@@ -33,7 +33,12 @@ jobs:
           cache: npm
 
       - name: Install dependencies 📦
-        run: npm ci
+        run: npm i -g --silent \
+          semantic-release \
+          @semantic-release/commit-analyzer \
+          @semantic-release/release-notes-generator \
+          @semantic-release/changelog \
+          semantic-release-pub
 
       - name: Release 🚀
         run: npx semantic-release
