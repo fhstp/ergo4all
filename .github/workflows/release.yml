@@ -33,12 +33,13 @@ jobs:
 
       - name: Install dependencies 📦
         run: |
-          npm i -g --silent \
+          npm i -g \
             semantic-release \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
             @semantic-release/changelog \
-            semantic-release-pub
+            semantic-release-pub \
+            @semantic-release/git
 
       - name: Release 🚀
         run: npx semantic-release

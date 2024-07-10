@@ -1,13 +1,33 @@
 {
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "angular"
+      }
+    ],
     "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
+    [
+      "@semantic-release/changelog",
+      {
+        "preset": "angular"
+      }
+    ],
     [
       "semantic-release-pub",
       {
         "cli": "flutter",
         "publishPub": false
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "pubspec.yaml",
+          "CHANGELOG.md"
+        ],
+        "message": "ci: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
   ]
