@@ -14,20 +14,22 @@ class WelcomeScreen extends StatelessWidget {
           MaterialPageRoute(builder: (_) => const LanguageScreen()));
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
-          const SizedBox(
-            height: 20,
-          ),
-          TimedLoadingBar(
-            duration: const Duration(seconds: 3),
-            completed: navigateToNextScreen,
-          )
-        ],
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
+            const SizedBox(
+              height: 20,
+            ),
+            TimedLoadingBar(
+              duration: const Duration(seconds: 3),
+              completed: navigateToNextScreen,
+            )
+          ],
+        ),
       ),
     );
   }
