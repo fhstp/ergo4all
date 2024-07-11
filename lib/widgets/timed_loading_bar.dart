@@ -23,6 +23,7 @@ class _TimedLoadingBarState extends State<TimedLoadingBar>
       return;
     }
 
+    controller.removeListener(_onProgress);
     widget.completed?.call();
   }
 
