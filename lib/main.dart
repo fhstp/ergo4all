@@ -9,6 +9,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static const _colorScheme = ColorScheme(
+      brightness: Brightness.light,
+      primary: Color(0xFFFE0000),
+      onPrimary: Color(0xFF212121),
+      secondary: Color(0xFF00FEFE),
+      onSecondary: Color(0xFF757575),
+      error: Color(0xFFB00020),
+      onError: Color(0xFF757575),
+      surface: Color(0xFFF5F5F5),
+      onSurface: Color(0xFF212121));
+
   void _lockPortraitMode() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -23,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: _colorScheme,
           useMaterial3: true,
         ),
         home: const WelcomeScreen());
