@@ -5,11 +5,11 @@ on:
 
 jobs:
   changes:
+    name: Check for relevant changes
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
     outputs:
       unit: ${{ steps.filter.outputs.unit }}
+
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
