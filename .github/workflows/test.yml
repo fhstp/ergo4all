@@ -11,7 +11,11 @@ jobs:
     outputs:
       unit: ${{ steps.filter.outputs.unit }}
     steps:
-      - uses: dorny/paths-filter@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Check changes 🟥🟩
+        uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
