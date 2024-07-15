@@ -1,0 +1,25 @@
+import 'package:ergo4all/screens/analysis.dart';
+import 'package:ergo4all/screens/home.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
+
+void main() {
+  testWidgets("should get navigate to analysis after uploading video",
+      (tester) async {
+    Future<XFile?> mockGetVideo() async {
+      return XFile("/some/video.mp4");
+    }
+
+    await tester.pumpWidget(MaterialApp(
+      home: HomeScreen(
+        tryGetVideo: mockGetVideo,
+      ),
+    ));
+
+    await tester.tap(find.byKey(const Key("upload")));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AnalysisScreen), findsOneWidget);
+  });
+}
