@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
-  testWidgets("should get navigate to analysis after uploading video",
+  testWidgets("should navigate to analysis after uploading video",
       (tester) async {
     Future<XFile?> mockGetVideo() async {
       return XFile("/some/video.mp4");
