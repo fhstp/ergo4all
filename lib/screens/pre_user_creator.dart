@@ -28,6 +28,7 @@ class PreUserCreatorScreen extends StatelessWidget {
             const Text("Creating a user profile"),
             const Text(explanationText),
             TappableText(
+              key: const Key("default-values"),
               text: "Use default values",
               onTap: navigateToHome,
             )
