@@ -1,3 +1,13 @@
+# [1.4.0](https://github.com/fhstp/ergo4all/compare/v1.3.0...v1.4.0) (2024-07-15)
+
+
+### Features
+
+* add app colors ([3dc44a7](https://github.com/fhstp/ergo4all/commit/3dc44a7d78440445c7a2a2bec9cb6c2c08db6051))
+* add basic language screen ([505498c](https://github.com/fhstp/ergo4all/commit/505498c92943452935f49d943ffa37dd496e782b))
+* add skeleton pre-intro screen ([5d578ac](https://github.com/fhstp/ergo4all/commit/5d578ac68fce382193c4c8ff49c1118be72764cb))
+* add skeleton tos screen ([#3](https://github.com/fhstp/ergo4all/issues/3)) ([4598cda](https://github.com/fhstp/ergo4all/commit/4598cdab4f3eec27a9d9b52a3e3f1420e4498308))
+
 # [1.3.0](https://github.com/fhstp/ergo4all/compare/v1.2.0...v1.3.0) (2024-07-11)
 
 
