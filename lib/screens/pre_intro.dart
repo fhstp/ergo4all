@@ -1,4 +1,5 @@
 import 'package:ergo4all/screens/terms_of_use.dart';
+import 'package:ergo4all/widgets/tappable_text.dart';
 import 'package:flutter/material.dart';
 
 class PreIntroScreen extends StatelessWidget {
@@ -19,10 +20,10 @@ class PreIntroScreen extends StatelessWidget {
         children: [
           const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
           const Text("Choose your profile"),
-          GestureDetector(
+          TappableText(
               key: const Key("skip"),
               onTap: skipIntroduction,
-              child: const Text("Skip introduction"))
+              text: "Skip introduction")
         ],
       ),
     );
