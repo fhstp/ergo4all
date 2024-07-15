@@ -9,6 +9,12 @@ class PreUserCreatorScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Creating user"),
       ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text("Creating a user profile")],
+        ),
+      ),
     );
   }
 }
