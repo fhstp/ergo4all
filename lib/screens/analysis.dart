@@ -16,7 +16,8 @@ class AnalysisScreen extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.5,
               child: LoadingIndicator(),
-            )
+            ),
+            Text("It may take a few minutes, please do not close the app.")
           ],
         ),
       ),
