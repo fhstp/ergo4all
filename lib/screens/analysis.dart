@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/loading_indicator.dart';
+
 class AnalysisScreen extends StatelessWidget {
   const AnalysisScreen({super.key});
 
@@ -13,20 +15,7 @@ class AnalysisScreen extends StatelessWidget {
             Text("Analyzing your ergonomics"),
             FractionallySizedBox(
               widthFactor: 0.5,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Stack(children: [
-                  Center(
-                    child: FractionallySizedBox(
-                        widthFactor: 0.5,
-                        heightFactor: 0.5,
-                        child: Image(
-                            image:
-                                AssetImage('assets/images/logos/IconRed.png'))),
-                  ),
-                  SizedBox.expand(child: CircularProgressIndicator())
-                ]),
-              ),
+              child: LoadingIndicator(),
             )
           ],
         ),
