@@ -20,7 +20,9 @@ class PreIntroScreen extends StatelessWidget {
           const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
           const Text("Choose your profile"),
           GestureDetector(
-              onTap: skipIntroduction, child: const Text("Skip introduction"))
+              key: const Key("skip"),
+              onTap: skipIntroduction,
+              child: const Text("Skip introduction"))
         ],
       ),
     );
