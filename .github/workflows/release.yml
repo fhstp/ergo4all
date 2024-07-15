@@ -1,11 +1,6 @@
 name: Release
 
-on:
-  workflow_run:
-    workflows: [ "Test" ]
-    branches: [ main ]
-    types:
-      - completed
+on: workflow_dispatch
 
 jobs:
   semantic-release:
