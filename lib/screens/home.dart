@@ -10,15 +10,15 @@ class HomeScreen extends StatelessWidget {
         title: const Text("Home"),
       ),
       body: const Placeholder(),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.upload), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "")
+      bottomNavigationBar: BottomAppBar(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.upload)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.camera_alt)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
         ],
-      ),
+      )),
     );
   }
 }
