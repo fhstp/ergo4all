@@ -1,3 +1,4 @@
+import 'package:ergo4all/widgets/tappable_text.dart';
 import 'package:flutter/material.dart';
 
 const explanationText =
@@ -15,7 +16,11 @@ class PreUserCreatorScreen extends StatelessWidget {
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Creating a user profile"), Text(explanationText)],
+          children: [
+            Text("Creating a user profile"),
+            Text(explanationText),
+            TappableText(text: "Use default values")
+          ],
         ),
       ),
     );
