@@ -17,8 +17,11 @@ void main() {
       ),
     ));
 
-    await tester.tap(find.byKey(const Key("upload")));
-    await tester.pumpAndSettle();
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key("upload")));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 10));
+    });
 
     expect(find.byType(AnalysisScreen), findsOneWidget);
   });
