@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
-  testWidgets("should get navigate to analysis after uploading video",
+  testWidgets("should navigate to analysis after uploading video",
       (tester) async {
     Future<XFile?> mockGetVideo() async {
       return XFile("/some/video.mp4");
@@ -17,9 +17,33 @@ void main() {
       ),
     ));
 
-    await tester.tap(find.byKey(const Key("upload")));
-    await tester.pumpAndSettle();
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key("upload")));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 10));
+    });
 
     expect(find.byType(AnalysisScreen), findsOneWidget);
+  });
+
+  testWidgets("should not navigate to analysis after not selecting video",
+      (tester) async {
+    Future<XFile?> mockGetVideo() async {
+      return null;
+    }
+
+    await tester.pumpWidget(MaterialApp(
+      home: HomeScreen(
+        tryGetVideo: mockGetVideo,
+      ),
+    ));
+
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key("upload")));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 10));
+    });
+
+    expect(find.byType(HomeScreen), findsOneWidget);
   });
 }
