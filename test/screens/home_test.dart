@@ -25,4 +25,25 @@ void main() {
 
     expect(find.byType(AnalysisScreen), findsOneWidget);
   });
+
+  testWidgets("should not navigate to analysis after not selecting video",
+      (tester) async {
+    Future<XFile?> mockGetVideo() async {
+      return null;
+    }
+
+    await tester.pumpWidget(MaterialApp(
+      home: HomeScreen(
+        tryGetVideo: mockGetVideo,
+      ),
+    ));
+
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key("upload")));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 10));
+    });
+
+    expect(find.byType(HomeScreen), findsOneWidget);
+  });
 }
