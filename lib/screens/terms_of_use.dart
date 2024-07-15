@@ -1,3 +1,4 @@
+import 'package:ergo4all/screens/pre_user_creator.dart';
 import 'package:flutter/material.dart';
 
 const tosText =
@@ -21,6 +22,13 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
+
+    void navigateToPreUserCreation() {
+      navigator.pushReplacement(
+          MaterialPageRoute(builder: (_) => const PreUserCreatorScreen()));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Terms of use"),
@@ -34,9 +42,11 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
               children: [
                 const Text("I accept"),
                 Checkbox(
+                    key: const Key("accept-check"),
                     value: hasAccepted,
                     onChanged: (isChecked) {
                       toggleHasAccepted();
+                      if (isChecked!) navigateToPreUserCreation();
                     }),
               ],
             )
