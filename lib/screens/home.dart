@@ -6,9 +6,19 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Home"),
-        ),
-        body: const Placeholder());
+      appBar: AppBar(
+        title: const Text("Home"),
+      ),
+      body: const Placeholder(),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.upload), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "")
+        ],
+      ),
+    );
   }
 }
