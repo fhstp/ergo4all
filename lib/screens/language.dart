@@ -1,4 +1,4 @@
-import 'package:ergo4all/screens/intro_start.dart';
+import 'package:ergo4all/screens/pre_intro.dart';
 import 'package:flutter/material.dart';
 
 class LanguageScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class LanguageScreen extends StatelessWidget {
 
     void onLanguageChosen() {
       navigator.pushReplacement(
-          MaterialPageRoute(builder: (_) => const IntroStartScreen()));
+          MaterialPageRoute(builder: (_) => const PreIntroScreen()));
     }
 
     Widget languageButtonFor(String language) {

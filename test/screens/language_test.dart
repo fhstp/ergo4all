@@ -1,4 +1,4 @@
-import 'package:ergo4all/screens/intro_start.dart';
+import 'package:ergo4all/screens/pre_intro.dart';
 import 'package:ergo4all/screens/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,6 +22,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(didNavigate, isTrue);
-    expect(find.byType(IntroStartScreen), findsOneWidget);
+    expect(find.byType(PreIntroScreen), findsOneWidget);
   });
 }
