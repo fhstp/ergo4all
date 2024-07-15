@@ -1,3 +1,4 @@
+import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/widgets/tappable_text.dart';
 import 'package:flutter/material.dart';
 
@@ -9,17 +10,27 @@ class PreUserCreatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
+
+    void navigateToHome() {
+      navigator.pushReplacement(
+          MaterialPageRoute(builder: (_) => const HomeScreen()));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Creating user"),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Creating a user profile"),
-            Text(explanationText),
-            TappableText(text: "Use default values")
+            const Text("Creating a user profile"),
+            const Text(explanationText),
+            TappableText(
+              text: "Use default values",
+              onTap: navigateToHome,
+            )
           ],
         ),
       ),
