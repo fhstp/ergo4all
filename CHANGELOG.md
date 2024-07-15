@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/fhstp/ergo4all/compare/v1.4.0...v1.5.0) (2024-07-15)
+
+
+### Features
+
+* add skeleton pre user creation screen ([#5](https://github.com/fhstp/ergo4all/issues/5)) ([d0c35b5](https://github.com/fhstp/ergo4all/commit/d0c35b55a1b11dd48ff19ecfbfdfed4ebcfcaf1d))
+
 # [1.4.0](https://github.com/fhstp/ergo4all/compare/v1.3.0...v1.4.0) (2024-07-15)
 
 
