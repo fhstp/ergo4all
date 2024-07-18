@@ -1,8 +1,6 @@
 import 'package:ergo4all/screens/pre_user_creator.dart';
 import 'package:flutter/material.dart';
-
-const tosText =
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TermsOfUseScreen extends StatefulWidget {
   const TermsOfUseScreen({super.key});
@@ -22,6 +20,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
 
     void navigateToPreUserCreation() {
@@ -31,16 +30,16 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Terms of use"),
+        title: Text(localizations.termsOfUse_title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(tosText),
+            Text(localizations.termsOfUse_content),
             Row(
               children: [
-                const Text("I accept"),
+                Text(localizations.termsOfUse_accept),
                 Checkbox(
                     key: const Key("accept-check"),
                     value: hasAccepted,
