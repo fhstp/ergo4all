@@ -1,8 +1,9 @@
-import 'package:ergo4all/screens/pre_intro.dart';
 import 'package:ergo4all/screens/language.dart';
+import 'package:ergo4all/screens/pre_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../mock_app.dart';
 import '../mock_navigation_observer.dart';
 
 void main() {
@@ -14,9 +15,8 @@ void main() {
       didNavigate = true;
     }
 
-    await tester.pumpWidget(MaterialApp(
-        navigatorObservers: [MockNavigationObserver(pushed: onPushed)],
-        home: const LanguageScreen()));
+    await tester.pumpWidget(makeMockAppFromWidget(
+        const LanguageScreen(), MockNavigationObserver(pushed: onPushed)));
 
     await tester.tap(find.byKey(const Key("lang_button_deutsch")));
     await tester.pumpAndSettle();
