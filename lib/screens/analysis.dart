@@ -1,6 +1,7 @@
 import 'package:ergo4all/screens/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
 import '../widgets/loading_indicator.dart';
 
 class AnalysisScreen extends StatefulWidget {
