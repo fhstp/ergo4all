@@ -1,11 +1,13 @@
 import 'package:ergo4all/screens/pre_intro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
 
     void onLanguageChosen() {
@@ -22,10 +24,10 @@ class LanguageScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Language")),
+      appBar: AppBar(title: Text(localizations.language_title)),
       body: Column(
         children: [
-          const Text("Choose language"),
+          Text(localizations.language_header),
           languageButtonFor("Deutsch"),
           languageButtonFor("English"),
           languageButtonFor("BHS"),

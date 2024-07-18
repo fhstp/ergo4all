@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../mock_app.dart';
+
 void main() {
   testWidgets("should navigate to analysis after uploading video",
       (tester) async {
@@ -11,8 +13,8 @@ void main() {
       return XFile("/some/video.mp4");
     }
 
-    await tester.pumpWidget(MaterialApp(
-      home: HomeScreen(
+    await tester.pumpWidget(makeMockAppFromWidget(
+      HomeScreen(
         tryGetVideo: mockGetVideo,
       ),
     ));
@@ -32,8 +34,8 @@ void main() {
       return null;
     }
 
-    await tester.pumpWidget(MaterialApp(
-      home: HomeScreen(
+    await tester.pumpWidget(makeMockAppFromWidget(
+      HomeScreen(
         tryGetVideo: mockGetVideo,
       ),
     ));

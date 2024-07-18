@@ -1,0 +1,16 @@
+{
+  "analysis_header": "Deine Ergonomie wird analysiert",
+  "analysis_wait": "Dies kann ein paar Minuten dauern. Bitte schließe die App nicht.",
+  "home_title": "Hauptmenü",
+  "language_title": "Sprachen",
+  "language_header": "Wähle eine Sprache",
+  "preIntro_chooseProfile": "Wähle ein Profil",
+  "preIntro_skip": "Einführung überspringen",
+  "preUserCreator_explanation": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+  "preUserCreator_header": "Erstelle ein Nutzerprofil",
+  "preUserCreator_title": "Nutzerprofil erstellen",
+  "preUserCreator_useDefaults": "Standardwerte nutzen",
+  "termsOfUse_accept": "Ich akzeptiere",
+  "termsOfUse_content": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+  "termsOfUse_title": "Nutzungsbedingungen"
+}

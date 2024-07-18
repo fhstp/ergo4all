@@ -1,6 +1,7 @@
 import 'package:ergo4all/screens/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/loading_indicator.dart';
 
@@ -31,17 +32,19 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final localizations = AppLocalizations.of(context)!;
+
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Analyzing your ergonomics"),
-            FractionallySizedBox(
+            Text(localizations.analysis_header),
+            const FractionallySizedBox(
               widthFactor: 0.5,
               child: LoadingIndicator(),
             ),
-            Text("It may take a few minutes, please do not close the app.")
+            Text(localizations.analysis_wait)
           ],
         ),
       ),

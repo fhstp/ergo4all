@@ -3,6 +3,7 @@ import 'package:ergo4all/screens/terms_of_use.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../mock_app.dart';
 import '../mock_navigation_observer.dart';
 
 void main() {
@@ -14,9 +15,10 @@ void main() {
       didNavigate = true;
     }
 
-    await tester.pumpWidget(MaterialApp(
-        navigatorObservers: [MockNavigationObserver(pushed: onPushed)],
-        home: const PreIntroScreen()));
+    await tester.pumpWidget(makeMockAppFromWidget(
+      const PreIntroScreen(),
+      MockNavigationObserver(pushed: onPushed),
+    ));
 
     await tester.tap(find.byKey(const Key("skip")));
     await tester.pumpAndSettle();

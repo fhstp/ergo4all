@@ -1,6 +1,7 @@
 import 'package:ergo4all/io/video.dart';
 import 'package:ergo4all/screens/analysis.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
 
     void analyzeVideo(XFile videoFile) {
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
+        title: Text(localizations.home_title),
       ),
       body: const Placeholder(),
       bottomNavigationBar: BottomAppBar(

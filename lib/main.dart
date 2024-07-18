@@ -1,6 +1,7 @@
 import 'package:ergo4all/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
           colorScheme: _colorScheme,
           useMaterial3: true,
         ),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: const WelcomeScreen());
   }
 }
