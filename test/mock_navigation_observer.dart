@@ -9,7 +9,7 @@ class MockNavigationObserver extends NavigatorObserver {
   NavigateCallback? replaced;
 
   MockNavigationObserver(
-      {this.pushed, this.popped, this.removed, this.replaced}) {}
+      {this.pushed, this.popped, this.removed, this.replaced});
 
   @override
   void didPush(Route route, Route? previousRoute) {
