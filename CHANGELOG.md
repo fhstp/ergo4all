@@ -1,3 +1,19 @@
+# [1.6.0](https://github.com/fhstp/ergo4all/compare/v1.5.0...v1.6.0) (2024-07-18)
+
+
+### Bug Fixes
+
+* **ci:** missing checkout ([02df126](https://github.com/fhstp/ergo4all/commit/02df126c8ea9011a14dace8c49238d3bbbd65f5d))
+
+
+### Features
+
+* add german locale ([#11](https://github.com/fhstp/ergo4all/issues/11)) ([06eb5c3](https://github.com/fhstp/ergo4all/commit/06eb5c34c30d6c84f8957702042dbb2fc279a419))
+* add skeleton analysis screen ([#10](https://github.com/fhstp/ergo4all/issues/10)) ([a5827c9](https://github.com/fhstp/ergo4all/commit/a5827c94d2aee110f6f6120eb577a6f43babee89))
+* add skeleton home screen ([#6](https://github.com/fhstp/ergo4all/issues/6)) ([ed70d61](https://github.com/fhstp/ergo4all/commit/ed70d61d6f05e262f325fbebc45984f02a3eb487))
+* **ci:** add change filter for unit tests ([0a53086](https://github.com/fhstp/ergo4all/commit/0a53086ba9a29ff9df9a73c3e109ecf3db0361f1))
+* select video for analysis ([#8](https://github.com/fhstp/ergo4all/issues/8)) ([ae9d1a0](https://github.com/fhstp/ergo4all/commit/ae9d1a04dc857a0c8e624a2c68c3d12a501d97bd))
+
 # [1.5.0](https://github.com/fhstp/ergo4all/compare/v1.4.0...v1.5.0) (2024-07-15)
 
 
