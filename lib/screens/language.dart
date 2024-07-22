@@ -1,6 +1,7 @@
 import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/pre_intro.dart';
 import 'package:ergo4all/widgets/header.dart';
+import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -33,14 +34,16 @@ class LanguageScreen extends StatelessWidget {
         title: Text(localizations.language_title),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Header(localizations.language_header),
-          languageButtonFor("Deutsch", const Locale("de")),
-          languageButtonFor("English", const Locale("en")),
-          languageButtonFor("BHS", const Locale("hbs")),
-          languageButtonFor("Türkçe", const Locale("tr")),
-        ],
+      body: ScreenContent(
+        child: Column(
+          children: [
+            Header(localizations.language_header),
+            languageButtonFor("Deutsch", const Locale("de")),
+            languageButtonFor("English", const Locale("en")),
+            languageButtonFor("BHS", const Locale("hbs")),
+            languageButtonFor("Türkçe", const Locale("tr")),
+          ],
+        ),
       ),
     );
   }

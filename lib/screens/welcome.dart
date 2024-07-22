@@ -1,5 +1,6 @@
 import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/language.dart';
+import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:ergo4all/widgets/timed_loading_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     }
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: ScreenContent(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

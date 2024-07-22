@@ -1,5 +1,6 @@
 import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/widgets/header.dart';
+import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:ergo4all/widgets/tappable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,7 +23,7 @@ class PreUserCreatorScreen extends StatelessWidget {
         title: Text(localizations.preUserCreator_title),
         centerTitle: true,
       ),
-      body: Center(
+      body: ScreenContent(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
