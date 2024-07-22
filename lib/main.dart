@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
             title: 'Ergo4All',
             theme: ThemeData(
               colorScheme: _colorScheme,
+              fontFamily: "Montserrat",
               useMaterial3: true,
             ),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
