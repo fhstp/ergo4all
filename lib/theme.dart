@@ -39,10 +39,17 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
 
 const _textTheme = TextTheme(headlineLarge: _h1Style);
 
+final _textButtonTheme = TextButtonThemeData(
+    style: ButtonStyle(
+        foregroundColor: WidgetStatePropertyAll(_colorScheme.onSurface),
+        textStyle: const WidgetStatePropertyAll(
+            TextStyle(decoration: TextDecoration.underline))));
+
 final globalTheme = ThemeData(
   colorScheme: _colorScheme,
   appBarTheme: _appBarTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
+  textButtonTheme: _textButtonTheme,
   textTheme: _textTheme,
   fontFamily: "Montserrat",
   useMaterial3: true,

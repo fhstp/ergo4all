@@ -1,7 +1,6 @@
 import 'package:ergo4all/screens/terms_of_use.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
-import 'package:ergo4all/widgets/tappable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -25,10 +24,10 @@ class PreIntroScreen extends StatelessWidget {
           children: [
             const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
             Header(localizations.preIntro_chooseProfile),
-            TappableText(
+            TextButton(
                 key: const Key("skip"),
-                onTap: skipIntroduction,
-                text: localizations.preIntro_skip)
+                onPressed: skipIntroduction,
+                child: Text(localizations.preIntro_skip))
           ],
         ),
       ),

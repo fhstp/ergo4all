@@ -1,7 +1,6 @@
 import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
-import 'package:ergo4all/widgets/tappable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -29,10 +28,10 @@ class PreUserCreatorScreen extends StatelessWidget {
           children: [
             Header(localizations.preUserCreator_header),
             Text(localizations.preUserCreator_explanation),
-            TappableText(
+            TextButton(
               key: const Key("default-values"),
-              text: localizations.preUserCreator_useDefaults,
-              onTap: navigateToHome,
+              onPressed: navigateToHome,
+              child: Text(localizations.preUserCreator_useDefaults),
             )
           ],
         ),
