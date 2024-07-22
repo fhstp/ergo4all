@@ -12,21 +12,17 @@ import '../widgets/mock_custom_locale.dart';
 void main() {
   testWidgets("should navigate to next screen once language button is pressed",
       (tester) async {
-    bool didNavigate = false;
-
-    void onPushed(Route? oldRoute, Route? newRoute) {
-      didNavigate = true;
-    }
+    var mockNavigationObserver = MockNavigationObserver();
 
     await tester.pumpWidget(makeMockAppFromWidget(
         const LanguageScreen(),
-        MockNavigationObserver(pushed: onPushed),
+        mockNavigationObserver,
         [ChangeNotifierProvider(create: (_) => makeStubCustomLocale())]));
 
     await tester.tap(find.byKey(const Key("lang_button_deutsch")));
     await tester.pumpAndSettle();
 
-    expect(didNavigate, isTrue);
+    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
     expect(find.byType(PreIntroScreen), findsOneWidget);
   });
 

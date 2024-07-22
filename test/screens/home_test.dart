@@ -5,19 +5,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../mock_app.dart';
+import '../mock_navigation_observer.dart';
 
 void main() {
   testWidgets("should navigate to analysis after uploading video",
       (tester) async {
+    final mockNavigationObserver = MockNavigationObserver();
+
     Future<XFile?> mockGetVideo() async {
       return XFile("/some/video.mp4");
     }
 
     await tester.pumpWidget(makeMockAppFromWidget(
-      HomeScreen(
-        tryGetVideo: mockGetVideo,
-      ),
-    ));
+        HomeScreen(
+          tryGetVideo: mockGetVideo,
+        ),
+        mockNavigationObserver));
 
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const Key("upload")));
@@ -25,6 +28,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 10));
     });
 
+    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
     expect(find.byType(AnalysisScreen), findsOneWidget);
   });
 

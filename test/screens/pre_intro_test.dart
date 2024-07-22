@@ -9,21 +9,17 @@ import '../mock_navigation_observer.dart';
 void main() {
   testWidgets("should navigate to next screen once skip button is pressed",
       (tester) async {
-    bool didNavigate = false;
-
-    void onPushed(Route? oldRoute, Route? newRoute) {
-      didNavigate = true;
-    }
+    final mockNavigationObserver = MockNavigationObserver();
 
     await tester.pumpWidget(makeMockAppFromWidget(
       const PreIntroScreen(),
-      MockNavigationObserver(pushed: onPushed),
+      mockNavigationObserver,
     ));
 
     await tester.tap(find.byKey(const Key("skip")));
     await tester.pumpAndSettle();
 
-    expect(didNavigate, isTrue);
+    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
     expect(find.byType(TermsOfUseScreen), findsOneWidget);
   });
 }
