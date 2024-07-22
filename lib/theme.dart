@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const _primaryHovered = Color(0xFFFF6666);
+const _primaryPressed = Color(0xFFB20000);
+
 const _colorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFFFE0000),
@@ -18,9 +21,22 @@ final _appBarTheme = AppBarTheme(
     foregroundColor: _colorScheme.onPrimary,
     titleTextStyle: _h1Style);
 
+final _elevatedButtonTheme = ElevatedButtonThemeData(
+    style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.pressed)) {
+            return _primaryPressed;
+          } else if (states.contains(WidgetState.hovered)) {
+            return _primaryHovered;
+          }
+          return _colorScheme.primary;
+        }),
+        foregroundColor: WidgetStatePropertyAll(_colorScheme.onPrimary)));
+
 final globalTheme = ThemeData(
   colorScheme: _colorScheme,
   appBarTheme: _appBarTheme,
+  elevatedButtonTheme: _elevatedButtonTheme,
   fontFamily: "Montserrat",
   useMaterial3: true,
 );
