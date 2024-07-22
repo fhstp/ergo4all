@@ -1,4 +1,5 @@
 import 'package:ergo4all/screens/pre_user_creator.dart';
+import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -33,7 +34,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
         title: Text(localizations.termsOfUse_title),
         centerTitle: true,
       ),
-      body: Center(
+      body: ScreenContent(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
