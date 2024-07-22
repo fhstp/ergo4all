@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     _lockPortraitMode();
 
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Ergo4All',
         theme: ThemeData(
           colorScheme: _colorScheme,
           useMaterial3: true,
