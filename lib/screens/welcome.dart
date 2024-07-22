@@ -1,9 +1,24 @@
+import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/language.dart';
 import 'package:ergo4all/widgets/timed_loading_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final customLocale = Provider.of<CustomLocale>(context);
+    customLocale.load();
+  }
 
   @override
   Widget build(BuildContext context) {

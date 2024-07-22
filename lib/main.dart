@@ -36,15 +36,19 @@ class MyApp extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (_) => CustomLocale.fromSharedPrefs(),
-      child: MaterialApp(
-          title: 'Ergo4All',
-          theme: ThemeData(
-            colorScheme: _colorScheme,
-            useMaterial3: true,
-          ),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: const WelcomeScreen()),
+      child: Builder(builder: (context) {
+        final customLocale = Provider.of<CustomLocale>(context);
+        return MaterialApp(
+            locale: customLocale.customLocale,
+            title: 'Ergo4All',
+            theme: ThemeData(
+              colorScheme: _colorScheme,
+              useMaterial3: true,
+            ),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const WelcomeScreen());
+      }),
     );
   }
 }
