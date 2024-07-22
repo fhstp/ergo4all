@@ -23,6 +23,12 @@ class MyApp extends StatelessWidget {
       surface: Color(0xFFF5F5F5),
       onSurface: Color(0xFF212121));
 
+  static final _themeData = ThemeData(
+    colorScheme: _colorScheme,
+    fontFamily: "Montserrat",
+    useMaterial3: true,
+  );
+
   void _lockPortraitMode() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -41,11 +47,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             locale: customLocale.customLocale,
             title: 'Ergo4All',
-            theme: ThemeData(
-              colorScheme: _colorScheme,
-              fontFamily: "Montserrat",
-              useMaterial3: true,
-            ),
+            theme: _themeData,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: const WelcomeScreen());
