@@ -31,7 +31,11 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
           }
           return _colorScheme.primary;
         }),
-        foregroundColor: WidgetStatePropertyAll(_colorScheme.onPrimary)));
+        foregroundColor: WidgetStatePropertyAll(_colorScheme.onPrimary),
+        minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+        textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 14)),
+        shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))))));
 
 final globalTheme = ThemeData(
   colorScheme: _colorScheme,
