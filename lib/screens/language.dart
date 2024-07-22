@@ -28,7 +28,10 @@ class LanguageScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(localizations.language_title)),
+      appBar: AppBar(
+        title: Text(localizations.language_title),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           Text(localizations.language_header),

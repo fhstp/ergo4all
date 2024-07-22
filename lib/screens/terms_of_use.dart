@@ -31,6 +31,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.termsOfUse_title),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(

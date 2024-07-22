@@ -28,6 +28,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.home_title),
+        centerTitle: true,
       ),
       body: Text(localizations.home_welcome("Max")),
       bottomNavigationBar: BottomAppBar(
