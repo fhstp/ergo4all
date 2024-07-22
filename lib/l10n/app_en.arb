@@ -2,6 +2,14 @@
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
   "home_title": "Home",
+  "home_welcome": "Welcome {firstName}",
+  "@home_welcome": {
+    "placeholders": {
+      "firstName": {
+        "type": "String"
+      }
+    }
+  },
   "language_title": "Languages",
   "language_header": "Choose language",
   "preIntro_chooseProfile": "Choose your profile",

@@ -2,6 +2,7 @@
   "analysis_header": "Deine Ergonomie wird analysiert",
   "analysis_wait": "Dies kann ein paar Minuten dauern. Bitte schließe die App nicht.",
   "home_title": "Hauptmenü",
+  "home_welcome": "Willkommen {firstName}",
   "language_title": "Sprachen",
   "language_header": "Wähle eine Sprache",
   "preIntro_chooseProfile": "Wähle ein Profil",
