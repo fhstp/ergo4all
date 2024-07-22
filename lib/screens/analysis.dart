@@ -1,4 +1,5 @@
 import 'package:ergo4all/screens/results.dart';
+import 'package:ergo4all/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,7 +40,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(localizations.analysis_header),
+            Header(localizations.analysis_header),
             const FractionallySizedBox(
               widthFactor: 0.5,
               child: LoadingIndicator(),
