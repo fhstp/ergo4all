@@ -37,10 +37,13 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
         shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))))));
 
+const _textTheme = TextTheme(headlineLarge: _h1Style);
+
 final globalTheme = ThemeData(
   colorScheme: _colorScheme,
   appBarTheme: _appBarTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
+  textTheme: _textTheme,
   fontFamily: "Montserrat",
   useMaterial3: true,
 );
