@@ -19,6 +19,7 @@ class PreUserCreatorScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.preUserCreator_title),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
