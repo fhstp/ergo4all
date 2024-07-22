@@ -1,3 +1,24 @@
+# [1.7.0](https://github.com/fhstp/ergo4all/compare/v1.6.0...v1.7.0) (2024-07-22)
+
+
+### Bug Fixes
+
+* incorrect text style ([780627f](https://github.com/fhstp/ergo4all/commit/780627fbb1f5a3d4f3b5ee144a36b1dc1b5b05d2))
+
+
+### Features
+
+* add app icon ([#15](https://github.com/fhstp/ergo4all/issues/15)) ([8d83185](https://github.com/fhstp/ergo4all/commit/8d83185a06a9cfcbcc6a64864b2b60d382144d8a))
+* add intro profile buttons ([465a7f8](https://github.com/fhstp/ergo4all/commit/465a7f89df8b474a91bfba637416bcaee6aba52c))
+* add welcome message ([#13](https://github.com/fhstp/ergo4all/issues/13)) ([b3d5c50](https://github.com/fhstp/ergo4all/commit/b3d5c507134e93ae5fc9a97bf460e0f9fe91a96c))
+* allow user to override locale ([#12](https://github.com/fhstp/ergo4all/issues/12)) ([54eade8](https://github.com/fhstp/ergo4all/commit/54eade8f74e470203ac8ed4f58517b5503f0c7a6))
+* change app font ([#14](https://github.com/fhstp/ergo4all/issues/14)) ([8130a49](https://github.com/fhstp/ergo4all/commit/8130a49984f28ee00258847093acb6ca7243db54))
+* style app bar ([#16](https://github.com/fhstp/ergo4all/issues/16)) ([fe4821e](https://github.com/fhstp/ergo4all/commit/fe4821e7366227395fe2f6bdc9d228c483309545))
+* style buttons ([#17](https://github.com/fhstp/ergo4all/issues/17)) ([d8d175e](https://github.com/fhstp/ergo4all/commit/d8d175efb727f801815c07f83c0f1953f6b25355))
+* style h1 headers ([#18](https://github.com/fhstp/ergo4all/issues/18)) ([188a106](https://github.com/fhstp/ergo4all/commit/188a1069f79809885d1f90934591328ac0b1a4a3))
+* style screen content ([#19](https://github.com/fhstp/ergo4all/issues/19)) ([a8f124e](https://github.com/fhstp/ergo4all/commit/a8f124e91cc64e427294f0e77ebcb69ca570c3e0))
+* style text-buttons ([#20](https://github.com/fhstp/ergo4all/issues/20)) ([e3c34f7](https://github.com/fhstp/ergo4all/commit/e3c34f76ad45e182b98217de602fd69e8692287f))
+
 # [1.6.0](https://github.com/fhstp/ergo4all/compare/v1.5.0...v1.6.0) (2024-07-18)
 
 
