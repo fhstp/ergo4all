@@ -1,8 +1,4 @@
 {
-  "analysis_header": "Analyzing your ergonomics",
-  "analysis_wait": "It may take a few minutes, please do not close the app.",
-  "home_title": "Home",
-  "home_welcome": "Welcome {firstName}",
   "@home_welcome": {
     "placeholders": {
       "firstName": {
@@ -10,8 +6,14 @@
       }
     }
   },
-  "language_title": "Languages",
+  "analysis_header": "Analyzing your ergonomics",
+  "analysis_wait": "It may take a few minutes, please do not close the app.",
+  "home_title": "Home",
+  "home_welcome": "Welcome {firstName}",
   "language_header": "Choose language",
+  "language_title": "Languages",
+  "preInto_professional": "Professional",
+  "preInto_worker": "Worker",
   "preIntro_chooseProfile": "Choose your profile",
   "preIntro_skip": "Skip introduction",
   "preUserCreator_explanation": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",

@@ -17,6 +17,14 @@ class PreIntroScreen extends StatelessWidget {
           .push(MaterialPageRoute(builder: (_) => const TermsOfUseScreen()));
     }
 
+    Widget makeProfileButton(String label) {
+      return ElevatedButton(
+          onPressed: () {
+            // TODO: Start intro for profile
+          },
+          child: Text(label));
+    }
+
     return Scaffold(
       body: ScreenContent(
         child: Column(
@@ -24,6 +32,8 @@ class PreIntroScreen extends StatelessWidget {
           children: [
             const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
             Header(localizations.preIntro_chooseProfile),
+            makeProfileButton(localizations.preInto_professional),
+            makeProfileButton(localizations.preInto_worker),
             TextButton(
                 key: const Key("skip"),
                 onPressed: skipIntroduction,
