@@ -1,5 +1,6 @@
 import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/welcome.dart';
+import 'package:ergo4all/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,23 +12,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static const _colorScheme = ColorScheme(
-      brightness: Brightness.light,
-      primary: Color(0xFFFE0000),
-      onPrimary: Color(0xFF212121),
-      secondary: Color(0xFF00FEFE),
-      onSecondary: Color(0xFF757575),
-      error: Color(0xFFB00020),
-      onError: Color(0xFF757575),
-      surface: Color(0xFFF5F5F5),
-      onSurface: Color(0xFF212121));
-
-  static final _themeData = ThemeData(
-    colorScheme: _colorScheme,
-    fontFamily: "Montserrat",
-    useMaterial3: true,
-  );
 
   void _lockPortraitMode() {
     SystemChrome.setPreferredOrientations([
@@ -47,7 +31,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             locale: customLocale.customLocale,
             title: 'Ergo4All',
-            theme: _themeData,
+            theme: globalTheme,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: const WelcomeScreen());
