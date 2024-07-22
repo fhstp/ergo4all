@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(localizations.home_title),
       ),
-      body: const Placeholder(),
+      body: Text(localizations.home_welcome("Max")),
       bottomNavigationBar: BottomAppBar(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
