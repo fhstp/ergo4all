@@ -1,5 +1,6 @@
 import 'package:ergo4all/io/video.dart';
 import 'package:ergo4all/screens/analysis.dart';
+import 'package:ergo4all/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.home_title),
+        title: Header(localizations.home_title),
         centerTitle: true,
       ),
       body: Text(localizations.home_welcome("Max")),
