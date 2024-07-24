@@ -2,6 +2,7 @@ import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/language.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:ergo4all/widgets/timed_loading_bar.dart';
+import 'package:ergo4all/widgets/version_display.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,16 +34,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: ScreenContent(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
-            const SizedBox(
-              height: 20,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Image(
+                      image: AssetImage('assets/images/logos/LogoRed.png')),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TimedLoadingBar(
+                    duration: const Duration(seconds: 3),
+                    completed: navigateToNextScreen,
+                  )
+                ],
+              ),
             ),
-            TimedLoadingBar(
-              duration: const Duration(seconds: 3),
-              completed: navigateToNextScreen,
-            )
+            const VersionDisplay()
           ],
         ),
       ),
