@@ -1,5 +1,6 @@
 import 'package:ergo4all/screens/professional_intro.dart';
 import 'package:ergo4all/screens/terms_of_use.dart';
+import 'package:ergo4all/screens/worker_intro.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,10 @@ class PreIntroScreen extends StatelessWidget {
           .push(MaterialPageRoute(builder: (_) => const ProfessionalIntro()));
     }
 
+    void takeWorkerIntroduction() {
+      navigator.push(MaterialPageRoute(builder: (_) => const WorkerIntro()));
+    }
+
     return Scaffold(
       body: ScreenContent(
         child: Column(
@@ -35,7 +40,9 @@ class PreIntroScreen extends StatelessWidget {
                 onPressed: takeProfessionalIntroduction,
                 child: Text(localizations.preInto_professional)),
             ElevatedButton(
-                onPressed: () {}, child: Text(localizations.preInto_worker)),
+                key: const Key("worker"),
+                onPressed: takeWorkerIntroduction,
+                child: Text(localizations.preInto_worker)),
             TextButton(
                 key: const Key("skip"),
                 onPressed: skipIntroduction,
