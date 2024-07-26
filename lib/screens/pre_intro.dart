@@ -1,3 +1,4 @@
+import 'package:ergo4all/screens/professional_intro.dart';
 import 'package:ergo4all/screens/terms_of_use.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
@@ -17,12 +18,9 @@ class PreIntroScreen extends StatelessWidget {
           .push(MaterialPageRoute(builder: (_) => const TermsOfUseScreen()));
     }
 
-    Widget makeProfileButton(String label) {
-      return ElevatedButton(
-          onPressed: () {
-            // TODO: Start intro for profile
-          },
-          child: Text(label));
+    void takeProfessionalIntroduction() {
+      navigator
+          .push(MaterialPageRoute(builder: (_) => const ProfessionalIntro()));
     }
 
     return Scaffold(
@@ -32,8 +30,12 @@ class PreIntroScreen extends StatelessWidget {
           children: [
             const Image(image: AssetImage('assets/images/logos/LogoRed.png')),
             Header(localizations.preIntro_chooseProfile),
-            makeProfileButton(localizations.preInto_professional),
-            makeProfileButton(localizations.preInto_worker),
+            ElevatedButton(
+                key: const Key("professional"),
+                onPressed: takeProfessionalIntroduction,
+                child: Text(localizations.preInto_professional)),
+            ElevatedButton(
+                onPressed: () {}, child: Text(localizations.preInto_worker)),
             TextButton(
                 key: const Key("skip"),
                 onPressed: skipIntroduction,
