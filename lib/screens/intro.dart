@@ -65,7 +65,7 @@ class _IntroState extends State<Intro> {
         ElevatedButton(
             key: const Key("done"),
             onPressed: navigateToTermsOfUse,
-            child: Text(localizations.professionalInto_done))
+            child: Text(localizations.intro_done))
       ])),
     );
   }
