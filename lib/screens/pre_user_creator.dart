@@ -9,6 +9,7 @@ class PreUserCreatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
 
@@ -27,7 +28,13 @@ class PreUserCreatorScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Header(localizations.preUserCreator_header),
-            Text(localizations.preUserCreator_explanation),
+            Text(
+              localizations.preUserCreator_text1,
+            ),
+            Text(
+              localizations.preUserCreator_text2,
+              style: appTheme.textTheme.bodySmall,
+            ),
             TextButton(
               key: const Key("default-values"),
               onPressed: navigateToHome,
