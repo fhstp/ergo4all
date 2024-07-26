@@ -1,3 +1,4 @@
+import 'package:ergo4all/screens/terms_of_use.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,18 +30,24 @@ class _ProfessionalIntroState extends State<ProfessionalIntro> {
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
+    final navigator = Navigator.of(context);
     final titles = [
       localizations.professionalIntro_overview_title,
       localizations.professionalIntro_privacy_title
     ];
 
-    final skipButton = TextButton(onPressed: () {}, child: const Text("Skip"));
+    void navigateToTermsOfUse() {
+      navigator
+          .push(MaterialPageRoute(builder: (_) => const TermsOfUseScreen()));
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(titles[_pageIndex]),
       ),
       body: ScreenContent(
+          child: Column(children: [
+        Expanded(
           child: PageView(
             controller: _pageController,
             onPageChanged: _onPageChanged,
@@ -52,7 +59,6 @@ class _ProfessionalIntroState extends State<ProfessionalIntro> {
                     style: appTheme.textTheme.headlineLarge,
                   ),
                   Text(localizations.professionalIntro_overview_text),
-                  skipButton
                 ],
               ),
               Column(
@@ -62,11 +68,16 @@ class _ProfessionalIntroState extends State<ProfessionalIntro> {
                     style: appTheme.textTheme.headlineLarge,
                   ),
                   Text(localizations.professionalIntro_privacy_text),
-                  skipButton
                 ],
               )
             ],
-          )),
+          ),
+        ),
+        ElevatedButton(
+            key: const Key("done"),
+            onPressed: navigateToTermsOfUse,
+            child: Text(localizations.professionalInto_done))
+      ])),
     );
   }
 }
