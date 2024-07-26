@@ -31,19 +31,41 @@ class _ProfessionalIntroState extends State<ProfessionalIntro> {
     final appTheme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
-    final titles = [
-      localizations.professionalIntro_overview_title,
-      localizations.professionalIntro_privacy_title
-    ];
+
+    final pageTitle = switch (_pageIndex) {
+      0 => localizations.professionalIntro_overview_title,
+      1 => localizations.professionalIntro_privacy_title,
+      _ => throw Error()
+    };
 
     void navigateToTermsOfUse() {
       navigator
           .push(MaterialPageRoute(builder: (_) => const TermsOfUseScreen()));
     }
 
+    var overviewPage = Column(
+      children: [
+        Text(
+          localizations.professionalIntro_overview_header,
+          style: appTheme.textTheme.headlineLarge,
+        ),
+        Text(localizations.professionalIntro_overview_text),
+      ],
+    );
+
+    var privacyPage = Column(
+      children: [
+        Text(
+          localizations.professionalIntro_privacy_header,
+          style: appTheme.textTheme.headlineLarge,
+        ),
+        Text(localizations.professionalIntro_privacy_text),
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(titles[_pageIndex]),
+        title: Text(pageTitle),
       ),
       body: ScreenContent(
           child: Column(children: [
@@ -51,26 +73,7 @@ class _ProfessionalIntroState extends State<ProfessionalIntro> {
           child: PageView(
             controller: _pageController,
             onPageChanged: _onPageChanged,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    localizations.professionalIntro_overview_header,
-                    style: appTheme.textTheme.headlineLarge,
-                  ),
-                  Text(localizations.professionalIntro_overview_text),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    localizations.professionalIntro_privacy_header,
-                    style: appTheme.textTheme.headlineLarge,
-                  ),
-                  Text(localizations.professionalIntro_privacy_text),
-                ],
-              )
-            ],
+            children: [overviewPage, privacyPage],
           ),
         ),
         ElevatedButton(
