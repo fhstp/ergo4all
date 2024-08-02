@@ -1,3 +1,14 @@
+# [1.8.0](https://github.com/fhstp/ergo4all/compare/v1.7.0...v1.8.0) (2024-08-02)
+
+
+### Features
+
+* add correct text ([157a94a](https://github.com/fhstp/ergo4all/commit/157a94a02482ae36fb2df14e7ea6cb18f5435b4b))
+* add correct tos text ([9b50178](https://github.com/fhstp/ergo4all/commit/9b50178fdb7c479a2bb413ac14b67dca751d5d4e))
+* add professional intro ([#22](https://github.com/fhstp/ergo4all/issues/22)) ([b12692c](https://github.com/fhstp/ergo4all/commit/b12692cb870da6adcc9a9772e09b087b8e9fcb6b))
+* add version display ([#21](https://github.com/fhstp/ergo4all/issues/21)) ([8d787e9](https://github.com/fhstp/ergo4all/commit/8d787e94d887cce31af56bfe323e5b2882a32171))
+* add worker intro ([#23](https://github.com/fhstp/ergo4all/issues/23)) ([b118a4e](https://github.com/fhstp/ergo4all/commit/b118a4e2c579f69b2fdeb48c68a339f74eacae05))
+
 # [1.7.0](https://github.com/fhstp/ergo4all/compare/v1.6.0...v1.7.0) (2024-07-22)
 
 
