@@ -23,7 +23,7 @@ class LanguageScreen extends StatelessWidget {
 
     Widget languageButtonFor(String language, Locale locale) {
       return ElevatedButton(
-        key: Key("lang_button_${language.toLowerCase()}"),
+        key: Key("lang_button_${locale.languageCode.toLowerCase()}"),
         onPressed: () => onLanguageChosen(locale),
         child: Text(language),
       );
@@ -40,7 +40,7 @@ class LanguageScreen extends StatelessWidget {
             Header(localizations.language_header),
             languageButtonFor("Deutsch", const Locale("de")),
             languageButtonFor("English", const Locale("en")),
-            languageButtonFor("BHS", const Locale("hbs")),
+            languageButtonFor("Bosansko-Hrvatsko-Srpski", const Locale("hbs")),
             languageButtonFor("Türkçe", const Locale("tr")),
           ],
         ),

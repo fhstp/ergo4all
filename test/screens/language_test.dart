@@ -19,7 +19,7 @@ void main() {
         mockNavigationObserver,
         [ChangeNotifierProvider(create: (_) => makeStubCustomLocale())]));
 
-    await tester.tap(find.byKey(const Key("lang_button_deutsch")));
+    await tester.tap(find.byKey(const Key("lang_button_de")));
     await tester.pumpAndSettle();
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);
@@ -38,7 +38,7 @@ void main() {
     await tester.pumpWidget(makeMockAppFromWidget(const LanguageScreen(), null,
         [ChangeNotifierProvider(create: (_) => mockCustomLocale)]));
 
-    await tester.tap(find.byKey(const Key("lang_button_deutsch")));
+    await tester.tap(find.byKey(const Key("lang_button_de")));
     await tester.pumpAndSettle();
 
     expect(storedLocale, equals(const Locale("de")));
