@@ -25,24 +25,24 @@ class MockNavigationObserver extends NavigatorObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     _pushed?.call(route, previousRoute);
-    _anyNavigationHappened = true;
+    if (previousRoute != null) _anyNavigationHappened = true;
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
     _popped?.call(route, previousRoute);
-    _anyNavigationHappened = true;
+    if (previousRoute != null) _anyNavigationHappened = true;
   }
 
   @override
   void didRemove(Route route, Route? previousRoute) {
     _removed?.call(route, previousRoute);
-    _anyNavigationHappened = true;
+    if (previousRoute != null) _anyNavigationHappened = true;
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
     _replaced?.call(newRoute, oldRoute);
-    _anyNavigationHappened = true;
+    if (oldRoute != null) _anyNavigationHappened = true;
   }
 }
