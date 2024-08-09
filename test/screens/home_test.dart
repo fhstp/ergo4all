@@ -1,55 +1,25 @@
-import 'package:ergo4all/screens/analysis.dart';
+import 'package:ergo4all/dialogs/session_start.dart';
 import 'package:ergo4all/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../mock_app.dart';
 import '../mock_navigation_observer.dart';
 
 void main() {
-  testWidgets("should navigate to analysis after uploading video",
+  testWidgets("should show session start dialog when pressing start button",
       (tester) async {
     final mockNavigationObserver = MockNavigationObserver();
 
-    Future<XFile?> mockGetVideo() async {
-      return XFile("/some/video.mp4");
-    }
-
-    await tester.pumpWidget(makeMockAppFromWidget(
-        HomeScreen(
-          tryGetVideo: mockGetVideo,
-        ),
-        mockNavigationObserver));
+    await tester.pumpWidget(
+        makeMockAppFromWidget(const HomeScreen(), mockNavigationObserver));
 
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(const Key("upload")));
+      await tester.tap(find.byKey(const Key("start")));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 10));
     });
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(AnalysisScreen), findsOneWidget);
-  });
-
-  testWidgets("should not navigate to analysis after not selecting video",
-      (tester) async {
-    Future<XFile?> mockGetVideo() async {
-      return null;
-    }
-
-    await tester.pumpWidget(makeMockAppFromWidget(
-      HomeScreen(
-        tryGetVideo: mockGetVideo,
-      ),
-    ));
-
-    await tester.runAsync(() async {
-      await tester.tap(find.byKey(const Key("upload")));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 10));
-    });
-
-    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.byKey(StartSessionDialog.dialogKey), findsOneWidget);
   });
 }
