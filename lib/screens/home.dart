@@ -31,17 +31,10 @@ class HomeScreen extends StatelessWidget {
         title: Text(localizations.home_title),
         centerTitle: true,
       ),
-      body: ScreenContent(child: Text(localizations.home_welcome("Max"))),
-      bottomNavigationBar: BottomAppBar(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: ScreenContent(
+          child: Column(
         children: [
-          IconButton(
-              key: const Key("upload"),
-              onPressed: trySelectVideoForAnalysis,
-              icon: const Icon(Icons.upload)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.camera_alt)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          Text(localizations.home_welcome("Max")),
         ],
       )),
     );
