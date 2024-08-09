@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const _primaryHovered = Color(0xFFFF6666);
 const _primaryPressed = Color(0xFFB20000);
+const _disabled = Color(0xFFBDBDBD);
 
 const _colorScheme = ColorScheme(
     brightness: Brightness.light,
@@ -24,6 +25,9 @@ final _appBarTheme = AppBarTheme(
 final _elevatedButtonTheme = ElevatedButtonThemeData(
     style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return _disabled;
+          }
           if (states.contains(WidgetState.pressed)) {
             return _primaryPressed;
           } else if (states.contains(WidgetState.hovered)) {
