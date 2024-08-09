@@ -44,3 +44,8 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Untargeted platforms
+linux
+windows
+macos
