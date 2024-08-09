@@ -13,9 +13,9 @@ class TermsOfUseScreen extends StatefulWidget {
 class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
   bool hasAccepted = false;
 
-  void toggleHasAccepted() {
+  void setHasAccepted(bool? value) {
     setState(() {
-      hasAccepted = !hasAccepted;
+      hasAccepted = value ?? false;
     });
   }
 
@@ -45,12 +45,13 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                 Checkbox(
                     key: const Key("accept-check"),
                     value: hasAccepted,
-                    onChanged: (isChecked) {
-                      toggleHasAccepted();
-                      if (isChecked!) navigateToPreUserCreation();
-                    }),
+                    onChanged: setHasAccepted)
               ],
-            )
+            ),
+            ElevatedButton(
+                key: const Key("next"),
+                onPressed: hasAccepted ? navigateToPreUserCreation : null,
+                child: Text(localizations.common_next))
           ],
         ),
       ),

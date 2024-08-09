@@ -7,13 +7,34 @@ import '../mock_app.dart';
 import '../mock_navigation_observer.dart';
 
 void main() {
-  testWidgets("should navigate to next screen once accepted", (tester) async {
+  testWidgets("should disable next button while not accepting terms",
+      (tester) async {
+    await tester.pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen()));
+
+    final createButton = find.byKey(const Key("next"));
+    expect(tester.widget<ElevatedButton>(createButton).enabled, isFalse);
+  });
+
+  testWidgets("should enable next button when accepting terms", (tester) async {
+    await tester.pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen()));
+
+    await tester.tap(find.byKey(const Key("accept-check")));
+    await tester.pumpAndSettle();
+
+    final createButton = find.byKey(const Key("next"));
+    expect(tester.widget<ElevatedButton>(createButton).enabled, isTrue);
+  });
+
+  testWidgets("should navigate to next screen on next button press",
+      (tester) async {
     final mockNavigationObserver = MockNavigationObserver();
 
     await tester.pumpWidget(makeMockAppFromWidget(
         const TermsOfUseScreen(), mockNavigationObserver));
 
     await tester.tap(find.byKey(const Key("accept-check")));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("next")));
     await tester.pumpAndSettle();
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);
