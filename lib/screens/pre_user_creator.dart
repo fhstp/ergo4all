@@ -1,4 +1,5 @@
 import 'package:ergo4all/screens/home.dart';
+import 'package:ergo4all/screens/user_creator.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,11 @@ class PreUserCreatorScreen extends StatelessWidget {
     final appTheme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
+
+    void navigateToUserCreator() {
+      navigator
+          .push(MaterialPageRoute(builder: (_) => const UserCreatorScreen()));
+    }
 
     void navigateToHome() {
       navigator.pushReplacement(
@@ -35,6 +41,10 @@ class PreUserCreatorScreen extends StatelessWidget {
               localizations.preUserCreator_text2,
               style: appTheme.textTheme.bodySmall,
             ),
+            ElevatedButton(
+                key: const Key("create"),
+                onPressed: navigateToUserCreator,
+                child: Text(localizations.preUserCreator_create)),
             TextButton(
               key: const Key("default-values"),
               onPressed: navigateToHome,

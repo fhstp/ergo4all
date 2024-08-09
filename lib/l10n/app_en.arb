@@ -6,6 +6,13 @@
       }
     }
   },
+  "@userCreator_error_empty": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
   "home_title": "Home",
@@ -17,6 +24,7 @@
   "preInto_worker": "Worker",
   "preIntro_chooseProfile": "Choose your profile",
   "preIntro_skip": "Skip introduction",
+  "preUserCreator_create": "Create profile",
   "preUserCreator_header": "Creating a user profile",
   "preUserCreator_text1": "allows to tailor ergonomic recommendations specifically for you, enhancing the effectiveness of the app. ",
   "preUserCreator_text2": "While not mandatory, providing some personal details enables more personalized and accurate suggestions. ",
@@ -31,6 +39,17 @@
   "termsOfUse_accept": "I accept",
   "termsOfUse_content": "Ergo4A provides ergonomic guidance, not medical advice. Consult healthcare professionals for medical issues. The AI support is an aid, not perfect. You're accountable for the data accuracy you provide.",
   "termsOfUse_title": "Terms of use",
+  "userCreator_ageRange_header": "Age Range",
+  "userCreator_ageRange_placeholder": "E.g. 20-30. Important for much weight you should lift",
+  "userCreator_create": "Create profile",
+  "userCreator_error_empty": "{field} may not be empty.",
+  "userCreator_header": "User information",
+  "userCreator_intro": "Data provided here is used to give you more precise suggestions and they stay on your phone",
+  "userCreator_nickname_header": "Nickname",
+  "userCreator_nickname_placeholder": "You don't need to put your real name",
+  "userCreator_sex_header": "Sex",
+  "userCreator_sex_placeholder": "Important for how much weight you can legally lift",
+  "userCreator_title": "Creating user",
   "workerIntro_overview1_text": "Ergo4A designed to help you maintain a healthy working posture, reducing the risk of work-related musculoskeletal disorders. ",
   "workerIntro_overview2_header": "How do we achieve that?",
   "workerIntro_overview2_text1": "By analysing your posture through your phone's camera, we provide personalized tips and exercises to improve your ergonomics.",

@@ -1,5 +1,6 @@
 import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/screens/pre_user_creator.dart';
+import 'package:ergo4all/screens/user_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -20,5 +21,19 @@ void main() {
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);
     expect(find.byType(HomeScreen), findsOneWidget);
+  });
+
+  testWidgets("should navigate to user creator once create button is pressed",
+      (tester) async {
+    final mockNavigationObserver = MockNavigationObserver();
+
+    await tester.pumpWidget(makeMockAppFromWidget(
+        const PreUserCreatorScreen(), mockNavigationObserver));
+
+    await tester.tap(find.byKey(const Key("create")));
+    await tester.pumpAndSettle();
+
+    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
+    expect(find.byType(UserCreatorScreen), findsOneWidget);
   });
 }
