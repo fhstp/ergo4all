@@ -16,6 +16,7 @@
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
   "common_next": "Next",
+  "home_firstSession": "Record your first session",
   "home_title": "Home",
   "home_welcome": "Welcome {firstName}",
   "intro_done": "Done",

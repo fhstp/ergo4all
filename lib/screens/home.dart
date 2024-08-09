@@ -35,6 +35,8 @@ class HomeScreen extends StatelessWidget {
           child: Column(
         children: [
           Text(localizations.home_welcome("Max")),
+          ElevatedButton(
+              onPressed: () {}, child: Text(localizations.home_firstSession))
         ],
       )),
     );
