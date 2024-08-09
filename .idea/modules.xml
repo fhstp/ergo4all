@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ergo4all.iml" filepath="$PROJECT_DIR$/.idea/ergo4all.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/ergo4all_android.iml" filepath="$PROJECT_DIR$/android/ergo4all_android.iml" />
     </modules>
   </component>
 </project>
