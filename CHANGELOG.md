@@ -1,3 +1,19 @@
+# [1.9.0](https://github.com/fhstp/ergo4all/compare/v1.8.0...v1.9.0) (2024-08-09)
+
+
+### Bug Fixes
+
+* incorrect navigation mock ([231581a](https://github.com/fhstp/ergo4all/commit/231581a00faa1957b28eac3537e1e369cab0c8e5))
+
+
+### Features
+
+* accept button for tos ([16f64cd](https://github.com/fhstp/ergo4all/commit/16f64cd08bc08c4a625486caaa11a90533524b9f))
+* add sesion start dialog ([#25](https://github.com/fhstp/ergo4all/issues/25)) ([16eb943](https://github.com/fhstp/ergo4all/commit/16eb943370daca5a03b7cdee2c43a98e7fd2f44d))
+* add skeleton user creator ([ba3ada4](https://github.com/fhstp/ergo4all/commit/ba3ada433542337d062584b2162218422550e432))
+* disabled button style ([9373801](https://github.com/fhstp/ergo4all/commit/9373801e7662fcfbf8804aa152235d942bdf9bdf))
+* skeleton user creator ([#24](https://github.com/fhstp/ergo4all/issues/24)) ([cf90d8f](https://github.com/fhstp/ergo4all/commit/cf90d8f9b49c22f6d6d2da4135e8536939db00a7))
+
 # [1.8.0](https://github.com/fhstp/ergo4all/compare/v1.7.0...v1.8.0) (2024-08-02)
 
 
