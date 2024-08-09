@@ -1,29 +1,18 @@
-import 'package:ergo4all/io/video.dart';
-import 'package:ergo4all/screens/analysis.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:image_picker/image_picker.dart';
+
+import '../dialogs/session_start.dart';
 
 class HomeScreen extends StatelessWidget {
-  final Future<XFile?> Function() tryGetVideo;
-
-  const HomeScreen({super.key, this.tryGetVideo = tryGetVideoFromGallery});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final navigator = Navigator.of(context);
 
-    void analyzeVideo(XFile videoFile) {
-      navigator.push(MaterialPageRoute(builder: (_) => const AnalysisScreen()));
-    }
-
-    void trySelectVideoForAnalysis() async {
-      final videoFile = await tryGetVideo();
-      if (videoFile == null) return;
-
-      analyzeVideo(videoFile);
+    void showStartSessionDialog() {
+      StartSessionDialog.show(context);
     }
 
     return Scaffold(
@@ -31,17 +20,14 @@ class HomeScreen extends StatelessWidget {
         title: Text(localizations.home_title),
         centerTitle: true,
       ),
-      body: ScreenContent(child: Text(localizations.home_welcome("Max"))),
-      bottomNavigationBar: BottomAppBar(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: ScreenContent(
+          child: Column(
         children: [
-          IconButton(
-              key: const Key("upload"),
-              onPressed: trySelectVideoForAnalysis,
-              icon: const Icon(Icons.upload)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.camera_alt)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          Text(localizations.home_welcome("Max")),
+          ElevatedButton(
+              key: const Key("start"),
+              onPressed: showStartSessionDialog,
+              child: Text(localizations.home_firstSession))
         ],
       )),
     );
