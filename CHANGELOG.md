@@ -1,3 +1,18 @@
+# [1.10.0](https://github.com/fhstp/ergo4all/compare/v1.9.0...v1.10.0) (2024-08-12)
+
+
+### Bug Fixes
+
+* bad vscode launch script ([b687788](https://github.com/fhstp/ergo4all/commit/b68778856e9d167ddb6959ed15fde1f1d8da515c))
+* incorrect back behavior ([34c8d05](https://github.com/fhstp/ergo4all/commit/34c8d0599174f31ac3fad4d12d91158ae42b4adc))
+
+
+### Features
+
+* add spacings ([acaf8c0](https://github.com/fhstp/ergo4all/commit/acaf8c01710fcf6eaab7e9798146390f12772478))
+* rewrite terms ([a093d64](https://github.com/fhstp/ergo4all/commit/a093d6467774279959d689369f10252c699946b2))
+* user storage ([#26](https://github.com/fhstp/ergo4all/issues/26)) ([e89cd56](https://github.com/fhstp/ergo4all/commit/e89cd564bdfca4118ff1c3717c74f01a0a8e6828))
+
 # [1.9.0](https://github.com/fhstp/ergo4all/compare/v1.8.0...v1.9.0) (2024-08-09)
 
 
