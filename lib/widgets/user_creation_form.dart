@@ -19,14 +19,13 @@ class _UserCreationFormState extends State<UserCreationForm> {
     final navigator = Navigator.of(context);
 
     void navigateHome() {
-      navigator.pushReplacement(
-          MaterialPageRoute(builder: (_) => const HomeScreen()));
+      navigator.pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
     }
 
     String? isNotEmpty(String? value, String label) {
       if (value == null || value.isEmpty) {
         return localizations.userCreator_error_empty(label);
-
       }
       return null;
     }

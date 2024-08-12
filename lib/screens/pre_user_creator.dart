@@ -21,8 +21,8 @@ class PreUserCreatorScreen extends StatelessWidget {
     }
 
     void navigateToHome() {
-      navigator.pushReplacement(
-          MaterialPageRoute(builder: (_) => const HomeScreen()));
+      navigator.pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
     }
 
     return Scaffold(
