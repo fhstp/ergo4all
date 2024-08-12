@@ -1,10 +1,13 @@
+import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/screens/user_creator.dart';
+import 'package:ergo4all/service/add_user.dart';
 import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 
 class PreUserCreatorScreen extends StatelessWidget {
   const PreUserCreatorScreen({super.key});
@@ -20,7 +23,12 @@ class PreUserCreatorScreen extends StatelessWidget {
           .push(MaterialPageRoute(builder: (_) => const UserCreatorScreen()));
     }
 
-    void navigateToHome() {
+    void proceedeWithDefaultUser() async {
+      final addUser = GetIt.instance.get<AddUser>();
+
+      // This is the default user.
+      await addUser(const User(name: "Ergo-fan"));
+
       navigator.pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
     }
@@ -57,7 +65,7 @@ class PreUserCreatorScreen extends StatelessWidget {
             ),
             TextButton(
               key: const Key("default-values"),
-              onPressed: navigateToHome,
+              onPressed: proceedeWithDefaultUser,
               child: Text(localizations.preUserCreator_useDefaults),
             )
           ],
