@@ -1,6 +1,6 @@
-import 'package:ergo4all/screens/professional_intro.dart';
+import 'package:ergo4all/screens/expert_intro.dart';
 import 'package:ergo4all/screens/terms_of_use.dart';
-import 'package:ergo4all/screens/worker_intro.dart';
+import 'package:ergo4all/screens/non_expert_intro.dart';
 import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
@@ -21,12 +21,11 @@ class PreIntroScreen extends StatelessWidget {
     }
 
     void takeProfessionalIntroduction() {
-      navigator
-          .push(MaterialPageRoute(builder: (_) => const ProfessionalIntro()));
+      navigator.push(MaterialPageRoute(builder: (_) => const ExpertIntro()));
     }
 
     void takeWorkerIntroduction() {
-      navigator.push(MaterialPageRoute(builder: (_) => const WorkerIntro()));
+      navigator.push(MaterialPageRoute(builder: (_) => const NonExpertIntro()));
     }
 
     return Scaffold(
@@ -41,16 +40,16 @@ class PreIntroScreen extends StatelessWidget {
               ),
               Header(localizations.preIntro_chooseProfile),
               ElevatedButton(
-                  key: const Key("professional"),
+                  key: const Key("expert"),
                   onPressed: takeProfessionalIntroduction,
-                  child: Text(localizations.preInto_professional)),
+                  child: Text(localizations.preInto_expert)),
               const SizedBox(
                 height: mediumSpace,
               ),
               ElevatedButton(
-                  key: const Key("worker"),
+                  key: const Key("non-expert"),
                   onPressed: takeWorkerIntroduction,
-                  child: Text(localizations.preInto_worker)),
+                  child: Text(localizations.preInto_non_expert)),
               const SizedBox(
                 height: largeSpace,
               ),

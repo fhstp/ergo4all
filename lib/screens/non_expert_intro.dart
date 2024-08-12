@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'intro.dart';
 
-class WorkerIntro extends StatelessWidget {
-  const WorkerIntro({super.key});
+class NonExpertIntro extends StatelessWidget {
+  const NonExpertIntro({super.key});
 
   @override
   Widget build(BuildContext context) {

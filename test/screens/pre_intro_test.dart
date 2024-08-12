@@ -1,7 +1,7 @@
 import 'package:ergo4all/screens/pre_intro.dart';
-import 'package:ergo4all/screens/professional_intro.dart';
+import 'package:ergo4all/screens/expert_intro.dart';
 import 'package:ergo4all/screens/terms_of_use.dart';
-import 'package:ergo4all/screens/worker_intro.dart';
+import 'package:ergo4all/screens/non_expert_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,11 +18,11 @@ void main() {
       mockNavigationObserver,
     ));
 
-    await tester.tap(find.byKey(const Key("professional")));
+    await tester.tap(find.byKey(const Key("expert")));
     await tester.pumpAndSettle();
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(ProfessionalIntro), findsOneWidget);
+    expect(find.byType(ExpertIntro), findsOneWidget);
   });
 
   testWidgets("should navigate to worker intro when button is pressed",
@@ -34,11 +34,11 @@ void main() {
       mockNavigationObserver,
     ));
 
-    await tester.tap(find.byKey(const Key("worker")));
+    await tester.tap(find.byKey(const Key("non-expert")));
     await tester.pumpAndSettle();
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(WorkerIntro), findsOneWidget);
+    expect(find.byType(NonExpertIntro), findsOneWidget);
   });
 
   testWidgets("should navigate to next screen once skip button is pressed",
