@@ -50,7 +50,11 @@ void main() {
       mockNavigationObserver,
     ));
 
-    await tester.tap(find.byKey(const Key("skip")));
+    final skipButton = find.byKey(const Key("skip"));
+    final scoll = find.byType(SingleChildScrollView);
+
+    await tester.dragUntilVisible(skipButton, scoll, const Offset(0, 500));
+    await tester.tap(skipButton);
     await tester.pumpAndSettle();
 
     expect(mockNavigationObserver.anyNavigationHappened, isTrue);

@@ -1,4 +1,5 @@
 import 'package:ergo4all/screens/pre_user_creator.dart';
+import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,6 +40,9 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(localizations.termsOfUse_content),
+            const SizedBox(
+              height: largeSpace,
+            ),
             Row(
               children: [
                 Text(localizations.termsOfUse_accept),
@@ -47,6 +51,9 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                     value: hasAccepted,
                     onChanged: setHasAccepted)
               ],
+            ),
+            const SizedBox(
+              height: mediumSpace,
             ),
             ElevatedButton(
                 key: const Key("next"),

@@ -1,5 +1,6 @@
 import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/language.dart';
+import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:ergo4all/widgets/timed_loading_bar.dart';
 import 'package:ergo4all/widgets/version_display.dart';
@@ -42,7 +43,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   const Image(
                       image: AssetImage('assets/images/logos/LogoRed.png')),
                   const SizedBox(
-                    height: 20,
+                    height: largeSpace,
                   ),
                   TimedLoadingBar(
                     duration: const Duration(seconds: 3),

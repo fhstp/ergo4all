@@ -1,4 +1,5 @@
 import 'package:ergo4all/screens/results.dart';
+import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             const FractionallySizedBox(
               widthFactor: 0.5,
               child: LoadingIndicator(),
+            ),
+            const SizedBox(
+              height: largeSpace,
             ),
             Text(localizations.analysis_wait)
           ],

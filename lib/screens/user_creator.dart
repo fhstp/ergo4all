@@ -1,3 +1,4 @@
+import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:ergo4all/widgets/user_creation_form.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class _UserCreatorScreenState extends State<UserCreatorScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final appTheme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,9 +23,8 @@ class _UserCreatorScreenState extends State<UserCreatorScreen> {
       body: ScreenContent(
         child: Column(
           children: [
-            Text(
+            Header(
               localizations.userCreator_header,
-              style: appTheme.textTheme.headlineLarge,
             ),
             Text(localizations.userCreator_intro),
             const SizedBox(

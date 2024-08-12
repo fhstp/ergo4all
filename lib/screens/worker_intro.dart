@@ -1,3 +1,4 @@
+import 'package:ergo4all/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,9 +18,8 @@ class WorkerIntro extends StatelessWidget {
         title: localizations.workerIntro_welcome_title,
         widget: Column(
           children: [
-            Text(
+            Header(
               localizations.workerIntro_welcome_header,
-              style: appTheme.textTheme.headlineLarge,
             ),
             Text(localizations.workerIntro_welcome_text),
           ],
@@ -27,18 +27,16 @@ class WorkerIntro extends StatelessWidget {
 
     final overview1Page = IntroPage(
         title: localizations.workerIntro_overview_title,
-        widget: Text(
+        widget: Header(
           localizations.workerIntro_overview1_text,
-          style: appTheme.textTheme.headlineLarge,
         ));
 
     final overview2Page = IntroPage(
         title: localizations.workerIntro_overview_title,
         widget: Column(
           children: [
-            Text(
+            Header(
               localizations.workerIntro_overview2_header,
-              style: appTheme.textTheme.headlineLarge,
             ),
             Text(localizations.workerIntro_overview2_text1),
             Text(
@@ -52,9 +50,8 @@ class WorkerIntro extends StatelessWidget {
         title: localizations.workerIntro_privacy_title,
         widget: Column(
           children: [
-            Text(
+            Header(
               localizations.workerIntro_privacy_header,
-              style: appTheme.textTheme.headlineLarge,
             ),
             Text(localizations.workerIntro_privacy_text1),
             Text(localizations.workerIntro_privacy_text2, style: boldStyle),

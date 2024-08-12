@@ -1,5 +1,6 @@
 import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/screens/user_creator.dart';
+import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/header.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +38,23 @@ class PreUserCreatorScreen extends StatelessWidget {
             Text(
               localizations.preUserCreator_text1,
             ),
+            const SizedBox(
+              height: smallSpace,
+            ),
             Text(
               localizations.preUserCreator_text2,
               style: appTheme.textTheme.bodySmall,
+            ),
+            const SizedBox(
+              height: mediumSpace,
             ),
             ElevatedButton(
                 key: const Key("create"),
                 onPressed: navigateToUserCreator,
                 child: Text(localizations.preUserCreator_create)),
+            const SizedBox(
+              height: mediumSpace,
+            ),
             TextButton(
               key: const Key("default-values"),
               onPressed: navigateToHome,

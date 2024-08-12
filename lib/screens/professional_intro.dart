@@ -1,3 +1,4 @@
+import 'package:ergo4all/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,16 +9,14 @@ class ProfessionalIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
 
     var overviewPage = IntroPage(
         title: localizations.professionalIntro_overview_title,
         widget: Column(
           children: [
-            Text(
+            Header(
               localizations.professionalIntro_overview_header,
-              style: appTheme.textTheme.headlineLarge,
             ),
             Text(localizations.professionalIntro_overview_text),
           ],
@@ -27,9 +26,8 @@ class ProfessionalIntro extends StatelessWidget {
         title: localizations.professionalIntro_privacy_title,
         widget: Column(
           children: [
-            Text(
+            Header(
               localizations.professionalIntro_privacy_header,
-              style: appTheme.textTheme.headlineLarge,
             ),
             Text(localizations.professionalIntro_privacy_text),
           ],
