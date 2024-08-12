@@ -1,22 +1,27 @@
+import 'dart:async';
+
 import 'package:ergo4all/providers/custom_locale.dart';
 import 'package:ergo4all/screens/welcome.dart';
+import 'package:ergo4all/service/get_current_user.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import '../mock_app.dart';
 
 void main() {
   testWidgets("should load custom locale", (tester) async {
-    var wasLoaded = false;
+    final completer = Completer();
 
+    GetIt.instance.registerSingleton<GetCurrentUser>(() async => null);
     final mockCustomLocale = CustomLocale(() async {
-      wasLoaded = true;
+      completer.complete();
       return null;
     }, (_) async {});
 
     await tester.pumpWidget(makeMockAppFromWidget(const WelcomeScreen(), null,
         [ChangeNotifierProvider(create: (_) => mockCustomLocale)]));
 
-    expect(wasLoaded, isTrue);
+    expect(completer.isCompleted, isTrue);
   });
 }

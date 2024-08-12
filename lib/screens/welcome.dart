@@ -1,10 +1,14 @@
+import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/providers/custom_locale.dart';
+import 'package:ergo4all/screens/home.dart';
 import 'package:ergo4all/screens/language.dart';
+import 'package:ergo4all/service/get_current_user.dart';
 import 'package:ergo4all/spacing.dart';
 import 'package:ergo4all/widgets/screen_content.dart';
 import 'package:ergo4all/widgets/timed_loading_bar.dart';
 import 'package:ergo4all/widgets/version_display.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -15,6 +19,19 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  late Future<User?> _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final getIt = GetIt.instance;
+
+    // We start getting the current user in the background
+    final getCurrentUser = getIt.get<GetCurrentUser>();
+    _currentUser = getCurrentUser();
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -27,9 +44,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
 
-    void navigateToNextScreen() {
-      navigator.pushReplacement(
-          MaterialPageRoute(builder: (_) => const LanguageScreen()));
+    void navigateToNextScreen() async {
+      final currentUser = await _currentUser;
+      final isFirstStart = currentUser == null;
+      // Depending on whether this is the first time we start the app
+      // we either go to onboarding or home.
+      final nextScreen =
+          isFirstStart ? const LanguageScreen() : const HomeScreen();
+
+      navigator.pushReplacement(MaterialPageRoute(builder: (_) => nextScreen));
     }
 
     return Scaffold(
