@@ -25,7 +25,7 @@ void main() {
 
       expect(
           config,
-          UserConfig(currentUserIndex: 1, userEntries: [
+          const UserConfig(currentUserIndex: 1, userEntries: [
             UserConfigEntry(name: "John"),
             UserConfigEntry(name: "Jane")
           ]));
