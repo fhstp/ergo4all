@@ -1,6 +1,9 @@
+import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/screens/home.dart';
+import 'package:ergo4all/service/add_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 
 class UserCreationForm extends StatefulWidget {
   const UserCreationForm({super.key});
@@ -11,6 +14,7 @@ class UserCreationForm extends StatefulWidget {
 
 class _UserCreationFormState extends State<UserCreationForm> {
   final _formKey = GlobalKey<FormState>();
+  final nickNameController = TextEditingController();
   static final _ageBrackets = ["20 - 30", "30 - 40", "50 - 50", "> 50"];
 
   @override
@@ -38,11 +42,12 @@ class _UserCreationFormState extends State<UserCreationForm> {
       return isNotEmpty(value, localizations.userCreator_sex_header);
     }
 
-    void tryCreateUser() {
+    void tryCreateUser() async {
       var formIsValid = _formKey.currentState!.validate();
       if (!formIsValid) return;
 
-      // TODO: Create user
+      final addUser = GetIt.instance.get<AddUser>();
+      await addUser(User(name: nickNameController.text));
 
       navigateHome();
     }
@@ -53,6 +58,7 @@ class _UserCreationFormState extends State<UserCreationForm> {
           children: [
             TextFormField(
               key: const Key("nickNameInput"),
+              controller: nickNameController,
               decoration: InputDecoration(
                   label: Text(localizations.userCreator_nickname_header),
                   hintText: localizations.userCreator_nickname_placeholder),
@@ -89,5 +95,11 @@ class _UserCreationFormState extends State<UserCreationForm> {
                 child: Text(localizations.userCreator_create))
           ],
         ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nickNameController.dispose();
   }
 }
