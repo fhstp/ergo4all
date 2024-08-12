@@ -14,7 +14,7 @@ void main() {
 
   test("should be null if there config has no current user", () async {
     final getCurrentUser = makeGetCurrentUserFromConfig(
-        () async => UserConfig(currentUserIndex: null, userEntries: []));
+        () async => const UserConfig(currentUserIndex: null, userEntries: []));
 
     final currentUser = await getCurrentUser();
 
@@ -23,8 +23,10 @@ void main() {
 
   test("should be user if config has current user", () async {
     const userName = "John";
-    final getCurrentUser = makeGetCurrentUserFromConfig(() async => UserConfig(
-        currentUserIndex: 0, userEntries: [UserConfigEntry(name: userName)]));
+    final getCurrentUser = makeGetCurrentUserFromConfig(() async =>
+        const UserConfig(
+            currentUserIndex: 0,
+            userEntries: [UserConfigEntry(name: userName)]));
 
     final currentUser = await getCurrentUser();
 
