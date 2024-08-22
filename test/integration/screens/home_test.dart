@@ -3,8 +3,8 @@ import 'package:ergo4all/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../mock_app.dart';
-import '../mock_navigation_observer.dart';
+import '../app_mock.dart';
+import '../navigation_observer_mock.dart';
 
 void main() {
   testWidgets("should show session start dialog when pressing start button",

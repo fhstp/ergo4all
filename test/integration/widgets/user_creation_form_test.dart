@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
-import '../mock_app.dart';
-import '../mock_navigation_observer.dart';
+import '../app_mock.dart';
+import '../navigation_observer_mock.dart';
 
 void main() {
   tearDown(() async {

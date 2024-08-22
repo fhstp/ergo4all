@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
-import '../mock_app.dart';
-import '../mock_navigation_observer.dart';
-import '../widgets/mock_custom_locale.dart';
+import '../app_mock.dart';
+import '../navigation_observer_mock.dart';
+import '../custom_locale_mock.dart';
 
 void main() {
   testWidgets("should navigate to next screen once language button is pressed",

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../mock_app.dart';
-import '../mock_navigation_observer.dart';
+import '../app_mock.dart';
+import '../navigation_observer_mock.dart';
 
 void main() {
   Future<XFile?> mockGetVideo() async {

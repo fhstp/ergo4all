@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'mock_navigation_observer.dart';
+import 'navigation_observer_mock.dart';
 
 Widget makeMockAppFromWidget(Widget widget,
     [MockNavigationObserver? navigationObserver,

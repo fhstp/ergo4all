@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-import '../mock_app.dart';
+import '../app_mock.dart';
 
 void main() {
   testWidgets("should load custom locale", (tester) async {
