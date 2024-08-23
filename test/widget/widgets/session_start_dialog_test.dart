@@ -1,16 +1,11 @@
+import 'package:ergo4all/domain/video_source.dart';
 import 'package:ergo4all/ui/widgets/session_start_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../../lib/domain/video_source.dart';
 import '../../integration/ui/app_mock.dart';
 
 void main() {
-  Future<XFile?> mockGetVideo() async {
-    return XFile("/some/video.mp4");
-  }
-
   testWidgets("should use live video source when pressing camera button",
       (tester) async {
     VideoSource? selectedSource;
