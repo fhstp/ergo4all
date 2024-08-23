@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/dialogs/session_start.dart';
+import 'package:ergo4all/ui/widgets/session_start_dialog.dart';
 import 'package:ergo4all/ui/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
