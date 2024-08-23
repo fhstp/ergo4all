@@ -1,6 +1,8 @@
+import 'package:ergo4all/ui/screens/analysis.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../widgets/session_start_dialog.dart';
 
@@ -10,9 +12,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final navigator = Navigator.of(context);
+
+    void analyzeVideo(XFile videoFile) {
+      navigator.push(MaterialPageRoute(builder: (_) => const AnalysisScreen()));
+    }
 
     void showStartSessionDialog() {
-      StartSessionDialog.show(context);
+      StartSessionDialog.show(context, analyzeVideo);
     }
 
     return Scaffold(

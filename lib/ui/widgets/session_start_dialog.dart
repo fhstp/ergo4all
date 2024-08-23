@@ -2,29 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../io/video.dart';
-import '../screens/analysis.dart';
 
 class StartSessionDialog extends StatelessWidget {
   static const dialogKey = Key("sessionStartDialog");
   final Future<XFile?> Function() tryGetVideo;
+  final void Function(XFile videoFile) videoSelected;
 
   const StartSessionDialog(
-      {super.key, this.tryGetVideo = tryGetVideoFromGallery});
+      {super.key,
+      this.tryGetVideo = tryGetVideoFromGallery,
+      required this.videoSelected});
 
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
-    final navigator = Navigator.of(context);
-
-    void analyzeVideo(XFile videoFile) {
-      navigator.push(MaterialPageRoute(builder: (_) => const AnalysisScreen()));
-    }
 
     void trySelectVideoForAnalysis() async {
       final videoFile = await tryGetVideo();
       if (videoFile == null) return;
 
-      analyzeVideo(videoFile);
+      videoSelected(videoFile);
     }
 
     Widget makeSourceButton(
@@ -83,11 +80,14 @@ class StartSessionDialog extends StatelessWidget {
     );
   }
 
-  static void show(BuildContext context) {
+  static void show(
+      BuildContext context, void Function(XFile videoFile) videoSelected) {
     showDialog(
         context: context,
         builder: (context) {
-          return const StartSessionDialog();
+          return StartSessionDialog(
+            videoSelected: videoSelected,
+          );
         });
   }
 }
