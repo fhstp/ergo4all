@@ -1,12 +1,11 @@
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/ui/screens/home.dart';
-import 'package:ergo4all/service/add_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 
 class UserCreationForm extends StatefulWidget {
-  const UserCreationForm({super.key});
+  final void Function(User user) onUserSubmitted;
+
+  const UserCreationForm({super.key, required this.onUserSubmitted});
 
   @override
   State<UserCreationForm> createState() => _UserCreationFormState();
@@ -20,12 +19,6 @@ class _UserCreationFormState extends State<UserCreationForm> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final navigator = Navigator.of(context);
-
-    void navigateHome() {
-      navigator.pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
-    }
 
     String? isNotEmpty(String? value, String label) {
       if (value == null || value.isEmpty) {
@@ -46,10 +39,8 @@ class _UserCreationFormState extends State<UserCreationForm> {
       var formIsValid = _formKey.currentState!.validate();
       if (!formIsValid) return;
 
-      final addUser = GetIt.instance.get<AddUser>();
-      await addUser(User(name: nickNameController.text));
-
-      navigateHome();
+      var user = User(name: nickNameController.text);
+      widget.onUserSubmitted(user);
     }
 
     return Form(
