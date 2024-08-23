@@ -3,16 +3,22 @@ import 'package:ergo4all/ui/widgets/session_start_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../integration/ui/app_mock.dart';
-
 void main() {
+  Widget makeDialog(void Function(VideoSource) onVideoSourceChosen) {
+    return MaterialApp(
+      home: StartSessionDialog(
+        videoSourceChosen: onVideoSourceChosen,
+      ),
+    );
+  }
+
   testWidgets("should use live video source when pressing camera button",
       (tester) async {
     VideoSource? selectedSource;
 
-    await tester.pumpWidget(makeMockAppFromWidget(StartSessionDialog(
-      videoSourceChosen: (source) => selectedSource = source,
-    )));
+    await tester.pumpWidget(makeDialog(
+      (source) => selectedSource = source,
+    ));
 
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const Key("new")));
@@ -27,9 +33,9 @@ void main() {
       (tester) async {
     VideoSource? selectedSource;
 
-    await tester.pumpWidget(makeMockAppFromWidget(StartSessionDialog(
-      videoSourceChosen: (source) => selectedSource = source,
-    )));
+    await tester.pumpWidget(makeDialog(
+      (source) => selectedSource = source,
+    ));
 
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const Key("upload")));
