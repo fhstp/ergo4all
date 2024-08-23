@@ -1,9 +1,11 @@
+import 'package:ergo4all/io/video.dart';
 import 'package:ergo4all/ui/screens/analysis.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../domain/video_source.dart';
 import '../widgets/session_start_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,8 +20,19 @@ class HomeScreen extends StatelessWidget {
       navigator.push(MaterialPageRoute(builder: (_) => const AnalysisScreen()));
     }
 
+    void onSessionVideoSourceChosen(VideoSource source) async {
+      if (source == VideoSource.live) {
+        // TODO: Implement live video source
+        throw Exception("Not impl");
+      }
+
+      final videoFile = await tryGetVideoFromGallery();
+      if (videoFile == null) return;
+      analyzeVideo(videoFile);
+    }
+
     void showStartSessionDialog() {
-      StartSessionDialog.show(context, analyzeVideo);
+      StartSessionDialog.show(context, onSessionVideoSourceChosen);
     }
 
     return Scaffold(

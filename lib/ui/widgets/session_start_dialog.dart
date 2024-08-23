@@ -1,37 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../io/video.dart';
+import '../../domain/video_source.dart';
 
 class StartSessionDialog extends StatelessWidget {
   static const dialogKey = Key("sessionStartDialog");
-  final Future<XFile?> Function() tryGetVideo;
-  final void Function(XFile videoFile) videoSelected;
+  final void Function(VideoSource source) videoSourceChosen;
 
-  const StartSessionDialog(
-      {super.key,
-      this.tryGetVideo = tryGetVideoFromGallery,
-      required this.videoSelected});
+  const StartSessionDialog({super.key, required this.videoSourceChosen});
 
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
 
-    void trySelectVideoForAnalysis() async {
-      final videoFile = await tryGetVideo();
-      if (videoFile == null) return;
-
-      videoSelected(videoFile);
-    }
-
     Widget makeSourceButton(
-        Key key, IconData icon, String label, void Function() onPressed) {
+        Key key, IconData icon, String label, VideoSource source) {
       return Expanded(
         child: Column(
           children: [
             IconButton(
               key: key,
-              onPressed: onPressed,
+              onPressed: () => videoSourceChosen(source),
               icon: Icon(
                 icon,
                 color: appTheme.primaryColor,
@@ -64,13 +52,10 @@ class StartSessionDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  makeSourceButton(
-                      const Key("upload"),
-                      Icons.upload,
-                      "Use a video from your device.",
-                      trySelectVideoForAnalysis),
+                  makeSourceButton(const Key("upload"), Icons.upload,
+                      "Use a video from your device.", VideoSource.gallery),
                   makeSourceButton(const Key("new"), Icons.camera_alt,
-                      "Take a new video.", () {})
+                      "Take a new video.", VideoSource.live)
                 ],
               )
             ],
@@ -81,12 +66,12 @@ class StartSessionDialog extends StatelessWidget {
   }
 
   static void show(
-      BuildContext context, void Function(XFile videoFile) videoSelected) {
+      BuildContext context, void Function(VideoSource source) sourceChosen) {
     showDialog(
         context: context,
         builder: (context) {
           return StartSessionDialog(
-            videoSelected: videoSelected,
+            videoSourceChosen: sourceChosen,
           );
         });
   }

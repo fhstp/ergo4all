@@ -3,21 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../app_mock.dart';
+import '../../../lib/domain/video_source.dart';
+import '../../integration/ui/app_mock.dart';
 
 void main() {
   Future<XFile?> mockGetVideo() async {
     return XFile("/some/video.mp4");
   }
 
-  testWidgets(
-      "should not invoke video selected callback when recording new video",
+  testWidgets("should use live video source when pressing camera button",
       (tester) async {
-    bool calledVideoSelected = false;
+    VideoSource? selectedSource;
 
     await tester.pumpWidget(makeMockAppFromWidget(StartSessionDialog(
-      tryGetVideo: () async => null,
-      videoSelected: (_) => calledVideoSelected = true,
+      videoSourceChosen: (source) => selectedSource = source,
     )));
 
     await tester.runAsync(() async {
@@ -26,20 +25,16 @@ void main() {
       await tester.pump(const Duration(milliseconds: 10));
     });
 
-    expect(calledVideoSelected, isFalse);
+    expect(selectedSource, equals(VideoSource.live));
   });
 
-  testWidgets(
-      "should invoke video selected callback when selecting video from gallery",
+  testWidgets("should use gallery video source when pressing upload button",
       (tester) async {
-    bool calledVideoSelected = false;
+    VideoSource? selectedSource;
 
-    await tester.pumpWidget(makeMockAppFromWidget(
-      StartSessionDialog(
-        tryGetVideo: mockGetVideo,
-        videoSelected: (_) => calledVideoSelected = true,
-      ),
-    ));
+    await tester.pumpWidget(makeMockAppFromWidget(StartSessionDialog(
+      videoSourceChosen: (source) => selectedSource = source,
+    )));
 
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const Key("upload")));
@@ -47,6 +42,6 @@ void main() {
       await tester.pump(const Duration(milliseconds: 10));
     });
 
-    expect(calledVideoSelected, isTrue);
+    expect(selectedSource, equals(VideoSource.gallery));
   });
 }
