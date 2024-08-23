@@ -1,5 +1,5 @@
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/screens/home.dart';
+import 'package:ergo4all/ui/screens/home.dart';
 import 'package:ergo4all/service/add_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

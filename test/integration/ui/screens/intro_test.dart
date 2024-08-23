@@ -1,5 +1,5 @@
-import 'package:ergo4all/screens/intro.dart';
-import 'package:ergo4all/screens/terms_of_use.dart';
+import 'package:ergo4all/ui/screens/intro.dart';
+import 'package:ergo4all/ui/screens/terms_of_use.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 

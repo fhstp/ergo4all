@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../io/video.dart';
+import '../../io/video.dart';
 import '../screens/analysis.dart';
 
 class StartSessionDialog extends StatelessWidget {

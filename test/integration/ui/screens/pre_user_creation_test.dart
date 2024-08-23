@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/screens/home.dart';
-import 'package:ergo4all/screens/pre_user_creator.dart';
-import 'package:ergo4all/screens/user_creator.dart';
+import 'package:ergo4all/ui/screens/home.dart';
+import 'package:ergo4all/ui/screens/pre_user_creator.dart';
+import 'package:ergo4all/ui/screens/user_creator.dart';
 import 'package:ergo4all/service/add_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

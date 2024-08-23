@@ -1,5 +1,5 @@
-import 'package:ergo4all/screens/pre_user_creator.dart';
-import 'package:ergo4all/screens/terms_of_use.dart';
+import 'package:ergo4all/ui/screens/pre_user_creator.dart';
+import 'package:ergo4all/ui/screens/terms_of_use.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

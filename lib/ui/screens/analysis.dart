@@ -1,7 +1,7 @@
-import 'package:ergo4all/screens/results.dart';
-import 'package:ergo4all/spacing.dart';
-import 'package:ergo4all/widgets/header.dart';
-import 'package:ergo4all/widgets/screen_content.dart';
+import 'package:ergo4all/ui/screens/results.dart';
+import 'package:ergo4all/ui/spacing.dart';
+import 'package:ergo4all/ui/widgets/header.dart';
+import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

@@ -1,5 +1,5 @@
-import 'package:ergo4all/dialogs/session_start.dart';
-import 'package:ergo4all/screens/home.dart';
+import 'package:ergo4all/ui/dialogs/session_start.dart';
+import 'package:ergo4all/ui/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

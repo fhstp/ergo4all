@@ -1,6 +1,6 @@
-import 'package:ergo4all/widgets/header.dart';
-import 'package:ergo4all/widgets/screen_content.dart';
-import 'package:ergo4all/widgets/user_creation_form.dart';
+import 'package:ergo4all/ui/widgets/header.dart';
+import 'package:ergo4all/ui/widgets/screen_content.dart';
+import 'package:ergo4all/ui/widgets/user_creation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
