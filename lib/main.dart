@@ -64,7 +64,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-          Routes.home.path: (context) => HomeScreen(_videoStorage),
+          Routes.home.path: (context) =>
+              HomeScreen(_videoStorage, _textStorage),
           Routes.analysis.path: (context) => const AnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
           Routes.preIntro.path: (context) => const PreIntroScreen(),
