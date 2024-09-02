@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../app_mock.dart';
+import '../fake_video_storage.dart';
 
 void main() {
   testWidgets("should show session start dialog when pressing start button",
       (tester) async {
-    await tester.pumpWidget(makeMockAppFromWidget(const HomeScreen()));
+    final videoStorage = FakeVideoStorage();
+
+    await tester.pumpWidget(makeMockAppFromWidget(HomeScreen(videoStorage)));
 
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const Key("start")));

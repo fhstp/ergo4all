@@ -1,4 +1,4 @@
-import 'package:ergo4all/io/video.dart';
+import 'package:ergo4all/io/video_storage.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,9 @@ import '../../domain/video_source.dart';
 import '../../ui/widgets/session_start_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final VideoStorage videoStorage;
+
+  const HomeScreen(this.videoStorage, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         throw Exception("Not impl");
       }
 
-      final videoFile = await tryGetVideoFromGallery();
+      final videoFile = await videoStorage.tryPick();
       if (videoFile == null) return;
       analyzeVideo(videoFile);
     }

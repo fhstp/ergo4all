@@ -12,16 +12,19 @@ import 'package:ergo4all/app/screens/terms_of_use.dart';
 import 'package:ergo4all/app/screens/user_creator.dart';
 import 'package:ergo4all/app/screens/welcome.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
+import 'package:ergo4all/io/video_storage.dart';
 import 'package:ergo4all/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 final textStorage = LocalDocumentStorage();
+final videoStorage = GalleryVideoStorage(ImagePicker());
 
 final Map<String, WidgetBuilder> _routes = {
-  Routes.home.path: (context) => const HomeScreen(),
+  Routes.home.path: (context) => HomeScreen(videoStorage),
   Routes.analysis.path: (context) => const AnalysisScreen(),
   Routes.results.path: (context) => const ResultsScreen(),
   Routes.preIntro.path: (context) => const PreIntroScreen(),
