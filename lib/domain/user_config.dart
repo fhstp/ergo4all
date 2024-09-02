@@ -40,23 +40,28 @@ class UserConfig extends Equatable {
   List<Object?> get props => [currentUserIndex, userEntries];
 }
 
+UserConfigEntry _userToEntry(User user) {
+  return UserConfigEntry(
+      name: user.name, tutorialViewStatus: user.tutorialViewStatus);
+}
+
+User _entryToUser(UserConfigEntry userEntry){
+  return User(
+      name: userEntry.name, tutorialViewStatus: userEntry.tutorialViewStatus);
+}
+
 /// Makes a new [UserConfig] with one user inside. The user will be the
 /// current user.
 UserConfig makeNewConfigForUser(User user) {
-  return UserConfig(currentUserIndex: 0, userEntries: [
-    UserConfigEntry(
-        name: user.name, tutorialViewStatus: user.tutorialViewStatus)
-  ]);
+  return UserConfig(currentUserIndex: 0, userEntries: [_userToEntry(user)]);
 }
 
 /// Appends a user to a [UserConfig] and sets the current user index to the
 /// appended users index.
 UserConfig appendUserToConfig(UserConfig config, User user) {
-  return UserConfig(currentUserIndex: config.userEntries.length, userEntries: [
-    ...config.userEntries,
-    UserConfigEntry(
-        name: user.name, tutorialViewStatus: user.tutorialViewStatus)
-  ]);
+  return UserConfig(
+      currentUserIndex: config.userEntries.length,
+      userEntries: [...config.userEntries, _userToEntry(user)]);
 }
 
 /// Attempts to get the current user from a [UserConfig] object.
@@ -67,7 +72,5 @@ User? tryGetCurrentUserFromConfig(UserConfig config) {
   if (userIndex == null) return null;
 
   final userEntry = config.userEntries[userIndex];
-  // TODO: Extract entry -> domain conversion logic
-  return User(
-      name: userEntry.name, tutorialViewStatus: userEntry.tutorialViewStatus);
+  return _entryToUser(userEntry)
 }

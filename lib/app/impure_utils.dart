@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
