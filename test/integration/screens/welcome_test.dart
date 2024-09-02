@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import '../app_mock.dart';
+import '../fake_text_storage.dart';
 
 void main() {
   testWidgets("should load custom locale", (tester) async {
@@ -15,12 +16,14 @@ void main() {
       completer.complete();
       return null;
     }, (_) async {});
+    final textStorage = FakeTextStorage();
 
-    await tester.pumpWidget(makeMockAppFromWidget(WelcomeScreen(
-      getCurrentUser: () async {
-        return null;
-      },
-    ), null, [ChangeNotifierProvider(create: (_) => mockCustomLocale)]));
+    await tester.pumpWidget(makeMockAppFromWidget(
+        WelcomeScreen(
+          textStorage,
+        ),
+        null,
+        [ChangeNotifierProvider(create: (_) => mockCustomLocale)]));
 
     expect(completer.isCompleted, isTrue);
   });

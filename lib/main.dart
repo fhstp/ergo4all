@@ -1,9 +1,5 @@
-import 'package:ergo4all/io/local_file.dart';
 import 'package:ergo4all/app/custom_locale.dart';
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/app/add_user.dart';
-import 'package:ergo4all/app/get_current_user.dart';
-import 'package:ergo4all/app/user_config.dart';
 import 'package:ergo4all/app/screens/analysis.dart';
 import 'package:ergo4all/app/screens/expert_intro.dart';
 import 'package:ergo4all/app/screens/home.dart';
@@ -15,17 +11,14 @@ import 'package:ergo4all/app/screens/results.dart';
 import 'package:ergo4all/app/screens/terms_of_use.dart';
 import 'package:ergo4all/app/screens/user_creator.dart';
 import 'package:ergo4all/app/screens/welcome.dart';
+import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-final _getUserConfig = makeGetUserConfigFromStorage(readLocalDocument);
-final _updateUserConfig =
-    makeUpdateStoredUserConfig(_getUserConfig, writeLocalDocument);
-final _addUser = makeAddUserToUserConfig(_updateUserConfig);
-final _getCurrentUser = makeGetCurrentUserFromConfig(_getUserConfig);
+final textStorage = LocalDocumentStorage();
 
 final Map<String, WidgetBuilder> _routes = {
   Routes.home.path: (context) => const HomeScreen(),
@@ -34,16 +27,12 @@ final Map<String, WidgetBuilder> _routes = {
   Routes.preIntro.path: (context) => const PreIntroScreen(),
   Routes.expertIntro.path: (context) => const ExpertIntro(),
   Routes.nonExpertIntro.path: (context) => const NonExpertIntro(),
-  Routes.preUserCreator.path: (context) => PreUserCreatorScreen(
-        addUser: _addUser,
-      ),
-  Routes.userCreator.path: (context) => UserCreatorScreen(
-        addUser: _addUser,
-      ),
+  Routes.preUserCreator.path: (context) => PreUserCreatorScreen(textStorage),
+  Routes.userCreator.path: (context) => UserCreatorScreen(textStorage),
   Routes.language.path: (context) => const LanguageScreen(),
   Routes.tou.path: (context) => const TermsOfUseScreen(),
   Routes.welcome.path: (context) => WelcomeScreen(
-        getCurrentUser: _getCurrentUser,
+        textStorage,
       )
 };
 

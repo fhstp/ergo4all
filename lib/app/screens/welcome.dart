@@ -1,7 +1,8 @@
-import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/app/custom_locale.dart';
+import 'package:ergo4all/app/impure_utils.dart';
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/app/get_current_user.dart';
+import 'package:ergo4all/domain/user.dart';
+import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:ergo4all/ui/widgets/timed_loading_bar.dart';
@@ -10,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  final GetCurrentUser getCurrentUser;
+  final LocalTextStorage textStorage;
 
-  const WelcomeScreen({super.key, required this.getCurrentUser});
+  const WelcomeScreen(this.textStorage, {super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -26,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.initState();
 
     // We start getting the current user in the background
-    _currentUser = widget.getCurrentUser();
+    _currentUser = getCurrentUser(widget.textStorage);
   }
 
   @override

@@ -6,6 +6,8 @@ import 'user.dart';
 
 part 'user_config.g.dart';
 
+const userConfigFilePath = "users.json";
+
 @JsonSerializable()
 @immutable
 class UserConfigEntry extends Equatable {

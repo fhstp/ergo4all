@@ -1,24 +1,21 @@
-import 'dart:async';
-
-import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/screens/pre_user_creator.dart';
+import 'package:ergo4all/domain/user_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
 
 import '../app_mock.dart';
+import '../fake_text_storage.dart';
 
 void main() {
   testWidgets(
       "should navigate to next screen once \"default values\" is selected",
       (tester) async {
     final navigator = makeDummyMockNavigator();
-    await tester.pumpWidget(makeMockAppFromWidget(
-        PreUserCreatorScreen(
-          addUser: (_) async => null,
-        ),
-        navigator));
+    final textStorage = FakeTextStorage();
+    await tester.pumpWidget(
+        makeMockAppFromWidget(PreUserCreatorScreen(textStorage), navigator));
 
     await tester.tap(find.byKey(const Key("default-values")));
     await tester.pumpAndSettle();
@@ -28,28 +25,28 @@ void main() {
 
   testWidgets("should create default user when \"default values\" is selected",
       (tester) async {
-    final completer = Completer();
+    final textStorage = FakeTextStorage();
     await tester.pumpWidget(makeMockAppFromWidget(PreUserCreatorScreen(
-      addUser: (user) async {
-        expect(user, equals(const User(name: "Ergo-fan")));
-        completer.complete();
-      },
+      textStorage,
     )));
 
     await tester.tap(find.byKey(const Key("default-values")));
     await tester.pumpAndSettle();
 
-    expect(completer.isCompleted, isTrue);
+    final userConfig = textStorage.tryGetUserConfig();
+    expect(
+        userConfig,
+        equals(const UserConfig(
+            currentUserIndex: 0,
+            userEntries: [UserConfigEntry(name: "Ergo-fan")])));
   });
 
   testWidgets("should navigate to user creator once create button is pressed",
       (tester) async {
     final navigator = makeDummyMockNavigator();
-    await tester.pumpWidget(makeMockAppFromWidget(
-        PreUserCreatorScreen(
-          addUser: (_) async => null,
-        ),
-        navigator));
+    final textStorage = FakeTextStorage();
+    await tester.pumpWidget(
+        makeMockAppFromWidget(PreUserCreatorScreen(textStorage), navigator));
 
     await tester.tap(find.byKey(const Key("create")));
     await tester.pumpAndSettle();

@@ -1,6 +1,7 @@
-import 'package:ergo4all/domain/user.dart';
+import 'package:ergo4all/app/impure_utils.dart';
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/app/add_user.dart';
+import 'package:ergo4all/domain/user.dart';
+import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/header.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
@@ -8,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PreUserCreatorScreen extends StatelessWidget {
-  final AddUser addUser;
+  final LocalTextStorage textStorage;
 
-  const PreUserCreatorScreen({super.key, required this.addUser});
+  const PreUserCreatorScreen(this.textStorage, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class PreUserCreatorScreen extends StatelessWidget {
 
     void proceedeWithDefaultUser() async {
       // This is the default user.
-      await addUser(const User(name: "Ergo-fan"));
+      await addUser(textStorage, const User(name: "Ergo-fan"));
 
       navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
