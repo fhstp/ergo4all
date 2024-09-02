@@ -8,14 +8,14 @@ import 'user_data.dart';
 void main() {
   group("new config", () {
     Glados(any.user).test("should have first user as current user", (user) {
-      final config = makeNewConfigForUser(user);
+      final config = UserConfig.forUser(user);
 
       expect(config.currentUserIndex, equals(0));
     });
 
     Glados(any.user).test("should have single entry with user information",
         (user) {
-      final config = makeNewConfigForUser(user);
+      final config = UserConfig.forUser(user);
 
       expect(config.userEntries,
           equals([UserConfigEntry(name: user.name, hasSeenTutorial: false)]));
@@ -58,7 +58,7 @@ void main() {
     });
 
     test("should be user for configs with current user", () {
-      final config = makeNewConfigForUser(const User.newFromName("John"));
+      final config = UserConfig.forUser(const User.newFromName("John"));
 
       final user = tryGetCurrentUserFromConfig(config);
 

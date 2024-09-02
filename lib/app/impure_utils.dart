@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
@@ -44,7 +45,7 @@ Future<User?> getCurrentUser(LocalTextStorage storage) async {
 Future<Null> addUser(LocalTextStorage storage, User user) async {
   await updateUserConfig(storage, (initial) {
     if (initial == null) {
-      return makeNewConfigForUser(user);
+      return UserConfig.forUser(user);
     }
 
     return appendUserToConfig(initial, user);

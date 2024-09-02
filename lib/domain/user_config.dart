@@ -32,6 +32,11 @@ class UserConfig extends Equatable {
 
   const UserConfig({required this.currentUserIndex, required this.userEntries});
 
+  /// Makes a new [UserConfig] with one user inside. The user will be the
+  /// current user.
+  UserConfig.forUser(User user)
+      : this(currentUserIndex: 0, userEntries: [_userToEntry(user)]);
+
   factory UserConfig.fromJson(Map<String, dynamic> json) =>
       _$UserConfigFromJson(json);
   Map<String, dynamic> toJson() => _$UserConfigToJson(this);
@@ -47,12 +52,6 @@ UserConfigEntry _userToEntry(User user) {
 
 User _entryToUser(UserConfigEntry userEntry) {
   return User(name: userEntry.name, hasSeenTutorial: userEntry.hasSeenTutorial);
-}
-
-/// Makes a new [UserConfig] with one user inside. The user will be the
-/// current user.
-UserConfig makeNewConfigForUser(User user) {
-  return UserConfig(currentUserIndex: 0, userEntries: [_userToEntry(user)]);
 }
 
 /// Appends a user to a [UserConfig] and sets the current user index to the
