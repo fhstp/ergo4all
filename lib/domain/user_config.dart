@@ -45,7 +45,7 @@ UserConfigEntry _userToEntry(User user) {
       name: user.name, tutorialViewStatus: user.tutorialViewStatus);
 }
 
-User _entryToUser(UserConfigEntry userEntry){
+User _entryToUser(UserConfigEntry userEntry) {
   return User(
       name: userEntry.name, tutorialViewStatus: userEntry.tutorialViewStatus);
 }
@@ -72,5 +72,5 @@ User? tryGetCurrentUserFromConfig(UserConfig config) {
   if (userIndex == null) return null;
 
   final userEntry = config.userEntries[userIndex];
-  return _entryToUser(userEntry)
+  return _entryToUser(userEntry);
 }
