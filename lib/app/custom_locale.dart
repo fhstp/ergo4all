@@ -14,14 +14,14 @@ class CustomLocale extends ChangeNotifier {
   CustomLocale(this._loadCustomLocale, this._storeCustomLocale);
 
   static CustomLocale fromSharedPrefs() {
-    SharedPreferences? prefs;
+    SharedPreferencesAsync? prefs;
 
     return CustomLocale(() async {
-      prefs ??= await SharedPreferences.getInstance();
-      final localePref = prefs!.getString("custom-locale");
+      prefs ??= SharedPreferencesAsync();
+      final localePref = await prefs!.getString("custom-locale");
       return localePref != null ? Locale(localePref) : null;
     }, (locale) async {
-      prefs ??= await SharedPreferences.getInstance();
+      prefs ??= SharedPreferencesAsync();
       await prefs!.setString("custom-locale", locale.languageCode);
     });
   }
