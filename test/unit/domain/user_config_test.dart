@@ -17,13 +17,8 @@ void main() {
         (user) {
       final config = makeNewConfigForUser(user);
 
-      expect(
-          config.userEntries,
-          equals([
-            UserConfigEntry(
-                name: user.name,
-                tutorialViewStatus: TutorialViewStatus.notDecided)
-          ]));
+      expect(config.userEntries,
+          equals([UserConfigEntry(name: user.name, hasSeenTutorial: false)]));
     });
   });
 
@@ -42,7 +37,7 @@ void main() {
       expect(
           updated.userEntries.last,
           equals(UserConfigEntry(
-              name: user.name, tutorialViewStatus: user.tutorialViewStatus)));
+              name: user.name, hasSeenTutorial: user.hasSeenTutorial)));
     });
 
     Glados2(any.userConfig, any.user)

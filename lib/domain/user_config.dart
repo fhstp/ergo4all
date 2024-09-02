@@ -12,9 +12,9 @@ const userConfigFilePath = "users.json";
 @immutable
 class UserConfigEntry extends Equatable {
   final String name;
-  final TutorialViewStatus tutorialViewStatus;
+  final bool hasSeenTutorial;
 
-  const UserConfigEntry({required this.name, required this.tutorialViewStatus});
+  const UserConfigEntry({required this.name, required this.hasSeenTutorial});
 
   factory UserConfigEntry.fromJson(Map<String, dynamic> json) =>
       _$UserConfigEntryFromJson(json);
@@ -42,12 +42,11 @@ class UserConfig extends Equatable {
 
 UserConfigEntry _userToEntry(User user) {
   return UserConfigEntry(
-      name: user.name, tutorialViewStatus: user.tutorialViewStatus);
+      name: user.name, hasSeenTutorial: user.hasSeenTutorial);
 }
 
 User _entryToUser(UserConfigEntry userEntry) {
-  return User(
-      name: userEntry.name, tutorialViewStatus: userEntry.tutorialViewStatus);
+  return User(name: userEntry.name, hasSeenTutorial: userEntry.hasSeenTutorial);
 }
 
 /// Makes a new [UserConfig] with one user inside. The user will be the

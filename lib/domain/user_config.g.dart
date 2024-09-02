@@ -9,22 +9,14 @@ part of 'user_config.dart';
 UserConfigEntry _$UserConfigEntryFromJson(Map<String, dynamic> json) =>
     UserConfigEntry(
       name: json['name'] as String,
-      tutorialViewStatus:
-          $enumDecode(_$TutorialViewStatusEnumMap, json['tutorialViewStatus']),
+      hasSeenTutorial: json['hasSeenTutorial'] as bool,
     );
 
 Map<String, dynamic> _$UserConfigEntryToJson(UserConfigEntry instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'tutorialViewStatus':
-          _$TutorialViewStatusEnumMap[instance.tutorialViewStatus]!,
+      'hasSeenTutorial': instance.hasSeenTutorial,
     };
-
-const _$TutorialViewStatusEnumMap = {
-  TutorialViewStatus.notDecided: 'notDecided',
-  TutorialViewStatus.seen: 'seen',
-  TutorialViewStatus.skipped: 'skipped',
-};
 
 UserConfig _$UserConfigFromJson(Map<String, dynamic> json) => UserConfig(
       currentUserIndex: (json['currentUserIndex'] as num?)?.toInt(),

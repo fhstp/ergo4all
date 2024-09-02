@@ -1,21 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-enum TutorialViewStatus { notDecided, seen, skipped }
-
 /// Represents a user of the app
 @immutable
 class User extends Equatable {
   /// The users name.
   final String name;
 
-  /// Status of whether the user has seen the tutorial.
-  final TutorialViewStatus tutorialViewStatus;
+  /// Whether the user has seen the tutorial. This will also be true if
+  /// the user has skipped the tutorial.
+  final bool hasSeenTutorial;
 
-  const User({required this.name, required this.tutorialViewStatus});
+  const User({required this.name, required this.hasSeenTutorial});
 
   const User.newFromName(String name)
-      : this(name: name, tutorialViewStatus: TutorialViewStatus.notDecided);
+      : this(name: name, hasSeenTutorial: false);
 
   @override
   List<Object?> get props => [name];

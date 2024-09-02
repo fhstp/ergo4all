@@ -1,6 +1,5 @@
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/screens/pre_user_creator.dart';
-import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,9 +37,7 @@ void main() {
     expect(
         userConfig,
         equals(const UserConfig(currentUserIndex: 0, userEntries: [
-          UserConfigEntry(
-              name: "Ergo-fan",
-              tutorialViewStatus: TutorialViewStatus.notDecided)
+          UserConfigEntry(name: "Ergo-fan", hasSeenTutorial: false)
         ])));
   });
 

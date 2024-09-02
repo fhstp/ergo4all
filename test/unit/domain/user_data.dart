@@ -5,7 +5,7 @@ extension AnyUser on Any {
   /// Generates a user with a random name
   Generator<User> get user => combine2(
       letters,
-      choose(TutorialViewStatus.values),
-      (name, tutorialViewStatus) =>
-          User(name: name, tutorialViewStatus: tutorialViewStatus));
+      any.bool,
+      (name, hasSeenTutorial) =>
+          User(name: name, hasSeenTutorial: hasSeenTutorial));
 }
