@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/routes.dart';
-import 'package:ergo4all/ui/screens/pre_user_creator.dart';
+import 'package:ergo4all/app/routes.dart';
+import 'package:ergo4all/app/screens/pre_user_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';

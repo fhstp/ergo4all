@@ -1,5 +1,5 @@
-import 'package:ergo4all/routes.dart';
-import 'package:ergo4all/ui/screens/terms_of_use.dart';
+import 'package:ergo4all/app/routes.dart';
+import 'package:ergo4all/app/screens/terms_of_use.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';

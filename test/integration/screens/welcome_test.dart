@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:ergo4all/providers/custom_locale.dart';
-import 'package:ergo4all/ui/screens/welcome.dart';
+import 'package:ergo4all/app/custom_locale.dart';
+import 'package:ergo4all/app/screens/welcome.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 

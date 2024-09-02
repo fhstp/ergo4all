@@ -1,5 +1,5 @@
-import 'package:ergo4all/providers/custom_locale.dart';
-import 'package:ergo4all/routes.dart';
+import 'package:ergo4all/app/custom_locale.dart';
+import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/header.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';

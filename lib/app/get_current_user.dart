@@ -1,6 +1,6 @@
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
-import 'package:ergo4all/service/user_config.dart';
+import 'package:ergo4all/app/user_config.dart';
 
 /// Function for getting the current user. May return `null` if no user was
 /// created yet.

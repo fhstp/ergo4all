@@ -1,7 +1,7 @@
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/providers/custom_locale.dart';
-import 'package:ergo4all/routes.dart';
-import 'package:ergo4all/service/get_current_user.dart';
+import 'package:ergo4all/app/custom_locale.dart';
+import 'package:ergo4all/app/routes.dart';
+import 'package:ergo4all/app/get_current_user.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:ergo4all/ui/widgets/timed_loading_bar.dart';
