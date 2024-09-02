@@ -3,13 +3,8 @@ import 'package:ergo4all/ui/widgets/user_creation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 
 void main() {
-  tearDown(() async {
-    await GetIt.instance.reset();
-  });
-
   Widget makeForm(void Function(User user) onUserSubmitted) {
     return MaterialApp(
       locale: const Locale("en"),

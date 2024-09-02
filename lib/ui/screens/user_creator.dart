@@ -6,10 +6,11 @@ import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:ergo4all/ui/widgets/user_creation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 
 class UserCreatorScreen extends StatefulWidget {
-  const UserCreatorScreen({super.key});
+  final AddUser addUser;
+
+  const UserCreatorScreen({super.key, required this.addUser});
 
   @override
   State<UserCreatorScreen> createState() => _UserCreatorScreenState();
@@ -22,10 +23,8 @@ class _UserCreatorScreenState extends State<UserCreatorScreen> {
     final navigator = Navigator.of(context);
 
     void onUserSubmitted(User user) async {
-      final addUser = GetIt.instance.get<AddUser>();
-
       // Add user and navigate home afterwards
-      await addUser(user);
+      await widget.addUser(user);
       navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
 

@@ -19,24 +19,13 @@ import 'package:ergo4all/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-void _registerSingletons() {
-  final getIt = GetIt.instance;
-
-  getIt.registerSingleton<ReadLocalTextFile>(readLocalDocument);
-  getIt.registerSingleton<WriteLocalTextFile>(writeLocalDocument);
-  getIt.registerLazySingleton<GetUserConfig>(
-      () => makeGetUserConfigFromStorage(getIt.get<ReadLocalTextFile>()));
-  getIt.registerLazySingleton<GetCurrentUser>(
-      () => makeGetCurrentUserFromConfig(getIt.get<GetUserConfig>()));
-  getIt.registerLazySingleton<UpdateUserConfig>(() =>
-      makeUpdateStoredUserConfig(
-          getIt.get<GetUserConfig>(), getIt.get<WriteLocalTextFile>()));
-  getIt.registerLazySingleton<AddUser>(
-      () => makeAddUserToUserConfig(getIt.get<UpdateUserConfig>()));
-}
+final _getUserConfig = makeGetUserConfigFromStorage(readLocalDocument);
+final _updateUserConfig =
+    makeUpdateStoredUserConfig(_getUserConfig, writeLocalDocument);
+final _addUser = makeAddUserToUserConfig(_updateUserConfig);
+final _getCurrentUser = makeGetCurrentUserFromConfig(_getUserConfig);
 
 final Map<String, WidgetBuilder> _routes = {
   Routes.home.path: (context) => const HomeScreen(),
@@ -45,11 +34,17 @@ final Map<String, WidgetBuilder> _routes = {
   Routes.preIntro.path: (context) => const PreIntroScreen(),
   Routes.expertIntro.path: (context) => const ExpertIntro(),
   Routes.nonExpertIntro.path: (context) => const NonExpertIntro(),
-  Routes.preUserCreator.path: (context) => const PreUserCreatorScreen(),
-  Routes.userCreator.path: (context) => const UserCreatorScreen(),
+  Routes.preUserCreator.path: (context) => PreUserCreatorScreen(
+        addUser: _addUser,
+      ),
+  Routes.userCreator.path: (context) => UserCreatorScreen(
+        addUser: _addUser,
+      ),
   Routes.language.path: (context) => const LanguageScreen(),
   Routes.tou.path: (context) => const TermsOfUseScreen(),
-  Routes.welcome.path: (context) => const WelcomeScreen()
+  Routes.welcome.path: (context) => WelcomeScreen(
+        getCurrentUser: _getCurrentUser,
+      )
 };
 
 class Ergo4AllApp extends StatelessWidget {
@@ -77,13 +72,12 @@ class Ergo4AllApp extends StatelessWidget {
             theme: globalTheme,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            home: const WelcomeScreen());
+            initialRoute: Routes.welcome.path);
       }),
     );
   }
 }
 
 void main() {
-  _registerSingletons();
   runApp(const Ergo4AllApp());
 }

@@ -7,11 +7,12 @@ import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:ergo4all/ui/widgets/timed_loading_bar.dart';
 import 'package:ergo4all/ui/widgets/version_display.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  final GetCurrentUser getCurrentUser;
+
+  const WelcomeScreen({super.key, required this.getCurrentUser});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -24,11 +25,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
 
-    final getIt = GetIt.instance;
-
     // We start getting the current user in the background
-    final getCurrentUser = getIt.get<GetCurrentUser>();
-    _currentUser = getCurrentUser();
+    _currentUser = widget.getCurrentUser();
   }
 
   @override

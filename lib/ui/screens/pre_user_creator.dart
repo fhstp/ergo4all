@@ -6,10 +6,11 @@ import 'package:ergo4all/ui/widgets/header.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 
 class PreUserCreatorScreen extends StatelessWidget {
-  const PreUserCreatorScreen({super.key});
+  final AddUser addUser;
+
+  const PreUserCreatorScreen({super.key, required this.addUser});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,6 @@ class PreUserCreatorScreen extends StatelessWidget {
     }
 
     void proceedeWithDefaultUser() async {
-      final addUser = GetIt.instance.get<AddUser>();
-
       // This is the default user.
       await addUser(const User(name: "Ergo-fan"));
 
