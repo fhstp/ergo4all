@@ -1,10 +1,11 @@
 {
-    "files.exclude": {
-        ".fvm": true,
-        ".idea": true,
-        "android": true,
-        "build": true,
-        "ios": true,
-        "web": true
-    }
+  "files.exclude": {
+    ".fvm": true,
+    ".idea": true,
+    "android": true,
+    "build": true,
+    "ios": true,
+    "web": true
+  },
+  "dart.flutterSdkPath": ".fvm/versions/stable"
 }

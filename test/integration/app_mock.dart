@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 /// Makes a basic [MockNavigator] which simply allows all navigation
 /// requests and silently does nothing.
@@ -22,8 +20,7 @@ MockNavigator makeDummyMockNavigator() {
   return navigator;
 }
 
-Widget makeMockAppFromWidget(Widget widget,
-    [MockNavigator? mockNavigator, List<SingleChildWidget>? providers]) {
+Widget makeMockAppFromWidget(Widget widget, [MockNavigator? mockNavigator]) {
   final app = MaterialApp(
       title: "Mock Ergo4All",
       theme: ThemeData(
@@ -37,10 +34,5 @@ Widget makeMockAppFromWidget(Widget widget,
         child: widget,
       ));
 
-  return providers != null && providers.isNotEmpty
-      ? MultiProvider(
-          providers: providers,
-          child: app,
-        )
-      : app;
+  return app;
 }

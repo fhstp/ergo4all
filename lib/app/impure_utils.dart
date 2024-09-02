@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
+import 'package:ergo4all/io/preference_storage.dart';
+import 'package:flutter/material.dart';
 
 /// Reads the current [UserConfig].
 Future<UserConfig?> getUserConfig(LocalTextStorage storage) async {
@@ -48,4 +50,18 @@ Future<Null> addUser(LocalTextStorage storage, User user) async {
 
     return appendUserToConfig(initial, user);
   });
+}
+
+const customLocalPrefKey = "custom-locale";
+
+/// Attempts to read custom locale from a [PreferenceStorage]. May return null
+/// if there is no custom locale.
+Future<Locale?> tryGetCustomLocale(PreferenceStorage storage) async {
+  final localePref = await storage.tryGetString(customLocalPrefKey);
+  return localePref != null ? Locale(localePref) : null;
+}
+
+/// Sets the users custom locale in a [PreferenceStorage].
+Future<Null> setCustomLocale(PreferenceStorage storage, Locale locale) async {
+  await storage.putString(customLocalPrefKey, locale.languageCode);
 }

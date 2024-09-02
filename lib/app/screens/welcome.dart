@@ -1,4 +1,3 @@
-import 'package:ergo4all/app/custom_locale.dart';
 import 'package:ergo4all/app/impure_utils.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/user.dart';
@@ -8,7 +7,6 @@ import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:ergo4all/ui/widgets/timed_loading_bar.dart';
 import 'package:ergo4all/ui/widgets/version_display.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final LocalTextStorage textStorage;
@@ -28,14 +26,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     // We start getting the current user in the background
     _currentUser = getCurrentUser(widget.textStorage);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final customLocale = Provider.of<CustomLocale>(context);
-    customLocale.load();
   }
 
   @override
