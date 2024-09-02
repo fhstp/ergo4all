@@ -14,6 +14,9 @@ class User extends Equatable {
 
   const User({required this.name, required this.tutorialViewStatus});
 
+  const User.newFromName(String name)
+      : this(name: name, tutorialViewStatus: TutorialViewStatus.notDecided);
+
   @override
   List<Object?> get props => [name];
 }

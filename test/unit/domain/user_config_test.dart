@@ -63,8 +63,7 @@ void main() {
     });
 
     test("should be user for configs with current user", () {
-      final config = makeNewConfigForUser(const User(
-          name: "John", tutorialViewStatus: TutorialViewStatus.notDecided));
+      final config = makeNewConfigForUser(const User.newFromName("John"));
 
       final user = tryGetCurrentUserFromConfig(config);
 
