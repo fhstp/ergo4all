@@ -1,7 +1,6 @@
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/providers/custom_locale.dart';
-import 'package:ergo4all/ui/screens/home.dart';
-import 'package:ergo4all/ui/screens/language.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/service/get_current_user.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
@@ -49,10 +48,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       final isFirstStart = currentUser == null;
       // Depending on whether this is the first time we start the app
       // we either go to onboarding or home.
-      final nextScreen =
-          isFirstStart ? const LanguageScreen() : const HomeScreen();
+      final nextRoute = isFirstStart ? Routes.language : Routes.home;
 
-      navigator.pushReplacement(MaterialPageRoute(builder: (_) => nextScreen));
+      navigator.pushReplacementNamed(nextRoute.path);
     }
 
     return Scaffold(

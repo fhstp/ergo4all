@@ -1,6 +1,6 @@
 import 'package:ergo4all/domain/user.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/service/add_user.dart';
-import 'package:ergo4all/ui/screens/home.dart';
 import 'package:ergo4all/ui/widgets/header.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:ergo4all/ui/widgets/user_creation_form.dart';
@@ -26,8 +26,7 @@ class _UserCreatorScreenState extends State<UserCreatorScreen> {
 
       // Add user and navigate home afterwards
       await addUser(user);
-      navigator.pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
+      navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
 
     return Scaffold(

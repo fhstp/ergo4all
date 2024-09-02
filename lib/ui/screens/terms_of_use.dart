@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/screens/pre_user_creator.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
     final navigator = Navigator.of(context);
 
     void navigateToPreUserCreation() {
-      navigator.pushReplacement(
-          MaterialPageRoute(builder: (_) => const PreUserCreatorScreen()));
+      navigator.pushReplacementNamed(Routes.preUserCreator.path);
     }
 
     return Scaffold(

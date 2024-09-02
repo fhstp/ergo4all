@@ -62,6 +62,8 @@ dev_dependencies:
   build_runner: ^2.4.11
   json_serializable: ^6.8.0
   glados: ^1.1.7
+  mockingjay: ^0.5.0
+  mockito: ^5.4.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

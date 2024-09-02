@@ -1,10 +1,10 @@
-import 'package:ergo4all/ui/screens/pre_user_creator.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/ui/screens/terms_of_use.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockingjay/mockingjay.dart';
 
 import '../app_mock.dart';
-import '../navigation_observer_mock.dart';
 
 void main() {
   testWidgets("should disable next button while not accepting terms",
@@ -27,17 +27,16 @@ void main() {
 
   testWidgets("should navigate to next screen on next button press",
       (tester) async {
-    final mockNavigationObserver = MockNavigationObserver();
+    final navigator = makeDummyMockNavigator();
 
-    await tester.pumpWidget(makeMockAppFromWidget(
-        const TermsOfUseScreen(), mockNavigationObserver));
+    await tester
+        .pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen(), navigator));
 
     await tester.tap(find.byKey(const Key("accept-check")));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key("next")));
     await tester.pumpAndSettle();
 
-    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(PreUserCreatorScreen), findsOneWidget);
+    verify(() => navigator.pushReplacementNamed(Routes.preUserCreator.path));
   });
 }

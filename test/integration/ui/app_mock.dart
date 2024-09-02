@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mockingjay/mockingjay.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'navigation_observer_mock.dart';
+/// Makes a basic [MockNavigator] which simply allows all navigation
+/// requests and silently does nothing.
+MockNavigator makeDummyMockNavigator() {
+  final navigator = MockNavigator();
+  when(navigator.canPop).thenReturn(true);
+  when(() => navigator.pushNamed(any())).thenAnswer((_) async {
+    return null;
+  });
+  when(() => navigator.pushReplacementNamed(any())).thenAnswer((_) async {
+    return null;
+  });
+  when(() => navigator.pushNamedAndRemoveUntil(any(), any()))
+      .thenAnswer((_) async {
+    return null;
+  });
+  return navigator;
+}
 
 Widget makeMockAppFromWidget(Widget widget,
-    [MockNavigationObserver? navigationObserver,
-    List<SingleChildWidget>? providers]) {
+    [MockNavigator? mockNavigator, List<SingleChildWidget>? providers]) {
   final app = MaterialApp(
       title: "Mock Ergo4All",
       theme: ThemeData(
@@ -16,9 +32,10 @@ Widget makeMockAppFromWidget(Widget widget,
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      navigatorObservers:
-          navigationObserver != null ? [navigationObserver] : [],
-      home: widget);
+      home: MockNavigatorProvider(
+        navigator: mockNavigator ?? makeDummyMockNavigator(),
+        child: widget,
+      ));
 
   return providers != null && providers.isNotEmpty
       ? MultiProvider(

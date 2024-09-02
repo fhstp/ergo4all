@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/screens/results.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/header.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
@@ -27,10 +27,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   _navigateAfterDelay() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const ResultsScreen()),
-    );
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, Routes.results.path);
+    }
   }
 
   @override

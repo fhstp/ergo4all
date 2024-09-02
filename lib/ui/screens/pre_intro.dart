@@ -1,6 +1,4 @@
-import 'package:ergo4all/ui/screens/expert_intro.dart';
-import 'package:ergo4all/ui/screens/terms_of_use.dart';
-import 'package:ergo4all/ui/screens/non_expert_intro.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/header.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
@@ -16,16 +14,15 @@ class PreIntroScreen extends StatelessWidget {
     final navigator = Navigator.of(context);
 
     void skipIntroduction() {
-      navigator
-          .push(MaterialPageRoute(builder: (_) => const TermsOfUseScreen()));
+      navigator.pushNamed(Routes.tou.path);
     }
 
     void takeProfessionalIntroduction() {
-      navigator.push(MaterialPageRoute(builder: (_) => const ExpertIntro()));
+      navigator.pushNamed(Routes.expertIntro.path);
     }
 
     void takeWorkerIntroduction() {
-      navigator.push(MaterialPageRoute(builder: (_) => const NonExpertIntro()));
+      navigator.pushNamed(Routes.nonExpertIntro.path);
     }
 
     return Scaffold(

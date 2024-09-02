@@ -1,6 +1,5 @@
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/ui/screens/home.dart';
-import 'package:ergo4all/ui/screens/user_creator.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/service/add_user.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:ergo4all/ui/widgets/header.dart';
@@ -19,8 +18,7 @@ class PreUserCreatorScreen extends StatelessWidget {
     final navigator = Navigator.of(context);
 
     void navigateToUserCreator() {
-      navigator
-          .push(MaterialPageRoute(builder: (_) => const UserCreatorScreen()));
+      navigator.pushNamed(Routes.userCreator.path);
     }
 
     void proceedeWithDefaultUser() async {
@@ -29,8 +27,7 @@ class PreUserCreatorScreen extends StatelessWidget {
       // This is the default user.
       await addUser(const User(name: "Ergo-fan"));
 
-      navigator.pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const HomeScreen()), (_) => false);
+      navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
 
     return Scaffold(

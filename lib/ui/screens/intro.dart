@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/screens/terms_of_use.dart';
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/ui/widgets/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,8 +45,7 @@ class _IntroState extends State<Intro> {
     final pageTitle = widget.pages[_pageIndex].title;
 
     void navigateToTermsOfUse() {
-      navigator
-          .push(MaterialPageRoute(builder: (_) => const TermsOfUseScreen()));
+      navigator.pushNamed(Routes.tou.path);
     }
 
     return Scaffold(

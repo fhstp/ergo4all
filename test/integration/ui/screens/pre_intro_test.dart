@@ -1,54 +1,48 @@
+import 'package:ergo4all/routes.dart';
 import 'package:ergo4all/ui/screens/pre_intro.dart';
-import 'package:ergo4all/ui/screens/expert_intro.dart';
-import 'package:ergo4all/ui/screens/terms_of_use.dart';
-import 'package:ergo4all/ui/screens/non_expert_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockingjay/mockingjay.dart';
 
 import '../app_mock.dart';
-import '../navigation_observer_mock.dart';
 
 void main() {
   testWidgets("should navigate to professional intro when button is pressed",
       (tester) async {
-    final mockNavigationObserver = MockNavigationObserver();
+    final navigator = makeDummyMockNavigator();
 
     await tester.pumpWidget(makeMockAppFromWidget(
       const PreIntroScreen(),
-      mockNavigationObserver,
+      navigator,
     ));
 
     await tester.tap(find.byKey(const Key("expert")));
     await tester.pumpAndSettle();
 
-    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(ExpertIntro), findsOneWidget);
+    verify(() => navigator.pushNamed(Routes.expertIntro.path));
   });
 
   testWidgets("should navigate to worker intro when button is pressed",
       (tester) async {
-    final mockNavigationObserver = MockNavigationObserver();
+    final navigator = makeDummyMockNavigator();
 
     await tester.pumpWidget(makeMockAppFromWidget(
       const PreIntroScreen(),
-      mockNavigationObserver,
+      navigator,
     ));
 
     await tester.tap(find.byKey(const Key("non-expert")));
     await tester.pumpAndSettle();
 
-    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(NonExpertIntro), findsOneWidget);
+    verify(() => navigator.pushNamed(Routes.nonExpertIntro.path));
   });
 
   testWidgets("should navigate to next screen once skip button is pressed",
       (tester) async {
-    final mockNavigationObserver = MockNavigationObserver();
+    final navigator = makeDummyMockNavigator();
 
-    await tester.pumpWidget(makeMockAppFromWidget(
-      const PreIntroScreen(),
-      mockNavigationObserver,
-    ));
+    await tester
+        .pumpWidget(makeMockAppFromWidget(const PreIntroScreen(), navigator));
 
     final skipButton = find.byKey(const Key("skip"));
     final scoll = find.byType(SingleChildScrollView);
@@ -57,7 +51,6 @@ void main() {
     await tester.tap(skipButton);
     await tester.pumpAndSettle();
 
-    expect(mockNavigationObserver.anyNavigationHappened, isTrue);
-    expect(find.byType(TermsOfUseScreen), findsOneWidget);
+    verify(() => navigator.pushNamed(Routes.tou.path));
   });
 }
