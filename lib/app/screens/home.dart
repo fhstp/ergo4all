@@ -1,12 +1,12 @@
 import 'package:ergo4all/io/video_storage.dart';
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/ui/widgets/screen_content.dart';
+import 'package:ergo4all/ui/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../domain/video_source.dart';
-import '../../ui/widgets/session_start_dialog.dart';
+import '../../ui/session_start_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   final VideoStorage videoStorage;
