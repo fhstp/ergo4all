@@ -12,8 +12,9 @@ const userConfigFilePath = "users.json";
 @immutable
 class UserConfigEntry extends Equatable {
   final String name;
+  final TutorialViewStatus tutorialViewStatus;
 
-  const UserConfigEntry({required this.name});
+  const UserConfigEntry({required this.name, required this.tutorialViewStatus});
 
   factory UserConfigEntry.fromJson(Map<String, dynamic> json) =>
       _$UserConfigEntryFromJson(json);
@@ -42,16 +43,20 @@ class UserConfig extends Equatable {
 /// Makes a new [UserConfig] with one user inside. The user will be the
 /// current user.
 UserConfig makeNewConfigForUser(User user) {
-  return UserConfig(
-      currentUserIndex: 0, userEntries: [UserConfigEntry(name: user.name)]);
+  return UserConfig(currentUserIndex: 0, userEntries: [
+    UserConfigEntry(
+        name: user.name, tutorialViewStatus: user.tutorialViewStatus)
+  ]);
 }
 
 /// Appends a user to a [UserConfig] and sets the current user index to the
 /// appended users index.
 UserConfig appendUserToConfig(UserConfig config, User user) {
-  return UserConfig(
-      currentUserIndex: config.userEntries.length,
-      userEntries: [...config.userEntries, UserConfigEntry(name: user.name)]);
+  return UserConfig(currentUserIndex: config.userEntries.length, userEntries: [
+    ...config.userEntries,
+    UserConfigEntry(
+        name: user.name, tutorialViewStatus: user.tutorialViewStatus)
+  ]);
 }
 
 /// Attempts to get the current user from a [UserConfig] object.
@@ -63,5 +68,6 @@ User? tryGetCurrentUserFromConfig(UserConfig config) {
 
   final userEntry = config.userEntries[userIndex];
   // TODO: Extract entry -> domain conversion logic
-  return User(name: userEntry.name);
+  return User(
+      name: userEntry.name, tutorialViewStatus: userEntry.tutorialViewStatus);
 }

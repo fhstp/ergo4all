@@ -25,7 +25,11 @@ class PreUserCreatorScreen extends StatelessWidget {
 
     void proceedeWithDefaultUser() async {
       // This is the default user.
-      await addUser(textStorage, const User(name: "Ergo-fan"));
+      await addUser(
+          textStorage,
+          const User(
+              name: "Ergo-fan",
+              tutorialViewStatus: TutorialViewStatus.notDecided));
 
       navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }

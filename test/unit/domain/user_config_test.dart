@@ -2,8 +2,8 @@ import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
 import 'package:glados/glados.dart';
 
-import 'user_data.dart';
 import 'user_config_data.dart';
+import 'user_data.dart';
 
 void main() {
   group("new config", () {
@@ -17,7 +17,13 @@ void main() {
         (user) {
       final config = makeNewConfigForUser(user);
 
-      expect(config.userEntries, equals([UserConfigEntry(name: user.name)]));
+      expect(
+          config.userEntries,
+          equals([
+            UserConfigEntry(
+                name: user.name,
+                tutorialViewStatus: TutorialViewStatus.notDecided)
+          ]));
     });
   });
 
@@ -34,7 +40,9 @@ void main() {
       final updated = appendUserToConfig(config, user);
 
       expect(
-          updated.userEntries.last, equals(UserConfigEntry(name: user.name)));
+          updated.userEntries.last,
+          equals(UserConfigEntry(
+              name: user.name, tutorialViewStatus: user.tutorialViewStatus)));
     });
 
     Glados2(any.userConfig, any.user)
@@ -55,7 +63,8 @@ void main() {
     });
 
     test("should be user for configs with current user", () {
-      final config = makeNewConfigForUser(const User(name: "John"));
+      final config = makeNewConfigForUser(const User(
+          name: "John", tutorialViewStatus: TutorialViewStatus.notDecided));
 
       final user = tryGetCurrentUserFromConfig(config);
 

@@ -6,7 +6,8 @@ import 'user_data.dart';
 extension AnyUserConfig on Any {
   /// Generates a [UserConfigEntry]
   Generator<UserConfigEntry> get userConfigEntry =>
-      any.user.map((user) => UserConfigEntry(name: user.name));
+      any.user.map((user) => UserConfigEntry(
+          name: user.name, tutorialViewStatus: user.tutorialViewStatus));
 
   /// Generates a non-empty [UserConfig]
   Generator<UserConfig> get userConfig =>

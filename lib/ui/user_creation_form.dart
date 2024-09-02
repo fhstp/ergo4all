@@ -39,7 +39,9 @@ class _UserCreationFormState extends State<UserCreationForm> {
       var formIsValid = _formKey.currentState!.validate();
       if (!formIsValid) return;
 
-      var user = User(name: nickNameController.text);
+      var user = User(
+          name: nickNameController.text,
+          tutorialViewStatus: TutorialViewStatus.notDecided);
       widget.onUserSubmitted(user);
     }
 
