@@ -1,6 +1,6 @@
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
-import 'package:ergo4all/io/user_config.dart';
+import 'package:ergo4all/service/user_config.dart';
 
 /// Function for adding new users.
 ///

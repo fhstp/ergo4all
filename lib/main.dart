@@ -1,5 +1,5 @@
 import 'package:ergo4all/io/local_file.dart';
-import 'package:ergo4all/io/user_config.dart';
+import 'package:ergo4all/service/user_config.dart';
 import 'package:ergo4all/service/add_user.dart';
 import 'package:ergo4all/service/get_current_user.dart';
 import 'package:ergo4all/ui/app.dart';
