@@ -65,9 +65,9 @@ class StartSessionDialog extends StatelessWidget {
     );
   }
 
-  static void show(
-      BuildContext context, void Function(VideoSource source) sourceChosen) {
-    showDialog(
+  static Future<Null> show(BuildContext context,
+      void Function(VideoSource source) sourceChosen) async {
+    await showDialog(
         context: context,
         builder: (context) {
           return StartSessionDialog(
