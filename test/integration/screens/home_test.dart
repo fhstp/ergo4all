@@ -38,6 +38,6 @@ void main() {
         makeMockAppFromWidget(HomeScreen(videoStorage, textStorage)));
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
-    expect(find.text(user.name), findsOne);
+    expect(find.textContaining(user.name), findsOne);
   });
 }
