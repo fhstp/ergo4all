@@ -1,3 +1,17 @@
+# [1.11.0](https://github.com/fhstp/ergo4all/compare/v1.10.0...v1.11.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* incorrect imports ([76fb293](https://github.com/fhstp/ergo4all/commit/76fb293b22c76f628f016b534d6d1f4952bbb4be))
+* incorrect paths ([b1e9dac](https://github.com/fhstp/ergo4all/commit/b1e9dac9ac42c8c7181afd07a479ebd376c45257))
+* syntax error ([e297b13](https://github.com/fhstp/ergo4all/commit/e297b13c6dc55d8a2f3d28b2a4d8dcf664a9c474))
+
+
+### Features
+
+* show user name on home ([693e948](https://github.com/fhstp/ergo4all/commit/693e948e9ef47e8417ae51f535f6abaad7abbe53))
+
 # [1.10.0](https://github.com/fhstp/ergo4all/compare/v1.9.0...v1.10.0) (2024-08-12)
 
 
