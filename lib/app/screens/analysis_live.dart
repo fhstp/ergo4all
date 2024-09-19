@@ -5,19 +5,17 @@ import 'package:ergo4all/domain/action_recognition.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/scoring.dart';
 import 'package:ergo4all/domain/video_score.dart';
-import 'package:ergo4all/ui/screen_content.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
-class AnalysisScreen extends StatefulWidget {
-  const AnalysisScreen({super.key});
+class LiveAnalysisScreen extends StatefulWidget {
+  const LiveAnalysisScreen({super.key});
 
   @override
-  State<AnalysisScreen> createState() => _AnalysisScreenState();
+  State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
 }
 
-class _AnalysisScreenState extends State<AnalysisScreen> {
+class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   final _poseDetector = PoseDetector(
       options: PoseDetectorOptions(
           model: PoseDetectionModel.accurate, mode: PoseDetectionMode.stream));
@@ -90,13 +88,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-
     return Scaffold(
-      body: ScreenContent(
-          child: _activeCameraController != null
-              ? CameraPreview(_activeCameraController!)
-              : const Placeholder()),
+      body: _activeCameraController != null
+          ? CameraPreview(_activeCameraController!)
+          : const Placeholder(),
     );
   }
 }

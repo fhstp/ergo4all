@@ -1,6 +1,7 @@
 enum Routes {
   home("/home"),
-  analysis('/analysis'),
+  liveAnalysis('/analysis/live'),
+  recordedAnalysis('/analysis/recorded'),
   results('/analysis/results'),
   preIntro('/intro/pre'),
   expertIntro('/intro/expert'),

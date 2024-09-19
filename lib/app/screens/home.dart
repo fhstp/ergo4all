@@ -92,14 +92,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     void analyzeVideo(XFile videoFile) {
-      // TODO: Implement recorded video source
-      Navigator.pushNamed(context, Routes.analysis.path);
+      // TODO: Pass file
+      Navigator.pushNamed(context, Routes.recordedAnalysis.path);
     }
 
     void onSessionVideoSourceChosen(VideoSource source) async {
       if (source == VideoSource.live) {
-        // TODO: Implement live video source
-        Navigator.pushNamed(context, Routes.analysis.path);
+        Navigator.pushNamed(context, Routes.liveAnalysis.path);
         return;
       }
 

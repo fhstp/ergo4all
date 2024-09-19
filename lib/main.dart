@@ -1,7 +1,8 @@
 import 'package:ergo4all/app/impure_utils.dart';
 import 'package:ergo4all/app/post_language_nav_observer.dart';
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/app/screens/analysis.dart';
+import 'package:ergo4all/app/screens/analysis_live.dart';
+import 'package:ergo4all/app/screens/analysis_recorded.dart';
 import 'package:ergo4all/app/screens/expert_intro.dart';
 import 'package:ergo4all/app/screens/home.dart';
 import 'package:ergo4all/app/screens/language.dart';
@@ -66,7 +67,9 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         routes: {
           Routes.home.path: (context) =>
               HomeScreen(_videoStorage, _textStorage),
-          Routes.analysis.path: (context) => const AnalysisScreen(),
+          Routes.liveAnalysis.path: (context) => const LiveAnalysisScreen(),
+          Routes.recordedAnalysis.path: (context) =>
+              const RecordedAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
           Routes.preIntro.path: (context) => const PreIntroScreen(),
           Routes.expertIntro.path: (context) => const ExpertIntro(),
