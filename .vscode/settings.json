@@ -7,5 +7,5 @@
     "ios": true,
     "web": true
   },
-  "dart.flutterSdkPath": ".fvm/versions/stable"
+  "dart.flutterSdkPath": ".fvm/versions/3.24.3"
 }
