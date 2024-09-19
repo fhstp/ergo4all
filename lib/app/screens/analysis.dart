@@ -5,14 +5,10 @@ import 'package:ergo4all/domain/action_recognition.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/scoring.dart';
 import 'package:ergo4all/domain/video_score.dart';
-import 'package:ergo4all/ui/header.dart';
 import 'package:ergo4all/ui/screen_content.dart';
-import 'package:ergo4all/ui/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-
-import '../../ui/loading_indicator.dart';
 
 class AnalysisScreen extends StatefulWidget {
   const AnalysisScreen({super.key});
@@ -65,6 +61,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     await controller.initialize();
     await controller.startImageStream(_onImageCaptured);
     _activeCameraController = controller;
+    setState(() {});
   }
 
   void _onScreenResumed() {
@@ -97,21 +94,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
     return Scaffold(
       body: ScreenContent(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Header(localizations.analysis_header),
-            const FractionallySizedBox(
-              widthFactor: 0.5,
-              child: LoadingIndicator(),
-            ),
-            const SizedBox(
-              height: largeSpace,
-            ),
-            Text(localizations.analysis_wait)
-          ],
-        ),
-      ),
+          child: _activeCameraController != null
+              ? CameraPreview(_activeCameraController!)
+              : const Placeholder()),
     );
   }
 }
