@@ -46,7 +46,7 @@ dependencies:
   path: ^1.9.0
   cross_file: ^0.3.4+2
   google_mlkit_pose_detection: ^0.12.0
-  camera: ^0.11.0+2
+  camera: ^0.10.6
 
 dev_dependencies:
   flutter_test:
