@@ -60,19 +60,18 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!user.hasSeenTutorial) await ShowTutorialDialog.show(context);
   }
 
-  void _analyzeVideo(XFile videoFile) {
-    Navigator.pushNamed(context, Routes.analysis.path);
-  }
-
   void _onSessionVideoSourceChosen(VideoSource source) async {
     if (source == VideoSource.live) {
-      // TODO: Implement live video source
-      throw Exception("Not impl");
+      Navigator.pushNamed(context, Routes.liveAnalysis.path);
+      return;
     }
 
     final videoFile = await widget.videoStorage.tryPick();
     if (videoFile == null) return;
-    _analyzeVideo(videoFile);
+
+    if (mounted) {
+      Navigator.pushNamed(context, Routes.recordedAnalysis.path);
+    }
   }
 
   void _showStartSessionDialog() async {
