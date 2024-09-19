@@ -91,6 +91,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void analyzeVideo(XFile videoFile) {
+      // TODO: Implement recorded video source
+      Navigator.pushNamed(context, Routes.analysis.path);
+    }
+
+    void onSessionVideoSourceChosen(VideoSource source) async {
+      if (source == VideoSource.live) {
+        // TODO: Implement live video source
+        Navigator.pushNamed(context, Routes.analysis.path);
+        return;
+      }
+
+      final videoFile = await widget.videoStorage.tryPick();
+      if (videoFile == null) return;
+      analyzeVideo(videoFile);
+    }
+
+    void showStartSessionDialog() {
+      StartSessionDialog.show(context, onSessionVideoSourceChosen);
+    }
+
     return FutureBuilder(
       future: loadedUser,
       builder: (context, snapshot) => snapshot.hasData
