@@ -32,6 +32,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
       _currentPose = pose;
     });
 
+    // TODO: Update score
   }
 
   _onImageCaptured(CameraImage camerImage) {
