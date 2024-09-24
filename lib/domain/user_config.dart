@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:ergo4all/domain/list_ext.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -71,4 +72,17 @@ User? tryGetCurrentUserFromConfig(UserConfig config) {
 
   final userEntry = config.userEntries[userIndex];
   return _entryToUser(userEntry);
+}
+
+/// Applies a mapping function to a user in a [UserConfig]. You must know the
+/// [userIndex] of the user. Returns the mapped [UserConfig].
+UserConfig updateUserInConfig(
+    UserConfig config, int userIndex, User Function(User user) update) {
+  return UserConfig(
+      currentUserIndex: config.currentUserIndex,
+      userEntries: config.userEntries.mapAt(userIndex, (userEntry) {
+        final user = _entryToUser(userEntry);
+        final updatedUser = update(user);
+        return _userToEntry(updatedUser);
+      }));
 }

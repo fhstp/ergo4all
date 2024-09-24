@@ -6,6 +6,7 @@ import 'package:ergo4all/io/video_storage.dart';
 import 'package:ergo4all/ui/loading_indicator.dart';
 import 'package:ergo4all/ui/screen_content.dart';
 import 'package:ergo4all/ui/show_tutorial_dialog.dart';
+import 'package:ergo4all/ui/snack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -55,8 +56,30 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Future<User> loadedUser;
 
+  void _skipTutorial() async {
+    final userIndex = await getCurrentUserIndex(widget.textStorage);
+    if (userIndex == null) {
+      throw StateError("Must have current user to skip tutorial.");
+    }
+    await updateUser(widget.textStorage, userIndex, skipTutorial);
+  }
+
+  void _showTutorial() {
+    showNotImplementedSnackbar(context);
+  }
+
+  void _onTakeTutorialChoiceMade(bool showTutorial) {
+    if (showTutorial) {
+      _showTutorial();
+    } else {
+      _skipTutorial();
+    }
+  }
+
   void _onUserLoaded(User user) async {
-    if (!user.hasSeenTutorial) await ShowTutorialDialog.show(context);
+    if (!user.hasSeenTutorial) {
+      await ShowTutorialDialog.show(context, _onTakeTutorialChoiceMade);
+    }
   }
 
   void _onSessionVideoSourceChosen(VideoSource source) async {

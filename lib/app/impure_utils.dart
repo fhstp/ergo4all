@@ -30,12 +30,30 @@ Future<Null> updateUserConfig(
   await storage.write(userConfigFilePath, text);
 }
 
+/// Gets the index of the current user from the local [UserConfig]. May be [null]
+/// if there is no [UserConfig] or no current user.
+Future<int?> getCurrentUserIndex(LocalTextStorage storage) async {
+  final config = await getUserConfig(storage);
+  if (config == null) return null;
+  return config.currentUserIndex;
+}
+
 /// Function for getting the current user. May return `null` if no user was
 /// created yet.
 Future<User?> getCurrentUser(LocalTextStorage storage) async {
   final config = await getUserConfig(storage);
   if (config == null) return null;
   return tryGetCurrentUserFromConfig(config);
+}
+
+/// Updates a user in the local [UserConfig]. Finds the user using the given
+/// [userIndex] and applies [updateF] to it.
+Future<Null> updateUser(LocalTextStorage storage, int userIndex,
+    User Function(User user) updateF) async {
+  await updateUserConfig(storage, (config) {
+    if (config == null) throw StateError("No user config found!");
+    return updateUserInConfig(config, userIndex, updateF);
+  });
 }
 
 /// Function for adding new users.
