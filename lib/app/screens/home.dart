@@ -8,7 +8,6 @@ import 'package:ergo4all/ui/screen_content.dart';
 import 'package:ergo4all/ui/show_tutorial_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../domain/video_source.dart';
 import '../../ui/session_start_dialog.dart';
@@ -90,26 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void analyzeVideo(XFile videoFile) {
-      // TODO: Pass file
-      Navigator.pushNamed(context, Routes.recordedAnalysis.path);
-    }
-
-    void onSessionVideoSourceChosen(VideoSource source) async {
-      if (source == VideoSource.live) {
-        Navigator.pushNamed(context, Routes.liveAnalysis.path);
-        return;
-      }
-
-      final videoFile = await widget.videoStorage.tryPick();
-      if (videoFile == null) return;
-      analyzeVideo(videoFile);
-    }
-
-    void showStartSessionDialog() {
-      StartSessionDialog.show(context, onSessionVideoSourceChosen);
-    }
-
     return FutureBuilder(
       future: loadedUser,
       builder: (context, snapshot) => snapshot.hasData
