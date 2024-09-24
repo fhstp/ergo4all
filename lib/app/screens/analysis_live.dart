@@ -19,6 +19,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   CameraController? _activeCameraController;
   late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
+  Pose? _currentPose;
 
   // TODO: Get frames from recorded video
   _processFrame(int timestamp, InputImage frame) async {
@@ -27,6 +28,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     if (pose == null) return;
 
     // TODO: Visualize pose
+    setState(() {
+      _currentPose = pose;
+    });
+
   }
 
   _onImageCaptured(CameraImage camerImage) {
