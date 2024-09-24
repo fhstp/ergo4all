@@ -1,10 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:ergo4all/domain/action_recognition.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
-import 'package:ergo4all/domain/scoring.dart';
-import 'package:ergo4all/domain/video_score.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
@@ -20,7 +17,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
       options: PoseDetectorOptions(
           model: PoseDetectionModel.accurate, mode: PoseDetectionMode.stream));
   CameraController? _activeCameraController;
-  VideoScore _score = VideoScore.empty;
   late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
 
@@ -31,9 +27,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     if (pose == null) return;
 
     // TODO: Visualize pose
-    final action = determineAction(pose);
-    final bodyScore = scorePose(action, pose);
-    _score = _score.addScore(timestamp, bodyScore);
   }
 
   _onImageCaptured(CameraImage camerImage) {
