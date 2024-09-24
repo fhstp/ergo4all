@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
+import 'package:ergo4all/ui/pose_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
@@ -27,7 +28,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     final pose = allPoses.singleOrNull;
     if (pose == null) return;
 
-    // TODO: Visualize pose
     setState(() {
       _currentPose = pose;
     });
@@ -87,9 +87,19 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _activeCameraController != null
-          ? CameraPreview(_activeCameraController!)
-          : const Placeholder(),
+      body: Stack(
+        children: [
+          _activeCameraController != null
+              ? CameraPreview(_activeCameraController!)
+              : const Placeholder(),
+          if (_currentPose != null)
+            SizedBox.expand(
+              child: CustomPaint(
+                painter: PosePainter(pose: _currentPose!),
+              ),
+            )
+        ],
+      ),
     );
   }
 }
