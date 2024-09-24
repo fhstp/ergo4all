@@ -6,6 +6,14 @@ import 'package:ergo4all/ui/pose_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
+@immutable
+class _Capture {
+  final Pose pose;
+  final Size imageSize;
+
+  const _Capture({required this.pose, required this.imageSize});
+}
+
 class LiveAnalysisScreen extends StatefulWidget {
   const LiveAnalysisScreen({super.key});
 
@@ -20,16 +28,16 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   CameraController? _activeCameraController;
   late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
-  Pose? _currentPose;
+  _Capture? _latestCapture;
 
   // TODO: Get frames from recorded video
-  _processFrame(int timestamp, InputImage frame) async {
+  _processFrame(int timestamp, Size imageSize, InputImage frame) async {
     final allPoses = await _poseDetector.processImage(frame);
     final pose = allPoses.singleOrNull;
     if (pose == null) return;
 
     setState(() {
-      _currentPose = pose;
+      _latestCapture = _Capture(pose: pose, imageSize: imageSize);
     });
 
     // TODO: Update score
@@ -42,7 +50,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     assert(cameraRotation != null);
     final inputImage = cameraImageToInputImage(camerImage, cameraRotation!);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    _processFrame(timestamp, inputImage);
+    _processFrame(
+        timestamp,
+        Size(camerImage.width.toDouble(), camerImage.height.toDouble()),
+        inputImage);
   }
 
   Future<Null> _initCamera() async {
@@ -87,18 +98,32 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _activeCameraController != null
-              ? CameraPreview(_activeCameraController!)
-              : const Placeholder(),
-          if (_currentPose != null)
-            SizedBox.expand(
-              child: CustomPaint(
-                painter: PosePainter(pose: _currentPose!),
-              ),
-            )
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (_activeCameraController == null) {
+            return const Placeholder();
+          }
+
+          final previewSize = _activeCameraController!.value.previewSize!;
+
+          return Stack(
+            children: [
+              CameraPreview(_activeCameraController!),
+              if (_latestCapture != null)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  width: previewSize.width,
+                  height: previewSize.height,
+                  child: CustomPaint(
+                    painter: PosePainter(
+                        pose: _latestCapture!.pose,
+                        inputImageSize: _latestCapture!.imageSize),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
