@@ -42,13 +42,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   Future<Null> _initCamera() async {
     final cameras = await availableCameras();
     _activeCamera = cameras[0];
-    final controller = CameraController(
-      _activeCamera, ResolutionPreset.medium,
-      enableAudio: false,
-      imageFormatGroup: Platform.isAndroid
-          ? ImageFormatGroup.nv21 // for Android
-          : ImageFormatGroup.bgra8888, // for iOS
-    );
+    final controller = CameraController(_activeCamera, ResolutionPreset.medium,
+        enableAudio: false,
+        imageFormatGroup: Platform.isAndroid
+            ? ImageFormatGroup.nv21 // for Android
+            : ImageFormatGroup.bgra8888, // for iOS
+        fps: 15);
     await controller.initialize();
     await controller.startImageStream(_onImageCaptured);
     _activeCameraController = controller;
