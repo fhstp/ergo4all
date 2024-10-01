@@ -2,6 +2,7 @@ import 'package:ergo4all/app/impure_utils.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
+import 'package:ergo4all/ui/app_bar.dart';
 import 'package:ergo4all/ui/header.dart';
 import 'package:ergo4all/ui/screen_content.dart';
 import 'package:ergo4all/ui/user_creation_form.dart';
@@ -30,8 +31,8 @@ class _UserCreatorScreenState extends State<UserCreatorScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.userCreator_title),
+      appBar: makeCustomAppBar(
+        title: localizations.userCreator_title,
       ),
       body: ScreenContent(
         child: Column(

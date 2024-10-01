@@ -3,6 +3,7 @@ import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/io/video_storage.dart';
+import 'package:ergo4all/ui/app_bar.dart';
 import 'package:ergo4all/ui/loading_indicator.dart';
 import 'package:ergo4all/ui/screen_content.dart';
 import 'package:ergo4all/ui/show_tutorial_dialog.dart';
@@ -23,9 +24,8 @@ class _HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.home_title),
-        centerTitle: true,
+      appBar: makeCustomAppBar(
+        title: localizations.home_title,
       ),
       body: ScreenContent(
           child: Column(
