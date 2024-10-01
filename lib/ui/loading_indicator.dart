@@ -1,3 +1,4 @@
+import 'package:ergo4all/ui/custom_images.dart';
 import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
@@ -14,8 +15,7 @@ class LoadingIndicator extends StatelessWidget {
           child: FractionallySizedBox(
               widthFactor: 0.5,
               heightFactor: 0.5,
-              child:
-                  Image(image: AssetImage('assets/images/logos/IconRed.png'))),
+              child: Image(image: CustomImages.iconRed)),
         ),
         SizedBox.expand(child: CircularProgressIndicator())
       ]),

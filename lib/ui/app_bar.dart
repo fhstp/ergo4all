@@ -1,3 +1,4 @@
+import 'package:ergo4all/ui/custom_images.dart';
 import 'package:ergo4all/ui/spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,7 @@ AppBar makeCustomAppBar({required String title, bool withIcon = true}) {
     leading: withIcon
         ? const Padding(
             padding: EdgeInsets.all(smallSpace),
-            child:
-                Image(image: AssetImage('assets/images/logos/IconWhite.png')),
+            child: Image(image: CustomImages.iconWhite),
           )
         : null,
     title: Text(title),
