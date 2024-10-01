@@ -1,3 +1,4 @@
+import 'package:ergo4all/ui/spacing.dart';
 import 'package:flutter/material.dart';
 
 const _primaryHovered = Color(0xFFFF6666);
@@ -36,9 +37,11 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
           return _colorScheme.primary;
         }),
         foregroundColor: WidgetStatePropertyAll(_colorScheme.onPrimary),
-        minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+        minimumSize: const WidgetStatePropertyAll(Size(128, 48)),
+        padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(
+            vertical: smallSpace, horizontal: mediumSpace)),
         textStyle: const WidgetStatePropertyAll(
-            TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))))));
 
