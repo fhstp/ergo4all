@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/image_utils.dart';
 import 'package:ergo4all/ui/pose_painter.dart';
@@ -73,10 +74,16 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     setState(() {});
   }
 
+  void onStoppedRecording() {
+    Navigator.of(context).pushReplacementNamed(Routes.results.path);
+  }
+
   void _toggleRecording() {
     setState(() {
       _isRecording = !_isRecording;
     });
+
+    if (!_isRecording) onStoppedRecording();
   }
 
   void _onScreenResumed() {
