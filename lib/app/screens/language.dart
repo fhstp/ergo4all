@@ -38,8 +38,12 @@ class LanguageScreen extends StatelessWidget {
       ),
       body: ScreenContent(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Header(localizations.language_header),
+            const SizedBox(
+              height: largeSpace,
+            ),
             languageButtonFor("Deutsch", const Locale("de")),
             const SizedBox(
               height: mediumSpace,
