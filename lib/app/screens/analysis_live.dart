@@ -35,15 +35,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   _processFrame(int timestamp, InputImage frame, Size imageSize) async {
     final allPoses = await _poseDetector.processImage(frame);
     final pose = allPoses.singleOrNull;
-    if (pose == null) {
-      setState(() {
-        _latestCapture = null;
-      });
-      return;
-    }
 
     setState(() {
-      _latestCapture = _Capture(pose: pose, imageSize: imageSize);
+      _latestCapture =
+          pose != null ? _Capture(pose: pose, imageSize: imageSize) : null;
     });
 
     // TODO: Update score
