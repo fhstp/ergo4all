@@ -11,6 +11,7 @@ class PosePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.clipRect(Rect.fromLTRB(0, 0, size.width, size.height));
     final jointPaint = Paint()..color = Colors.red;
 
     Offset imageToCanvas(Offset offset) {
