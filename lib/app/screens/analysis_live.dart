@@ -74,8 +74,18 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     setState(() {});
   }
 
-  void onStoppedRecording() {
+  void _goToResults() {
     Navigator.of(context).pushReplacementNamed(Routes.results.path);
+  }
+
+  Future<Null> _stopCapture() async {
+    _activeCameraController?.dispose();
+    _activeCameraController = null;
+  }
+
+  void _onStoppedRecording() async {
+    await _stopCapture();
+    _goToResults();
   }
 
   void _toggleRecording() {
@@ -83,7 +93,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
       _isRecording = !_isRecording;
     });
 
-    if (!_isRecording) onStoppedRecording();
+    if (!_isRecording) _onStoppedRecording();
   }
 
   void _onScreenResumed() {
@@ -91,9 +101,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     _initCamera();
   }
 
-  void _onScreenPaused() {
-    _activeCameraController?.dispose();
-    _activeCameraController = null;
+  void _onScreenPaused() async {
+    await _stopCapture();
   }
 
   @override
