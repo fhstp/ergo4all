@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
+import 'package:ergo4all/domain/image_utils.dart';
 import 'package:ergo4all/ui/pose_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
@@ -31,7 +32,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   _Capture? _latestCapture;
 
   // TODO: Get frames from recorded video
-  _processFrame(int timestamp, InputImage frame) async {
+  _processFrame(int timestamp, InputImage frame, Size imageSize) async {
     final allPoses = await _poseDetector.processImage(frame);
     final pose = allPoses.singleOrNull;
     if (pose == null) {
@@ -42,27 +43,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     }
 
     setState(() {
-      final imageSize = frame.metadata!.size;
-      // For some reason, the width and height in the image are flipped.
-      // So in order for the math in following code to be correct, we need
-      // to flip it back. It seems like this only makes sense in portrait mode.
-      // This might be an issue if we ever allow landscape mode. Then we
-      // would need to use some dynamic logic to determine the image orientation.
-      _latestCapture = _Capture(
-          pose: pose, imageSize: Size(imageSize.height, imageSize.width));
+      _latestCapture = _Capture(pose: pose, imageSize: imageSize);
     });
 
     // TODO: Update score
   }
 
-  _onImageCaptured(CameraImage camerImage) {
+  _onImageCaptured(CameraImage cameraImage) {
     final deviceOrientation = _activeCameraController!.value.deviceOrientation;
     final cameraRotation =
         tryGetCameraRotation(deviceOrientation, _activeCamera);
     assert(cameraRotation != null);
-    final inputImage = cameraImageToInputImage(camerImage, cameraRotation!);
+    final inputImage = cameraImageToInputImage(cameraImage, cameraRotation!);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    _processFrame(timestamp, inputImage);
+    _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
   }
 
   Future<Null> _initCamera() async {
