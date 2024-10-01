@@ -64,7 +64,8 @@ class PreUserCreatorScreen extends StatelessWidget {
               key: const Key("default-values"),
               onPressed: proceedeWithDefaultUser,
               child: Text(localizations.preUserCreator_useDefaults),
-            )
+            ),
+            Text(localizations.preUserCreator_defaultsExplanation)
           ],
         ),
       ),
