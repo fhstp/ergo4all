@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/image_utils.dart';
 import 'package:ergo4all/ui/pose_painter.dart';
+import 'package:ergo4all/ui/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
@@ -30,6 +31,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
   _Capture? _latestCapture;
+  bool _isRecording = false;
 
   // TODO: Get frames from recorded video
   _processFrame(int timestamp, InputImage frame, Size imageSize) async {
@@ -69,6 +71,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     setState(() {});
   }
 
+  void _toggleRecording() {
+    setState(() {
+      _isRecording = !_isRecording;
+    });
+  }
+
   void _onScreenResumed() {
     if (_activeCameraController != null) return;
     _initCamera();
@@ -101,17 +109,26 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     }
 
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
-          CameraPreview(_activeCameraController!),
-          if (_latestCapture != null)
-            Positioned.fill(
-              child: CustomPaint(
-                painter: PosePainter(
-                    pose: _latestCapture!.pose,
-                    inputImageSize: _latestCapture!.imageSize),
-              ),
-            ),
+          Stack(
+            children: [
+              CameraPreview(_activeCameraController!),
+              if (_latestCapture != null)
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: PosePainter(
+                        pose: _latestCapture!.pose,
+                        inputImageSize: _latestCapture!.imageSize),
+                  ),
+                ),
+            ],
+          ),
+          const Spacer(),
+          RecordButton(
+            isRecording: _isRecording,
+            onTap: _toggleRecording,
+          )
         ],
       ),
     );
