@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/image_utils.dart';
 import 'package:ergo4all/ui/pose_painter.dart';
+import 'package:ergo4all/ui/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
@@ -30,6 +32,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
   _Capture? _latestCapture;
+  bool _isRecording = false;
 
   // TODO: Get frames from recorded video
   _processFrame(int timestamp, InputImage frame, Size imageSize) async {
@@ -41,6 +44,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
           pose != null ? _Capture(pose: pose, imageSize: imageSize) : null;
     });
 
+    // We only update score when recording
+    if (!_isRecording) return;
     // TODO: Update score
   }
 
@@ -54,9 +59,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
   }
 
-  Future<Null> _initCamera() async {
-    final cameras = await availableCameras();
-    _activeCamera = cameras[0];
+  Future<Null> _startCaptureUsing(CameraDescription camera) async {
+    _activeCamera = camera;
     final controller = CameraController(_activeCamera, ResolutionPreset.medium,
         enableAudio: false,
         imageFormatGroup: Platform.isAndroid
@@ -69,14 +73,41 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     setState(() {});
   }
 
+  Future<Null> _initCamera() async {
+    final cameras = await availableCameras();
+    await _startCaptureUsing(cameras[0]);
+  }
+
+  void _goToResults() {
+    Navigator.of(context).pushReplacementNamed(Routes.results.path);
+  }
+
+  Future<Null> _stopCapture() async {
+    _activeCameraController?.dispose();
+    _activeCameraController = null;
+    setState(() {});
+  }
+
+  void _onStoppedRecording() async {
+    await _stopCapture();
+    _goToResults();
+  }
+
+  void _toggleRecording() {
+    setState(() {
+      _isRecording = !_isRecording;
+    });
+
+    if (!_isRecording) _onStoppedRecording();
+  }
+
   void _onScreenResumed() {
     if (_activeCameraController != null) return;
     _initCamera();
   }
 
-  void _onScreenPaused() {
-    _activeCameraController?.dispose();
-    _activeCameraController = null;
+  void _onScreenPaused() async {
+    await _stopCapture();
   }
 
   @override
@@ -101,17 +132,26 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     }
 
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
-          CameraPreview(_activeCameraController!),
-          if (_latestCapture != null)
-            Positioned.fill(
-              child: CustomPaint(
-                painter: PosePainter(
-                    pose: _latestCapture!.pose,
-                    inputImageSize: _latestCapture!.imageSize),
-              ),
-            ),
+          Stack(
+            children: [
+              CameraPreview(_activeCameraController!),
+              if (_latestCapture != null)
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: PosePainter(
+                        pose: _latestCapture!.pose,
+                        inputImageSize: _latestCapture!.imageSize),
+                  ),
+                ),
+            ],
+          ),
+          const Spacer(),
+          RecordButton(
+            isRecording: _isRecording,
+            onTap: _toggleRecording,
+          )
         ],
       ),
     );
