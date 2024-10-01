@@ -19,7 +19,10 @@ class StartSessionDialog extends StatelessWidget {
           children: [
             IconButton(
               key: key,
-              onPressed: () => videoSourceChosen(source),
+              onPressed: () {
+                Navigator.of(context).pop();
+                videoSourceChosen(source);
+              },
               icon: Icon(
                 icon,
                 color: appTheme.primaryColor,
