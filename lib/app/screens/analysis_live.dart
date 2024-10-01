@@ -97,33 +97,24 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_activeCameraController == null ||
+        !_activeCameraController!.value.isInitialized) {
+      return const Placeholder();
+    }
+
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (_activeCameraController == null) {
-            return const Placeholder();
-          }
-
-          final previewSize = _activeCameraController!.value.previewSize!;
-
-          return Stack(
-            children: [
-              CameraPreview(_activeCameraController!),
-              if (_latestCapture != null)
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  width: previewSize.width,
-                  height: previewSize.height,
-                  child: CustomPaint(
-                    painter: PosePainter(
-                        pose: _latestCapture!.pose,
-                        inputImageSize: _latestCapture!.imageSize),
-                  ),
-                ),
-            ],
-          );
-        },
+      body: Stack(
+        children: [
+          CameraPreview(_activeCameraController!),
+          if (_latestCapture != null)
+            Positioned.fill(
+              child: CustomPaint(
+                painter: PosePainter(
+                    pose: _latestCapture!.pose,
+                    inputImageSize: _latestCapture!.imageSize),
+              ),
+            ),
+        ],
       ),
     );
   }
