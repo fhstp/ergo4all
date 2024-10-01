@@ -43,6 +43,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
               height: largeSpace,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(localizations.termsOfUse_accept),
                 Checkbox(
