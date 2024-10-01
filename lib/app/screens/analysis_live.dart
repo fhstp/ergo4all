@@ -43,6 +43,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
           pose != null ? _Capture(pose: pose, imageSize: imageSize) : null;
     });
 
+    // We only update score when recording
+    if (!_isRecording) return;
     // TODO: Update score
   }
 
