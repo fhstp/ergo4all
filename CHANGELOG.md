@@ -1,3 +1,24 @@
+# [1.12.0](https://github.com/fhstp/ergo4all/compare/v1.11.0...v1.12.0) (2024-10-01)
+
+
+### Bug Fixes
+
+* bad merge ([69c076c](https://github.com/fhstp/ergo4all/commit/69c076c58d7883fd7143bb1b2d3584fe82c519de))
+
+
+### Features
+
+* add default-value explanation text ([0dc9635](https://github.com/fhstp/ergo4all/commit/0dc9635c27adad04d6546a4cc472b0c7b95143ea)), closes [#35](https://github.com/fhstp/ergo4all/issues/35)
+* add icon to app bar ([0d3cd32](https://github.com/fhstp/ergo4all/commit/0d3cd3220a76e200788270614f160a7654c4fa97)), closes [#29](https://github.com/fhstp/ergo4all/issues/29)
+* add record button ([#39](https://github.com/fhstp/ergo4all/issues/39)) ([a0c52a4](https://github.com/fhstp/ergo4all/commit/a0c52a42e1ca2f05b8b01fca8c1f7c54ff0b0b9a)), closes [#37](https://github.com/fhstp/ergo4all/issues/37)
+* close session-start popup ([fc4cb6a](https://github.com/fhstp/ergo4all/commit/fc4cb6adf3e7d3d0aba522fba2cc1f761614072c)), closes [#40](https://github.com/fhstp/ergo4all/issues/40)
+* record live video ([1a5befb](https://github.com/fhstp/ergo4all/commit/1a5befbb8f2d9f31cab9970b36d7aa36d21a1479))
+* show error snackbars ([d1cd552](https://github.com/fhstp/ergo4all/commit/d1cd552b0dee54c8e9841b8fbf19ee0910d74a5c))
+* show tutorial dialog ([bf566fc](https://github.com/fhstp/ergo4all/commit/bf566fcd85206ee771c917c3873b151423a2d85f))
+* simple camera preview ([ec1a812](https://github.com/fhstp/ergo4all/commit/ec1a81207092ea0ab58395a9f4d84e961ff0c271))
+* skip tutorial ([cd612a8](https://github.com/fhstp/ergo4all/commit/cd612a8ab354519027b3b888b8fad08ca3b20553))
+* visualize pose during live ([#27](https://github.com/fhstp/ergo4all/issues/27)) ([996c2fa](https://github.com/fhstp/ergo4all/commit/996c2fa4a57626e1ec152fde3107850c49cb6851))
+
 # [1.11.0](https://github.com/fhstp/ergo4all/compare/v1.10.0...v1.11.0) (2024-09-03)
 
 
