@@ -37,7 +37,8 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
         }),
         foregroundColor: WidgetStatePropertyAll(_colorScheme.onPrimary),
         minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
-        textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 14)),
+        textStyle: const WidgetStatePropertyAll(
+            TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))))));
 
