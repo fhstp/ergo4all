@@ -59,9 +59,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
   }
 
-  Future<Null> _initCamera() async {
-    final cameras = await availableCameras();
-    _activeCamera = cameras[0];
+  Future<Null> _startCaptureUsing(CameraDescription camera) async {
+    _activeCamera = camera;
     final controller = CameraController(_activeCamera, ResolutionPreset.medium,
         enableAudio: false,
         imageFormatGroup: Platform.isAndroid
@@ -74,6 +73,11 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     setState(() {});
   }
 
+  Future<Null> _initCamera() async {
+    final cameras = await availableCameras();
+    await _startCaptureUsing(cameras[0]);
+  }
+
   void _goToResults() {
     Navigator.of(context).pushReplacementNamed(Routes.results.path);
   }
@@ -81,6 +85,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   Future<Null> _stopCapture() async {
     _activeCameraController?.dispose();
     _activeCameraController = null;
+    setState(() {});
   }
 
   void _onStoppedRecording() async {
