@@ -31,13 +31,13 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   _Capture? _latestCapture;
 
   // TODO: Get frames from recorded video
-  _processFrame(int timestamp, Size imageSize, InputImage frame) async {
+  _processFrame(int timestamp, InputImage frame) async {
     final allPoses = await _poseDetector.processImage(frame);
     final pose = allPoses.singleOrNull;
     if (pose == null) return;
 
     setState(() {
-      _latestCapture = _Capture(pose: pose, imageSize: imageSize);
+      _latestCapture = _Capture(pose: pose, imageSize: frame.metadata!.size);
     });
 
     // TODO: Update score
@@ -50,10 +50,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     assert(cameraRotation != null);
     final inputImage = cameraImageToInputImage(camerImage, cameraRotation!);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    _processFrame(
-        timestamp,
-        Size(camerImage.width.toDouble(), camerImage.height.toDouble()),
-        inputImage);
+    _processFrame(timestamp, inputImage);
   }
 
   Future<Null> _initCamera() async {
