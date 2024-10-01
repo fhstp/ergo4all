@@ -37,7 +37,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     if (pose == null) return;
 
     setState(() {
-      _latestCapture = _Capture(pose: pose, imageSize: frame.metadata!.size);
+      final imageSize = frame.metadata!.size;
+      // For some reason, the width and height in the image are flipped.
+      // So in order for the math in following code to be correct, we need
+      // to flip it back. It seems like this only makes sense in portrait mode.
+      // This might be an issue if we ever allow landscape mode. Then we
+      // would need to use some dynamic logic to determine the image orientation.
+      _latestCapture = _Capture(
+          pose: pose, imageSize: Size(imageSize.height, imageSize.width));
     });
 
     // TODO: Update score

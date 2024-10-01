@@ -23,8 +23,8 @@ class PosePainter extends CustomPainter {
     Offset? tryGetPosOf(PoseLandmarkType landmarkType) {
       final landmark = _pose.landmarks[landmarkType];
       if (landmark == null || landmark.likelihood < 0.9) return null;
-      var imageOffset = Offset(landmark.x, landmark.y);
-      var canvasOffset = imageToCanvas(imageOffset);
+      final imageOffset = Offset(landmark.x, landmark.y);
+      final canvasOffset = imageToCanvas(imageOffset);
       return canvasOffset;
     }
 
