@@ -1,12 +1,19 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:ergo4all/domain/action_recognition.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
-import 'package:ergo4all/domain/scoring.dart';
-import 'package:ergo4all/domain/video_score.dart';
+import 'package:ergo4all/domain/image_utils.dart';
+import 'package:ergo4all/ui/pose_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+
+@immutable
+class _Capture {
+  final Pose pose;
+  final Size imageSize;
+
+  const _Capture({required this.pose, required this.imageSize});
+}
 
 class LiveAnalysisScreen extends StatefulWidget {
   const LiveAnalysisScreen({super.key});
@@ -20,42 +27,42 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
       options: PoseDetectorOptions(
           model: PoseDetectionModel.accurate, mode: PoseDetectionMode.stream));
   CameraController? _activeCameraController;
-  VideoScore _score = VideoScore.empty;
   late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
+  _Capture? _latestCapture;
 
   // TODO: Get frames from recorded video
-  _processFrame(int timestamp, InputImage frame) async {
+  _processFrame(int timestamp, InputImage frame, Size imageSize) async {
     final allPoses = await _poseDetector.processImage(frame);
     final pose = allPoses.singleOrNull;
-    if (pose == null) return;
 
-    // TODO: Visualize pose
-    final action = determineAction(pose);
-    final bodyScore = scorePose(action, pose);
-    _score = _score.addScore(timestamp, bodyScore);
+    setState(() {
+      _latestCapture =
+          pose != null ? _Capture(pose: pose, imageSize: imageSize) : null;
+    });
+
+    // TODO: Update score
   }
 
-  _onImageCaptured(CameraImage camerImage) {
+  _onImageCaptured(CameraImage cameraImage) {
     final deviceOrientation = _activeCameraController!.value.deviceOrientation;
     final cameraRotation =
         tryGetCameraRotation(deviceOrientation, _activeCamera);
     assert(cameraRotation != null);
-    final inputImage = cameraImageToInputImage(camerImage, cameraRotation!);
+    final inputImage = cameraImageToInputImage(cameraImage, cameraRotation!);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    _processFrame(timestamp, inputImage);
+    _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
   }
 
   Future<Null> _initCamera() async {
     final cameras = await availableCameras();
     _activeCamera = cameras[0];
-    final controller = CameraController(
-      _activeCamera, ResolutionPreset.medium,
-      enableAudio: false,
-      imageFormatGroup: Platform.isAndroid
-          ? ImageFormatGroup.nv21 // for Android
-          : ImageFormatGroup.bgra8888, // for iOS
-    );
+    final controller = CameraController(_activeCamera, ResolutionPreset.medium,
+        enableAudio: false,
+        imageFormatGroup: Platform.isAndroid
+            ? ImageFormatGroup.nv21 // for Android
+            : ImageFormatGroup.bgra8888, // for iOS
+        fps: 15);
     await controller.initialize();
     await controller.startImageStream(_onImageCaptured);
     _activeCameraController = controller;
@@ -88,10 +95,25 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_activeCameraController == null ||
+        !_activeCameraController!.value.isInitialized) {
+      return const Placeholder();
+    }
+
     return Scaffold(
-      body: _activeCameraController != null
-          ? CameraPreview(_activeCameraController!)
-          : const Placeholder(),
+      body: Stack(
+        children: [
+          CameraPreview(_activeCameraController!),
+          if (_latestCapture != null)
+            Positioned.fill(
+              child: CustomPaint(
+                painter: PosePainter(
+                    pose: _latestCapture!.pose,
+                    inputImageSize: _latestCapture!.imageSize),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
