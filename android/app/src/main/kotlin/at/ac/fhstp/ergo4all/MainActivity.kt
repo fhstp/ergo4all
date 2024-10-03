@@ -1,4 +1,4 @@
-package com.example.ergo4all
+package at.ac.fhstp.ergo4all
 
 import io.flutter.embedding.android.FlutterActivity
 
