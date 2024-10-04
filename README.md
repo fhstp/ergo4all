@@ -1,5 +1,21 @@
 # ergo4all
 
+<table style="border-collapse: collapse; border: none">
+    <tr style="border: none">
+        <th>Powered by</th>
+        <th>Project partners</th>
+    </tr>
+    <tr style="border: none">
+        <th>
+            <img src="./assets/images/logos/ak.jpg" height="150px" />
+        </th>
+        <th>
+            <img src="./assets/images/logos/tuwien.jpg" height="150px" />
+            <img src="./assets/images/logos/fhstp.png" height="150px" />
+        </th>
+    </tr>
+</table>
+
 The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle) project.
 
 Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
