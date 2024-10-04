@@ -4,6 +4,7 @@ import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/io/video_storage.dart';
 import 'package:ergo4all/ui/app_bar.dart';
+import 'package:ergo4all/ui/header.dart';
 import 'package:ergo4all/ui/loading_indicator.dart';
 import 'package:ergo4all/ui/screen_content.dart';
 import 'package:ergo4all/ui/show_tutorial_dialog.dart';
@@ -30,7 +31,7 @@ class _HomeContent extends StatelessWidget {
       body: ScreenContent(
           child: Column(
         children: [
-          Text(localizations.home_welcome(user.name)),
+          Header(localizations.home_welcome(user.name)),
           ElevatedButton(
               key: const Key("start"),
               onPressed: () {
