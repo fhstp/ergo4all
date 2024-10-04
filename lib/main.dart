@@ -13,6 +13,7 @@ import 'package:ergo4all/app/screens/results.dart';
 import 'package:ergo4all/app/screens/terms_of_use.dart';
 import 'package:ergo4all/app/screens/user_creator.dart';
 import 'package:ergo4all/app/screens/welcome.dart';
+import 'package:ergo4all/io/exit_app.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/io/preference_storage.dart';
 import 'package:ergo4all/io/video_storage.dart';
@@ -34,6 +35,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   late final LocalTextStorage _textStorage;
   late final VideoStorage _videoStorage;
   late final PreferenceStorage _preferenceStorage;
+  late final ExitApp _exitApp;
   Locale? _customLocale;
 
   void _lockPortraitMode() {
@@ -56,6 +58,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
     _textStorage = LocalDocumentStorage();
     _videoStorage = GalleryVideoStorage(ImagePicker());
     _preferenceStorage = SharedPreferencesStorage(SharedPreferencesAsync());
+    _exitApp = multiPlatformExitApp;
 
     _lockPortraitMode();
     _reloadCustomLocale();
@@ -67,7 +70,9 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         routes: {
           Routes.home.path: (context) =>
               HomeScreen(_videoStorage, _textStorage),
-          Routes.liveAnalysis.path: (context) => const LiveAnalysisScreen(),
+          Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(
+                exitApp: _exitApp,
+              ),
           Routes.recordedAnalysis.path: (context) =>
               const RecordedAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
