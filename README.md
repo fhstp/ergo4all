@@ -2,6 +2,8 @@
 
 The main repository for the Ergo4All project.
 
+Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
+
 ## Develop
 
 The ergo4all app is a Flutter project targeting Android and iOS.
