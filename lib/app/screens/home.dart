@@ -92,9 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final videoFile = await widget.videoStorage.tryPick();
     if (videoFile == null) return;
 
-    if (mounted) {
-      Navigator.pushNamed(context, Routes.recordedAnalysis.path);
-    }
+    if (!mounted) return;
+
+    Navigator.pushNamed(context, Routes.recordedAnalysis.path);
   }
 
   void _showStartSessionDialog() async {
