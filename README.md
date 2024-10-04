@@ -1,6 +1,6 @@
 # ergo4all
 
-The main repository for the Ergo4All project.
+The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle) project.
 
 Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
 
