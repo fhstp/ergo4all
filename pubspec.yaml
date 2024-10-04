@@ -46,7 +46,7 @@ dependencies:
   path: ^1.9.0
   cross_file: ^0.3.4+2
   google_mlkit_pose_detection: ^0.12.0
-  camera: ^0.10.6
+  camera: ^0.11.0+2
 
 dev_dependencies:
   flutter_test:
@@ -57,12 +57,12 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
   build_runner: ^2.4.11
   json_serializable: ^6.8.0
   glados: ^1.1.7
-  mockingjay: ^0.5.0
+  mockingjay: ^0.6.0
   mockito: ^5.4.4
 
 # For information on the generic Dart part of this file, see the
