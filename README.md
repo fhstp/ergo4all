@@ -1,14 +1,14 @@
 # ergo4all
 
 <table style="border-collapse: collapse; border: none">
-    <tr style="border: none">
-        <th>Powered by</th>
-        <th>Project partners</th>
+    <tr>
+        <th style="border: none">Powered by</th>
+        <th style="border: none">Project partners</th>
     </tr>
-    <tr style="border: none">
-        <th>
+    <tr>
+        <th style="border: none">
             <img src="./assets/images/logos/ak.jpg" height="150px" />
-        </th>
+        </th style="border: none">
         <th>
             <img src="./assets/images/logos/tuwien.jpg" height="150px" />
             <img src="./assets/images/logos/fhstp.png" height="150px" />
