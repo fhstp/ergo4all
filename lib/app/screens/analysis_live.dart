@@ -4,9 +4,11 @@ import 'package:camera/camera.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/image_utils.dart';
+import 'package:ergo4all/ui/camera_exception_alert.dart';
 import 'package:ergo4all/ui/pose_painter.dart';
 import 'package:ergo4all/ui/record_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 @immutable
@@ -59,6 +61,18 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
   }
 
+  _handleCameraInitError(CameraException ex) async {
+    final action = await showCameraExceptionAlert(context, ex);
+
+    if (!mounted) return;
+
+    if (action == CameraExceptionHandleActions.closeApp) {
+      FlutterExitApp.exitApp();
+    } else {
+      Navigator.of(context).pushReplacementNamed(Routes.liveAnalysis.path);
+    }
+  }
+
   Future<Null> _startCaptureUsing(CameraDescription camera) async {
     _activeCamera = camera;
     final controller = CameraController(_activeCamera, ResolutionPreset.medium,
@@ -67,10 +81,16 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
             ? ImageFormatGroup.nv21 // for Android
             : ImageFormatGroup.bgra8888, // for iOS
         fps: 15);
-    await controller.initialize();
-    await controller.startImageStream(_onImageCaptured);
-    _activeCameraController = controller;
-    setState(() {});
+    try {
+      await controller.initialize();
+      await controller.startImageStream(_onImageCaptured);
+      _activeCameraController = controller;
+      setState(() {});
+    } catch (ex) {
+      _activeCameraController = null;
+      assert(ex is CameraException);
+      _handleCameraInitError(ex as CameraException);
+    }
   }
 
   Future<Null> _initCamera() async {
