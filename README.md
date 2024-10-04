@@ -8,8 +8,8 @@
     <tr>
         <th style="border: none">
             <img src="./assets/images/logos/ak.jpg" height="150px" />
-        </th style="border: none">
-        <th>
+        </th>
+        <th style="border: none">
             <img src="./assets/images/logos/tuwien.jpg" height="150px" />
             <img src="./assets/images/logos/fhstp.png" height="150px" />
         </th>
