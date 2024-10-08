@@ -49,7 +49,7 @@ InputImage cameraImageToInputImage(
       (Platform.isAndroid && format != InputImageFormat.nv21) ||
       (Platform.isIOS && format != InputImageFormat.bgra8888)) {
     throw ArgumentError(
-        "Image has invalid format. Must be nv21 for Android or bgra8888 for ios",
+        "Image has invalid format. Must be nv21 for Android or bgra8888 for ios, but was $format.",
         "image");
   }
 

@@ -4,8 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/image_utils.dart';
-import 'package:ergo4all/io/exit_app.dart';
-import 'package:ergo4all/ui/camera_exception_alert.dart';
+import 'package:ergo4all/domain/types.dart';
 import 'package:ergo4all/ui/pose_painter.dart';
 import 'package:ergo4all/ui/record_button.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,9 @@ class _Capture {
 }
 
 class LiveAnalysisScreen extends StatefulWidget {
-  final ExitApp exitApp;
+  final RequestCameraPermissions requestCameraPermissions;
 
-  const LiveAnalysisScreen({super.key, required this.exitApp});
+  const LiveAnalysisScreen({super.key, required this.requestCameraPermissions});
 
   @override
   State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
@@ -33,7 +32,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
       options: PoseDetectorOptions(
           model: PoseDetectionModel.accurate, mode: PoseDetectionMode.stream));
   CameraController? _activeCameraController;
-  late final AppLifecycleListener _appLifecycleListener;
   late final CameraDescription _activeCamera;
   _Capture? _latestCapture;
   bool _isRecording = false;
@@ -63,18 +61,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
   }
 
-  _handleCameraInitError(CameraException ex) async {
-    final action = await showCameraExceptionAlert(context, ex);
-
-    if (!mounted) return;
-
-    if (action == CameraExceptionHandleActions.closeApp) {
-      await widget.exitApp();
-    } else {
-      Navigator.of(context).pushReplacementNamed(Routes.liveAnalysis.path);
-    }
-  }
-
   Future<Null> _startCaptureUsing(CameraDescription camera) async {
     _activeCamera = camera;
     final controller = CameraController(_activeCamera, ResolutionPreset.medium,
@@ -83,19 +69,19 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
             ? ImageFormatGroup.nv21 // for Android
             : ImageFormatGroup.bgra8888, // for iOS
         fps: 15);
-    try {
-      await controller.initialize();
-      await controller.startImageStream(_onImageCaptured);
-      _activeCameraController = controller;
-      setState(() {});
-    } catch (ex) {
-      _activeCameraController = null;
-      assert(ex is CameraException);
-      _handleCameraInitError(ex as CameraException);
-    }
+    await controller.initialize();
+    await controller.startImageStream(_onImageCaptured);
+    _activeCameraController = controller;
+    setState(() {});
   }
 
-  Future<Null> _initCamera() async {
+  Future<Null> _tryInitCamera() async {
+    final isCameraPermissionGranted = await widget.requestCameraPermissions();
+    if (!isCameraPermissionGranted) {
+      if (mounted) Navigator.of(context).pop();
+      return;
+    }
+
     final cameras = await availableCameras();
     await _startCaptureUsing(cameras[0]);
   }
@@ -123,34 +109,25 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     if (!_isRecording) _onStoppedRecording();
   }
 
-  void _onScreenResumed() {
-    if (_activeCameraController != null) return;
-    _initCamera();
-  }
-
-  void _onScreenPaused() async {
-    await _stopCapture();
-  }
-
   @override
   void initState() {
     super.initState();
-    _appLifecycleListener = AppLifecycleListener(
-        onResume: _onScreenResumed, onPause: _onScreenPaused);
-    _initCamera();
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _appLifecycleListener.dispose();
+    _tryInitCamera();
   }
 
   @override
   Widget build(BuildContext context) {
     if (_activeCameraController == null ||
         !_activeCameraController!.value.isInitialized) {
-      return const Placeholder();
+      return Scaffold(
+        body: Center(
+          child: SizedBox(
+              width: 200,
+              height: 200,
+              child: const CircularProgressIndicator()),
+        ),
+      );
     }
 
     return Scaffold(

@@ -17,6 +17,7 @@ import 'package:ergo4all/io/exit_app.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
 import 'package:ergo4all/io/preference_storage.dart';
 import 'package:ergo4all/io/video_storage.dart';
+import 'package:ergo4all/ui/camera_permission_dialog.dart';
 import 'package:ergo4all/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,8 +72,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.home.path: (context) =>
               HomeScreen(_videoStorage, _textStorage),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(
-                exitApp: _exitApp,
-              ),
+              requestCameraPermissions: () =>
+                  showCameraPermissionDialog(context)),
           Routes.recordedAnalysis.path: (context) =>
               const RecordedAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
