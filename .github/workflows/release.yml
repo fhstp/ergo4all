@@ -17,28 +17,39 @@ jobs:
         uses: kuhnroyal/flutter-fvm-config-action@v2
 
       - name: Setup Flutter 💻
-        uses: subosito/flutter-action@v2.10.0
+        uses: subosito/flutter-action@v2
         with:
           channel: ${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
           cache: true
           cache-key: ${{ runner.os }}-flutter-${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
+
+      - name: Install flutter dependencies 📦
+        run: flutter pub get --no-example
+
+      - name: Install java ☕
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build for android 🤖
+        run: flutter build appbundle
 
       - name: Setup Node 💻
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
 
-      - name: Install dependencies 📦
+      - name: Install semantic-release dependencies 📦
         run: |
           npm i -g \
             semantic-release \
-            @semantic-release/commit-analyzer \
-            @semantic-release/release-notes-generator \
             @semantic-release/changelog \
             semantic-release-pub \
-            @semantic-release/git
+            @semantic-release/git \
+            @semantic-release/github
 
       - name: Release 🚀
         run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
