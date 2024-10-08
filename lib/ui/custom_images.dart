@@ -10,4 +10,7 @@ abstract final class CustomImages {
 
   /// The app logo (icon + text) in solid red color.
   static const logoRed = AssetImage('assets/images/logos/LogoRed.png');
+
+  /// The logo for AK Niederösterreich
+  static const logoAk = AssetImage('assets/images/logos/ak.jpg');
 }

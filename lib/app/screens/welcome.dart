@@ -52,6 +52,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Image(image: CustomImages.logoRed),
+                  // TODO: Localize
+                  Text("Powered by"),
+                  const Image(
+                    image: CustomImages.logoAk,
+                    height: 200,
+                  ),
                   const SizedBox(
                     height: largeSpace,
                   ),
