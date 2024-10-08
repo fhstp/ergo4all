@@ -1,3 +1,16 @@
+# [1.13.0](https://github.com/fhstp/ergo4all/compare/v1.12.0...v1.13.0) (2024-10-08)
+
+
+### Bug Fixes
+
+* build issue ([9beba22](https://github.com/fhstp/ergo4all/commit/9beba223cef1377becb04e7066a64057a5754afb))
+
+
+### Features
+
+* **ci:** build android release ([8b210c1](https://github.com/fhstp/ergo4all/commit/8b210c1cfad264524c949432b0d80c1cda2a3504))
+* handle cam permissions denied ([#45](https://github.com/fhstp/ergo4all/issues/45)) ([a3a9a1d](https://github.com/fhstp/ergo4all/commit/a3a9a1da279e8b95634d24732f2de6f087e0c746))
+
 # [1.12.0](https://github.com/fhstp/ergo4all/compare/v1.11.0...v1.12.0) (2024-10-01)
 
 
