@@ -29,7 +29,7 @@ jobs:
       - name: Install flutter dependencies 📦
         run: flutter pub get --no-example
 
-      - name: Install java ☕
+      - name: Setup java ☕
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
