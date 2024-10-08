@@ -52,11 +52,41 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Image(image: CustomImages.logoRed),
+                  const SizedBox(
+                    height: largeSpace,
+                  ),
                   // TODO: Localize
                   Text("Powered by"),
+                  const SizedBox(
+                    height: smallSpace,
+                  ),
                   const Image(
                     image: CustomImages.logoAk,
                     height: 200,
+                  ),
+                  const SizedBox(
+                    height: largeSpace,
+                  ),
+                  // TODO: Localize
+                  Text("Project partners"),
+                  const SizedBox(
+                    height: smallSpace,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Image(
+                        image: CustomImages.logoTUWien,
+                        height: 100,
+                      ),
+                      SizedBox(
+                        width: largeSpace,
+                      ),
+                      const Image(
+                        image: CustomImages.logoFhStp,
+                        height: 100,
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: largeSpace,

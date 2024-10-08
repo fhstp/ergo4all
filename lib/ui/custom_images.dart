@@ -13,4 +13,10 @@ abstract final class CustomImages {
 
   /// The logo for AK Niederösterreich
   static const logoAk = AssetImage('assets/images/logos/ak.jpg');
+
+  /// The logo for TU Wien
+  static const logoTUWien = AssetImage('assets/images/logos/tuwien.jpg');
+
+  /// The logo for FH St.Pölten
+  static const logoFhStp = AssetImage('assets/images/logos/fhstp.png');
 }
