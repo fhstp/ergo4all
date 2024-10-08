@@ -24,7 +24,7 @@ jobs:
         with:
           channel: ${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
           cache: true
-          cache-key: ${{ runner.os }}-flutter-${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
+          cache-key: ${{ runner.os }}-flutter-${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}-${{ hashFiles('**/pubspec.yaml') }}
 
       - name: Install flutter dependencies 📦
         run: flutter pub get --no-example
