@@ -1,3 +1,12 @@
+# [1.14.0](https://github.com/fhstp/ergo4all/compare/v1.13.0...v1.14.0) (2024-10-09)
+
+
+### Features
+
+* add ak logo to welcome screen ([07d320c](https://github.com/fhstp/ergo4all/commit/07d320c3e7bb2454f2e9e394f04a3f205be82341)), closes [#31](https://github.com/fhstp/ergo4all/issues/31)
+* add project partner logos to welcome screen ([d5eb52c](https://github.com/fhstp/ergo4all/commit/d5eb52cb3bc2cca503595ed6a51cfaa47cd53164)), closes [#30](https://github.com/fhstp/ergo4all/issues/30)
+* improve camera permission logic ([a3923f9](https://github.com/fhstp/ergo4all/commit/a3923f9c9ce90e282ddc07d3ae8d2aa0952d71b0)), closes [#44](https://github.com/fhstp/ergo4all/issues/44)
+
 # [1.13.0](https://github.com/fhstp/ergo4all/compare/v1.12.0...v1.13.0) (2024-10-08)
 
 
