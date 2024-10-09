@@ -26,6 +26,15 @@ jobs:
           cache: true
           cache-key: ${{ runner.os }}-flutter-${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}-${{ hashFiles('**/pubspec.yaml') }}
 
+      - name: Cache Flutter dependencies ♻️
+        id: cache-flutter
+        uses: actions/cache@v2
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
       - name: Install flutter dependencies 📦
         run: flutter pub get --no-example
 
