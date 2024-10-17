@@ -1,4 +1,4 @@
-import 'package:ergo4all/app/impure_utils.dart';
+import 'package:ergo4all/app/pref_keys.dart';
 import 'package:ergo4all/io/preference_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mockingjay/mockingjay.dart';
@@ -28,11 +28,11 @@ class FakePreferenceStorage extends Fake implements PreferenceStorage {
 
 extension CustomLocaleStorage on FakePreferenceStorage {
   FakePreferenceStorage putCustomLocale(Locale locale) {
-    return putStringSync(customLocalPrefKey, locale.languageCode);
+    return putStringSync(PrefKeys.customLocale, locale.languageCode);
   }
 
   Locale? tryGetCustomLocale() {
-    final localePref = tryGetStringSync(customLocalPrefKey);
+    final localePref = tryGetStringSync(PrefKeys.customLocale);
     return localePref != null ? Locale(localePref) : null;
   }
 }
