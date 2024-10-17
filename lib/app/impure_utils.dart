@@ -76,8 +76,7 @@ const customLocalPrefKey = "custom-locale";
 /// Attempts to read custom locale from a [PreferenceStorage]. May return null
 /// if there is no custom locale.
 Future<Locale?> tryGetCustomLocale(PreferenceStorage storage) async {
-  final localePref = await storage.tryGetString(customLocalPrefKey);
-  return localePref != null ? deserializeLocale(localePref) : null;
+  return storage.tryGetItem(customLocalPrefKey, deserializeLocale);
 }
 
 /// Sets the users custom locale in a [PreferenceStorage].
