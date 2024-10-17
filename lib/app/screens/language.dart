@@ -8,26 +8,30 @@ import 'package:ergo4all/ui/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LanguageScreen extends StatelessWidget {
+class LanguageScreen extends StatefulWidget {
   final PreferenceStorage preferenceStorage;
 
   const LanguageScreen(this.preferenceStorage, {super.key});
 
   @override
+  State<LanguageScreen> createState() => _LanguageScreenState();
+}
+
+class _LanguageScreenState extends State<LanguageScreen> {
+  void _selectLocale(Locale locale) async {
+    await setCustomLocale(widget.preferenceStorage, locale);
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, Routes.preIntro.path);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    void onLanguageChosen(Locale locale) async {
-      await setCustomLocale(preferenceStorage, locale);
-      if (context.mounted) {
-        Navigator.pushReplacementNamed(context, Routes.preIntro.path);
-      }
-    }
 
     Widget languageButtonFor(String language, Locale locale) {
       return ElevatedButton(
         key: Key("lang_button_${locale.languageCode.toLowerCase()}"),
-        onPressed: () => onLanguageChosen(locale),
+        onPressed: () => _selectLocale(locale),
         child: Text(language),
       );
     }
