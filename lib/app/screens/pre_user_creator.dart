@@ -24,7 +24,7 @@ class PreUserCreatorScreen extends StatelessWidget {
       navigator.pushNamed(Routes.userCreator.path);
     }
 
-    void proceedeWithDefaultUser() async {
+    void proceedWithDefaultUser() async {
       // This is the default user.
       await addUser(textStorage, const User.newFromName("Ergo-fan"));
 
@@ -62,7 +62,7 @@ class PreUserCreatorScreen extends StatelessWidget {
             ),
             TextButton(
               key: const Key("default-values"),
-              onPressed: proceedeWithDefaultUser,
+              onPressed: proceedWithDefaultUser,
               child: Text(localizations.preUserCreator_useDefaults),
             ),
             Text(localizations.preUserCreator_defaultsExplanation)
