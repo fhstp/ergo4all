@@ -1,6 +1,6 @@
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/ui/app_bar.dart';
-import 'package:ergo4all/ui/screen_content.dart';
+import 'package:ergo4all/app/ui/app_bar.dart';
+import 'package:ergo4all/app/ui/screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

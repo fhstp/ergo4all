@@ -1,4 +1,4 @@
-import 'package:ergo4all/app/locale_serialize.dart';
+import 'package:ergo4all/app/io/custom_locale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

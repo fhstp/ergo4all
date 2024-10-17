@@ -1,5 +1,5 @@
-import 'package:ergo4all/app/pref_keys.dart';
-import 'package:ergo4all/io/preference_storage.dart';
+import 'package:ergo4all/app/io/pref_keys.dart';
+import 'package:ergo4all/app/io/preference_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mockingjay/mockingjay.dart';
 

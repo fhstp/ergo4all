@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/spacing.dart';
+import 'package:ergo4all/app/ui/spacing.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {

@@ -1,19 +1,19 @@
-import 'package:ergo4all/app/impure_utils.dart';
+import 'package:ergo4all/app/io/local_text_storage.dart';
+import 'package:ergo4all/app/io/user.dart';
+import 'package:ergo4all/app/io/video_storage.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/io/local_text_storage.dart';
-import 'package:ergo4all/io/video_storage.dart';
-import 'package:ergo4all/ui/app_bar.dart';
-import 'package:ergo4all/ui/header.dart';
-import 'package:ergo4all/ui/loading_indicator.dart';
-import 'package:ergo4all/ui/screen_content.dart';
-import 'package:ergo4all/ui/show_tutorial_dialog.dart';
-import 'package:ergo4all/ui/snack.dart';
+import 'package:ergo4all/app/ui/app_bar.dart';
+import 'package:ergo4all/app/ui/header.dart';
+import 'package:ergo4all/app/ui/loading_indicator.dart';
+import 'package:ergo4all/app/ui/screen_content.dart';
+import 'package:ergo4all/app/ui/show_tutorial_dialog.dart';
+import 'package:ergo4all/app/ui/snack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/video_source.dart';
-import '../../ui/session_start_dialog.dart';
+import '../ui/session_start_dialog.dart';
 
 class _HomeContent extends StatelessWidget {
   final User user;

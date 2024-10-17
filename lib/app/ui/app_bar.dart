@@ -1,5 +1,5 @@
-import 'package:ergo4all/ui/custom_images.dart';
-import 'package:ergo4all/ui/spacing.dart';
+import 'package:ergo4all/app/ui/custom_images.dart';
+import 'package:ergo4all/app/ui/spacing.dart';
 import 'package:flutter/material.dart';
 
 /// Makes an [AppBar] widget with the custom styles for this app.

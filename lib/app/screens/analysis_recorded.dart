@@ -1,8 +1,8 @@
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/ui/header.dart';
-import 'package:ergo4all/ui/loading_indicator.dart';
-import 'package:ergo4all/ui/screen_content.dart';
-import 'package:ergo4all/ui/spacing.dart';
+import 'package:ergo4all/app/ui/header.dart';
+import 'package:ergo4all/app/ui/loading_indicator.dart';
+import 'package:ergo4all/app/ui/screen_content.dart';
+import 'package:ergo4all/app/ui/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

@@ -1,5 +1,5 @@
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/ui/user_creation_form.dart';
+import 'package:ergo4all/app/ui/user_creation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';

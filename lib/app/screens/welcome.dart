@@ -1,12 +1,12 @@
-import 'package:ergo4all/app/impure_utils.dart';
+import 'package:ergo4all/app/io/local_text_storage.dart';
+import 'package:ergo4all/app/io/user.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/io/local_text_storage.dart';
-import 'package:ergo4all/ui/custom_images.dart';
-import 'package:ergo4all/ui/screen_content.dart';
-import 'package:ergo4all/ui/spacing.dart';
-import 'package:ergo4all/ui/timed_loading_bar.dart';
-import 'package:ergo4all/ui/version_display.dart';
+import 'package:ergo4all/app/ui/custom_images.dart';
+import 'package:ergo4all/app/ui/screen_content.dart';
+import 'package:ergo4all/app/ui/spacing.dart';
+import 'package:ergo4all/app/ui/timed_loading_bar.dart';
+import 'package:ergo4all/app/ui/version_display.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {

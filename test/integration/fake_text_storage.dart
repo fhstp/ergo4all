@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:ergo4all/domain/user_config.dart';
-import 'package:ergo4all/io/local_text_storage.dart';
+import 'package:ergo4all/app/io/local_text_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FakeTextStorage extends Fake implements LocalTextStorage {

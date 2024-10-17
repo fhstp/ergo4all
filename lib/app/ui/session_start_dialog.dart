@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../domain/video_source.dart';
+import '../../domain/video_source.dart';
 
 class StartSessionDialog extends StatelessWidget {
   static const dialogKey = Key("sessionStartDialog");

@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/spacing.dart';
+import 'package:ergo4all/app/ui/spacing.dart';
 import 'package:flutter/material.dart';
 
 /// Shows a [SnackBar] with a specific error message. The snackbar will be

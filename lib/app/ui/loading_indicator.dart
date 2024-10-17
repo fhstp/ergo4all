@@ -1,4 +1,4 @@
-import 'package:ergo4all/ui/custom_images.dart';
+import 'package:ergo4all/app/ui/custom_images.dart';
 import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
