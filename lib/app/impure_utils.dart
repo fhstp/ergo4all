@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ergo4all/app/locale_serialize.dart';
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/domain/user_config.dart';
 import 'package:ergo4all/io/local_text_storage.dart';
@@ -76,7 +77,7 @@ const customLocalPrefKey = "custom-locale";
 /// if there is no custom locale.
 Future<Locale?> tryGetCustomLocale(PreferenceStorage storage) async {
   final localePref = await storage.tryGetString(customLocalPrefKey);
-  return localePref != null ? Locale(localePref) : null;
+  return localePref != null ? deserializeLocale(localePref) : null;
 }
 
 /// Sets the users custom locale in a [PreferenceStorage].
