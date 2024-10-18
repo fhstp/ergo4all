@@ -6,6 +6,7 @@ import 'package:ergo4all/app/io/preference_storage.dart';
 import 'package:ergo4all/app/io/video_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,10 +64,16 @@ class _LocalDocumentStorage extends LocalTextStorage {
   }
 }
 
+/// Gets the projects version using the [PackageInfo] package.
+Future<String> _getProjectVersion() {
+  return PackageInfo.fromPlatform().then((info) => info.version);
+}
+
 void main() {
   runApp(Ergo4AllApp(
     textStorage: _LocalDocumentStorage(),
     videoStorage: _GalleryVideoStorage(ImagePicker()),
     preferenceStorage: _SharedPreferencesStorage(SharedPreferencesAsync()),
+    getProjectVersion: _getProjectVersion,
   ));
 }

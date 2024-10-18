@@ -1,6 +1,7 @@
 import 'package:ergo4all/app/io/custom_locale.dart';
 import 'package:ergo4all/app/io/local_text_storage.dart';
 import 'package:ergo4all/app/io/preference_storage.dart';
+import 'package:ergo4all/app/io/project_version.dart';
 import 'package:ergo4all/app/io/video_storage.dart';
 import 'package:ergo4all/app/post_language_nav_observer.dart';
 import 'package:ergo4all/app/routes.dart';
@@ -15,9 +16,9 @@ import 'package:ergo4all/app/screens/pre_user_creator.dart';
 import 'package:ergo4all/app/screens/results.dart';
 import 'package:ergo4all/app/screens/terms_of_use.dart';
 import 'package:ergo4all/app/screens/user_creator.dart';
+import 'package:ergo4all/app/screens/welcome.dart';
 import 'package:ergo4all/app/ui/camera_permission_dialog.dart';
 import 'package:ergo4all/app/ui/theme.dart';
-import 'package:ergo4all/app/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,12 +27,14 @@ class Ergo4AllApp extends StatefulWidget {
   final LocalTextStorage textStorage;
   final VideoStorage videoStorage;
   final PreferenceStorage preferenceStorage;
+  final GetProjectVersion getProjectVersion;
 
   const Ergo4AllApp(
       {super.key,
       required this.textStorage,
       required this.videoStorage,
-      required this.preferenceStorage});
+      required this.preferenceStorage,
+      required this.getProjectVersion});
 
   @override
   State<Ergo4AllApp> createState() => _Ergo4AllAppState();
@@ -86,6 +89,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.tou.path: (context) => const TermsOfUseScreen(),
           Routes.welcome.path: (context) => WelcomeScreen(
                 widget.textStorage,
+                getProjectVersion: widget.getProjectVersion,
               )
         },
         navigatorObservers: [
