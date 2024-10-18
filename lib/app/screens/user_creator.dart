@@ -1,5 +1,5 @@
 import 'package:ergo4all/app/io/local_text_storage.dart';
-import 'package:ergo4all/app/io/user.dart';
+import 'package:ergo4all/app/io/user_storage.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/app/ui/app_bar.dart';

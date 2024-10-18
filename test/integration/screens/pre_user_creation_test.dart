@@ -1,12 +1,13 @@
+import 'package:ergo4all/app/io/user_storage.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/screens/pre_user_creator.dart';
-import 'package:ergo4all/domain/user_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
 
 import '../app_mock.dart';
 import '../fake_text_storage.dart';
+import '../fake_user_storage.dart';
 
 void main() {
   testWidgets(

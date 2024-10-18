@@ -1,5 +1,5 @@
+import 'package:ergo4all/app/io/user_storage.dart';
 import 'package:ergo4all/domain/user.dart';
-import 'package:ergo4all/domain/user_config.dart';
 import 'package:glados/glados.dart';
 
 import 'user_config_data.dart';

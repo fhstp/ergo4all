@@ -1,6 +1,6 @@
 import 'package:ergo4all/app/io/local_text_storage.dart';
 import 'package:ergo4all/app/io/project_version.dart';
-import 'package:ergo4all/app/io/user.dart';
+import 'package:ergo4all/app/io/user_storage.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/ui/custom_images.dart';
 import 'package:ergo4all/app/ui/screen_content.dart';
