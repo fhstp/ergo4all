@@ -2,20 +2,22 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/app/routes.dart';
+import 'package:ergo4all/app/ui/pose_painter.dart';
+import 'package:ergo4all/app/ui/record_button.dart';
 import 'package:ergo4all/domain/image_conversion.dart';
 import 'package:ergo4all/domain/image_utils.dart';
 import 'package:ergo4all/domain/types.dart';
-import 'package:ergo4all/app/ui/pose_painter.dart';
-import 'package:ergo4all/app/ui/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 @immutable
 class _Capture {
+  final int timestamp;
   final Pose pose;
   final Size imageSize;
 
-  const _Capture({required this.pose, required this.imageSize});
+  const _Capture(
+      {required this.timestamp, required this.pose, required this.imageSize});
 }
 
 class LiveAnalysisScreen extends StatefulWidget {
@@ -36,29 +38,35 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   _Capture? _latestCapture;
   bool _isRecording = false;
 
-  // TODO: Get frames from recorded video
-  _processFrame(int timestamp, InputImage frame, Size imageSize) async {
-    final allPoses = await _poseDetector.processImage(frame);
-    final pose = allPoses.singleOrNull;
-
-    setState(() {
-      _latestCapture =
-          pose != null ? _Capture(pose: pose, imageSize: imageSize) : null;
-    });
-
+  _processCapture(_Capture capture) async {
     // We only update score when recording
     if (!_isRecording) return;
     // TODO: Update score
   }
 
-  _onImageCaptured(CameraImage cameraImage) {
+  _onImageCaptured(CameraImage cameraImage) async {
     final deviceOrientation = _activeCameraController!.value.deviceOrientation;
-    final cameraRotation =
-        tryGetCameraRotation(deviceOrientation, _activeCamera);
-    assert(cameraRotation != null);
-    final inputImage = cameraImageToInputImage(cameraImage, cameraRotation!);
-    final timestamp = DateTime.now().millisecondsSinceEpoch;
-    _processFrame(timestamp, inputImage, getRotatedImageSize(cameraImage));
+    final inputImage =
+        cameraImageToInputImage(_activeCamera, deviceOrientation, cameraImage);
+    final poses = await _poseDetector.processImage(inputImage);
+    final pose = poses.singleOrNull;
+
+    if (pose == null) {
+      setState(() {
+        _latestCapture = null;
+      });
+      return;
+    }
+
+    final capture = _Capture(
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        pose: pose,
+        imageSize: getRotatedImageSize(cameraImage));
+
+    setState(() {
+      _latestCapture = capture;
+    });
+    _processCapture(capture);
   }
 
   Future<Null> _startCaptureUsing(CameraDescription camera) async {

@@ -11,7 +11,7 @@ final _orientations = {
   DeviceOrientation.landscapeRight: 270,
 };
 
-InputImageRotation? tryGetCameraRotation(
+InputImageRotation? _tryGetCameraRotation(
     DeviceOrientation deviceOrientation, CameraDescription camera) {
   // get image rotation
   // it is used in android to convert the InputImage from Dart to Java
@@ -37,8 +37,11 @@ InputImageRotation? tryGetCameraRotation(
   throw UnsupportedError("Only Android and iOS are supported!");
 }
 
-InputImage cameraImageToInputImage(
-    CameraImage image, InputImageRotation rotation) {
+InputImage cameraImageToInputImage(CameraDescription camera,
+    DeviceOrientation deviceOrientation, CameraImage image) {
+  final rotation = _tryGetCameraRotation(deviceOrientation, camera);
+  assert(rotation != null);
+
   // get image format
   final format = InputImageFormatValue.fromRawValue(image.format.raw);
   // validate format depending on platform
@@ -62,7 +65,7 @@ InputImage cameraImageToInputImage(
     bytes: plane.bytes,
     metadata: InputImageMetadata(
       size: Size(image.width.toDouble(), image.height.toDouble()),
-      rotation: rotation, // used only in Android
+      rotation: rotation!, // used only in Android
       format: format, // used only in iOS
       bytesPerRow: plane.bytesPerRow, // used only in iOS
     ),
