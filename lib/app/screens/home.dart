@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<User> loadedUser;
+  User? _currentUser;
 
   void _skipTutorial() async {
     final userIndex = await getCurrentUserIndex(widget.textStorage);
@@ -41,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onUserLoaded(User user) async {
+    setState(() {
+      _currentUser = user;
+    });
+
     if (user.hasSeenTutorial) return;
 
     final showTutorial = await ShowTutorialDialog.show(context);
@@ -75,10 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    loadedUser = getCurrentUser(widget.textStorage).then((user) {
+    getCurrentUser(widget.textStorage).then((user) {
       if (user == null) throw Exception("Must have user on home screen!");
       _onUserLoaded(user);
-      return user;
     });
   }
 
@@ -92,15 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ScreenContent(
           child: Column(
         children: [
-          FutureBuilder(
-              future: loadedUser,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return ShimmerBox(width: 200, height: 24);
-                }
-
-                return Header(localizations.home_welcome(snapshot.data!.name));
-              }),
+          _currentUser == null
+              ? ShimmerBox(width: 200, height: 24)
+              : Header(localizations.home_welcome(_currentUser!.name)),
           ElevatedButton(
               key: const Key("start"),
               onPressed: () {
