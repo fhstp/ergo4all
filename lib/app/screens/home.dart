@@ -2,13 +2,13 @@ import 'package:ergo4all/app/io/local_text_storage.dart';
 import 'package:ergo4all/app/io/user_storage.dart';
 import 'package:ergo4all/app/io/video_storage.dart';
 import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/domain/user.dart';
 import 'package:ergo4all/app/ui/app_bar.dart';
 import 'package:ergo4all/app/ui/header.dart';
 import 'package:ergo4all/app/ui/loading_indicator.dart';
 import 'package:ergo4all/app/ui/screen_content.dart';
 import 'package:ergo4all/app/ui/show_tutorial_dialog.dart';
 import 'package:ergo4all/app/ui/snack.dart';
+import 'package:ergo4all/domain/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -83,9 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _onSessionVideoSourceChosen(VideoSource source) async {
+  void _showStartSessionDialog() async {
+    final source = await StartSessionDialog.show(
+      context,
+    );
+    if (source == null) return;
+
     if (source == VideoSource.live) {
-      Navigator.pushNamed(context, Routes.liveAnalysis.path);
+      if (!mounted) return;
+      await Navigator.pushNamed(context, Routes.liveAnalysis.path);
       return;
     }
 
@@ -93,12 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (videoFile == null) return;
 
     if (!mounted) return;
-
-    Navigator.pushNamed(context, Routes.recordedAnalysis.path);
-  }
-
-  void _showStartSessionDialog() async {
-    await StartSessionDialog.show(context, _onSessionVideoSourceChosen);
+    await Navigator.pushNamed(context, Routes.recordedAnalysis.path);
   }
 
   @override

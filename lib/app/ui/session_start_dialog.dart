@@ -4,9 +4,10 @@ import '../../domain/video_source.dart';
 
 class StartSessionDialog extends StatelessWidget {
   static const dialogKey = Key("sessionStartDialog");
-  final void Function(VideoSource source) videoSourceChosen;
 
-  const StartSessionDialog({super.key, required this.videoSourceChosen});
+  const StartSessionDialog({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,7 @@ class StartSessionDialog extends StatelessWidget {
             IconButton(
               key: key,
               onPressed: () {
-                Navigator.of(context).pop();
-                videoSourceChosen(source);
+                Navigator.of(context).pop(source);
               },
               icon: Icon(
                 icon,
@@ -68,14 +68,10 @@ class StartSessionDialog extends StatelessWidget {
     );
   }
 
-  static Future<Null> show(BuildContext context,
-      void Function(VideoSource source) sourceChosen) async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return StartSessionDialog(
-            videoSourceChosen: sourceChosen,
-          );
-        });
+  static Future<VideoSource?> show(
+    BuildContext context,
+  ) {
+    return showDialog(
+        context: context, builder: (context) => StartSessionDialog());
   }
 }
