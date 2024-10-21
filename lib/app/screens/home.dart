@@ -4,8 +4,8 @@ import 'package:ergo4all/app/io/video_storage.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/ui/app_bar.dart';
 import 'package:ergo4all/app/ui/header.dart';
-import 'package:ergo4all/app/ui/loading_indicator.dart';
 import 'package:ergo4all/app/ui/screen_content.dart';
+import 'package:ergo4all/app/ui/shimmer_box.dart';
 import 'package:ergo4all/app/ui/show_tutorial_dialog.dart';
 import 'package:ergo4all/app/ui/snack.dart';
 import 'package:ergo4all/domain/user.dart';
@@ -14,35 +14,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/video_source.dart';
 import '../ui/session_start_dialog.dart';
-
-class _HomeContent extends StatelessWidget {
-  final User user;
-  final void Function() onSessionStartPressed;
-
-  const _HomeContent({required this.user, required this.onSessionStartPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: makeCustomAppBar(
-        title: localizations.home_title,
-      ),
-      body: ScreenContent(
-          child: Column(
-        children: [
-          Header(localizations.home_welcome(user.name)),
-          ElevatedButton(
-              key: const Key("start"),
-              onPressed: () {
-                onSessionStartPressed();
-              },
-              child: Text(localizations.home_firstSession))
-        ],
-      )),
-    );
-  }
-}
 
 class HomeScreen extends StatefulWidget {
   final VideoStorage videoStorage;
@@ -113,14 +84,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: loadedUser,
-      builder: (context, snapshot) => snapshot.hasData
-          ? _HomeContent(
-              user: snapshot.data!,
-              onSessionStartPressed: _showStartSessionDialog,
-            )
-          : const LoadingIndicator(),
+    final localizations = AppLocalizations.of(context)!;
+    return Scaffold(
+      appBar: makeCustomAppBar(
+        title: localizations.home_title,
+      ),
+      body: ScreenContent(
+          child: Column(
+        children: [
+          FutureBuilder(
+              future: loadedUser,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return ShimmerBox(width: 200, height: 24);
+                }
+
+                return Header(localizations.home_welcome(snapshot.data!.name));
+              }),
+          ElevatedButton(
+              key: const Key("start"),
+              onPressed: () {
+                _showStartSessionDialog();
+              },
+              child: Text(localizations.home_firstSession))
+        ],
+      )),
     );
   }
 }
