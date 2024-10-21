@@ -69,17 +69,16 @@ class _HomeScreenState extends State<HomeScreen> {
     showNotImplementedSnackbar(context);
   }
 
-  void _onTakeTutorialChoiceMade(bool showTutorial) {
+  void _onUserLoaded(User user) async {
+    if (user.hasSeenTutorial) return;
+
+    final showTutorial = await ShowTutorialDialog.show(context);
+    if (showTutorial == null) return;
+
     if (showTutorial) {
       _showTutorial();
     } else {
       _skipTutorial();
-    }
-  }
-
-  void _onUserLoaded(User user) async {
-    if (!user.hasSeenTutorial) {
-      await ShowTutorialDialog.show(context, _onTakeTutorialChoiceMade);
     }
   }
 

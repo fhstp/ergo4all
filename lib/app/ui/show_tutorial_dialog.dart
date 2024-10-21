@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 /// Dialog asking the user whether they want to see the tutorial.
 class ShowTutorialDialog extends StatelessWidget {
   static const dialogKey = Key("showTutorialDialog");
-  final void Function(bool wantsToSeeTutorial) onOptionChosen;
 
   const ShowTutorialDialog({
     super.key,
-    required this.onOptionChosen,
   });
 
   @override
@@ -27,14 +25,12 @@ class ShowTutorialDialog extends StatelessWidget {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    onOptionChosen(true);
-                    navigator.pop();
+                    navigator.pop(true);
                   },
                   child: const Text("Yes")),
               ElevatedButton(
                   onPressed: () {
-                    onOptionChosen(false);
-                    navigator.pop();
+                    navigator.pop(false);
                   },
                   child: const Text("Skip"))
             ],
@@ -44,15 +40,14 @@ class ShowTutorialDialog extends StatelessWidget {
     );
   }
 
-  /// Shows a [ShowTutorialDialog]. [onOptionChosen] will be called with a [bool]
-  /// indicating whether the user wants to see the tutorial. If the user closes
-  /// the dialog without making a choice [onOptionChosen] will not be called.
-  static Future<Null> show(BuildContext context,
-      void Function(bool wantsToSeeTutorial) onOptionChosen) async {
-    await showDialog(
+  /// Shows a [ShowTutorialDialog]. Returns a [bool] indicating whether the
+  /// user wants to see the tutorial. If the user closes
+  /// the dialog without making a choice `null` will be returned.
+  static Future<bool?> show(BuildContext context) {
+    return showDialog(
         context: context,
         builder: (context) {
-          return ShowTutorialDialog(onOptionChosen: onOptionChosen);
+          return ShowTutorialDialog();
         });
   }
 }
