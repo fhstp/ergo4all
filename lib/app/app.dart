@@ -1,5 +1,6 @@
 import 'package:ergo4all/app/io/custom_locale.dart';
 import 'package:ergo4all/app/io/local_text_storage.dart';
+import 'package:ergo4all/app/io/pose_processing.dart';
 import 'package:ergo4all/app/io/preference_storage.dart';
 import 'package:ergo4all/app/io/project_version.dart';
 import 'package:ergo4all/app/io/video_storage.dart';
@@ -28,13 +29,15 @@ class Ergo4AllApp extends StatefulWidget {
   final VideoStorage videoStorage;
   final PreferenceStorage preferenceStorage;
   final GetProjectVersion getProjectVersion;
+  final PoseDetector poseDetector;
 
   const Ergo4AllApp(
       {super.key,
       required this.textStorage,
       required this.videoStorage,
       required this.preferenceStorage,
-      required this.getProjectVersion});
+      required this.getProjectVersion,
+      required this.poseDetector});
 
   @override
   State<Ergo4AllApp> createState() => _Ergo4AllAppState();
@@ -72,6 +75,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.home.path: (context) =>
               HomeScreen(widget.videoStorage, widget.textStorage),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(
+              poseDetector: widget.poseDetector,
               requestCameraPermissions: () =>
                   showCameraPermissionDialog(context)),
           Routes.recordedAnalysis.path: (context) =>

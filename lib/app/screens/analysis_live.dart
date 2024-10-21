@@ -1,38 +1,39 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:ergo4all/app/io/pose_processing.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/ui/pose_painter.dart';
 import 'package:ergo4all/app/ui/record_button.dart';
-import 'package:ergo4all/domain/image_conversion.dart';
-import 'package:ergo4all/domain/image_utils.dart';
+import 'package:ergo4all/domain/pose.dart';
 import 'package:ergo4all/domain/types.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 @immutable
 class _Capture {
   final int timestamp;
-  final Pose pose;
-  final Size imageSize;
+  final Pose2D pose2d;
 
-  const _Capture(
-      {required this.timestamp, required this.pose, required this.imageSize});
+  const _Capture({
+    required this.timestamp,
+    required this.pose2d,
+  });
 }
 
 class LiveAnalysisScreen extends StatefulWidget {
   final RequestCameraPermissions requestCameraPermissions;
+  final PoseDetector poseDetector;
 
-  const LiveAnalysisScreen({super.key, required this.requestCameraPermissions});
+  const LiveAnalysisScreen(
+      {super.key,
+      required this.requestCameraPermissions,
+      required this.poseDetector});
 
   @override
   State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
 }
 
 class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
-  final _poseDetector = PoseDetector(
-      options: PoseDetectorOptions(
-          model: PoseDetectionModel.accurate, mode: PoseDetectionMode.stream));
   CameraController? _activeCameraController;
   late final CameraDescription _activeCamera;
   _Capture? _latestCapture;
@@ -45,13 +46,13 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   }
 
   _onImageCaptured(CameraImage cameraImage) async {
-    final deviceOrientation = _activeCameraController!.value.deviceOrientation;
-    final inputImage =
-        cameraImageToInputImage(_activeCamera, deviceOrientation, cameraImage);
-    final poses = await _poseDetector.processImage(inputImage);
-    final pose = poses.singleOrNull;
+    final input = DetectInput(
+        camera: _activeCamera,
+        deviceOrientation: _activeCameraController!.value.deviceOrientation,
+        image: cameraImage);
+    final result = await widget.poseDetector.detect(input);
 
-    if (pose == null) {
+    if (result == null) {
       setState(() {
         _latestCapture = null;
       });
@@ -59,9 +60,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     }
 
     final capture = _Capture(
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-        pose: pose,
-        imageSize: getRotatedImageSize(cameraImage));
+      timestamp: DateTime.now().millisecondsSinceEpoch,
+      pose2d: result.pose2d,
+    );
 
     setState(() {
       _latestCapture = capture;
@@ -80,6 +81,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     await controller.initialize();
     await controller.startImageStream(_onImageCaptured);
     _activeCameraController = controller;
+    await widget.poseDetector.start();
     setState(() {});
   }
 
@@ -147,10 +149,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
               if (_latestCapture != null)
                 Positioned.fill(
                   child: CustomPaint(
-                    painter: PosePainter(
-                        pose: _latestCapture!.pose,
-                        inputImageSize: _latestCapture!.imageSize),
-                  ),
+                      painter: PosePainter(
+                    pose: _latestCapture!.pose2d,
+                  )),
                 ),
             ],
           ),

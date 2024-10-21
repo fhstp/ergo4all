@@ -1,13 +1,10 @@
+import 'package:ergo4all/domain/pose.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 class PosePainter extends CustomPainter {
-  final Pose _pose;
-  final Size _inputImageSize;
+  final Pose2D pose;
 
-  PosePainter({super.repaint, required Pose pose, required Size inputImageSize})
-      : _pose = pose,
-        _inputImageSize = inputImageSize;
+  PosePainter({super.repaint, required this.pose});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -17,26 +14,19 @@ class PosePainter extends CustomPainter {
       ..color = Colors.green
       ..strokeWidth = 5;
 
-    Offset imageToCanvas(Offset offset) {
-      final normalized = Offset(offset.dx / _inputImageSize.width,
-          offset.dy / _inputImageSize.height);
-      return Offset(normalized.dx * size.width, normalized.dy * size.height);
+    Offset? tryGetPosOf(LandmarkTypes landmarkType) {
+      final landmark = pose[landmarkType];
+      assert(landmark != null);
+      if (landmark!.confidence < 0.9) return null;
+      return Offset(size.width * landmark.x, size.height * landmark.y);
     }
 
-    Offset? tryGetPosOf(PoseLandmarkType landmarkType) {
-      final landmark = _pose.landmarks[landmarkType];
-      if (landmark == null || landmark.likelihood < 0.9) return null;
-      final imageOffset = Offset(landmark.x, landmark.y);
-      final canvasOffset = imageToCanvas(imageOffset);
-      return canvasOffset;
-    }
-
-    void drawJoint(PoseLandmarkType landmarkType) {
+    void drawJoint(LandmarkTypes landmarkType) {
       final pos = tryGetPosOf(landmarkType);
       if (pos != null) canvas.drawCircle(pos, 7, jointPaint);
     }
 
-    void drawBone((PoseLandmarkType, PoseLandmarkType) bone) {
+    void drawBone((LandmarkTypes, LandmarkTypes) bone) {
       final (from, to) = bone;
 
       final fromPos = tryGetPosOf(from);
@@ -49,37 +39,36 @@ class PosePainter extends CustomPainter {
     }
 
     [
-      (PoseLandmarkType.rightWrist, PoseLandmarkType.rightElbow),
-      (PoseLandmarkType.leftWrist, PoseLandmarkType.leftElbow),
-      (PoseLandmarkType.rightElbow, PoseLandmarkType.rightShoulder),
-      (PoseLandmarkType.leftElbow, PoseLandmarkType.leftShoulder),
-      (PoseLandmarkType.rightShoulder, PoseLandmarkType.leftShoulder),
-      (PoseLandmarkType.rightHip, PoseLandmarkType.leftHip),
-      (PoseLandmarkType.rightHip, PoseLandmarkType.rightKnee),
-      (PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee),
-      (PoseLandmarkType.rightKnee, PoseLandmarkType.rightAnkle),
-      (PoseLandmarkType.leftKnee, PoseLandmarkType.leftAnkle),
+      (LandmarkTypes.rightHand, LandmarkTypes.rightElbow),
+      (LandmarkTypes.leftHand, LandmarkTypes.leftElbow),
+      (LandmarkTypes.rightElbow, LandmarkTypes.rightShoulder),
+      (LandmarkTypes.leftElbow, LandmarkTypes.leftShoulder),
+      (LandmarkTypes.rightShoulder, LandmarkTypes.leftShoulder),
+      (LandmarkTypes.rightHip, LandmarkTypes.leftHip),
+      (LandmarkTypes.rightHip, LandmarkTypes.rightKnee),
+      (LandmarkTypes.leftHip, LandmarkTypes.leftKnee),
+      (LandmarkTypes.rightKnee, LandmarkTypes.rightFoot),
+      (LandmarkTypes.leftKnee, LandmarkTypes.leftFoot),
     ].forEach(drawBone);
 
     [
-      PoseLandmarkType.nose,
-      PoseLandmarkType.leftShoulder,
-      PoseLandmarkType.rightShoulder,
-      PoseLandmarkType.leftElbow,
-      PoseLandmarkType.rightElbow,
-      PoseLandmarkType.leftWrist,
-      PoseLandmarkType.rightWrist,
-      PoseLandmarkType.leftHip,
-      PoseLandmarkType.rightHip,
-      PoseLandmarkType.leftKnee,
-      PoseLandmarkType.rightKnee,
-      PoseLandmarkType.leftAnkle,
-      PoseLandmarkType.rightAnkle
+      LandmarkTypes.leftShoulder,
+      LandmarkTypes.rightShoulder,
+      LandmarkTypes.leftElbow,
+      LandmarkTypes.rightElbow,
+      LandmarkTypes.leftHand,
+      LandmarkTypes.rightHand,
+      LandmarkTypes.leftHip,
+      LandmarkTypes.rightHip,
+      LandmarkTypes.leftKnee,
+      LandmarkTypes.rightKnee,
+      LandmarkTypes.leftFoot,
+      LandmarkTypes.rightFoot
     ].forEach(drawJoint);
   }
 
   @override
   bool shouldRepaint(covariant PosePainter oldDelegate) {
-    return oldDelegate._pose != _pose;
+    return oldDelegate.pose != pose;
   }
 }
