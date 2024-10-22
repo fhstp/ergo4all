@@ -4,7 +4,7 @@ import 'package:ergo4all/app/io/pose_processing.dart';
 import 'package:ergo4all/app/io/preference_storage.dart';
 import 'package:ergo4all/app/io/project_version.dart';
 import 'package:ergo4all/app/io/video_storage.dart';
-import 'package:ergo4all/app/post_language_nav_observer.dart';
+import 'package:ergo4all/app/route_leave_observer.dart';
 import 'package:ergo4all/app/routes.dart';
 import 'package:ergo4all/app/screens/analysis_live.dart';
 import 'package:ergo4all/app/screens/analysis_recorded.dart';
@@ -97,7 +97,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
               )
         },
         navigatorObservers: [
-          PostLanguageNavObserver(_reloadCustomLocale)
+          RouteLeaveObserver(
+              routeName: Routes.language.path, onLeft: _reloadCustomLocale)
         ],
         locale: _customLocale,
         title: 'Ergo4All',
