@@ -2,9 +2,7 @@
   "files.exclude": {
     ".fvm": true,
     ".idea": true,
-    "android": true,
     "build": true,
-    "ios": true,
     "web": true
   },
   "dart.flutterSdkPath": ".fvm/versions/3.24.3",
