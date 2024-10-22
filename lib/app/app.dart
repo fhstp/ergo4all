@@ -1,25 +1,24 @@
-import 'package:ergo4all/app/io/custom_locale.dart';
-import 'package:ergo4all/app/io/local_text_storage.dart';
-import 'package:ergo4all/app/io/pose_processing.dart';
-import 'package:ergo4all/app/io/preference_storage.dart';
-import 'package:ergo4all/app/io/project_version.dart';
-import 'package:ergo4all/app/io/video_storage.dart';
+import 'package:ergo4all/app/common/routes.dart';
+import 'package:ergo4all/app/expert_intro_screen.dart';
+import 'package:ergo4all/app/home/screen.dart';
+import 'package:ergo4all/app/live_analysis/screen.dart';
+import 'package:ergo4all/app/non_expert_intro_screen.dart';
+import 'package:ergo4all/app/pick_language/screen.dart';
+import 'package:ergo4all/app/pre_intro_screen.dart';
+import 'package:ergo4all/app/pre_user_creator_screen.dart';
+import 'package:ergo4all/app/recorded_analysis/screen.dart';
+import 'package:ergo4all/app/results_screen.dart';
 import 'package:ergo4all/app/route_leave_observer.dart';
-import 'package:ergo4all/app/routes.dart';
-import 'package:ergo4all/app/screens/analysis_live.dart';
-import 'package:ergo4all/app/screens/analysis_recorded.dart';
-import 'package:ergo4all/app/screens/expert_intro.dart';
-import 'package:ergo4all/app/screens/home.dart';
-import 'package:ergo4all/app/screens/language.dart';
-import 'package:ergo4all/app/screens/non_expert_intro.dart';
-import 'package:ergo4all/app/screens/pre_intro.dart';
-import 'package:ergo4all/app/screens/pre_user_creator.dart';
-import 'package:ergo4all/app/screens/results.dart';
-import 'package:ergo4all/app/screens/terms_of_use.dart';
-import 'package:ergo4all/app/screens/user_creator.dart';
-import 'package:ergo4all/app/screens/welcome.dart';
-import 'package:ergo4all/app/ui/camera_permission_dialog.dart';
-import 'package:ergo4all/app/ui/theme.dart';
+import 'package:ergo4all/app/terms_of_use_screen.dart';
+import 'package:ergo4all/app/theme.dart';
+import 'package:ergo4all/app/user_creator/screen.dart';
+import 'package:ergo4all/app/welcome/screen.dart';
+import 'package:ergo4all/pose.detection/types.dart';
+import 'package:ergo4all/app/welcome/types.dart';
+import 'package:ergo4all/storage.custom_locale/pref_storage_ext.dart';
+import 'package:ergo4all/storage.prefs/types.dart';
+import 'package:ergo4all/storage.text/types.dart';
+import 'package:ergo4all/storage.video/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -54,7 +53,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   }
 
   void _reloadCustomLocale() async {
-    final customLocale = await tryGetCustomLocale(widget.preferenceStorage);
+    final customLocale = await widget.preferenceStorage.tryGetCustomLocale();
     setState(() {
       _customLocale = customLocale;
     });
@@ -75,21 +74,20 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.home.path: (context) =>
               HomeScreen(widget.videoStorage, widget.textStorage),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(
-              poseDetector: widget.poseDetector,
-              requestCameraPermissions: () =>
-                  showCameraPermissionDialog(context)),
+                poseDetector: widget.poseDetector,
+              ),
           Routes.recordedAnalysis.path: (context) =>
               const RecordedAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
           Routes.preIntro.path: (context) => const PreIntroScreen(),
-          Routes.expertIntro.path: (context) => const ExpertIntro(),
-          Routes.nonExpertIntro.path: (context) => const NonExpertIntro(),
+          Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
+          Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),
           Routes.preUserCreator.path: (context) =>
               PreUserCreatorScreen(widget.textStorage),
           Routes.userCreator.path: (context) =>
               UserCreatorScreen(widget.textStorage),
           Routes.language.path: (context) =>
-              LanguageScreen(widget.preferenceStorage),
+              PickLanguageScreen(widget.preferenceStorage),
           Routes.tou.path: (context) => const TermsOfUseScreen(),
           Routes.welcome.path: (context) => WelcomeScreen(
                 widget.textStorage,

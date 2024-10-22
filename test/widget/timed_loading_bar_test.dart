@@ -1,4 +1,4 @@
-import 'package:ergo4all/app/ui/timed_loading_bar.dart';
+import 'package:ergo4all/app/welcome/timed_loading_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

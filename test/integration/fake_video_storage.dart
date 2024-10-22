@@ -1,5 +1,5 @@
 import 'package:cross_file/cross_file.dart';
-import 'package:ergo4all/app/io/video_storage.dart';
+import 'package:ergo4all/storage.video/types.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FakeVideoStorage extends Fake implements VideoStorage {

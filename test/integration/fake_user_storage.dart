@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:ergo4all/app/io/user_storage.dart';
+import 'package:ergo4all/storage.user/user_config.dart';
+import 'package:ergo4all/storage.user/user_storage.dart';
 
 import 'fake_text_storage.dart';
 
