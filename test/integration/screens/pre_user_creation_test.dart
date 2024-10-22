@@ -1,9 +1,9 @@
-import 'package:ergo4all/app/common/routes.dart';
-import 'package:ergo4all/storage.user/user_config.dart';
-import 'package:ergo4all/app/pre_user_creator_screen.dart';
+import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/pre_user_creator_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
+import 'package:user_storage/user_config.dart';
 
 import '../app_mock.dart';
 import '../fake_text_storage.dart';

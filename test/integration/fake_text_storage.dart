@@ -1,4 +1,4 @@
-import 'package:ergo4all/storage.text/types.dart';
+import 'package:text_storage/types.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FakeTextStorage extends Fake implements LocalTextStorage {

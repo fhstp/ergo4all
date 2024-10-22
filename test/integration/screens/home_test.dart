@@ -1,10 +1,10 @@
-import 'package:ergo4all/app/home/screen.dart';
-import 'package:ergo4all/app/home/session_start_dialog.dart';
-import 'package:ergo4all/app/home/show_tutorial_dialog.dart';
-import 'package:ergo4all/common/user.dart';
-import 'package:ergo4all/storage.user/user_config.dart';
+import 'package:common/user.dart';
+import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/home/session_start_dialog.dart';
+import 'package:ergo4all/home/show_tutorial_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:user_storage/user_config.dart';
 
 import '../app_mock.dart';
 import '../fake_text_storage.dart';

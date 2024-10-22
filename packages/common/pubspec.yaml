@@ -1,0 +1,15 @@
+name: common
+description: Common logic which can be used in all project packages.
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  glados: ^1.1.7

@@ -31,21 +31,38 @@ dependencies:
   flutter:
     sdk: flutter
 
+  common:
+    path: ./packages/common
+
+  custom_locale_storage:
+    path: ./packages/custom_locale_storage
+
+  pose_common:
+    path: ./packages/pose_common
+
+  pose_detection:
+    path: ./packages/pose_detection
+
+  prefs_storage:
+    path: ./packages/prefs_storage
+
+  text_storage:
+    path: ./packages/text_storage
+
+  user_storage:
+    path: ./packages/user_storage
+
+  video_storage:
+    path: ./packages/video_storage
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  image_picker: ^1.1.2
   flutter_localizations:
     sdk: flutter
   intl: any
-  shared_preferences: ^2.3.2
   package_info_plus: ^8.0.2
-  json_annotation: ^4.9.0
-  equatable: ^2.0.5
-  path_provider: ^2.1.4
-  path: ^1.9.0
   cross_file: ^0.3.4+2
-  google_mlkit_pose_detection: ^0.13.0
   camera: ^0.10.0
   flutter_exit_app: ^1.1.4
   permission_handler: ^11.3.1
@@ -63,8 +80,6 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_launcher_icons: ^0.14.1
   build_runner: ^2.4.11
-  json_serializable: ^6.8.0
-  glados: ^1.1.7
   mockingjay: ^0.6.0
   mockito: ^5.4.4
 

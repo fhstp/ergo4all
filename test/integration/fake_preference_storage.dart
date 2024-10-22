@@ -1,5 +1,5 @@
-import 'package:ergo4all/storage.prefs/types.dart';
 import 'package:mockingjay/mockingjay.dart';
+import 'package:prefs_storage/types.dart';
 
 class FakePreferenceStorage extends Fake implements PreferenceStorage {
   final Map<String, String> _strings = {};

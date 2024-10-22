@@ -1,0 +1,15 @@
+name: pose_detection
+description: Pose detection files.
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  pose_common:
+    path: ../pose_common
+
+  google_mlkit_pose_detection: ^0.13.0
+  camera: ^0.10.0

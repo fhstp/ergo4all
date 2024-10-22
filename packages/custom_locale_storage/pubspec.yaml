@@ -1,0 +1,16 @@
+name: custom_locale_storage
+description: Storage logic for local custom locale.
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  prefs_storage:
+    path: ../prefs_storage
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
