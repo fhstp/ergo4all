@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/fhstp/ergo4all/compare/v1.14.0...v1.15.0) (2024-10-22)
+
+
+### Features
+
+* add shimmer box ([15a9ea5](https://github.com/fhstp/ergo4all/commit/15a9ea520163b44a7303564eea7aa8f1a1992be6))
+
 # [1.14.0](https://github.com/fhstp/ergo4all/compare/v1.13.0...v1.14.0) (2024-10-09)
 
 
