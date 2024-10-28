@@ -7,3 +7,4 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  fast_immutable_collections: ^10.2.4

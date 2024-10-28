@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 /// The types of landmarks that are relevant for ergonomic pose analysis.
@@ -36,4 +37,4 @@ class Landmark2D {
       {required this.confidence, required this.x, required this.y});
 }
 
-typedef Pose2D = Map<LandmarkTypes, Landmark2D>;
+typedef Pose2D = IMap<LandmarkTypes, Landmark2D>;

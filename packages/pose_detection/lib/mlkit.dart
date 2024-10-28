@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import "package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart"
     as mlkit;
@@ -138,10 +139,9 @@ class MLkitPoseDetectorAdapter extends PoseDetector {
           y: mlkitLandmark.y / imageSize.height);
     }
 
-    return DetectResult(pose2d: {
-      for (var landmarkType in LandmarkTypes.values)
-        landmarkType: landmarkFor(landmarkType)
-    });
+    return DetectResult(
+        pose2d: IMap.fromKeys(
+            keys: LandmarkTypes.values, valueMapper: landmarkFor));
   }
 
   @override
