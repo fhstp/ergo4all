@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// The types of landmarks that are relevant for ergonomic pose analysis.
 enum LandmarkTypes {
   leftHand,
@@ -15,6 +17,7 @@ enum LandmarkTypes {
 }
 
 /// Describes a pose landmark in 2D image space.
+@immutable
 class Landmark2D {
   /// The confidence of this landmark. Will be in range [0; 1].
   final double confidence;
