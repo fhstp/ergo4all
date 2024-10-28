@@ -8,3 +8,9 @@ dependencies:
   flutter:
     sdk: flutter
   fast_immutable_collections: ^10.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  glados: ^1.1.7
+  parameterized_test: ^2.0.1

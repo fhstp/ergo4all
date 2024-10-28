@@ -10,6 +10,7 @@ import 'package:ergo4all/live_analysis/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pose_common/types.dart';
 import 'package:pose_detection/types.dart';
+import 'package:rula/score.dart';
 
 @immutable
 class _Capture {
@@ -37,12 +38,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   _Capture? _latestCapture;
   bool _isRecording = false;
   final Random _random = Random();
-  int? _currentScore;
+  RulaScore? _currentScore;
 
   _processCapture(_Capture capture) async {
     setState(() {
       // TODO: Calculate real score
-      _currentScore = _random.nextInt(255);
+      _currentScore = RulaScore.tryMake(_random.nextInt(6) + 1);
     });
   }
 
