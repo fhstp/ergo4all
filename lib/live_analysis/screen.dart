@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/live_analysis/camera_permission_dialog.dart';
 import 'package:ergo4all/live_analysis/pose_painter.dart';
 import 'package:ergo4all/live_analysis/record_button.dart';
@@ -34,11 +36,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   late final CameraDescription _activeCamera;
   _Capture? _latestCapture;
   bool _isRecording = false;
+  final Random _random = Random();
+  int? _currentScore;
 
   _processCapture(_Capture capture) async {
-    // We only update score when recording
-    if (!_isRecording) return;
-    // TODO: Update score
+    setState(() {
+      // TODO: Calculate real score
+      _currentScore = _random.nextInt(255);
+    });
   }
 
   _onImageCaptured(CameraImage cameraImage) async {
@@ -63,7 +68,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
     setState(() {
       _latestCapture = capture;
     });
-    _processCapture(capture);
+
+    if (_isRecording) _processCapture(capture);
   }
 
   Future<Null> _startCaptureUsing(CameraDescription camera) async {
@@ -149,6 +155,11 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
                     pose: _latestCapture!.pose2d,
                   )),
                 ),
+              if (_currentScore != null)
+                Positioned(
+                    top: largeSpace,
+                    right: largeSpace,
+                    child: Text("$_currentScore")),
             ],
           ),
           const Spacer(),
