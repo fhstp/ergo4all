@@ -10,6 +10,7 @@ import 'package:ergo4all/live_analysis/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pose_common/types.dart';
 import 'package:pose_detection/types.dart';
+import 'package:rula/label.dart';
 import 'package:rula/score.dart';
 
 @immutable
@@ -160,7 +161,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
                 Positioned(
                     top: largeSpace,
                     right: largeSpace,
-                    child: Text("$_currentScore")),
+                    // TODO: Add proper stringified version of rula label with localization
+                    child: Text(
+                        "$_currentScore: ${rulaLabelFor(_currentScore!)}")),
             ],
           ),
           const Spacer(),
