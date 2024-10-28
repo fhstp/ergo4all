@@ -24,6 +24,17 @@ class RulaScore {
     return RulaScore._(value);
   }
 
+  /// Attempts to create a [RulaScore] object from an [int] [value]. Throws an
+  /// [ArgumentError] if the value is not valid
+  static RulaScore make(int value) {
+    final score = tryMake(value);
+    if (score == null) {
+      throw ArgumentError.value(
+          value, "value", "Rula-score value is not valid");
+    }
+    return score;
+  }
+
   @override
   String toString() {
     return value.toString();

@@ -12,6 +12,7 @@ import 'package:pose_common/types.dart';
 import 'package:pose_detection/types.dart';
 import 'package:rula/label.dart';
 import 'package:rula/score.dart';
+import 'package:rula/scoring.dart';
 
 @immutable
 class _Capture {
@@ -42,10 +43,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   RulaScore? _currentScore;
 
   _processCapture(_Capture capture) async {
-    setState(() {
-      // TODO: Calculate real score
-      _currentScore = RulaScore.tryMake(_random.nextInt(6) + 1);
-    });
+    // TODO: Calculate real scores for A and B score
+    final armHandScore = RulaScore.make(_random.nextInt(6) + 1);
+    final neckTorsoLegScore = RulaScore.make(_random.nextInt(6) + 1);
+    final finalScore = calcFinalRulaScore(armHandScore, neckTorsoLegScore);
+
+    setState(() => _currentScore = finalScore);
   }
 
   _onImageCaptured(CameraImage cameraImage) async {
