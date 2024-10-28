@@ -46,6 +46,9 @@ dependencies:
   prefs_storage:
     path: ./packages/prefs_storage
 
+  rula:
+    path: ./packages/rula
+
   text_storage:
     path: ./packages/text_storage
 

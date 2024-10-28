@@ -1,0 +1,10 @@
+name: rula
+description: Calculation logic for rula scoring
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fast_immutable_collections: ^10.2.4
