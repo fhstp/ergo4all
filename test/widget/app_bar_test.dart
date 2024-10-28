@@ -11,7 +11,7 @@ void main() {
     );
   }
 
-  testWidgets("it should have given title", (tester) async {
+  testWidgets("should have given title", (tester) async {
     const expectedTitle = "wow";
 
     await tester
@@ -20,14 +20,14 @@ void main() {
     expect(find.text(expectedTitle), findsOneWidget);
   });
 
-  testWidgets("it should have icon if requested", (tester) async {
+  testWidgets("should have icon if requested", (tester) async {
     await tester.pumpWidget(
         testAppWith(makeCustomAppBar(title: "title", withIcon: true)));
 
     expect(find.byType(Image), findsOneWidget);
   });
 
-  testWidgets("it should have no icon if requested", (tester) async {
+  testWidgets("should have no icon if requested", (tester) async {
     await tester.pumpWidget(
         testAppWith(makeCustomAppBar(title: "title", withIcon: false)));
 
