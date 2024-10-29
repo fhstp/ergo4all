@@ -1,32 +1,71 @@
 import 'package:glados/glados.dart';
-import 'package:parameterized_test/parameterized_test.dart';
-import 'package:rula/score.dart';
+import 'package:rula/degree.dart';
 import 'package:rula/scoring.dart';
+import 'package:rula/sheet.dart';
 
-import 'score_data.dart';
+import 'sheet_data.dart';
 
 void main() {
-  group("Final score", () {
-    Glados2(any.rulaScore, any.rulaScore)
-        .test("should have output in range [1, 7]",
-            (armHandScore, neckTorsoLegScore) {
-      final finalScore = calcFinalRulaScore(armHandScore, neckTorsoLegScore);
-      expect(finalScore.value, greaterThanOrEqualTo(1));
-      expect(finalScore.value, lessThanOrEqualTo(7));
-    });
+  Glados(any.rulaSheet).test("should have output in range [1; 7]", (sheet) {
+    final finalScore = calcFullRulaScore(sheet);
+    expect(finalScore.value, greaterThanOrEqualTo(1));
+    expect(finalScore.value, lessThanOrEqualTo(7));
+  });
 
-    parameterizedTest("should calculate correct score", [
-      // A few examples of rula score calculations, where the first two values
-      // are the A and B score and the last is the expected result.
-      [1, 1, 1],
-      [4, 3, 3],
-      [3, 5, 4],
-      [7, 3, 6],
-      [9, 6, 7],
-    ], (int armHandScore, int neckTorsoLegScore, int expected) {
-      final actual = calcFinalRulaScore(
-          RulaScore.make(armHandScore), RulaScore.make(neckTorsoLegScore));
-      expect(actual.value, equals(expected));
-    });
+  test("should have correct score for person standing straight", () {
+    final sheet = RulaSheet(
+        shoulderFlexion: Degree.zero,
+        shoulderAbduction: Degree.zero,
+        elbowFlexion: Degree.zero,
+        wristFlexion: Degree.zero,
+        neckFlexion: Degree.zero,
+        neckRotation: Degree.zero,
+        neckLateralFlexion: Degree.zero,
+        hipFlexion: Degree.zero,
+        trunkRotation: Degree.zero,
+        trunkLateralFlexion: Degree.zero,
+        isStandingOnBothLegs: true);
+
+    final finalScore = calcFullRulaScore(sheet);
+
+    expect(finalScore.value, equals(2));
+  });
+
+  test("should have correct score for person picking something off ground", () {
+    final sheet = RulaSheet(
+        shoulderFlexion: Degree.makeFrom180(80),
+        shoulderAbduction: Degree.zero,
+        elbowFlexion: Degree.zero,
+        wristFlexion: Degree.zero,
+        neckFlexion: Degree.makeFrom180(15),
+        neckRotation: Degree.zero,
+        neckLateralFlexion: Degree.zero,
+        hipFlexion: Degree.makeFrom180(65),
+        trunkRotation: Degree.zero,
+        trunkLateralFlexion: Degree.zero,
+        isStandingOnBothLegs: true);
+
+    final finalScore = calcFullRulaScore(sheet);
+
+    expect(finalScore.value, equals(4));
+  });
+
+  test("should have correct score for person lifting something above head", () {
+    final sheet = RulaSheet(
+        shoulderFlexion: Degree.makeFrom180(120),
+        shoulderAbduction: Degree.zero,
+        elbowFlexion: Degree.makeFrom180(80),
+        wristFlexion: Degree.zero,
+        neckFlexion: Degree.makeFrom180(-30),
+        neckRotation: Degree.zero,
+        neckLateralFlexion: Degree.zero,
+        hipFlexion: Degree.zero,
+        trunkRotation: Degree.zero,
+        trunkLateralFlexion: Degree.zero,
+        isStandingOnBothLegs: true);
+
+    final finalScore = calcFullRulaScore(sheet);
+
+    expect(finalScore.value, equals(5));
   });
 }

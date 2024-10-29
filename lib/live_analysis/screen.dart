@@ -10,9 +10,11 @@ import 'package:ergo4all/live_analysis/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pose_common/types.dart';
 import 'package:pose_detection/types.dart';
+import 'package:rula/degree.dart';
 import 'package:rula/label.dart';
 import 'package:rula/score.dart';
 import 'package:rula/scoring.dart';
+import 'package:rula/sheet.dart';
 
 @immutable
 class _Capture {
@@ -42,11 +44,25 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   final Random _random = Random();
   RulaScore? _currentScore;
 
+  Degree _randomAngle(double min, double max) {
+    return Degree.makeFrom180(min + _random.nextDouble() * (max - min));
+  }
+
   _processCapture(_Capture capture) async {
-    // TODO: Calculate real scores for A and B score
-    final armHandScore = RulaScore.make(_random.nextInt(6) + 1);
-    final neckTorsoLegScore = RulaScore.make(_random.nextInt(6) + 1);
-    final finalScore = calcFinalRulaScore(armHandScore, neckTorsoLegScore);
+    // TODO: Calculate real rula sheet
+    final sheet = RulaSheet(
+        shoulderFlexion: _randomAngle(-180, 180),
+        shoulderAbduction: _randomAngle(0, 180),
+        elbowFlexion: _randomAngle(0, 180),
+        wristFlexion: _randomAngle(-180, 180),
+        neckFlexion: _randomAngle(-90, 90),
+        neckRotation: _randomAngle(-180, 180),
+        neckLateralFlexion: _randomAngle(-90, 90),
+        hipFlexion: _randomAngle(0, 180),
+        trunkRotation: _randomAngle(-180, 180),
+        trunkLateralFlexion: _randomAngle(-90, 90),
+        isStandingOnBothLegs: _random.nextDouble() > 0.5);
+    final finalScore = calcFullRulaScore(sheet);
 
     setState(() => _currentScore = finalScore);
   }
