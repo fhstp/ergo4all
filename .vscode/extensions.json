@@ -1,7 +1,11 @@
 {
     "recommendations": [
         "dart-code.flutter",
+        "google.arb-editor",
+        "streetsidesoftware.code-spell-checker",
         "dart-code.dart-code",
-        "google.arb-editor"
+        "redhat.vscode-yaml",
+        "yzhang.markdown-all-in-one",
+        "github.vscode-github-actions"
     ]
 }
