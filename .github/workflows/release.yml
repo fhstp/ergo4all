@@ -38,6 +38,11 @@ jobs:
       - name: Install flutter dependencies 📦
         run: flutter pub get --no-example
 
+      - name: Setup node 💻
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 22
+
       - name: Cache global npm modules ♻️
         id: cache-npm
         uses: actions/cache@v4
