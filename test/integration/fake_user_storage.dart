@@ -1,22 +1,29 @@
-import 'dart:convert';
+import 'package:common/list_ext.dart';
+import 'package:common/types.dart';
+import 'package:user_management/src/types.dart';
 
-import 'package:user_storage/user_config.dart';
-import 'package:user_storage/user_storage.dart';
+class FakeUserStorage implements UserStorage {
+  int? _currentUserIndex;
+  List<User> _users = List.empty();
 
-import 'fake_text_storage.dart';
-
-extension FakeUserConfigStorage on FakeTextStorage {
-  FakeTextStorage putUserConfig(UserConfig config) {
-    final json = config.toJson();
-    final text = jsonEncode(json);
-    put(userConfigFilePath, text);
-    return this;
+  @override
+  Future<Null> addUser(User user) async {
+    _users.add(user);
+    _currentUserIndex = _users.length;
   }
 
-  UserConfig? tryGetUserConfig() {
-    final text = tryGet(userConfigFilePath);
-    if (text == null) return null;
-    final json = jsonDecode(text);
-    return UserConfig.fromJson(json);
+  @override
+  Future<User?> getCurrentUser() async {
+    return _currentUserIndex != null ? _users[_currentUserIndex!] : null;
+  }
+
+  @override
+  Future<int?> getCurrentUserIndex() async {
+    return _currentUserIndex;
+  }
+
+  @override
+  Future<Null> updateUser(int userIndex, Update<User> update) async {
+    _users = _users.mapAt(userIndex, update);
   }
 }

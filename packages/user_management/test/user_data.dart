@@ -1,5 +1,5 @@
-import 'package:common/user.dart';
 import 'package:glados/glados.dart';
+import 'package:user_management/src/types.dart';
 
 extension AnyUser on Any {
   /// Generates a user with a random name

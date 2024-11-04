@@ -1,6 +1,6 @@
-import 'package:common/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:user_management/user_management.dart';
 
 class UserCreationForm extends StatefulWidget {
   final void Function(User user) onUserSubmitted;
@@ -39,7 +39,7 @@ class _UserCreationFormState extends State<UserCreationForm> {
       var formIsValid = _formKey.currentState!.validate();
       if (!formIsValid) return;
 
-      var user = User.newFromName(nickNameController.text);
+      var user = makeUserFromName(nickNameController.text);
       widget.onUserSubmitted(user);
     }
 

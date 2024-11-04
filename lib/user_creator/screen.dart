@@ -1,4 +1,3 @@
-import 'package:common/user.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -6,13 +5,12 @@ import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/user_creator/user_creation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:text_storage/types.dart';
-import 'package:user_storage/user_storage.dart';
+import 'package:user_management/user_management.dart';
 
 class UserCreatorScreen extends StatefulWidget {
-  final LocalTextStorage textStorage;
+  final UserStorage userStorage;
 
-  const UserCreatorScreen(this.textStorage, {super.key});
+  const UserCreatorScreen({super.key, required this.userStorage});
 
   @override
   State<UserCreatorScreen> createState() => _UserCreatorScreenState();
@@ -26,7 +24,7 @@ class _UserCreatorScreenState extends State<UserCreatorScreen> {
 
     void onUserSubmitted(User user) async {
       // Add user and navigate home afterwards
-      await addUser(widget.textStorage, user);
+      await widget.userStorage.addUser(user);
       navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
 

@@ -1,7 +1,7 @@
 import 'package:glados/glados.dart';
-import 'package:user_storage/user_config.dart';
+import 'package:user_management/src/user_config.dart';
 
-import '../../common/test/user_data.dart';
+import 'user_data.dart';
 
 extension AnyUserConfig on Any {
   /// Generates a [UserConfigEntry]

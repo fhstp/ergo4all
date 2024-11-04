@@ -49,11 +49,8 @@ dependencies:
   rula:
     path: ./packages/rula
 
-  text_storage:
-    path: ./packages/text_storage
-
-  user_storage:
-    path: ./packages/user_storage
+  user_management:
+    path: ./packages/user_management
 
   video_storage:
     path: ./packages/video_storage

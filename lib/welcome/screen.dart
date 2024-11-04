@@ -1,4 +1,3 @@
-import 'package:common/user.dart';
 import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
@@ -7,15 +6,14 @@ import 'package:ergo4all/welcome/timed_loading_bar.dart';
 import 'package:ergo4all/welcome/types.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:flutter/material.dart';
-import 'package:text_storage/types.dart';
-import 'package:user_storage/user_storage.dart';
+import 'package:user_management/user_management.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  final LocalTextStorage textStorage;
+  final UserStorage userStorage;
   final GetProjectVersion getProjectVersion;
 
-  const WelcomeScreen(this.textStorage,
-      {super.key, required this.getProjectVersion});
+  const WelcomeScreen(
+      {super.key, required this.getProjectVersion, required this.userStorage});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -30,7 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.initState();
 
     // We start getting the current user in the background
-    _currentUser = getCurrentUser(widget.textStorage);
+    _currentUser = widget.userStorage.getCurrentUser();
     _projectVersion = widget.getProjectVersion();
   }
 

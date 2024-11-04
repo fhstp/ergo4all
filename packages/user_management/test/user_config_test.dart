@@ -1,10 +1,9 @@
-import 'package:common/user.dart';
 import 'package:glados/glados.dart';
-import 'package:user_storage/user_config.dart';
-import 'package:user_storage/user_storage.dart';
+import 'package:user_management/src/user_config.dart';
+import 'package:user_management/user_management.dart';
 
-import '../../common/test/user_data.dart';
 import 'user_config_data.dart';
+import 'user_data.dart';
 
 void main() {
   group("new config", () {
@@ -18,8 +17,12 @@ void main() {
         (user) {
       final config = UserConfig.forUser(user);
 
-      expect(config.userEntries,
-          equals([UserConfigEntry(name: user.name, hasSeenTutorial: false)]));
+      expect(
+          config.userEntries,
+          equals([
+            UserConfigEntry(
+                name: user.name, hasSeenTutorial: user.hasSeenTutorial)
+          ]));
     });
   });
 
@@ -59,7 +62,7 @@ void main() {
     });
 
     test("should be user for configs with current user", () {
-      final config = UserConfig.forUser(const User.newFromName("John"));
+      final config = UserConfig.forUser(makeUserFromName("John"));
 
       final user = tryGetCurrentUserFromConfig(config);
 

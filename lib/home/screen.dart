@@ -1,4 +1,3 @@
-import 'package:common/user.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -10,15 +9,14 @@ import 'package:ergo4all/home/show_tutorial_dialog.dart';
 import 'package:ergo4all/home/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:text_storage/types.dart';
-import 'package:user_storage/user_storage.dart';
+import 'package:user_management/user_management.dart';
 import 'package:video_storage/types.dart';
 
 class HomeScreen extends StatefulWidget {
   final VideoStorage videoStorage;
-  final LocalTextStorage textStorage;
+  final UserStorage userStorage;
 
-  const HomeScreen(this.videoStorage, this.textStorage, {super.key});
+  const HomeScreen(this.videoStorage, {super.key, required this.userStorage});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -28,11 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   User? _currentUser;
 
   void _skipTutorial() async {
-    final userIndex = await getCurrentUserIndex(widget.textStorage);
+    final userIndex = await widget.userStorage.getCurrentUserIndex();
     if (userIndex == null) {
       throw StateError("Must have current user to skip tutorial.");
     }
-    await updateUser(widget.textStorage, userIndex, skipTutorial);
+    await widget.userStorage.updateUser(userIndex, skipTutorial);
   }
 
   void _showTutorial() {
@@ -78,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser(widget.textStorage).then((user) {
+    widget.userStorage.getCurrentUser().then((user) {
       if (user == null) throw Exception("Must have user on home screen!");
       _onUserLoaded(user);
     });

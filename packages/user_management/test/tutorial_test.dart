@@ -1,5 +1,5 @@
-import 'package:common/user.dart';
 import 'package:glados/glados.dart';
+import 'package:user_management/src/tutorial.dart';
 
 import 'user_data.dart';
 

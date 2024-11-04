@@ -1,13 +1,11 @@
-import 'package:common/user.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/home/session_start_dialog.dart';
 import 'package:ergo4all/home/show_tutorial_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:user_storage/user_config.dart';
+import 'package:user_management/user_management.dart';
 
 import '../app_mock.dart';
-import '../fake_text_storage.dart';
 import '../fake_user_storage.dart';
 import '../fake_video_storage.dart';
 
@@ -15,11 +13,13 @@ void main() {
   testWidgets("should show session start dialog when pressing start button",
       (tester) async {
     final videoStorage = FakeVideoStorage();
-    final textStorage = FakeTextStorage().putUserConfig(
-        UserConfig.forUser(const User(name: "Jane", hasSeenTutorial: true)));
+    final userStorage = FakeUserStorage();
+    await userStorage.addUser(const User(name: "Jane", hasSeenTutorial: true));
 
-    await tester.pumpWidget(
-        makeMockAppFromWidget(HomeScreen(videoStorage, textStorage)));
+    await tester.pumpWidget(makeMockAppFromWidget(HomeScreen(
+      videoStorage,
+      userStorage: userStorage,
+    )));
     await tester.pump(const Duration(seconds: 1));
 
     await tester.tap(find.byKey(const Key("start")));
@@ -30,12 +30,12 @@ void main() {
 
   testWidgets("should display name of current user", (tester) async {
     final videoStorage = FakeVideoStorage();
-    const user = User.newFromName("Jane");
-    final textStorage =
-        FakeTextStorage().putUserConfig(UserConfig.forUser(user));
+    final user = makeUserFromName("Jane");
+    final userStorage = FakeUserStorage();
+    await userStorage.addUser(user);
 
-    await tester.pumpWidget(
-        makeMockAppFromWidget(HomeScreen(videoStorage, textStorage)));
+    await tester.pumpWidget(makeMockAppFromWidget(
+        HomeScreen(videoStorage, userStorage: userStorage)));
     await tester.pump(const Duration(seconds: 1));
 
     expect(find.textContaining(user.name), findsOne);
@@ -44,11 +44,13 @@ void main() {
   testWidgets("should show tutorial dialog if user has not seen it",
       (tester) async {
     final videoStorage = FakeVideoStorage();
-    final textStorage = FakeTextStorage().putUserConfig(
-        UserConfig.forUser(const User(name: "Jane", hasSeenTutorial: false)));
+    final userStorage = FakeUserStorage();
+    await userStorage.addUser(const User(name: "Jane", hasSeenTutorial: false));
 
-    await tester.pumpWidget(
-        makeMockAppFromWidget(HomeScreen(videoStorage, textStorage)));
+    await tester.pumpWidget(makeMockAppFromWidget(HomeScreen(
+      videoStorage,
+      userStorage: userStorage,
+    )));
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
     expect(find.byKey(ShowTutorialDialog.dialogKey), findsOneWidget);
@@ -57,11 +59,13 @@ void main() {
   testWidgets("should not show tutorial dialog if user has seen it",
       (tester) async {
     final videoStorage = FakeVideoStorage();
-    final textStorage = FakeTextStorage().putUserConfig(
-        UserConfig.forUser(const User(name: "Jane", hasSeenTutorial: true)));
+    final userStorage = FakeUserStorage();
+    await userStorage.addUser(const User(name: "Jane", hasSeenTutorial: true));
 
-    await tester.pumpWidget(
-        makeMockAppFromWidget(HomeScreen(videoStorage, textStorage)));
+    await tester.pumpWidget(makeMockAppFromWidget(HomeScreen(
+      videoStorage,
+      userStorage: userStorage,
+    )));
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
     expect(find.byKey(ShowTutorialDialog.dialogKey), findsNothing);
