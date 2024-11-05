@@ -41,25 +41,12 @@ jobs:
       - name: Setup node 💻
         uses: actions/setup-node@v4
         with: 
-          node-version: 22
-
-      - name: Cache global npm modules ♻️
-        id: cache-npm
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
+          node-version-file: .nvmrc
+          cache: npm
 
       - name: Install semantic-release dependencies 📦
         run: |
-          npm i -g \
-            semantic-release \
-            @semantic-release/changelog \
-            semantic-release-pub \
-            @semantic-release/git \
-            @semantic-release/github
+          npm i semantic-release @semantic-release/changelog semantic-release-pub @semantic-release/git @semantic-release/github
 
       - name: Setup java ☕
         uses: actions/setup-java@v4
@@ -70,13 +57,12 @@ jobs:
       - name: Build for android 🤖
         run: flutter build appbundle
 
-      - name: Setup Node 💻
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-
-
       - name: Release 🚀
-        run: npx semantic-release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/changelog
+            semantic-release-pub
+            @semantic-release/git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
