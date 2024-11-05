@@ -40,8 +40,7 @@ class UserConfig extends Equatable {
 
   const UserConfig({required this.currentUserIndex, required this.userEntries});
 
-  /// Makes a new [UserConfig] with one user inside. The user will be the
-  /// current user.
+  /// Makes a new [UserConfig] with one user inside. The user will be the current user.
   UserConfig.forUser(User user)
       : this(
             currentUserIndex: 0, userEntries: [UserConfigEntry.fromUser(user)]);
@@ -54,17 +53,14 @@ class UserConfig extends Equatable {
   List<Object?> get props => [currentUserIndex, userEntries];
 }
 
-/// Appends a user to a [UserConfig] and sets the current user index to the
-/// appended users index.
+/// Appends a user to a [UserConfig] and sets the current user index to the appended users index.
 UserConfig appendUserToConfig(UserConfig config, User user) {
   return UserConfig(
       currentUserIndex: config.userEntries.length,
       userEntries: [...config.userEntries, UserConfigEntry.fromUser(user)]);
 }
 
-/// Attempts to get the current user from a [UserConfig] object.
-/// This will attempt to get the [UserConfigEntry] corresponding to
-/// [config.currentUserIndex] and convert it to a [User].
+/// Attempts to get the current user from a [UserConfig] object. This will attempt to get the [UserConfigEntry] corresponding to [config.currentUserIndex] and convert it to a [User].
 User? tryGetCurrentUserFromConfig(UserConfig config) {
   final userIndex = config.currentUserIndex;
   if (userIndex == null) return null;
@@ -73,8 +69,7 @@ User? tryGetCurrentUserFromConfig(UserConfig config) {
   return userEntry.toUser();
 }
 
-/// Applies a mapping function to a user in a [UserConfig]. You must know the
-/// [userIndex] of the user. Returns the mapped [UserConfig].
+/// Applies a mapping function to a user in a [UserConfig]. You must know the [userIndex] of the user. Returns the mapped [UserConfig].
 UserConfig updateUserInConfig(
     UserConfig config, int userIndex, Update<User> update) {
   return UserConfig(

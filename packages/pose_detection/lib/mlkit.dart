@@ -77,8 +77,7 @@ mlkit.InputImage _makeMLkitInput(DetectInput input) {
   );
 }
 
-/// Gets the size of a [CameraImage] but rotates it so width and height match
-/// the device orientation.
+/// Gets the size of a [CameraImage] but rotates it so width and height match  the device orientation.
 Size _getRotatedImageSize(CameraImage image) {
   // For some reason, the width and height in the image are flipped in
   // portrait mode.

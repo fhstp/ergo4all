@@ -8,8 +8,7 @@ class User extends Equatable {
   /// The users name.
   final String name;
 
-  /// Whether the user has seen the tutorial. This will also be true if
-  /// the user has skipped the tutorial.
+  /// Whether the user has seen the tutorial. This will also be true if the user has skipped the tutorial.
   final bool hasSeenTutorial;
 
   const User({required this.name, required this.hasSeenTutorial});

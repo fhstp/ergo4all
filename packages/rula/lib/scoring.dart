@@ -101,8 +101,7 @@ const _tableC = [
   [5, 5, 6, 7, 7, 7, 7]
 ];
 
-/// Does the full Rula calculation based on the given [sheet] and produces
-/// a [RulaScore] in the range [0; 7].
+/// Does the full Rula calculation based on the given [sheet] and produces a [RulaScore] in the range [0; 7].
 RulaScore calcFullRulaScore(RulaSheet sheet) {
   final shoulderFlexionScore = switch (sheet.shoulderFlexion.value) {
     < -20.0 => 2,

@@ -7,8 +7,7 @@ enum RulaLabel {
   /// The pose is acceptable. Corresponds to values [1, 2].
   acceptable,
 
-  /// The pose should be changed in the near future. Corresponds to values
-  /// [3, 4].
+  /// The pose should be changed in the near future. Corresponds to values [3, 4].
   changeInFuture,
 
   /// The pose should be changed shortly. Corresponds to values [5, 6].

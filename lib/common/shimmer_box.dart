@@ -2,8 +2,7 @@ import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-/// A shimmering box which can be displayed instead of rectangular content
-/// while it loads.
+/// A shimmering box which can be displayed instead of rectangular content while it loads.
 class ShimmerBox extends StatelessWidget {
   /// The width of the box.
   final double width;

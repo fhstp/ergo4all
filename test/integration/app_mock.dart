@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mockingjay/mockingjay.dart';
 
-/// Makes a basic [MockNavigator] which simply allows all navigation
-/// requests and silently does nothing.
+/// Makes a basic [MockNavigator] which simply allows all navigation requests and silently does nothing.
 MockNavigator makeDummyMockNavigator() {
   final navigator = MockNavigator();
   when(navigator.canPop).thenReturn(true);

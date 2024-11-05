@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:rula/degree.dart';
 
-/// Contains input data for filling out a Rula Sheet. Each field on this class
-/// corresponds to a point on the sheet.
+/// Contains input data for filling out a Rula Sheet. Each field on this class corresponds to a point on the sheet.
 ///
 /// The following points are currently not included.
 ///

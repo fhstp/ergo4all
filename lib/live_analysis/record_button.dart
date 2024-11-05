@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// A record button widget. It is a text-less button that switches between
-/// the record and stop icon depending on the [RecordButton.isRecording]
-/// parameter.
+/// A record button widget. It is a text-less button that switches between the record and stop icon depending on the [RecordButton.isRecording] parameter.
 class RecordButton extends StatelessWidget {
   /// Whether we are currently recording.
   final bool isRecording;
 
-  /// The size of the button. The button has a square size so this value is
-  /// used for both dimensions.
+  /// The size of the button. The button has a square size so this value is used for both dimensions.
   final double size;
   final double iconSize;
 

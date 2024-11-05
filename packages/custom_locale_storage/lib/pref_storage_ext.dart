@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prefs_storage/generic_ext.dart';
 import 'package:prefs_storage/types.dart';
 
-/// Contains extension methods for loading and storing custom locales in a
-/// [PreferenceStorage].
+/// Contains extension methods for loading and storing custom locales in a [PreferenceStorage].
 extension CustomLocalePrefStorage on PreferenceStorage {
   static const String prefKey = "custom-locale";
 
