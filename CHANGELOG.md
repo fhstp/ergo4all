@@ -1,3 +1,18 @@
+# [1.16.0](https://github.com/fhstp/ergo4all/compare/v1.15.0...v1.16.0) (2024-11-05)
+
+
+### Bug Fixes
+
+* fake user storage error ([7775c66](https://github.com/fhstp/ergo4all/commit/7775c6677e23d9dc3aba958766a7ee14674ead94))
+
+
+### Features
+
+* add rula scoring logic ([4a6335f](https://github.com/fhstp/ergo4all/commit/4a6335f1da06f3a02da32db8c7d7c9ab5cdbb3c8))
+* add score labeling ([10c612a](https://github.com/fhstp/ergo4all/commit/10c612adaf9c7c2e1dfcb670be5422383216b208))
+* display live score ([c8eb45d](https://github.com/fhstp/ergo4all/commit/c8eb45d1a8942f107822163d9d8cfe3a20ff9011))
+* rula final score calculation ([0868e1d](https://github.com/fhstp/ergo4all/commit/0868e1d9e08edae609188542f3c7aeb8923d647f))
+
 # [1.15.0](https://github.com/fhstp/ergo4all/compare/v1.14.0...v1.15.0) (2024-10-22)
 
 
