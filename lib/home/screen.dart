@@ -82,9 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: makeCustomAppBar(
-        title: localizations.home_title,
-      ),
+      appBar: makeCustomAppBar(title: localizations.home_title),
       body: ScreenContent(
           child: Column(
         children: [
@@ -93,9 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
               : Header(localizations.home_welcome(_currentUserName!)),
           ElevatedButton(
               key: const Key("start"),
-              onPressed: () {
-                _showStartSessionDialog();
-              },
+              onPressed: _showStartSessionDialog,
               child: Text(localizations.home_firstSession))
         ],
       )),
