@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  User? _currentUser;
+  String? _currentUserName;
 
   void _skipTutorial() async {
     final userIndex = await widget.userStorage.getCurrentUserIndex();
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onUserLoaded(User user) async {
     setState(() {
-      _currentUser = user;
+      _currentUserName = user.name;
     });
 
     if (user.hasSeenTutorial) return;
@@ -55,9 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showStartSessionDialog() async {
-    final source = await StartSessionDialog.show(
-      context,
-    );
+    final source = await StartSessionDialog.show(context);
     if (source == null) return;
 
     if (source == VideoSource.live) {
@@ -92,9 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ScreenContent(
           child: Column(
         children: [
-          _currentUser == null
+          _currentUserName == null
               ? ShimmerBox(width: 200, height: 24)
-              : Header(localizations.home_welcome(_currentUser!.name)),
+              : Header(localizations.home_welcome(_currentUserName!)),
           ElevatedButton(
               key: const Key("start"),
               onPressed: () {
