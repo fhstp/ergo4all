@@ -18,7 +18,7 @@ import 'package:ergo4all/welcome/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:pose_detection/types.dart';
+import 'package:pose/types.dart';
 import 'package:prefs_storage/types.dart';
 import 'package:user_management/user_management.dart';
 import 'package:video_storage/types.dart';

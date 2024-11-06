@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pose_common/types.dart';
+import 'package:pose/types.dart';
 
 class PosePainter extends CustomPainter {
   final Pose2D pose;

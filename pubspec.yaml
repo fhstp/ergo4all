@@ -37,11 +37,8 @@ dependencies:
   custom_locale_storage:
     path: ./packages/custom_locale_storage
 
-  pose_common:
-    path: ./packages/pose_common
-
-  pose_detection:
-    path: ./packages/pose_detection
+  pose:
+    path: ./packages/pose
 
   prefs_storage:
     path: ./packages/prefs_storage

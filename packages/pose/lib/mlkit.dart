@@ -5,7 +5,6 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
 import "package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart"
     as mlkit;
-import 'package:pose_common/types.dart';
 
 import 'types.dart';
 
@@ -42,13 +41,13 @@ mlkit.InputImageRotation? _tryGetCameraRotation(
   throw UnsupportedError("Only Android and iOS are supported!");
 }
 
-mlkit.InputImage _makeMLkitInput(DetectInput input) {
-  final rotation = _tryGetCameraRotation(input.deviceOrientation, input.camera);
+mlkit.InputImage _makeMLkitInput(CameraDescription camera,
+    DeviceOrientation deviceOrientation, CameraImage image) {
+  final rotation = _tryGetCameraRotation(deviceOrientation, camera);
   assert(rotation != null);
 
   // get image format
-  final format =
-      mlkit.InputImageFormatValue.fromRawValue(input.image.format.raw);
+  final format = mlkit.InputImageFormatValue.fromRawValue(image.format.raw);
   // validate format depending on platform
   // only supported formats:
   // * nv21 for Android
@@ -62,14 +61,14 @@ mlkit.InputImage _makeMLkitInput(DetectInput input) {
   }
 
   // since format is constraint to nv21 or bgra8888, both only have one plane
-  assert(input.image.planes.length == 1);
-  final plane = input.image.planes.first;
+  assert(image.planes.length == 1);
+  final plane = image.planes.first;
 
   // compose InputImage using bytes
   return mlkit.InputImage.fromBytes(
     bytes: plane.bytes,
     metadata: mlkit.InputImageMetadata(
-      size: Size(input.image.width.toDouble(), input.image.height.toDouble()),
+      size: Size(image.width.toDouble(), image.height.toDouble()),
       rotation: rotation!, // used only in Android
       format: format, // used only in iOS
       bytesPerRow: plane.bytesPerRow, // used only in iOS
@@ -93,18 +92,18 @@ class MLkitPoseDetectorAdapter extends PoseDetector {
   mlkit.PoseDetector? _detector;
 
   @override
-  Future<bool> isReady() async {
+  isReady() async {
     return _detector != null;
   }
 
   @override
-  Future<DetectResult?> detect(DetectInput input) async {
+  detect(camera, deviceOrientation, image) async {
     if (_detector == null) {
       throw StateError(
           "Detect was called on PoseDetector before it was ready.");
     }
 
-    final mlkitInput = _makeMLkitInput(input);
+    final mlkitInput = _makeMLkitInput(camera, deviceOrientation, image);
     final poses = await _detector!.processImage(mlkitInput);
 
     final pose = poses.singleOrNull;
@@ -128,7 +127,7 @@ class MLkitPoseDetectorAdapter extends PoseDetector {
       return pose.landmarks[mlkitType]!;
     }
 
-    final imageSize = _getRotatedImageSize(input.image);
+    final imageSize = _getRotatedImageSize(image);
 
     Landmark2D landmarkFor(LandmarkTypes type) {
       final mlkitLandmark = mlkitLandmarkFor(type);
@@ -144,7 +143,7 @@ class MLkitPoseDetectorAdapter extends PoseDetector {
   }
 
   @override
-  Future<Null> start() async {
+  start() async {
     if (_detector != null) return;
 
     _detector = mlkit.PoseDetector(
@@ -154,7 +153,7 @@ class MLkitPoseDetectorAdapter extends PoseDetector {
   }
 
   @override
-  Future<Null> stop() async {
+  stop() async {
     if (_detector == null) return;
 
     await _detector!.close();

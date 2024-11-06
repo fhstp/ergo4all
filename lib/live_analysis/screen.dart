@@ -8,8 +8,7 @@ import 'package:ergo4all/live_analysis/camera_permission_dialog.dart';
 import 'package:ergo4all/live_analysis/pose_painter.dart';
 import 'package:ergo4all/live_analysis/record_button.dart';
 import 'package:flutter/material.dart';
-import 'package:pose_common/types.dart';
-import 'package:pose_detection/types.dart';
+import 'package:pose/types.dart';
 import 'package:rula/degree.dart';
 import 'package:rula/label.dart';
 import 'package:rula/score.dart';
@@ -68,11 +67,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
   }
 
   _onImageCaptured(CameraImage cameraImage) async {
-    final input = DetectInput(
-        camera: _activeCamera,
-        deviceOrientation: _activeCameraController!.value.deviceOrientation,
-        image: cameraImage);
-    final result = await widget.poseDetector.detect(input);
+    final result = await widget.poseDetector.detect(_activeCamera,
+        _activeCameraController!.value.deviceOrientation, cameraImage);
 
     if (result == null) {
       setState(() {
