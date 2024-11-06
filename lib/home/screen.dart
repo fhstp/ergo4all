@@ -27,10 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _skipTutorial() async {
     final userIndex = await widget.userStorage.getCurrentUserIndex();
-    if (userIndex == null) {
-      throw StateError("Must have current user to skip tutorial.");
-    }
-    await widget.userStorage.updateUser(userIndex, skipTutorial);
+    assert(userIndex != null);
+    await widget.userStorage.updateUser(userIndex!, skipTutorial);
   }
 
   void _showTutorial() {
@@ -75,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     widget.userStorage.getCurrentUser().then((user) {
-      if (user == null) throw Exception("Must have user on home screen!");
-      _onUserLoaded(user);
+      assert(user != null);
+      _onUserLoaded(user!);
     });
   }
 
