@@ -50,7 +50,9 @@ jobs:
           java-version: ${{env.JAVA_VERSION}}
 
       - name: Build for android 🤖
-        run: flutter build appbundle
+        # For now we build apks
+        # run: flutter build appbundle
+        run: flutter build apk --split-per-abi
 
       - name: Release 🚀
         uses: cycjimmy/semantic-release-action@v4
