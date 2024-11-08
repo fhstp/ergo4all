@@ -49,9 +49,6 @@ dependencies:
   user_management:
     path: ./packages/user_management
 
-  video_storage:
-    path: ./packages/video_storage
-
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -60,6 +57,7 @@ dependencies:
   camera: ^0.10.0
   permission_handler: ^11.3.1
   shimmer: ^3.0.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

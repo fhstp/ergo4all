@@ -4,12 +4,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pose/mlkit.dart';
 import 'package:prefs_storage/shared_preferences.dart';
 import 'package:user_management/user_management.dart';
-import 'package:video_storage/gallery.dart';
 
 void main() {
   runApp(Ergo4AllApp(
     userStorage: PersistentUserStorage(),
-    videoStorage: GalleryVideoStorage(),
     preferenceStorage: SharedPreferencesStorage(),
     getProjectVersion: () =>
         PackageInfo.fromPlatform().then((info) => info.version),

@@ -21,11 +21,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pose/types.dart';
 import 'package:prefs_storage/types.dart';
 import 'package:user_management/user_management.dart';
-import 'package:video_storage/types.dart';
 
 class Ergo4AllApp extends StatefulWidget {
   final UserStorage userStorage;
-  final VideoStorage videoStorage;
   final PreferenceStorage preferenceStorage;
   final GetProjectVersion getProjectVersion;
   final PoseDetector poseDetector;
@@ -33,7 +31,6 @@ class Ergo4AllApp extends StatefulWidget {
   const Ergo4AllApp({
     super.key,
     required this.userStorage,
-    required this.videoStorage,
     required this.preferenceStorage,
     required this.getProjectVersion,
     required this.poseDetector,
@@ -73,7 +70,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
     return MaterialApp(
         routes: {
           Routes.home.path: (context) => HomeScreen(
-                widget.videoStorage,
                 userStorage: widget.userStorage,
               ),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(

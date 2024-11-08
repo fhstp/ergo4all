@@ -4,19 +4,18 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
 import 'package:ergo4all/common/snack.dart';
+import 'package:ergo4all/home/pick_video_dialog.dart';
 import 'package:ergo4all/home/session_start_dialog.dart';
 import 'package:ergo4all/home/show_tutorial_dialog.dart';
 import 'package:ergo4all/home/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:user_management/user_management.dart';
-import 'package:video_storage/types.dart';
 
 class HomeScreen extends StatefulWidget {
-  final VideoStorage videoStorage;
   final UserStorage userStorage;
 
-  const HomeScreen(this.videoStorage, {super.key, required this.userStorage});
+  const HomeScreen({super.key, required this.userStorage});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -62,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    final videoFile = await widget.videoStorage.tryPick();
+    final videoFile = await showVideoPickDialog();
     if (videoFile == null) return;
 
     if (!mounted) return;

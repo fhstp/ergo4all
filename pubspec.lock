@@ -457,7 +457,7 @@ packages:
     source: hosted
     version: "4.3.0"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
       sha256: "021834d9c0c3de46bf0fe40341fa07168407f694d9b2bb18d532dc1261867f7a"
@@ -1089,13 +1089,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  video_storage:
-    dependency: "direct main"
-    description:
-      path: "packages/video_storage"
-      relative: true
-    source: path
-    version: "0.0.0"
   vm_service:
     dependency: transitive
     description:
