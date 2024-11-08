@@ -6,32 +6,28 @@ import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:prefs_storage/types.dart';
 
-class PickLanguageScreen extends StatefulWidget {
+class PickLanguageScreen extends HookWidget {
   final PreferenceStorage preferenceStorage;
 
   const PickLanguageScreen(this.preferenceStorage, {super.key});
 
   @override
-  State<PickLanguageScreen> createState() => _PickLanguageScreenState();
-}
-
-class _PickLanguageScreenState extends State<PickLanguageScreen> {
-  void _selectLocale(Locale locale) async {
-    await widget.preferenceStorage.setCustomLocale(locale);
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, Routes.preIntro.path);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    void selectLocale(Locale locale) async {
+      await preferenceStorage.setCustomLocale(locale);
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(context, Routes.preIntro.path);
+    }
 
     Widget languageButtonFor(String language, Locale locale) {
       return ElevatedButton(
         key: Key("lang_button_${locale.languageCode.toLowerCase()}"),
-        onPressed: () => _selectLocale(locale),
+        onPressed: () => selectLocale(locale),
         child: Text(language),
       );
     }

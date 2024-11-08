@@ -1,8 +1,9 @@
+import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
-import 'package:ergo4all/common/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 class IntroPage {
   final String title;
@@ -11,7 +12,7 @@ class IntroPage {
   IntroPage({required this.title, required this.widget});
 }
 
-class Intro extends StatefulWidget {
+class Intro extends HookWidget {
   final List<IntroPage> pages;
 
   Intro({super.key, required this.pages}) {
@@ -19,31 +20,14 @@ class Intro extends StatefulWidget {
   }
 
   @override
-  State<Intro> createState() => _IntroState();
-}
-
-class _IntroState extends State<Intro> {
-  int _pageIndex = 0;
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _pageIndex);
-  }
-
-  void _onPageChanged(int newIndex) {
-    setState(() {
-      _pageIndex = newIndex;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
+    final pageIndex = useState(0);
+    final pageController =
+        useMemoized(() => PageController(initialPage: pageIndex.value));
 
-    final pageTitle = widget.pages[_pageIndex].title;
+    final pageTitle = pages[pageIndex.value].title;
 
     void navigateToTermsOfUse() {
       navigator.pushNamed(Routes.tou.path);
@@ -55,9 +39,9 @@ class _IntroState extends State<Intro> {
           child: Column(children: [
         Expanded(
           child: PageView(
-            controller: _pageController,
-            onPageChanged: _onPageChanged,
-            children: widget.pages.map((it) => it.widget).toList(),
+            controller: pageController,
+            onPageChanged: (newIndex) => pageIndex.value = newIndex,
+            children: pages.map((it) => it.widget).toList(),
           ),
         ),
         ElevatedButton(

@@ -1,39 +1,30 @@
 import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/loading_indicator.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/common/screen_content.dart';
+import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class RecordedAnalysisScreen extends StatefulWidget {
+class RecordedAnalysisScreen extends HookWidget {
   const RecordedAnalysisScreen({super.key});
-
-  @override
-  State<RecordedAnalysisScreen> createState() => _RecordedAnalysisScreenState();
-}
-
-class _RecordedAnalysisScreenState extends State<RecordedAnalysisScreen> {
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _navigateAfterDelay();
-    });
-  }
-
-  _navigateAfterDelay() async {
-    await Future.delayed(const Duration(seconds: 3));
-
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, Routes.results.path);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    navigateAfterDelay() async {
+      await Future.delayed(const Duration(seconds: 3));
+
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(context, Routes.results.path);
+    }
+
+    useEffect(() {
+      navigateAfterDelay();
+      return null;
+    }, [null]);
 
     return Scaffold(
       body: ScreenContent(

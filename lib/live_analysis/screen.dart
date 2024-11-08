@@ -2,12 +2,14 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
+import 'package:ergo4all/common/hook_ext.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/live_analysis/camera_permission_dialog.dart';
 import 'package:ergo4all/live_analysis/pose_painter.dart';
 import 'package:ergo4all/live_analysis/record_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pose/types.dart';
 import 'package:rula/degree.dart';
 import 'package:rula/label.dart';
@@ -26,129 +28,117 @@ class _Capture {
   });
 }
 
-class LiveAnalysisScreen extends StatefulWidget {
+class LiveAnalysisScreen extends HookWidget {
   final PoseDetector poseDetector;
 
   const LiveAnalysisScreen({super.key, required this.poseDetector});
 
   @override
-  State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
-}
-
-class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
-  CameraController? _activeCameraController;
-  late final CameraDescription _activeCamera;
-  _Capture? _latestCapture;
-  bool _isRecording = false;
-  final Random _random = Random();
-  RulaScore? _currentScore;
-
-  Degree _randomAngle(double min, double max) {
-    return Degree.makeFrom180(min + _random.nextDouble() * (max - min));
-  }
-
-  _processCapture(_Capture capture) async {
-    // TODO: Calculate real rula sheet
-    final sheet = RulaSheet(
-        shoulderFlexion: _randomAngle(-180, 180),
-        shoulderAbduction: _randomAngle(0, 180),
-        elbowFlexion: _randomAngle(0, 180),
-        wristFlexion: _randomAngle(-180, 180),
-        neckFlexion: _randomAngle(-90, 90),
-        neckRotation: _randomAngle(-180, 180),
-        neckLateralFlexion: _randomAngle(-90, 90),
-        hipFlexion: _randomAngle(0, 180),
-        trunkRotation: _randomAngle(-180, 180),
-        trunkLateralFlexion: _randomAngle(-90, 90),
-        isStandingOnBothLegs: _random.nextDouble() > 0.5);
-    final finalScore = calcFullRulaScore(sheet);
-
-    setState(() => _currentScore = finalScore);
-  }
-
-  _onImageCaptured(CameraImage cameraImage) async {
-    final result = await widget.poseDetector.detect(_activeCamera,
-        _activeCameraController!.value.deviceOrientation, cameraImage);
-
-    if (result == null) {
-      setState(() {
-        _latestCapture = null;
-      });
-      return;
-    }
-
-    final capture = _Capture(
-      timestamp: DateTime.now().millisecondsSinceEpoch,
-      pose2d: result.pose2d,
-    );
-
-    setState(() {
-      _latestCapture = capture;
-    });
-
-    if (_isRecording) _processCapture(capture);
-  }
-
-  Future<Null> _startCaptureUsing(CameraDescription camera) async {
-    _activeCamera = camera;
-    final controller = CameraController(_activeCamera, ResolutionPreset.medium,
-        enableAudio: false,
-        imageFormatGroup: Platform.isAndroid
-            ? ImageFormatGroup.nv21 // for Android
-            : ImageFormatGroup.bgra8888, // for iOS
-        fps: 15);
-    await controller.initialize();
-    await controller.startImageStream(_onImageCaptured);
-    _activeCameraController = controller;
-    await widget.poseDetector.start();
-    setState(() {});
-  }
-
-  Future<Null> _tryInitCamera() async {
-    final isCameraPermissionGranted = await showCameraPermissionDialog(context);
-    if (!isCameraPermissionGranted) {
-      if (mounted) Navigator.of(context).pop();
-      return;
-    }
-
-    final cameras = await availableCameras();
-    await _startCaptureUsing(cameras[0]);
-  }
-
-  void _goToResults() {
-    Navigator.of(context).pushReplacementNamed(Routes.results.path);
-  }
-
-  Future<Null> _stopCapture() async {
-    _activeCameraController?.dispose();
-    _activeCameraController = null;
-    setState(() {});
-  }
-
-  void _onStoppedRecording() async {
-    await _stopCapture();
-    _goToResults();
-  }
-
-  void _toggleRecording() {
-    setState(() {
-      _isRecording = !_isRecording;
-    });
-
-    if (!_isRecording) _onStoppedRecording();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _tryInitCamera();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_activeCameraController == null ||
-        !_activeCameraController!.value.isInitialized) {
+    final random = useMemoized(() => Random());
+    final (currentScore, setCurrentScore) = useState<RulaScore?>(null).split();
+    final (cameraController, setCameraController) =
+        useState<CameraController?>(null).split();
+    final (activeCamera, setActiveCamera) =
+        useState<CameraDescription?>(null).split();
+    final (latestCapture, setLatestCapture) = useState<_Capture?>(null).split();
+    final (isRecording, setRecording) = useState(false).split();
+
+    Degree randomAngle(double min, double max) {
+      return Degree.makeFrom180(min + random.nextDouble() * (max - min));
+    }
+
+    processCapture(_Capture capture) async {
+      // TODO: Calculate real rula sheet
+      final sheet = RulaSheet(
+          shoulderFlexion: randomAngle(-180, 180),
+          shoulderAbduction: randomAngle(0, 180),
+          elbowFlexion: randomAngle(0, 180),
+          wristFlexion: randomAngle(-180, 180),
+          neckFlexion: randomAngle(-90, 90),
+          neckRotation: randomAngle(-180, 180),
+          neckLateralFlexion: randomAngle(-90, 90),
+          hipFlexion: randomAngle(0, 180),
+          trunkRotation: randomAngle(-180, 180),
+          trunkLateralFlexion: randomAngle(-90, 90),
+          isStandingOnBothLegs: random.nextDouble() > 0.5);
+      final finalScore = calcFullRulaScore(sheet);
+
+      setCurrentScore(finalScore);
+    }
+
+    onImageCaptured(CameraImage cameraImage) async {
+      final result = await poseDetector.detect(activeCamera!,
+          cameraController!.value.deviceOrientation, cameraImage);
+
+      if (result == null) {
+        setLatestCapture(null);
+        return;
+      }
+
+      final capture = _Capture(
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        pose2d: result.pose2d,
+      );
+
+      setLatestCapture(capture);
+
+      if (isRecording) processCapture(capture);
+    }
+
+    Future<Null> startCaptureUsing(CameraDescription camera) async {
+      setActiveCamera(camera);
+      final controller = CameraController(camera, ResolutionPreset.medium,
+          enableAudio: false,
+          imageFormatGroup: Platform.isAndroid
+              ? ImageFormatGroup.nv21 // for Android
+              : ImageFormatGroup.bgra8888, // for iOS
+          fps: 15);
+      await controller.initialize();
+      await controller.startImageStream(onImageCaptured);
+      setCameraController(controller);
+      await poseDetector.start();
+    }
+
+    Future<Null> tryInitCamera() async {
+      final isCameraPermissionGranted =
+          await showCameraPermissionDialog(context);
+      if (!isCameraPermissionGranted) {
+        if (context.mounted) Navigator.of(context).pop();
+        return;
+      }
+
+      final cameras = await availableCameras();
+      await startCaptureUsing(cameras[0]);
+    }
+
+    void goToResults() {
+      Navigator.of(context).pushReplacementNamed(Routes.results.path);
+    }
+
+    Future<Null> stopCapture() async {
+      cameraController?.dispose();
+      setCameraController(null);
+    }
+
+    void onStoppedRecording() async {
+      await stopCapture();
+      goToResults();
+    }
+
+    void toggleRecording() {
+      setRecording(!isRecording);
+
+      // We don't ! here because, we still have the "old" value
+      if (isRecording) onStoppedRecording();
+    }
+
+    useEffect(() {
+      tryInitCamera();
+      return null;
+    }, [null]);
+
+    if (cameraController == null || !cameraController.value.isInitialized) {
       return Scaffold(
         body: Center(
           child: SizedBox(
@@ -164,27 +154,27 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen> {
         children: [
           Stack(
             children: [
-              CameraPreview(_activeCameraController!),
-              if (_latestCapture != null)
+              CameraPreview(cameraController),
+              if (latestCapture != null)
                 Positioned.fill(
                   child: CustomPaint(
                       painter: PosePainter(
-                    pose: _latestCapture!.pose2d,
+                    pose: latestCapture.pose2d,
                   )),
                 ),
-              if (_currentScore != null)
+              if (currentScore != null)
                 Positioned(
                     top: largeSpace,
                     right: largeSpace,
                     // TODO: Add proper stringified version of rula label with localization
-                    child: Text(
-                        "$_currentScore: ${rulaLabelFor(_currentScore!)}")),
+                    child:
+                        Text("$currentScore: ${rulaLabelFor(currentScore)}")),
             ],
           ),
           const Spacer(),
           RecordButton(
-            isRecording: _isRecording,
-            onTap: _toggleRecording,
+            isRecording: isRecording,
+            onTap: toggleRecording,
           )
         ],
       ),

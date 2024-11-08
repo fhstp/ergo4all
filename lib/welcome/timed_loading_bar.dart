@@ -1,52 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class TimedLoadingBar extends StatefulWidget {
+class TimedLoadingBar extends HookWidget {
   final Duration duration;
   final VoidCallback? completed;
 
   const TimedLoadingBar({super.key, required this.duration, this.completed});
 
   @override
-  State<StatefulWidget> createState() {
-    return _TimedLoadingBarState();
-  }
-}
-
-class _TimedLoadingBarState extends State<TimedLoadingBar>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-
-  _onProgress() {
-    final progress = controller.value;
-    if (progress < 1) {
-      setState(() {});
-      return;
-    }
-
-    controller.removeListener(_onProgress);
-    widget.completed?.call();
-  }
-
-  @override
-  void initState() {
-    controller = AnimationController(
-        vsync: this, duration: widget.duration, lowerBound: 0, upperBound: 1);
-    controller
-      ..addListener(_onProgress)
-      ..forward();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final controller = useAnimationController(
+        duration: duration, lowerBound: 0, upperBound: 1);
+    final progress = useAnimation(controller);
+
+    useEffect(() {
+      controller.forward().then((_) {
+        completed?.call();
+      });
+      return null;
+    }, [null]);
+
     return LinearProgressIndicator(
-      value: controller.value,
+      value: progress,
       semanticsLabel: 'Loading bar',
     );
   }

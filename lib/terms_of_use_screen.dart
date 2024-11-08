@@ -4,27 +4,16 @@ import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class TermsOfUseScreen extends StatefulWidget {
+class TermsOfUseScreen extends HookWidget {
   const TermsOfUseScreen({super.key});
-
-  @override
-  State<TermsOfUseScreen> createState() => _TermsOfUseScreenState();
-}
-
-class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
-  bool hasAccepted = false;
-
-  void setHasAccepted(bool? value) {
-    setState(() {
-      hasAccepted = value ?? false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final navigator = Navigator.of(context);
+    final hasAccepted = useState(false);
 
     void navigateToPreUserCreation() {
       navigator.pushReplacementNamed(Routes.preUserCreator.path);
@@ -48,8 +37,10 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                 Text(localizations.termsOfUse_accept),
                 Checkbox(
                     key: const Key("accept-check"),
-                    value: hasAccepted,
-                    onChanged: setHasAccepted)
+                    value: hasAccepted.value,
+                    onChanged: (value) {
+                      hasAccepted.value = value!;
+                    })
               ],
             ),
             const SizedBox(
@@ -57,7 +48,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
             ),
             ElevatedButton(
                 key: const Key("next"),
-                onPressed: hasAccepted ? navigateToPreUserCreation : null,
+                onPressed: hasAccepted.value ? navigateToPreUserCreation : null,
                 child: Text(localizations.common_next))
           ],
         ),

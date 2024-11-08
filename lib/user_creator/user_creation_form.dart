@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:user_management/user_management.dart';
 
-class UserCreationForm extends StatefulWidget {
+class UserCreationForm extends HookWidget {
+  static final _ageBrackets = ["20 - 30", "30 - 40", "50 - 50", "> 50"];
+
   final void Function(User user) onUserSubmitted;
 
   const UserCreationForm({super.key, required this.onUserSubmitted});
 
   @override
-  State<UserCreationForm> createState() => _UserCreationFormState();
-}
-
-class _UserCreationFormState extends State<UserCreationForm> {
-  final _formKey = GlobalKey<FormState>();
-  final nickNameController = TextEditingController();
-  static final _ageBrackets = ["20 - 30", "30 - 40", "50 - 50", "> 50"];
-
-  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final formKey = useMemoized(() => GlobalKey<FormState>());
+    final nickNameController = useTextEditingController();
 
     String? isNotEmpty(String? value, String label) {
       if (value == null || value.isEmpty) {
@@ -36,15 +32,15 @@ class _UserCreationFormState extends State<UserCreationForm> {
     }
 
     void tryCreateUser() async {
-      var formIsValid = _formKey.currentState!.validate();
+      var formIsValid = formKey.currentState!.validate();
       if (!formIsValid) return;
 
       var user = makeUserFromName(nickNameController.text);
-      widget.onUserSubmitted(user);
+      onUserSubmitted(user);
     }
 
     return Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: [
             TextFormField(
@@ -86,11 +82,5 @@ class _UserCreationFormState extends State<UserCreationForm> {
                 child: Text(localizations.userCreator_create))
           ],
         ));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    nickNameController.dispose();
   }
 }

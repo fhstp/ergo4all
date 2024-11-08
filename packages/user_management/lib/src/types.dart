@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:common/types.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,16 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [name, hasSeenTutorial];
+
+  User copyWith({
+    String? name,
+    bool? hasSeenTutorial,
+  }) {
+    return User(
+      name: name ?? this.name,
+      hasSeenTutorial: hasSeenTutorial ?? this.hasSeenTutorial,
+    );
+  }
 }
 
 /// Stores [User] data.
