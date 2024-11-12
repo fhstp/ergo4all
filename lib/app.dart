@@ -18,23 +18,22 @@ import 'package:ergo4all/welcome/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pose/mlkit.dart';
 import 'package:pose/types.dart';
+import 'package:prefs_storage/shared_preferences.dart';
 import 'package:prefs_storage/types.dart';
 import 'package:user_management/user_management.dart';
 
 class Ergo4AllApp extends StatefulWidget {
-  final UserStorage userStorage;
-  final PreferenceStorage preferenceStorage;
-  final GetProjectVersion getProjectVersion;
-  final PoseDetector poseDetector;
+  final UserStorage userStorage = PersistentUserStorage();
+  final PreferenceStorage preferenceStorage = SharedPreferencesStorage();
+  // ignore: prefer_function_declarations_over_variables
+  final GetProjectVersion getProjectVersion =
+      () => PackageInfo.fromPlatform().then((info) => info.version);
+  final PoseDetector poseDetector = MLkitPoseDetectorAdapter();
 
-  const Ergo4AllApp({
-    super.key,
-    required this.userStorage,
-    required this.preferenceStorage,
-    required this.getProjectVersion,
-    required this.poseDetector,
-  });
+  Ergo4AllApp({super.key});
 
   @override
   State<Ergo4AllApp> createState() => _Ergo4AllAppState();
