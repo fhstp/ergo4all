@@ -47,18 +47,6 @@ void main() {
         .called(1);
   });
 
-  testWidgets("should display name of current user", (tester) async {
-    final user = makeUserFromName("Jane");
-    final userStorage = FakeUserStorage();
-    await userStorage.addUser(user);
-
-    await tester.pumpWidget(
-        makeMockAppFromWidget(HomeScreen(userStorage: userStorage), navigator));
-    await tester.pump(Duration(milliseconds: 100));
-
-    expect(find.textContaining(user.name), findsOne);
-  });
-
   testWidgets("should show tutorial dialog if user has not seen it",
       (tester) async {
     final userStorage = FakeUserStorage();

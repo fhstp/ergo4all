@@ -1,5 +1,5 @@
 import 'package:ergo4all/common/app_bar.dart';
-import 'package:ergo4all/common/header.dart';
+import 'package:ergo4all/common/hook_ext.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
@@ -8,6 +8,7 @@ import 'package:ergo4all/home/pick_video_dialog.dart';
 import 'package:ergo4all/home/session_start_dialog.dart';
 import 'package:ergo4all/home/show_tutorial_dialog.dart';
 import 'package:ergo4all/home/types.dart';
+import 'package:ergo4all/home/user_welcome_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -22,7 +23,7 @@ class HomeScreen extends HookWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final currentUserName = useState<String?>(null);
+    final (currentUser, setCurrentUser) = useState<User?>(null).split();
 
     void showStartSessionDialog() async {
       final source = await StartSessionDialog.show(context);
@@ -53,7 +54,7 @@ class HomeScreen extends HookWidget {
     }
 
     void onUserLoaded(User user) async {
-      currentUserName.value = user.name;
+      setCurrentUser(user);
 
       if (user.hasSeenTutorial) return;
 
@@ -80,9 +81,9 @@ class HomeScreen extends HookWidget {
       body: ScreenContent(
           child: Column(
         children: [
-          currentUserName.value == null
+          currentUser == null
               ? ShimmerBox(width: 200, height: 24)
-              : Header(localizations.home_welcome(currentUserName.value!)),
+              : UserWelcomeHeader(currentUser),
           ElevatedButton(
               key: const Key("start"),
               onPressed: showStartSessionDialog,
