@@ -8,7 +8,7 @@ jobs:
     name: Check for relevant changes
     runs-on: ubuntu-latest
     outputs:
-      unit: ${{ steps.filter.outputs.unit }}
+      unit: ${{ steps.filter.outputs.changes }}
 
     steps:
       - name: Checkout 🛎️
@@ -19,7 +19,7 @@ jobs:
         id: filter
         with:
           filters: |
-            unit:
+            changes:
               - 'lib/**'
               - 'test/**'
               - 'assets/**'
@@ -28,7 +28,7 @@ jobs:
   unit-test:
     name: Unit Test
     needs: changes
-    if: ${{ needs.changes.outputs.unit == 'true'}}
+    if: ${{ needs.changes.outputs.unit == 'changes'}}
     runs-on: ubuntu-latest
 
     steps:
