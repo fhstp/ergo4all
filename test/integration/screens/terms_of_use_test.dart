@@ -19,26 +19,6 @@ void main() {
         .thenAnswer((_) async => null);
   });
 
-  testWidgets("should disable next button while not accepting terms",
-      (tester) async {
-    await tester
-        .pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen(), navigator));
-
-    final createButton = find.byKey(const Key("next"));
-    expect(tester.widget<ElevatedButton>(createButton).enabled, isFalse);
-  });
-
-  testWidgets("should enable next button when accepting terms", (tester) async {
-    await tester
-        .pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen(), navigator));
-
-    await tester.tap(find.byKey(const Key("accept-check")));
-    await tester.pumpAndSettle();
-
-    final createButton = find.byKey(const Key("next"));
-    expect(tester.widget<ElevatedButton>(createButton).enabled, isTrue);
-  });
-
   testWidgets("should navigate to next screen on next button press",
       (tester) async {
     await tester

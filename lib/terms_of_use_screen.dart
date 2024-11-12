@@ -12,11 +12,10 @@ class TermsOfUseScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final navigator = Navigator.of(context);
     final hasAccepted = useState(false);
 
     void navigateToPreUserCreation() {
-      navigator.pushReplacementNamed(Routes.preUserCreator.path);
+      Navigator.of(context).pushReplacementNamed(Routes.preUserCreator.path);
     }
 
     return Scaffold(
