@@ -11,10 +11,12 @@ Widget makeMockAppFromWidget(Widget widget, [MockNavigator? mockNavigator]) {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: MockNavigatorProvider(
-        navigator: mockNavigator ?? MockNavigator(),
-        child: widget,
-      ));
+      home: mockNavigator != null
+          ? MockNavigatorProvider(
+              navigator: mockNavigator,
+              child: widget,
+            )
+          : widget);
 
   return app;
 }
