@@ -2,11 +2,9 @@ import 'package:ergo4all/home/types.dart';
 import 'package:flutter/material.dart';
 
 class StartSessionDialog extends StatelessWidget {
-  static const dialogKey = Key("sessionStartDialog");
+  static const name = "/start-session-dialog";
 
-  const StartSessionDialog({
-    super.key,
-  });
+  const StartSessionDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,6 @@ class StartSessionDialog extends StatelessWidget {
     }
 
     return Dialog(
-      key: dialogKey,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: IntrinsicHeight(
         child: Padding(
@@ -67,10 +64,11 @@ class StartSessionDialog extends StatelessWidget {
     );
   }
 
-  static Future<VideoSource?> show(
-    BuildContext context,
-  ) {
+  static Future<VideoSource?> show(BuildContext context) {
     return showDialog(
-        context: context, builder: (context) => StartSessionDialog());
+        context: context,
+        useRootNavigator: false,
+        routeSettings: RouteSettings(name: name),
+        builder: (context) => StartSessionDialog());
   }
 }

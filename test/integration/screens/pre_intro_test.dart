@@ -7,10 +7,19 @@ import 'package:mockingjay/mockingjay.dart';
 import '../app_mock.dart';
 
 void main() {
+  late MockNavigator navigator;
+
+  setUpAll(() {});
+
+  setUp(() {
+    navigator = MockNavigator();
+
+    when(() => navigator.canPop()).thenReturn(true);
+    when(() => navigator.pushNamed(any())).thenAnswer((_) async => null);
+  });
+
   testWidgets("should navigate to professional intro when button is pressed",
       (tester) async {
-    final navigator = makeDummyMockNavigator();
-
     await tester.pumpWidget(makeMockAppFromWidget(
       const PreIntroScreen(),
       navigator,
@@ -24,8 +33,6 @@ void main() {
 
   testWidgets("should navigate to worker intro when button is pressed",
       (tester) async {
-    final navigator = makeDummyMockNavigator();
-
     await tester.pumpWidget(makeMockAppFromWidget(
       const PreIntroScreen(),
       navigator,
@@ -39,8 +46,6 @@ void main() {
 
   testWidgets("should navigate to next screen once skip button is pressed",
       (tester) async {
-    final navigator = makeDummyMockNavigator();
-
     await tester
         .pumpWidget(makeMockAppFromWidget(const PreIntroScreen(), navigator));
 

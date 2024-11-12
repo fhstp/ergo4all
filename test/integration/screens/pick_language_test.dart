@@ -9,9 +9,20 @@ import '../app_mock.dart';
 import '../fake_preference_storage.dart';
 
 void main() {
+  late MockNavigator navigator;
+
+  setUpAll(() {});
+
+  setUp(() {
+    navigator = MockNavigator();
+
+    when(() => navigator.canPop()).thenReturn(true);
+    when(() => navigator.pushReplacementNamed(any()))
+        .thenAnswer((_) async => null);
+  });
+
   testWidgets("should navigate to next screen once language button is pressed",
       (tester) async {
-    final navigator = makeDummyMockNavigator();
     final preferenceStorage = FakePreferenceStorage();
 
     await tester.pumpWidget(makeMockAppFromWidget(
@@ -29,8 +40,7 @@ void main() {
     final preferenceStorage = FakePreferenceStorage();
 
     await tester.pumpWidget(makeMockAppFromWidget(
-      PickLanguageScreen(preferenceStorage),
-    ));
+        PickLanguageScreen(preferenceStorage), navigator));
 
     await tester.tap(find.byKey(const Key("lang_button_de")));
     await tester.pumpAndSettle();

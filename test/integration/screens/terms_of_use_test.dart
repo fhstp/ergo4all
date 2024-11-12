@@ -7,16 +7,30 @@ import 'package:mockingjay/mockingjay.dart';
 import '../app_mock.dart';
 
 void main() {
+  late MockNavigator navigator;
+
+  setUpAll(() {});
+
+  setUp(() {
+    navigator = MockNavigator();
+
+    when(() => navigator.canPop()).thenReturn(true);
+    when(() => navigator.pushReplacementNamed(any()))
+        .thenAnswer((_) async => null);
+  });
+
   testWidgets("should disable next button while not accepting terms",
       (tester) async {
-    await tester.pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen()));
+    await tester
+        .pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen(), navigator));
 
     final createButton = find.byKey(const Key("next"));
     expect(tester.widget<ElevatedButton>(createButton).enabled, isFalse);
   });
 
   testWidgets("should enable next button when accepting terms", (tester) async {
-    await tester.pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen()));
+    await tester
+        .pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen(), navigator));
 
     await tester.tap(find.byKey(const Key("accept-check")));
     await tester.pumpAndSettle();
@@ -27,8 +41,6 @@ void main() {
 
   testWidgets("should navigate to next screen on next button press",
       (tester) async {
-    final navigator = makeDummyMockNavigator();
-
     await tester
         .pumpWidget(makeMockAppFromWidget(const TermsOfUseScreen(), navigator));
 

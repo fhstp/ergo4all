@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 /// Dialog asking the user whether they want to see the tutorial.
 class ShowTutorialDialog extends StatelessWidget {
-  static const dialogKey = Key("showTutorialDialog");
+  static const name = "/show-tutorial-dialog";
 
-  const ShowTutorialDialog({
-    super.key,
-  });
+  const ShowTutorialDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +12,6 @@ class ShowTutorialDialog extends StatelessWidget {
 
     // TODO: Localize
     return Dialog(
-      key: dialogKey,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -44,8 +41,8 @@ class ShowTutorialDialog extends StatelessWidget {
   static Future<bool?> show(BuildContext context) {
     return showDialog(
         context: context,
-        builder: (context) {
-          return ShowTutorialDialog();
-        });
+        useRootNavigator: false,
+        routeSettings: RouteSettings(name: name),
+        builder: (context) => ShowTutorialDialog());
   }
 }

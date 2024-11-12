@@ -1,5 +1,5 @@
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/intro.dart';
+import 'package:ergo4all/common/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
@@ -9,10 +9,19 @@ import '../app_mock.dart';
 void main() {
   final testPage = IntroPage(title: "Some title", widget: const Placeholder());
 
+  late MockNavigator navigator;
+
+  setUpAll(() {});
+
+  setUp(() {
+    navigator = MockNavigator();
+
+    when(() => navigator.canPop()).thenReturn(true);
+    when(() => navigator.pushNamed(any())).thenAnswer((_) async => null);
+  });
+
   testWidgets("should navigate to tos once done button is pressed",
       (tester) async {
-    final navigator = makeDummyMockNavigator();
-
     await tester.pumpWidget(makeMockAppFromWidget(
         Intro(
           pages: [testPage],
