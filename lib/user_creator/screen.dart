@@ -29,22 +29,19 @@ class UserCreatorScreen extends HookWidget {
         title: localizations.userCreator_title,
       ),
       body: ScreenContent(
-        child: Column(
-          children: [
-            Header(
-              localizations.userCreator_header,
-            ),
-            Text(localizations.userCreator_intro),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-                child: SingleChildScrollView(
-                    child: UserCreationForm(onUserSubmitted: onUserSubmitted))),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Header(
+                localizations.userCreator_header,
+              ),
+              Text(localizations.userCreator_intro),
+              const SizedBox(
+                height: 20,
+              ),
+              UserCreationForm(onUserSubmitted: onUserSubmitted),
+            ],
+          ),
         ),
       ),
     );

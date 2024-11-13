@@ -5,6 +5,7 @@ import 'package:ergo4all/pick_language/screen.dart';
 import 'package:ergo4all/pre_intro_screen.dart';
 import 'package:ergo4all/pre_user_creator_screen.dart';
 import 'package:ergo4all/terms_of_use_screen.dart';
+import 'package:ergo4all/user_creator/screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -101,6 +102,35 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  Future<void> completeUserCreatorWith(
+      WidgetTester tester, String nickName, String sex) async {
+    // We should be pre user creator
+    expect(find.byType(PreUserCreatorScreen), findsOne);
+
+    // We continue to the user creation screen
+    await tester.tap(find.byKey(Key("create")));
+    await tester.pumpAndSettle();
+
+    // Should now be on user creation screen
+    expect(find.byType(UserCreatorScreen), findsOne);
+
+    // Enter nick name
+    await tester.enterText(find.byKey(Key("nickNameInput")), nickName);
+    await tester.pumpAndSettle();
+
+    // Enter sex
+    await tester.enterText(find.byKey(Key("sexInput")), sex);
+    await tester.pumpAndSettle();
+
+    // Submit
+    await tester.scrollUntilVisible(find.byKey(Key("create")), 10,
+        scrollable: find.descendant(
+            of: find.byType(SingleChildScrollView),
+            matching: find.byType(Scrollable).at(0)));
+    await tester.tap(find.byKey(Key("create")));
+    await tester.pumpAndSettle();
+  }
+
   testWidgets("scenario: skip past everything", (tester) async {
     await cleanAppOpen(tester);
 
@@ -165,5 +195,25 @@ void main() {
 
     // We should end up at home
     expect(find.byType(HomeScreen), findsOne);
+  });
+
+  testWidgets("scenario: create user", (tester) async {
+    await cleanAppOpen(tester);
+
+    await completeWelcomeScreen(tester);
+
+    await completeLanguageScreenWithLanguage(tester, "en");
+
+    await completeIntroBySkipping(tester);
+
+    await completeTosByAccepting(tester);
+
+    await completeUserCreatorWith(tester, "Cool user", "m");
+
+    // We should end up at home
+    expect(find.byType(HomeScreen), findsOne);
+
+    // The entered nick name should be displayed
+    expect(find.textContaining("Cool user"), findsOne);
   });
 }
