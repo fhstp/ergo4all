@@ -1,6 +1,6 @@
 import 'package:glados/glados.dart';
-import 'package:rula/degree.dart';
-import 'package:rula/sheet.dart';
+import 'package:rula/src/degree.dart';
+import 'package:rula/src/sheet.dart';
 
 import 'degree_data.dart';
 

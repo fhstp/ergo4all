@@ -11,11 +11,7 @@ import 'package:ergo4all/live_analysis/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pose/types.dart';
-import 'package:rula/degree.dart';
-import 'package:rula/label.dart';
-import 'package:rula/score.dart';
-import 'package:rula/scoring.dart';
-import 'package:rula/sheet.dart';
+import 'package:rula/rula.dart';
 
 @immutable
 class _Capture {

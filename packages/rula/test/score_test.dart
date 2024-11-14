@@ -1,6 +1,6 @@
 import 'package:glados/glados.dart';
 import 'package:parameterized_test/parameterized_test.dart';
-import 'package:rula/score.dart';
+import 'package:rula/src/score.dart';
 
 void main() {
   group("Rula score type", () {

@@ -1,6 +1,6 @@
 import 'package:glados/glados.dart';
 import 'package:parameterized_test/parameterized_test.dart';
-import 'package:rula/degree.dart';
+import 'package:rula/src/degree.dart';
 
 void main() {
   group("Creation", () {

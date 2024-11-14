@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:rula/score.dart';
-import 'package:rula/sheet.dart';
+import 'package:rula/src/score.dart';
+import 'package:rula/src/sheet.dart';
 
 /// This matches table A on the Rula sheet, except that we omit the wrist twist score. Here we just always pick the value like it was 1.
 const _tableA = [

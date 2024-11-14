@@ -1,5 +1,5 @@
 import 'package:glados/glados.dart';
-import 'package:rula/degree.dart';
+import 'package:rula/src/degree.dart';
 
 extension AnyDegree on Any {
   /// Generates a [Degree] in a certain range.

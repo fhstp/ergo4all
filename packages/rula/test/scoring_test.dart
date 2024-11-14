@@ -1,7 +1,7 @@
 import 'package:glados/glados.dart';
-import 'package:rula/degree.dart';
-import 'package:rula/scoring.dart';
-import 'package:rula/sheet.dart';
+import 'package:rula/src/degree.dart';
+import 'package:rula/src/scoring.dart';
+import 'package:rula/src/sheet.dart';
 
 import 'sheet_data.dart';
 

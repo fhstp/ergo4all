@@ -1,5 +1,5 @@
 import 'package:glados/glados.dart';
-import 'package:rula/score.dart';
+import 'package:rula/src/score.dart';
 
 extension RulaScoreConfig on Any {
   /// Generates a [RulaScore] in the range [1, 9]

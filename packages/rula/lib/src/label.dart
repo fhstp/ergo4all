@@ -1,4 +1,4 @@
-import 'package:rula/score.dart';
+import 'package:rula/src/score.dart';
 
 /// The different rula scoring labels which can be derived from the final score.
 ///
