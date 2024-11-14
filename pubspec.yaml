@@ -34,14 +34,11 @@ dependencies:
   common:
     path: ./packages/common
 
-  custom_locale_storage:
-    path: ./packages/custom_locale_storage
+  custom_locale:
+    path: ./packages/custom_locale
 
   pose:
     path: ./packages/pose
-
-  prefs_storage:
-    path: ./packages/prefs_storage
 
   rula:
     path: ./packages/rula

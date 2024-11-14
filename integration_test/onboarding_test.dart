@@ -56,6 +56,17 @@ void main() {
       expect(find.byType(HomeScreen), findsOne);
     });
 
+    testWidgets("scenario: choose german", (tester) async {
+      await openApp(tester);
+
+      await completeWelcomeScreen(tester);
+
+      await completeLanguageScreenWithLanguage(tester, "de");
+
+      // Intro text should now be german
+      expect(find.textContaining("Einführung"), findsOne);
+    });
+
     testWidgets("scenario: take non-expert intro", (tester) async {
       await openApp(tester);
 

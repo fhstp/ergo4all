@@ -1,4 +1,4 @@
-import 'package:custom_locale_storage/pref_storage_ext.dart';
+import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/live_analysis_screen.dart';
 import 'package:ergo4all/analysis/recorded_analysis_screen.dart';
 import 'package:ergo4all/analysis/results_screen.dart';
@@ -21,11 +21,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pose/mlkit.dart';
 import 'package:pose/types.dart';
-import 'package:prefs_storage/shared_preferences.dart';
-import 'package:prefs_storage/types.dart';
 
 class Ergo4AllApp extends StatefulWidget {
-  final PreferenceStorage preferenceStorage = SharedPreferencesStorage();
   // ignore: prefer_function_declarations_over_variables
   final GetProjectVersion getProjectVersion =
       () => PackageInfo.fromPlatform().then((info) => info.version);
@@ -48,7 +45,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   }
 
   void _reloadCustomLocale() async {
-    final customLocale = await widget.preferenceStorage.tryGetCustomLocale();
+    final customLocale = await tryGetCustomLocale();
     setState(() {
       _customLocale = customLocale;
     });
@@ -78,8 +75,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),
           Routes.preUserCreator.path: (context) => PreUserCreatorScreen(),
           Routes.userCreator.path: (context) => UserCreatorScreen(),
-          Routes.language.path: (context) =>
-              PickLanguageScreen(widget.preferenceStorage),
+          Routes.language.path: (context) => PickLanguageScreen(),
           Routes.tou.path: (context) => const TermsOfUseScreen(),
           Routes.welcome.path: (context) => WelcomeScreen(
                 getProjectVersion: widget.getProjectVersion,

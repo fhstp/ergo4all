@@ -1,4 +1,4 @@
-import 'package:custom_locale_storage/serialize.dart';
+import 'package:custom_locale/src/serialize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
