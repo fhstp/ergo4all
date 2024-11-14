@@ -1,18 +1,18 @@
 import 'package:custom_locale_storage/pref_storage_ext.dart';
-import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/onboarding/expert_intro_screen.dart';
-import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/analysis/live_analysis_screen.dart';
+import 'package:ergo4all/analysis/recorded_analysis_screen.dart';
+import 'package:ergo4all/analysis/results_screen.dart';
+import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/onboarding/expert_intro_screen.dart';
 import 'package:ergo4all/onboarding/non_expert_intro_screen.dart';
 import 'package:ergo4all/onboarding/pick_language_screen.dart';
 import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
-import 'package:ergo4all/analysis/recorded_analysis_screen.dart';
-import 'package:ergo4all/analysis/results_screen.dart';
-import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
-import 'package:ergo4all/theme.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
+import 'package:ergo4all/route_leave_observer.dart';
+import 'package:ergo4all/theme.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:ergo4all/welcome/types.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +23,8 @@ import 'package:pose/mlkit.dart';
 import 'package:pose/types.dart';
 import 'package:prefs_storage/shared_preferences.dart';
 import 'package:prefs_storage/types.dart';
-import 'package:user_management/user_management.dart';
 
 class Ergo4AllApp extends StatefulWidget {
-  final UserStorage userStorage = PersistentUserStorage();
   final PreferenceStorage preferenceStorage = SharedPreferencesStorage();
   // ignore: prefer_function_declarations_over_variables
   final GetProjectVersion getProjectVersion =
@@ -68,9 +66,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-          Routes.home.path: (context) => HomeScreen(
-                userStorage: widget.userStorage,
-              ),
+          Routes.home.path: (context) => HomeScreen(),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(
                 poseDetector: widget.poseDetector,
               ),
@@ -80,18 +76,13 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.preIntro.path: (context) => const PreIntroScreen(),
           Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
           Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),
-          Routes.preUserCreator.path: (context) => PreUserCreatorScreen(
-                userStorage: widget.userStorage,
-              ),
-          Routes.userCreator.path: (context) => UserCreatorScreen(
-                userStorage: widget.userStorage,
-              ),
+          Routes.preUserCreator.path: (context) => PreUserCreatorScreen(),
+          Routes.userCreator.path: (context) => UserCreatorScreen(),
           Routes.language.path: (context) =>
               PickLanguageScreen(widget.preferenceStorage),
           Routes.tou.path: (context) => const TermsOfUseScreen(),
           Routes.welcome.path: (context) => WelcomeScreen(
                 getProjectVersion: widget.getProjectVersion,
-                userStorage: widget.userStorage,
               )
         },
         navigatorObservers: [

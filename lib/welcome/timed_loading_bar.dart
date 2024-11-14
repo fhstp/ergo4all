@@ -14,11 +14,9 @@ class TimedLoadingBar extends HookWidget {
     final progress = useAnimation(controller);
 
     useEffect(() {
-      controller.forward().then((_) {
-        completed?.call();
-      });
+      controller.forward().then((_) => completed?.call());
       return null;
-    }, [null]);
+    }, [completed]);
 
     return LinearProgressIndicator(
       value: progress,

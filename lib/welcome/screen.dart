@@ -11,30 +11,26 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:user_management/user_management.dart';
 
 class WelcomeScreen extends HookWidget {
-  final UserStorage userStorage;
   final GetProjectVersion getProjectVersion;
 
-  const WelcomeScreen(
-      {super.key, required this.getProjectVersion, required this.userStorage});
+  const WelcomeScreen({super.key, required this.getProjectVersion});
 
   @override
   Widget build(BuildContext context) {
-    final navigator = Navigator.of(context);
-
     final (currentUser, setCurrentUser) = useState<User?>(null).split();
     final (projectVersion, setProjectVersion) = useState<String?>(null).split();
 
-    void navigateToNextScreen() async {
+    navigateToNextScreen() async {
       final isFirstStart = currentUser == null;
       // Depending on whether this is the first time we start the app
       // we either go to onboarding or home.
       final nextRoute = isFirstStart ? Routes.language : Routes.home;
 
-      await navigator.pushReplacementNamed(nextRoute.path);
+      await Navigator.of(context).pushReplacementNamed(nextRoute.path);
     }
 
     useEffect(() {
-      userStorage.getCurrentUser().then(setCurrentUser);
+      loadCurrentUser().then(setCurrentUser);
       return null;
     }, [null]);
 

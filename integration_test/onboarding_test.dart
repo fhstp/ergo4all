@@ -1,219 +1,114 @@
-import 'package:ergo4all/app.dart';
-import 'package:ergo4all/common/intro.dart';
 import 'package:ergo4all/home/screen.dart';
-import 'package:ergo4all/onboarding/pick_language_screen.dart';
-import 'package:ergo4all/onboarding/pre_intro_screen.dart';
-import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
-import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
-import 'package:ergo4all/onboarding/user_creator_screen.dart';
-import 'package:ergo4all/welcome/screen.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:user_management/user_management.dart';
+
+import 'app_robot.dart';
+import 'onboarding_robot.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  group("onboarding", () {
+    setUpAll(clearAppStorage);
+    tearDown(clearAppStorage);
 
-  Future<void> cleanAppOpen(WidgetTester tester) async {
-    await tester.pumpWidget(Ergo4AllApp());
-  }
+    testWidgets("scenario: skip past everything", (tester) async {
+      await openApp(tester);
 
-  Future<void> completeWelcomeScreen(WidgetTester tester) async {
-    // Should be on welcome screen
-    expect(find.byType(WelcomeScreen), findsOne);
+      // Should start on welcome screen
+      await completeWelcomeScreen(tester);
 
-    // Wait for welcome screen to pass
-    await tester.pumpAndSettle();
-  }
+      // Now we should be on language screen
+      await completeLanguageScreenWithLanguage(tester, "en");
 
-  Future<void> completeLanguageScreenWithLanguage(
-      WidgetTester tester, String languageName) async {
-    // We should be on language screen
-    expect(find.byType(PickLanguageScreen), findsOne);
+      // Now we should be on pre-intro screen
+      await completeIntroBySkipping(tester);
 
-    // Pick english
-    await tester.tap(find.byKey(Key("lang_button_$languageName")));
-    await tester.pumpAndSettle();
-  }
+      // Now we should be on tos screen
+      await completeTosByAccepting(tester);
 
-  Future<void> completeIntroBySkipping(WidgetTester tester) async {
-    // We should be on pre-intro screen
-    expect(find.byType(PreIntroScreen), findsOne);
+      // Now we should be pre user creator
+      await completeUserCreationBySkipping(tester);
 
-    // Skip intro
-    await tester.tap(find.byKey(Key("skip")));
-    await tester.pumpAndSettle();
-  }
+      // We should end up at home
+      expect(find.byType(HomeScreen), findsOne);
+    });
 
-  Future<void> completeIntro(WidgetTester tester) async {
-    // We should be on intro screen
-    expect(find.byType(Intro), findsOne);
+    testWidgets("scenario: take expert intro", (tester) async {
+      await openApp(tester);
 
-    // Swipe right a few times
-    for (var i = 0; i < 5; i++) {
-      await tester.drag(find.byType(PageView), Offset(-400, 0));
-      await tester.pumpAndSettle();
-    }
+      // Should start on welcome screen
+      await completeWelcomeScreen(tester);
 
-    // We are done
-    await tester.tap(find.byKey(Key("done")));
-    await tester.pumpAndSettle();
-  }
+      // Now we should be on language screen
+      await completeLanguageScreenWithLanguage(tester, "en");
 
-  Future<void> completeExpertIntro(WidgetTester tester) async {
-    // We should be on pre-intro screen
-    expect(find.byType(PreIntroScreen), findsOne);
+      // Now we take the intro
+      await completeExpertIntro(tester);
 
-    // Start expert intro
-    await tester.tap(find.byKey(Key("expert")));
-    await tester.pumpAndSettle();
+      // Now we should be on tos screen
+      await completeTosByAccepting(tester);
 
-    await completeIntro(tester);
-  }
+      // Now we should be pre user creator
+      await completeUserCreationBySkipping(tester);
 
-  Future<void> completeNonExpertIntro(WidgetTester tester) async {
-    // We should be on pre-intro screen
-    expect(find.byType(PreIntroScreen), findsOne);
+      // We should end up at home
+      expect(find.byType(HomeScreen), findsOne);
+    });
 
-    // Start non-expert intro
-    await tester.tap(find.byKey(Key("non-expert")));
-    await tester.pumpAndSettle();
+    testWidgets("scenario: take non-expert intro", (tester) async {
+      await openApp(tester);
 
-    await completeIntro(tester);
-  }
+      // Should start on welcome screen
+      await completeWelcomeScreen(tester);
 
-  Future<void> completeTosByAccepting(WidgetTester tester) async {
-    // We should be on tos screen
-    expect(find.byType(TermsOfUseScreen), findsOne);
+      // Now we should be on language screen
+      await completeLanguageScreenWithLanguage(tester, "en");
 
-    // We accept and move on
-    await tester.tap(find.byKey(Key("accept-check")));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(Key("next")));
-    await tester.pumpAndSettle();
-  }
+      // Now we take the intro
+      await completeNonExpertIntro(tester);
 
-  Future<void> completeUserCreationBySkipping(WidgetTester tester) async {
-    // We should be pre user creator
-    expect(find.byType(PreUserCreatorScreen), findsOne);
+      // Now we should be on tos screen
+      await completeTosByAccepting(tester);
 
-    // We use default values and move on
-    await tester.tap(find.byKey(Key("default-values")));
-    await tester.pumpAndSettle();
-  }
+      // Now we should be pre user creator
+      await completeUserCreationBySkipping(tester);
 
-  Future<void> completeUserCreatorWith(
-      WidgetTester tester, String nickName, String sex) async {
-    // We should be pre user creator
-    expect(find.byType(PreUserCreatorScreen), findsOne);
+      // We should end up at home
+      expect(find.byType(HomeScreen), findsOne);
+    });
 
-    // We continue to the user creation screen
-    await tester.tap(find.byKey(Key("create")));
-    await tester.pumpAndSettle();
+    testWidgets("scenario: create user", (tester) async {
+      await openApp(tester);
 
-    // Should now be on user creation screen
-    expect(find.byType(UserCreatorScreen), findsOne);
+      await completeWelcomeScreen(tester);
 
-    // Enter nick name
-    await tester.enterText(find.byKey(Key("nickNameInput")), nickName);
-    await tester.pumpAndSettle();
+      await completeLanguageScreenWithLanguage(tester, "en");
 
-    // Enter sex
-    await tester.enterText(find.byKey(Key("sexInput")), sex);
-    await tester.pumpAndSettle();
+      await completeIntroBySkipping(tester);
 
-    // Submit
-    await tester.scrollUntilVisible(find.byKey(Key("create")), 10,
-        scrollable: find.descendant(
-            of: find.byType(SingleChildScrollView),
-            matching: find.byType(Scrollable).at(0)));
-    await tester.tap(find.byKey(Key("create")));
-    await tester.pumpAndSettle();
-  }
+      await completeTosByAccepting(tester);
 
-  testWidgets("scenario: skip past everything", (tester) async {
-    await cleanAppOpen(tester);
+      await completeUserCreatorWith(tester, "Cool user", "m");
 
-    // Should start on welcome screen
-    await completeWelcomeScreen(tester);
+      // We should end up at home
+      expect(find.byType(HomeScreen), findsOne);
 
-    // Now we should be on language screen
-    await completeLanguageScreenWithLanguage(tester, "en");
+      // The entered nick name should be displayed
+      expect(find.textContaining("Cool user"), findsOne);
+    });
 
-    // Now we should be on pre-intro screen
-    await completeIntroBySkipping(tester);
+    testWidgets("scenario: onboarding is skipped when a user exists",
+        (tester) async {
+      await clearAppStorage();
 
-    // Now we should be on tos screen
-    await completeTosByAccepting(tester);
+      await addUser(User(name: "Cool user", hasSeenTutorial: true));
 
-    // Now we should be pre user creator
-    await completeUserCreationBySkipping(tester);
+      await openApp(tester);
 
-    // We should end up at home
-    expect(find.byType(HomeScreen), findsOne);
-  });
+      await completeWelcomeScreen(tester);
 
-  testWidgets("scenario: take expert intro", (tester) async {
-    await cleanAppOpen(tester);
-
-    // Should start on welcome screen
-    await completeWelcomeScreen(tester);
-
-    // Now we should be on language screen
-    await completeLanguageScreenWithLanguage(tester, "en");
-
-    // Now we take the intro
-    await completeExpertIntro(tester);
-
-    // Now we should be on tos screen
-    await completeTosByAccepting(tester);
-
-    // Now we should be pre user creator
-    await completeUserCreationBySkipping(tester);
-
-    // We should end up at home
-    expect(find.byType(HomeScreen), findsOne);
-  });
-
-  testWidgets("scenario: take non-expert intro", (tester) async {
-    await cleanAppOpen(tester);
-
-    // Should start on welcome screen
-    await completeWelcomeScreen(tester);
-
-    // Now we should be on language screen
-    await completeLanguageScreenWithLanguage(tester, "en");
-
-    // Now we take the intro
-    await completeNonExpertIntro(tester);
-
-    // Now we should be on tos screen
-    await completeTosByAccepting(tester);
-
-    // Now we should be pre user creator
-    await completeUserCreationBySkipping(tester);
-
-    // We should end up at home
-    expect(find.byType(HomeScreen), findsOne);
-  });
-
-  testWidgets("scenario: create user", (tester) async {
-    await cleanAppOpen(tester);
-
-    await completeWelcomeScreen(tester);
-
-    await completeLanguageScreenWithLanguage(tester, "en");
-
-    await completeIntroBySkipping(tester);
-
-    await completeTosByAccepting(tester);
-
-    await completeUserCreatorWith(tester, "Cool user", "m");
-
-    // We should end up at home
-    expect(find.byType(HomeScreen), findsOne);
-
-    // The entered nick name should be displayed
-    expect(find.textContaining("Cool user"), findsOne);
+      expect(find.byType(HomeScreen), findsOne);
+    });
   });
 }

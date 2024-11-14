@@ -15,9 +15,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:user_management/user_management.dart';
 
 class HomeScreen extends HookWidget {
-  final UserStorage userStorage;
-
-  const HomeScreen({super.key, required this.userStorage});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +41,10 @@ class HomeScreen extends HookWidget {
     }
 
     void skipTutorial() async {
-      final userIndex = await userStorage.getCurrentUserIndex();
+      final userIndex = await loadCurrentUserIndex();
+
       assert(userIndex != null);
-      await userStorage.updateUser(
-          userIndex!, (it) => it.copyWith(hasSeenTutorial: true));
+      await updateUser(userIndex!, (it) => it.copyWith(hasSeenTutorial: true));
     }
 
     void showTutorial() {
@@ -69,7 +67,7 @@ class HomeScreen extends HookWidget {
     }
 
     useEffect(() {
-      userStorage.getCurrentUser().then((user) {
+      loadCurrentUser().then((user) {
         assert(user != null);
         onUserLoaded(user!);
       });

@@ -26,6 +26,7 @@ class ShowTutorialDialog extends StatelessWidget {
                   },
                   child: const Text("Yes")),
               ElevatedButton(
+                  key: Key("skip"),
                   onPressed: () {
                     navigator.pop(false);
                   },

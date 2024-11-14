@@ -34,7 +34,7 @@ void main() {
     expect(submittedUser, null);
   });
 
-  testWidgets("should submit user if form is valid", (tester) async {
+  testWidgets("should submit user with entered information", (tester) async {
     User? submittedUser;
 
     await tester.pumpWidget(makeForm(
@@ -42,10 +42,11 @@ void main() {
     ));
 
     await tester.enterText(find.byKey(const Key("nickNameInput")), "John");
+    await tester.enterText(find.byKey(const Key("sexInput")), "m");
 
     await tester.tap(find.byKey(const Key("create")));
     await tester.pumpAndSettle();
 
-    expect(submittedUser, null);
+    expect(submittedUser, equals(User(name: "John", hasSeenTutorial: false)));
   });
 }

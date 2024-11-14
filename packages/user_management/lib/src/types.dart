@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:common/types.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -26,19 +25,4 @@ class User extends Equatable {
       hasSeenTutorial: hasSeenTutorial ?? this.hasSeenTutorial,
     );
   }
-}
-
-/// Stores [User] data.
-abstract class UserStorage {
-  /// Adds the given [user] to the app and marks them as the current user.
-  Future<Null> addUser(User user);
-
-  /// Updates the user with the given [userIndex] by applying [update] to it. Will throw an exception if the user does not exist.
-  Future<Null> updateUser(int userIndex, Update<User> update);
-
-  /// Gets the current user or `null` if there is none.
-  Future<User?> getCurrentUser();
-
-  /// Gets the index of the current user. May be `null` if there is no user yet.
-  Future<int?> getCurrentUserIndex();
 }
