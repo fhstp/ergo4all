@@ -2,15 +2,15 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
-import 'package:ergo4all/common/hook_ext.dart';
-import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/analysis/camera_permission_dialog.dart';
 import 'package:ergo4all/analysis/pose_painter.dart';
 import 'package:ergo4all/analysis/record_button.dart';
+import 'package:ergo4all/common/hook_ext.dart';
+import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:pose/types.dart';
+import 'package:pose/pose.dart';
 import 'package:rula/rula.dart';
 
 @immutable
@@ -25,9 +25,7 @@ class _Capture {
 }
 
 class LiveAnalysisScreen extends HookWidget {
-  final PoseDetector poseDetector;
-
-  const LiveAnalysisScreen({super.key, required this.poseDetector});
+  const LiveAnalysisScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class LiveAnalysisScreen extends HookWidget {
     }
 
     onImageCaptured(CameraImage cameraImage) async {
-      final result = await poseDetector.detect(activeCamera!,
+      final result = await detectPose(activeCamera!,
           cameraController!.value.deviceOrientation, cameraImage);
 
       if (result == null) {
@@ -93,7 +91,7 @@ class LiveAnalysisScreen extends HookWidget {
       await controller.initialize();
       await controller.startImageStream(onImageCaptured);
       setCameraController(controller);
-      await poseDetector.start();
+      await startPoseDetection();
     }
 
     Future<Null> tryInitCamera() async {
@@ -114,6 +112,7 @@ class LiveAnalysisScreen extends HookWidget {
 
     Future<Null> stopCapture() async {
       cameraController?.dispose();
+      await stopPoseDetection();
       setCameraController(null);
     }
 

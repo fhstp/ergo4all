@@ -19,14 +19,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pose/mlkit.dart';
-import 'package:pose/types.dart';
 
 class Ergo4AllApp extends StatefulWidget {
   // ignore: prefer_function_declarations_over_variables
   final GetProjectVersion getProjectVersion =
       () => PackageInfo.fromPlatform().then((info) => info.version);
-  final PoseDetector poseDetector = MLkitPoseDetectorAdapter();
 
   Ergo4AllApp({super.key});
 
@@ -64,9 +61,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
     return MaterialApp(
         routes: {
           Routes.home.path: (context) => HomeScreen(),
-          Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(
-                poseDetector: widget.poseDetector,
-              ),
+          Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(),
           Routes.recordedAnalysis.path: (context) =>
               const RecordedAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
