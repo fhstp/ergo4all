@@ -14,18 +14,12 @@ import 'package:ergo4all/onboarding/user_creator_screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/theme.dart';
 import 'package:ergo4all/welcome/screen.dart';
-import 'package:ergo4all/welcome/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class Ergo4AllApp extends StatefulWidget {
-  // ignore: prefer_function_declarations_over_variables
-  final GetProjectVersion getProjectVersion =
-      () => PackageInfo.fromPlatform().then((info) => info.version);
-
-  Ergo4AllApp({super.key});
+  const Ergo4AllApp({super.key});
 
   @override
   State<Ergo4AllApp> createState() => _Ergo4AllAppState();
@@ -72,9 +66,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.userCreator.path: (context) => UserCreatorScreen(),
           Routes.language.path: (context) => PickLanguageScreen(),
           Routes.tou.path: (context) => const TermsOfUseScreen(),
-          Routes.welcome.path: (context) => WelcomeScreen(
-                getProjectVersion: widget.getProjectVersion,
-              )
+          Routes.welcome.path: (context) => WelcomeScreen()
         },
         navigatorObservers: [
           RouteLeaveObserver(

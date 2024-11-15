@@ -4,16 +4,14 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/welcome/timed_loading_bar.dart';
-import 'package:ergo4all/welcome/types.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:user_management/user_management.dart';
 
 class WelcomeScreen extends HookWidget {
-  final GetProjectVersion getProjectVersion;
-
-  const WelcomeScreen({super.key, required this.getProjectVersion});
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,9 @@ class WelcomeScreen extends HookWidget {
     }, [null]);
 
     useEffect(() {
-      getProjectVersion().then(setProjectVersion);
+      PackageInfo.fromPlatform()
+          .then((info) => info.version)
+          .then(setProjectVersion);
       return null;
     }, [null]);
 
