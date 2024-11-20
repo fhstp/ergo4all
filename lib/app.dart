@@ -1,6 +1,5 @@
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/live_analysis_screen.dart';
-import 'package:ergo4all/analysis/recorded_analysis_screen.dart';
 import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/home/screen.dart';
@@ -56,8 +55,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         routes: {
           Routes.home.path: (context) => HomeScreen(),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(),
-          Routes.recordedAnalysis.path: (context) =>
-              const RecordedAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
           Routes.preIntro.path: (context) => const PreIntroScreen(),
           Routes.expertIntro.path: (context) => const ExpertIntroScreen(),

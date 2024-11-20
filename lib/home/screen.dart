@@ -37,7 +37,7 @@ class HomeScreen extends HookWidget {
       if (videoFile == null) return;
 
       if (!context.mounted) return;
-      await Navigator.pushNamed(context, Routes.recordedAnalysis.path);
+      showNotImplementedSnackbar(context);
     }
 
     void skipTutorial() async {
