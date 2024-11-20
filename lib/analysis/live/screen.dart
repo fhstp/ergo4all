@@ -66,7 +66,7 @@ class LiveAnalysisScreen extends HookWidget {
                 Positioned.fill(
                   child: CustomPaint(
                       painter: PosePainter(
-                    pose: uiState.latestCapture!.pose2d,
+                    pose: uiState.latestCapture!.pose,
                   )),
                 ),
               if (uiState.currentScore != null)

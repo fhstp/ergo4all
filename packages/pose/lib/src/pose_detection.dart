@@ -1,20 +1,23 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
+    as mlkit;
 import 'package:pose/src/types.dart';
+import 'package:vector_math/vector_math.dart';
 
-PoseDetector? _detector;
+mlkit.PoseDetector? _detector;
 
 /// Starts pose detection if not already active.
 Future<void> startPoseDetection() async {
   if (_detector != null) return;
-  _detector = PoseDetector(
-      options: PoseDetectorOptions(
-          model: PoseDetectionModel.accurate, mode: PoseDetectionMode.stream));
+  _detector = mlkit.PoseDetector(
+      options: mlkit.PoseDetectorOptions(
+          model: mlkit.PoseDetectionModel.accurate,
+          mode: mlkit.PoseDetectionMode.stream));
 }
 
 /// Stops pose detection if running.
@@ -31,7 +34,7 @@ final _orientations = {
   DeviceOrientation.landscapeRight: 270,
 };
 
-InputImageRotation? _tryGetCameraRotation(
+mlkit.InputImageRotation? _tryGetCameraRotation(
     DeviceOrientation deviceOrientation, CameraDescription camera) {
   // get image rotation
   // it is used in android to convert the InputImage from Dart to Java
@@ -39,7 +42,7 @@ InputImageRotation? _tryGetCameraRotation(
   // in both platforms `rotation` and `camera.lensDirection` can be used to compensate `x` and `y` coordinates on a canvas
   final sensorOrientation = camera.sensorOrientation;
   if (Platform.isIOS) {
-    return InputImageRotationValue.fromRawValue(sensorOrientation);
+    return mlkit.InputImageRotationValue.fromRawValue(sensorOrientation);
   } else if (Platform.isAndroid) {
     var rotationCompensation = _orientations[deviceOrientation];
     if (rotationCompensation == null) return null;
@@ -51,26 +54,26 @@ InputImageRotation? _tryGetCameraRotation(
       rotationCompensation =
           (sensorOrientation - rotationCompensation + 360) % 360;
     }
-    return InputImageRotationValue.fromRawValue(rotationCompensation);
+    return mlkit.InputImageRotationValue.fromRawValue(rotationCompensation);
   }
 
   throw UnsupportedError("Only Android and iOS are supported!");
 }
 
-InputImage _makeMLkitInput(CameraDescription camera,
+mlkit.InputImage _makeMLkitInput(CameraDescription camera,
     DeviceOrientation deviceOrientation, CameraImage image) {
   final rotation = _tryGetCameraRotation(deviceOrientation, camera);
   assert(rotation != null);
 
   // get image format
-  final format = InputImageFormatValue.fromRawValue(image.format.raw);
+  final format = mlkit.InputImageFormatValue.fromRawValue(image.format.raw);
   // validate format depending on platform
   // only supported formats:
   // * nv21 for Android
   // * bgra8888 for iOS
   if (format == null ||
-      (Platform.isAndroid && format != InputImageFormat.nv21) ||
-      (Platform.isIOS && format != InputImageFormat.bgra8888)) {
+      (Platform.isAndroid && format != mlkit.InputImageFormat.nv21) ||
+      (Platform.isIOS && format != mlkit.InputImageFormat.bgra8888)) {
     throw ArgumentError(
         "Image has invalid format. Must be nv21 for Android or bgra8888 for ios, but was $format.",
         "image");
@@ -81,9 +84,9 @@ InputImage _makeMLkitInput(CameraDescription camera,
   final plane = image.planes.first;
 
   // compose InputImage using bytes
-  return InputImage.fromBytes(
+  return mlkit.InputImage.fromBytes(
     bytes: plane.bytes,
-    metadata: InputImageMetadata(
+    metadata: mlkit.InputImageMetadata(
       size: Size(image.width.toDouble(), image.height.toDouble()),
       rotation: rotation!, // used only in Android
       format: format, // used only in iOS
@@ -103,57 +106,59 @@ Size _getRotatedImageSize(CameraImage image) {
   return Size(image.height.toDouble(), image.width.toDouble());
 }
 
-/// Class which contains output data for the [PoseDetector.detect] method. Specifically this contains pose data.
-@immutable
-class DetectResult {
-  /// 2D Pose data.
-  final Pose2D pose2d;
+mlkit.PoseLandmarkType _convertToMlkitLandmarkType(LandmarkTypes type) {
+  final mlkitType = switch (type) {
+    LandmarkTypes.leftHand => mlkit.PoseLandmarkType.leftWrist,
+    LandmarkTypes.leftElbow => mlkit.PoseLandmarkType.leftElbow,
+    LandmarkTypes.leftShoulder => mlkit.PoseLandmarkType.leftShoulder,
+    LandmarkTypes.leftHip => mlkit.PoseLandmarkType.leftHip,
+    LandmarkTypes.leftKnee => mlkit.PoseLandmarkType.leftKnee,
+    LandmarkTypes.leftFoot => mlkit.PoseLandmarkType.leftAnkle,
+    LandmarkTypes.rightHand => mlkit.PoseLandmarkType.rightWrist,
+    LandmarkTypes.rightElbow => mlkit.PoseLandmarkType.rightElbow,
+    LandmarkTypes.rightShoulder => mlkit.PoseLandmarkType.rightShoulder,
+    LandmarkTypes.rightHip => mlkit.PoseLandmarkType.rightHip,
+    LandmarkTypes.rightKnee => mlkit.PoseLandmarkType.rightKnee,
+    LandmarkTypes.rightFoot => mlkit.PoseLandmarkType.rightAnkle,
+  };
+  return mlkitType;
+}
 
-  const DetectResult({required this.pose2d});
+Landmark _convertFromMlkitLandmark(mlkit.PoseLandmark mlkitLandmark,
+    Size imageSize, double minZ, double zRange) {
+  final position = Vector3(mlkitLandmark.x / imageSize.width,
+      mlkitLandmark.y / imageSize.height, (mlkitLandmark.z - minZ) / zRange);
+
+  return Landmark(confidence: mlkitLandmark.likelihood, position: position);
+}
+
+Pose _convertFromMlkitPose(mlkit.Pose mlkitPose, Size imageSize) {
+  final zs = mlkitPose.landmarks.values.map((it) => it.z).asList();
+  final minZ = zs.reduce(min);
+  final maxZ = zs.reduce(max);
+  final zRange = maxZ - minZ;
+
+  return IMap.fromKeys(
+      keys: LandmarkTypes.values,
+      valueMapper: (type) {
+        final mlkitType = _convertToMlkitLandmarkType(type);
+        final mlkitLandmark = mlkitPose.landmarks[mlkitType]!;
+        return _convertFromMlkitLandmark(
+            mlkitLandmark, imageSize, minZ, zRange);
+      });
 }
 
 /// Detects the pose in an input image. Might return `null` if no pose could be detected. Only call this when the detector [isReady]. The inputs are the [camera] which took the image, the [deviceOrientation] when the image was taken and the [image] itself.
-Future<DetectResult?> detectPose(CameraDescription camera,
+Future<Pose?> detectPose(CameraDescription camera,
     DeviceOrientation deviceOrientation, CameraImage image) async {
   if (_detector == null) throw StateError("Pose detection was not started.");
 
   final mlkitInput = _makeMLkitInput(camera, deviceOrientation, image);
   final poses = await _detector!.processImage(mlkitInput);
 
-  final pose = poses.singleOrNull;
-  if (pose == null) return null;
-
-  PoseLandmark mlkitLandmarkFor(LandmarkTypes type) {
-    final mlkitType = switch (type) {
-      LandmarkTypes.leftHand => PoseLandmarkType.leftWrist,
-      LandmarkTypes.leftElbow => PoseLandmarkType.leftElbow,
-      LandmarkTypes.leftShoulder => PoseLandmarkType.leftShoulder,
-      LandmarkTypes.leftHip => PoseLandmarkType.leftHip,
-      LandmarkTypes.leftKnee => PoseLandmarkType.leftKnee,
-      LandmarkTypes.leftFoot => PoseLandmarkType.leftAnkle,
-      LandmarkTypes.rightHand => PoseLandmarkType.rightWrist,
-      LandmarkTypes.rightElbow => PoseLandmarkType.rightElbow,
-      LandmarkTypes.rightShoulder => PoseLandmarkType.rightShoulder,
-      LandmarkTypes.rightHip => PoseLandmarkType.rightHip,
-      LandmarkTypes.rightKnee => PoseLandmarkType.rightKnee,
-      LandmarkTypes.rightFoot => PoseLandmarkType.rightAnkle,
-    };
-    return pose.landmarks[mlkitType]!;
-  }
-
+  final mlkitPose = poses.singleOrNull;
+  if (mlkitPose == null) return null;
   final imageSize = _getRotatedImageSize(image);
 
-  Landmark2D landmarkFor(LandmarkTypes type) {
-    final mlkitLandmark = mlkitLandmarkFor(type);
-    return Landmark2D(
-        confidence: mlkitLandmark.likelihood,
-        x: mlkitLandmark.x / imageSize.width,
-        y: mlkitLandmark.y / imageSize.height);
-  }
-
-  return DetectResult(
-      pose2d: IMap.fromKeys(
-    keys: LandmarkTypes.values,
-    valueMapper: landmarkFor,
-  ));
+  return _convertFromMlkitPose(mlkitPose, imageSize);
 }

@@ -55,16 +55,16 @@ class LiveAnalysisViewModel {
 
   _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,
       CameraImage cameraImage) async {
-    final result = await detectPose(camera, orientation, cameraImage);
+    final pose = await detectPose(camera, orientation, cameraImage);
 
-    if (result == null) {
+    if (pose == null) {
       uiState.value = uiState.value.copyWith(latestCapture: null);
       return;
     }
 
     final capture = Capture(
       timestamp: DateTime.now().millisecondsSinceEpoch,
-      pose2d: result.pose2d,
+      pose: pose,
     );
 
     uiState.value = uiState.value.copyWith(latestCapture: capture);

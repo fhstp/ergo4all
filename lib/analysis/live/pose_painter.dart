@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
 
 class PosePainter extends CustomPainter {
-  final Pose2D pose;
+  final Pose pose;
 
   PosePainter({super.repaint, required this.pose});
 
@@ -18,7 +18,10 @@ class PosePainter extends CustomPainter {
       final landmark = pose[landmarkType];
       assert(landmark != null);
       if (landmark!.confidence < 0.9) return null;
-      return Offset(size.width * landmark.x, size.height * landmark.y);
+      return Offset(
+        size.width * landmark.position.x,
+        size.height * landmark.position.y,
+      );
     }
 
     void drawJoint(LandmarkTypes landmarkType) {

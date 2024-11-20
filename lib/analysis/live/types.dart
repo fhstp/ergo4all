@@ -6,11 +6,11 @@ import 'package:rula/rula.dart';
 @immutable
 class Capture {
   final int timestamp;
-  final Pose2D pose2d;
+  final Pose pose;
 
   const Capture({
     required this.timestamp,
-    required this.pose2d,
+    required this.pose,
   });
 }
 

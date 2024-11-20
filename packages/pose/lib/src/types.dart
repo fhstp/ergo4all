@@ -1,5 +1,6 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
+import 'package:vector_math/vector_math.dart';
 
 /// The types of landmarks that are relevant for ergonomic pose analysis.
 enum LandmarkTypes {
@@ -17,20 +18,17 @@ enum LandmarkTypes {
   rightFoot
 }
 
-/// Describes a pose landmark in 2D image space.
+/// Describes a pose landmark in 3D space.
 @immutable
-class Landmark2D {
-  /// The confidence of this landmark. Will be in range [0; 1].
+class Landmark {
+  /// The confidence in range [0, 1] of whether the landmark is currently in view.
   final double confidence;
 
-  /// The normalized x coordinate of the landmark in the image. Will usually be in range [0; 1], through for landmarks which are estimated to be outside the image they might also be outside the [0; 1] range.
-  final double x;
+  /// The position of the landmark in pseudo 3D space. Coordinates are normalized to be in a [0; 1[ range, though for landmarks which are outside the input image, they might also be out of that range.
+  final Vector3 position;
 
-  /// The normalized y coordinate of the landmark in the image. Will usually be in range [0; 1], through for landmarks which are estimated to be outside the image they might also be outside the [0; 1] range.
-  final double y;
-
-  const Landmark2D(
-      {required this.confidence, required this.x, required this.y});
+  const Landmark({required this.confidence, required this.position});
 }
 
-typedef Pose2D = IMap<LandmarkTypes, Landmark2D>;
+/// The pose landmarks indexed by their type.
+typedef Pose = IMap<LandmarkTypes, Landmark>;
