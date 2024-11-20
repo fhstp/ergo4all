@@ -80,19 +80,29 @@ class LiveAnalysisScreen extends HookWidget {
       if (isRecording) processCapture(capture);
     }
 
-    Future<Null> startCaptureUsing(CameraDescription camera) async {
-      setActiveCamera(camera);
-      final controller = CameraController(camera, ResolutionPreset.medium,
+    useEffect(() {
+      if (cameraController == null) return null;
+
+      cameraController
+          .startImageStream(onImageCaptured)
+          .then((_) => startPoseDetection());
+
+      return cameraController.stopImageStream;
+    }, [cameraController]);
+
+    useEffect(() {
+      if (activeCamera == null) return null;
+      final controller = CameraController(activeCamera, ResolutionPreset.medium,
           enableAudio: false,
           imageFormatGroup: Platform.isAndroid
               ? ImageFormatGroup.nv21 // for Android
               : ImageFormatGroup.bgra8888, // for iOS
           fps: 15);
-      await controller.initialize();
-      await controller.startImageStream(onImageCaptured);
-      setCameraController(controller);
-      await startPoseDetection();
-    }
+
+      controller.initialize().then((_) => setCameraController(controller));
+
+      return controller.dispose;
+    }, [activeCamera]);
 
     Future<Null> tryInitCamera() async {
       final isCameraPermissionGranted =
@@ -103,7 +113,7 @@ class LiveAnalysisScreen extends HookWidget {
       }
 
       final cameras = await availableCameras();
-      await startCaptureUsing(cameras[0]);
+      setActiveCamera(cameras[0]);
     }
 
     void goToResults() {
