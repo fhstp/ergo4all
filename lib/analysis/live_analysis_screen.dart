@@ -113,7 +113,9 @@ class LiveAnalysisScreen extends HookWidget {
       }
 
       final cameras = await availableCameras();
-      setActiveCamera(cameras[0]);
+      final frontCamera = cameras
+          .firstWhere((it) => it.lensDirection == CameraLensDirection.back);
+      setActiveCamera(frontCamera);
     }
 
     void goToResults() {
