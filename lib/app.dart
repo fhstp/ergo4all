@@ -1,5 +1,5 @@
 import 'package:custom_locale/custom_locale.dart';
-import 'package:ergo4all/analysis/live_analysis_screen.dart';
+import 'package:ergo4all/analysis/live/screen.dart';
 import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/home/screen.dart';
