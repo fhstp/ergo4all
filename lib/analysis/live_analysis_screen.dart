@@ -30,6 +30,15 @@ class LiveAnalysisScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final random = useMemoized(() => Random());
+
+    Degree randomAngle(double min, double max) {
+      return Degree.makeFrom180(min + random.nextDouble() * (max - min));
+    }
+
+    bool randomBool() {
+      return random.nextDouble() > 0.5;
+    }
+
     final (currentScore, setCurrentScore) = useState<RulaScore?>(null).split();
     final (cameraController, setCameraController) =
         useState<CameraController?>(null).split();
@@ -37,10 +46,6 @@ class LiveAnalysisScreen extends HookWidget {
         useState<CameraDescription?>(null).split();
     final (latestCapture, setLatestCapture) = useState<_Capture?>(null).split();
     final (isRecording, setRecording) = useState(false).split();
-
-    Degree randomAngle(double min, double max) {
-      return Degree.makeFrom180(min + random.nextDouble() * (max - min));
-    }
 
     processCapture(_Capture capture) async {
       // TODO: Calculate real rula sheet
@@ -55,7 +60,7 @@ class LiveAnalysisScreen extends HookWidget {
           hipFlexion: randomAngle(0, 180),
           trunkRotation: randomAngle(-180, 180),
           trunkLateralFlexion: randomAngle(-90, 90),
-          isStandingOnBothLegs: random.nextDouble() > 0.5);
+          isStandingOnBothLegs: randomBool());
       final finalScore = calcFullRulaScore(sheet);
 
       setCurrentScore(finalScore);
