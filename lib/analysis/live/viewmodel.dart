@@ -80,6 +80,8 @@ class LiveAnalysisViewModel {
 
     uiState.value = uiState.value.copyWith(latestCapture: capture);
 
+    // TODO: Use moving average for analysis
+
     if (_isRecording) _processCapture(capture);
   }
 
