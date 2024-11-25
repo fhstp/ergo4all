@@ -1,34 +1,37 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/foundation.dart';
 import 'package:vector_math/vector_math.dart';
 
-/// The types of landmarks that are relevant for ergonomic pose analysis.
-enum LandmarkTypes {
-  leftHand,
-  leftElbow,
+/// The key-points which are relevant for RULA pose analysis.
+enum KeyPoints {
   leftShoulder,
-  leftHip,
-  leftKnee,
-  leftFoot,
-  rightHand,
-  rightElbow,
+  midNeck,
   rightShoulder,
+  leftElbow,
+  rightElbow,
+  leftWrist,
+  rightWrist,
+  leftPalm,
+  rightPalm,
+  leftHip,
+  midPelvis,
   rightHip,
+  leftKnee,
   rightKnee,
-  rightFoot
+  leftAnkle,
+  rightAnkle,
+  leftEar,
+  midHead,
+  rightEar
 }
 
-/// Describes a pose landmark in 3D space.
-@immutable
-class Landmark {
-  /// The confidence in range [0, 1] of whether the landmark is currently in view.
-  final double confidence;
+/// Tuple containing data for a landmark. First element is the landmarks position in world-space. Second element is the elements visibility/confidence.
+typedef Landmark = (Vector3, double);
 
-  /// The position of the landmark in pseudo 3D space. Coordinates are normalized to be in a [0; 1[ range, though for landmarks which are outside the input image, they might also be out of that range.
-  final Vector3 position;
+/// Extract the world-space position from a [Landmark].
+Vector3 worldPosOf(Landmark landmark) => landmark.$1;
 
-  const Landmark({required this.confidence, required this.position});
-}
+/// Extract the visibility from a [Landmark].
+double visibilityOf(Landmark landmark) => landmark.$2;
 
-/// The pose landmarks indexed by their type.
-typedef Pose = IMap<LandmarkTypes, Landmark>;
+/// A pose in 3d world-space. This is a map of [KeyPoints] with their associated [Landmark]s.
+typedef Pose = IMap<KeyPoints, Landmark>;

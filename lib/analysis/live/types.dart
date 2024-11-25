@@ -7,11 +7,10 @@ import 'package:rula/rula.dart';
 class Capture {
   final int timestamp;
   final Pose pose;
+  final Size imageSize;
 
-  const Capture({
-    required this.timestamp,
-    required this.pose,
-  });
+  const Capture(
+      {required this.timestamp, required this.pose, required this.imageSize});
 }
 
 @immutable
