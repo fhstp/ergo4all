@@ -10,7 +10,8 @@ dependencies:
 
   google_mlkit_pose_detection: ^0.13.0
   camera: ^0.10.0
-  fast_immutable_collections: ^10.2.4
+  fast_immutable_collections: ^11.0.0
+
 
   rula:
     path: ../rula

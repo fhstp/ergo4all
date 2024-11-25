@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  common:
+    dependency: "direct main"
+    description:
+      path: "../common"
+      relative: true
+    source: path
+    version: "0.0.0"
   cross_file:
     dependency: transitive
     description:
@@ -65,14 +72,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4+2"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
   fast_immutable_collections:
     dependency: "direct main"
     description:
       name: fast_immutable_collections
-      sha256: c3c73f4f989d3302066e4ec94e6ec73b5dc872592d02194f49f1352d64126b8c
+      sha256: e5e27788db94c5f1046585566a5cf63a8139a0d743cf9fdcab7ae7b0c3701a4a
       url: "https://pub.dev"
     source: hosted
-    version: "10.2.4"
+    version: "11.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
