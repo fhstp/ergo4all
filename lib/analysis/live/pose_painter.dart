@@ -18,7 +18,7 @@ class PosePainter extends CustomPainter {
     Offset? tryGetPosOf(KeyPoints keyPoint) {
       final landmark = pose[keyPoint];
       if (visibilityOf(landmark!) < 0.9) return null;
-      final position = worldPosOf(landmark).xy;
+      final position = posOf(landmark).xy;
       return Offset(
         size.width * (position.x / imageSize.width),
         size.height * (position.y / imageSize.height),

@@ -12,12 +12,10 @@ Pose convertMlkitPose(mlkit.Pose pose) {
 
   Landmark average(Iterable<mlkit.PoseLandmarkType> types) {
     final landmarks = types.map(single).toISet();
-    final sum = landmarks.reduce((acc, it) => (
-          worldPosOf(acc) + worldPosOf(it),
-          visibilityOf(acc) + visibilityOf(it)
-        ));
+    final sum = landmarks.reduce((acc, it) =>
+        (posOf(acc) + posOf(it), visibilityOf(acc) + visibilityOf(it)));
     return (
-      worldPosOf(sum) / landmarks.length.toDouble(),
+      posOf(sum) / landmarks.length.toDouble(),
       visibilityOf(sum) / landmarks.length
     );
   }

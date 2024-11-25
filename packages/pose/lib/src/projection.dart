@@ -4,7 +4,7 @@ import 'package:vector_math/vector_math.dart';
 
 Landmark Function(Landmark) _projectLandmarkUsing(Matrix4 matrix) {
   return (landmark) {
-    final worldPos = worldPosOf(landmark);
+    final worldPos = posOf(landmark);
     final projectedPos = Vector3.copy(worldPos);
     Matrix4.solve3(matrix, worldPos, projectedPos);
     return (projectedPos, visibilityOf(landmark));
@@ -14,10 +14,10 @@ Landmark Function(Landmark) _projectLandmarkUsing(Matrix4 matrix) {
 /// Projects the given [Pose], which is assumed to be in 3D world-space, onto the coronal and sagittal planes.
 (Pose coronal, Pose sagittal) projectOnAnatomicalPlanes(Pose pose3D) {
   // Extract key points from pose
-  final neck = worldPosOf(pose3D[KeyPoints.midNeck]!);
-  final leftHip = worldPosOf(pose3D[KeyPoints.leftHip]!);
-  final rightHip = worldPosOf(pose3D[KeyPoints.rightHip]!);
-  final midHip = worldPosOf(pose3D[KeyPoints.midPelvis]!);
+  final neck = posOf(pose3D[KeyPoints.midNeck]!);
+  final leftHip = posOf(pose3D[KeyPoints.leftHip]!);
+  final rightHip = posOf(pose3D[KeyPoints.rightHip]!);
+  final midHip = posOf(pose3D[KeyPoints.midPelvis]!);
 
   // Define the coronal plane by calculating 2 vectors from the neck key-point to each hip
   final neckToLeftHip = leftHip - neck;
