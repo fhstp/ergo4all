@@ -12,6 +12,8 @@ dependencies:
   camera: ^0.10.0
   fast_immutable_collections: ^11.0.0
 
+  common:
+    path: ../common
 
   rula:
     path: ../rula
