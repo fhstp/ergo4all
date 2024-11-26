@@ -8,6 +8,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:rula/rula.dart';
 
 class LiveAnalysisScreen extends HookWidget {
@@ -42,11 +43,11 @@ class LiveAnalysisScreen extends HookWidget {
     }, [uiState.isDone]);
 
     useEffect(() {
-      if (uiState.cameraController == null) askForPermission();
+      if (uiState.cameraController.isNone()) askForPermission();
       return null;
     }, [uiState.cameraController]);
 
-    if (uiState.cameraController == null) {
+    if (uiState.cameraController.isNone()) {
       return Scaffold(
         body: Center(
           child: SizedBox(
@@ -62,8 +63,8 @@ class LiveAnalysisScreen extends HookWidget {
         children: [
           Stack(
             children: [
-              if (uiState.cameraController != null)
-                CameraPreview(uiState.cameraController!),
+              if (uiState.cameraController case Some(value: final controller))
+                CameraPreview(controller),
               if (uiState.latestCapture != null)
                 Positioned.fill(
                   child: CustomPaint(

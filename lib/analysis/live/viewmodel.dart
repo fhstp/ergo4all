@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'dart:io';
 import 'dart:math';
 
@@ -8,6 +6,7 @@ import 'package:ergo4all/analysis/live/types.dart';
 import 'package:ergo4all/common/value_notifier_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
 import 'package:rula/rula.dart';
 
@@ -112,7 +111,7 @@ class LiveAnalysisViewModel {
         frontCamera, controller.value.deviceOrientation, image));
     await startPoseDetection();
 
-    _uiState.update((it) => it.copyWith(cameraController: controller));
+    _uiState.update((it) => it.copyWith(cameraController: Some(controller)));
   }
 
   void toggleRecording() async {

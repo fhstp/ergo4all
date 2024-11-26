@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
 import 'package:rula/rula.dart';
 
@@ -16,7 +17,7 @@ class Capture {
 
 @immutable
 class UIState {
-  final CameraController? cameraController;
+  final Option<CameraController> cameraController;
   final Capture? latestCapture;
   final bool isRecording;
   final bool isDone;
@@ -27,7 +28,7 @@ class UIState {
       this.isDone, this.currentScore, this.angles);
 
   UIState copyWith({
-    CameraController? cameraController,
+    Option<CameraController>? cameraController,
     Capture? latestCapture,
     bool? isRecording,
     bool? isDone,
@@ -45,5 +46,5 @@ class UIState {
   }
 
   static const UIState initial =
-      UIState(null, null, false, false, null, PoseAngles.empty());
+      UIState(None(), null, false, false, null, PoseAngles.empty());
 }
