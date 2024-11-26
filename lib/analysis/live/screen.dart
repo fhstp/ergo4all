@@ -32,7 +32,7 @@ class LiveAnalysisScreen extends HookWidget {
       await Navigator.of(context).pushReplacementNamed(Routes.results.path);
     }
 
-    final uiState = useListenable(vm.uiState).value;
+    final uiState = useValueListenable(vm.uiState);
 
     useEffect(() {
       if (uiState.isDone) {
