@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/analysis/live/types.dart';
+import 'package:ergo4all/common/value_notifier_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pose/pose.dart';
@@ -26,14 +27,12 @@ class LiveAnalysisViewModel {
   CameraController? _controller;
   bool _isRecording = false;
 
-  final _uiState = ValueNotifier(
-      UIState(null, null, false, false, null, const PoseAngles.empty()));
+  final _uiState = ValueNotifier(UIState.initial);
 
   ValueNotifier<UIState> get uiState => _uiState;
 
   Future<void> _closeCamera() async {
-    _uiState.value =
-        UIState(null, null, false, false, null, const PoseAngles.empty());
+    _uiState.value = UIState.initial;
 
     await _controller?.stopImageStream();
     await _controller?.dispose();
@@ -53,7 +52,7 @@ class LiveAnalysisViewModel {
     final (coronal, sagittal) = projectOnAnatomicalPlanes(capture.pose);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
-    _uiState.value = _uiState.value.copyWith(angles: angles);
+    _uiState.update((it) => it.copyWith(angles: angles));
 
     // TODO: Calculate real rula sheet
     final sheet = RulaSheet(
@@ -70,7 +69,7 @@ class LiveAnalysisViewModel {
         isStandingOnBothLegs: _randomBool());
     final finalScore = calcFullRulaScore(sheet);
 
-    _uiState.value = _uiState.value.copyWith(currentScore: finalScore);
+    _uiState.update((it) => it.copyWith(currentScore: finalScore));
   }
 
   _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,
@@ -78,7 +77,7 @@ class LiveAnalysisViewModel {
     final pose = await detectPose(camera, orientation, cameraImage);
 
     if (pose == null) {
-      _uiState.value = _uiState.value.copyWith(latestCapture: null);
+      _uiState.update((it) => it.copyWith(latestCapture: null));
       return;
     }
 
@@ -87,7 +86,7 @@ class LiveAnalysisViewModel {
         pose: pose,
         imageSize: _getRotatedImageSize(cameraImage));
 
-    _uiState.value = _uiState.value.copyWith(latestCapture: capture);
+    _uiState.update((it) => it.copyWith(latestCapture: capture));
 
     // TODO: Use moving average for analysis
 
@@ -113,16 +112,16 @@ class LiveAnalysisViewModel {
         frontCamera, controller.value.deviceOrientation, image));
     await startPoseDetection();
 
-    _uiState.value = _uiState.value.copyWith(cameraController: controller);
+    _uiState.update((it) => it.copyWith(cameraController: controller));
   }
 
   void toggleRecording() async {
     _isRecording = !_isRecording;
-    _uiState.value = _uiState.value.copyWith(isRecording: _isRecording);
+    _uiState.update((it) => it.copyWith(isRecording: _isRecording));
 
     if (!_isRecording) {
       await _closeCamera();
-      _uiState.value = _uiState.value.copyWith(isDone: true);
+      _uiState.update((it) => it.copyWith(isDone: true));
     }
   }
 }

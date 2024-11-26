@@ -43,4 +43,7 @@ class UIState {
       angles ?? this.angles,
     );
   }
+
+  static const UIState initial =
+      UIState(null, null, false, false, null, PoseAngles.empty());
 }
