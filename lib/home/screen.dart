@@ -68,7 +68,7 @@ class HomeScreen extends HookWidget {
 
     useEffect(() {
       loadCurrentUser().then((user) {
-        assert(user != null);
+        assert(user != null, "Must have user on home-screen");
         onUserLoaded(user!);
       });
       return null;

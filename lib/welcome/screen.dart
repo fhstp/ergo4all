@@ -1,41 +1,31 @@
 import 'package:ergo4all/common/custom_images.dart';
-import 'package:ergo4all/common/hook_ext.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/welcome/timed_loading_bar.dart';
 import 'package:ergo4all/welcome/version_display.dart';
+import 'package:ergo4all/welcome/viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:user_management/user_management.dart';
 
+/// Top-level widget for the welcome screen.
 class WelcomeScreen extends HookWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final (currentUser, setCurrentUser) = useState<User?>(null).split();
-    final (projectVersion, setProjectVersion) = useState<String?>(null).split();
+    final viewModel = useMemoized(WelcomeViewModel.new);
+    final uiState = useValueListenable(viewModel.uiState);
 
     navigateToNextScreen() async {
-      final isFirstStart = currentUser == null;
-      // Depending on whether this is the first time we start the app
-      // we either go to onboarding or home.
-      final nextRoute = isFirstStart ? Routes.language : Routes.home;
+      final nextRoute =
+          uiState.shouldDoOnboarding ? Routes.language : Routes.home;
 
       await Navigator.of(context).pushReplacementNamed(nextRoute.path);
     }
 
     useEffect(() {
-      loadCurrentUser().then(setCurrentUser);
-      return null;
-    }, [null]);
-
-    useEffect(() {
-      PackageInfo.fromPlatform()
-          .then((info) => info.version)
-          .then(setProjectVersion);
+      viewModel.checkOnboarding();
       return null;
     }, [null]);
 
@@ -94,7 +84,7 @@ class WelcomeScreen extends HookWidget {
                 ],
               ),
             ),
-            VersionDisplay(version: projectVersion)
+            VersionDisplay(version: uiState.projectVersion)
           ],
         ),
       ),
