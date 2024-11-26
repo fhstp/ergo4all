@@ -16,7 +16,7 @@ Future<void> startPoseDetection() async {
   if (_detector != null) return;
   _detector = mlkit.PoseDetector(
       options: mlkit.PoseDetectorOptions(
-          model: mlkit.PoseDetectionModel.accurate,
+          model: mlkit.PoseDetectionModel.base,
           mode: mlkit.PoseDetectionMode.stream));
 }
 
