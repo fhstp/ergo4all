@@ -28,6 +28,9 @@ typedef PoseAngles = IMap<KeyAngles, double>;
 
 /// Calculates the angle in degrees between two directional vectors.
 double _angle(Vector3 a, Vector3 b) {
+  assert(a.length2 > 0, "a must have non 0 length");
+  assert(b.length2 > 0, "b must have non 0 length");
+
   final cosineAngle = a.dot(b) / (a.length * b.length);
   final angle = acos(cosineAngle);
   return degrees(angle);
