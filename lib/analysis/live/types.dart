@@ -18,7 +18,7 @@ class Capture {
 @immutable
 class UIState {
   final Option<CameraController> cameraController;
-  final Capture? latestCapture;
+  final Option<Capture> latestCapture;
   final bool isRecording;
   final bool isDone;
   final RulaScore? currentScore;
@@ -29,7 +29,7 @@ class UIState {
 
   UIState copyWith({
     Option<CameraController>? cameraController,
-    Capture? latestCapture,
+    Option<Capture>? latestCapture,
     bool? isRecording,
     bool? isDone,
     RulaScore? currentScore,
@@ -46,5 +46,5 @@ class UIState {
   }
 
   static const UIState initial =
-      UIState(None(), null, false, false, null, PoseAngles.empty());
+      UIState(None(), None(), false, false, null, PoseAngles.empty());
 }

@@ -76,7 +76,7 @@ class LiveAnalysisViewModel {
     final pose = await detectPose(camera, orientation, cameraImage);
 
     if (pose == null) {
-      _uiState.update((it) => it.copyWith(latestCapture: null));
+      _uiState.update((it) => it.copyWith(latestCapture: None()));
       return;
     }
 
@@ -85,7 +85,7 @@ class LiveAnalysisViewModel {
         pose: pose,
         imageSize: _getRotatedImageSize(cameraImage));
 
-    _uiState.update((it) => it.copyWith(latestCapture: capture));
+    _uiState.update((it) => it.copyWith(latestCapture: Some(capture)));
 
     // TODO: Use moving average for analysis
 

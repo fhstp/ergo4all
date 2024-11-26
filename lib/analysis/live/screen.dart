@@ -65,12 +65,12 @@ class LiveAnalysisScreen extends HookWidget {
             children: [
               if (uiState.cameraController case Some(value: final controller))
                 CameraPreview(controller),
-              if (uiState.latestCapture != null)
+              if (uiState.latestCapture case Some(value: final capture))
                 Positioned.fill(
                   child: CustomPaint(
                       painter: PosePainter(
-                    pose: uiState.latestCapture!.pose,
-                    imageSize: uiState.latestCapture!.imageSize,
+                    pose: capture.pose,
+                    imageSize: capture.imageSize,
                   )),
                 ),
               if (uiState.currentScore != null)
