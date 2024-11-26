@@ -68,7 +68,7 @@ class LiveAnalysisViewModel {
         isStandingOnBothLegs: _randomBool());
     final finalScore = calcFullRulaScore(sheet);
 
-    _uiState.update((it) => it.copyWith(currentScore: finalScore));
+    _uiState.update((it) => it.copyWith(currentScore: Some(finalScore)));
   }
 
   _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,

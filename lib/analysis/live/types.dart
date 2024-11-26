@@ -21,7 +21,7 @@ class UIState {
   final Option<Capture> latestCapture;
   final bool isRecording;
   final bool isDone;
-  final RulaScore? currentScore;
+  final Option<RulaScore> currentScore;
   final PoseAngles angles;
 
   const UIState(this.cameraController, this.latestCapture, this.isRecording,
@@ -32,7 +32,7 @@ class UIState {
     Option<Capture>? latestCapture,
     bool? isRecording,
     bool? isDone,
-    RulaScore? currentScore,
+    Option<RulaScore>? currentScore,
     PoseAngles? angles,
   }) {
     return UIState(
@@ -46,5 +46,5 @@ class UIState {
   }
 
   static const UIState initial =
-      UIState(None(), None(), false, false, null, PoseAngles.empty());
+      UIState(None(), None(), false, false, None(), PoseAngles.empty());
 }

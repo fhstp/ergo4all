@@ -73,13 +73,12 @@ class LiveAnalysisScreen extends HookWidget {
                     imageSize: capture.imageSize,
                   )),
                 ),
-              if (uiState.currentScore != null)
+              if (uiState.currentScore case Some(value: final score))
                 Positioned(
                     top: largeSpace,
                     right: largeSpace,
                     // TODO: Add proper stringified version of rula label with localization
-                    child: Text(
-                        "${uiState.currentScore}: ${rulaLabelFor(uiState.currentScore!)}")),
+                    child: Text("${score}: ${rulaLabelFor(score)}")),
               Positioned(
                   bottom: 0,
                   left: 0,
