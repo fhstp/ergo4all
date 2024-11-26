@@ -26,11 +26,13 @@ class LiveAnalysisViewModel {
   CameraController? _controller;
   bool _isRecording = false;
 
-  final uiState = ValueNotifier(
+  final _uiState = ValueNotifier(
       UIState(null, null, false, false, null, const PoseAngles.empty()));
 
+  ValueNotifier<UIState> get uiState => _uiState;
+
   Future<void> _closeCamera() async {
-    uiState.value =
+    _uiState.value =
         UIState(null, null, false, false, null, const PoseAngles.empty());
 
     await _controller?.stopImageStream();
@@ -51,7 +53,7 @@ class LiveAnalysisViewModel {
     final (coronal, sagittal) = projectOnAnatomicalPlanes(capture.pose);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
-    uiState.value = uiState.value.copyWith(angles: angles);
+    _uiState.value = _uiState.value.copyWith(angles: angles);
 
     // TODO: Calculate real rula sheet
     final sheet = RulaSheet(
@@ -68,7 +70,7 @@ class LiveAnalysisViewModel {
         isStandingOnBothLegs: _randomBool());
     final finalScore = calcFullRulaScore(sheet);
 
-    uiState.value = uiState.value.copyWith(currentScore: finalScore);
+    _uiState.value = _uiState.value.copyWith(currentScore: finalScore);
   }
 
   _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,
@@ -76,7 +78,7 @@ class LiveAnalysisViewModel {
     final pose = await detectPose(camera, orientation, cameraImage);
 
     if (pose == null) {
-      uiState.value = uiState.value.copyWith(latestCapture: null);
+      _uiState.value = _uiState.value.copyWith(latestCapture: null);
       return;
     }
 
@@ -85,7 +87,7 @@ class LiveAnalysisViewModel {
         pose: pose,
         imageSize: _getRotatedImageSize(cameraImage));
 
-    uiState.value = uiState.value.copyWith(latestCapture: capture);
+    _uiState.value = _uiState.value.copyWith(latestCapture: capture);
 
     // TODO: Use moving average for analysis
 
@@ -111,16 +113,16 @@ class LiveAnalysisViewModel {
         frontCamera, controller.value.deviceOrientation, image));
     await startPoseDetection();
 
-    uiState.value = uiState.value.copyWith(cameraController: controller);
+    _uiState.value = _uiState.value.copyWith(cameraController: controller);
   }
 
   void toggleRecording() async {
     _isRecording = !_isRecording;
-    uiState.value = uiState.value.copyWith(isRecording: _isRecording);
+    _uiState.value = _uiState.value.copyWith(isRecording: _isRecording);
 
     if (!_isRecording) {
       await _closeCamera();
-      uiState.value = uiState.value.copyWith(isDone: true);
+      _uiState.value = _uiState.value.copyWith(isDone: true);
     }
   }
 }
