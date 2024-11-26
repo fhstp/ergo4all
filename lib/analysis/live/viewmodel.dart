@@ -77,7 +77,7 @@ class LiveAnalysisViewModel {
     final frontCamera = cameras
         .firstWhere((it) => it.lensDirection == CameraLensDirection.back);
 
-    final controller = CameraController(frontCamera, ResolutionPreset.medium,
+    final controller = CameraController(frontCamera, ResolutionPreset.low,
         enableAudio: false,
         imageFormatGroup: Platform.isAndroid
             ? ImageFormatGroup.nv21 // for Android
