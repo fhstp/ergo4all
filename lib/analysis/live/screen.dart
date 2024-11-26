@@ -15,7 +15,7 @@ class LiveAnalysisScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = useMemoized(() => LiveAnalysisViewModel());
+    final viewModel = useMemoized(LiveAnalysisViewModel.new);
 
     void askForPermission() async {
       final isCameraPermissionGranted =
@@ -25,24 +25,26 @@ class LiveAnalysisScreen extends HookWidget {
         return;
       }
 
-      vm.initializeCamera();
+      viewModel.initializeCamera();
     }
 
     void goToResults() async {
       await Navigator.of(context).pushReplacementNamed(Routes.results.path);
     }
 
-    final uiState = useValueListenable(vm.uiState);
+    final uiState = useValueListenable(viewModel.uiState);
 
     useEffect(() {
       if (uiState.isDone) {
         WidgetsBinding.instance.addPostFrameCallback((_) => goToResults());
-        return null;
       }
+      return null;
+    }, [uiState.isDone]);
 
+    useEffect(() {
       if (uiState.cameraController == null) askForPermission();
       return null;
-    }, [uiState]);
+    }, [uiState.cameraController]);
 
     if (uiState.cameraController == null) {
       return Scaffold(
@@ -97,7 +99,7 @@ class LiveAnalysisScreen extends HookWidget {
           const Spacer(),
           RecordButton(
             isRecording: uiState.isRecording,
-            onTap: vm.toggleRecording,
+            onTap: viewModel.toggleRecording,
           )
         ],
       ),
