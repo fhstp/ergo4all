@@ -1,4 +1,5 @@
 import 'package:ergo4all/common/app_bar.dart';
+import 'package:ergo4all/common/hook_ext.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/spacing.dart';
@@ -12,7 +13,7 @@ class TermsOfUseScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final hasAccepted = useState(false);
+    final (hasAccepted, setHasAccepted) = useState(false).split();
 
     void navigateToPreUserCreation() {
       Navigator.of(context).pushReplacementNamed(Routes.preUserCreator.path);
@@ -36,10 +37,8 @@ class TermsOfUseScreen extends HookWidget {
                 Text(localizations.termsOfUse_accept),
                 Checkbox(
                     key: const Key("accept-check"),
-                    value: hasAccepted.value,
-                    onChanged: (value) {
-                      hasAccepted.value = value!;
-                    })
+                    value: hasAccepted,
+                    onChanged: (value) => setHasAccepted(value!))
               ],
             ),
             const SizedBox(
@@ -47,7 +46,7 @@ class TermsOfUseScreen extends HookWidget {
             ),
             ElevatedButton(
                 key: const Key("next"),
-                onPressed: hasAccepted.value ? navigateToPreUserCreation : null,
+                onPressed: hasAccepted ? navigateToPreUserCreation : null,
                 child: Text(localizations.common_next))
           ],
         ),
