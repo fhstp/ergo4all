@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
@@ -20,9 +21,10 @@ class UIState {
   final bool isRecording;
   final bool isDone;
   final RulaScore? currentScore;
+  final PoseAngles angles;
 
   const UIState(this.cameraController, this.latestCapture, this.isRecording,
-      this.isDone, this.currentScore);
+      this.isDone, this.currentScore, this.angles);
 
   UIState copyWith({
     CameraController? cameraController,
@@ -30,6 +32,7 @@ class UIState {
     bool? isRecording,
     bool? isDone,
     RulaScore? currentScore,
+    PoseAngles? angles,
   }) {
     return UIState(
       cameraController ?? this.cameraController,
@@ -37,6 +40,7 @@ class UIState {
       isRecording ?? this.isRecording,
       isDone ?? this.isDone,
       currentScore ?? this.currentScore,
+      angles ?? this.angles,
     );
   }
 }

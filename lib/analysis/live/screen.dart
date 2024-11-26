@@ -77,6 +77,21 @@ class LiveAnalysisScreen extends HookWidget {
                     // TODO: Add proper stringified version of rula label with localization
                     child: Text(
                         "${uiState.currentScore}: ${rulaLabelFor(uiState.currentScore!)}")),
+              Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(255, 255, 255, 0.5)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: uiState.angles
+                          .mapTo((keyAngle, degrees) =>
+                              Text("${keyAngle.name}: ${degrees.toInt()}°"))
+                          .toList(),
+                    ),
+                  ))
             ],
           ),
           const Spacer(),

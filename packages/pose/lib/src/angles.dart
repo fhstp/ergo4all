@@ -1,0 +1,150 @@
+import 'dart:math';
+
+import 'package:common/immutable_collection_ext.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:pose/src/types.dart';
+import 'package:vector_math/vector_math.dart';
+
+enum KeyAngles {
+  shoulderFlexionLeft,
+  shoulderAbductionLeft,
+  shoulderFlexionRight,
+  shoulderAbductionRight,
+  elbowFlexionLeft,
+  elbowFlexionRight,
+  wristFlexionLeft,
+  wristFlexionRight,
+  kneeFlexionLeft,
+  kneeFlexionRight,
+  trunkStoop,
+  trunkTwist,
+  trunkSideBend,
+  neckFlexion,
+  neckSideBend,
+  neckTwist
+}
+
+typedef PoseAngles = IMap<KeyAngles, double>;
+
+/// Calculates the angle in degrees between two directional vectors.
+double _angle(Vector3 a, Vector3 b) {
+  final cosineAngle = a.dot(b) / (a.length * b.length);
+  final angle = acos(cosineAngle);
+  return degrees(angle);
+}
+
+/// Calculates the angle in degrees between the lines from [pointB] to [pointA] and [pointB] to [pointC].
+double _jointAngle(
+    Pose pose, KeyPoints pointA, KeyPoints pointB, KeyPoints pointC) {
+  final a = posOf(pose[pointA]!);
+  final b = posOf(pose[pointB]!);
+  final c = posOf(pose[pointC]!);
+
+  final ba = a - b;
+  final bc = c - b;
+
+  return _angle(ba, bc);
+}
+
+/// Calculates the angle in degrees between the lines from [pointB] to [pointA] and the z-axis.
+double _zAngle(Pose pose, KeyPoints pointA, KeyPoints pointB) {
+  final a = posOf(pose[pointA]!);
+  final b = posOf(pose[pointB]!);
+
+  final ba = a - b;
+  final bc = Vector3(0, 0, 1);
+
+  return _angle(ba, bc);
+}
+
+/// Calculates the angle in degrees between the lines from [pointA] to [pointB] and [pointC] to [pointD].
+double _crossAngle(Pose pose, KeyPoints pointA, KeyPoints pointB,
+    KeyPoints pointC, KeyPoints pointD) {
+  final a = posOf(pose[pointA]!);
+  final b = posOf(pose[pointB]!);
+  final c = posOf(pose[pointC]!);
+  final d = posOf(pose[pointD]!);
+
+  final ba = a - b;
+  final dc = c - d;
+
+  return _angle(ba, dc);
+}
+
+/// Takes the original [pose] and transposes it from XZY to XYZ and flips the Z axes
+Pose _transformPose(Pose pose) {
+  Landmark transformLandmark(Landmark landmark) {
+    final originalPos = posOf(landmark);
+    final transformedPos =
+        Vector3(originalPos.x, originalPos.z, -originalPos.y);
+    return (transformedPos, visibilityOf(landmark));
+  }
+
+  return pose.mapValues(transformLandmark);
+}
+
+PoseAngles calculateAngles(
+    Pose worldPose, Pose coronalPose, Pose sagittalPose) {
+  coronalPose = _transformPose(coronalPose);
+  sagittalPose = _transformPose(sagittalPose);
+
+  double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
+        KeyAngles.shoulderFlexionLeft =>
+          _zAngle(sagittalPose, KeyPoints.leftShoulder, KeyPoints.leftElbow),
+        KeyAngles.shoulderAbductionLeft =>
+          _zAngle(coronalPose, KeyPoints.leftShoulder, KeyPoints.leftElbow),
+        KeyAngles.shoulderFlexionRight =>
+          _zAngle(sagittalPose, KeyPoints.rightShoulder, KeyPoints.rightElbow),
+        KeyAngles.shoulderAbductionRight =>
+          _zAngle(coronalPose, KeyPoints.rightShoulder, KeyPoints.rightElbow),
+        KeyAngles.elbowFlexionLeft => 180 -
+            _jointAngle(worldPose, KeyPoints.leftWrist, KeyPoints.leftElbow,
+                KeyPoints.leftShoulder),
+        KeyAngles.elbowFlexionRight => 180 -
+            _jointAngle(worldPose, KeyPoints.rightWrist, KeyPoints.rightElbow,
+                KeyPoints.rightShoulder),
+        KeyAngles.wristFlexionLeft => 180 -
+            _jointAngle(worldPose, KeyPoints.leftElbow, KeyPoints.leftWrist,
+                KeyPoints.leftPalm),
+        KeyAngles.wristFlexionRight => 180 -
+            _jointAngle(worldPose, KeyPoints.rightElbow, KeyPoints.rightWrist,
+                KeyPoints.rightPalm),
+        KeyAngles.kneeFlexionLeft => 180 -
+            _jointAngle(sagittalPose, KeyPoints.leftHip, KeyPoints.leftKnee,
+                KeyPoints.leftAnkle),
+        KeyAngles.kneeFlexionRight => 180 -
+            _jointAngle(sagittalPose, KeyPoints.rightHip, KeyPoints.rightKnee,
+                KeyPoints.rightAnkle),
+        KeyAngles.trunkStoop =>
+          180 - _zAngle(sagittalPose, KeyPoints.midPelvis, KeyPoints.midNeck),
+        KeyAngles.trunkTwist => (180 -
+                _crossAngle(worldPose, KeyPoints.leftHip, KeyPoints.rightHip,
+                    KeyPoints.leftShoulder, KeyPoints.rightShoulder))
+            .abs(),
+        KeyAngles.trunkSideBend => (90 -
+                _crossAngle(worldPose, KeyPoints.leftHip, KeyPoints.rightHip,
+                    KeyPoints.midPelvis, KeyPoints.midNeck))
+            .abs(),
+        KeyAngles.neckFlexion => 180 -
+            _jointAngle(sagittalPose, KeyPoints.midPelvis, KeyPoints.midNeck,
+                KeyPoints.midHead),
+        KeyAngles.neckSideBend => (90 -
+                _crossAngle(
+                    worldPose, // TODO: Should this be coronal?
+                    KeyPoints.leftShoulder,
+                    KeyPoints.rightShoulder,
+                    KeyPoints.midNeck,
+                    KeyPoints.midHead))
+            .abs(),
+        KeyAngles.neckTwist => (180 -
+                _crossAngle(
+                    worldPose,
+                    KeyPoints.leftShoulder,
+                    KeyPoints.rightShoulder,
+                    KeyPoints.leftEar,
+                    KeyPoints.rightEar))
+            .abs(),
+      };
+
+  return IMap.fromKeys(keys: KeyAngles.values, valueMapper: calcKeyAngle);
+}

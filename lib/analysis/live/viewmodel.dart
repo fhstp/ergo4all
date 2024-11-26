@@ -26,10 +26,12 @@ class LiveAnalysisViewModel {
   CameraController? _controller;
   bool _isRecording = false;
 
-  final uiState = ValueNotifier(UIState(null, null, false, false, null));
+  final uiState = ValueNotifier(
+      UIState(null, null, false, false, null, const PoseAngles.empty()));
 
   Future<void> _closeCamera() async {
-    uiState.value = UIState(null, null, false, false, null);
+    uiState.value =
+        UIState(null, null, false, false, null, const PoseAngles.empty());
 
     await _controller?.stopImageStream();
     await _controller?.dispose();
@@ -46,6 +48,11 @@ class LiveAnalysisViewModel {
   }
 
   _processCapture(Capture capture) async {
+    final (coronal, sagittal) = projectOnAnatomicalPlanes(capture.pose);
+    final angles = calculateAngles(capture.pose, coronal, sagittal);
+
+    uiState.value = uiState.value.copyWith(angles: angles);
+
     // TODO: Calculate real rula sheet
     final sheet = RulaSheet(
         shoulderFlexion: _randomAngle(-180, 180),
