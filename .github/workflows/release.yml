@@ -1,16 +1,16 @@
 name: Release
 
 on: 
-  push:
-    branches:
-      - main
-
+  workflow_run:
+    workflows: [Test]
+    types:
+      - completed
 env: 
   JAVA_VERSION: 17
 
 jobs:
   check-commits:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main'  && github.event.workflow_run.conclusion == 'success'}}
     runs-on: ubuntu-latest
     outputs:
       should-release: ${{steps.check-release.outputs.new_release_published}}
