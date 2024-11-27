@@ -1,3 +1,18 @@
+# [1.17.0](https://github.com/fhstp/ergo4all/compare/v1.16.0...v1.17.0) (2024-11-27)
+
+
+### Bug Fixes
+
+* null ref error in live analysis ([dc456f4](https://github.com/fhstp/ergo4all/commit/dc456f42eda84b2942f90164fff1b24a3510b3c3))
+* wrong camera ([7a50667](https://github.com/fhstp/ergo4all/commit/7a5066770998c61fe6ecd3b95450348bf1970b86))
+
+
+### Features
+
+* add pose projection logic ([1948f74](https://github.com/fhstp/ergo4all/commit/1948f748cda777853949ba07adea38ef11c97066))
+* drop unimplemented screen ([ebca55b](https://github.com/fhstp/ergo4all/commit/ebca55b2332026274b52dbb0476b1b51f5c09c2f))
+* initial angle calc logic ([3e17dd0](https://github.com/fhstp/ergo4all/commit/3e17dd06d9a60e7d947e82f108244d81736699a5))
+
 # [1.16.0](https://github.com/fhstp/ergo4all/compare/v1.15.0...v1.16.0) (2024-11-05)
 
 
