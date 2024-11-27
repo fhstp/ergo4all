@@ -9,11 +9,11 @@ env:
   JAVA_VERSION: 17
 
 jobs:
-  semantic-release:
-    name: Semantic release
-    runs-on: ubuntu-latest
+  check-commits:
     if: ${{ github.ref == 'refs/heads/main' }}
-    
+    runs-on: ubuntu-latest
+    outputs:
+      should-release: ${{steps.check-release.outputs.new_release_published}}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
@@ -41,6 +41,42 @@ jobs:
         with: 
           node-version-file: .nvmrc
 
+      - name: Check for release 🔍
+        id: check-release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          dry_run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-android:
+    name: Build Android
+    needs: 
+      - check-commits
+    if: ${{ needs.check-commits.outputs.should-release == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter 🐦
+        uses: kuhnroyal/flutter-fvm-config-action@v2
+        with: 
+          setup: true
+          cache: true
+
+      - name: Cache Flutter dependencies ♻️
+        id: cache-flutter
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
+      - name: Install flutter dependencies 📦
+        run: flutter pub get --no-example
+
       - name: Setup Java ☕
         uses: actions/setup-java@v4
         with:
@@ -56,10 +92,50 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
 
-      - name: Build for android 🤖
+      - name: Build for Android 🤖
         # For now we build apks
         # run: flutter build appbundle
         run: flutter build apk --split-per-abi
+
+      - name: Upload build ⬆️
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: build/app/outputs/apk/release/*.apk
+
+  semantic-release:
+    name: Semantic release
+    needs: 
+      - build-android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Download Android build ⬇️
+        uses: actions/download-artifact@v4
+        with:
+          name: android-build
+
+      - name: Setup Flutter 🐦
+        uses: kuhnroyal/flutter-fvm-config-action@v2
+        with: 
+          setup: true
+          cache: true
+
+      - name: Cache Flutter dependencies ♻️
+        id: cache-flutter
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
+
+      - name: Setup node 💻
+        uses: actions/setup-node@v4
+        with: 
+          node-version-file: .nvmrc
 
       - name: Cache Node modules ♻️
         uses: actions/cache@v4
