@@ -1,6 +1,9 @@
 name: Release
 
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - main
 
 env: 
   JAVA_VERSION: 17
@@ -15,23 +18,18 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Get project Flutter version 🏷️
-        id: fvm-config
+      - name: Setup Flutter 🐦
         uses: kuhnroyal/flutter-fvm-config-action@v2
-
-      - name: Setup Flutter 💻
-        uses: subosito/flutter-action@v2
-        with:
-          channel: ${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
+        with: 
+          setup: true
           cache: true
-          cache-key: ${{ runner.os }}-flutter-${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}-${{ hashFiles('**/pubspec.yaml') }}
 
       - name: Cache Flutter dependencies ♻️
         id: cache-flutter
         uses: actions/cache@v4
         with:
           path: ~/.pub-cache
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-
 
@@ -43,11 +41,20 @@ jobs:
         with: 
           node-version-file: .nvmrc
 
-      - name: Setup java ☕
+      - name: Setup Java ☕
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: ${{env.JAVA_VERSION}}
+          cache: 'gradle'
+
+      - name: Cache build outputs ♻️
+        uses: actions/cache@v4
+        with:
+          path: build/
+          key: ${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
       - name: Build for android 🤖
         # For now we build apks
