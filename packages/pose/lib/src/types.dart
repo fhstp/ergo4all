@@ -28,7 +28,7 @@ enum KeyPoints {
 typedef Landmark = (Vector3, double);
 
 /// Extract the world-space position from a [Landmark].
-Vector3 posOf(Landmark landmark) => landmark.$1;
+Vector3 posOf(Landmark landmark) => Vector3.copy(landmark.$1);
 
 /// Extract the visibility from a [Landmark].
 double visibilityOf(Landmark landmark) => landmark.$2;
