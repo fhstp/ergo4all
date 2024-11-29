@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/fhstp/ergo4all/compare/v1.18.0...v1.18.1) (2024-11-29)
+
+
+### Bug Fixes
+
+* pose mutation error ([7bcb771](https://github.com/fhstp/ergo4all/commit/7bcb77195a9a14b4bf3d9da1c3d29745dad04a7c))
+
 # [1.18.0](https://github.com/fhstp/ergo4all/compare/v1.17.0...v1.18.0) (2024-11-29)
 
 
