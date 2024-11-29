@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/fhstp/ergo4all/compare/v1.18.1...v1.19.0) (2024-11-29)
+
+
+### Features
+
+* add placeholder ui for results screen ([c69d7cc](https://github.com/fhstp/ergo4all/commit/c69d7cc8e461a37e061f7ec03ac0c585c5d4cea9))
+
 ## [1.18.1](https://github.com/fhstp/ergo4all/compare/v1.18.0...v1.18.1) (2024-11-29)
 
 
