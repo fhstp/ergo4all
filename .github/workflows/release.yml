@@ -147,14 +147,6 @@ jobs:
         with: 
           node-version-file: .nvmrc
 
-      - name: Cache Node modules ♻️
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Release 🚀
         uses: cycjimmy/semantic-release-action@v4
         with:
