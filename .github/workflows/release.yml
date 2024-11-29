@@ -99,7 +99,7 @@ jobs:
       - name: Build for Android 🤖
         # For now we build apks
         # run: flutter build appbundle
-        run: flutter build apk --split-per-abi
+        run: flutter build apk --split-per-abi --release
 
       - name: Upload build ⬆️
         uses: actions/upload-artifact@v4
