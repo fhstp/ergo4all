@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/fhstp/ergo4all/compare/v1.17.0...v1.18.0) (2024-11-29)
+
+
+### Features
+
+* improve rula score display ([7d0baf9](https://github.com/fhstp/ergo4all/commit/7d0baf9ec1b5d6cb7b0b2475b49b655f7b22465f))
+
 # [1.17.0](https://github.com/fhstp/ergo4all/compare/v1.16.0...v1.17.0) (2024-11-27)
 
 
