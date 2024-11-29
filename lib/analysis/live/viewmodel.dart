@@ -1,7 +1,10 @@
+import 'dart:collection';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
+import 'package:common/immutable_collection_ext.dart';
+import 'package:common/iterable_ext.dart';
 import 'package:ergo4all/analysis/live/types.dart';
 import 'package:ergo4all/common/value_notifier_ext.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +12,8 @@ import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
 import 'package:rula/rula.dart';
+
+const _queueSize = 5;
 
 /// Gets the size of a [CameraImage] but rotates it so width and height match  the device orientation.
 Size _getRotatedImageSize(CameraImage image) {
@@ -25,7 +30,7 @@ class LiveAnalysisViewModel {
   final _random = Random();
   CameraController? _controller;
   bool _isRecording = false;
-
+  final _captureQueue = Queue<Capture>();
   final _uiState = ValueNotifier(UIState.initial);
 
   ValueNotifier<UIState> get uiState => _uiState;
@@ -71,6 +76,26 @@ class LiveAnalysisViewModel {
     _uiState.update((it) => it.copyWith(currentScore: Some(finalScore)));
   }
 
+  _enqueueCapture(Capture capture) {
+    _captureQueue.add(capture);
+
+    // Discard "old" captures
+    while (_captureQueue.length > _queueSize) {
+      _captureQueue.removeFirst();
+    }
+
+    // Check if we have enough captures to do the average
+    if (_captureQueue.length != _queueSize) return;
+
+    final averagePose = averagePoses(_captureQueue.map((it) => it.pose));
+    final averageCapture = Capture(
+        timestamp: capture.timestamp,
+        pose: averagePose,
+        imageSize: capture.imageSize);
+
+    if (_isRecording) _processCapture(averageCapture);
+  }
+
   _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,
       CameraImage cameraImage) async {
     final pose = await detectPose(camera, orientation, cameraImage);
@@ -84,12 +109,9 @@ class LiveAnalysisViewModel {
         timestamp: DateTime.now().millisecondsSinceEpoch,
         pose: pose,
         imageSize: _getRotatedImageSize(cameraImage));
-
     _uiState.update((it) => it.copyWith(latestCapture: Some(capture)));
 
-    // TODO: Use moving average for analysis
-
-    if (_isRecording) _processCapture(capture);
+    _enqueueCapture(capture);
   }
 
   void initializeCamera() async {
