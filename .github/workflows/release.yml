@@ -125,6 +125,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: android-build
+          path: build/android
 
       - name: Setup Flutter 🐦
         uses: kuhnroyal/flutter-fvm-config-action@v2
