@@ -110,6 +110,7 @@ jobs:
           path: |
             build/app/outputs/apk/release/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
+          retention-days: 2
 
   semantic-release:
     name: Semantic release
