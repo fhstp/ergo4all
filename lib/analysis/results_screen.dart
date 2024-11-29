@@ -1,3 +1,5 @@
+import 'package:ergo4all/common/app_bar.dart';
+import 'package:ergo4all/common/screen_content.dart';
 import 'package:flutter/material.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -5,6 +7,10 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    // TODO: Localize
+    return Scaffold(
+      appBar: makeCustomAppBar(title: "Results"),
+      body: ScreenContent(child: Text("[Results will go here]")),
+    );
   }
 }
