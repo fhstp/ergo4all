@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/fhstp/ergo4all/compare/v1.19.0...v1.20.0) (2024-11-29)
+
+
+### Features
+
+* denoise pose data ([4e677c6](https://github.com/fhstp/ergo4all/commit/4e677c6ab498dbc4d72f6a6e3542232a157397f7))
+
 # [1.19.0](https://github.com/fhstp/ergo4all/compare/v1.18.1...v1.19.0) (2024-11-29)
 
 
