@@ -35,16 +35,11 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Get project Flutter version 🏷️
-        id: fvm-config
+      - name: Setup Flutter 🐦
         uses: kuhnroyal/flutter-fvm-config-action@v2
-
-      - name: Setup Flutter 💻
-        uses: subosito/flutter-action@v2.10.0
-        with:
-          channel: ${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
+        with: 
+          setup: true
           cache: true
-          cache-key: ${{ runner.os }}-flutter-${{ steps.fvm-config.outputs.FLUTTER_CHANNEL }}
 
       - name: Run tests 🧪
         run: flutter test ./test
