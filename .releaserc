@@ -35,11 +35,11 @@
       {
         "assets": [
           {
-            "path": "build/android/app-release.apk",
+            "path": "build/android/apk/release/app-release.apk",
             "label": "Android APK"
           },
           {
-            "path": "build/android/app-release.aab",
+            "path": "build/android/bundle/release/app-release.aab",
             "label": "Android App Bundle"
           }
         ]
