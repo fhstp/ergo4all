@@ -10,6 +10,7 @@ env:
 
 jobs:
   check-commits:
+    name: Check for release
     if: ${{ github.ref == 'refs/heads/main'  && github.event.workflow_run.conclusion == 'success'}}
     runs-on: ubuntu-latest
     outputs:
