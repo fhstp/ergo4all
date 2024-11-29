@@ -78,7 +78,10 @@ class LiveAnalysisScreen extends HookWidget {
                     top: largeSpace,
                     right: largeSpace,
                     // TODO: Add proper stringified version of rula label with localization
-                    child: Text("${score}: ${rulaLabelFor(score)}")),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.5)),
+                        child: Text("${score}: ${rulaLabelFor(score)}"))),
               Positioned(
                   bottom: 0,
                   left: 0,
