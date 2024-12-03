@@ -3,8 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
-import 'package:common/immutable_collection_ext.dart';
-import 'package:common/iterable_ext.dart';
 import 'package:ergo4all/analysis/live/types.dart';
 import 'package:ergo4all/common/value_notifier_ext.dart';
 import 'package:flutter/material.dart';
