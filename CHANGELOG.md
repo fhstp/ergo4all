@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/fhstp/ergo4all/compare/v1.20.0...v1.20.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* incorrect pose projection ([4a2da2e](https://github.com/fhstp/ergo4all/commit/4a2da2ee19c4494deb09debae27aea3d91f8e627))
+
 # [1.20.0](https://github.com/fhstp/ergo4all/compare/v1.19.0...v1.20.0) (2024-11-29)
 
 
