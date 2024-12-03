@@ -21,6 +21,7 @@ jobs:
           filters: |
             changes:
               - 'lib/**'
+              - 'packages/**'
               - 'test/**'
               - 'assets/**'
               - 'pub*'
