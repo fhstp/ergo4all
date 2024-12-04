@@ -30,6 +30,13 @@
             "type": "dart",
             "flutterMode": "release",
             "program": "./lib/main.dart"
-        }
+        },
+        {
+            "name": "Pose tester",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "./packages/pose_tester/lib/main.dart"
+        },
     ]
 }
