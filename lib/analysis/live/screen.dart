@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:camera/camera.dart';
 import 'package:ergo4all/analysis/live/camera_permission_dialog.dart';
-import 'package:ergo4all/analysis/live/pose_painter.dart';
+import 'package:pose/src/pose_painter.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/viewmodel.dart';
 import 'package:ergo4all/common/routes.dart';
