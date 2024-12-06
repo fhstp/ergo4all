@@ -18,6 +18,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
   Option<AssetImage> selectedImage = none();
+  Option<Pose> selectedPose = none();
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
 
@@ -27,12 +28,16 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     setState(() {
       selectedImageName = Some(name);
       selectedImage = Some(AssetImage(assetKey));
+      selectedPose = none();
     });
 
     final imageFile = await makeTempFileForAsset(assetKey);
     try {
       final input = PoseDetectInput.fromFile(imageFile);
-      final pose = await detectPose(input);
+      final pose = (await detectPose(input))!;
+      setState(() {
+        selectedPose = Some(pose);
+      });
     } finally {
       await imageFile.delete();
     }
@@ -90,9 +95,22 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-                child: selectedImage.match(
-                    () => Placeholder(), (it) => Image(image: it))),
+            Stack(
+              fit: StackFit.passthrough,
+              children: [
+                if (selectedImage case Some(value: final image))
+                  Image(
+                    image: image,
+                    fit: BoxFit.fitWidth,
+                  ),
+                if (selectedPose case Some(value: final pose))
+                  Positioned.fill(
+                    child: CustomPaint(
+                        painter:
+                            PosePainter(pose: pose, imageSize: Size(240, 320))),
+                  ),
+              ],
+            ),
             SizedBox(
               height: 50,
               child: ListView(
