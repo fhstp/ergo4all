@@ -1,3 +1,24 @@
+# [1.21.0](https://github.com/fhstp/ergo4all/compare/v1.20.1...v1.21.0) (2024-12-06)
+
+
+### Bug Fixes
+
+* **pose_tester:** index error ([2d5137f](https://github.com/fhstp/ergo4all/commit/2d5137f4afa6a41ef19ab2d1f20e910551376f40))
+* **pose_tester:** use correct pose model ([0fef7a0](https://github.com/fhstp/ergo4all/commit/0fef7a0c15a4d88f9b2a24fc478183f1084d81cc))
+
+
+### Features
+
+* **app:** remove angle display ([836835c](https://github.com/fhstp/ergo4all/commit/836835cfc1f93235a84d0d5b4483edb19ca2e8da))
+* **pose_painter:** display selected image ([c909ed2](https://github.com/fhstp/ergo4all/commit/c909ed20a09f9a776f42a82c8a809854d5a45e09))
+* **pose_tester:** add placeholder app ([e29cf20](https://github.com/fhstp/ergo4all/commit/e29cf200aa4347966909bf2412abe8804fbee459))
+* **pose_tester:** copy pose data ([2c1f531](https://github.com/fhstp/ergo4all/commit/2c1f53166b843c7cdaca1a5a278a0f92c6243bb0))
+* **pose_tester:** display angles ([d2cdcc7](https://github.com/fhstp/ergo4all/commit/d2cdcc7a33ba881847cbd503fcfb6f46f5dcc302))
+* **pose_tester:** display image list ([8c8694c](https://github.com/fhstp/ergo4all/commit/8c8694c6a6779145ef946be581c32f059c619ed5))
+* **pose_tester:** get pose ([f5e5cff](https://github.com/fhstp/ergo4all/commit/f5e5cffac56d19c824f7808d08988c3f6ce7d410))
+* **pose_tester:** paint pose ([046428d](https://github.com/fhstp/ergo4all/commit/046428d899499d0069bd29975e813dfb02c0414a))
+* **pose_tester:** shrink image display ([ab2e2f6](https://github.com/fhstp/ergo4all/commit/ab2e2f62322add017b996754aee4a0dce474ffa4))
+
 ## [1.20.1](https://github.com/fhstp/ergo4all/compare/v1.20.0...v1.20.1) (2024-12-03)
 
 
