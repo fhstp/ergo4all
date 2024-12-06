@@ -15,6 +15,14 @@ class PoseTesterApp extends StatefulWidget {
 class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
+  Option<AssetImage> selectedImage = none();
+
+  void selectImageWithName(String name) async {
+    setState(() {
+      selectedImageName = Some(name);
+      selectedImage = Some(AssetImage('assets/test_images/$name'));
+    });
+  }
 
   void loadImages() async {
     final Map<String, dynamic> manifestContent =
@@ -25,8 +33,9 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
           .where((it) => it.contains("test_image"))
           .map((it) => it.split("/").last)
           .toIList();
-      selectedImageName = Some(imageNames.first);
     });
+
+    selectImageWithName(imageNames.first);
   }
 
   @override
@@ -34,12 +43,6 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     super.initState();
 
     loadImages();
-  }
-
-  void selectImage(String name) {
-    setState(() {
-      selectedImageName = Some(name);
-    });
   }
 
   @override
@@ -57,7 +60,9 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(child: Placeholder()),
+            Expanded(
+                child: selectedImage.match(
+                    () => Placeholder(), (it) => Image(image: it))),
             SizedBox(
               height: 50,
               child: ListView(
@@ -65,7 +70,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 children: imageNames
                     .map((name) => ElevatedButton(
                           onPressed: () {
-                            selectImage(name);
+                            selectImageWithName(name);
                           },
                           style: Some(name) == selectedImageName
                               ? highlightedButtonStyle
