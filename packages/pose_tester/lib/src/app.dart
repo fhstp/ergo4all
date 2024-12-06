@@ -35,7 +35,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
           .toIList();
     });
 
-    selectImageWithName(imageNames.first);
+    if (imageNames.isNotEmpty) selectImageWithName(imageNames.first);
   }
 
   @override
