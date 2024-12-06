@@ -22,15 +22,15 @@ Landmark Function(Landmark) _projectLandmarkUsingPlane(
   final midHip = posOf(pose3D[KeyPoints.midPelvis]!);
 
   // Define the coronal plane by calculating 2 vectors from the neck key-point to each hip
-  final neckToLeftHip = leftHip - neck;
-  final neckToRightHip = rightHip - neck;
+  final neckToLeftHip = (leftHip - neck).normalized();
+  final neckToRightHip = (rightHip - neck).normalized();
   // Calculate cross product between the vectors to get the normal of the coronal plane (person forward vector)
   final forward = neckToLeftHip.cross(neckToRightHip).normalized();
 
   final coronal = pose3D.mapValues(_projectLandmarkUsingPlane(neck, forward));
 
   // Calculate vector connecting mid hip and neck
-  final up = neck - midHip;
+  final up = (neck - midHip).normalized();
 
   // We can now define the normal of the sagittal plane by a cross product of these vectors
   final right = up.cross(forward).normalized();
