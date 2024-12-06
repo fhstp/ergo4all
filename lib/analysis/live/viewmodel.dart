@@ -96,7 +96,8 @@ class LiveAnalysisViewModel {
 
   _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,
       CameraImage cameraImage) async {
-    final pose = await detectPose(camera, orientation, cameraImage);
+    final input = poseDetectInputFromCamera(camera, orientation, cameraImage);
+    final pose = await detectPose(input);
 
     if (pose == null) {
       _uiState.update((it) => it.copyWith(latestCapture: None()));

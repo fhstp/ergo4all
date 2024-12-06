@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
     as mlkit;
+import 'package:pose/src/pose_detection.dart';
 
 final _orientations = {
   DeviceOrientation.portraitUp: 0,
@@ -38,7 +39,7 @@ mlkit.InputImageRotation? _tryGetCameraRotation(
   throw UnsupportedError("Only Android and iOS are supported!");
 }
 
-mlkit.InputImage makeMLkitInput(CameraDescription camera,
+PoseDetectInput poseDetectInputFromCamera(CameraDescription camera,
     DeviceOrientation deviceOrientation, CameraImage image) {
   final rotation = _tryGetCameraRotation(deviceOrientation, camera);
   assert(rotation != null);
