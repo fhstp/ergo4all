@@ -1,4 +1,4 @@
-package com.example.pose_tester
+package at.ac.fhstp.ergo4all.pose_tester
 
 import io.flutter.embedding.android.FlutterActivity
 
