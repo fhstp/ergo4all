@@ -22,10 +22,9 @@ class UIState {
   final bool isRecording;
   final bool isDone;
   final Option<RulaScore> currentScore;
-  final PoseAngles angles;
 
   const UIState(this.cameraController, this.latestCapture, this.isRecording,
-      this.isDone, this.currentScore, this.angles);
+      this.isDone, this.currentScore);
 
   UIState copyWith({
     Option<CameraController>? cameraController,
@@ -33,7 +32,6 @@ class UIState {
     bool? isRecording,
     bool? isDone,
     Option<RulaScore>? currentScore,
-    PoseAngles? angles,
   }) {
     return UIState(
       cameraController ?? this.cameraController,
@@ -41,10 +39,8 @@ class UIState {
       isRecording ?? this.isRecording,
       isDone ?? this.isDone,
       currentScore ?? this.currentScore,
-      angles ?? this.angles,
     );
   }
 
-  static const UIState initial =
-      UIState(None(), None(), false, false, None(), PoseAngles.empty());
+  static const UIState initial = UIState(None(), None(), false, false, None());
 }

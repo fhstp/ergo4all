@@ -54,8 +54,6 @@ class LiveAnalysisViewModel {
     final (coronal, sagittal) = projectOnAnatomicalPlanes(capture.pose);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
-    _uiState.update((it) => it.copyWith(angles: angles));
-
     // TODO: Calculate real rula sheet
     final sheet = RulaSheet(
         shoulderFlexion: _randomAngle(-180, 180),
