@@ -10,6 +10,9 @@ dependencies:
     sdk: flutter
   fast_immutable_collections: ^11.0.0
   fpdart: ^1.1.1
+  pose:
+    path: "../pose"
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -24,5 +27,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets: 
+  assets:
     - assets/test_images/

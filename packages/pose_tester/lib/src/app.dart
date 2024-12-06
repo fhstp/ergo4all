@@ -4,6 +4,8 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
+import 'package:pose/pose.dart';
+import 'package:pose_tester/src/temp_asset.dart';
 
 class PoseTesterApp extends StatefulWidget {
   const PoseTesterApp({super.key});
@@ -17,11 +19,23 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   Option<String> selectedImageName = none();
   Option<AssetImage> selectedImage = none();
 
+  String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
+
   void selectImageWithName(String name) async {
+    var assetKey = assetKeyFor(name);
+
     setState(() {
       selectedImageName = Some(name);
-      selectedImage = Some(AssetImage('assets/test_images/$name'));
+      selectedImage = Some(AssetImage(assetKey));
     });
+
+    final imageFile = await makeTempFileForAsset(assetKey);
+    try {
+      final input = PoseDetectInput.fromFile(imageFile);
+      final pose = await detectPose(input);
+    } finally {
+      await imageFile.delete();
+    }
   }
 
   void loadImages() async {
@@ -42,7 +56,23 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   void initState() {
     super.initState();
 
-    loadImages();
+    void doInitialIO() async {
+      await startPoseDetection();
+      loadImages();
+    }
+
+    doInitialIO();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    void doFinalIO() async {
+      await stopPoseDetection();
+    }
+
+    doFinalIO();
   }
 
   @override
