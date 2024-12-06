@@ -111,21 +111,23 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Stack(
-              fit: StackFit.passthrough,
-              children: [
-                if (selectedImage case Some(value: final image))
-                  Image(
-                    image: image,
-                    fit: BoxFit.fitWidth,
-                  ),
-                if (selectedPose case Some(value: final pose))
-                  Positioned.fill(
-                    child: CustomPaint(
-                        painter:
-                            PosePainter(pose: pose, imageSize: Size(240, 320))),
-                  ),
-              ],
+            Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (selectedImage case Some(value: final image))
+                    Image(
+                      image: image,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  if (selectedPose case Some(value: final pose))
+                    Positioned.fill(
+                      child: CustomPaint(
+                          painter: PosePainter(
+                              pose: pose, imageSize: Size(240, 320))),
+                    ),
+                ],
+              ),
             ),
             SizedBox(height: 10),
             SizedBox(
