@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
+import 'package:pose_tester/src/angle_display.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 
 class PoseTesterApp extends StatefulWidget {
@@ -19,8 +20,33 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   Option<String> selectedImageName = none();
   Option<AssetImage> selectedImage = none();
   Option<Pose> selectedPose = none();
+  Option<PoseAngles> currentAngles = none();
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
+
+  void updatePoseForImage(String imageName) async {
+    setState(() {
+      selectedPose = none();
+      currentAngles = none();
+    });
+
+    var assetKey = assetKeyFor(imageName);
+
+    final imageFile = await makeTempFileForAsset(assetKey);
+    try {
+      final input = PoseDetectInput.fromFile(imageFile);
+      final pose = (await detectPose(input))!;
+      final (coronal, sagittal) = projectOnAnatomicalPlanes(pose);
+      final angles = calculateAngles(pose, coronal, sagittal);
+
+      setState(() {
+        selectedPose = Some(pose);
+        currentAngles = Some(angles);
+      });
+    } finally {
+      await imageFile.delete();
+    }
+  }
 
   void selectImageWithName(String name) async {
     var assetKey = assetKeyFor(name);
@@ -28,19 +54,9 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     setState(() {
       selectedImageName = Some(name);
       selectedImage = Some(AssetImage(assetKey));
-      selectedPose = none();
     });
 
-    final imageFile = await makeTempFileForAsset(assetKey);
-    try {
-      final input = PoseDetectInput.fromFile(imageFile);
-      final pose = (await detectPose(input))!;
-      setState(() {
-        selectedPose = Some(pose);
-      });
-    } finally {
-      await imageFile.delete();
-    }
+    updatePoseForImage(name);
   }
 
   void loadImages() async {
@@ -111,6 +127,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                   ),
               ],
             ),
+            SizedBox(height: 10),
             SizedBox(
               height: 50,
               child: ListView(
@@ -127,7 +144,10 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                         ))
                     .toList(),
               ),
-            )
+            ),
+            SizedBox(height: 10),
+            if (currentAngles case Some(value: final angles))
+              Expanded(child: AngleDisplay(angles: angles))
           ],
         ),
       ),
