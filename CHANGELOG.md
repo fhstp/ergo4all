@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/fhstp/ergo4all/compare/v1.21.0...v1.22.0) (2024-12-06)
+
+
+### Features
+
+* **pose_tester:** switch pose type ([7a0ddfd](https://github.com/fhstp/ergo4all/commit/7a0ddfd50156845445b45c1dfb5483ce155425a3))
+
 # [1.21.0](https://github.com/fhstp/ergo4all/compare/v1.20.1...v1.21.0) (2024-12-06)
 
 
