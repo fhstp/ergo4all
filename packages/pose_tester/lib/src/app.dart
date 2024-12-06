@@ -96,6 +96,19 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     doFinalIO();
   }
 
+  void copyPoseToClipboard(Pose pose) async {
+    final poseText = pose.mapTo((point, landmark) {
+      final pos = posOf(landmark);
+      return "${point.name}: ${pos.x}, ${pos.y}, ${pos.z}";
+    }).join("\n");
+    await Clipboard.setData(ClipboardData(text: poseText));
+
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Copied pose")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final highlightedButtonStyle = ElevatedButton.styleFrom(
@@ -107,50 +120,67 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
         appBar: AppBar(
           title: Text("Pose tester"),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  if (selectedImage case Some(value: final image))
-                    Image(
-                      image: image,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  if (selectedPose case Some(value: final pose))
-                    Positioned.fill(
-                      child: CustomPaint(
-                          painter: PosePainter(
-                              pose: pose, imageSize: Size(240, 320))),
-                    ),
-                ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    if (selectedImage case Some(value: final image))
+                      Image(
+                        image: image,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    if (selectedPose case Some(value: final pose))
+                      Positioned.fill(
+                        child: CustomPaint(
+                            painter: PosePainter(
+                                pose: pose, imageSize: Size(240, 320))),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            SizedBox(
-              height: 50,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: imageNames
-                    .map((name) => ElevatedButton(
+              SizedBox(height: 10),
+              SizedBox(
+                height: 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: imageNames
+                      .map((name) => ElevatedButton(
+                            onPressed: () {
+                              selectImageWithName(name);
+                            },
+                            style: Some(name) == selectedImageName
+                                ? highlightedButtonStyle
+                                : null,
+                            child: Text(name),
+                          ))
+                      .toList(),
+                ),
+              ),
+              SizedBox(height: 10),
+              if (currentAngles case Some(value: final angles))
+                Expanded(child: AngleDisplay(angles: angles)),
+              SizedBox(height: 10),
+              SizedBox(
+                height: 50,
+                child: Row(
+                  children: [
+                    if (selectedPose case Some(value: final pose))
+                      IconButton.filled(
                           onPressed: () {
-                            selectImageWithName(name);
+                            copyPoseToClipboard(pose);
                           },
-                          style: Some(name) == selectedImageName
-                              ? highlightedButtonStyle
-                              : null,
-                          child: Text(name),
-                        ))
-                    .toList(),
-              ),
-            ),
-            SizedBox(height: 10),
-            if (currentAngles case Some(value: final angles))
-              Expanded(child: AngleDisplay(angles: angles))
-          ],
+                          icon: Icon(Icons.copy))
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
