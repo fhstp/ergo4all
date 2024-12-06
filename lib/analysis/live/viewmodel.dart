@@ -130,7 +130,7 @@ class LiveAnalysisViewModel {
     await controller.initialize();
     await controller.startImageStream((image) => _onImageCaptured(
         frontCamera, controller.value.deviceOrientation, image));
-    await startPoseDetection();
+    await startPoseDetection(PoseDetectMode.stream);
 
     _uiState.update((it) => it.copyWith(cameraController: Some(controller)));
   }

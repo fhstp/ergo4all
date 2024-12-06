@@ -5,15 +5,21 @@ import 'package:pose/src/types.dart';
 
 typedef PoseDetectInput = mlkit.InputImage;
 
+enum PoseDetectMode { static, stream }
+
 mlkit.PoseDetector? _detector;
 
 /// Starts pose detection if not already active.
-Future<void> startPoseDetection() async {
+Future<void> startPoseDetection(PoseDetectMode mode) async {
   if (_detector != null) return;
   _detector = mlkit.PoseDetector(
       options: mlkit.PoseDetectorOptions(
-          model: mlkit.PoseDetectionModel.base,
-          mode: mlkit.PoseDetectionMode.stream));
+          model: mode == PoseDetectMode.stream
+              ? mlkit.PoseDetectionModel.base
+              : mlkit.PoseDetectionModel.accurate,
+          mode: mode == PoseDetectMode.stream
+              ? mlkit.PoseDetectionMode.stream
+              : mlkit.PoseDetectionMode.single));
 }
 
 /// Stops pose detection if running.

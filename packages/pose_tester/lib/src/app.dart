@@ -62,7 +62,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     super.initState();
 
     void doInitialIO() async {
-      await startPoseDetection();
+      await startPoseDetection(PoseDetectMode.static);
       loadImages();
     }
 
