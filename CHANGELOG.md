@@ -1,3 +1,15 @@
+# [1.23.0](https://github.com/fhstp/ergo4all/compare/v1.22.0...v1.23.0) (2024-12-11)
+
+
+### Bug Fixes
+
+* **pose:** normalize directions ([40f418c](https://github.com/fhstp/ergo4all/commit/40f418caa465f382d26fa5bad4a24a752fde6326))
+
+
+### Features
+
+* **pose_tester:** allow arb size images ([995aa8e](https://github.com/fhstp/ergo4all/commit/995aa8e7a5cf1585bb88c89f9c2b9ff7e97d2080))
+
 # [1.22.0](https://github.com/fhstp/ergo4all/compare/v1.21.0...v1.22.0) (2024-12-06)
 
 
