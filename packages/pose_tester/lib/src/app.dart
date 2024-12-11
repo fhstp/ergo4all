@@ -20,15 +20,17 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
   Option<AssetImage> selectedImage = none();
-  Option<List<Pose>> selectedPose = none();
+  Option<List<Pose>> selectedPoseSet = none();
   Option<PoseAngles> currentAngles = none();
   int poseIndex = 0;
+
+  Option<Pose> get selectedPose => selectedPoseSet.map((it) => it[poseIndex]);
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
 
   void updatePoseForImage(String imageName) async {
     setState(() {
-      selectedPose = none();
+      selectedPoseSet = none();
       currentAngles = none();
     });
 
@@ -42,7 +44,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       final angles = calculateAngles(pose, coronal, sagittal);
 
       setState(() {
-        selectedPose = Some([pose, coronal, sagittal]);
+        selectedPoseSet = Some([pose, coronal, sagittal]);
         currentAngles = Some(angles);
       });
     } finally {
@@ -137,12 +139,11 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                         image: image,
                         fit: BoxFit.fitHeight,
                       ),
-                    if (selectedPose case Some(value: final poses))
+                    if (selectedPose case Some(value: final pose))
                       Positioned.fill(
                         child: CustomPaint(
                             painter: PosePainter(
-                                pose: poses[poseIndex],
-                                imageSize: Size(240, 320))),
+                                pose: pose, imageSize: Size(240, 320))),
                       ),
                   ],
                 ),
@@ -180,7 +181,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                             poseIndex = it;
                           });
                         }),
-                    if (selectedPose case Some(value: final pose))
+                    if (selectedPoseSet case Some(value: final pose))
                       IconButton.filled(
                           onPressed: () {
                             copyPoseToClipboard(pose[poseIndex]);
