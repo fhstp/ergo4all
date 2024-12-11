@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_tester/src/angle_display.dart';
+import 'package:pose_tester/src/pose_type_select.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 
 class PoseTesterApp extends StatefulWidget {
@@ -172,19 +173,13 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 height: 50,
                 child: Row(
                   children: [
-                    SegmentedButton<int>(
-                      segments: [
-                        ButtonSegment(value: 0, label: Text("3D")),
-                        ButtonSegment(value: 1, label: Text("Coronal")),
-                        ButtonSegment(value: 2, label: Text("Sagittal")),
-                      ],
-                      selected: {poseIndex},
-                      onSelectionChanged: (selected) {
-                        setState(() {
-                          poseIndex = selected.first;
-                        });
-                      },
-                    ),
+                    PoseTypeSelect(
+                        poseIndex: poseIndex,
+                        onSelected: (it) {
+                          setState(() {
+                            poseIndex = it;
+                          });
+                        }),
                     if (selectedPose case Some(value: final pose))
                       IconButton.filled(
                           onPressed: () {
