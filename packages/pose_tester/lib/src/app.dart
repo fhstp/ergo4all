@@ -8,6 +8,7 @@ import 'package:pose/pose.dart';
 import 'package:pose_tester/src/angle_display.dart';
 import 'package:pose_tester/src/pose_type_select.dart';
 import 'package:pose_tester/src/temp_asset.dart';
+import 'package:pose_tester/src/test_image.dart';
 
 class PoseTesterApp extends StatefulWidget {
   const PoseTesterApp({super.key});
@@ -19,7 +20,7 @@ class PoseTesterApp extends StatefulWidget {
 class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
-  Option<AssetImage> selectedImage = none();
+  Option<TestImage> selectedImage = none();
   Option<List<Pose>> selectedPoseSet = none();
   Option<PoseAngles> currentAngles = none();
   int poseIndex = 0;
@@ -57,7 +58,11 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
     setState(() {
       selectedImageName = Some(name);
-      selectedImage = Some(AssetImage(assetKey));
+    });
+
+    final image = await TestImage.loadFromAsset(assetKey);
+    setState(() {
+      selectedImage = Some(image);
     });
 
     updatePoseForImage(name);
@@ -134,17 +139,20 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    if (selectedImage case Some(value: final image))
+                    if (selectedImage case Some(value: final image)) ...[
                       Image(
-                        image: image,
+                        image: image.asset,
                         fit: BoxFit.fitHeight,
                       ),
-                    if (selectedPose case Some(value: final pose))
-                      Positioned.fill(
-                        child: CustomPaint(
-                            painter: PosePainter(
-                                pose: pose, imageSize: Size(240, 320))),
-                      ),
+                      if (selectedPose case Some(value: final pose))
+                        Positioned.fill(
+                          child: CustomPaint(
+                              painter: PosePainter(
+                                  pose: pose,
+                                  imageSize: Size(image.width.toDouble(),
+                                      image.height.toDouble()))),
+                        )
+                    ],
                   ],
                 ),
               ),
