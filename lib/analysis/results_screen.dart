@@ -6,7 +6,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
-typedef RulaTimeline = IMap<int, RulaSheet>;
+@immutable
+class TimelineEntry {
+  final int timestamp;
+  final RulaSheet sheet;
+
+  const TimelineEntry({required this.timestamp, required this.sheet});
+}
+
+typedef RulaTimeline = IList<TimelineEntry>;
 
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});

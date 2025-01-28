@@ -6,6 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:ergo4all/analysis/live/types.dart';
 import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/value_notifier_ext.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
@@ -32,11 +33,11 @@ class LiveAnalysisViewModel {
   final _captureQueue = Queue<Capture>();
   final _uiState = ValueNotifier(UIState.initial);
   DateTime? _startTime;
-  RulaTimeline _timeline = const RulaTimeline.empty();
+  final List<TimelineEntry> _timeline = List.empty(growable: true);
 
   ValueNotifier<UIState> get uiState => _uiState;
 
-  RulaTimeline get timeline => _timeline;
+  RulaTimeline get timeline => _timeline.toIList();
 
   Future<void> _closeCamera() async {
     _uiState.value = UIState.initial;
@@ -75,7 +76,7 @@ class LiveAnalysisViewModel {
 
     final now = DateTime.now().millisecond;
     final timestamp = now - _startTime!.millisecond;
-    _timeline = _timeline.add(timestamp, sheet);
+    _timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
   }
 
   _enqueueCapture(Capture capture) {
@@ -138,7 +139,7 @@ class LiveAnalysisViewModel {
 
     _uiState.update((it) => it.copyWith(cameraController: Some(controller)));
     _startTime = DateTime.now();
-    _timeline = const RulaTimeline.empty();
+    _timeline.clear();
   }
 
   void toggleRecording() async {
