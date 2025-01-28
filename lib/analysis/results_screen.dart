@@ -153,7 +153,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withValues(alpha: 0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
                       offset: const Offset(0, 3),
@@ -284,7 +284,7 @@ class ChartBackgroundPainter extends CustomPainter {
 
     // Green region (Good)
 
-    paint.color = Colors.green.withOpacity(0.2);
+    paint.color = Colors.green.withValues(alpha: 0.2);
 
     canvas.drawRect(
       Rect.fromLTRB(0, mapYToCanvas(0.33), size.width, size.height),
@@ -293,7 +293,7 @@ class ChartBackgroundPainter extends CustomPainter {
 
     // Yellow region (Improve)
 
-    paint.color = Colors.yellow.withOpacity(0.2);
+    paint.color = Colors.yellow.withValues(alpha: 0.2);
 
     canvas.drawRect(
       Rect.fromLTRB(0, mapYToCanvas(0.66), size.width, mapYToCanvas(0.33)),
@@ -302,7 +302,7 @@ class ChartBackgroundPainter extends CustomPainter {
 
     // Red region (Bad)
 
-    paint.color = Colors.red.withOpacity(0.2);
+    paint.color = Colors.red.withValues(alpha: 0.2);
 
     canvas.drawRect(
       Rect.fromLTRB(0, 0, size.width, mapYToCanvas(0.66)),

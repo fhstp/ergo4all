@@ -71,7 +71,7 @@ class BodyPartDetailPage extends StatelessWidget {
                     height: 100,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.3),
+                      color: color.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
