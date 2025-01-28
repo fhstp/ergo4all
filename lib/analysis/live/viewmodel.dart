@@ -74,8 +74,8 @@ class LiveAnalysisViewModel {
         trunkLateralFlexion: _randomAngle(-90, 90),
         isStandingOnBothLegs: _randomBool());
 
-    final now = DateTime.now().millisecond;
-    final timestamp = now - _startTime!.millisecond;
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final timestamp = now - _startTime!.microsecondsSinceEpoch;
     _timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
   }
 

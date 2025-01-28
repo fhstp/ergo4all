@@ -40,40 +40,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
     Colors.red,
   ];
 
-  List<List<FlSpot>> lineChartData = [
-    [
-      const FlSpot(0, 2),
-      const FlSpot(10, 2),
-      const FlSpot(30, 5),
-      const FlSpot(45, 6),
-      const FlSpot(60, 3)
-    ],
-    [
-      const FlSpot(0, 1),
-      const FlSpot(20, 3),
-      const FlSpot(40, 4),
-      const FlSpot(60, 2)
-    ],
-    [
-      const FlSpot(0, 3),
-      const FlSpot(15, 3),
-      const FlSpot(45, 7),
-      const FlSpot(60, 5)
-    ],
-    [
-      const FlSpot(0, 2),
-      const FlSpot(25, 5),
-      const FlSpot(50, 6),
-      const FlSpot(60, 4)
-    ],
-    [
-      const FlSpot(0, 1),
-      const FlSpot(30, 3),
-      const FlSpot(45, 5),
-      const FlSpot(60, 6)
-    ],
-  ];
-
   final Random random = Random();
 
   void _navigateToBodyPartPage(
@@ -106,14 +72,38 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final timeline =
-        ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
+    final timeline = ModalRoute.of(context)!.settings.arguments as RulaTimeline;
 
-    if (lineChartData.isEmpty) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+    final firstTimestamp = timeline.first.timestamp;
+    final lastTimestamp = timeline.last.timestamp;
+    final timeRange = lastTimestamp - firstTimestamp;
+
+    double graphXFor(int timestamp) {
+      return (timestamp - firstTimestamp) / timeRange;
     }
+
+    double graphYFor(RulaScore score, int maxValue) {
+      final value = score.value;
+      return (value - 1) / (maxValue - 1);
+    }
+
+    List<FlSpot> graphLineFor(
+        RulaScore Function(RulaSheet) selector, int maxValue) {
+      return timeline.map((entry) {
+        final score = selector(entry.sheet);
+        final x = graphXFor(entry.timestamp);
+        final y = graphYFor(score, maxValue);
+        return FlSpot(x, y);
+      }).toList();
+    }
+
+    final lineChartData = IList([
+      graphLineFor((sheet) => calcUpperArmScore(sheet), 6),
+      graphLineFor((sheet) => calcLowerArmScore(sheet), 3),
+      graphLineFor((sheet) => calcTrukScore(sheet), 6),
+      graphLineFor((sheet) => calcNeckScore(sheet), 6),
+      graphLineFor((sheet) => calcLegScore(sheet), 2)
+    ]);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Charts Overview')),
@@ -191,7 +181,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             for (int i = 0; i < lineChartData.length; i++)
                               LineChartBarData(
                                 spots: lineChartData[i],
-                                isCurved: true,
+                                isCurved: false,
                                 color: colors[i],
                                 barWidth: 2,
                                 isStrokeCapRound: true,
