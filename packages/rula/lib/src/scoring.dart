@@ -101,8 +101,8 @@ const _tableC = [
   [5, 5, 6, 7, 7, 7, 7]
 ];
 
-/// Does the full Rula calculation based on the given [sheet] and produces a [RulaScore] in the range [0; 7].
-RulaScore calcFullRulaScore(RulaSheet sheet) {
+/// Calculates the upper arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
+RulaScore calcUpperArmScore(RulaSheet sheet) {
   final shoulderFlexionScore = switch (sheet.shoulderFlexion.value) {
     < -20.0 => 2,
     <= 20.0 => 1,
@@ -113,21 +113,20 @@ RulaScore calcFullRulaScore(RulaSheet sheet) {
   final shoulderAbductionBonus = sheet.shoulderAbduction.value > 60 ? 1 : 0;
   final upperArmScore = shoulderFlexionScore + shoulderAbductionBonus;
   assert(upperArmScore >= 1 && upperArmScore <= 6);
+  return RulaScore.make(upperArmScore);
+}
 
+/// Calculates the lower arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 3].
+RulaScore calcLowerArmScore(RulaSheet sheet) {
   final elbowFlexionScore =
       switch (sheet.elbowFlexion.value) { <= 60 => 2, <= 100 => 1, _ => 2 };
   final lowerArmScore = elbowFlexionScore;
   assert(lowerArmScore >= 1 && lowerArmScore <= 3);
+  return RulaScore.make(lowerArmScore);
+}
 
-  final wristFlexionScore =
-      switch (sheet.wristFlexion.value) { < -15 => 3, < 15 => 1, _ => 3 };
-  final wristScore = wristFlexionScore;
-  assert(wristScore >= 1 && wristScore <= 4);
-
-  final armHandScore =
-      _tableA[upperArmScore - 1][lowerArmScore - 1][wristScore - 1];
-  assert(armHandScore >= 1 && armHandScore <= 9);
-
+/// Calculates the neck score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
+RulaScore calcNeckScore(RulaSheet sheet) {
   final neckFlexionScore = switch (sheet.neckFlexion.value) {
     < 0 => 4,
     < 10 => 1,
@@ -140,7 +139,11 @@ RulaScore calcFullRulaScore(RulaSheet sheet) {
   final neckScore =
       neckFlexionScore + neckRotationBonus + neckLateralFlexionBonus;
   assert(neckScore >= 1 && neckScore <= 6);
+  return RulaScore.make(neckScore);
+}
 
+/// Calculates the trunk score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
+RulaScore calcTrukScore(RulaSheet sheet) {
   final hipFlexionScore = switch (sheet.hipFlexion.value) {
     < 5 => 1,
     < 20 => 2,
@@ -153,10 +156,34 @@ RulaScore calcFullRulaScore(RulaSheet sheet) {
   final trunkScore =
       hipFlexionScore + trunkTwistBonus + trunkLateralFlexionBonus;
   assert(trunkScore >= 1 && trunkScore <= 6);
+  return RulaScore.make(trunkScore);
+}
 
+/// Calculates the leg score for the given [sheet]. Produces a [RulaScore] in the range [1; 2].
+RulaScore calcLegScore(RulaSheet sheet) {
   final oneLeggedBonus = sheet.isStandingOnBothLegs ? 1 : 2;
   final legScore = oneLeggedBonus;
   assert(legScore >= 1 && legScore <= 2);
+  return RulaScore.make(legScore);
+}
+
+/// Does the full Rula calculation based on the given [sheet] and produces a [RulaScore] in the range [0; 7].
+RulaScore calcFullRulaScore(RulaSheet sheet) {
+  final upperArmScore = calcUpperArmScore(sheet).value;
+  final lowerArmScore = calcLowerArmScore(sheet).value;
+
+  final wristFlexionScore =
+      switch (sheet.wristFlexion.value) { < -15 => 3, < 15 => 1, _ => 3 };
+  final wristScore = wristFlexionScore;
+  assert(wristScore >= 1 && wristScore <= 4);
+
+  final armHandScore =
+      _tableA[upperArmScore - 1][lowerArmScore - 1][wristScore - 1];
+  assert(armHandScore >= 1 && armHandScore <= 9);
+
+  final neckScore = calcNeckScore(sheet).value;
+  final trunkScore = calcTrukScore(sheet).value;
+  final legScore = calcLegScore(sheet).value;
 
   final neckTrunkLegScore =
       _tableB[neckScore - 1][trunkScore - 1][legScore - 1];
