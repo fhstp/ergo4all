@@ -189,14 +189,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             leftTitles: AxisTitles(
                               sideTitles: SideTitles(
                                 showTitles: true,
-
                                 reservedSize: 50,
-
                                 interval: 0.5,
-
                                 getTitlesWidget: (value, meta) {
                                   // Explicitly define labels for fixed positions
-
                                   if (value == 0) {
                                     return const Text(
                                       'Good',
