@@ -67,8 +67,8 @@ class UserCreationForm extends HookWidget {
             DropdownButtonFormField(
                 value: _ageBrackets.first,
                 decoration: InputDecoration(
-                    label: Text(localizations.userCreator_ageRange_header),
-                    hintText: localizations.userCreator_ageRange_placeholder),
+                  label: Text(localizations.userCreator_ageRange_header),
+                ),
                 items: _ageBrackets
                     .map((it) => DropdownMenuItem(value: it, child: Text(it)))
                     .toList(),
