@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/analysis/live/types.dart';
+import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/value_notifier_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,6 +31,8 @@ class LiveAnalysisViewModel {
   bool _isRecording = false;
   final _captureQueue = Queue<Capture>();
   final _uiState = ValueNotifier(UIState.initial);
+  DateTime? _startTime;
+  RulaTimeline _timeline = const RulaTimeline.empty();
 
   ValueNotifier<UIState> get uiState => _uiState;
 
@@ -67,9 +70,10 @@ class LiveAnalysisViewModel {
         trunkRotation: _randomAngle(-180, 180),
         trunkLateralFlexion: _randomAngle(-90, 90),
         isStandingOnBothLegs: _randomBool());
-    final finalScore = calcFullRulaScore(sheet);
 
-    _uiState.update((it) => it.copyWith(currentScore: Some(finalScore)));
+    final now = DateTime.now().millisecond;
+    final timestamp = now - _startTime!.millisecond;
+    _timeline = _timeline.add(timestamp, sheet);
   }
 
   _enqueueCapture(Capture capture) {
@@ -131,6 +135,8 @@ class LiveAnalysisViewModel {
     await startPoseDetection(PoseDetectMode.stream);
 
     _uiState.update((it) => it.copyWith(cameraController: Some(controller)));
+    _startTime = DateTime.now();
+    _timeline = const RulaTimeline.empty();
   }
 
   void toggleRecording() async {
@@ -139,6 +145,7 @@ class LiveAnalysisViewModel {
 
     if (!_isRecording) {
       await _closeCamera();
+      _startTime = null;
       _uiState.update((it) => it.copyWith(isDone: true));
     }
   }

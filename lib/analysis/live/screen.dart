@@ -4,12 +4,10 @@ import 'package:ergo4all/analysis/live/camera_permission_dialog.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/viewmodel.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:pose/src/pose_painter.dart';
-import 'package:rula/rula.dart';
 
 class LiveAnalysisScreen extends HookWidget {
   const LiveAnalysisScreen({super.key});
@@ -73,15 +71,6 @@ class LiveAnalysisScreen extends HookWidget {
                     imageSize: capture.imageSize,
                   )),
                 ),
-              if (uiState.currentScore case Some(value: final score))
-                Positioned(
-                    top: largeSpace,
-                    right: largeSpace,
-                    // TODO: Add proper stringified version of rula label with localization
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 255, 255, 0.5)),
-                        child: Text("$score: ${rulaLabelFor(score)}"))),
             ],
           ),
           const Spacer(),

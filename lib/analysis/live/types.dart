@@ -3,7 +3,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
-import 'package:rula/rula.dart';
 
 @immutable
 class Capture {
@@ -21,26 +20,27 @@ class UIState {
   final Option<Capture> latestCapture;
   final bool isRecording;
   final bool isDone;
-  final Option<RulaScore> currentScore;
 
-  const UIState(this.cameraController, this.latestCapture, this.isRecording,
-      this.isDone, this.currentScore);
+  const UIState(
+    this.cameraController,
+    this.latestCapture,
+    this.isRecording,
+    this.isDone,
+  );
 
   UIState copyWith({
     Option<CameraController>? cameraController,
     Option<Capture>? latestCapture,
     bool? isRecording,
     bool? isDone,
-    Option<RulaScore>? currentScore,
   }) {
     return UIState(
       cameraController ?? this.cameraController,
       latestCapture ?? this.latestCapture,
       isRecording ?? this.isRecording,
       isDone ?? this.isDone,
-      currentScore ?? this.currentScore,
     );
   }
 
-  static const UIState initial = UIState(None(), None(), false, false, None());
+  static const UIState initial = UIState(None(), None(), false, false);
 }

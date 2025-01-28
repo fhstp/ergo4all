@@ -1,8 +1,12 @@
 import 'dart:math';
 
 import 'package:ergo4all/analysis/body_part_detail_page.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:rula/rula.dart';
+
+typedef RulaTimeline = IMap<int, RulaSheet>;
 
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
