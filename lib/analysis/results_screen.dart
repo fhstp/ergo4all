@@ -98,6 +98,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final timeline =
+        ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
+
     if (lineChartData.isEmpty) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),

@@ -36,6 +36,8 @@ class LiveAnalysisViewModel {
 
   ValueNotifier<UIState> get uiState => _uiState;
 
+  RulaTimeline get timeline => _timeline;
+
   Future<void> _closeCamera() async {
     _uiState.value = UIState.initial;
 

@@ -28,7 +28,8 @@ class LiveAnalysisScreen extends HookWidget {
     }
 
     void goToResults() async {
-      await Navigator.of(context).pushReplacementNamed(Routes.results.path);
+      await Navigator.of(context).pushReplacementNamed(Routes.results.path,
+          arguments: viewModel.timeline);
     }
 
     final uiState = useValueListenable(viewModel.uiState);
