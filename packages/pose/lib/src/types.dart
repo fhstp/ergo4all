@@ -1,3 +1,4 @@
+import 'package:common/immutable_collection_ext.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -35,3 +36,9 @@ double visibilityOf(Landmark landmark) => landmark.$2;
 
 /// A pose in 3d world-space. This is a map of [KeyPoints] with their associated [Landmark]s.
 typedef Pose = IMap<KeyPoints, Landmark>;
+
+/// Maps the positions in a [Pose] by applying [map] to each.
+Pose mapPosePositions(Pose pose, Vector3 Function(Vector3) map) {
+  return pose
+      .mapValues((landmark) => (map(posOf(landmark)), visibilityOf(landmark)));
+}
