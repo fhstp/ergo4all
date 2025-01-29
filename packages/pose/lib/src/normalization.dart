@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:common/immutable_collection_ext.dart';
 import 'package:pose/pose.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -13,19 +12,14 @@ Vector3 _midHipOffset(Pose pose) {
   return posOf(pose[KeyPoints.midPelvis]!);
 }
 
-Pose _mapPosePositions(Pose pose, Vector3 Function(Vector3) map) {
-  return pose
-      .mapValues((landmark) => (map(posOf(landmark)), visibilityOf(landmark)));
-}
-
 /// Translates a [pose] by a given [translation] vector.
 Pose _translatePose(Pose pose, Vector3 translation) {
-  return _mapPosePositions(pose, (pos) => pos - translation);
+  return mapPosePositions(pose, (pos) => pos - translation);
 }
 
 /// Rotates the points in a [pose] using the given [rotation] matrix.
 Pose _rotatePose(Pose pose, Matrix3 rotation) {
-  return _mapPosePositions(pose, (pos) => rotation.transform(pos));
+  return mapPosePositions(pose, (pos) => rotation.transform(pos));
 }
 
 Matrix3 _yRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
@@ -84,7 +78,7 @@ Pose _alignHipWithXAxis(Pose pose) {
 Pose _normalizeScale(Pose pose, double yMult, double zMult) {
   final hipLength = 2 * posOf(pose[KeyPoints.leftHip]!).x.abs();
   final scalar = 1 / hipLength;
-  return _mapPosePositions(
+  return mapPosePositions(
       pose,
       (pos) => Vector3(
           pos.x * scalar, pos.y * scalar * yMult, pos.z * scalar * zMult));
