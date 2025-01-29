@@ -1,3 +1,11 @@
+# [1.25.0](https://github.com/fhstp/ergo4all/compare/v1.24.0...v1.25.0) (2025-01-29)
+
+
+### Features
+
+* **pose:** pose normalization ([6e9f3fc](https://github.com/fhstp/ergo4all/commit/6e9f3fcef5a8608fd3d7858568a5af81624596b4))
+* **pose:** use simplified projection ([f78197d](https://github.com/fhstp/ergo4all/commit/f78197d5537a14e1332b46b63c8d039d340478f3))
+
 # [1.24.0](https://github.com/fhstp/ergo4all/compare/v1.23.0...v1.24.0) (2025-01-29)
 
 
