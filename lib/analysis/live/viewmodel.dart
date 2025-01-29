@@ -57,7 +57,8 @@ class LiveAnalysisViewModel {
   }
 
   _processCapture(Capture capture) async {
-    final (coronal, sagittal) = projectOnAnatomicalPlanes(capture.pose);
+    final normalized = normalizePose(capture.pose);
+    final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
     // TODO: Calculate real rula sheet
