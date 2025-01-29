@@ -1,3 +1,16 @@
+# [1.24.0](https://github.com/fhstp/ergo4all/compare/v1.23.0...v1.24.0) (2025-01-29)
+
+
+### Bug Fixes
+
+* overflow error ([fbc47fc](https://github.com/fhstp/ergo4all/commit/fbc47fc081d352b05935c24bb1b785567d1d83a0))
+
+
+### Features
+
+* collect rula timeline ([dda3eb7](https://github.com/fhstp/ergo4all/commit/dda3eb7c875d1c26b05262e9a994aa18b596afa4))
+* visualize timeline ([532b8a9](https://github.com/fhstp/ergo4all/commit/532b8a9eb45fd3be86ac906140fb15e1d9b79ee7))
+
 # [1.23.0](https://github.com/fhstp/ergo4all/compare/v1.22.0...v1.23.0) (2024-12-11)
 
 
