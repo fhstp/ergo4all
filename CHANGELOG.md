@@ -1,3 +1,11 @@
+## [1.26.1](https://github.com/fhstp/ergo4all/compare/v1.26.0...v1.26.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* **pose_tester:** incorrect pose usage ([0de7bc6](https://github.com/fhstp/ergo4all/commit/0de7bc6558fe1c02cb802bc0989e1cb26853e02f))
+* **pose:** pose normalization logic ([25f8232](https://github.com/fhstp/ergo4all/commit/25f8232657ecedfadade055dfdb26cf9cd190246))
+
 # [1.26.0](https://github.com/fhstp/ergo4all/compare/v1.25.0...v1.26.0) (2025-01-30)
 
 
