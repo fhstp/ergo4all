@@ -61,7 +61,6 @@ class LiveAnalysisViewModel {
     final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
-    // TODO: Calculate real rula sheet
     final sheet = RulaSheet(
         shoulderFlexion: _randomAngle(-180, 180),
         shoulderAbduction: _randomAngle(0, 180),

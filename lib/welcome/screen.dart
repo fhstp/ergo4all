@@ -41,7 +41,6 @@ class WelcomeScreen extends HookWidget {
                   const SizedBox(
                     height: largeSpace,
                   ),
-                  // TODO: Localize
                   Text("Powered by"),
                   const SizedBox(
                     height: smallSpace,
@@ -53,7 +52,6 @@ class WelcomeScreen extends HookWidget {
                   const SizedBox(
                     height: largeSpace,
                   ),
-                  // TODO: Localize
                   Text("Project partners"),
                   const SizedBox(
                     height: smallSpace,

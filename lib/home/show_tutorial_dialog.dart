@@ -10,7 +10,6 @@ class ShowTutorialDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
 
-    // TODO: Localize
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
