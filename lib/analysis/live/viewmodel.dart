@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:ergo4all/analysis/live/types.dart';
@@ -27,7 +26,6 @@ Size _getRotatedImageSize(CameraImage image) {
 }
 
 class LiveAnalysisViewModel {
-  final _random = Random();
   CameraController? _controller;
   bool _isRecording = false;
   final _captureQueue = Queue<Capture>();
@@ -48,10 +46,6 @@ class LiveAnalysisViewModel {
     _controller = null;
   }
 
-  bool _randomBool() {
-    return _random.nextDouble() > 0.5;
-  }
-
   _processCapture(Capture capture) async {
     final normalized = normalizePose(capture.pose);
     final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
@@ -69,6 +63,8 @@ class LiveAnalysisViewModel {
       return Degree.makeFrom180(larger);
     }
 
+    final isStanding = calcIsStanding(angles, angleThreshold: 10);
+
     final sheet = RulaSheet(
         shoulderFlexion: largerAngleOf(
             KeyAngles.shoulderFlexionLeft, KeyAngles.shoulderFlexionRight),
@@ -84,7 +80,7 @@ class LiveAnalysisViewModel {
         hipFlexion: angleOf(KeyAngles.trunkStoop),
         trunkRotation: angleOf(KeyAngles.trunkTwist),
         trunkLateralFlexion: angleOf(KeyAngles.trunkSideBend),
-        isStandingOnBothLegs: _randomBool());
+        isStandingOnBothLegs: isStanding);
 
     final now = DateTime.now().millisecondsSinceEpoch;
     final timestamp = now - _startTime!.microsecondsSinceEpoch;

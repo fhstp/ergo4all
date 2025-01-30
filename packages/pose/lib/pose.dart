@@ -5,4 +5,5 @@ export 'src/normalization.dart';
 export 'src/pose_detection.dart';
 export 'src/pose_painter.dart';
 export 'src/projection.dart';
+export 'src/standing.dart';
 export 'src/types.dart';
