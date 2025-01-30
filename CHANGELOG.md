@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/fhstp/ergo4all/compare/v1.26.1...v1.27.0) (2025-01-30)
+
+
+### Features
+
+* calculate standing status ([d128c56](https://github.com/fhstp/ergo4all/commit/d128c56abcd6a2704586bdfe67e56cd3b66911ca)), closes [#49](https://github.com/fhstp/ergo4all/issues/49)
+
 ## [1.26.1](https://github.com/fhstp/ergo4all/compare/v1.26.0...v1.26.1) (2025-01-30)
 
 
