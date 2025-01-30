@@ -43,7 +43,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       final pose = (await detectPose(input))!;
       final normalized = normalizePose(pose);
       final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
-      final angles = calculateAngles(pose, coronal, sagittal);
+      final angles = calculateAngles(normalized, coronal, sagittal);
 
       setState(() {
         selectedPoseSet = Some([pose, coronal, sagittal]);
