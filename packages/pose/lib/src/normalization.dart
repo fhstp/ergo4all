@@ -62,16 +62,31 @@ Pose _centerPose(Pose pose) {
   return _translatePose(pose, translation);
 }
 
-/// Rotates the given [pose] such that it's hip line is in parallel with the x-axis. For this to work properly you should first move it onto the x-axis using the [_centerPose] function.
-Pose _alignHipWithXAxis(Pose pose) {
+/// Rotates the given [pose] such that it's hip line is in the XY plane.
+Pose _alignHipWithXYPlane(Pose pose) {
   final leftHip = posOf(pose[KeyPoints.leftHip]!);
   final rightHip = posOf(pose[KeyPoints.rightHip]!);
 
   final yRotation = _yRotationMatrixFor(leftHip, rightHip);
-  final zRotation = _zRotationMatrixFor(leftHip, rightHip);
-  final rotation = yRotation * zRotation;
+  final rotation = yRotation;
 
   return _rotatePose(pose, rotation);
+}
+
+/// Rotates the given [pose] such that it's hip line is in the XZ plane.
+Pose _alignHipWithXZPlane(Pose pose) {
+  final leftHip = posOf(pose[KeyPoints.leftHip]!);
+  final rightHip = posOf(pose[KeyPoints.rightHip]!);
+
+  final zRotation = _zRotationMatrixFor(leftHip, rightHip);
+  final rotation = zRotation;
+
+  return _rotatePose(pose, rotation);
+}
+
+/// Flip the axis to align with the coordinate system
+Pose _flipYAxis(Pose pose3D) {
+  return mapPosePositions(pose3D, (pos) => Vector3(pos.x, -pos.y, pos.z));
 }
 
 /// Uniformly scales the given [pose] such that the hip line is one unit long. You can also apply additional scaling to the other axes using the [yMult] and [zMult] parameters.
@@ -89,7 +104,12 @@ NormalizedPose normalizePose(Pose pose) {
   pose = _centerPose(pose);
 
   // Next we align the hip-line with the x-axis by rotating the pose accordingly.
-  pose = _alignHipWithXAxis(pose);
+  // Rotations must be handled separately, as the angle calculation is affected by each transformation (angle estimation cannot be multiplicative)
+  pose = _alignHipWithXYPlane(pose);
+  pose = _alignHipWithXZPlane(pose);
+
+  // Flip the Y axis to get the correct direction, otherwise angle calculation could be potentially affected (e.g., 180 instead 0 degrees etc.)
+  pose = _flipYAxis(pose);
 
   // Finally we normalize the pose scale. The axis multipliers here were
   // determined through experimentation.
