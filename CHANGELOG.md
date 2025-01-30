@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/fhstp/ergo4all/compare/v1.25.0...v1.26.0) (2025-01-30)
+
+
+### Features
+
+* use angles for rula scoring ([5eac1a4](https://github.com/fhstp/ergo4all/commit/5eac1a4b92959046e0b1b9fb784c40b316358e1b)), closes [#46](https://github.com/fhstp/ergo4all/issues/46)
+
 # [1.25.0](https://github.com/fhstp/ergo4all/compare/v1.24.0...v1.25.0) (2025-01-29)
 
 
