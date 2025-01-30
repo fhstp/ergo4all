@@ -48,10 +48,6 @@ class LiveAnalysisViewModel {
     _controller = null;
   }
 
-  Degree _randomAngle(double min, double max) {
-    return Degree.makeFrom180(min + _random.nextDouble() * (max - min));
-  }
-
   bool _randomBool() {
     return _random.nextDouble() > 0.5;
   }
@@ -61,17 +57,33 @@ class LiveAnalysisViewModel {
     final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
+    Degree angleOf(KeyAngles key) {
+      final angle = angles[key]!;
+      return Degree.makeFrom180(angle);
+    }
+
+    Degree largerAngleOf(KeyAngles keyA, KeyAngles keyB) {
+      final angleA = angles[keyA]!;
+      final angleB = angles[keyB]!;
+      final larger = angleA.abs() > angleB.abs() ? angleA : angleB;
+      return Degree.makeFrom180(larger);
+    }
+
     final sheet = RulaSheet(
-        shoulderFlexion: _randomAngle(-180, 180),
-        shoulderAbduction: _randomAngle(0, 180),
-        elbowFlexion: _randomAngle(0, 180),
-        wristFlexion: _randomAngle(-180, 180),
-        neckFlexion: _randomAngle(-90, 90),
-        neckRotation: _randomAngle(-180, 180),
-        neckLateralFlexion: _randomAngle(-90, 90),
-        hipFlexion: _randomAngle(0, 180),
-        trunkRotation: _randomAngle(-180, 180),
-        trunkLateralFlexion: _randomAngle(-90, 90),
+        shoulderFlexion: largerAngleOf(
+            KeyAngles.shoulderFlexionLeft, KeyAngles.shoulderFlexionRight),
+        shoulderAbduction: largerAngleOf(
+            KeyAngles.shoulderAbductionLeft, KeyAngles.shoulderAbductionRight),
+        elbowFlexion: largerAngleOf(
+            KeyAngles.elbowFlexionLeft, KeyAngles.elbowFlexionRight),
+        wristFlexion: largerAngleOf(
+            KeyAngles.wristFlexionLeft, KeyAngles.wristFlexionRight),
+        neckFlexion: angleOf(KeyAngles.neckFlexion),
+        neckRotation: angleOf(KeyAngles.neckTwist),
+        neckLateralFlexion: angleOf(KeyAngles.neckSideBend),
+        hipFlexion: angleOf(KeyAngles.trunkStoop),
+        trunkRotation: angleOf(KeyAngles.trunkTwist),
+        trunkLateralFlexion: angleOf(KeyAngles.trunkSideBend),
         isStandingOnBothLegs: _randomBool());
 
     final now = DateTime.now().millisecondsSinceEpoch;
