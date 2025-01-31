@@ -121,7 +121,7 @@ PoseAngles calculateAngles(
         KeyAngles.trunkStoop =>
           180 - _zAngle(sagittalPose, KeyPoints.midPelvis, KeyPoints.midNeck),
         KeyAngles.trunkTwist => (180 -
-                _crossAngle(worldPose, KeyPoints.leftHip, KeyPoints.rightHip,
+                _crossAngle(worldPose, KeyPoints.rightHip, KeyPoints.leftHip,
                     KeyPoints.leftShoulder, KeyPoints.rightShoulder))
             .abs(),
         KeyAngles.trunkSideBend => (90 -
@@ -141,9 +141,9 @@ PoseAngles calculateAngles(
             .abs(),
         KeyAngles.neckTwist => (180 -
                 _crossAngle(
-                    worldPose,
-                    KeyPoints.leftShoulder,
+                    worldPose,                    
                     KeyPoints.rightShoulder,
+                    KeyPoints.leftShoulder,
                     KeyPoints.leftEar,
                     KeyPoints.rightEar))
             .abs(),
