@@ -1,3 +1,10 @@
+## [1.27.1](https://github.com/fhstp/ergo4all/compare/v1.27.0...v1.27.1) (2025-01-31)
+
+
+### Bug Fixes
+
+* **pose:** twisting range ([#50](https://github.com/fhstp/ergo4all/issues/50)) ([00fae40](https://github.com/fhstp/ergo4all/commit/00fae40bc4f029784da241ecc4c29297b38c0b48))
+
 # [1.27.0](https://github.com/fhstp/ergo4all/compare/v1.26.1...v1.27.0) (2025-01-30)
 
 
