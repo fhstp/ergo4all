@@ -26,7 +26,7 @@ class RulaScoreDisplay extends StatelessWidget {
         color: color,
         child: Padding(
           padding: EdgeInsets.all(8),
-          child: Text("$label: ${score.value}"),
+          child: Text("$label: ${score.value} / $maxScore"),
         ));
   }
 }
