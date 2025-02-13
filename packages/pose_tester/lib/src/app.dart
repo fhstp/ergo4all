@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
-import 'package:pose_tester/src/angle_display.dart';
+import 'package:pose_tester/src/map_display.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
 import 'package:share_plus/share_plus.dart';
@@ -47,7 +47,10 @@ class AnglePage extends StatelessWidget {
     return Page(
         title: "Angles",
         body: switch (currentAngles) {
-          Some(value: final angles) => AngleDisplay(angles: angles),
+          Some(value: final angles) => MapDisplay(
+              map: angles,
+              formatKey: (keyAngle) => keyAngle.name,
+              formatValue: (degrees) => "${degrees.toInt()}°"),
           _ => null
         });
   }
