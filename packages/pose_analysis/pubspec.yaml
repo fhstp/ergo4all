@@ -1,0 +1,21 @@
+name: pose_analysis
+description: Pose analysis
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  fast_immutable_collections: ^11.0.0
+
+  common:
+    path: ../common
+
+  pose:
+    path: ../pose
+
+  rula:
+    path: ../rula
+  vector_math: ^2.1.4

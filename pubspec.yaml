@@ -40,6 +40,9 @@ dependencies:
   pose:
     path: ./packages/pose
 
+  pose_analysis:
+    path: ./packages/pose_analysis
+
   rula:
     path: ./packages/rula
 

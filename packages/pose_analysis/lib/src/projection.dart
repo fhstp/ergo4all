@@ -1,4 +1,5 @@
 import 'package:pose/pose.dart';
+import 'package:pose_analysis/pose_analysis.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// Projects the given [NormalizedPose], onto the coronal and sagittal planes. This is done by dropping (setting to 0) relevant coordinate components. For sagittal, we get rid of the x values. For coronal, we drop z.

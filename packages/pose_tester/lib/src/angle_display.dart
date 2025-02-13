@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pose/pose.dart';
+import 'package:pose_analysis/pose_analysis.dart';
 
 class AngleDisplay extends StatelessWidget {
   final PoseAngles angles;

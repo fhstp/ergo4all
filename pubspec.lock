@@ -934,6 +934,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  pose_analysis:
+    dependency: "direct main"
+    description:
+      path: "packages/pose_analysis"
+      relative: true
+    source: path
+    version: "0.0.0"
   posix:
     dependency: transitive
     description:

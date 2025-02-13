@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
+import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_display.dart';
 import 'package:pose_tester/src/pose_type_select.dart';
 import 'package:pose_tester/src/temp_asset.dart';
