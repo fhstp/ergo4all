@@ -7,6 +7,8 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
+import 'package:pose_tester/src/pose_2d.dart';
+import 'package:pose_tester/src/pose_2d_painter.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
 import 'package:pose_tester/src/score_sheet.dart';
 import 'package:pose_tester/src/temp_asset.dart';
@@ -131,6 +133,60 @@ class _ScorePageState extends State<ScorePage> {
   }
 }
 
+class Pose2dPage extends StatefulWidget {
+  final String title;
+  final Option<NormalizedPose> normalizedPose;
+  final Pose2d Function(NormalizedPose) makePose2d;
+
+  const Pose2dPage(
+      {super.key,
+      required this.normalizedPose,
+      required this.makePose2d,
+      required this.title});
+
+  @override
+  State<Pose2dPage> createState() => _Pose2dPageState();
+}
+
+class _Pose2dPageState extends State<Pose2dPage> {
+  Option<Pose2d> pose = none();
+
+  void recalculatePose() {
+    setState(() {
+      pose = none();
+    });
+
+    widget.normalizedPose.match(() {}, (normalizedPose) {
+      setState(() {
+        pose = Some(widget.makePose2d(normalizedPose));
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    recalculatePose();
+  }
+
+  @override
+  void didUpdateWidget(covariant Pose2dPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    recalculatePose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Page(
+        title: widget.title,
+        body: pose.match(
+            () => CircularProgressIndicator(),
+            (pose) => ConstrainedBox(
+                constraints: BoxConstraints.expand(width: 100, height: 300),
+                child: CustomPaint(painter: Pose2dPainter(pose: pose)))));
+  }
+}
+
 class Pose3DDisplay extends StatelessWidget {
   const Pose3DDisplay({
     super.key,
@@ -183,6 +239,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   Option<String> selectedImageName = none();
   Option<TestImage> selectedImage = none();
   Option<Pose> selectedPose = none();
+  Option<NormalizedPose> normalizedPose = none();
   Option<PoseAngles> currentAngles = none();
   int pageIndex = 0;
 
@@ -191,6 +248,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   void updatePoseForImage(String imageName) async {
     setState(() {
       selectedPose = none();
+      normalizedPose = none();
       currentAngles = none();
     });
 
@@ -206,6 +264,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
       setState(() {
         selectedPose = Some(pose);
+        normalizedPose = Some(normalized);
         currentAngles = Some(angles);
       });
     } finally {
@@ -217,6 +276,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     setState(() {
       selectedImage = none();
       selectedPose = none();
+      normalizedPose = none();
       currentAngles = none();
     });
 
@@ -350,17 +410,32 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
               switch (pageIndex) {
                 0 => AnglePage(currentAngles: currentAngles),
                 1 => ScorePage(angles: currentAngles),
+                2 => Pose2dPage(
+                    title: "Sagittal",
+                    makePose2d: make2dSagittalPose,
+                    normalizedPose: normalizedPose,
+                  ),
+                3 => Pose2dPage(
+                    title: "Coronal",
+                    makePose2d: make2dCoronalPose,
+                    normalizedPose: normalizedPose,
+                  ),
                 _ => Placeholder()
               },
             ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.text_rotation_angledown), label: "Angles"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.scoreboard), label: "Scores"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.directions_walk), label: "Sagittal"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.accessibility_new), label: "Coronal"),
           ],
           currentIndex: pageIndex,
           onTap: switchToPage,

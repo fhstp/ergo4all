@@ -21,6 +21,9 @@ dependencies:
 
   path_provider: ^2.1.5
   share_plus: ^10.1.4
+  vector_math: ^2.1.4
+  common:
+    path: ../common
 
 dev_dependencies:
   flutter_test:
