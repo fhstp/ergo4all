@@ -123,6 +123,21 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       home: Scaffold(
         appBar: AppBar(
           title: Text("Pose tester"),
+          actions: [
+            PopupMenuButton(
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                          child: InkWell(
+                        onTap: switch (selectedPose) {
+                          Some(value: final pose) => () {
+                              copyPoseToClipboard(context, pose);
+                            },
+                          _ => null
+                        },
+                        child: Text("Export angles"),
+                      ))
+                    ])
+          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -172,22 +187,6 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
               SizedBox(height: 10),
               if (currentAngles case Some(value: final angles))
                 Expanded(child: AngleDisplay(angles: angles)),
-              SizedBox(height: 10),
-              SizedBox(
-                height: 50,
-                child: Row(
-                  children: [
-                    if (selectedPose case Some(value: final pose))
-                      Builder(builder: (context) {
-                        return IconButton.filled(
-                            onPressed: () {
-                              copyPoseToClipboard(context, pose);
-                            },
-                            icon: Icon(Icons.copy));
-                      })
-                  ],
-                ),
-              )
             ],
           ),
         ),
