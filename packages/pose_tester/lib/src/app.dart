@@ -11,6 +11,30 @@ import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
 import 'package:share_plus/share_plus.dart';
 
+class AnglePage extends StatelessWidget {
+  const AnglePage({
+    super.key,
+    required this.currentAngles,
+  });
+
+  final Option<PoseAngles> currentAngles;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          "Angles",
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        SizedBox(height: 10),
+        if (currentAngles case Some(value: final angles))
+          AngleDisplay(angles: angles),
+      ],
+    );
+  }
+}
+
 class PoseTesterApp extends StatefulWidget {
   const PoseTesterApp({super.key});
 
@@ -24,6 +48,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   Option<TestImage> selectedImage = none();
   Option<Pose> selectedPose = none();
   Option<PoseAngles> currentAngles = none();
+  int pageIndex = 0;
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
 
@@ -119,6 +144,12 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     }
   }
 
+  void switchToPage(int newIndex) {
+    setState(() {
+      pageIndex = newIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -187,11 +218,24 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
-              if (currentAngles case Some(value: final angles))
-                Expanded(child: AngleDisplay(angles: angles)),
+              SizedBox(height: 20),
+              Expanded(
+                  child: switch (pageIndex) {
+                0 => AnglePage(currentAngles: currentAngles),
+                _ => Placeholder()
+              }),
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.text_rotation_angledown), label: "Angles"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.scoreboard), label: "Scores"),
+          ],
+          currentIndex: pageIndex,
+          onTap: switchToPage,
         ),
       ),
     );
