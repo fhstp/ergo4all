@@ -1,3 +1,27 @@
+# [1.28.0](https://github.com/fhstp/ergo4all/compare/v1.27.1...v1.28.0) (2025-02-13)
+
+
+### Bug Fixes
+
+* **pose_tester:** clipboard copy crash ([5fd0772](https://github.com/fhstp/ergo4all/commit/5fd0772128db55efbe02221be23213fe3b34d566))
+* **pose_tester:** incorrect score display ([dd6f388](https://github.com/fhstp/ergo4all/commit/dd6f388719a689282fd3c6596567147936751b27))
+
+
+### Features
+
+* **pose_tester:** add 2d pose painters ([f8dfb81](https://github.com/fhstp/ergo4all/commit/f8dfb813261154c434f161a1cd5914870e341611))
+* **pose_tester:** add placeholder score page ([0f0cb83](https://github.com/fhstp/ergo4all/commit/0f0cb8330e22ea696bb9eec93b384d26f5896900))
+* **pose_tester:** better loading animations ([728d495](https://github.com/fhstp/ergo4all/commit/728d4954b7e60e26a7bb4eee379ed353596228a8))
+* **pose_tester:** color code scores ([b023d8b](https://github.com/fhstp/ergo4all/commit/b023d8b12a099eb10bb1383c1fd96fb08937fcdd))
+* **pose_tester:** constrain image height ([5f2870f](https://github.com/fhstp/ergo4all/commit/5f2870fd97b399edd7a4ce615fb30a888dbde233))
+* **pose_tester:** display max score ([beef404](https://github.com/fhstp/ergo4all/commit/beef40497d520c96ded1c3f011e5ec41867f6287))
+* **pose_tester:** display scores ([4f0c5f0](https://github.com/fhstp/ergo4all/commit/4f0c5f06a1eb0f2c2b2e7e731195c31b8de64e20))
+* **pose_tester:** drop pose type selection ([5b011a1](https://github.com/fhstp/ergo4all/commit/5b011a12449b1f765b6385908af36fa0b8a10b1f))
+* **pose_tester:** improve pose sharing ([6425577](https://github.com/fhstp/ergo4all/commit/6425577ef09c77288427ad86f6e96d7da79674a7))
+* **pose_tester:** move angle export ui ([5f654d2](https://github.com/fhstp/ergo4all/commit/5f654d280b40b399b385abfd47521d519786e729))
+* **pose_tester:** move image selection ([40c191e](https://github.com/fhstp/ergo4all/commit/40c191e90169b446698aa6761e9e3868fee2d845))
+* **pose_tester:** overhaul image select ui ([be23212](https://github.com/fhstp/ergo4all/commit/be23212ce3c4dacdf60fd383378a5aea96f1d891))
+
 ## [1.27.1](https://github.com/fhstp/ergo4all/compare/v1.27.0...v1.27.1) (2025-01-31)
 
 
