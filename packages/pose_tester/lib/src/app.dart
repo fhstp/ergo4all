@@ -35,6 +35,45 @@ class AnglePage extends StatelessWidget {
   }
 }
 
+class Pose3DDisplay extends StatelessWidget {
+  const Pose3DDisplay({
+    super.key,
+    required this.selectedImage,
+    required this.selectedPose,
+  });
+
+  final Option<TestImage> selectedImage;
+  final Option<Pose> selectedPose;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            if (selectedImage case Some(value: final image)) ...[
+              Image(
+                image: image.asset,
+                fit: BoxFit.fitHeight,
+              ),
+              if (selectedPose case Some(value: final pose))
+                Positioned.fill(
+                  child: CustomPaint(
+                      painter: PosePainter(
+                          pose: pose,
+                          imageSize: Size(image.width.toDouble(),
+                              image.height.toDouble()))),
+                )
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class PoseTesterApp extends StatefulWidget {
   const PoseTesterApp({super.key});
 
@@ -194,30 +233,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      if (selectedImage case Some(value: final image)) ...[
-                        Image(
-                          image: image.asset,
-                          fit: BoxFit.fitHeight,
-                        ),
-                        if (selectedPose case Some(value: final pose))
-                          Positioned.fill(
-                            child: CustomPaint(
-                                painter: PosePainter(
-                                    pose: pose,
-                                    imageSize: Size(image.width.toDouble(),
-                                        image.height.toDouble()))),
-                          )
-                      ],
-                    ],
-                  ),
-                ),
-              ),
+              Pose3DDisplay(
+                  selectedImage: selectedImage, selectedPose: selectedPose),
               SizedBox(height: 20),
               Expanded(
                   child: switch (pageIndex) {
