@@ -122,14 +122,26 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
   @override
   Widget build(BuildContext context) {
-    final highlightedButtonStyle = ElevatedButton.styleFrom(
-        backgroundColor: Color.fromRGBO(200, 200, 240, 1));
-
     return MaterialApp(
       title: "Pose tester",
       home: Scaffold(
         appBar: AppBar(
           title: Text("Pose tester"),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(child: Text("Images")),
+              ...imageNames.map((name) => ListTile(
+                    onTap: () {
+                      selectImageWithName(name);
+                    },
+                    selected: Some(name) == selectedImageName,
+                    title: Text(name),
+                  ))
+            ],
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -156,24 +168,6 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                         )
                     ],
                   ],
-                ),
-              ),
-              SizedBox(height: 10),
-              SizedBox(
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: imageNames
-                      .map((name) => ElevatedButton(
-                            onPressed: () {
-                              selectImageWithName(name);
-                            },
-                            style: Some(name) == selectedImageName
-                                ? highlightedButtonStyle
-                                : null,
-                            child: Text(name),
-                          ))
-                      .toList(),
                 ),
               ),
               SizedBox(height: 10),
