@@ -11,6 +11,29 @@ import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
 import 'package:share_plus/share_plus.dart';
 
+class Page extends StatelessWidget {
+  final String title;
+  final Widget? body;
+
+  const Page({super.key, required this.title, required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          SizedBox(height: 10),
+          Expanded(child: SingleChildScrollView(child: body))
+        ],
+      ),
+    );
+  }
+}
+
 class AnglePage extends StatelessWidget {
   const AnglePage({
     super.key,
@@ -21,17 +44,12 @@ class AnglePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Angles",
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        SizedBox(height: 10),
-        if (currentAngles case Some(value: final angles))
-          AngleDisplay(angles: angles),
-      ],
-    );
+    return Page(
+        title: "Angles",
+        body: switch (currentAngles) {
+          Some(value: final angles) => AngleDisplay(angles: angles),
+          _ => null
+        });
   }
 }
 
@@ -247,13 +265,10 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 ],
               ),
               SizedBox(height: 20),
-              Expanded(
-                  child: SingleChildScrollView(
-                child: switch (pageIndex) {
-                  0 => AnglePage(currentAngles: currentAngles),
-                  _ => Placeholder()
-                },
-              )),
+              switch (pageIndex) {
+                0 => AnglePage(currentAngles: currentAngles),
+                _ => Placeholder()
+              },
             ],
           ),
         ),
