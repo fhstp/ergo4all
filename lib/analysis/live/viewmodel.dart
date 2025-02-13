@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
-import 'package:rula/rula.dart';
 
 const _queueSize = 5;
 
@@ -52,37 +51,7 @@ class LiveAnalysisViewModel {
     final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
-    Degree angleOf(KeyAngles key) {
-      final angle = angles[key]!;
-      return Degree.makeFrom180(angle);
-    }
-
-    Degree largerAngleOf(KeyAngles keyA, KeyAngles keyB) {
-      final angleA = angles[keyA]!;
-      final angleB = angles[keyB]!;
-      final larger = angleA.abs() > angleB.abs() ? angleA : angleB;
-      return Degree.makeFrom180(larger);
-    }
-
-    final isStanding = calcIsStanding(angles, angleThreshold: 10);
-
-    final sheet = RulaSheet(
-        shoulderFlexion: largerAngleOf(
-            KeyAngles.shoulderFlexionLeft, KeyAngles.shoulderFlexionRight),
-        shoulderAbduction: largerAngleOf(
-            KeyAngles.shoulderAbductionLeft, KeyAngles.shoulderAbductionRight),
-        elbowFlexion: largerAngleOf(
-            KeyAngles.elbowFlexionLeft, KeyAngles.elbowFlexionRight),
-        wristFlexion: largerAngleOf(
-            KeyAngles.wristFlexionLeft, KeyAngles.wristFlexionRight),
-        neckFlexion: angleOf(KeyAngles.neckFlexion),
-        neckRotation: angleOf(KeyAngles.neckTwist),
-        neckLateralFlexion: angleOf(KeyAngles.neckSideBend),
-        hipFlexion: angleOf(KeyAngles.trunkStoop),
-        trunkRotation: angleOf(KeyAngles.trunkTwist),
-        trunkLateralFlexion: angleOf(KeyAngles.trunkSideBend),
-        isStandingOnBothLegs: isStanding);
-
+    final sheet = rulaSheetFromAngles(angles);
     final now = DateTime.now().millisecondsSinceEpoch;
     final timestamp = now - _startTime!.microsecondsSinceEpoch;
     _timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
