@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pose_analysis/pose_analysis.dart';
+import 'package:pose_tester/src/map_display.dart';
 
 class AngleDisplay extends StatelessWidget {
   final PoseAngles angles;
@@ -8,17 +9,9 @@ class AngleDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget displayFor(KeyAngles keyAngle, double degrees) {
-      return Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("${keyAngle.name}: ${degrees.toInt()}°"),
-        ),
-      );
-    }
-
-    return Wrap(
-      children: angles.mapTo(displayFor).toList(),
-    );
+    return MapDisplay(
+        map: angles,
+        formatKey: (keyAngle) => keyAngle.name,
+        formatValue: (degrees) => "${degrees.toInt()}°");
   }
 }
