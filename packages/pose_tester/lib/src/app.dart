@@ -54,7 +54,7 @@ class AnglePage extends StatelessWidget {
               map: angles,
               formatKey: (keyAngle) => keyAngle.name,
               formatValue: (degrees) => "${degrees.toInt()}°"),
-          _ => null
+          _ => CircularProgressIndicator()
         });
   }
 }
@@ -162,7 +162,8 @@ class Pose3DDisplay extends StatelessWidget {
                           imageSize: Size(image.width.toDouble(),
                               image.height.toDouble()))),
                 )
-            ],
+            ] else
+              CircularProgressIndicator()
           ],
         ),
       ),
@@ -213,12 +214,15 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   }
 
   void selectImageWithName(String? name) async {
+    setState(() {
+      selectedImage = none();
+      selectedPose = none();
+      currentAngles = none();
+    });
+
     if (name == null) {
       setState(() {
         selectedImageName = none();
-        selectedImage = none();
-        selectedPose = none();
-        currentAngles = none();
       });
       return;
     }
