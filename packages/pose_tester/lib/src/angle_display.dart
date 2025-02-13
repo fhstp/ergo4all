@@ -17,9 +17,8 @@ class AngleDisplay extends StatelessWidget {
       );
     }
 
-    return SingleChildScrollView(
-        child: Wrap(
+    return Wrap(
       children: angles.mapTo(displayFor).toList(),
-    ));
+    );
   }
 }

@@ -116,7 +116,17 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     }
   }
 
-  void selectImageWithName(String name) async {
+  void selectImageWithName(String? name) async {
+    if (name == null) {
+      setState(() {
+        selectedImageName = none();
+        selectedImage = none();
+        selectedPose = none();
+        currentAngles = none();
+      });
+      return;
+    }
+
     var assetKey = assetKeyFor(name);
 
     setState(() {
@@ -212,21 +222,6 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                     ])
           ],
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(child: Text("Images")),
-              ...imageNames.map((name) => ListTile(
-                    onTap: () {
-                      selectImageWithName(name);
-                    },
-                    selected: Some(name) == selectedImageName,
-                    title: Text(name),
-                  ))
-            ],
-          ),
-        ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -236,11 +231,29 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
               Pose3DDisplay(
                   selectedImage: selectedImage, selectedPose: selectedPose),
               SizedBox(height: 20),
+              Row(
+                children: [
+                  Text("Select image"),
+                  SizedBox(width: 20),
+                  DropdownButton<String>(
+                      items: imageNames
+                          .map((name) => DropdownMenuItem<String>(
+                                value: name,
+                                child: Text(name),
+                              ))
+                          .toList(),
+                      value: selectedImageName.toNullable(),
+                      onChanged: selectImageWithName),
+                ],
+              ),
+              SizedBox(height: 20),
               Expanded(
-                  child: switch (pageIndex) {
-                0 => AnglePage(currentAngles: currentAngles),
-                _ => Placeholder()
-              }),
+                  child: SingleChildScrollView(
+                child: switch (pageIndex) {
+                  0 => AnglePage(currentAngles: currentAngles),
+                  _ => Placeholder()
+                },
+              )),
             ],
           ),
         ),
