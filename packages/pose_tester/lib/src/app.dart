@@ -7,7 +7,6 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_display.dart';
-import 'package:pose_tester/src/pose_type_select.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
 
@@ -22,17 +21,14 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
   Option<TestImage> selectedImage = none();
-  Option<List<Pose>> selectedPoseSet = none();
+  Option<Pose> selectedPose = none();
   Option<PoseAngles> currentAngles = none();
-  int poseIndex = 0;
-
-  Option<Pose> get selectedPose => selectedPoseSet.map((it) => it[poseIndex]);
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
 
   void updatePoseForImage(String imageName) async {
     setState(() {
-      selectedPoseSet = none();
+      selectedPose = none();
       currentAngles = none();
     });
 
@@ -47,7 +43,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       final angles = calculateAngles(normalized, coronal, sagittal);
 
       setState(() {
-        selectedPoseSet = Some([pose, coronal, sagittal]);
+        selectedPose = Some(pose);
         currentAngles = Some(angles);
       });
     } finally {
@@ -178,17 +174,10 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 height: 50,
                 child: Row(
                   children: [
-                    PoseTypeSelect(
-                        poseIndex: poseIndex,
-                        onSelected: (it) {
-                          setState(() {
-                            poseIndex = it;
-                          });
-                        }),
-                    if (selectedPoseSet case Some(value: final pose))
+                    if (selectedPose case Some(value: final pose))
                       IconButton.filled(
                           onPressed: () {
-                            copyPoseToClipboard(pose[poseIndex]);
+                            copyPoseToClipboard(pose);
                           },
                           icon: Icon(Icons.copy))
                   ],
