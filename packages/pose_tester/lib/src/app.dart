@@ -7,8 +7,11 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
+import 'package:pose_tester/src/rula_score_display.dart';
+import 'package:pose_tester/src/score_sheet.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
+import 'package:rula/rula.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Page extends StatelessWidget {
@@ -53,6 +56,96 @@ class AnglePage extends StatelessWidget {
               formatValue: (degrees) => "${degrees.toInt()}°"),
           _ => null
         });
+  }
+}
+
+class ScorePage extends StatefulWidget {
+  final Option<PoseAngles> angles;
+
+  const ScorePage({super.key, required this.angles});
+
+  @override
+  State<ScorePage> createState() => _ScorePageState();
+}
+
+class _ScorePageState extends State<ScorePage> {
+  Option<ScoreSheet> currentSheet = none();
+
+  void refreshSheet() async {
+    setState(() {
+      currentSheet = none();
+    });
+
+    await Future.value(Null);
+
+    widget.angles.match(() {}, (angles) {
+      final rulaSheet = rulaSheetFromAngles(angles);
+      setState(() {
+        currentSheet = Some(ScoreSheet(
+            upperArm: calcUpperArmScore(rulaSheet),
+            lowerArm: calcLowerArmScore(rulaSheet),
+            neck: calcNeckScore(rulaSheet),
+            trunk: calcTrukScore(rulaSheet),
+            leg: calcLegScore(rulaSheet),
+            full: calcFullRulaScore(rulaSheet)));
+      });
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant ScorePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    refreshSheet();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshSheet();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Page(
+        title: "Score",
+        body: currentSheet.match(
+            () => CircularProgressIndicator(),
+            (sheet) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    RulaScoreDisplay(
+                        label: "Full",
+                        score: sheet.full,
+                        minScore: 1,
+                        maxScore: 7),
+                    RulaScoreDisplay(
+                        label: "Upper arm",
+                        score: sheet.upperArm,
+                        minScore: 1,
+                        maxScore: 6),
+                    RulaScoreDisplay(
+                        label: "Lower arm",
+                        score: sheet.lowerArm,
+                        minScore: 1,
+                        maxScore: 3),
+                    RulaScoreDisplay(
+                        label: "Neck",
+                        score: sheet.neck,
+                        minScore: 1,
+                        maxScore: 6),
+                    RulaScoreDisplay(
+                        label: "Trunk",
+                        score: sheet.trunk,
+                        minScore: 1,
+                        maxScore: 6),
+                    RulaScoreDisplay(
+                        label: "Leg",
+                        score: sheet.trunk,
+                        minScore: 1,
+                        maxScore: 2),
+                  ],
+                )));
   }
 }
 
@@ -270,6 +363,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
               SizedBox(height: 20),
               switch (pageIndex) {
                 0 => AnglePage(currentAngles: currentAngles),
+                1 => ScorePage(angles: currentAngles),
                 _ => Placeholder()
               },
             ],

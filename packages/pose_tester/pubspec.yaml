@@ -16,6 +16,9 @@ dependencies:
   pose_analysis:
     path: "../pose_analysis"
 
+  rula:
+    path: "../rula"
+
   path_provider: ^2.1.5
   share_plus: ^10.1.4
 
