@@ -103,14 +103,14 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     doFinalIO();
   }
 
-  void copyPoseToClipboard(Pose pose) async {
+  void copyPoseToClipboard(BuildContext context, Pose pose) async {
     final poseText = pose.mapTo((point, landmark) {
       final pos = posOf(landmark);
       return "${point.name}: ${pos.x}, ${pos.y}, ${pos.z}";
     }).join("\n");
     await Clipboard.setData(ClipboardData(text: poseText));
 
-    if (mounted) {
+    if (context.mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Copied pose")));
     }
@@ -178,11 +178,13 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 child: Row(
                   children: [
                     if (selectedPose case Some(value: final pose))
-                      IconButton.filled(
-                          onPressed: () {
-                            copyPoseToClipboard(pose);
-                          },
-                          icon: Icon(Icons.copy))
+                      Builder(builder: (context) {
+                        return IconButton.filled(
+                            onPressed: () {
+                              copyPoseToClipboard(context, pose);
+                            },
+                            icon: Icon(Icons.copy));
+                      })
                   ],
                 ),
               )
