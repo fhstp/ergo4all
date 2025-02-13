@@ -9,6 +9,7 @@ import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_display.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PoseTesterApp extends StatefulWidget {
   const PoseTesterApp({super.key});
@@ -103,16 +104,18 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     doFinalIO();
   }
 
-  void copyPoseToClipboard(BuildContext context, Pose pose) async {
+  void sharePose(BuildContext context, Pose pose) async {
     final poseText = pose.mapTo((point, landmark) {
       final pos = posOf(landmark);
       return "${point.name}: ${pos.x}, ${pos.y}, ${pos.z}";
     }).join("\n");
-    await Clipboard.setData(ClipboardData(text: poseText));
 
-    if (context.mounted) {
+    final shareResult = await Share.share(poseText, subject: "Exported pose");
+
+    if (shareResult.status == ShareResultStatus.unavailable &&
+        context.mounted) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Copied pose")));
+          .showSnackBar(SnackBar(content: Text("Share failed")));
     }
   }
 
@@ -130,11 +133,11 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                           child: InkWell(
                         onTap: switch (selectedPose) {
                           Some(value: final pose) => () {
-                              copyPoseToClipboard(context, pose);
+                              sharePose(context, pose);
                             },
                           _ => null
                         },
-                        child: Text("Export angles"),
+                        child: Text("Share pose"),
                       ))
                     ])
           ],
