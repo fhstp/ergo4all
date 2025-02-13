@@ -125,7 +125,7 @@ class _ScorePageState extends State<ScorePage> {
                     RulaScoreDisplay(
                         label: "Trunk", score: sheet.trunk, maxScore: 6),
                     RulaScoreDisplay(
-                        label: "Leg", score: sheet.trunk, maxScore: 2),
+                        label: "Leg", score: sheet.leg, maxScore: 2),
                   ],
                 )));
   }
