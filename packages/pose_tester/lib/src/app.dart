@@ -24,17 +24,16 @@ class Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          SizedBox(height: 10),
-          Expanded(child: SingleChildScrollView(child: body))
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        SizedBox(height: 10),
+        Expanded(child: body ?? Container())
+      ],
     );
   }
 }
@@ -52,10 +51,12 @@ class AnglePage extends StatelessWidget {
     return Page(
         title: "Angles",
         body: switch (currentAngles) {
-          Some(value: final angles) => MapDisplay(
-              map: angles,
-              formatKey: (keyAngle) => keyAngle.name,
-              formatValue: (degrees) => "${degrees.toInt()}°"),
+          Some(value: final angles) => SingleChildScrollView(
+              child: MapDisplay(
+                  map: angles,
+                  formatKey: (keyAngle) => keyAngle.name,
+                  formatValue: (degrees) => "${degrees.toInt()}°"),
+            ),
           _ => CircularProgressIndicator()
         });
   }
@@ -181,8 +182,7 @@ class _Pose2dPageState extends State<Pose2dPage> {
         title: widget.title,
         body: pose.match(
             () => CircularProgressIndicator(),
-            (pose) => ConstrainedBox(
-                constraints: BoxConstraints.expand(width: 100, height: 300),
+            (pose) => Expanded(
                 child: CustomPaint(painter: Pose2dPainter(pose: pose)))));
   }
 }
@@ -407,26 +407,28 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 ],
               ),
               SizedBox(height: 20),
-              switch (pageIndex) {
-                0 => AnglePage(currentAngles: currentAngles),
-                1 => ScorePage(angles: currentAngles),
-                2 => Pose2dPage(
-                    title: "Sagittal",
-                    makePose2d: make2dSagittalPose,
-                    normalizedPose: normalizedPose,
-                  ),
-                3 => Pose2dPage(
-                    title: "Coronal",
-                    makePose2d: make2dCoronalPose,
-                    normalizedPose: normalizedPose,
-                  ),
-                4 => Pose2dPage(
-                    title: "Transverse",
-                    makePose2d: make2dTransversePose,
-                    normalizedPose: normalizedPose,
-                  ),
-                _ => Placeholder()
-              },
+              Expanded(
+                child: switch (pageIndex) {
+                  0 => AnglePage(currentAngles: currentAngles),
+                  1 => ScorePage(angles: currentAngles),
+                  2 => Pose2dPage(
+                      title: "Sagittal",
+                      makePose2d: make2dSagittalPose,
+                      normalizedPose: normalizedPose,
+                    ),
+                  3 => Pose2dPage(
+                      title: "Coronal",
+                      makePose2d: make2dCoronalPose,
+                      normalizedPose: normalizedPose,
+                    ),
+                  4 => Pose2dPage(
+                      title: "Transverse",
+                      makePose2d: make2dTransversePose,
+                      normalizedPose: normalizedPose,
+                    ),
+                  _ => Placeholder()
+                },
+              ),
             ],
           ),
         ),
