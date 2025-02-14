@@ -44,9 +44,8 @@ Pose _alignHipWithXYPlane(Pose pose) {
   final rightHip = posOf(pose[KeyPoints.rightHip]!);
 
   final yRotation = _yRotationMatrixFor(leftHip, rightHip);
-  final rotation = yRotation;
 
-  return _rotatePose(pose, rotation);
+  return _rotatePose(pose, yRotation);
 }
 
 /// Rotates the given [pose] such that it's hip line is in the XZ plane.
@@ -55,9 +54,8 @@ Pose _alignHipWithXZPlane(Pose pose) {
   final rightHip = posOf(pose[KeyPoints.rightHip]!);
 
   final zRotation = _zRotationMatrixFor(leftHip, rightHip);
-  final rotation = zRotation;
 
-  return _rotatePose(pose, rotation);
+  return _rotatePose(pose, zRotation);
 }
 
 /// Flip the axis to align with the coordinate system
