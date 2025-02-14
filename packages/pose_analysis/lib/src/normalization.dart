@@ -68,9 +68,13 @@ Pose _normalizeScale(Pose pose, double yMult, double zMult) {
   final hipLength = 2 * posOf(pose[KeyPoints.leftHip]!).x.abs();
   final scalar = 1 / hipLength;
   return mapPosePositions(
-      pose,
-      (pos) => Vector3(
-          pos.x * scalar, pos.y * scalar * yMult, pos.z * scalar * zMult));
+    pose,
+    (pos) => Vector3(
+      pos.x * scalar,
+      pos.y * scalar * yMult,
+      pos.z * scalar * zMult,
+    ),
+  );
 }
 
 NormalizedPose normalizePose(Pose pose) {
