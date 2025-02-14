@@ -420,6 +420,11 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                     makePose2d: make2dCoronalPose,
                     normalizedPose: normalizedPose,
                   ),
+                4 => Pose2dPage(
+                    title: "Transverse",
+                    makePose2d: make2dTransversePose,
+                    normalizedPose: normalizedPose,
+                  ),
                 _ => Placeholder()
               },
             ],
@@ -436,6 +441,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 icon: Icon(Icons.directions_walk), label: "Sagittal"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.accessibility_new), label: "Coronal"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.circle), label: "Transverse"),
           ],
           currentIndex: pageIndex,
           onTap: switchToPage,

@@ -38,3 +38,18 @@ Pose2d make2dSagittalPose(NormalizedPose pose, {double minVisibility = 0.9}) {
       .mapValues((pos) =>
           Vector2(invLerp(minZ, maxZ, pos.z), invLerp(minY, maxY, pos.y)));
 }
+
+Pose2d make2dTransversePose(NormalizedPose pose, {double minVisibility = 0.9}) {
+  final positions = pose.values.map(posOf).toList();
+
+  final minZ = positions.map((it) => it.z).reduce(min);
+  final maxZ = positions.map((it) => it.z).reduce(max);
+  final minX = positions.map((it) => it.x).reduce(min);
+  final maxX = positions.map((it) => it.x).reduce(max);
+
+  return pose
+      .where((_, landmark) => visibilityOf(landmark) >= minVisibility)
+      .mapValues((landmark) => posOf(landmark))
+      .mapValues((pos) =>
+          Vector2(invLerp(minX, maxX, pos.x), invLerp(minZ, maxZ, pos.z)));
+}
