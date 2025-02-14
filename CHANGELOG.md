@@ -1,3 +1,11 @@
+# [1.29.0](https://github.com/fhstp/ergo4all/compare/v1.28.0...v1.29.0) (2025-02-14)
+
+
+### Features
+
+* **pose_analysis:** add transverse pose display ([7386efb](https://github.com/fhstp/ergo4all/commit/7386efbb79c5e640d1aab7360465d41a738c2b3c))
+* **pose_tester:** correct aspect pose rendering ([f8f630c](https://github.com/fhstp/ergo4all/commit/f8f630c21b5160a35febef1487fcc76c31f35bbf))
+
 # [1.28.0](https://github.com/fhstp/ergo4all/compare/v1.27.1...v1.28.0) (2025-02-13)
 
 
