@@ -24,36 +24,12 @@ Pose _rotatePose(Pose pose, Matrix3 rotation) {
 
 Matrix3 _yRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
   final angle = 0 - atan2(leftHip.z - rightHip.z, leftHip.x - rightHip.x);
-  final c = cos(angle);
-  final s = sin(angle);
-  return Matrix3(
-    c,
-    0,
-    s,
-    0,
-    1,
-    0,
-    -s,
-    0,
-    c,
-  );
+  return Matrix3.rotationY(angle);
 }
 
 Matrix3 _zRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
   final angle = pi + atan2(leftHip.y - rightHip.y, leftHip.x - rightHip.x);
-  final c = cos(angle);
-  final s = sin(angle);
-  return Matrix3(
-    c,
-    -s,
-    0,
-    s,
-    c,
-    0,
-    0,
-    0,
-    1,
-  );
+  return Matrix3.rotationZ(angle);
 }
 
 /// Translate the given [pose] such that the mid-hip point is at the origin.
