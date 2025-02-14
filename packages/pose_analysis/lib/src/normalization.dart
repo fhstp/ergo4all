@@ -19,7 +19,7 @@ Pose _translatePose(Pose pose, Vector3 translation) {
 
 /// Rotates the points in a [pose] using the given [rotation] matrix.
 Pose _rotatePose(Pose pose, Matrix3 rotation) {
-  return mapPosePositions(pose, (pos) => rotation.transform(pos));
+  return mapPosePositions(pose, rotation.transform);
 }
 
 Matrix3 _yRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
