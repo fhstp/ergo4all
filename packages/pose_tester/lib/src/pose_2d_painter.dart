@@ -1,4 +1,5 @@
 import 'dart:math';
+import "dart:ui" as ui;
 
 import 'package:common/immutable_collection_ext.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +40,6 @@ extension _ScalingExt on Pose2d {
 class Pose2dPainter extends CustomPainter {
   final Pose2d pose;
 
-  final jointPaint = Paint()..color = Colors.red;
-  final bonePaint = Paint()
-    ..color = Colors.green
-    ..strokeWidth = 5;
-
   Pose2dPainter({super.repaint, required this.pose});
 
   @override
@@ -56,9 +52,19 @@ class Pose2dPainter extends CustomPainter {
       return Offset(pos.x, pos.y);
     }
 
+    Color jointColor(KeyPoints keyPoint) {
+      final index = keyPoint.index;
+      final count = KeyPoints.values.length;
+      final t = index / (count - 1);
+      final hue = t * 360;
+      return HSVColor.fromAHSV(1, hue, 0.8, 0.8).toColor();
+    }
+
     void drawJoint(KeyPoints keyPoint) {
       final pos = tryGetPosOf(keyPoint);
-      canvas.drawCircle(pos, 7, jointPaint);
+      final color = jointColor(keyPoint);
+      final paint = Paint()..color = color;
+      canvas.drawCircle(pos, 7, paint);
     }
 
     void drawBone((KeyPoints, KeyPoints) bone) {
@@ -66,7 +72,13 @@ class Pose2dPainter extends CustomPainter {
       final fromPos = tryGetPosOf(from);
       final toPos = tryGetPosOf(to);
 
-      canvas.drawLine(fromPos, toPos, bonePaint);
+      final fromColor = jointColor(from);
+      final toColor = jointColor(to);
+      final paint = Paint()
+        ..shader = ui.Gradient.linear(fromPos, toPos, [fromColor, toColor])
+        ..strokeWidth = 5;
+
+      canvas.drawLine(fromPos, toPos, paint);
     }
 
     [
