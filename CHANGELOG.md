@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/fhstp/ergo4all/compare/v1.30.0...v1.30.1) (2025-02-20)
+
+
+### Bug Fixes
+
+* **pose_analysis:** hip alignment ([e4e8a7f](https://github.com/fhstp/ergo4all/commit/e4e8a7ff7dc8d9fb57e46d368315fde7f1c25f96))
+
 # [1.30.0](https://github.com/fhstp/ergo4all/compare/v1.29.0...v1.30.0) (2025-02-20)
 
 
