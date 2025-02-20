@@ -28,7 +28,7 @@ Matrix3 _yRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
 }
 
 Matrix3 _zRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
-  final angle = pi + atan2(leftHip.y - rightHip.y, leftHip.x - rightHip.x);
+  final angle = -atan2(leftHip.y - rightHip.y, leftHip.x - rightHip.x);
   return Matrix3.rotationZ(angle);
 }
 
@@ -58,11 +58,6 @@ Pose _alignHipWithXZPlane(Pose pose) {
   return _rotatePose(pose, zRotation);
 }
 
-/// Flip the axis to align with the coordinate system
-Pose _flipYAxis(Pose pose3D) {
-  return mapPosePositions(pose3D, (pos) => Vector3(pos.x, -pos.y, pos.z));
-}
-
 /// Uniformly scales the given [pose] such that the hip line is one unit long. You can also apply additional scaling to the other axes using the [yMult] and [zMult] parameters.
 Pose _normalizeScale(Pose pose, double yMult, double zMult) {
   final hipLength = 2 * posOf(pose[KeyPoints.leftHip]!).x.abs();
@@ -85,9 +80,6 @@ NormalizedPose normalizePose(Pose pose) {
   // Rotations must be handled separately, as the angle calculation is affected by each transformation (angle estimation cannot be multiplicative)
   pose = _alignHipWithXYPlane(pose);
   pose = _alignHipWithXZPlane(pose);
-
-  // Flip the Y axis to get the correct direction, otherwise angle calculation could be potentially affected (e.g., 180 instead 0 degrees etc.)
-  pose = _flipYAxis(pose);
 
   // Finally we normalize the pose scale. The axis multipliers here were
   // determined through experimentation.
