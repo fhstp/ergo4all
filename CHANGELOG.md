@@ -1,3 +1,15 @@
+# [1.30.0](https://github.com/fhstp/ergo4all/compare/v1.29.0...v1.30.0) (2025-02-20)
+
+
+### Bug Fixes
+
+* **pose_tester:** stretched progress indicators ([5b5ace4](https://github.com/fhstp/ergo4all/commit/5b5ace4a8c93dd83da85e3dfbc844ab5804b82b9))
+
+
+### Features
+
+* **pose_tester:** rainbow pose ([e6d5284](https://github.com/fhstp/ergo4all/commit/e6d5284f9aa2c9d1289d6ecde40e334bba1aa24c))
+
 # [1.29.0](https://github.com/fhstp/ergo4all/compare/v1.28.0...v1.29.0) (2025-02-14)
 
 
