@@ -16,6 +16,23 @@ import 'package:pose_tester/src/test_image.dart';
 import 'package:rula/rula.dart';
 import 'package:share_plus/share_plus.dart';
 
+class ProgressIndicator extends StatelessWidget {
+  const ProgressIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 100,
+        height: 100,
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}
+
 class Page extends StatelessWidget {
   final String title;
   final Widget? body;
@@ -57,7 +74,7 @@ class AnglePage extends StatelessWidget {
                   formatKey: (keyAngle) => keyAngle.name,
                   formatValue: (degrees) => "${degrees.toInt()}°"),
             ),
-          _ => CircularProgressIndicator()
+          _ => ProgressIndicator()
         });
   }
 }
@@ -113,7 +130,7 @@ class _ScorePageState extends State<ScorePage> {
     return Page(
         title: "Score",
         body: currentSheet.match(
-            () => CircularProgressIndicator(),
+            () => ProgressIndicator(),
             (sheet) => Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -181,7 +198,7 @@ class _Pose2dPageState extends State<Pose2dPage> {
     return Page(
         title: widget.title,
         body: pose.match(
-            () => CircularProgressIndicator(),
+            () => ProgressIndicator(),
             (pose) => Expanded(
                 child: CustomPaint(painter: Pose2dPainter(pose: pose)))));
   }
@@ -219,7 +236,7 @@ class Pose3DDisplay extends StatelessWidget {
                               image.height.toDouble()))),
                 )
             ] else
-              CircularProgressIndicator()
+              ProgressIndicator()
           ],
         ),
       ),
