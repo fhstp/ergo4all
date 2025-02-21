@@ -2,7 +2,9 @@ name: pose
 description: Pose detection files.
 
 environment:
-  sdk: ">=3.4.3 <4.0.0"
+  sdk: ^3.6.0
+
+resolution: workspace
 
 dependencies:
   flutter:

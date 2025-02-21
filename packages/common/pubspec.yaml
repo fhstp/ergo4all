@@ -2,7 +2,9 @@ name: common
 description: Common logic which can be used in all project packages.
 
 environment:
-  sdk: ">=3.4.3 <4.0.0"
+  sdk: ^3.6.0
+
+resolution: workspace
 
 dependencies:
   flutter:
