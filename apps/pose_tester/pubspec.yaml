@@ -19,6 +19,8 @@ dependencies:
   pose_analysis:
     path: "../../packages/pose_analysis"
 
+  pose_vis: any
+
   rula:
     path: "../../packages/rula"
 

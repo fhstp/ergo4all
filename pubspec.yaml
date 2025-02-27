@@ -9,6 +9,7 @@ workspace:
   - ./packages/custom_locale
   - ./packages/pose
   - ./packages/pose_analysis
+  - ./packages/pose_vis
   - ./packages/rula
   - ./packages/user_management
   - ./apps/ergo4all

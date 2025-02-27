@@ -13,6 +13,7 @@ import 'package:pose_tester/src/rula_score_display.dart';
 import 'package:pose_tester/src/score_sheet.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
+import 'package:pose_vis/pose_vis.dart';
 import 'package:rula/rula.dart';
 import 'package:share_plus/share_plus.dart';
 
