@@ -1,3 +1,10 @@
+## [1.30.2](https://github.com/fhstp/ergo4all/compare/v1.30.1...v1.30.2) (2025-02-27)
+
+
+### Bug Fixes
+
+* broken localization ([af8f49c](https://github.com/fhstp/ergo4all/commit/af8f49cca8f748eb5d936bf7df67559e4a162de9))
+
 ## [1.30.1](https://github.com/fhstp/ergo4all/compare/v1.30.0...v1.30.1) (2025-02-20)
 
 
