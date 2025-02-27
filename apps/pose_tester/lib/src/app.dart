@@ -275,8 +275,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       final input = PoseDetectInput.fromFile(imageFile);
       final pose = (await detectPose(input))!;
       final normalized = normalizePose(pose);
-      final (_, sagittal) = projectOnAnatomicalPlanes(normalized);
       final coronal = make2dCoronalPose(normalized);
+      final sagittal = make2dSagittalPose(normalized);
       final angles = calculateAngles(normalized, coronal, sagittal);
 
       setState(() {

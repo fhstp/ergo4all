@@ -48,7 +48,7 @@ class LiveAnalysisViewModel {
 
   _processCapture(Capture capture) async {
     final normalized = normalizePose(capture.pose);
-    final (_, sagittal) = projectOnAnatomicalPlanes(normalized);
+    final sagittal = make2dSagittalPose(normalized);
     final coronal = make2dCoronalPose(normalized);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
