@@ -48,7 +48,8 @@ class LiveAnalysisViewModel {
 
   _processCapture(Capture capture) async {
     final normalized = normalizePose(capture.pose);
-    final (coronal, sagittal) = projectOnAnatomicalPlanes(normalized);
+    final (_, sagittal) = projectOnAnatomicalPlanes(normalized);
+    final coronal = make2dCoronalPose(normalized);
     final angles = calculateAngles(capture.pose, coronal, sagittal);
 
     final sheet = rulaSheetFromAngles(angles);

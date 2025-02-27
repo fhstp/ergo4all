@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:pose/src/types.dart';
+import 'package:pose/pose.dart';
 import 'package:vector_math/vector_math.dart';
 
 enum KeyAngles {
@@ -25,6 +25,11 @@ enum KeyAngles {
 }
 
 typedef PoseAngles = IMap<KeyAngles, double>;
+
+double _angle2d(Vector2 a, Vector2 b) {
+  final rads = atan2(a.x * b.y - a.y * b.x, a.x * b.x + a.y * b.y);
+  return degrees(rads);
+}
 
 /// Calculates the angle in degrees between two directional vectors.
 double _angle(Vector3 a, Vector3 b) {
@@ -86,20 +91,26 @@ Pose _transformPose(Pose pose) {
   return pose.mapValues(transformLandmark);
 }
 
-PoseAngles calculateAngles(
-    Pose worldPose, Pose coronalPose, Pose sagittalPose) {
-  coronalPose = _transformPose(coronalPose);
+Vector2 _line(Pose2d pose, KeyPoints a, KeyPoints b) {
+  return (pose[b]! - pose[a]!).normalized();
+}
+
+PoseAngles calculateAngles(Pose worldPose, Pose2d coronal, Pose sagittalPose) {
   sagittalPose = _transformPose(sagittalPose);
 
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
         KeyAngles.shoulderFlexionLeft =>
           _zAngle(sagittalPose, KeyPoints.leftShoulder, KeyPoints.leftElbow),
-        KeyAngles.shoulderAbductionLeft =>
-          _zAngle(coronalPose, KeyPoints.leftShoulder, KeyPoints.leftElbow),
+        KeyAngles.shoulderAbductionLeft => _angle2d(
+            _line(coronal, KeyPoints.leftShoulder, KeyPoints.leftElbow),
+            _line(coronal, KeyPoints.leftShoulder, KeyPoints.leftHip),
+          ),
         KeyAngles.shoulderFlexionRight =>
           _zAngle(sagittalPose, KeyPoints.rightShoulder, KeyPoints.rightElbow),
-        KeyAngles.shoulderAbductionRight =>
-          _zAngle(coronalPose, KeyPoints.rightShoulder, KeyPoints.rightElbow),
+        KeyAngles.shoulderAbductionRight => _angle2d(
+            _line(coronal, KeyPoints.rightShoulder, KeyPoints.rightHip),
+            _line(coronal, KeyPoints.rightShoulder, KeyPoints.rightElbow),
+          ),
         KeyAngles.elbowFlexionLeft => 180 -
             _jointAngle(worldPose, KeyPoints.leftWrist, KeyPoints.leftElbow,
                 KeyPoints.leftShoulder),
@@ -141,7 +152,7 @@ PoseAngles calculateAngles(
             .abs(),
         KeyAngles.neckTwist => (180 -
                 _crossAngle(
-                    worldPose,                    
+                    worldPose,
                     KeyPoints.rightShoulder,
                     KeyPoints.leftShoulder,
                     KeyPoints.leftEar,
