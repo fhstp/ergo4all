@@ -68,7 +68,7 @@ class Pose2dPainter extends CustomPainter {
       final toColor = jointColor(to);
       final paint = Paint()
         ..shader = ui.Gradient.linear(fromPos, toPos, [fromColor, toColor])
-        ..strokeWidth = 5;
+        ..strokeWidth = 3;
 
       canvas.drawLine(fromPos, toPos, paint);
     }
