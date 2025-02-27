@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
 
+/// [CustomPainter] for [Pose] objects. Intended to be overlayed over the image
+/// which produced the pose.
 class PosePainter extends CustomPainter {
-  final Pose pose;
-  final Size imageSize;
+  /// Creates a pose painter.
+  PosePainter({required this.pose, required this.imageSize, super.repaint});
 
-  PosePainter({super.repaint, required this.pose, required this.imageSize});
+  /// The pose to visualize.
+  final Pose pose;
+
+  /// The size of the original image from which the pose was estimated,
+  final Size imageSize;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -67,7 +73,7 @@ class PosePainter extends CustomPainter {
       KeyPoints.leftKnee,
       KeyPoints.rightKnee,
       KeyPoints.leftAnkle,
-      KeyPoints.rightAnkle
+      KeyPoints.rightAnkle,
     ].forEach(drawJoint);
   }
 
