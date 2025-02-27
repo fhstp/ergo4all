@@ -79,6 +79,8 @@ class Pose2dPainter extends CustomPainter {
       (KeyPoints.rightElbow, KeyPoints.rightShoulder),
       (KeyPoints.leftElbow, KeyPoints.leftShoulder),
       (KeyPoints.rightShoulder, KeyPoints.leftShoulder),
+      (KeyPoints.rightShoulder, KeyPoints.rightHip),
+      (KeyPoints.leftShoulder, KeyPoints.leftHip),
       (KeyPoints.rightHip, KeyPoints.leftHip),
       (KeyPoints.rightHip, KeyPoints.rightKnee),
       (KeyPoints.leftHip, KeyPoints.leftKnee),
