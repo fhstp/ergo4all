@@ -49,3 +49,6 @@ app.*.map.json
 linux
 windows
 macos
+
+# Generated files
+**/lib/**/gen

@@ -3,6 +3,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
 import 'package:ergo4all/common/snack.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/pick_video_dialog.dart';
 import 'package:ergo4all/home/session_start_dialog.dart';
 import 'package:ergo4all/home/show_tutorial_dialog.dart';
@@ -10,7 +11,6 @@ import 'package:ergo4all/home/types.dart';
 import 'package:ergo4all/home/user_welcome_header.dart';
 import 'package:ergo4all/home/viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:user_management/user_management.dart';
 

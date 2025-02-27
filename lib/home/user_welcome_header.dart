@@ -1,6 +1,6 @@
 import 'package:ergo4all/common/header.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:user_management/user_management.dart';
 
 /// Displays a welcome header for a given [User].

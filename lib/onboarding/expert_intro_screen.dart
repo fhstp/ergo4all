@@ -1,7 +1,7 @@
 import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/intro.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExpertIntroScreen extends StatelessWidget {
   const ExpertIntroScreen({super.key});

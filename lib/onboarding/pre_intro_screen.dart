@@ -4,7 +4,7 @@ import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 
 class PreIntroScreen extends StatelessWidget {
   const PreIntroScreen({super.key});
