@@ -42,5 +42,11 @@ jobs:
           setup: true
           cache: true
 
+      - name: Setup Very Good CLI 🦄
+        run: dart pub global activate very_good_cli
+
+      - name: Get dependencies 📦
+        run: very_good packages get -r
+
       - name: Run tests 🧪
-        run: flutter test ./test
+        run: very_good test -r

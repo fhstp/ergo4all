@@ -79,8 +79,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-flutter-
 
-      - name: Install flutter dependencies 📦
-        run: flutter pub get --no-example
+      - name: Setup Very Good CLI 🦄
+        run: dart pub global activate very_good_cli
+
+      - name: Get dependencies 📦
+        run: very_good packages get -r
 
       - name: Setup Java ☕
         uses: actions/setup-java@v4
@@ -92,10 +95,13 @@ jobs:
       - name: Cache build outputs ♻️
         uses: actions/cache@v4
         with:
-          path: build/
+          path: apps/ergo4all/build
           key: ${{ runner.os }}-build-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-build-
+
+      - name: Move to app dir 🚶‍♂️
+        run: cd apps/ergo4all
 
       - name: Build APKs 🔨
         run: flutter build apk --release

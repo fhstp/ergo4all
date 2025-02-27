@@ -2,8 +2,7 @@
   "files.exclude": {
     ".fvm": true,
     ".idea": true,
-    "build": true,
-    "web": true
+    "build": true
   },
   "dart.flutterSdkPath": ".fvm/versions/3.27.3",
   "cSpell.words": [

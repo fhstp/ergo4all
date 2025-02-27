@@ -15,21 +15,21 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
-            "program": "./lib/main.dart"
+            "program": "./apps/ergo4all/lib/main.dart"
         },
         {
             "name": "ergo4all (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
-            "program": "./lib/main.dart"
+            "program": "./apps/ergo4all/lib/main.dart"
         },
         {
             "name": "ergo4all (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
-            "program": "./lib/main.dart"
+            "program": "./apps/ergo4all/lib/main.dart"
         },
         {
             "name": "Pose tester",
