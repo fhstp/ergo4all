@@ -11,8 +11,8 @@ workspace:
   - ./packages/pose_analysis
   - ./packages/rula
   - ./packages/user_management
-  - ./packages/pose_tester
   - ./apps/ergo4all
+  - ./apps/pose_tester
 
 environment:
   sdk: ^3.6.0
