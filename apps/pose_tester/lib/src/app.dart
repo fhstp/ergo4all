@@ -7,8 +7,6 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
-import 'package:pose_tester/src/pose_2d.dart';
-import 'package:pose_tester/src/pose_2d_painter.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
 import 'package:pose_tester/src/score_sheet.dart';
 import 'package:pose_tester/src/temp_asset.dart';

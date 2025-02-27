@@ -1,10 +1,10 @@
 import 'dart:math';
-import "dart:ui" as ui;
+import 'dart:ui' as ui;
 
 import 'package:common/immutable_collection_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
-import 'package:pose_tester/src/pose_2d.dart';
+import 'package:pose/src/pose_2d.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 
 extension _ScalingExt on Pose2d {
