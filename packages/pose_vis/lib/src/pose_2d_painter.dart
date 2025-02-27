@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:common/immutable_collection_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
-import 'package:pose/src/pose_2d.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 
 extension _ScalingExt on Pose2d {
@@ -60,13 +59,6 @@ class Pose2dPainter extends CustomPainter {
       return HSVColor.fromAHSV(1, hue, 0.8, 0.8).toColor();
     }
 
-    void drawJoint(KeyPoints keyPoint) {
-      final pos = tryGetPosOf(keyPoint);
-      final color = jointColor(keyPoint);
-      final paint = Paint()..color = color;
-      canvas.drawCircle(pos, 7, paint);
-    }
-
     void drawBone((KeyPoints, KeyPoints) bone) {
       final (from, to) = bone;
       final fromPos = tryGetPosOf(from);
@@ -95,21 +87,6 @@ class Pose2dPainter extends CustomPainter {
       (KeyPoints.midNeck, KeyPoints.midPelvis),
       (KeyPoints.midNeck, KeyPoints.midHead),
     ].forEach(drawBone);
-
-    [
-      KeyPoints.leftShoulder,
-      KeyPoints.rightShoulder,
-      KeyPoints.leftElbow,
-      KeyPoints.rightElbow,
-      KeyPoints.leftPalm,
-      KeyPoints.rightPalm,
-      KeyPoints.leftHip,
-      KeyPoints.rightHip,
-      KeyPoints.leftKnee,
-      KeyPoints.rightKnee,
-      KeyPoints.leftAnkle,
-      KeyPoints.rightAnkle
-    ].forEach(drawJoint);
   }
 
   @override
