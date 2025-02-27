@@ -100,22 +100,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
 
-      - name: Move to app dir 🚶‍♂️
-        run: cd apps/ergo4all
-
       - name: Build APKs 🔨
-        run: flutter build apk --release
+        run: cd apps/ergo4all ; flutter build apk --release ; cd -
 
       - name: Build AAB 🔨
-        run: flutter build appbundle --release
+        run: cd apps/ergo4all ; flutter build appbundle --release; cd -
 
       - name: Upload build ⬆️
         uses: actions/upload-artifact@v4
         with:
           name: android-build
           path: |
-            build/app/outputs/apk/release/app-release.apk
-            build/app/outputs/bundle/release/app-release.aab
+            apps/ergo4all/build/app/outputs/apk/release/app-release.apk
+            apps/ergo4all/build/app/outputs/bundle/release/app-release.aab
           retention-days: 2
 
   semantic-release:
