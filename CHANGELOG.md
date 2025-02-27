@@ -1,3 +1,16 @@
+# [1.31.0](https://github.com/fhstp/ergo4all/compare/v1.30.2...v1.31.0) (2025-02-27)
+
+
+### Features
+
+* **pose_analysis:** improve sagittal angles ([b046938](https://github.com/fhstp/ergo4all/commit/b046938a07408c2f2f7c064e1a4f62363de01942))
+* **pose_analysis:** improve shoulder abduction ([b8354d7](https://github.com/fhstp/ergo4all/commit/b8354d7eaa280966245f56117af1394047fd45a4))
+* **pose_vis:** remove joints ([a5ac102](https://github.com/fhstp/ergo4all/commit/a5ac102920446f889c3f6537d092c44343abcf13))
+* **pose_vis:** thinner lines in 2d vis ([bb7c000](https://github.com/fhstp/ergo4all/commit/bb7c000448c7c144c8e80330f8760fae96ff2f62))
+* **pose_vis:** visualize flanks ([d10c844](https://github.com/fhstp/ergo4all/commit/d10c844eac2f95680446a07a3a5f21015c9411fb))
+* **pose_vis:** visualize hands ([adc57f6](https://github.com/fhstp/ergo4all/commit/adc57f60043d025d80d74320fae1d71ccc81b3a6))
+* **pose_vis:** visualize nose ([cba49ce](https://github.com/fhstp/ergo4all/commit/cba49ce9b9d043c9497ebb2dffdba7eed9aa2b84))
+
 ## [1.30.2](https://github.com/fhstp/ergo4all/compare/v1.30.1...v1.30.2) (2025-02-27)
 
 
