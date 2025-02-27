@@ -59,6 +59,7 @@ Pose convertMlkitPose(mlkit.Pose pose) {
               mlkit.PoseLandmarkType.rightEar
             ]),
           KeyPoints.rightEar => single(mlkit.PoseLandmarkType.rightEar),
+          KeyPoints.nose => single(mlkit.PoseLandmarkType.nose)
         };
       });
 }

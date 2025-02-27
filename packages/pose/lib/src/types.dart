@@ -22,7 +22,8 @@ enum KeyPoints {
   rightAnkle,
   leftEar,
   midHead,
-  rightEar
+  rightEar,
+  nose
 }
 
 /// Tuple containing data for a landmark. First element is the landmarks position in world-space. Second element is the elements visibility/confidence.

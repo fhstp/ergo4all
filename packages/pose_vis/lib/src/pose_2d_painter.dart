@@ -90,6 +90,7 @@ class Pose2dPainter extends CustomPainter {
       (KeyPoints.leftKnee, KeyPoints.leftAnkle),
       (KeyPoints.midNeck, KeyPoints.midPelvis),
       (KeyPoints.midNeck, KeyPoints.midHead),
+      (KeyPoints.midHead, KeyPoints.nose),
     ].forEach(drawBone);
   }
 
