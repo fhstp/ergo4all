@@ -11,24 +11,18 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
+
+  common: any
+  pose: any
+  pose_analysis: any
+  pose_vis: any
+  rula: any
+
   fast_immutable_collections: ^11.0.0
   fpdart: ^1.1.1
-  pose:
-    path: "../../packages/pose"
-
-  pose_analysis:
-    path: "../../packages/pose_analysis"
-
-  pose_vis: any
-
-  rula:
-    path: "../../packages/rula"
-
   path_provider: ^2.1.5
   share_plus: ^10.1.4
   vector_math: ^2.1.4
-  common:
-    path: ../../packages/common
 
 dev_dependencies:
   flutter_test:

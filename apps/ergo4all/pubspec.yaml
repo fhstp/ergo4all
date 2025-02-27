@@ -17,28 +17,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  common:
-    path: ../../packages/common
-
-  custom_locale:
-    path: ../../packages/custom_locale
-
-  pose:
-    path: ../../packages/pose
-
-  pose_analysis:
-    path: ../../packages/pose_analysis
-
-  pose_vis: any
-
-  rula:
-    path: ../../packages/rula
-
-  user_management:
-    path: ../../packages/user_management
-
   flutter_localizations:
     sdk: flutter
+
+  common: any
+  custom_locale: any
+  pose: any
+  pose_analysis: any
+  pose_vis: any
+  rula: any
+  user_management: any
+
   intl: any
   package_info_plus: ^8.0.2
   cross_file: ^0.3.4+2

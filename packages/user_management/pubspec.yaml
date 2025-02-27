@@ -10,8 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  common:
-    path: ../common
+  common: any
 
   equatable: ^2.0.5
   json_annotation: ^4.9.0
