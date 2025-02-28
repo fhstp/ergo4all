@@ -211,14 +211,14 @@ RulaScore calcHipFlexionScore(RulaSheet sheet) {
 
 /// Calculates the trunk twist score based on the given [sheet].
 /// Produces a value in range [0; 1].
-int calcTrunkTwistScore(RulaSheet sheet) {
+int calcTrunkTwistBonus(RulaSheet sheet) {
   return sheet.trunkRotation.value.abs() > minBadTrunkTwistAngle ? 1 : 0;
 }
 
 /// Calculates the trunk score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
 RulaScore calcTrukScore(RulaSheet sheet) {
   final hipFlexionScore = calcHipFlexionScore(sheet).value;
-  final trunkTwistBonus = calcTrunkTwistScore(sheet);
+  final trunkTwistBonus = calcTrunkTwistBonus(sheet);
   final trunkLateralFlexionBonus =
       sheet.trunkLateralFlexion.value.abs() > 5 ? 1 : 0;
   final trunkScore =
