@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:rula/src/score.dart';
 import 'package:rula/src/sheet.dart';
 
+const _minBadNeckTwistAngle = 5;
+const _minBadNeckLateralFlexAngle = 5;
+
 /// This matches table A on the Rula sheet, except that we omit the wrist twist score. Here we just always pick the value like it was 1.
 const _tableA = [
   [
@@ -133,9 +136,12 @@ RulaScore calcNeckScore(RulaSheet sheet) {
     < 20 => 2,
     _ => 3
   };
-  final neckRotationBonus = sheet.neckRotation.value.abs() > 5 ? 1 : 0;
+  final neckRotationBonus =
+      sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
   final neckLateralFlexionBonus =
-      sheet.neckLateralFlexion.value.abs() > 5 ? 1 : 0;
+      sheet.neckLateralFlexion.value.abs() > _minBadNeckLateralFlexAngle
+          ? 1
+          : 0;
   final neckScore =
       neckFlexionScore + neckRotationBonus + neckLateralFlexionBonus;
   assert(neckScore >= 1 && neckScore <= 6);
