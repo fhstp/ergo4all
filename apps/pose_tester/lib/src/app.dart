@@ -257,6 +257,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   Option<Pose> selectedPose = none();
   Option<NormalizedPose> normalizedPose = none();
   Option<PoseAngles> currentAngles = none();
+  bool show3dPose = true;
   int pageIndex = 0;
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
@@ -405,8 +406,17 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Pose3DDisplay(
-                  selectedImage: selectedImage, selectedPose: selectedPose),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    show3dPose = !show3dPose;
+                  });
+                },
+                child: Pose3DDisplay(
+                  selectedImage: selectedImage,
+                  selectedPose: show3dPose ? selectedPose : none(),
+                ),
+              ),
               SizedBox(height: 20),
               Row(
                 children: [
