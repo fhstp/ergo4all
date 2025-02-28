@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'dart:ui' as ui;
 
 import 'package:common/immutable_collection_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
+import 'package:pose_vis/src/painting.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 
 extension _ScalingExt on Pose2d {
@@ -49,12 +49,12 @@ class Pose2dPainter extends CustomPainter {
     final centeredPos =
         pose.scaleToFit(size * 0.95).centerAt(size.center(Offset.zero));
 
-    Offset tryGetPosOf(KeyPoints keyPoint) {
+    Offset getJointPos(KeyPoints keyPoint) {
       final pos = centeredPos[keyPoint]!;
       return Offset(pos.x, pos.y);
     }
 
-    Color jointColor(KeyPoints keyPoint) {
+    Color getJointColor(KeyPoints keyPoint) {
       final index = keyPoint.index;
       final count = KeyPoints.values.length;
       final t = index / (count - 1);
@@ -62,39 +62,7 @@ class Pose2dPainter extends CustomPainter {
       return HSVColor.fromAHSV(1, hue, 0.8, 0.8).toColor();
     }
 
-    void drawBone((KeyPoints, KeyPoints) bone) {
-      final (from, to) = bone;
-      final fromPos = tryGetPosOf(from);
-      final toPos = tryGetPosOf(to);
-
-      final fromColor = jointColor(from);
-      final toColor = jointColor(to);
-      final paint = Paint()
-        ..shader = ui.Gradient.linear(fromPos, toPos, [fromColor, toColor])
-        ..strokeWidth = 3;
-
-      canvas.drawLine(fromPos, toPos, paint);
-    }
-
-    [
-      (KeyPoints.rightPalm, KeyPoints.rightElbow),
-      (KeyPoints.leftPalm, KeyPoints.leftElbow),
-      (KeyPoints.rightElbow, KeyPoints.rightShoulder),
-      (KeyPoints.rightWrist, KeyPoints.rightPalm),
-      (KeyPoints.leftElbow, KeyPoints.leftShoulder),
-      (KeyPoints.leftWrist, KeyPoints.leftPalm),
-      (KeyPoints.rightShoulder, KeyPoints.leftShoulder),
-      (KeyPoints.rightShoulder, KeyPoints.rightHip),
-      (KeyPoints.leftShoulder, KeyPoints.leftHip),
-      (KeyPoints.rightHip, KeyPoints.leftHip),
-      (KeyPoints.rightHip, KeyPoints.rightKnee),
-      (KeyPoints.leftHip, KeyPoints.leftKnee),
-      (KeyPoints.rightKnee, KeyPoints.rightAnkle),
-      (KeyPoints.leftKnee, KeyPoints.leftAnkle),
-      (KeyPoints.midNeck, KeyPoints.midPelvis),
-      (KeyPoints.midNeck, KeyPoints.midHead),
-      (KeyPoints.midHead, KeyPoints.nose),
-    ].forEach(drawBone);
+    paintPose(canvas, getJointPos, getJointColor);
   }
 
   @override
