@@ -130,14 +130,22 @@ RulaScore calcLowerArmScore(RulaSheet sheet) {
   return RulaScore.make(lowerArmScore);
 }
 
-/// Calculates the neck score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
-RulaScore calcNeckScore(RulaSheet sheet) {
-  final neckFlexionScore = switch (sheet.neckFlexion.value) {
+/// Calculates the neck flexion score based on the given [sheet]. Produces a
+/// [RulaScore] in range [1; 4].
+RulaScore calcNeckFlexionScore(RulaSheet sheet) {
+  final score = switch (sheet.neckFlexion.value) {
     < 0 => 4,
     < 10 => 1,
     < 20 => 2,
     _ => 3
   };
+  assert(score >= 1 && score <= 4);
+  return RulaScore.make(score);
+}
+
+/// Calculates the neck score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
+RulaScore calcNeckScore(RulaSheet sheet) {
+  int neckFlexionScore = calcNeckFlexionScore(sheet).value;
   final neckRotationBonus =
       sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
   final neckLateralFlexionBonus =
