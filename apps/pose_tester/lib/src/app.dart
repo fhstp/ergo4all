@@ -153,6 +153,11 @@ class _ScorePageState extends State<ScorePage> {
                           maxScore: 3,
                           level: 1),
                       RulaScoreDisplay(
+                          label: "Elbow flexion",
+                          score: calcElbowFlexionScore(sheet).value,
+                          maxScore: 2,
+                          level: 2),
+                      RulaScoreDisplay(
                           label: "Neck",
                           score: calcNeckScore(sheet).value,
                           maxScore: 6,
