@@ -54,15 +54,7 @@ class Pose2dPainter extends CustomPainter {
       return Offset(pos.x, pos.y);
     }
 
-    Color getJointColor(KeyPoints keyPoint) {
-      final index = keyPoint.index;
-      final count = KeyPoints.values.length;
-      final t = index / (count - 1);
-      final hue = t * 360;
-      return HSVColor.fromAHSV(1, hue, 0.8, 0.8).toColor();
-    }
-
-    paintPose(canvas, getJointPos, getJointColor);
+    paintPose(canvas, getJointPos, getJointColorFromIndex);
   }
 
   @override

@@ -3,6 +3,15 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
 
+/// Calculates a [Color] for the given [keyPoint] based on its enum index.
+Color getJointColorFromIndex(KeyPoints keyPoint) {
+  final index = keyPoint.index;
+  final count = KeyPoints.values.length;
+  final t = index / (count - 1);
+  final hue = t * 360;
+  return HSVColor.fromAHSV(1, hue, 0.8, 0.8).toColor();
+}
+
 /// Function for painting a skeleton pose onto the given [canvas]. Uses
 /// [getJointPos] to get the poses relevant position as well as [getJointColor]
 /// for the joint and bone colors.
