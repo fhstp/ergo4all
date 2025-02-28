@@ -127,12 +127,11 @@ PoseAngles calculateAngles(
             _line2d(sagittal, KeyPoints.midPelvis, KeyPoints.midNeck),
           ),
         KeyAngles.neckSideBend => (90 -
-                _crossAngle(
-                    world, // TODO: Should this be coronal?
-                    KeyPoints.leftShoulder,
-                    KeyPoints.rightShoulder,
-                    KeyPoints.midNeck,
-                    KeyPoints.midHead))
+                _angle2d(
+                  _line2d(coronal, KeyPoints.midNeck, KeyPoints.midHead),
+                  _line2d(
+                      coronal, KeyPoints.rightShoulder, KeyPoints.leftShoulder),
+                ))
             .abs(),
         KeyAngles.neckTwist => (180 -
                 _crossAngle(
