@@ -122,46 +122,53 @@ class _ScorePageState extends State<ScorePage> {
         title: "Score",
         body: currentSheet.match(
             () => ProgressIndicator(),
-            (sheet) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    RulaScoreDisplay(
-                      label: "Full",
-                      score: calcFullRulaScore(sheet),
-                      maxScore: 7,
-                      level: 0,
-                    ),
-                    RulaScoreDisplay(
-                        label: "Upper arm",
-                        score: calcUpperArmScore(sheet),
-                        maxScore: 6,
-                        level: 1),
-                    RulaScoreDisplay(
-                        label: "Lower arm",
-                        score: calcLowerArmScore(sheet),
-                        maxScore: 3,
-                        level: 1),
-                    RulaScoreDisplay(
-                        label: "Neck",
-                        score: calcNeckScore(sheet),
-                        maxScore: 6,
-                        level: 1),
-                    RulaScoreDisplay(
-                        label: "Flexion",
-                        score: calcNeckFlexionScore(sheet),
-                        maxScore: 4,
-                        level: 2),
-                    RulaScoreDisplay(
-                        label: "Trunk",
-                        score: calcTrukScore(sheet),
-                        maxScore: 6,
-                        level: 1),
-                    RulaScoreDisplay(
-                        label: "Leg",
-                        score: calcLegScore(sheet),
-                        maxScore: 2,
-                        level: 1),
-                  ],
+            (sheet) => SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      RulaScoreDisplay(
+                          label: "Full",
+                          score: calcFullRulaScore(sheet).value,
+                          maxScore: 7,
+                          level: 0),
+                      RulaScoreDisplay(
+                          label: "Upper arm",
+                          score: calcUpperArmScore(sheet).value,
+                          maxScore: 6,
+                          level: 1),
+                      RulaScoreDisplay(
+                          label: "Lower arm",
+                          score: calcLowerArmScore(sheet).value,
+                          maxScore: 3,
+                          level: 1),
+                      RulaScoreDisplay(
+                          label: "Neck",
+                          score: calcNeckScore(sheet).value,
+                          maxScore: 6,
+                          level: 1),
+                      RulaScoreDisplay(
+                          label: "Flexion",
+                          score: calcNeckFlexionScore(sheet).value,
+                          maxScore: 4,
+                          level: 2),
+                      RulaScoreDisplay(
+                          label: "Lateral flexion",
+                          score: calcLateralNeckFlexionBonus(sheet),
+                          minScore: 0,
+                          maxScore: 1,
+                          level: 2),
+                      RulaScoreDisplay(
+                          label: "Trunk",
+                          score: calcTrukScore(sheet).value,
+                          maxScore: 6,
+                          level: 1),
+                      RulaScoreDisplay(
+                          label: "Leg",
+                          score: calcLegScore(sheet).value,
+                          maxScore: 2,
+                          level: 1),
+                    ],
+                  ),
                 )));
   }
 }

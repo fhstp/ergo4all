@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 
 class RulaScoreDisplay extends StatelessWidget {
   final String label;
-  final RulaScore score;
+  final int score;
+  final int minScore;
   final int maxScore;
   final int level;
 
@@ -11,12 +11,13 @@ class RulaScoreDisplay extends StatelessWidget {
       {super.key,
       required this.label,
       required this.score,
+      this.minScore = 1,
       required this.maxScore,
       required this.level});
 
   @override
   Widget build(BuildContext context) {
-    final scoreT = (score.value - 1) / (maxScore - 1);
+    final scoreT = (score - minScore) / (maxScore - minScore);
     final color = switch (scoreT) {
       < 0.25 => const Color.fromARGB(255, 129, 224, 132),
       < 0.5 => const Color.fromARGB(255, 237, 224, 105),
@@ -30,7 +31,7 @@ class RulaScoreDisplay extends StatelessWidget {
           color: color,
           child: Padding(
             padding: EdgeInsets.all(8),
-            child: Text("$label: ${score.value} / $maxScore"),
+            child: Text("$label: $score / $maxScore"),
           )),
     );
   }
