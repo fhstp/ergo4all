@@ -40,22 +40,6 @@ double _angle(Vector3 a, Vector3 b) {
   return degrees(angle);
 }
 
-/// Calculates the angle in degrees between the lines from [pointA] to [pointB] and [pointC] to [pointD].
-double _crossAngle(Pose pose, KeyPoints pointA, KeyPoints pointB,
-    KeyPoints pointC, KeyPoints pointD) {
-  final a = posOf(pose[pointA]!);
-  final b = posOf(pose[pointB]!);
-  final c = posOf(pose[pointC]!);
-  final d = posOf(pose[pointD]!);
-
-  final ba = a - b;
-  final dc = c - d;
-
-  return _angle(ba, dc);
-}
-
-Vector2 _down = Vector2(0, 1);
-
 Vector2 _up = Vector2(0, -1);
 
 Vector2 _line2d(Pose2d pose, KeyPoints a, KeyPoints b) {
