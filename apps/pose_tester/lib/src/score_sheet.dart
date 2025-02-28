@@ -7,6 +7,7 @@ class ScoreSheet {
   final RulaScore upperArm;
   final RulaScore lowerArm;
   final RulaScore neck;
+  final RulaScore neckFlexion;
   final RulaScore trunk;
   final RulaScore leg;
   final RulaScore full;
@@ -15,6 +16,7 @@ class ScoreSheet {
     required this.upperArm,
     required this.lowerArm,
     required this.neck,
+    required this.neckFlexion,
     required this.trunk,
     required this.leg,
     required this.full,

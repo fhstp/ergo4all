@@ -104,6 +104,7 @@ class _ScorePageState extends State<ScorePage> {
             upperArm: calcUpperArmScore(rulaSheet),
             lowerArm: calcLowerArmScore(rulaSheet),
             neck: calcNeckScore(rulaSheet),
+            neckFlexion: calcNeckFlexionScore(rulaSheet),
             trunk: calcTrukScore(rulaSheet),
             leg: calcLegScore(rulaSheet),
             full: calcFullRulaScore(rulaSheet)));
@@ -154,6 +155,11 @@ class _ScorePageState extends State<ScorePage> {
                         score: sheet.neck,
                         maxScore: 6,
                         level: 1),
+                    RulaScoreDisplay(
+                        label: "Flexion",
+                        score: sheet.neckFlexion,
+                        maxScore: 4,
+                        level: 2),
                     RulaScoreDisplay(
                         label: "Trunk",
                         score: sheet.trunk,
