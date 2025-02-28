@@ -134,17 +134,33 @@ class _ScorePageState extends State<ScorePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     RulaScoreDisplay(
-                        label: "Full", score: sheet.full, maxScore: 7),
+                      label: "Full",
+                      score: sheet.full,
+                      maxScore: 7,
+                      level: 0,
+                    ),
                     RulaScoreDisplay(
-                        label: "Upper arm", score: sheet.upperArm, maxScore: 6),
+                        label: "Upper arm",
+                        score: sheet.upperArm,
+                        maxScore: 6,
+                        level: 1),
                     RulaScoreDisplay(
-                        label: "Lower arm", score: sheet.lowerArm, maxScore: 3),
+                        label: "Lower arm",
+                        score: sheet.lowerArm,
+                        maxScore: 3,
+                        level: 1),
                     RulaScoreDisplay(
-                        label: "Neck", score: sheet.neck, maxScore: 6),
+                        label: "Neck",
+                        score: sheet.neck,
+                        maxScore: 6,
+                        level: 1),
                     RulaScoreDisplay(
-                        label: "Trunk", score: sheet.trunk, maxScore: 6),
+                        label: "Trunk",
+                        score: sheet.trunk,
+                        maxScore: 6,
+                        level: 1),
                     RulaScoreDisplay(
-                        label: "Leg", score: sheet.leg, maxScore: 2),
+                        label: "Leg", score: sheet.leg, maxScore: 2, level: 1),
                   ],
                 )));
   }

@@ -5,12 +5,14 @@ class RulaScoreDisplay extends StatelessWidget {
   final String label;
   final RulaScore score;
   final int maxScore;
+  final int level;
 
   const RulaScoreDisplay(
       {super.key,
       required this.label,
       required this.score,
-      required this.maxScore});
+      required this.maxScore,
+      required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +24,14 @@ class RulaScoreDisplay extends StatelessWidget {
       _ => const Color.fromARGB(255, 240, 120, 111)
     };
 
-    return Card(
-        color: color,
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Text("$label: ${score.value} / $maxScore"),
-        ));
+    return Container(
+      margin: EdgeInsets.only(left: level * 20),
+      child: Card(
+          color: color,
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Text("$label: ${score.value} / $maxScore"),
+          )),
+    );
   }
 }
