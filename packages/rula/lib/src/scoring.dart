@@ -151,11 +151,16 @@ int calcLateralNeckFlexionBonus(RulaSheet sheet) {
       : 0;
 }
 
+/// Calculates the neck twist score based on the given [sheet].
+/// Produces a value in range [0; 1].
+int calcNeckTwistBonus(RulaSheet sheet) {
+  return sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
+}
+
 /// Calculates the neck score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
 RulaScore calcNeckScore(RulaSheet sheet) {
   final neckFlexionScore = calcNeckFlexionScore(sheet).value;
-  final neckRotationBonus =
-      sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
+  final neckRotationBonus = calcNeckTwistBonus(sheet);
   final neckLateralFlexionBonus = calcLateralNeckFlexionBonus(sheet);
   final neckScore =
       neckFlexionScore + neckRotationBonus + neckLateralFlexionBonus;
