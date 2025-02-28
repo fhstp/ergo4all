@@ -136,10 +136,19 @@ RulaScore calcUpperArmScore(RulaSheet sheet) {
   return RulaScore.make(upperArmScore);
 }
 
+/// Calculates the elbow flexion score for the given [sheet]. Produces a [RulaScore] in the range [1; 2].
+RulaScore calcElbowFlexionScore(RulaSheet sheet) {
+  final score = switch (sheet.elbowFlexion.value) {
+    <= 60 => 2,
+    <= 100 => 1,
+    _ => 2,
+  };
+  return RulaScore.make(score);
+}
+
 /// Calculates the lower arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 3].
 RulaScore calcLowerArmScore(RulaSheet sheet) {
-  final elbowFlexionScore =
-      switch (sheet.elbowFlexion.value) { <= 60 => 2, <= 100 => 1, _ => 2 };
+  final elbowFlexionScore = calcElbowFlexionScore(sheet).value;
   final lowerArmScore = elbowFlexionScore;
   assert(lowerArmScore >= 1 && lowerArmScore <= 3);
   return RulaScore.make(lowerArmScore);
