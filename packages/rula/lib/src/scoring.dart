@@ -150,6 +150,11 @@ RulaScore calcElbowFlexionScore(RulaSheet sheet) {
 RulaScore calcLowerArmScore(RulaSheet sheet) {
   final elbowFlexionScore = calcElbowFlexionScore(sheet).value;
   final lowerArmScore = elbowFlexionScore;
+
+  // NOTE:
+  //  In theory you could get +1 here for lateral flexion but we don't track
+  //  that. I still say the range is [1; 3].
+
   assert(lowerArmScore >= 1 && lowerArmScore <= 3);
   return RulaScore.make(lowerArmScore);
 }
