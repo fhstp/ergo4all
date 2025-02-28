@@ -121,11 +121,16 @@ RulaScore calcShoulderFlexionScore(RulaSheet sheet) {
   return RulaScore.make(shoulderFlexionScore);
 }
 
+/// Calculates the shoulder abduction score based on the given [sheet].
+/// Produces a value in range [0; 1].
+int calcShoulderAbductionBonus(RulaSheet sheet) {
+  return sheet.shoulderAbduction.value > minBadShoulderAbductionAngle ? 1 : 0;
+}
+
 /// Calculates the upper arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
 RulaScore calcUpperArmScore(RulaSheet sheet) {
   final shoulderFlexionScore = calcShoulderFlexionScore(sheet).value;
-  final shoulderAbductionBonus =
-      sheet.shoulderAbduction.value > minBadShoulderAbductionAngle ? 1 : 0;
+  final shoulderAbductionBonus = calcShoulderAbductionBonus(sheet);
   final upperArmScore = shoulderFlexionScore + shoulderAbductionBonus;
   assert(upperArmScore >= 1 && upperArmScore <= 6);
   return RulaScore.make(upperArmScore);
