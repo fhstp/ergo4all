@@ -8,7 +8,6 @@ import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
-import 'package:pose_tester/src/score_sheet.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
 import 'package:pose_vis/pose_vis.dart';
@@ -88,7 +87,7 @@ class ScorePage extends StatefulWidget {
 }
 
 class _ScorePageState extends State<ScorePage> {
-  Option<ScoreSheet> currentSheet = none();
+  Option<RulaSheet> currentSheet = none();
 
   void refreshSheet() async {
     setState(() {
@@ -98,16 +97,8 @@ class _ScorePageState extends State<ScorePage> {
     await Future.value(Null);
 
     widget.angles.match(() {}, (angles) {
-      final rulaSheet = rulaSheetFromAngles(angles);
       setState(() {
-        currentSheet = Some(ScoreSheet(
-            upperArm: calcUpperArmScore(rulaSheet),
-            lowerArm: calcLowerArmScore(rulaSheet),
-            neck: calcNeckScore(rulaSheet),
-            neckFlexion: calcNeckFlexionScore(rulaSheet),
-            trunk: calcTrukScore(rulaSheet),
-            leg: calcLegScore(rulaSheet),
-            full: calcFullRulaScore(rulaSheet)));
+        currentSheet = Some(rulaSheetFromAngles(angles));
       });
     });
   }
@@ -136,37 +127,40 @@ class _ScorePageState extends State<ScorePage> {
                   children: [
                     RulaScoreDisplay(
                       label: "Full",
-                      score: sheet.full,
+                      score: calcFullRulaScore(sheet),
                       maxScore: 7,
                       level: 0,
                     ),
                     RulaScoreDisplay(
                         label: "Upper arm",
-                        score: sheet.upperArm,
+                        score: calcUpperArmScore(sheet),
                         maxScore: 6,
                         level: 1),
                     RulaScoreDisplay(
                         label: "Lower arm",
-                        score: sheet.lowerArm,
+                        score: calcLowerArmScore(sheet),
                         maxScore: 3,
                         level: 1),
                     RulaScoreDisplay(
                         label: "Neck",
-                        score: sheet.neck,
+                        score: calcNeckScore(sheet),
                         maxScore: 6,
                         level: 1),
                     RulaScoreDisplay(
                         label: "Flexion",
-                        score: sheet.neckFlexion,
+                        score: calcNeckFlexionScore(sheet),
                         maxScore: 4,
                         level: 2),
                     RulaScoreDisplay(
                         label: "Trunk",
-                        score: sheet.trunk,
+                        score: calcTrukScore(sheet),
                         maxScore: 6,
                         level: 1),
                     RulaScoreDisplay(
-                        label: "Leg", score: sheet.leg, maxScore: 2, level: 1),
+                        label: "Leg",
+                        score: calcLegScore(sheet),
+                        maxScore: 2,
+                        level: 1),
                   ],
                 )));
   }
