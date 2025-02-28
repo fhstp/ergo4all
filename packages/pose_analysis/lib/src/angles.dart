@@ -40,30 +40,6 @@ double _angle(Vector3 a, Vector3 b) {
   return degrees(angle);
 }
 
-/// Calculates the angle in degrees between the lines from [pointB] to [pointA] and [pointB] to [pointC].
-double _jointAngle(
-    Pose pose, KeyPoints pointA, KeyPoints pointB, KeyPoints pointC) {
-  final a = posOf(pose[pointA]!);
-  final b = posOf(pose[pointB]!);
-  final c = posOf(pose[pointC]!);
-
-  final ba = a - b;
-  final bc = c - b;
-
-  return _angle(ba, bc);
-}
-
-/// Calculates the angle in degrees between the lines from [pointB] to [pointA] and the z-axis.
-double _zAngle(Pose pose, KeyPoints pointA, KeyPoints pointB) {
-  final a = posOf(pose[pointA]!);
-  final b = posOf(pose[pointB]!);
-
-  final ba = a - b;
-  final bc = Vector3(0, 0, 1);
-
-  return _angle(ba, bc);
-}
-
 /// Calculates the angle in degrees between the lines from [pointA] to [pointB] and [pointC] to [pointD].
 double _crossAngle(Pose pose, KeyPoints pointA, KeyPoints pointB,
     KeyPoints pointC, KeyPoints pointD) {
