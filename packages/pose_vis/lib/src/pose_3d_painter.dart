@@ -3,9 +3,9 @@ import 'package:pose/pose.dart';
 
 /// [CustomPainter] for [Pose] objects. Intended to be overlayed over the image
 /// which produced the pose.
-class PosePainter extends CustomPainter {
+class Pose3dPainter extends CustomPainter {
   /// Creates a pose painter.
-  PosePainter({required this.pose, required this.imageSize, super.repaint});
+  Pose3dPainter({required this.pose, required this.imageSize, super.repaint});
 
   /// The pose to visualize.
   final Pose pose;
@@ -78,7 +78,7 @@ class PosePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant PosePainter oldDelegate) {
+  bool shouldRepaint(covariant Pose3dPainter oldDelegate) {
     return oldDelegate.pose != pose;
   }
 }

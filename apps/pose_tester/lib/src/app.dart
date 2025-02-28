@@ -229,7 +229,7 @@ class Pose3DDisplay extends StatelessWidget {
               if (selectedPose case Some(value: final pose))
                 Positioned.fill(
                   child: CustomPaint(
-                      painter: PosePainter(
+                      painter: Pose3dPainter(
                           pose: pose,
                           imageSize: Size(image.width.toDouble(),
                               image.height.toDouble()))),

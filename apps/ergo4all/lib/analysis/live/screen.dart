@@ -66,7 +66,7 @@ class LiveAnalysisScreen extends HookWidget {
               if (uiState.latestCapture case Some(value: final capture))
                 Positioned.fill(
                   child: CustomPaint(
-                      painter: PosePainter(
+                      painter: Pose3dPainter(
                     pose: capture.pose,
                     imageSize: capture.imageSize,
                   )),
