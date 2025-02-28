@@ -106,8 +106,8 @@ const _tableC = [
   [5, 5, 6, 7, 7, 7, 7]
 ];
 
-/// Calculates the upper arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
-RulaScore calcUpperArmScore(RulaSheet sheet) {
+/// Calculates the shoulder flexion score for the given [sheet]. Produces a [RulaScore] in the range [1; 4].
+RulaScore calcShoulderFlexionScore(RulaSheet sheet) {
   final shoulderFlexionScore = switch (sheet.shoulderFlexion.value) {
     < -20.0 => 2,
     <= 20.0 => 1,
@@ -115,6 +115,12 @@ RulaScore calcUpperArmScore(RulaSheet sheet) {
     <= 90 => 3,
     _ => 4,
   };
+  return RulaScore.make(shoulderFlexionScore);
+}
+
+/// Calculates the upper arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
+RulaScore calcUpperArmScore(RulaSheet sheet) {
+  final shoulderFlexionScore = calcShoulderFlexionScore(sheet).value;
   final shoulderAbductionBonus = sheet.shoulderAbduction.value > 60 ? 1 : 0;
   final upperArmScore = shoulderFlexionScore + shoulderAbductionBonus;
   assert(upperArmScore >= 1 && upperArmScore <= 6);
