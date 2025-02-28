@@ -86,7 +86,11 @@ Vector2 _line2d(Pose2d pose, KeyPoints a, KeyPoints b) {
   return (pose[b]! - pose[a]!).normalized();
 }
 
-PoseAngles calculateAngles(Pose worldPose, Pose2d coronal, Pose2d sagittal) {
+Vector3 _line(Pose pose, KeyPoints a, KeyPoints b) {
+  return (posOf(pose[b]!) - posOf(pose[a]!)).normalized();
+}
+
+PoseAngles calculateAngles(Pose world, Pose2d coronal, Pose2d sagittal) {
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
         KeyAngles.shoulderFlexionLeft => _angle2d(
             _line2d(sagittal, KeyPoints.leftShoulder, KeyPoints.leftHip),
@@ -104,18 +108,22 @@ PoseAngles calculateAngles(Pose worldPose, Pose2d coronal, Pose2d sagittal) {
             _line2d(coronal, KeyPoints.rightShoulder, KeyPoints.rightHip),
             _line2d(coronal, KeyPoints.rightShoulder, KeyPoints.rightElbow),
           ),
-        KeyAngles.elbowFlexionLeft => 180 -
-            _jointAngle(worldPose, KeyPoints.leftWrist, KeyPoints.leftElbow,
-                KeyPoints.leftShoulder),
-        KeyAngles.elbowFlexionRight => 180 -
-            _jointAngle(worldPose, KeyPoints.rightWrist, KeyPoints.rightElbow,
-                KeyPoints.rightShoulder),
-        KeyAngles.wristFlexionLeft => 180 -
-            _jointAngle(worldPose, KeyPoints.leftElbow, KeyPoints.leftWrist,
-                KeyPoints.leftPalm),
-        KeyAngles.wristFlexionRight => 180 -
-            _jointAngle(worldPose, KeyPoints.rightElbow, KeyPoints.rightWrist,
-                KeyPoints.rightPalm),
+        KeyAngles.elbowFlexionLeft => _angle(
+            _line(world, KeyPoints.leftElbow, KeyPoints.leftWrist),
+            _line(world, KeyPoints.leftShoulder, KeyPoints.leftElbow),
+          ),
+        KeyAngles.elbowFlexionRight => _angle(
+            _line(world, KeyPoints.rightElbow, KeyPoints.rightWrist),
+            _line(world, KeyPoints.rightShoulder, KeyPoints.rightElbow),
+          ),
+        KeyAngles.wristFlexionLeft => _angle(
+            _line(world, KeyPoints.leftWrist, KeyPoints.leftPalm),
+            _line(world, KeyPoints.leftElbow, KeyPoints.leftWrist),
+          ),
+        KeyAngles.wristFlexionRight => _angle(
+            _line(world, KeyPoints.rightWrist, KeyPoints.rightPalm),
+            _line(world, KeyPoints.rightElbow, KeyPoints.rightWrist),
+          ),
         KeyAngles.kneeFlexionLeft => _angle2d(
             _line2d(sagittal, KeyPoints.leftKnee, KeyPoints.leftAnkle),
             _line2d(sagittal, KeyPoints.leftHip, KeyPoints.leftKnee),
@@ -142,7 +150,7 @@ PoseAngles calculateAngles(Pose worldPose, Pose2d coronal, Pose2d sagittal) {
           ),
         KeyAngles.neckSideBend => (90 -
                 _crossAngle(
-                    worldPose, // TODO: Should this be coronal?
+                    world, // TODO: Should this be coronal?
                     KeyPoints.leftShoulder,
                     KeyPoints.rightShoulder,
                     KeyPoints.midNeck,
@@ -150,7 +158,7 @@ PoseAngles calculateAngles(Pose worldPose, Pose2d coronal, Pose2d sagittal) {
             .abs(),
         KeyAngles.neckTwist => (180 -
                 _crossAngle(
-                    worldPose,
+                    world,
                     KeyPoints.rightShoulder,
                     KeyPoints.leftShoulder,
                     KeyPoints.leftEar,
