@@ -197,14 +197,20 @@ RulaScore calcNeckScore(RulaSheet sheet) {
   return RulaScore.make(neckScore);
 }
 
-/// Calculates the trunk score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
-RulaScore calcTrukScore(RulaSheet sheet) {
+/// Calculates the hip flexion score for the given [sheet]. Produces a [RulaScore] in the range [1; 4].
+RulaScore calcHipFlexionScore(RulaSheet sheet) {
   final hipFlexionScore = switch (sheet.hipFlexion.value) {
     < 5 => 1,
     < 20 => 2,
     < 60 => 3,
     _ => 4
   };
+  return RulaScore.make(hipFlexionScore);
+}
+
+/// Calculates the trunk score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
+RulaScore calcTrukScore(RulaSheet sheet) {
+  final hipFlexionScore = calcHipFlexionScore(sheet).value;
   final trunkTwistBonus = sheet.trunkRotation.value.abs() > 5 ? 1 : 0;
   final trunkLateralFlexionBonus =
       sheet.trunkLateralFlexion.value.abs() > 5 ? 1 : 0;
