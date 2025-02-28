@@ -35,8 +35,8 @@ void paintPose(
   }
 
   [
-    (KeyPoints.rightPalm, KeyPoints.rightElbow),
-    (KeyPoints.leftPalm, KeyPoints.leftElbow),
+    (KeyPoints.rightWrist, KeyPoints.rightElbow),
+    (KeyPoints.leftWrist, KeyPoints.leftElbow),
     (KeyPoints.rightElbow, KeyPoints.rightShoulder),
     (KeyPoints.rightWrist, KeyPoints.rightPalm),
     (KeyPoints.leftElbow, KeyPoints.leftShoulder),
