@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:rula/src/score.dart';
 import 'package:rula/src/sheet.dart';
 
-const _minBadNeckTwistAngle = 5;
-const _minBadNeckLateralFlexAngle = 5;
+// These angles are not specified by RULA. I chose 20, because 20 is also
+// the "worst" angle which is scored for neck flexion.
+const _minBadNeckTwistAngle = 20;
+const _minBadNeckLateralFlexAngle = 20;
 
 /// This matches table A on the Rula sheet, except that we omit the wrist twist score. Here we just always pick the value like it was 1.
 const _tableA = [
