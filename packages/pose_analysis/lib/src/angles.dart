@@ -66,7 +66,8 @@ Vector3 _line(Pose pose, KeyPoints a, KeyPoints b) {
   return (posOf(pose[b]!) - posOf(pose[a]!)).normalized();
 }
 
-PoseAngles calculateAngles(Pose world, Pose2d coronal, Pose2d sagittal) {
+PoseAngles calculateAngles(
+    Pose world, Pose2d coronal, Pose2d sagittal, Pose2d transverse) {
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
         KeyAngles.shoulderFlexionLeft => _angle2d(
             _line2d(sagittal, KeyPoints.leftShoulder, KeyPoints.leftHip),
@@ -112,10 +113,11 @@ PoseAngles calculateAngles(Pose world, Pose2d coronal, Pose2d sagittal) {
             _line2d(sagittal, KeyPoints.midPelvis, KeyPoints.midNeck),
             _up,
           ),
-        KeyAngles.trunkTwist => (180 -
-                _crossAngle(worldPose, KeyPoints.rightHip, KeyPoints.leftHip,
-                    KeyPoints.leftShoulder, KeyPoints.rightShoulder))
-            .abs(),
+        KeyAngles.trunkTwist => _angle2d(
+            _line2d(
+                transverse, KeyPoints.leftShoulder, KeyPoints.rightShoulder),
+            _line2d(transverse, KeyPoints.leftHip, KeyPoints.rightHip),
+          ),
         KeyAngles.trunkSideBend => (90 -
                 _crossAngle(worldPose, KeyPoints.leftHip, KeyPoints.rightHip,
                     KeyPoints.midPelvis, KeyPoints.midNeck))

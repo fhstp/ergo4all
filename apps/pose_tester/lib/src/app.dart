@@ -278,7 +278,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       final normalized = normalizePose(pose);
       final coronal = make2dCoronalPose(normalized);
       final sagittal = make2dSagittalPose(normalized);
-      final angles = calculateAngles(normalized, coronal, sagittal);
+      final transverse = make2dTransversePose(normalized);
+      final angles = calculateAngles(normalized, coronal, sagittal, transverse);
 
       setState(() {
         selectedPose = Some(pose);

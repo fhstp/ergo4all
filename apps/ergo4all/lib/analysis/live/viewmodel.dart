@@ -50,7 +50,8 @@ class LiveAnalysisViewModel {
     final normalized = normalizePose(capture.pose);
     final sagittal = make2dSagittalPose(normalized);
     final coronal = make2dCoronalPose(normalized);
-    final angles = calculateAngles(capture.pose, coronal, sagittal);
+    final transverse = make2dTransversePose(normalized);
+    final angles = calculateAngles(capture.pose, coronal, sagittal, transverse);
 
     final sheet = rulaSheetFromAngles(angles);
     final now = DateTime.now().millisecondsSinceEpoch;
