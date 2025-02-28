@@ -143,15 +143,20 @@ RulaScore calcNeckFlexionScore(RulaSheet sheet) {
   return RulaScore.make(score);
 }
 
+/// Calculates the neck lateral flexion score based on the given [sheet].
+/// Produces a value in range [0; 1].
+int calcLateralNeckFlexionBonus(RulaSheet sheet) {
+  return sheet.neckLateralFlexion.value.abs() > _minBadNeckLateralFlexAngle
+      ? 1
+      : 0;
+}
+
 /// Calculates the neck score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
 RulaScore calcNeckScore(RulaSheet sheet) {
-  int neckFlexionScore = calcNeckFlexionScore(sheet).value;
+  final neckFlexionScore = calcNeckFlexionScore(sheet).value;
   final neckRotationBonus =
       sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
-  final neckLateralFlexionBonus =
-      sheet.neckLateralFlexion.value.abs() > _minBadNeckLateralFlexAngle
-          ? 1
-          : 0;
+  final neckLateralFlexionBonus = calcLateralNeckFlexionBonus(sheet);
   final neckScore =
       neckFlexionScore + neckRotationBonus + neckLateralFlexionBonus;
   assert(neckScore >= 1 && neckScore <= 6);
