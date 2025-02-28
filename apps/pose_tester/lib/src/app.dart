@@ -158,6 +158,12 @@ class _ScorePageState extends State<ScorePage> {
                           maxScore: 1,
                           level: 2),
                       RulaScoreDisplay(
+                          label: "Twist",
+                          score: calcNeckTwistBonus(sheet),
+                          minScore: 0,
+                          maxScore: 1,
+                          level: 2),
+                      RulaScoreDisplay(
                           label: "Trunk",
                           score: calcTrukScore(sheet).value,
                           maxScore: 6,
