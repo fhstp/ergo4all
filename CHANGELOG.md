@@ -1,3 +1,33 @@
+# [1.32.0](https://github.com/fhstp/ergo4all/compare/v1.31.0...v1.32.0) (2025-02-28)
+
+
+### Bug Fixes
+
+* **pose_analysis:** signed trunk twist angle ([4a245e5](https://github.com/fhstp/ergo4all/commit/4a245e572e5a43477e092807e44e6eda1afd263f))
+* **pose_vis:** backwards hands ([3e49831](https://github.com/fhstp/ergo4all/commit/3e4983169e55508a586a667d734b7f5daa13066c))
+
+
+### Features
+
+* **pose_analysis:** overhaul arm angle logic ([e4b3459](https://github.com/fhstp/ergo4all/commit/e4b34591783462508a4383ee653e7d8a07c17d1d))
+* **pose_analysis:** overhaul neck side-bend angle ([02b49f1](https://github.com/fhstp/ergo4all/commit/02b49f10dafeea1c8578642ee08f990506558f47))
+* **pose_analysis:** overhaul neck twist angle ([475fcb3](https://github.com/fhstp/ergo4all/commit/475fcb3adae5248f36b7b8da78fd31cfe7d006a0))
+* **pose_analysis:** overhaul trunk side bend angle ([507eb40](https://github.com/fhstp/ergo4all/commit/507eb404c26ccbcc1327d813d517aa1600238aaa))
+* **pose_analysis:** overhaul trunk twist angle ([5eb4c8b](https://github.com/fhstp/ergo4all/commit/5eb4c8b6d3aa15e004605d79ddb6fd28aa025adb))
+* **pose_tester:** display elbow flexion score ([a782aff](https://github.com/fhstp/ergo4all/commit/a782aff08431feaf87f24396dba997391a80d802))
+* **pose_tester:** display hip flexion score ([fef7c7f](https://github.com/fhstp/ergo4all/commit/fef7c7ff0cbf3898fe601694108ff491a241f792))
+* **pose_tester:** display neck flexion score ([7fb880e](https://github.com/fhstp/ergo4all/commit/7fb880e7d3f5a31a129fabfa455dfe58d851415b))
+* **pose_tester:** display neck lateral flexion score ([13fe8c6](https://github.com/fhstp/ergo4all/commit/13fe8c642a2955765b315797d624820158081391))
+* **pose_tester:** display neck twist score ([08e33a0](https://github.com/fhstp/ergo4all/commit/08e33a0a889d80a9db466b42791fbc2e4b6f6806))
+* **pose_tester:** display shoulder abduction score ([a58f5cc](https://github.com/fhstp/ergo4all/commit/a58f5cc55b9509e881756c00701d5cb332aad5c8))
+* **pose_tester:** display shoulder flexion score ([9d286e0](https://github.com/fhstp/ergo4all/commit/9d286e0cb7b5de55826572d49307095f23aba970))
+* **pose_tester:** display trunk lateral flexion angle ([4c83f9c](https://github.com/fhstp/ergo4all/commit/4c83f9c6d4cfa9db61ff5a66bfc75f6754c35a09))
+* **pose_tester:** display trunk twist score ([b546669](https://github.com/fhstp/ergo4all/commit/b546669098ec3a82281f87950097725bcab624ad))
+* **pose_tester:** improve score display ([c91c80f](https://github.com/fhstp/ergo4all/commit/c91c80faa31151a5e058ef3d5eb81debbadd3d47))
+* **pose_tester:** toggle 3d pose visibility ([07e1db7](https://github.com/fhstp/ergo4all/commit/07e1db7c57520f05efc7f7e7eabb3b1411d76eea))
+* **pose_vis:** use 2d vis style for 3d ([0b117b3](https://github.com/fhstp/ergo4all/commit/0b117b38bb5908fe37edd10cea4493f7ea936868))
+* **pose_vis:** visualize ears ([ded1d2c](https://github.com/fhstp/ergo4all/commit/ded1d2c3f8751266519cc65ebd81491ca68fc31e))
+
 # [1.31.0](https://github.com/fhstp/ergo4all/compare/v1.30.2...v1.31.0) (2025-02-27)
 
 
