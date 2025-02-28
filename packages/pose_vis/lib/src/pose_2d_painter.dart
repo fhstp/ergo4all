@@ -36,10 +36,13 @@ extension _ScalingExt on Pose2d {
   }
 }
 
+/// A [CustomPainter] for [Pose2d] objects.
 class Pose2dPainter extends CustomPainter {
-  final Pose2d pose;
+  /// Creates a painter for the given [pose].
+  Pose2dPainter({required this.pose, super.repaint});
 
-  Pose2dPainter({super.repaint, required this.pose});
+  /// The pose to paint.
+  final Pose2d pose;
 
   @override
   void paint(Canvas canvas, Size size) {
