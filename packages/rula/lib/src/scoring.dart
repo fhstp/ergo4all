@@ -11,7 +11,7 @@ const _minBadNeckLateralFlexAngle = 20;
 // These angles are also not in the RULA sheet. I just chose something arbitrarily.
 const minBadShoulderAbductionAngle = 60;
 const minBadTrunkTwistAngle = 10;
-const minBadTrunkLateralTwistAngle = 5;
+const minBadTrunkLateralTwistAngle = 10;
 
 /// This matches table A on the Rula sheet, except that we omit the wrist twist score. Here we just always pick the value like it was 1.
 const _tableA = [
