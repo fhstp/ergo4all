@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Page;
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
+import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
@@ -27,28 +28,6 @@ class ProgressIndicator extends StatelessWidget {
         height: 100,
         child: CircularProgressIndicator(),
       ),
-    );
-  }
-}
-
-class Page extends StatelessWidget {
-  final String title;
-  final Widget? body;
-
-  const Page({super.key, required this.title, required this.body});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        SizedBox(height: 10),
-        Expanded(child: body ?? Container())
-      ],
     );
   }
 }
