@@ -10,6 +10,7 @@ const _minBadNeckLateralFlexAngle = 20;
 
 // These angles are also not in the RULA sheet. I just chose something arbitrarily.
 const minBadShoulderAbductionAngle = 60;
+const minBadTrunkTwistAngle = 5;
 
 /// This matches table A on the Rula sheet, except that we omit the wrist twist score. Here we just always pick the value like it was 1.
 const _tableA = [
@@ -211,7 +212,7 @@ RulaScore calcHipFlexionScore(RulaSheet sheet) {
 /// Calculates the trunk twist score based on the given [sheet].
 /// Produces a value in range [0; 1].
 int calcTrunkTwistScore(RulaSheet sheet) {
-  return sheet.trunkRotation.value.abs() > 5 ? 1 : 0;
+  return sheet.trunkRotation.value.abs() > minBadTrunkTwistAngle ? 1 : 0;
 }
 
 /// Calculates the trunk score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
