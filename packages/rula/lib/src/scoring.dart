@@ -215,12 +215,17 @@ int calcTrunkTwistBonus(RulaSheet sheet) {
   return sheet.trunkRotation.value.abs() > minBadTrunkTwistAngle ? 1 : 0;
 }
 
+/// Calculates the trunk lateral flexion score based on the given [sheet].
+/// Produces a value in range [0; 1].
+int calcTrunkLateralFlexionBonus(RulaSheet sheet) {
+  return sheet.trunkLateralFlexion.value.abs() > 5 ? 1 : 0;
+}
+
 /// Calculates the trunk score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
 RulaScore calcTrukScore(RulaSheet sheet) {
   final hipFlexionScore = calcHipFlexionScore(sheet).value;
   final trunkTwistBonus = calcTrunkTwistBonus(sheet);
-  final trunkLateralFlexionBonus =
-      sheet.trunkLateralFlexion.value.abs() > 5 ? 1 : 0;
+  int trunkLateralFlexionBonus = calcTrunkLateralFlexionBonus(sheet);
   final trunkScore =
       hipFlexionScore + trunkTwistBonus + trunkLateralFlexionBonus;
   assert(trunkScore >= 1 && trunkScore <= 6);
