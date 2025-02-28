@@ -196,6 +196,12 @@ class _ScorePageState extends State<ScorePage> {
                           minScore: 1,
                           level: 2),
                       RulaScoreDisplay(
+                          label: "Lateral flexion",
+                          score: calcTrunkLateralFlexionBonus(sheet),
+                          maxScore: 1,
+                          minScore: 1,
+                          level: 2),
+                      RulaScoreDisplay(
                           label: "Leg",
                           score: calcLegScore(sheet).value,
                           maxScore: 2,
