@@ -52,5 +52,7 @@ void paintPose(
     (KeyPoints.midNeck, KeyPoints.midPelvis),
     (KeyPoints.midNeck, KeyPoints.midHead),
     (KeyPoints.midHead, KeyPoints.nose),
+    (KeyPoints.midHead, KeyPoints.leftEar),
+    (KeyPoints.midHead, KeyPoints.rightEar),
   ].forEach(drawBone);
 }
