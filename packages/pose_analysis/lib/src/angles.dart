@@ -133,14 +133,11 @@ PoseAngles calculateAngles(
                       coronal, KeyPoints.rightShoulder, KeyPoints.leftShoulder),
                 ))
             .abs(),
-        KeyAngles.neckTwist => (180 -
-                _crossAngle(
-                    world,
-                    KeyPoints.rightShoulder,
-                    KeyPoints.leftShoulder,
-                    KeyPoints.leftEar,
-                    KeyPoints.rightEar))
-            .abs(),
+        KeyAngles.neckTwist => _angle2d(
+            _line2d(
+                transverse, KeyPoints.leftShoulder, KeyPoints.rightShoulder),
+            _line2d(transverse, KeyPoints.leftEar, KeyPoints.rightEar),
+          ).abs(),
       };
 
   return IMap.fromKeys(keys: KeyAngles.values, valueMapper: calcKeyAngle);
