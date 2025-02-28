@@ -1,36 +1,20 @@
 import 'dart:convert';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart' hide Page;
+import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
 import 'package:pose_tester/src/page.dart';
+import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
 import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/test_image.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:rula/rula.dart';
 import 'package:share_plus/share_plus.dart';
-
-class ProgressIndicator extends StatelessWidget {
-  const ProgressIndicator({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 100,
-        height: 100,
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
-}
 
 class AnglePage extends StatelessWidget {
   const AnglePage({
