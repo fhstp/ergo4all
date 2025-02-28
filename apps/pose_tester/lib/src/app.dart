@@ -142,6 +142,12 @@ class _ScorePageState extends State<ScorePage> {
                           maxScore: 4,
                           level: 2),
                       RulaScoreDisplay(
+                          label: "Shoulder abduction",
+                          score: calcShoulderAbductionBonus(sheet),
+                          maxScore: 1,
+                          minScore: 0,
+                          level: 2),
+                      RulaScoreDisplay(
                           label: "Lower arm",
                           score: calcLowerArmScore(sheet).value,
                           maxScore: 3,
