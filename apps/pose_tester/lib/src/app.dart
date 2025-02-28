@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
-import 'package:pose_tester/src/map_display.dart';
+import 'package:pose_tester/src/angle_page.dart';
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
@@ -15,30 +15,6 @@ import 'package:pose_tester/src/test_image.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:rula/rula.dart';
 import 'package:share_plus/share_plus.dart';
-
-class AnglePage extends StatelessWidget {
-  const AnglePage({
-    super.key,
-    required this.currentAngles,
-  });
-
-  final Option<PoseAngles> currentAngles;
-
-  @override
-  Widget build(BuildContext context) {
-    return Page(
-        title: "Angles",
-        body: switch (currentAngles) {
-          Some(value: final angles) => SingleChildScrollView(
-              child: MapDisplay(
-                  map: angles,
-                  formatKey: (keyAngle) => keyAngle.name,
-                  formatValue: (degrees) => "${degrees.toInt()}°"),
-            ),
-          _ => ProgressIndicator()
-        });
-  }
-}
 
 class ScorePage extends StatefulWidget {
   final Option<PoseAngles> angles;
