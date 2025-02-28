@@ -8,6 +8,9 @@ import 'package:rula/src/sheet.dart';
 const _minBadNeckTwistAngle = 20;
 const _minBadNeckLateralFlexAngle = 20;
 
+// These angles are also not in the RULA sheet. I just chose something arbitrarily.
+const minBadShoulderAbductionAngle = 60;
+
 /// This matches table A on the Rula sheet, except that we omit the wrist twist score. Here we just always pick the value like it was 1.
 const _tableA = [
   [
@@ -121,7 +124,8 @@ RulaScore calcShoulderFlexionScore(RulaSheet sheet) {
 /// Calculates the upper arm score for the given [sheet]. Produces a [RulaScore] in the range [1; 6].
 RulaScore calcUpperArmScore(RulaSheet sheet) {
   final shoulderFlexionScore = calcShoulderFlexionScore(sheet).value;
-  final shoulderAbductionBonus = sheet.shoulderAbduction.value > 60 ? 1 : 0;
+  final shoulderAbductionBonus =
+      sheet.shoulderAbduction.value > minBadShoulderAbductionAngle ? 1 : 0;
   final upperArmScore = shoulderFlexionScore + shoulderAbductionBonus;
   assert(upperArmScore >= 1 && upperArmScore <= 6);
   return RulaScore.make(upperArmScore);
