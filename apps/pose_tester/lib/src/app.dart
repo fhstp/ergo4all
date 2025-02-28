@@ -185,6 +185,11 @@ class _ScorePageState extends State<ScorePage> {
                           maxScore: 6,
                           level: 1),
                       RulaScoreDisplay(
+                          label: "Hip flexion",
+                          score: calcHipFlexionScore(sheet).value,
+                          maxScore: 4,
+                          level: 2),
+                      RulaScoreDisplay(
                           label: "Leg",
                           score: calcLegScore(sheet).value,
                           maxScore: 2,
