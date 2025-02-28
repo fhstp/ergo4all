@@ -101,7 +101,7 @@ PoseAngles calculateAngles(
             _line2d(
                 transverse, KeyPoints.leftShoulder, KeyPoints.rightShoulder),
             _line2d(transverse, KeyPoints.leftHip, KeyPoints.rightHip),
-          ),
+          ).abs(),
         KeyAngles.trunkSideBend => (90 -
                 _angle2d(
                   _line2d(coronal, KeyPoints.midPelvis, KeyPoints.midNeck),
