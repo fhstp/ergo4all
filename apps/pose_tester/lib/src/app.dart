@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -62,13 +63,24 @@ class PoseTesterApp extends StatefulWidget {
   State<PoseTesterApp> createState() => _PoseTesterAppState();
 }
 
+@immutable
+class PoseData {
+  final Pose worldPose;
+  final NormalizedPose normalizedPose;
+  final PoseAngles angles;
+
+  const PoseData({
+    required this.worldPose,
+    required this.normalizedPose,
+    required this.angles,
+  });
+}
+
 class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
   Option<TestImage> selectedImage = none();
-  Option<Pose> selectedPose = none();
-  Option<NormalizedPose> normalizedPose = none();
-  Option<PoseAngles> currentAngles = none();
+  Option<PoseData> currentPoseData = none();
   bool show3dPose = true;
   int pageIndex = 0;
 
@@ -76,9 +88,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
   void updatePoseForImage(String imageName) async {
     setState(() {
-      selectedPose = none();
-      normalizedPose = none();
-      currentAngles = none();
+      currentPoseData = none();
     });
 
     var assetKey = assetKeyFor(imageName);
@@ -94,9 +104,11 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       final angles = calculateAngles(normalized, coronal, sagittal, transverse);
 
       setState(() {
-        selectedPose = Some(pose);
-        normalizedPose = Some(normalized);
-        currentAngles = Some(angles);
+        currentPoseData = Some(PoseData(
+          worldPose: pose,
+          normalizedPose: normalized,
+          angles: angles,
+        ));
       });
     } finally {
       await imageFile.delete();
@@ -106,9 +118,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   void selectImageWithName(String? name) async {
     setState(() {
       selectedImage = none();
-      selectedPose = none();
-      normalizedPose = none();
-      currentAngles = none();
+      currentPoseData = none();
     });
 
     if (name == null) {
@@ -202,9 +212,9 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 itemBuilder: (context) => [
                       PopupMenuItem(
                           child: InkWell(
-                        onTap: switch (selectedPose) {
+                        onTap: switch (currentPoseData) {
                           Some(value: final pose) => () {
-                              sharePose(context, pose);
+                              sharePose(context, pose.worldPose);
                             },
                           _ => null
                         },
@@ -227,7 +237,9 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 },
                 child: Pose3DDisplay(
                   selectedImage: selectedImage,
-                  selectedPose: show3dPose ? selectedPose : none(),
+                  selectedPose: show3dPose
+                      ? currentPoseData.map((it) => it.worldPose)
+                      : none(),
                 ),
               ),
               SizedBox(height: 20),
@@ -249,22 +261,29 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
               SizedBox(height: 20),
               Expanded(
                 child: switch (pageIndex) {
-                  0 => AnglePage(currentAngles: currentAngles),
-                  1 => ScorePage(angles: currentAngles),
+                  0 => AnglePage(
+                      currentAngles: currentPoseData.map((it) => it.angles),
+                    ),
+                  1 => ScorePage(
+                      angles: currentPoseData.map((it) => it.angles),
+                    ),
                   2 => Pose2dPage(
                       title: "Sagittal",
                       makePose2d: make2dSagittalPose,
-                      normalizedPose: normalizedPose,
+                      normalizedPose:
+                          currentPoseData.map((it) => it.normalizedPose),
                     ),
                   3 => Pose2dPage(
                       title: "Coronal",
                       makePose2d: make2dCoronalPose,
-                      normalizedPose: normalizedPose,
+                      normalizedPose:
+                          currentPoseData.map((it) => it.normalizedPose),
                     ),
                   4 => Pose2dPage(
                       title: "Transverse",
                       makePose2d: make2dTransversePose,
-                      normalizedPose: normalizedPose,
+                      normalizedPose:
+                          currentPoseData.map((it) => it.normalizedPose),
                     ),
                   _ => Placeholder()
                 },
