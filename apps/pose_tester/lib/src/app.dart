@@ -8,7 +8,7 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_page.dart';
-import 'package:pose_tester/src/paint_on_image.dart';
+import 'package:common_ui/src/paint_on_image.dart';
 import 'package:pose_tester/src/pose2d_page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/score_page.dart';

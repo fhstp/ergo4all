@@ -6,6 +6,7 @@ version: 1.32.0
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 workspace:
   - ./packages/common
+  - ./packages/common_ui
   - ./packages/custom_locale
   - ./packages/pose
   - ./packages/pose_analysis
