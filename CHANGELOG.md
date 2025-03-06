@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/fhstp/ergo4all/compare/v1.32.0...v1.33.0) (2025-03-06)
+
+
+### Features
+
+* **pose_tester:** select test images from gallery ([179613d](https://github.com/fhstp/ergo4all/commit/179613d9a841a40b36f98fcfafcf20af565c3f0f))
+
 # [1.32.0](https://github.com/fhstp/ergo4all/compare/v1.31.0...v1.32.0) (2025-02-28)
 
 
