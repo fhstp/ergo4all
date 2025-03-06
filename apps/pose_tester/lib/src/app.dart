@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:common_ui/src/paint_on_image.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:flutter/services.dart';
@@ -8,7 +9,6 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_page.dart';
-import 'package:common_ui/src/paint_on_image.dart';
 import 'package:pose_tester/src/pose2d_page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/score_page.dart';
@@ -35,8 +35,8 @@ class Pose3DDisplay extends StatelessWidget {
         child: selectedImage.match(
           () => ProgressIndicator(),
           (image) => PaintOnWidget(
-            base: Image(
-              image: image.asset,
+            base: Image.memory(
+              image.bytes,
               fit: BoxFit.fitHeight,
             ),
             painter: selectedPose

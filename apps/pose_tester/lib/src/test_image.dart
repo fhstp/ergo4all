@@ -5,17 +5,16 @@ import 'package:flutter/services.dart';
 class TestImage {
   final int width;
   final int height;
-  final AssetImage asset;
+  final Uint8List bytes;
 
   const TestImage(
-      {required this.width, required this.height, required this.asset});
+      {required this.width, required this.height, required this.bytes});
 
   static Future<TestImage> loadFromAsset(String assetName) async {
-    final asset = AssetImage(assetName);
-    final bytes = await rootBundle.load(assetName);
-    final image = await decodeImageFromList(bytes.buffer.asUint8List());
+    final bytes = (await rootBundle.load(assetName)).buffer.asUint8List();
+    final image = await decodeImageFromList(bytes);
     final result =
-        TestImage(width: image.width, height: image.height, asset: asset);
+        TestImage(width: image.width, height: image.height, bytes: bytes);
     image.dispose();
     return result;
   }
