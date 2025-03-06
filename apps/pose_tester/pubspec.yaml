@@ -24,6 +24,7 @@ dependencies:
   path_provider: ^2.1.5
   share_plus: ^10.1.4
   vector_math: ^2.1.4
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -38,5 +39,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/test_images/

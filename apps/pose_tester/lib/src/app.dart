@@ -1,19 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
-import 'package:common_ui/src/paint_on_image.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:common_ui/common_ui.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
-import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart' hide State;
+import 'package:image_picker/image_picker.dart';
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_page.dart';
-import 'package:pose_tester/src/pose2d_page.dart';
-import 'package:pose_tester/src/progress_indicator.dart';
-import 'package:pose_tester/src/score_page.dart';
-import 'package:pose_tester/src/temp_asset.dart';
 import 'package:pose_tester/src/image_file.dart';
+import 'package:pose_tester/src/pose2d_page.dart';
+import 'package:pose_tester/src/score_page.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -33,7 +28,7 @@ class Pose3DDisplay extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
         child: selectedImage.match(
-          () => ProgressIndicator(),
+          () => null,
           (image) => PaintOnWidget(
             base: Image.memory(
               image.bytes,
@@ -78,8 +73,6 @@ class PoseData {
 }
 
 class _PoseTesterAppState extends State<PoseTesterApp> {
-  IList<String> imageNames = const IList.empty();
-  Option<String> selectedImageName = none();
   Option<ImageFile> selectedImage = none();
   Option<PoseData> currentPoseData = none();
   bool show3dPose = true;
@@ -87,74 +80,39 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
 
-  void updatePoseForImage(String imageName) async {
+  void updatePoseForImage(ImageFile imageFile) async {
     setState(() {
       currentPoseData = none();
     });
 
-    var assetKey = assetKeyFor(imageName);
+    final input = PoseDetectInput.fromFile(imageFile.file);
+    final pose = (await detectPose(input))!;
+    final normalized = normalizePose(pose);
+    final coronal = make2dCoronalPose(normalized);
+    final sagittal = make2dSagittalPose(normalized);
+    final transverse = make2dTransversePose(normalized);
+    final angles = calculateAngles(normalized, coronal, sagittal, transverse);
 
-    final imageFile = await makeTempFileForAsset(assetKey);
-    try {
-      final input = PoseDetectInput.fromFile(imageFile);
-      final pose = (await detectPose(input))!;
-      final normalized = normalizePose(pose);
-      final coronal = make2dCoronalPose(normalized);
-      final sagittal = make2dSagittalPose(normalized);
-      final transverse = make2dTransversePose(normalized);
-      final angles = calculateAngles(normalized, coronal, sagittal, transverse);
-
-      setState(() {
-        currentPoseData = Some(PoseData(
-          worldPose: pose,
-          normalizedPose: normalized,
-          angles: angles,
-        ));
-      });
-    } finally {
-      await imageFile.delete();
-    }
+    setState(() {
+      currentPoseData = Some(PoseData(
+        worldPose: pose,
+        normalizedPose: normalized,
+        angles: angles,
+      ));
+    });
   }
 
-  void selectImageWithName(String? name) async {
+  void selectImage(Option<ImageFile> imageFile) async {
     setState(() {
       selectedImage = none();
       currentPoseData = none();
     });
 
-    if (name == null) {
-      setState(() {
-        selectedImageName = none();
-      });
-      return;
-    }
-
-    var assetKey = assetKeyFor(name);
-
     setState(() {
-      selectedImageName = Some(name);
+      selectedImage = imageFile;
     });
 
-    final image = await ImageFile.loadFromAsset(assetKey);
-    setState(() {
-      selectedImage = Some(image);
-    });
-
-    updatePoseForImage(name);
-  }
-
-  void loadImages() async {
-    final Map<String, dynamic> manifestContent =
-        jsonDecode(await rootBundle.loadString('AssetManifest.json'));
-
-    setState(() {
-      imageNames = manifestContent.keys
-          .where((it) => it.contains("test_image"))
-          .map((it) => it.split("/").last)
-          .toIList();
-    });
-
-    if (imageNames.isNotEmpty) selectImageWithName(imageNames.first);
+    selectedImage.match(() {}, updatePoseForImage);
   }
 
   @override
@@ -163,7 +121,6 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
     void doInitialIO() async {
       await startPoseDetection(PoseDetectMode.static);
-      loadImages();
     }
 
     doInitialIO();
@@ -199,6 +156,14 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     setState(() {
       pageIndex = newIndex;
     });
+  }
+
+  void chooseImage() async {
+    final xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (xFile == null) return;
+
+    final imageFile = await ImageFile.loadFrom(xFile.path);
+    selectImage(some(imageFile));
   }
 
   @override
@@ -244,51 +209,40 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                 ),
               ),
               SizedBox(height: 20),
-              Row(
-                children: [
-                  Text("Select image"),
-                  SizedBox(width: 20),
-                  DropdownButton<String>(
-                      items: imageNames
-                          .map((name) => DropdownMenuItem<String>(
-                                value: name,
-                                child: Text(name),
-                              ))
-                          .toList(),
-                      value: selectedImageName.toNullable(),
-                      onChanged: selectImageWithName),
-                ],
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child: switch (pageIndex) {
-                  0 => AnglePage(
-                      currentAngles: currentPoseData.map((it) => it.angles),
-                    ),
-                  1 => ScorePage(
-                      angles: currentPoseData.map((it) => it.angles),
-                    ),
-                  2 => Pose2dPage(
-                      title: "Sagittal",
-                      makePose2d: make2dSagittalPose,
-                      normalizedPose:
-                          currentPoseData.map((it) => it.normalizedPose),
-                    ),
-                  3 => Pose2dPage(
-                      title: "Coronal",
-                      makePose2d: make2dCoronalPose,
-                      normalizedPose:
-                          currentPoseData.map((it) => it.normalizedPose),
-                    ),
-                  4 => Pose2dPage(
-                      title: "Transverse",
-                      makePose2d: make2dTransversePose,
-                      normalizedPose:
-                          currentPoseData.map((it) => it.normalizedPose),
-                    ),
-                  _ => Placeholder()
-                },
-              ),
+              ElevatedButton(
+                  onPressed: chooseImage, child: Text("Select image")),
+              if (selectedImage.isSome()) ...[
+                SizedBox(height: 20),
+                Expanded(
+                  child: switch (pageIndex) {
+                    0 => AnglePage(
+                        currentAngles: currentPoseData.map((it) => it.angles),
+                      ),
+                    1 => ScorePage(
+                        angles: currentPoseData.map((it) => it.angles),
+                      ),
+                    2 => Pose2dPage(
+                        title: "Sagittal",
+                        makePose2d: make2dSagittalPose,
+                        normalizedPose:
+                            currentPoseData.map((it) => it.normalizedPose),
+                      ),
+                    3 => Pose2dPage(
+                        title: "Coronal",
+                        makePose2d: make2dCoronalPose,
+                        normalizedPose:
+                            currentPoseData.map((it) => it.normalizedPose),
+                      ),
+                    4 => Pose2dPage(
+                        title: "Transverse",
+                        makePose2d: make2dTransversePose,
+                        normalizedPose:
+                            currentPoseData.map((it) => it.normalizedPose),
+                      ),
+                    _ => Placeholder()
+                  },
+                ),
+              ]
             ],
           ),
         ),
