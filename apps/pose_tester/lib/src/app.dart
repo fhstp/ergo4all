@@ -13,7 +13,7 @@ import 'package:pose_tester/src/pose2d_page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/score_page.dart';
 import 'package:pose_tester/src/temp_asset.dart';
-import 'package:pose_tester/src/test_image.dart';
+import 'package:pose_tester/src/image_file.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -24,7 +24,7 @@ class Pose3DDisplay extends StatelessWidget {
     required this.selectedPose,
   });
 
-  final Option<TestImage> selectedImage;
+  final Option<ImageFile> selectedImage;
   final Option<Pose> selectedPose;
 
   @override
@@ -80,7 +80,7 @@ class PoseData {
 class _PoseTesterAppState extends State<PoseTesterApp> {
   IList<String> imageNames = const IList.empty();
   Option<String> selectedImageName = none();
-  Option<TestImage> selectedImage = none();
+  Option<ImageFile> selectedImage = none();
   Option<PoseData> currentPoseData = none();
   bool show3dPose = true;
   int pageIndex = 0;
@@ -135,7 +135,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       selectedImageName = Some(name);
     });
 
-    final image = await TestImage.loadFromAsset(assetKey);
+    final image = await ImageFile.loadFromAsset(assetKey);
     setState(() {
       selectedImage = Some(image);
     });
