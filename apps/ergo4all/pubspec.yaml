@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
 
   common: any
+  common_ui: any
   custom_locale: any
   pose: any
   pose_analysis: any

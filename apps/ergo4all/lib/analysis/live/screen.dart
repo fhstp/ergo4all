@@ -1,11 +1,12 @@
 import 'package:camera/camera.dart';
+import 'package:common_ui/common_ui.dart';
 import 'package:ergo4all/analysis/live/camera_permission_dialog.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/viewmodel.dart';
+import 'package:ergo4all/common/loading_indicator.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:pose_vis/pose_vis.dart';
 
 class LiveAnalysisScreen extends HookWidget {
@@ -59,19 +60,18 @@ class LiveAnalysisScreen extends HookWidget {
     return Scaffold(
       body: Column(
         children: [
-          Stack(
-            children: [
-              if (uiState.cameraController case Some(value: final controller))
-                CameraPreview(controller),
-              if (uiState.latestCapture case Some(value: final capture))
-                Positioned.fill(
-                  child: CustomPaint(
-                      painter: Pose3dPainter(
-                    pose: capture.pose,
-                    imageSize: capture.imageSize,
-                  )),
+          uiState.cameraController.match(
+            () => LoadingIndicator(),
+            (controller) => PaintOnWidget(
+              base: CameraPreview(controller),
+              painter: uiState.latestCapture.match(
+                () => null,
+                (capture) => Pose3dPainter(
+                  pose: capture.pose,
+                  imageSize: capture.imageSize,
                 ),
-            ],
+              ),
+            ),
           ),
           const Spacer(),
           RecordButton(
