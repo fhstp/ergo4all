@@ -8,6 +8,7 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/angle_page.dart';
+import 'package:pose_tester/src/paint_on_image.dart';
 import 'package:pose_tester/src/pose2d_page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/score_page.dart';
@@ -31,25 +32,25 @@ class Pose3DDisplay extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            if (selectedImage case Some(value: final image)) ...[
-              Image(
-                image: image.asset,
-                fit: BoxFit.fitHeight,
-              ),
-              if (selectedPose case Some(value: final pose))
-                Positioned.fill(
-                  child: CustomPaint(
-                      painter: Pose3dPainter(
-                          pose: pose,
-                          imageSize: Size(image.width.toDouble(),
-                              image.height.toDouble()))),
+        child: selectedImage.match(
+          () => ProgressIndicator(),
+          (image) => PaintOnWidget(
+            base: Image(
+              image: image.asset,
+              fit: BoxFit.fitHeight,
+            ),
+            painter: selectedPose
+                .map(
+                  (pose) => Pose3dPainter(
+                    pose: pose,
+                    imageSize: Size(
+                      image.width.toDouble(),
+                      image.height.toDouble(),
+                    ),
+                  ),
                 )
-            ] else
-              ProgressIndicator()
-          ],
+                .toNullable(),
+          ),
         ),
       ),
     );
