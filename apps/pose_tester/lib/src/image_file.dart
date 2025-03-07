@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 @immutable
 class ImageFile {
-  const ImageFile(
+  const ImageFile._(
     this.file, {
     required this.width,
     required this.height,
@@ -21,8 +21,8 @@ class ImageFile {
     final file = File(path);
     final bytes = await file.readAsBytes();
     final image = await decodeImageFromList(bytes);
-    final result =
-        ImageFile(file, width: image.width, height: image.height, bytes: bytes);
+    final result = ImageFile._(file,
+        width: image.width, height: image.height, bytes: bytes);
     image.dispose();
     return result;
   }
