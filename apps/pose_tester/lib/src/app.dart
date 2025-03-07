@@ -15,14 +15,20 @@ import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:share_plus/share_plus.dart';
 
+/// Displays a 3d pose.
 class Pose3DDisplay extends StatelessWidget {
+  /// Creates a display.
   const Pose3DDisplay({
     required this.selectedImage,
     required this.selectedPose,
     super.key,
   });
 
+  /// The image from which the pose was detected. The pose will be drawn
+  /// on top of this.
   final Option<ImageFile> selectedImage;
+
+  /// The pose to display.
   final Option<Pose> selectedPose;
 
   @override
@@ -55,23 +61,32 @@ class Pose3DDisplay extends StatelessWidget {
   }
 }
 
+/// The pose tester app.
 class PoseTesterApp extends StatefulWidget {
+  /// Creates a pose tester app.
   const PoseTesterApp({super.key});
 
   @override
   State<PoseTesterApp> createState() => _PoseTesterAppState();
 }
 
+/// Aggregate objected for all displayed pose data.
 @immutable
 class PoseData {
+  /// Create a pose data object.
   const PoseData({
     required this.worldPose,
     required this.normalizedPose,
     required this.angles,
   });
 
+  /// The 3d pose to display.
   final Pose worldPose;
+
+  /// The normalized pose to display.
   final NormalizedPose normalizedPose;
+
+  /// The angles to display.
   final PoseAngles angles;
 }
 

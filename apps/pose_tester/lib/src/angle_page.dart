@@ -5,12 +5,15 @@ import 'package:pose_tester/src/map_display.dart';
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 
+/// Page for displaying angles.
 class AnglePage extends StatelessWidget {
+  /// Creates an angle page.
   const AnglePage({
     required this.currentAngles,
     super.key,
   });
 
+  /// The angles to display.
   final Option<PoseAngles> currentAngles;
 
   @override
