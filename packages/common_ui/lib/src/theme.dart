@@ -68,6 +68,7 @@ final _textButtonTheme = TextButtonThemeData(
   ),
 );
 
+/// The global ergo4all theme.
 final globalTheme = ThemeData(
   colorScheme: _colorScheme,
   appBarTheme: _appBarTheme,
