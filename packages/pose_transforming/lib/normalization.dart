@@ -75,6 +75,11 @@ Pose _normalizeScale(Pose pose, double yMult, double zMult) {
   );
 }
 
+/// Normalizes the given [pose].
+/// This will
+///  - Center the hip at (0, 0, 0)
+///  - Rotate the pose, such that the hip is aligned with the x-axis
+///  - Scale the pose, such that the hip has length 1
 NormalizedPose normalizePose(Pose pose) {
   // We first want to make sure, that the mid-hip point is at the origin.
   var normalized = _centerPose(pose);
