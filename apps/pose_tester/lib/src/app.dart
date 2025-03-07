@@ -170,6 +170,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Pose tester",
+      theme: globalTheme,
       home: Scaffold(
         appBar: AppBar(
           title: Text("Pose tester"),
