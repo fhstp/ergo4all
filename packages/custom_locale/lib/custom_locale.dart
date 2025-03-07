@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'src/serialize.dart';
-import 'src/storage.dart';
+import 'package:custom_locale/src/serialize.dart';
+import 'package:custom_locale/src/storage.dart';
 
-const String _prefKey = "custom-locale";
+const String _prefKey = 'custom-locale';
 
 /// Sets the users custom locale.
-Future<Null> setCustomLocale(Locale locale) async {
+Future<void> setCustomLocale(Locale locale) async {
   await putStringIntoPrefs(_prefKey, serializeLocale(locale));
 }
 
