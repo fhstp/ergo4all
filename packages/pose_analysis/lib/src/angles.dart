@@ -5,25 +5,58 @@ import 'package:pose/pose.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:vector_math/vector_math.dart';
 
+/// Key angles in a pose.
 enum KeyAngles {
+  /// The flexion angle of the left shoulder.
   shoulderFlexionLeft,
+
+  /// The abduction angle of the left shoulder.
   shoulderAbductionLeft,
+
+  /// The flexion angle of the right shoulder.
   shoulderFlexionRight,
+
+  /// The abduction angle of the right shoulder.
   shoulderAbductionRight,
+
+  /// The flexion angle of the left elbow.
   elbowFlexionLeft,
+
+  /// The flexion angle of the right elbow.
   elbowFlexionRight,
+
+  /// The flexion angle of the left wrist.
   wristFlexionLeft,
+
+  /// The flexion angle of the right wrist.
   wristFlexionRight,
+
+  /// The flexion angle of the left knee.
   kneeFlexionLeft,
+
+  /// The flexion angle of the right knee.
   kneeFlexionRight,
+
+  /// The forward bend angle of the trunk.
   trunkStoop,
+
+  /// The twist angle of the trunk.
   trunkTwist,
+
+  /// The lateral flexion angle of the trunk.
   trunkSideBend,
+
+  /// The forward flexion angle of the neck.
   neckFlexion,
+
+  /// The lateral flexion angle of the neck.
   neckSideBend,
+
+  /// The twist angle of the neck.
   neckTwist
 }
 
+/// Mapping of all angles in a pose. Angles are in degrees.
 typedef PoseAngles = IMap<KeyAngles, double>;
 
 double _angle2d(Vector2 a, Vector2 b) {
@@ -51,6 +84,7 @@ Vector3 _line(Pose pose, KeyPoints a, KeyPoints b) {
   return (posOf(pose[b]!) - posOf(pose[a]!)).normalized();
 }
 
+/// Calculates [PoseAngles] from the given pose data.
 PoseAngles calculateAngles(
     Pose world, Pose2d coronal, Pose2d sagittal, Pose2d transverse) {
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
