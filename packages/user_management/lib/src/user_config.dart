@@ -9,33 +9,44 @@ import 'package:user_management/src/types.dart';
 
 part 'user_config.g.dart';
 
+/// An entry in the user config file
 @JsonSerializable()
 @immutable
 class UserConfigEntry extends Equatable {
+  /// Creates a user config entry.
   const UserConfigEntry({required this.name, required this.hasSeenTutorial});
 
+  /// Creates a user config entry from a [User].
   UserConfigEntry.fromUser(User user)
       : this(name: user.name, hasSeenTutorial: user.hasSeenTutorial);
 
+  /// Creates a user config entry from json.
   factory UserConfigEntry.fromJson(Map<String, dynamic> json) =>
       _$UserConfigEntryFromJson(json);
 
+  /// Corresponds to [User.name]
   final String name;
+
+  /// Corresponds to [User.hasSeenTutorial]
   final bool hasSeenTutorial;
 
+  /// Makes a user from this entry.
   User toUser() {
     return User(name: name, hasSeenTutorial: hasSeenTutorial);
   }
 
+  /// Serializes this entry to json.
   Map<String, dynamic> toJson() => _$UserConfigEntryToJson(this);
 
   @override
   List<Object?> get props => [name, hasSeenTutorial];
 }
 
+/// Representation of the content of a user config file.
 @JsonSerializable()
 @immutable
 class UserConfig extends Equatable {
+  /// Creates a [UserConfig] object.
   const UserConfig({required this.currentUserIndex, required this.userEntries});
 
   /// Makes a new [UserConfig] with one user inside. The user will be the
@@ -46,12 +57,17 @@ class UserConfig extends Equatable {
           userEntries: [UserConfigEntry.fromUser(user)],
         );
 
+  /// Creates a [UserConfig] from json.
   factory UserConfig.fromJson(Map<String, dynamic> json) =>
       _$UserConfigFromJson(json);
 
+  /// The index of the currently active user.
   final int? currentUserIndex;
+
+  /// Data about each user.
   final List<UserConfigEntry> userEntries;
 
+  /// Convert this object to json.
   Map<String, dynamic> toJson() => _$UserConfigToJson(this);
 
   @override
@@ -95,12 +111,14 @@ UserConfig updateUserInConfig(
   );
 }
 
+/// Parses the given [text] into a [UserConfig].
 UserConfig parseUserConfig(String text) {
   final json = jsonDecode(text);
   // ignore: argument_type_not_assignable If this parse fails, it's fine to crash.
   return UserConfig.fromJson(json);
 }
 
+/// Serializes a [UserConfig] to [String].
 String serializeUserConfig(UserConfig config) {
   final json = config.toJson();
   return jsonEncode(json);
