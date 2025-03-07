@@ -17,3 +17,6 @@ using [shared preferences](https://docs.flutter.dev/cookbook/persistence/key-val
 
 In order to generate better release notes, please include the scope `custom_locale` in
 your commit messages, eg. `fix(common_locale): some problem`.
+
+This package uses [very_good_analysis](https://pub.dev/packages/very_good_analysis)
+for style rules. Please make sure all warnings are fixed before committing.
