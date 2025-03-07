@@ -6,7 +6,10 @@
   },
   "dart.flutterSdkPath": ".fvm/versions/3.27.3",
   "cSpell.words": [
+    "denoise",
+    "denoised",
     "mlkit",
+    "mult",
     "nullable",
     "overlayed",
     "Prefs",
