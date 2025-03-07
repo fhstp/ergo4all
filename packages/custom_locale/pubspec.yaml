@@ -7,6 +7,8 @@ environment:
 resolution: workspace
 
 dependencies:
+  common: any
+
   flutter:
     sdk: flutter
 

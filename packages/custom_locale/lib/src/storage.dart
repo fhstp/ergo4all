@@ -1,3 +1,4 @@
+import 'package:common/nullable_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final SharedPreferencesAsync _sharedPrefs = SharedPreferencesAsync();
@@ -21,5 +22,5 @@ Future<T?> tryGetItemFromPrefs<T>(
   T Function(String pref) parse,
 ) async {
   final unparsed = await tryGetString(key);
-  return unparsed != null ? parse(unparsed) : null;
+  return doMaybe(parse)(unparsed);
 }
