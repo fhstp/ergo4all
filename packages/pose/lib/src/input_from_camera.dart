@@ -51,6 +51,10 @@ PoseDetectInput poseDetectInputFromCamera(
   assert(rotation != null, 'Could not determine camera rotation.');
 
   // get image format
+  // We ignore the dynamic warning here since this seems to be the recommended
+  // way to get the format.
+  // https://github.com/flutter-ml/google_ml_kit_flutter/tree/master/packages/google_mlkit_commons#creating-an-inputimage
+  // ignore: argument_type_not_assignable
   final format = mlkit.InputImageFormatValue.fromRawValue(image.format.raw);
   // validate format depending on platform
   // only supported formats:
