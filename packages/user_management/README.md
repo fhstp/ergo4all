@@ -17,3 +17,6 @@ updating and querying users.
 In order to generate better release notes, please include the scope
 `user_management` in your commit messages, eg.
 `fix(user_management): some problem`.
+
+This package uses [very_good_analysis](https://pub.dev/packages/very_good_analysis)
+for style rules. Please make sure all warnings are fixed before committing.
