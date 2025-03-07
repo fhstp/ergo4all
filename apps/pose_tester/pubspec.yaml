@@ -9,35 +9,36 @@ environment:
 resolution: workspace
 
 dependencies:
+  common: any
+  common_ui: any
+  fast_immutable_collections: ^11.0.0
+
   flutter:
     sdk: flutter
 
-  common: any
-  common_ui: any
+  fpdart: ^1.1.1
+  image_picker: ^1.1.2
+  path_provider: ^2.1.5
   pose: any
+  pose_analysis: any
   pose_detect: any
   pose_transforming: any
-  pose_analysis: any
   pose_vis: any
   rula: any
-
-  fast_immutable_collections: ^11.0.0
-  fpdart: ^1.1.1
-  path_provider: ^2.1.5
   share_plus: ^10.1.4
   vector_math: ^2.1.4
-  image_picker: ^1.1.2
 
 dev_dependencies:
+  build_runner: ^2.4.11
+  flutter_launcher_icons: ^0.14.1
+  flutter_lints: ^5.0.0
+
   flutter_test:
     sdk: flutter
 
   integration_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
-  flutter_launcher_icons: ^0.14.1
-  build_runner: ^2.4.11
   very_good_analysis: ^7.0.0
 
 flutter:

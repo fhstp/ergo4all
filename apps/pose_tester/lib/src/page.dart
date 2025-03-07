@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Page extends StatelessWidget {
+  const Page({required this.title, required this.body, super.key});
+
   final String title;
   final Widget? body;
-
-  const Page({super.key, required this.title, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,8 @@ class Page extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
-        SizedBox(height: 10),
-        Expanded(child: body ?? Container())
+        const SizedBox(height: 10),
+        Expanded(child: body ?? Container()),
       ],
     );
   }

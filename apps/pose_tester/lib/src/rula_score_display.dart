@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class RulaScoreDisplay extends StatelessWidget {
+  const RulaScoreDisplay({
+    required this.label,
+    required this.score,
+    required this.maxScore,
+    required this.level,
+    super.key,
+    this.minScore = 1,
+  });
+
   final String label;
   final int score;
   final int minScore;
   final int maxScore;
   final int level;
-
-  const RulaScoreDisplay(
-      {super.key,
-      required this.label,
-      required this.score,
-      this.minScore = 1,
-      required this.maxScore,
-      required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,12 @@ class RulaScoreDisplay extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: level * 20),
       child: Card(
-          color: color,
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Text("$label: $score / $maxScore"),
-          )),
+        color: color,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text('$label: $score / $maxScore'),
+        ),
+      ),
     );
   }
 }

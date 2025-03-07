@@ -7,8 +7,8 @@ import 'package:pose_tester/src/progress_indicator.dart';
 
 class AnglePage extends StatelessWidget {
   const AnglePage({
-    super.key,
     required this.currentAngles,
+    super.key,
   });
 
   final Option<PoseAngles> currentAngles;
@@ -16,15 +16,17 @@ class AnglePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Page(
-        title: "Angles",
-        body: switch (currentAngles) {
-          Some(value: final angles) => SingleChildScrollView(
-              child: MapDisplay(
-                  map: angles,
-                  formatKey: (keyAngle) => keyAngle.name,
-                  formatValue: (degrees) => "${degrees.toInt()}°"),
+      title: 'Angles',
+      body: switch (currentAngles) {
+        Some(value: final angles) => SingleChildScrollView(
+            child: MapDisplay(
+              map: angles,
+              formatKey: (keyAngle) => keyAngle.name,
+              formatValue: (degrees) => '${degrees.toInt()}°',
             ),
-          _ => ProgressIndicator()
-        });
+          ),
+        _ => const ProgressIndicator()
+      },
+    );
   }
 }

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:common_ui/theme/theme.dart';
 import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
@@ -18,9 +17,9 @@ import 'package:share_plus/share_plus.dart';
 
 class Pose3DDisplay extends StatelessWidget {
   const Pose3DDisplay({
-    super.key,
     required this.selectedImage,
     required this.selectedPose,
+    super.key,
   });
 
   final Option<ImageFile> selectedImage;
@@ -30,7 +29,7 @@ class Pose3DDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
+        constraints: const BoxConstraints(maxHeight: 300),
         child: selectedImage.match(
           () => null,
           (image) => PaintOnWidget(
@@ -65,15 +64,15 @@ class PoseTesterApp extends StatefulWidget {
 
 @immutable
 class PoseData {
-  final Pose worldPose;
-  final NormalizedPose normalizedPose;
-  final PoseAngles angles;
-
   const PoseData({
     required this.worldPose,
     required this.normalizedPose,
     required this.angles,
   });
+
+  final Pose worldPose;
+  final NormalizedPose normalizedPose;
+  final PoseAngles angles;
 }
 
 class _PoseTesterAppState extends State<PoseTesterApp> {
@@ -84,7 +83,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
   String assetKeyFor(String imageName) => 'assets/test_images/$imageName';
 
-  void updatePoseForImage(ImageFile imageFile) async {
+  Future<void> updatePoseForImage(ImageFile imageFile) async {
     setState(() {
       currentPoseData = none();
     });
@@ -98,15 +97,17 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     final angles = calculateAngles(normalized, coronal, sagittal, transverse);
 
     setState(() {
-      currentPoseData = Some(PoseData(
-        worldPose: pose,
-        normalizedPose: normalized,
-        angles: angles,
-      ));
+      currentPoseData = Some(
+        PoseData(
+          worldPose: pose,
+          normalizedPose: normalized,
+          angles: angles,
+        ),
+      );
     });
   }
 
-  void selectImage(Option<ImageFile> imageFile) async {
+  Future<void> selectImage(Option<ImageFile> imageFile) async {
     setState(() {
       selectedImage = none();
       currentPoseData = none();
@@ -116,14 +117,14 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
       selectedImage = imageFile;
     });
 
-    selectedImage.match(() {}, updatePoseForImage);
+    await selectedImage.match(() {}, updatePoseForImage);
   }
 
   @override
   void initState() {
     super.initState();
 
-    void doInitialIO() async {
+    Future<void> doInitialIO() async {
       await startPoseDetection(PoseDetectMode.static);
     }
 
@@ -134,25 +135,25 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
   void dispose() {
     super.dispose();
 
-    void doFinalIO() async {
+    Future<void> doFinalIO() async {
       await stopPoseDetection();
     }
 
     doFinalIO();
   }
 
-  void sharePose(BuildContext context, Pose pose) async {
+  Future<void> sharePose(BuildContext context, Pose pose) async {
     final poseText = pose.mapTo((point, landmark) {
       final pos = posOf(landmark);
-      return "${point.name}: ${pos.x}, ${pos.y}, ${pos.z}";
-    }).join("\n");
+      return '${point.name}: ${pos.x}, ${pos.y}, ${pos.z}';
+    }).join('\n');
 
-    final shareResult = await Share.share(poseText, subject: "Exported pose");
+    final shareResult = await Share.share(poseText, subject: 'Exported pose');
 
     if (shareResult.status == ShareResultStatus.unavailable &&
         context.mounted) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Share failed")));
+          .showSnackBar(const SnackBar(content: Text('Share failed')));
     }
   }
 
@@ -162,42 +163,43 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     });
   }
 
-  void chooseImage() async {
+  Future<void> chooseImage() async {
     final xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (xFile == null) return;
 
     final imageFile = await ImageFile.loadFrom(xFile.path);
-    selectImage(some(imageFile));
+    await selectImage(some(imageFile));
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Pose tester",
+      title: 'Pose tester',
       theme: ergo4allTheme,
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Pose tester"),
+          title: const Text('Pose tester'),
           actions: [
             PopupMenuButton(
-                itemBuilder: (context) => [
-                      PopupMenuItem(
-                          child: InkWell(
-                        onTap: switch (currentPoseData) {
-                          Some(value: final pose) => () {
-                              sharePose(context, pose.worldPose);
-                            },
-                          _ => null
+              itemBuilder: (context) => [
+                PopupMenuItem<void>(
+                  child: InkWell(
+                    onTap: switch (currentPoseData) {
+                      Some(value: final pose) => () {
+                          sharePose(context, pose.worldPose);
                         },
-                        child: Text("Share pose"),
-                      ))
-                    ])
+                      _ => null
+                    },
+                    child: const Text('Share pose'),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               GestureDetector(
@@ -213,11 +215,13 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                       : none(),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
-                  onPressed: chooseImage, child: Text("Select image")),
+                onPressed: chooseImage,
+                child: const Text('Select image'),
+              ),
               if (selectedImage.isSome()) ...[
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Expanded(
                   child: switch (pageIndex) {
                     0 => AnglePage(
@@ -227,43 +231,53 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                         angles: currentPoseData.map((it) => it.angles),
                       ),
                     2 => Pose2dPage(
-                        title: "Sagittal",
+                        title: 'Sagittal',
                         makePose2d: make2dSagittalPose,
                         normalizedPose:
                             currentPoseData.map((it) => it.normalizedPose),
                       ),
                     3 => Pose2dPage(
-                        title: "Coronal",
+                        title: 'Coronal',
                         makePose2d: make2dCoronalPose,
                         normalizedPose:
                             currentPoseData.map((it) => it.normalizedPose),
                       ),
                     4 => Pose2dPage(
-                        title: "Transverse",
+                        title: 'Transverse',
                         makePose2d: make2dTransversePose,
                         normalizedPose:
                             currentPoseData.map((it) => it.normalizedPose),
                       ),
-                    _ => Placeholder()
+                    _ => const Placeholder()
                   },
                 ),
-              ]
+              ],
             ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          items: [
+          items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.text_rotation_angledown), label: "Angles"),
+              icon: Icon(Icons.text_rotation_angledown),
+              label: 'Angles',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.scoreboard), label: "Scores"),
+              icon: Icon(Icons.scoreboard),
+              label: 'Scores',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.directions_walk), label: "Sagittal"),
+              icon: Icon(Icons.directions_walk),
+              label: 'Sagittal',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.accessibility_new), label: "Coronal"),
+              icon: Icon(Icons.accessibility_new),
+              label: 'Coronal',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.circle), label: "Transverse"),
+              icon: Icon(Icons.circle),
+              label: 'Transverse',
+            ),
           ],
           currentIndex: pageIndex,
           onTap: switchToPage,
