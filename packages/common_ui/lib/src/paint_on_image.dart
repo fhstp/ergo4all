@@ -7,8 +7,8 @@ class PaintOnWidget extends StatelessWidget {
   final CustomPainter? painter;
 
   const PaintOnWidget({
-    super.key,
     required this.base,
+    super.key,
     this.painter,
   });
 
@@ -19,7 +19,7 @@ class PaintOnWidget extends StatelessWidget {
       children: [
         base,
         if (painter != null)
-          Positioned.fill(child: CustomPaint(painter: painter))
+          Positioned.fill(child: CustomPaint(painter: painter)),
       ],
     );
   }
