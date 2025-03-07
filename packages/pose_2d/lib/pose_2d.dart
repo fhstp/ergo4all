@@ -4,6 +4,7 @@ import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:vector_math/vector_math.dart';
 
+/// A 2d pose represented as a mapping from [KeyPoints] to [Vector2].
 typedef Pose2d = IMap<KeyPoints, Vector2>;
 
 Pose2d _make2dPose(
@@ -16,6 +17,8 @@ Pose2d _make2dPose(
         .mapValues(posOf)
         .mapValues(makePoint2d);
 
+/// Projects the given pose onto the coronal plane in order to make it 2d.
+/// Landmarks with visibility < [minVisibility] will be discarded.
 Pose2d make2dCoronalPose(NormalizedPose pose, {double minVisibility = 0.9}) =>
     _make2dPose(
       pose,
@@ -23,6 +26,8 @@ Pose2d make2dCoronalPose(NormalizedPose pose, {double minVisibility = 0.9}) =>
       minVisibility: minVisibility,
     );
 
+/// Projects the given pose onto the sagittal plane in order to make it 2d.
+/// Landmarks with visibility < [minVisibility] will be discarded.
 Pose2d make2dSagittalPose(NormalizedPose pose, {double minVisibility = 0.9}) =>
     _make2dPose(
       pose,
@@ -30,6 +35,8 @@ Pose2d make2dSagittalPose(NormalizedPose pose, {double minVisibility = 0.9}) =>
       minVisibility: minVisibility,
     );
 
+/// Projects the given pose onto the transverse plane in order to make it 2d.
+/// Landmarks with visibility < [minVisibility] will be discarded.
 Pose2d make2dTransversePose(
   NormalizedPose pose, {
   double minVisibility = 0.9,
