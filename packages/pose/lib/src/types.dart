@@ -35,7 +35,8 @@ Vector3 posOf(Landmark landmark) => Vector3.copy(landmark.$1);
 /// Extract the visibility from a [Landmark].
 double visibilityOf(Landmark landmark) => landmark.$2;
 
-/// A pose in 3d world-space. This is a map of [KeyPoints] with their associated [Landmark]s.
+/// A pose in 3d world-space. This is a map of [KeyPoints] with their
+/// associated [Landmark]s.
 typedef Pose = IMap<KeyPoints, Landmark>;
 
 /// Maps the positions in a [Pose] by applying [map] to each.

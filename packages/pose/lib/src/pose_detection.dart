@@ -13,13 +13,15 @@ mlkit.PoseDetector? _detector;
 Future<void> startPoseDetection(PoseDetectMode mode) async {
   if (_detector != null) return;
   _detector = mlkit.PoseDetector(
-      options: mlkit.PoseDetectorOptions(
-          model: mode == PoseDetectMode.stream
-              ? mlkit.PoseDetectionModel.base
-              : mlkit.PoseDetectionModel.accurate,
-          mode: mode == PoseDetectMode.stream
-              ? mlkit.PoseDetectionMode.stream
-              : mlkit.PoseDetectionMode.single));
+    options: mlkit.PoseDetectorOptions(
+      model: mode == PoseDetectMode.stream
+          ? mlkit.PoseDetectionModel.base
+          : mlkit.PoseDetectionModel.accurate,
+      mode: mode == PoseDetectMode.stream
+          ? mlkit.PoseDetectionMode.stream
+          : mlkit.PoseDetectionMode.single,
+    ),
+  );
 }
 
 /// Stops pose detection if running.
@@ -29,9 +31,11 @@ Future<void> stopPoseDetection() async {
   _detector = null;
 }
 
-/// Detects the pose in an input image. Might return `null` if no pose could be detected. Only call this when the detection was started using [startPoseDetection].
+/// Detects the pose in an input image. Might return `null` if no pose could be
+/// detected. Only call this when the detection was started using
+/// [startPoseDetection].
 Future<Pose?> detectPose(PoseDetectInput input) async {
-  if (_detector == null) throw StateError("Pose detection was not started.");
+  if (_detector == null) throw StateError('Pose detection was not started.');
 
   final poses = await _detector!.processImage(input);
 
