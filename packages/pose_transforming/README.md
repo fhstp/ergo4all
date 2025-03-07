@@ -1,6 +1,6 @@
 # Ergo4All pose transforming package
 
-This flutter package contains data types and logic for transforming 3d pose 
+This flutter package contains data types and logic for transforming 3d pose
 data.
 
 ## Installation
@@ -9,6 +9,14 @@ Reference this package in another part of the project by adding `pose_transformi
 to the dependencies.
 
 ## Usage
+
+### Normalization
+
+Use the functions in `normalization` to normalize poses for further processing.
+
+### Denoising / Averaging
+
+Use the `denoise` library to average multiple poses in order to reduce noise.
 
 ### 2D pose projection
 

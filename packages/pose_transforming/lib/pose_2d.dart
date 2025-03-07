@@ -1,7 +1,7 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pose/pose.dart';
-import 'package:pose_analysis/pose_analysis.dart';
+import 'package:pose_transforming/normalization.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// A 2d pose represented as a mapping from [KeyPoints] to [Vector2].

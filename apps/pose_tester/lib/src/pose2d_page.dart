@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
-import 'package:pose_transforming/pose_2d.dart';
-import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
+import 'package:pose_transforming/normalization.dart';
+import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 
 class Pose2dPage extends StatefulWidget {

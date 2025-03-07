@@ -5,13 +5,14 @@ import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:image_picker/image_picker.dart';
 import 'package:pose/pose.dart';
-import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_tester/src/angle_page.dart';
 import 'package:pose_tester/src/image_file.dart';
 import 'package:pose_tester/src/pose2d_page.dart';
 import 'package:pose_tester/src/score_page.dart';
+import 'package:pose_transforming/normalization.dart';
+import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:share_plus/share_plus.dart';
 
