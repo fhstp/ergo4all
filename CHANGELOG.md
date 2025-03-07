@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/fhstp/ergo4all/compare/v1.33.0...v1.34.0) (2025-03-07)
+
+
+### Features
+
+* **pose_tester:** use ergo4all theme ([12e000c](https://github.com/fhstp/ergo4all/commit/12e000c59f313628bdfce59a74690484b2aadb0a))
+
 # [1.33.0](https://github.com/fhstp/ergo4all/compare/v1.32.0...v1.33.0) (2025-03-06)
 
 
