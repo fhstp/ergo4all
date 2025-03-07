@@ -1,5 +1,5 @@
-name: pose_2d
-description: 2D pose types and logic
+name: pose_transforming
+description: Pose transformation and normalization
 
 resolution: workspace
 

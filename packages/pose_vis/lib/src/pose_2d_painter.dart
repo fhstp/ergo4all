@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:pose/pose.dart';
-import 'package:pose_2d/pose_2d.dart';
+import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/src/painting.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 

@@ -11,7 +11,7 @@ workspace:
   - ./packages/pose
   - ./packages/pose_detect
   - ./packages/pose_analysis
-  - ./packages/pose_2d
+  - ./packages/pose_transforming
   - ./packages/pose_vis
   - ./packages/rula
   - ./packages/user_management

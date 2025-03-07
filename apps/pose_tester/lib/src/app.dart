@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:image_picker/image_picker.dart';
 import 'package:pose/pose.dart';
-import 'package:pose_2d/pose_2d.dart';
+import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_tester/src/angle_page.dart';

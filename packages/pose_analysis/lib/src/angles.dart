@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pose/pose.dart';
-import 'package:pose_2d/pose_2d.dart';
+import 'package:pose_transforming/pose_2d.dart';
 import 'package:vector_math/vector_math.dart';
 
 enum KeyAngles {

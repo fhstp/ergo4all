@@ -12,7 +12,7 @@ dependencies:
 
   common: any
   pose: any
-  pose_2d: any
+  pose_transforming: any
   rula: any
 
   fast_immutable_collections: ^11.0.0
