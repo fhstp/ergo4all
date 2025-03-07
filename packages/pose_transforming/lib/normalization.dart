@@ -4,7 +4,8 @@ import 'package:pose/pose.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// A [Pose] which was normalized using the [normalizePose] function. It
-/// is has it's mid-hip point at the origin, it's hip line is aligned with the x-axis and it is scaled such that the hip line is one unit long.
+/// is has it's mid-hip point at the origin, it's hip line is aligned with the
+/// x-axis and it is scaled such that the hip line is one unit long.
 extension type NormalizedPose(Pose it) implements Pose {}
 
 /// Gets the offset from the origin to the[pose]s mid-hip point.
@@ -58,7 +59,9 @@ Pose _alignHipWithXZPlane(Pose pose) {
   return _rotatePose(pose, zRotation);
 }
 
-/// Uniformly scales the given [pose] such that the hip line is one unit long. You can also apply additional scaling to the other axes using the [yMult] and [zMult] parameters.
+/// Uniformly scales the given [pose] such that the hip line is one unit long.
+/// You can also apply additional scaling to the other axes using the [yMult]
+/// and [zMult] parameters.
 Pose _normalizeScale(Pose pose, double yMult, double zMult) {
   final hipLength = 2 * posOf(pose[KeyPoints.leftHip]!).x.abs();
   final scalar = 1 / hipLength;
@@ -74,16 +77,18 @@ Pose _normalizeScale(Pose pose, double yMult, double zMult) {
 
 NormalizedPose normalizePose(Pose pose) {
   // We first want to make sure, that the mid-hip point is at the origin.
-  pose = _centerPose(pose);
+  var normalized = _centerPose(pose);
 
-  // Next we align the hip-line with the x-axis by rotating the pose accordingly.
-  // Rotations must be handled separately, as the angle calculation is affected by each transformation (angle estimation cannot be multiplicative)
-  pose = _alignHipWithXYPlane(pose);
-  pose = _alignHipWithXZPlane(pose);
+  // Next we align the hip-line with the x-axis by rotating the pose
+  // accordingly.
+  // Rotations must be handled separately, as the angle calculation is affected
+  // by each transformation (angle estimation cannot be multiplicative)
+  normalized = _alignHipWithXYPlane(normalized);
+  normalized = _alignHipWithXZPlane(normalized);
 
   // Finally we normalize the pose scale. The axis multipliers here were
   // determined through experimentation.
-  pose = _normalizeScale(pose, 4, 2);
+  normalized = _normalizeScale(normalized, 4, 2);
 
-  return NormalizedPose(pose);
+  return NormalizedPose(normalized);
 }

@@ -7,8 +7,10 @@ Landmark _addLandmarks(Landmark a, Landmark b) {
 }
 
 Pose _addPoses(Pose a, Pose b) {
-  return a.map((keyPoint, landmarkA) =>
-      MapEntry(keyPoint, _addLandmarks(landmarkA, b[keyPoint]!)));
+  return a.map(
+    (keyPoint, landmarkA) =>
+        MapEntry(keyPoint, _addLandmarks(landmarkA, b[keyPoint]!)),
+  );
 }
 
 Landmark _divideLandmark(Landmark landmark, int i) {
