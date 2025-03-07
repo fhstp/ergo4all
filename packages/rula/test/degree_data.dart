@@ -4,9 +4,6 @@ import 'package:rula/src/degree.dart';
 extension AnyDegree on Any {
   /// Generates a [Degree] in a certain range.
   Generator<Degree> degreeInRange(double min, double max) {
-    assert(min >= -180);
-    assert(min < max);
-    assert(max <= 180);
     return any.doubleInRange(min, max).map(Degree.makeFrom180);
   }
 
