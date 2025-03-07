@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:common_ui/common_ui.dart';
+import 'package:common_ui/theme/theme.dart';
+import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:image_picker/image_picker.dart';

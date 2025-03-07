@@ -1,5 +1,5 @@
 import 'package:camera/camera.dart';
-import 'package:common_ui/common_ui.dart';
+import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:ergo4all/analysis/live/camera_permission_dialog.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/viewmodel.dart';

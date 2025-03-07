@@ -1,4 +1,4 @@
-import 'package:common_ui/src/spacing.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
 const _primaryHovered = Color(0xFFFF6666);

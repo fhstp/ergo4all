@@ -1,4 +1,4 @@
-import 'package:common_ui/common_ui.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
 /// Shows a [SnackBar] with a specific error message. The snackbar will be styled using error colors.

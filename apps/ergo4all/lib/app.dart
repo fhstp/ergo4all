@@ -1,4 +1,4 @@
-import 'package:common_ui/common_ui.dart';
+import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/live/screen.dart';
 import 'package:ergo4all/analysis/results_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:common_ui/common_ui.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {

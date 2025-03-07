@@ -1,4 +1,4 @@
-import 'package:common_ui/common_ui.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/hook_ext.dart';
 import 'package:ergo4all/common/routes.dart';
