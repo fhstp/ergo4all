@@ -10,11 +10,12 @@ environment:
 
 dependencies:
   common: any
-  
+
   flutter:
     sdk: flutter
 
   pose: any
+  pose_2d: any
 
   vector_math: ^2.1.4
 

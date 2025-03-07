@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
+import 'package:pose_2d/pose_2d.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 
 const _queueSize = 5;

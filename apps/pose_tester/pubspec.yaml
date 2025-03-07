@@ -15,6 +15,7 @@ dependencies:
   common: any
   common_ui: any
   pose: any
+  pose_2d: any
   pose_analysis: any
   pose_vis: any
   rula: any
