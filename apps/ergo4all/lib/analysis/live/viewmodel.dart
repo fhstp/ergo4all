@@ -9,9 +9,9 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:pose/pose.dart';
 import 'package:pose_2d/pose_2d.dart';
 import 'package:pose_analysis/pose_analysis.dart';
+import 'package:pose_detect/pose_detect.dart';
 
 const _queueSize = 5;
 

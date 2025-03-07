@@ -1,0 +1,22 @@
+name: pose_detect
+description: Contains logic for detecting poses in images.
+
+resolution: workspace
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  camera: ^0.10.0
+
+  fast_immutable_collections: ^11.0.3
+  flutter:
+    sdk: flutter
+
+  google_mlkit_pose_detection: ^0.13.0
+
+  pose: any
+  vector_math: ^2.1.4
+
+dev_dependencies:
+  very_good_analysis: ^7.0.0

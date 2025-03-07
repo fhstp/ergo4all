@@ -1,7 +1,7 @@
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
     as mlkit;
-import 'package:pose/src/mlkit_pose_conversion.dart';
-import 'package:pose/src/types.dart';
+import 'package:pose/pose.dart';
+import 'package:pose_detect/src/mlkit_pose_conversion.dart';
 
 /// Input object required to detect a pose from an image.
 typedef PoseDetectInput = mlkit.InputImage;

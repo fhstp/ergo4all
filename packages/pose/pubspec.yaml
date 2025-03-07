@@ -7,15 +7,10 @@ environment:
 resolution: workspace
 
 dependencies:
-  flutter:
-    sdk: flutter
-
   common: any
-  rula: any
 
-  google_mlkit_pose_detection: ^0.13.0
-  camera: ^0.10.0
   fast_immutable_collections: ^11.0.0
+
   vector_math: ^2.1.4
 dev_dependencies:
   very_good_analysis: ^7.0.0
