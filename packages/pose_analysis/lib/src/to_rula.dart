@@ -18,19 +18,28 @@ RulaSheet rulaSheetFromAngles(PoseAngles angles) {
   final isStanding = calcIsStanding(angles, angleThreshold: 45);
 
   return RulaSheet(
-      shoulderFlexion: largerAngleOf(
-          KeyAngles.shoulderFlexionLeft, KeyAngles.shoulderFlexionRight),
-      shoulderAbduction: largerAngleOf(
-          KeyAngles.shoulderAbductionLeft, KeyAngles.shoulderAbductionRight),
-      elbowFlexion: largerAngleOf(
-          KeyAngles.elbowFlexionLeft, KeyAngles.elbowFlexionRight),
-      wristFlexion: largerAngleOf(
-          KeyAngles.wristFlexionLeft, KeyAngles.wristFlexionRight),
-      neckFlexion: angleOf(KeyAngles.neckFlexion),
-      neckRotation: angleOf(KeyAngles.neckTwist),
-      neckLateralFlexion: angleOf(KeyAngles.neckSideBend),
-      hipFlexion: angleOf(KeyAngles.trunkStoop),
-      trunkRotation: angleOf(KeyAngles.trunkTwist),
-      trunkLateralFlexion: angleOf(KeyAngles.trunkSideBend),
-      isStandingOnBothLegs: isStanding);
+    shoulderFlexion: largerAngleOf(
+      KeyAngles.shoulderFlexionLeft,
+      KeyAngles.shoulderFlexionRight,
+    ),
+    shoulderAbduction: largerAngleOf(
+      KeyAngles.shoulderAbductionLeft,
+      KeyAngles.shoulderAbductionRight,
+    ),
+    elbowFlexion: largerAngleOf(
+      KeyAngles.elbowFlexionLeft,
+      KeyAngles.elbowFlexionRight,
+    ),
+    wristFlexion: largerAngleOf(
+      KeyAngles.wristFlexionLeft,
+      KeyAngles.wristFlexionRight,
+    ),
+    neckFlexion: angleOf(KeyAngles.neckFlexion),
+    neckRotation: angleOf(KeyAngles.neckTwist),
+    neckLateralFlexion: angleOf(KeyAngles.neckSideBend),
+    hipFlexion: angleOf(KeyAngles.trunkStoop),
+    trunkRotation: angleOf(KeyAngles.trunkTwist),
+    trunkLateralFlexion: angleOf(KeyAngles.trunkSideBend),
+    isStandingOnBothLegs: isStanding,
+  );
 }
