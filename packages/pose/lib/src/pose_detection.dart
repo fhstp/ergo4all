@@ -3,9 +3,17 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
 import 'package:pose/src/mlkit_pose_conversion.dart';
 import 'package:pose/src/types.dart';
 
+/// Input object required to detect a pose from an image.
 typedef PoseDetectInput = mlkit.InputImage;
 
-enum PoseDetectMode { static, stream }
+/// Different pose detection modes.
+enum PoseDetectMode {
+  /// Detect from a single image.
+  static,
+
+  /// Detect from an image stream.
+  stream
+}
 
 mlkit.PoseDetector? _detector;
 

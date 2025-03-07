@@ -4,25 +4,64 @@ import 'package:vector_math/vector_math.dart';
 
 /// The key-points which are relevant for RULA pose analysis.
 enum KeyPoints {
+  /// The joint where the left shoulder meets the arm.
   leftShoulder,
+
+  /// The mid-point between [leftShoulder] and [rightShoulder].
   midNeck,
+
+  /// The joint where the right shoulder meets the arm.
   rightShoulder,
+
+  /// The left elbow joint.
   leftElbow,
+
+  /// The right elbow joint.
   rightElbow,
+
+  /// The left wrist joint
   leftWrist,
+
+  /// The right wrist joint
   rightWrist,
+
+  /// Point roughly in the palm of the left hand.
   leftPalm,
+
+  /// Point roughly in the palm of the right hand.
   rightPalm,
+
+  /// Joint where the left leg meets the hip.
   leftHip,
+
+  /// Mid-point between [leftHip] and [rightHip].
   midPelvis,
+
+  /// Joint where the right leg meets the hip.
   rightHip,
+
+  /// The left knee joint.
   leftKnee,
+
+  /// The right knee joint.
   rightKnee,
+
+  /// The left ankle joint.
   leftAnkle,
+
+  /// The right ankle joint.
   rightAnkle,
+
+  /// The left ear.
   leftEar,
+
+  /// Mid-point between [leftEar] and [rightEar].
   midHead,
+
+  /// The right ear.
   rightEar,
+
+  /// The tip of the nose.
   nose
 }
 

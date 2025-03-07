@@ -42,6 +42,9 @@ mlkit.InputImageRotation? _tryGetCameraRotation(
   throw UnsupportedError('Only Android and iOS are supported!');
 }
 
+/// Constructs a [PoseDetectInput] object from camera information. Specifically
+/// the [camera] which took the picture, the [deviceOrientation] when the
+/// picture was taken and the [image] itself.
 PoseDetectInput poseDetectInputFromCamera(
   CameraDescription camera,
   DeviceOrientation deviceOrientation,

@@ -4,6 +4,7 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
 import 'package:pose/src/types.dart';
 import 'package:vector_math/vector_math.dart';
 
+/// Converts an [mlkit.Pose] to a domain [Pose].
 Pose convertMlkitPose(mlkit.Pose pose) {
   Landmark single(mlkit.PoseLandmarkType type) {
     final landmark = pose.landmarks[type]!;
