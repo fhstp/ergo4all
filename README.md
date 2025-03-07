@@ -22,7 +22,8 @@ Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
 
 ## Project structure
 
-This is a monorepo/workspace project with the following parts.
+This is a [monorepo/workspace](https://dart.dev/tools/pub/workspaces) project
+with the following parts.
 
 | Name                                                        | Description                                      |
 | ----------------------------------------------------------- | ------------------------------------------------ |
