@@ -16,7 +16,8 @@
     </tr>
 </table>
 
-The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle) project.
+The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle) 
+project.
 
 Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
 
@@ -42,15 +43,22 @@ with the following parts.
 
 ## Develop
 
-To get started developing, [install Flutter](https://docs.flutter.dev/get-started/install), preferably using [fvm](https://fvm.app/). Then clone the repo and run `fvm use` inside the project directory to setup the correct flutter sdk.
+To get started developing,
+[install Flutter](https://docs.flutter.dev/get-started/install),
+preferably using [fvm](https://fvm.app/). Then clone the repo and run
+`fvm use` inside the project directory to setup the correct flutter sdk.
 
-It is recommended to use VSCode with the [recommended extensions](./.vscode/extensions.json).
+It is recommended to use VSCode with the
+[recommended extensions](./.vscode/extensions.json).
 
 ### Commit conventions
 
-This project uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/),
-specifically the [Angular style](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
-It is used by [semantic-release](https://github.com/semantic-release/semantic-release)
+This project uses
+[conventional commits](https://www.conventionalcommits.org/en/v1.0.0/),
+specifically the
+[Angular style](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
+It is used by
+[semantic-release](https://github.com/semantic-release/semantic-release)
 for automated releases.
 
 We use the following commit types:
@@ -65,4 +73,5 @@ We use the following commit types:
 | deps     | Made a change to installed dependencies, such as updating                                                                                            | none                       |
 | misc     | A change which fits into none of the above categories                                                                                                | none                       |
 
-We also use scopes matching the name of the affected app or package. If a change affects multiple scopes, then omit it.
+We also use scopes matching the name of the affected app or package. If a
+change affects multiple scopes, then omit it.
