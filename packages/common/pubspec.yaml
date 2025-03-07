@@ -9,11 +9,6 @@ resolution: workspace
 dependencies:
   equatable: ^2.0.5
   fast_immutable_collections: ^11.0.0
-  flutter:
-    sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  glados: ^1.1.7
   very_good_analysis: ^7.0.0
