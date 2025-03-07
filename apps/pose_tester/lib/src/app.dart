@@ -19,31 +19,31 @@ import 'package:share_plus/share_plus.dart';
 class Pose3DDisplay extends StatelessWidget {
   /// Creates a display.
   const Pose3DDisplay({
-    required this.selectedImage,
-    required this.selectedPose,
+    required this.image,
+    required this.pose,
     super.key,
   });
 
   /// The image from which the pose was detected. The pose will be drawn
   /// on top of this.
-  final Option<ImageFile> selectedImage;
+  final Option<ImageFile> image;
 
   /// The pose to display.
-  final Option<Pose> selectedPose;
+  final Option<Pose> pose;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 300),
-        child: selectedImage.match(
+        child: image.match(
           () => null,
           (image) => PaintOnWidget(
             base: Image.memory(
               image.bytes,
               fit: BoxFit.fitHeight,
             ),
-            painter: selectedPose
+            painter: pose
                 .map(
                   (pose) => Pose3dPainter(
                     pose: pose,
@@ -224,8 +224,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
                   });
                 },
                 child: Pose3DDisplay(
-                  selectedImage: selectedImage,
-                  selectedPose: show3dPose
+                  image: selectedImage,
+                  pose: show3dPose
                       ? currentPoseData.map((it) => it.worldPose)
                       : none(),
                 ),
