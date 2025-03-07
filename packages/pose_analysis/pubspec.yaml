@@ -14,3 +14,6 @@ dependencies:
 
   fast_immutable_collections: ^11.0.0
   vector_math: ^2.1.4
+
+dev_dependencies:
+  very_good_analysis: ^7.0.0
