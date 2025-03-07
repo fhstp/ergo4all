@@ -7,7 +7,8 @@ enum RulaLabel {
   /// The pose is acceptable. Corresponds to values [1, 2].
   acceptable,
 
-  /// The pose should be changed in the near future. Corresponds to values [3, 4].
+  /// The pose should be changed in the near future. Corresponds to values
+  /// [3, 4].
   changeInFuture,
 
   /// The pose should be changed shortly. Corresponds to values [5, 6].
@@ -25,6 +26,6 @@ RulaLabel rulaLabelFor(RulaScore score) {
     5 || 6 => RulaLabel.changeSoon,
     >= 7 => RulaLabel.changeImmediately,
     _ =>
-      throw AssertionError("Score is out of range for valid RulaScore values")
+      throw AssertionError('Score is out of range for valid RulaScore values')
   };
 }
