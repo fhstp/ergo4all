@@ -8,11 +8,10 @@ resolution: workspace
 
 dependencies:
   common: any
+  fast_immutable_collections: ^11.0.0
   pose: any
   pose_transforming: any
   rula: any
-
-  fast_immutable_collections: ^11.0.0
   vector_math: ^2.1.4
 
 dev_dependencies:

@@ -66,8 +66,8 @@ double _angle2d(Vector2 a, Vector2 b) {
 
 /// Calculates the angle in degrees between two directional vectors.
 double _angle(Vector3 a, Vector3 b) {
-  assert(a.length2 > 0, "a must have non 0 length");
-  assert(b.length2 > 0, "b must have non 0 length");
+  assert(a.length2 > 0, 'a must have non 0 length');
+  assert(b.length2 > 0, 'b must have non 0 length');
 
   final cosineAngle = a.dot(b) / (a.length * b.length);
   final angle = acos(cosineAngle);
@@ -86,7 +86,11 @@ Vector3 _line(Pose pose, KeyPoints a, KeyPoints b) {
 
 /// Calculates [PoseAngles] from the given pose data.
 PoseAngles calculateAngles(
-    Pose world, Pose2d coronal, Pose2d sagittal, Pose2d transverse) {
+  Pose world,
+  Pose2d coronal,
+  Pose2d sagittal,
+  Pose2d transverse,
+) {
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
         KeyAngles.shoulderFlexionLeft => _angle2d(
             _line2d(sagittal, KeyPoints.leftShoulder, KeyPoints.leftHip),
@@ -134,7 +138,10 @@ PoseAngles calculateAngles(
           ),
         KeyAngles.trunkTwist => _angle2d(
             _line2d(
-                transverse, KeyPoints.leftShoulder, KeyPoints.rightShoulder),
+              transverse,
+              KeyPoints.leftShoulder,
+              KeyPoints.rightShoulder,
+            ),
             _line2d(transverse, KeyPoints.leftHip, KeyPoints.rightHip),
           ).abs(),
         KeyAngles.trunkSideBend => (90 -
@@ -151,12 +158,18 @@ PoseAngles calculateAngles(
                 _angle2d(
                   _line2d(coronal, KeyPoints.midNeck, KeyPoints.midHead),
                   _line2d(
-                      coronal, KeyPoints.rightShoulder, KeyPoints.leftShoulder),
+                    coronal,
+                    KeyPoints.rightShoulder,
+                    KeyPoints.leftShoulder,
+                  ),
                 ))
             .abs(),
         KeyAngles.neckTwist => _angle2d(
             _line2d(
-                transverse, KeyPoints.leftShoulder, KeyPoints.rightShoulder),
+              transverse,
+              KeyPoints.leftShoulder,
+              KeyPoints.rightShoulder,
+            ),
             _line2d(transverse, KeyPoints.leftEar, KeyPoints.rightEar),
           ).abs(),
       };
