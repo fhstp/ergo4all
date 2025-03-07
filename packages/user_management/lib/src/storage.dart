@@ -9,14 +9,14 @@ import 'package:user_management/user_management.dart';
 
 const _userConfigFilePath = 'users.json';
 
-Future<File> getConfigFile() async {
+Future<File> _getConfigFile() async {
   final documentDir = await getApplicationDocumentsDirectory();
   final file = File(join(documentDir.path, _userConfigFilePath));
   return file;
 }
 
 Future<String?> _readConfigFile() async {
-  final file = await getConfigFile();
+  final file = await _getConfigFile();
   final fileExists = file.existsSync();
 
   if (!fileExists) return null;
@@ -61,7 +61,7 @@ Future<int?> loadCurrentUserIndex() =>
 
 /// Clears all user data.
 Future<void> clearAllUserData() async {
-  final file = await getConfigFile();
+  final file = await _getConfigFile();
   if (!file.existsSync()) return;
   await file.delete();
 }
