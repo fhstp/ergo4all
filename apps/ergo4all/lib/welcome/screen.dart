@@ -1,7 +1,7 @@
+import 'package:common_ui/common_ui.dart';
 import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
-import 'package:ergo4all/common/spacing.dart';
 import 'package:ergo4all/welcome/timed_loading_bar.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:ergo4all/welcome/viewmodel.dart';

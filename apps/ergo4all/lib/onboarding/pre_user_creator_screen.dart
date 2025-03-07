@@ -1,10 +1,10 @@
+import 'package:common_ui/common_ui.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
-import 'package:ergo4all/common/spacing.dart';
-import 'package:flutter/material.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:user_management/user_management.dart';
 
 final _defaultUser = makeUserFromName("Ergo-fan");

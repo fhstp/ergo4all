@@ -1,7 +1,9 @@
+import 'package:common_ui/common_ui.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/live/screen.dart';
 import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/onboarding/expert_intro_screen.dart';
 import 'package:ergo4all/onboarding/non_expert_intro_screen.dart';
@@ -11,11 +13,9 @@ import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
-import 'package:ergo4all/theme.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 
 class Ergo4AllApp extends StatefulWidget {
   const Ergo4AllApp({super.key});
