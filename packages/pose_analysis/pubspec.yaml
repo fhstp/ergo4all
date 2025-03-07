@@ -7,9 +7,6 @@ environment:
 resolution: workspace
 
 dependencies:
-  flutter:
-    sdk: flutter
-
   common: any
   pose: any
   pose_transforming: any
