@@ -75,6 +75,6 @@ final ergo4allTheme = ThemeData(
   elevatedButtonTheme: _elevatedButtonTheme,
   textButtonTheme: _textButtonTheme,
   textTheme: _textTheme,
-  fontFamily: "Montserrat",
+  fontFamily: 'Montserrat',
   useMaterial3: true,
 );
