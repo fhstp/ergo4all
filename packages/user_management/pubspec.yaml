@@ -7,15 +7,15 @@ environment:
 resolution: workspace
 
 dependencies:
+  common: any
+  equatable: ^2.0.5
+
   flutter:
     sdk: flutter
 
-  common: any
-
-  equatable: ^2.0.5
   json_annotation: ^4.9.0
-  path_provider: ^2.1.4
   path: ^1.9.0
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:

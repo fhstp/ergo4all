@@ -5,10 +5,9 @@ import 'package:common/types.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:user_management/src/user_config.dart';
+import 'package:user_management/user_management.dart';
 
-import '../user_management.dart';
-
-const _userConfigFilePath = "users.json";
+const _userConfigFilePath = 'users.json';
 
 Future<File> getConfigFile() async {
   final documentDir = await getApplicationDocumentsDirectory();
@@ -17,12 +16,12 @@ Future<File> getConfigFile() async {
 }
 
 Future<String?> _readConfigFile() async {
-  File file = await getConfigFile();
-  final fileExists = await file.exists();
+  final file = await getConfigFile();
+  final fileExists = file.existsSync();
 
   if (!fileExists) return null;
 
-  return await file.readAsString();
+  return file.readAsString();
 }
 
 Future<Null> _writeConfigFile(String content) async {
@@ -44,10 +43,11 @@ Future<Null> addUser(User user) => _tryReadConfig()
     .then((config) => config ?? UserConfig.forUser(user))
     .then(_tryWriteConfig);
 
-/// Updates the user with the given [userIndex] by applying [update] to it. Will throw an exception if the user does not exist.
+/// Updates the user with the given [userIndex] by applying [update] to it.
+/// Will throw an exception if the user does not exist.
 Future<Null> updateUser(int userIndex, Update<User> update) =>
     _tryReadConfig().then((config) {
-      assert(config != null);
+      assert(config != null, 'No config found.');
       return updateUserInConfig(config!, userIndex, update);
     }).then(_tryWriteConfig);
 
@@ -62,6 +62,6 @@ Future<int?> loadCurrentUserIndex() =>
 /// Clears all user data.
 Future<void> clearAllUserData() async {
   final file = await getConfigFile();
-  if (!(await file.exists())) return;
+  if (!file.existsSync()) return;
   await file.delete();
 }
