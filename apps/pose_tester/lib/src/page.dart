@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+/// A page with a title and body.
 class Page extends StatelessWidget {
+  /// Creates a [Page].
   const Page({required this.title, required this.body, super.key});
 
+  /// The pages title.
   final String title;
+
+  /// The pages body.
   final Widget? body;
 
   @override

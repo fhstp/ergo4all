@@ -1,7 +1,9 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
+/// Displays the key-value pairs in a [Map].
 class MapDisplay<TKey, TValue> extends StatelessWidget {
+  /// Creates a [MapDisplay].
   const MapDisplay({
     required this.map,
     required this.formatKey,
@@ -9,9 +11,13 @@ class MapDisplay<TKey, TValue> extends StatelessWidget {
     super.key,
   });
 
+  /// A selector for converting a key to a displayed [String].
   final String Function(TKey) formatKey;
+
+  /// A selector for converting a value to a displayed [String].
   final String Function(TValue) formatValue;
 
+  /// The map to display.
   final IMap<TKey, TValue> map;
 
   @override

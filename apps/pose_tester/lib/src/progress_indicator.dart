@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// A small circular progress indicator.
 class ProgressIndicator extends StatelessWidget {
+  /// Creates a progress indicator.
   const ProgressIndicator({
     super.key,
   });

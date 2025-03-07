@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Displays a rula score in a small chip.
 class RulaScoreDisplay extends StatelessWidget {
+  /// Creates an instance of the widget.
   const RulaScoreDisplay({
     required this.label,
     required this.score,
@@ -10,10 +12,19 @@ class RulaScoreDisplay extends StatelessWidget {
     this.minScore = 1,
   });
 
+  /// A label for the score.
   final String label;
+
+  /// The score to display.
   final int score;
+
+  /// The minimum score that is possible for the given category.
   final int minScore;
+
+  /// The maximum score that is possible for the given category.
   final int maxScore;
+
+  /// Indent level.
   final int level;
 
   @override

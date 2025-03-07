@@ -6,7 +6,9 @@ import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 
+/// Page for displaying a [Pose2d].
 class Pose2dPage extends StatefulWidget {
+  /// Creates a page.
   const Pose2dPage({
     required this.normalizedPose,
     required this.makePose2d,
@@ -14,8 +16,13 @@ class Pose2dPage extends StatefulWidget {
     super.key,
   });
 
+  /// The pose title.
   final String title;
+
+  /// The normalized pose to display.
   final Option<NormalizedPose> normalizedPose;
+
+  /// A function for converting the pose to a 2d pose.
   final Pose2d Function(NormalizedPose) makePose2d;
 
   @override

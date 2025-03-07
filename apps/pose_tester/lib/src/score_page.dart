@@ -6,9 +6,12 @@ import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
 import 'package:rula/rula.dart';
 
+/// Page for displaying score.
 class ScorePage extends StatefulWidget {
+  /// Creates a widget instance.
   const ScorePage({required this.angles, super.key});
 
+  /// The angles to display.
   final Option<PoseAngles> angles;
 
   @override
