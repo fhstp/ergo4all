@@ -7,10 +7,10 @@ environment:
 resolution: workspace
 
 dependencies:
-  flutter:
-    sdk: flutter
   equatable: ^2.0.5
   fast_immutable_collections: ^11.0.0
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
