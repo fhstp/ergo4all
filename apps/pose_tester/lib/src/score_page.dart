@@ -96,6 +96,12 @@ class _ScorePageState extends State<ScorePage> {
                 level: 2,
               ),
               RulaScoreDisplay(
+                label: 'Wrist flexion',
+                score: calcWristScore(sheet).value,
+                maxScore: 4,
+                level: 2,
+              ),
+              RulaScoreDisplay(
                 label: 'Neck',
                 score: calcNeckScore(sheet).value,
                 maxScore: 6,
