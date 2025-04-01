@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/fhstp/ergo4all/compare/v1.34.0...v1.35.0) (2025-04-01)
+
+
+### Features
+
+* **pose_tester:** display wrist score ([8f1710d](https://github.com/fhstp/ergo4all/commit/8f1710db838d8ec86bcfde7252508fc01ce28d2e))
+
 # [1.34.0](https://github.com/fhstp/ergo4all/compare/v1.33.0...v1.34.0) (2025-03-07)
 
 
