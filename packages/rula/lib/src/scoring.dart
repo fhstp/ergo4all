@@ -259,16 +259,23 @@ RulaScore calcLegScore(RulaSheet sheet) {
   return RulaScore.make(legScore);
 }
 
+/// Calculates the wrist score for the given [sheet]. Produces a [RulaScore] in
+/// the range [1; 4].
+RulaScore calcWristScore(RulaSheet sheet) {
+  final wristFlexionScore =
+      switch (sheet.wristFlexion.value) { < -15 => 3, < 15 => 1, _ => 3 };
+  final score = wristFlexionScore;
+  assert(score >= 1 && score <= 4, 'Score must be in range [1, 4]');
+  return RulaScore.make(score);
+}
+
 /// Does the full Rula calculation based on the given [sheet] and produces a
 /// [RulaScore] in the range [0; 7].
 RulaScore calcFullRulaScore(RulaSheet sheet) {
   final upperArmScore = calcUpperArmScore(sheet).value;
   final lowerArmScore = calcLowerArmScore(sheet).value;
 
-  final wristFlexionScore =
-      switch (sheet.wristFlexion.value) { < -15 => 3, < 15 => 1, _ => 3 };
-  final wristScore = wristFlexionScore;
-  assert(wristScore >= 1 && wristScore <= 4, 'Score must be in range [1, 4]');
+  final wristScore = calcWristScore(sheet).value;
 
   final armHandScore =
       _tableA[upperArmScore - 1][lowerArmScore - 1][wristScore - 1];
