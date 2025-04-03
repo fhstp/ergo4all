@@ -24,18 +24,20 @@ class Degree {
   /// 0°
   static const Degree zero = Degree.makeFrom180(0);
 
-  /// Creates a new [Degree] which is clamped between [min] and [max]. [min]
-  /// must be larger than or equal to -180 and smaller than [max]. [max] must
-  /// be smaller than 180.
-  Degree clamp(double min, double max) {
-    assert(min < max, 'Max must be larger than min');
-
-    final angle = clampDouble(value, min, max);
-    return Degree.makeFrom180(angle);
-  }
-
   @override
   String toString() {
     return '$value°';
   }
+}
+
+/// Creates a function, which clamps and input degree [Degree] between
+/// [min] and [max]. [min] must be larger than or equal to -180 and smaller
+/// than [max]. [max] must be smaller than 180.
+Degree Function(Degree) clampDegree(double min, double max) {
+  assert(min < max, 'Max must be larger than min');
+
+  return (degree) {
+    final angle = clampDouble(degree.value, min, max);
+    return Degree.makeFrom180(angle);
+  };
 }

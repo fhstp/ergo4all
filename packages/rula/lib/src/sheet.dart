@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:rula/src/degree.dart';
 
+final _clampRightAngle = clampDegree(-90, 90);
+
+final _clampStraightLine = clampDegree(0, 179);
+
 /// Contains input data for filling out a Rula Sheet. Each field on this class
 /// corresponds to a point on the sheet.
 ///
@@ -29,12 +33,12 @@ class RulaSheet {
     required this.trunkRotation,
     required Degree trunkLateralFlexion,
     required this.isStandingOnBothLegs,
-  })  : shoulderAbduction = shoulderAbduction.clamp(0, 179),
-        elbowFlexion = elbowFlexion.clamp(0, 179),
-        neckFlexion = neckFlexion.clamp(-90, 90),
-        neckLateralFlexion = neckLateralFlexion.clamp(-90, 90),
-        hipFlexion = hipFlexion.clamp(0, 179),
-        trunkLateralFlexion = trunkLateralFlexion.clamp(-90, 90);
+  })  : shoulderAbduction = _clampStraightLine(shoulderAbduction),
+        elbowFlexion = _clampStraightLine(elbowFlexion),
+        neckFlexion = _clampRightAngle(neckFlexion),
+        neckLateralFlexion = _clampRightAngle(neckLateralFlexion),
+        hipFlexion = _clampStraightLine(hipFlexion),
+        trunkLateralFlexion = _clampRightAngle(trunkLateralFlexion);
 
   /// The flexion angle of the upper arm. 0 is considered pointing straight
   /// down. Negative values indicate hyperextension, while positive ones
