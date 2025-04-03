@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/hook_ext.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -46,6 +47,7 @@ class TermsOfUseScreen extends HookWidget {
             ),
             ElevatedButton(
                 key: const Key("next"),
+                style: paleTextButtonStyle,
                 onPressed: hasAccepted ? navigateToPreUserCreation : null,
                 child: Text(localizations.common_next))
           ],

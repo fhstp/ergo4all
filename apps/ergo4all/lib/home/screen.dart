@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
@@ -84,6 +85,7 @@ class HomeScreen extends HookWidget {
               (it) => UserWelcomeHeader(it)),
           ElevatedButton(
               key: const Key("start"),
+              style: primaryTextButtonStyle,
               onPressed: showStartSessionDialog,
               child: Text(localizations.home_firstSession))
         ],

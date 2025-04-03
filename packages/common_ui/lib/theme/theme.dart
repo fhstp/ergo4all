@@ -1,55 +1,40 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
-const _primaryHovered = Color(0xFFFF6666);
-const _primaryPressed = Color(0xFFB20000);
-const _disabled = Color(0xFFBDBDBD);
-
 const _colorScheme = ColorScheme(
   brightness: Brightness.light,
-  primary: Color(0xFFFE0000),
-  onPrimary: Color(0xFFFFFFFF),
-  secondary: Color(0xFF00FEFE),
-  onSecondary: Color(0xFF757575),
-  error: Color(0xFFB00020),
-  onError: Color(0xFF757575),
-  surface: Color(0xFFF5F5F5),
-  onSurface: Color(0xFF212121),
+  primary: blueChill,
+  onPrimary: white,
+  secondary: tarawera,
+  onSecondary: white,
+  error: cardinal,
+  onError: white,
+  surface: white,
+  onSurface: woodSmoke,
 );
 
 const _h1Style = TextStyle(fontWeight: FontWeight.w500, fontSize: 24);
 
-final _appBarTheme = AppBarTheme(
-  backgroundColor: _colorScheme.primary,
-  foregroundColor: _colorScheme.onPrimary,
+const _appBarTheme = AppBarTheme(
+  backgroundColor: white,
+  foregroundColor: woodSmoke,
   titleTextStyle: _h1Style,
 );
 
-final _elevatedButtonTheme = ElevatedButtonThemeData(
+const _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    backgroundColor: WidgetStateProperty.resolveWith((states) {
-      if (states.contains(WidgetState.disabled)) {
-        return _disabled;
-      }
-      if (states.contains(WidgetState.pressed)) {
-        return _primaryPressed;
-      } else if (states.contains(WidgetState.hovered)) {
-        return _primaryHovered;
-      }
-      return _colorScheme.primary;
-    }),
-    foregroundColor: WidgetStatePropertyAll(_colorScheme.onPrimary),
-    minimumSize: const WidgetStatePropertyAll(Size(128, 48)),
-    padding: const WidgetStatePropertyAll(
+    minimumSize: WidgetStatePropertyAll(Size(128, 48)),
+    padding: WidgetStatePropertyAll(
       EdgeInsets.symmetric(
         vertical: smallSpace,
         horizontal: mediumSpace,
       ),
     ),
-    textStyle: const WidgetStatePropertyAll(
+    textStyle: WidgetStatePropertyAll(
       TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     ),
-    shape: const WidgetStatePropertyAll(
+    shape: WidgetStatePropertyAll(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -59,10 +44,9 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
 
 const _textTheme = TextTheme(headlineLarge: _h1Style);
 
-final _textButtonTheme = TextButtonThemeData(
+const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: WidgetStatePropertyAll(_colorScheme.onSurface),
-    textStyle: const WidgetStatePropertyAll(
+    textStyle: WidgetStatePropertyAll(
       TextStyle(decoration: TextDecoration.underline),
     ),
   ),

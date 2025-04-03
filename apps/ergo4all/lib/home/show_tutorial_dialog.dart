@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/styles.dart';
 import 'package:flutter/material.dart';
 
 /// Dialog asking the user whether they want to see the tutorial.
@@ -23,9 +24,11 @@ class ShowTutorialDialog extends StatelessWidget {
                   onPressed: () {
                     navigator.pop(true);
                   },
+                  style: primaryTextButtonStyle,
                   child: const Text("Yes")),
               ElevatedButton(
                   key: Key("skip"),
+                  style: secondaryTextButtonStyle,
                   onPressed: () {
                     navigator.pop(false);
                   },

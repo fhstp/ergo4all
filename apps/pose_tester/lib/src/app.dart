@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
@@ -232,6 +233,7 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: primaryTextButtonStyle,
                 onPressed: chooseImage,
                 child: const Text('Select image'),
               ),

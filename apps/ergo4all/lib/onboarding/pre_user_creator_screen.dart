@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -53,6 +54,7 @@ class PreUserCreatorScreen extends StatelessWidget {
             ),
             ElevatedButton(
                 key: const Key("create"),
+                style: primaryTextButtonStyle,
                 onPressed: navigateToUserCreator,
                 child: Text(localizations.preUserCreator_create)),
             const SizedBox(

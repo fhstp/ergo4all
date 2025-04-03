@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/header.dart';
@@ -23,6 +24,7 @@ class PickLanguageScreen extends StatelessWidget {
     Widget languageButtonFor(String language, Locale locale) {
       return ElevatedButton(
         key: Key("lang_button_${locale.languageCode.toLowerCase()}"),
+        style: paleTextButtonStyle,
         onPressed: () => selectLocale(locale),
         child: Text(language),
       );

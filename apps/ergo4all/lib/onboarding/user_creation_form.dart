@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -78,6 +79,7 @@ class UserCreationForm extends HookWidget {
             ),
             ElevatedButton(
                 key: const Key("create"),
+                style: primaryTextButtonStyle,
                 onPressed: tryCreateUser,
                 child: Text(localizations.userCreator_create))
           ],

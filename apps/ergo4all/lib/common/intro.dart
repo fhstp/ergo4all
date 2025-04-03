@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
@@ -46,6 +47,7 @@ class Intro extends HookWidget {
         ),
         ElevatedButton(
             key: const Key("done"),
+            style: primaryTextButtonStyle,
             onPressed: navigateToTermsOfUse,
             child: Text(localizations.intro_done))
       ])),

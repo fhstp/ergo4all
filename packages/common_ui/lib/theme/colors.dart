@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
 
-/// Dark blue color.
-const darkBlue = Color(0xFF0B3954);
+/// Color names taken from: https://chir.ag/projects/name-that-color
 
-/// Medium dark blue color.
-const blue = Color(0xFF087E8B);
+/// #097E8B
+const blueChill = Color(0xFF087E8B);
 
-/// Pale light blue color.
-const lightBlue = Color(0xFFBFD7EA);
+/// #054E56
+const tealBlue = Color(0xFF054E56);
 
-/// Pale light red color.
-const lightRed = Color(0xFFFF5A5F);
+/// #0B3954
+const tarawera = Color(0xFF0B3954);
 
-/// Strong red color.
-const red = Color(0xFFC81D25);
+/// #041D2C
+const blackPearl = Color(0xFF041D2C);
+
+/// #BFD7EA
+const spindle = Color(0xFFBFD7EA);
+
+/// #6792B6
+const hippieBlue = Color(0xFF6792B6);
+
+/// #FF5A5F
+const persimmon = Color(0xFFFF5A5F);
+
+/// #C81D25
+const cardinal = Color(0xFFC81D25);
+
+/// Pure white
+const white = Color(0xFFFFFFFF);
+
+/// #131515
+const woodSmoke = Color(0xFF131515);
+
+/// #C4D0DA
+const heather = Color(0xFFC4D0DA);
