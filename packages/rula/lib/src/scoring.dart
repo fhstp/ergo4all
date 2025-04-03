@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:rula/src/score.dart';
-import 'package:rula/src/sheet.dart';
+import 'package:common/func_ext.dart';
+import 'package:common/pair_utils.dart';
+import 'package:rula/rula.dart';
 
 // These angles are not specified by RULA. I chose 20, because 20 is also
 // the "worst" angle which is scored for neck flexion.
@@ -115,22 +116,30 @@ const _tableC = [
 
 /// Calculates the shoulder flexion score for the given [sheet]. Produces a
 /// [RulaScore] in the range [1; 4].
-RulaScore calcShoulderFlexionScore(RulaSheet sheet) {
-  final shoulderFlexionScore = switch (sheet.shoulderFlexion.value) {
-    < -20.0 => 2,
-    <= 20.0 => 1,
-    <= 45 => 2,
-    <= 90 => 3,
-    _ => 4,
-  };
-  return RulaScore.make(shoulderFlexionScore);
-}
+RulaScore calcShoulderFlexionScore(RulaSheet sheet) => sheet.shoulderFlexion
+    .pipe(
+      Pair.map(
+        (angle) => switch (angle.value) {
+          < -20.0 => 2,
+          <= 20.0 => 1,
+          <= 45 => 2,
+          <= 90 => 3,
+          _ => 4,
+        },
+      ),
+    )
+    .pipe(Pair.reduce(max))
+    .pipe(RulaScore.make);
 
 /// Calculates the shoulder abduction score based on the given [sheet].
 /// Produces a value in range [0; 1].
-int calcShoulderAbductionBonus(RulaSheet sheet) {
-  return sheet.shoulderAbduction.value > _minBadShoulderAbductionAngle ? 1 : 0;
-}
+int calcShoulderAbductionBonus(RulaSheet sheet) => sheet.shoulderAbduction
+    .pipe(
+      Pair.map(
+        (angle) => angle.value > _minBadShoulderAbductionAngle ? 1 : 0,
+      ),
+    )
+    .pipe(Pair.reduce(max));
 
 /// Calculates the upper arm score for the given [sheet]. Produces a
 /// [RulaScore] in the range [1; 6].
@@ -148,12 +157,18 @@ RulaScore calcUpperArmScore(RulaSheet sheet) {
 /// Calculates the elbow flexion score for the given [sheet]. Produces a
 /// [RulaScore] in the range [1; 2].
 RulaScore calcElbowFlexionScore(RulaSheet sheet) {
-  final score = switch (sheet.elbowFlexion.value) {
-    <= 60 => 2,
-    <= 100 => 1,
-    _ => 2,
-  };
-  return RulaScore.make(score);
+  return sheet.elbowFlexion
+      .pipe(
+        Pair.map(
+          (angle) => switch (angle.value) {
+            <= 60 => 2,
+            <= 100 => 1,
+            _ => 2,
+          },
+        ),
+      )
+      .pipe(Pair.reduce(max))
+      .pipe(RulaScore.make);
 }
 
 /// Calculates the lower arm score for the given [sheet]. Produces a
@@ -261,13 +276,16 @@ RulaScore calcLegScore(RulaSheet sheet) {
 
 /// Calculates the wrist score for the given [sheet]. Produces a [RulaScore] in
 /// the range [1; 4].
-RulaScore calcWristScore(RulaSheet sheet) {
-  final wristFlexionScore =
-      switch (sheet.wristFlexion.value) { < -15 => 3, < 15 => 1, _ => 3 };
-  final score = wristFlexionScore;
-  assert(score >= 1 && score <= 4, 'Score must be in range [1, 4]');
-  return RulaScore.make(score);
-}
+RulaScore calcWristScore(RulaSheet sheet) => sheet.wristFlexion
+        .pipe(
+          Pair.map(
+            (angle) => switch (angle.value) { < -15 => 3, < 15 => 1, _ => 3 },
+          ),
+        )
+        .pipe(Pair.reduce(max))
+        .tap((score) {
+      assert(score >= 1 && score <= 4, 'Score must be in range [1, 4]');
+    }).pipe(RulaScore.make);
 
 /// Does the full Rula calculation based on the given [sheet] and produces a
 /// [RulaScore] in the range [0; 7].

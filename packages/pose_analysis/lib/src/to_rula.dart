@@ -8,31 +8,24 @@ RulaSheet rulaSheetFromAngles(PoseAngles angles) {
     return Degree.makeFrom180(angle);
   }
 
-  Degree largerAngleOf(KeyAngles keyA, KeyAngles keyB) {
-    final angleA = angles[keyA]!;
-    final angleB = angles[keyB]!;
-    final larger = angleA.abs() > angleB.abs() ? angleA : angleB;
-    return Degree.makeFrom180(larger);
-  }
-
   final isStanding = calcIsStanding(angles, angleThreshold: 45);
 
   return RulaSheet(
-    shoulderFlexion: largerAngleOf(
-      KeyAngles.shoulderFlexionLeft,
-      KeyAngles.shoulderFlexionRight,
+    shoulderFlexion: (
+      angleOf(KeyAngles.shoulderFlexionLeft),
+      angleOf(KeyAngles.shoulderFlexionRight),
     ),
-    shoulderAbduction: largerAngleOf(
-      KeyAngles.shoulderAbductionLeft,
-      KeyAngles.shoulderAbductionRight,
+    shoulderAbduction: (
+      angleOf(KeyAngles.shoulderAbductionLeft),
+      angleOf(KeyAngles.shoulderAbductionRight),
     ),
-    elbowFlexion: largerAngleOf(
-      KeyAngles.elbowFlexionLeft,
-      KeyAngles.elbowFlexionRight,
+    elbowFlexion: (
+      angleOf(KeyAngles.elbowFlexionLeft),
+      angleOf(KeyAngles.elbowFlexionRight),
     ),
-    wristFlexion: largerAngleOf(
-      KeyAngles.wristFlexionLeft,
-      KeyAngles.wristFlexionRight,
+    wristFlexion: (
+      angleOf(KeyAngles.wristFlexionLeft),
+      angleOf(KeyAngles.wristFlexionRight),
     ),
     neckFlexion: angleOf(KeyAngles.neckFlexion),
     neckRotation: angleOf(KeyAngles.neckTwist),

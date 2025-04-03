@@ -1,3 +1,4 @@
+import 'package:common/pair_utils.dart';
 import 'package:glados/glados.dart';
 import 'package:rula/src/degree.dart';
 import 'package:rula/src/scoring.dart';
@@ -14,10 +15,10 @@ void main() {
 
   test('should have correct score for person standing straight', () {
     final sheet = RulaSheet(
-      shoulderFlexion: Degree.zero,
-      shoulderAbduction: Degree.zero,
-      elbowFlexion: Degree.zero,
-      wristFlexion: Degree.zero,
+      shoulderFlexion: Pair.of(Degree.zero),
+      shoulderAbduction: Pair.of(Degree.zero),
+      elbowFlexion: Pair.of(Degree.zero),
+      wristFlexion: Pair.of(Degree.zero),
       neckFlexion: Degree.zero,
       neckRotation: Degree.zero,
       neckLateralFlexion: Degree.zero,
@@ -34,10 +35,13 @@ void main() {
 
   test('should have correct score for person picking something off ground', () {
     final sheet = RulaSheet(
-      shoulderFlexion: const Degree.makeFrom180(80),
-      shoulderAbduction: Degree.zero,
-      elbowFlexion: Degree.zero,
-      wristFlexion: Degree.zero,
+      shoulderFlexion: (
+        const Degree.makeFrom180(80),
+        const Degree.makeFrom180(60)
+      ),
+      shoulderAbduction: Pair.of(Degree.zero),
+      elbowFlexion: Pair.of(Degree.zero),
+      wristFlexion: Pair.of(Degree.zero),
       neckFlexion: const Degree.makeFrom180(15),
       neckRotation: Degree.zero,
       neckLateralFlexion: Degree.zero,
@@ -54,10 +58,16 @@ void main() {
 
   test('should have correct score for person lifting something above head', () {
     final sheet = RulaSheet(
-      shoulderFlexion: const Degree.makeFrom180(120),
-      shoulderAbduction: Degree.zero,
-      elbowFlexion: const Degree.makeFrom180(80),
-      wristFlexion: Degree.zero,
+      shoulderFlexion: (
+        const Degree.makeFrom180(120),
+        const Degree.makeFrom180(110)
+      ),
+      shoulderAbduction: Pair.of(Degree.zero),
+      elbowFlexion: (
+        const Degree.makeFrom180(80),
+        const Degree.makeFrom180(70)
+      ),
+      wristFlexion: Pair.of(Degree.zero),
       neckFlexion: const Degree.makeFrom180(-30),
       neckRotation: Degree.zero,
       neckLateralFlexion: Degree.zero,

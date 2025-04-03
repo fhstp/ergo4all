@@ -4,6 +4,11 @@ import 'package:rula/src/sheet.dart';
 
 import 'degree_data.dart';
 
+extension PairAny on Any {
+  Generator<(T, T)> pairOf<T>(Generator<T> gen) =>
+      any.combine2(gen, gen, (a, b) => (a, b));
+}
+
 Generator<Degree> _shoulderFlexion = any.degree;
 Generator<Degree> _shoulderAbduction = any.degreeInRange(0, 180);
 Generator<Degree> _elbowFlexion = any.degreeInRange(0, 180);
@@ -38,8 +43,10 @@ Generator<(Degree, Degree, Degree)> _trunkAngles = any.combine3(
 extension AnyRulaSheet on Any {
   /// Generates a valid [RulaSheet].
   Generator<RulaSheet> get rulaSheet => any.combine5(
-        _shoulderAngles,
-        _armAngles,
+        any.pairOf(_shoulderAngles),
+        any.pairOf(
+          _armAngles,
+        ),
         _neckAngles,
         _trunkAngles,
         any.bool,
