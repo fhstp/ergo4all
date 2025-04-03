@@ -1,3 +1,10 @@
+# [1.36.0](https://github.com/fhstp/ergo4all/compare/v1.35.0...v1.36.0) (2025-04-03)
+
+
+### Features
+
+* overhaul color theme ([b71025a](https://github.com/fhstp/ergo4all/commit/b71025a3ff1daa7a1fdacdeff9d449097fc993e9))
+
 # [1.35.0](https://github.com/fhstp/ergo4all/compare/v1.34.0...v1.35.0) (2025-04-01)
 
 
