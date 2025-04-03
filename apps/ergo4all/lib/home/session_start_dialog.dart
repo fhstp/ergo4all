@@ -1,3 +1,6 @@
+import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/home/types.dart';
 import 'package:flutter/material.dart';
 
@@ -8,55 +11,30 @@ class StartSessionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = Theme.of(context);
-
-    Widget makeSourceButton(
-        Key key, IconData icon, String label, VideoSource source) {
-      return Expanded(
-        child: Column(
-          children: [
-            IconButton(
-              key: key,
-              onPressed: () {
-                Navigator.of(context).pop(source);
-              },
-              icon: Icon(
-                icon,
-                color: appTheme.primaryColor,
-              ),
-              iconSize: 50,
-            ),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      );
-    }
-
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: spindle,
       child: IntrinsicHeight(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(largeSpace),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Start new session",
-                style: appTheme.textTheme.headlineLarge,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  makeSourceButton(const Key("upload"), Icons.upload,
-                      "Use a video from your device.", VideoSource.gallery),
-                  makeSourceButton(const Key("new"), Icons.camera_alt,
-                      "Take a new video.", VideoSource.live)
-                ],
-              )
+              ElevatedButton(
+                  key: Key("new"),
+                  style: primaryTextButtonStyle,
+                  onPressed: () {
+                    Navigator.of(context).pop(VideoSource.live);
+                  },
+                  child: Text("Record")),
+              SizedBox(height: largeSpace),
+              ElevatedButton(
+                  key: Key("upload"),
+                  style: secondaryTextButtonStyle,
+                  onPressed: () {
+                    Navigator.of(context).pop(VideoSource.gallery);
+                  },
+                  child: Text("Upload from video"))
             ],
           ),
         ),
