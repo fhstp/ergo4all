@@ -49,7 +49,7 @@ class WelcomeScreen extends HookWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Image(image: CustomImages.logoRed),
+                    const Image(image: CustomImages.logoWhite),
                     const SizedBox(
                       height: largeSpace,
                     ),
