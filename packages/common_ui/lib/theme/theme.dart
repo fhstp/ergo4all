@@ -1,5 +1,6 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:flutter/material.dart';
 
 const _colorScheme = ColorScheme(
@@ -14,12 +15,10 @@ const _colorScheme = ColorScheme(
   onSurface: woodSmoke,
 );
 
-const _h1Style = TextStyle(fontWeight: FontWeight.w500, fontSize: 24);
-
 const _appBarTheme = AppBarTheme(
   backgroundColor: white,
   foregroundColor: woodSmoke,
-  titleTextStyle: _h1Style,
+  titleTextStyle: h1Style,
 );
 
 const _elevatedButtonTheme = ElevatedButtonThemeData(
@@ -42,7 +41,7 @@ const _elevatedButtonTheme = ElevatedButtonThemeData(
   ),
 );
 
-const _textTheme = TextTheme(headlineLarge: _h1Style);
+const _textTheme = TextTheme(headlineLarge: h1Style);
 
 const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(

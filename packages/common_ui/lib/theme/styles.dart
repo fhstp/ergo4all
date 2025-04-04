@@ -33,3 +33,7 @@ const paleTextButtonStyle = ButtonStyle(
     WidgetState.any: spindle,
   }),
 );
+
+/// Text style for H1 headers.
+const h1Style =
+    TextStyle(fontWeight: FontWeight.w700, fontSize: 38, color: cardinal);
