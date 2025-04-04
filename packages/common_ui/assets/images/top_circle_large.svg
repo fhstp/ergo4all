@@ -1,0 +1,13 @@
+<svg id="grafisches_element_welcome" data-name="grafisches element welcome"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 2048 1982.88">
+  <defs>
+    <linearGradient id="Unbenannter_Verlauf_15" data-name="Unbenannter Verlauf 15" x1="1024"
+      y1="1982.87" x2="1024" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset=".12" stop-color="#ff5a5f"></stop>
+      <stop offset=".58" stop-color="#c81d25"></stop>
+    </linearGradient>
+  </defs>
+  <path d="M2048,0H0v1587.55c270.55,245.63,629.79,395.32,1024,395.32s753.45-149.69,1024-395.32V0Z"
+    fill="url(#Unbenannter_Verlauf_15)"></path>
+</svg>
