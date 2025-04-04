@@ -1,5 +1,4 @@
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/common/app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
@@ -13,6 +12,7 @@ import 'package:ergo4all/home/user_welcome_header.dart';
 import 'package:ergo4all/home/viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:user_management/user_management.dart';
 
 /// Top-level widget for home screen.
@@ -77,8 +77,20 @@ class HomeScreen extends HookWidget {
     }, [null]);
 
     return Scaffold(
-      appBar: makeCustomAppBar(title: localizations.home_title),
-      body: ScreenContent(
+        body: Stack(children: [
+      Positioned(
+        top: 0,
+        left: 0,
+        right: 0,
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: SvgPicture.asset(
+            'assets/images/top_circle.svg',
+            package: "common_ui",
+          ),
+        ),
+      ),
+      ScreenContent(
           child: Column(
         children: [
           uiState.user.match(() => ShimmerBox(width: 200, height: 24),
@@ -89,7 +101,7 @@ class HomeScreen extends HookWidget {
               onPressed: showStartSessionDialog,
               child: Text(localizations.home_firstSession))
         ],
-      )),
-    );
+      ))
+    ]));
   }
 }

@@ -1,0 +1,15 @@
+<svg id="grafisches_element_header" data-name="grafisches element header"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="2.1 0 2043.8 1021.9">
+  <defs>
+    <linearGradient id="Unbenannter_Verlauf_32" data-name="Unbenannter Verlauf 32" x1="572.33"
+      y1="919.39" x2="1338.82" y2="-408.22" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff5a5f"></stop>
+      <stop offset=".28" stop-color="#db3239"></stop>
+      <stop offset=".47" stop-color="#c81d25"></stop>
+    </linearGradient>
+  </defs>
+  <path
+    d="M1024,1021.88c564.37,0,1021.88-457.51,1021.88-1021.88H2.12c0,564.37,457.51,1021.88,1021.88,1021.88Z"
+    fill="url(#Unbenannter_Verlauf_32)"></path>
+</svg>

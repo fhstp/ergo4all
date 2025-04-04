@@ -21,6 +21,9 @@ flutter:
         - asset: assets/fonts/Montserrat-Regular.ttf
           weight: 400
 
+  assets:
+    - assets/images/
+
 dependencies:
   flutter:
     sdk: flutter
