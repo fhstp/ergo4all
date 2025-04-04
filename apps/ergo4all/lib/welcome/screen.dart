@@ -42,40 +42,38 @@ class WelcomeScreen extends HookWidget {
             ),
           ),
         ),
-        Expanded(
-          child: Column(
-            children: [
-              Spacer(flex: 2),
-              Text(
-                "Welcome!",
-                style: h3Style.copyWith(color: white),
+        Column(
+          children: [
+            Spacer(flex: 2),
+            Text(
+              "Welcome!",
+              style: h3Style.copyWith(color: white),
+            ),
+            const Image(image: CustomImages.logoWhite),
+            Spacer(flex: 3),
+            ElevatedButton(
+              key: Key("start"),
+              style: primaryTextButtonStyle,
+              onPressed: uiState.shouldDoOnboarding.match(() => null,
+                  (doOnboarding) => () => navigateToNextScreen(doOnboarding)),
+              child: Text("Start"),
+            ),
+            Spacer(flex: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
+              child: SizedBox.fromSize(
+                size: Size.fromHeight(50),
+                child: Row(children: [
+                  const Image(image: CustomImages.logoAk),
+                  Spacer(),
+                  const Image(image: CustomImages.logoTUWien),
+                  SizedBox(width: mediumSpace),
+                  const Image(image: CustomImages.logoFhStp),
+                ]),
               ),
-              const Image(image: CustomImages.logoWhite),
-              Spacer(flex: 3),
-              ElevatedButton(
-                key: Key("start"),
-                style: primaryTextButtonStyle,
-                onPressed: uiState.shouldDoOnboarding.match(() => null,
-                    (doOnboarding) => () => navigateToNextScreen(doOnboarding)),
-                child: Text("Start"),
-              ),
-              Spacer(flex: 2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
-                child: SizedBox.fromSize(
-                  size: Size.fromHeight(50),
-                  child: Row(children: [
-                    const Image(image: CustomImages.logoAk),
-                    Spacer(),
-                    const Image(image: CustomImages.logoTUWien),
-                    SizedBox(width: mediumSpace),
-                    const Image(image: CustomImages.logoFhStp),
-                  ]),
-                ),
-              ),
-              VersionDisplay(version: uiState.projectVersion),
-            ],
-          ),
+            ),
+            VersionDisplay(version: uiState.projectVersion),
+          ],
         ),
       ]),
     );
