@@ -1,8 +1,8 @@
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
-import 'package:ergo4all/welcome/timed_loading_bar.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:ergo4all/welcome/viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +18,8 @@ class WelcomeScreen extends HookWidget {
     final viewModel = useMemoized(WelcomeViewModel.new);
     final uiState = useValueListenable(viewModel.uiState);
 
-    navigateToNextScreen() async {
-      final nextRoute =
-          uiState.shouldDoOnboarding ? Routes.language : Routes.home;
-
+    void navigateToNextScreen(bool doOnboarding) async {
+      final nextRoute = doOnboarding ? Routes.language : Routes.home;
       await Navigator.of(context).pushReplacementNamed(nextRoute.path);
     }
 
@@ -89,9 +87,14 @@ class WelcomeScreen extends HookWidget {
                     const SizedBox(
                       height: largeSpace,
                     ),
-                    TimedLoadingBar(
-                      duration: const Duration(seconds: 3),
-                      completed: navigateToNextScreen,
+                    ElevatedButton(
+                      key: Key("start"),
+                      style: primaryTextButtonStyle,
+                      onPressed: uiState.shouldDoOnboarding.match(
+                          () => null,
+                          (doOnboarding) =>
+                              () => navigateToNextScreen(doOnboarding)),
+                      child: Text("Start"),
                     )
                   ],
                 ),

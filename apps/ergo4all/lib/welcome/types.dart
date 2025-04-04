@@ -8,15 +8,18 @@ class UIState {
   /// The projects version, likely in the semantic version format. It is optional, since it must be loaded asynchronously.
   final Option<String> projectVersion;
 
-  /// Whether to go to onboarding after the welcome screen completes.
-  final bool shouldDoOnboarding;
+  /// Whether to go to onboarding after the welcome screen completes. Optional
+  /// since this information needs to be fetched first.
+  final Option<bool> shouldDoOnboarding;
 
-  const UIState(
-      {required this.projectVersion, required this.shouldDoOnboarding});
+  const UIState({
+    required this.projectVersion,
+    required this.shouldDoOnboarding,
+  });
 
   UIState copyWith({
     Option<String>? projectVersion,
-    bool? shouldDoOnboarding,
+    Option<bool>? shouldDoOnboarding,
   }) {
     return UIState(
       projectVersion: projectVersion ?? this.projectVersion,

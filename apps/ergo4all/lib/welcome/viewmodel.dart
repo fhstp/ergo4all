@@ -7,8 +7,8 @@ import 'package:user_management/user_management.dart';
 
 /// View-model for the welcome screen.
 class WelcomeViewModel {
-  final _uiState = ValueNotifier(
-      UIState(projectVersion: Option.none(), shouldDoOnboarding: false));
+  final _uiState = ValueNotifier(UIState(
+      projectVersion: Option.none(), shouldDoOnboarding: Option.none()));
 
   ValueListenable<UIState> get uiState => _uiState;
 
@@ -21,7 +21,7 @@ class WelcomeViewModel {
   Future<void> checkOnboarding() async {
     final user = await loadCurrentUser();
     final isFirstTime = user == null;
-    _uiState.update((it) => it.copyWith(shouldDoOnboarding: isFirstTime));
+    _uiState.update((it) => it.copyWith(shouldDoOnboarding: Some(isFirstTime)));
   }
 
   WelcomeViewModel() {

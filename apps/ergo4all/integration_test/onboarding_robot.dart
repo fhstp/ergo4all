@@ -12,7 +12,11 @@ Future<void> completeWelcomeScreen(WidgetTester tester) async {
   // Should be on welcome screen
   expect(find.byType(WelcomeScreen), findsOne);
 
-  // Wait for welcome screen to pass
+  // Wait a moment for the screen to get ready
+  await tester.pump(Duration(milliseconds: 500));
+
+  // Press start
+  await tester.tap(find.byKey(Key("start")));
   await tester.pumpAndSettle();
 }
 
