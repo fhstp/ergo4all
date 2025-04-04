@@ -3,7 +3,6 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:ergo4all/welcome/viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -43,68 +42,38 @@ class WelcomeScreen extends HookWidget {
             ),
           ),
         ),
-        ScreenContent(
+        Expanded(
           child: Column(
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Welcome!",
-                      style: h3Style.copyWith(color: white),
-                    ),
-                    const Image(image: CustomImages.logoWhite),
-                    const SizedBox(
-                      height: largeSpace,
-                    ),
-                    Text("Powered by"),
-                    const SizedBox(
-                      height: smallSpace,
-                    ),
-                    const Image(
-                      image: CustomImages.logoAk,
-                      height: 200,
-                    ),
-                    const SizedBox(
-                      height: largeSpace,
-                    ),
-                    Text("Project partners"),
-                    const SizedBox(
-                      height: smallSpace,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Image(
-                          image: CustomImages.logoTUWien,
-                          height: 100,
-                        ),
-                        SizedBox(
-                          width: largeSpace,
-                        ),
-                        const Image(
-                          image: CustomImages.logoFhStp,
-                          height: 100,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: largeSpace,
-                    ),
-                    ElevatedButton(
-                      key: Key("start"),
-                      style: primaryTextButtonStyle,
-                      onPressed: uiState.shouldDoOnboarding.match(
-                          () => null,
-                          (doOnboarding) =>
-                              () => navigateToNextScreen(doOnboarding)),
-                      child: Text("Start"),
-                    )
-                  ],
+              Spacer(flex: 2),
+              Text(
+                "Welcome!",
+                style: h3Style.copyWith(color: white),
+              ),
+              const Image(image: CustomImages.logoWhite),
+              Spacer(flex: 3),
+              ElevatedButton(
+                key: Key("start"),
+                style: primaryTextButtonStyle,
+                onPressed: uiState.shouldDoOnboarding.match(() => null,
+                    (doOnboarding) => () => navigateToNextScreen(doOnboarding)),
+                child: Text("Start"),
+              ),
+              Spacer(flex: 2),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
+                child: SizedBox.fromSize(
+                  size: Size.fromHeight(50),
+                  child: Row(children: [
+                    const Image(image: CustomImages.logoAk),
+                    Spacer(),
+                    const Image(image: CustomImages.logoTUWien),
+                    SizedBox(width: mediumSpace),
+                    const Image(image: CustomImages.logoFhStp),
+                  ]),
                 ),
               ),
-              VersionDisplay(version: uiState.projectVersion)
+              VersionDisplay(version: uiState.projectVersion),
             ],
           ),
         ),
