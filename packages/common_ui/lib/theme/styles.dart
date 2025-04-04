@@ -37,3 +37,7 @@ const paleTextButtonStyle = ButtonStyle(
 /// Text style for H1 headers.
 const h1Style =
     TextStyle(fontWeight: FontWeight.w700, fontSize: 38, color: cardinal);
+
+/// Text style for H3 headers.
+const h3Style =
+    TextStyle(fontWeight: FontWeight.w500, fontSize: 36, color: woodSmoke);

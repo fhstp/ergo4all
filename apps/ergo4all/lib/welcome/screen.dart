@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
@@ -49,6 +50,10 @@ class WelcomeScreen extends HookWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      "Welcome!",
+                      style: h3Style.copyWith(color: white),
+                    ),
                     const Image(image: CustomImages.logoWhite),
                     const SizedBox(
                       height: largeSpace,
