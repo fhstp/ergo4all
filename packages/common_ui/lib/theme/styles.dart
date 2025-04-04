@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 /// The button style for all primary buttons. It uses a teal color
 /// palette.
 const primaryTextButtonStyle = ButtonStyle(
+  minimumSize: WidgetStatePropertyAll(Size(75, 48)),
+  maximumSize: WidgetStatePropertyAll(Size(222, 48)),
   foregroundColor: WidgetStatePropertyAll(white),
   backgroundColor: WidgetStateColor.fromMap({
     WidgetState.pressed: tealBlue,
@@ -15,6 +17,8 @@ const primaryTextButtonStyle = ButtonStyle(
 /// The button style for all secondary buttons. It uses a dark blue color
 /// palette.
 const secondaryTextButtonStyle = ButtonStyle(
+  minimumSize: WidgetStatePropertyAll(Size(75, 48)),
+  maximumSize: WidgetStatePropertyAll(Size(222, 48)),
   foregroundColor: WidgetStatePropertyAll(white),
   backgroundColor: WidgetStateColor.fromMap({
     WidgetState.pressed: blackPearl,
@@ -26,6 +30,8 @@ const secondaryTextButtonStyle = ButtonStyle(
 /// The button style for all buttons which are surrounded by a lot of white.
 /// It uses the pale blue color palette.
 const paleTextButtonStyle = ButtonStyle(
+  minimumSize: WidgetStatePropertyAll(Size(75, 48)),
+  maximumSize: WidgetStatePropertyAll(Size(222, 48)),
   foregroundColor: WidgetStatePropertyAll(woodSmoke),
   backgroundColor: WidgetStateColor.fromMap({
     WidgetState.pressed: hippieBlue,
