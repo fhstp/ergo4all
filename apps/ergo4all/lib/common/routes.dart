@@ -1,5 +1,6 @@
 enum Routes {
   home("/home"),
+  scenarioChoice('/scenario/choice'),
   liveAnalysis('/analysis/live'),
   results('/analysis/results'),
   preIntro('/intro/pre'),

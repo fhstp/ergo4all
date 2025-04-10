@@ -13,6 +13,7 @@ import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
+import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +55,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
     return MaterialApp(
         routes: {
           Routes.home.path: (context) => HomeScreen(),
+          Routes.scenarioChoice.path: (context) => ScenarioChoiceScreen(),
           Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(),
           Routes.results.path: (context) => const ResultsScreen(),
           Routes.preIntro.path: (context) => const PreIntroScreen(),

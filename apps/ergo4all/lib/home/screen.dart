@@ -31,7 +31,7 @@ class HomeScreen extends HookWidget {
 
       if (source == VideoSource.live) {
         if (!context.mounted) return;
-        await Navigator.pushNamed(context, Routes.liveAnalysis.path);
+        await Navigator.pushNamed(context, Routes.scenarioChoice.path);
         return;
       }
 
