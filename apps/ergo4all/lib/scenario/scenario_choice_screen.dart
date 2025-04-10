@@ -1,6 +1,7 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
+import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,10 @@ class ScenarioChoiceScreen extends StatelessWidget {
           Scenario.conveyorBelt => localizations.scenario_conveyor_label,
         };
 
+    void goToDetailScreen() async {
+      await Navigator.of(context).pushNamed(Routes.scenarioDetail.path);
+    }
+
     return Scaffold(
       body: Column(
         children: [
@@ -40,8 +45,8 @@ class ScenarioChoiceScreen extends StatelessWidget {
                 final scenario = Scenario.values[i];
                 return ElevatedButton(
                   style: paleTextButtonStyle,
+                  onPressed: goToDetailScreen,
                   child: Text(titleFor(scenario)),
-                  onPressed: () {},
                 );
               },
               separatorBuilder: (ctx, i) => SizedBox(
