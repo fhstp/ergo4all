@@ -1,3 +1,38 @@
+# [1.37.0](https://github.com/fhstp/ergo4all/compare/v1.36.0...v1.37.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* localization errors ([12ab4f5](https://github.com/fhstp/ergo4all/commit/12ab4f58843037ab7d10a739db79a30fc474793e))
+
+
+### Features
+
+* add scenario label texts ([3de9d79](https://github.com/fhstp/ergo4all/commit/3de9d797f6f0b20ee9ea5dea259713442a673a7a))
+* add scenario summaries ([7094491](https://github.com/fhstp/ergo4all/commit/7094491ed9522a4a0a164f771ec11ab5da35216f))
+* **app:** add choice screen title ([eeca764](https://github.com/fhstp/ergo4all/commit/eeca764e6d977c63cb393d4a0b1cdc8b03efd397))
+* **app:** add circle graphic to home screen ([93faad1](https://github.com/fhstp/ergo4all/commit/93faad149260cc116ca60b7ca2fc942f8955d1f7))
+* **app:** add circle graphic to welcome screen ([13137f9](https://github.com/fhstp/ergo4all/commit/13137f92f4db4d0141563c60668e610396c32871))
+* **app:** add scenario choice buttons ([0743b3f](https://github.com/fhstp/ergo4all/commit/0743b3f995223e223cf9a04ef84617971a90fd10))
+* **app:** add scenario choice screen ([c50868b](https://github.com/fhstp/ergo4all/commit/c50868b4e5264784afbbf37d9eece04a025d8434))
+* **app:** add start button to welcome screen ([0dba193](https://github.com/fhstp/ergo4all/commit/0dba193a45823d98d1a2adbe6262fb44c6aa6516))
+* **app:** add title to home screen ([4eae208](https://github.com/fhstp/ergo4all/commit/4eae208404a0354af6a2b3c39c4ef00f3621b2a6))
+* **app:** add welcome header ([47f80a3](https://github.com/fhstp/ergo4all/commit/47f80a3600d87a6520784972302c356fcd906e17))
+* **app:** change h1 style ([2fe72e7](https://github.com/fhstp/ergo4all/commit/2fe72e70c086c6b04aed7c8a6b561da3aa4f7f92))
+* **app:** change logo color on welcome screen ([fc486ad](https://github.com/fhstp/ergo4all/commit/fc486ad91e32c445b5f1d5eaf53d6ff07fb6b476))
+* **app:** display scenario description ([4dd95db](https://github.com/fhstp/ergo4all/commit/4dd95db63342ddd4166839946dad7f33f90e782d))
+* **app:** move logos on welcome screen ([5b4e776](https://github.com/fhstp/ergo4all/commit/5b4e776ab66a71d828776ed31155dd82a972a865))
+* **app:** remove onboarding ([89497ff](https://github.com/fhstp/ergo4all/commit/89497ffaa5a668fa6f3c112f0e7ec9779bb5eb89))
+* **app:** reword text ([23be752](https://github.com/fhstp/ergo4all/commit/23be7526027876c7c263f7802a7dabb059a32c44))
+* **app:** scenario detail navigation ([7e590a2](https://github.com/fhstp/ergo4all/commit/7e590a2f4602e9197839cc112d71dea52515cb6e)), closes [#62](https://github.com/fhstp/ergo4all/issues/62)
+* **app:** scenario summary on detail screen ([943a20f](https://github.com/fhstp/ergo4all/commit/943a20f37650fbbcadb1e3e9c9e301cfbdab7c78))
+* **common_ui:** add h4 style ([bccd032](https://github.com/fhstp/ergo4all/commit/bccd0329676842ccf15f14ff7b96a797c5fdf41c))
+* **common_ui:** add paragraph header style ([05b5191](https://github.com/fhstp/ergo4all/commit/05b5191209da4d6354168dba75287548eceea216))
+* **common_ui:** define default button size ([18b58a7](https://github.com/fhstp/ergo4all/commit/18b58a7d216c6f2460a7abd4720db6b075ae3245))
+* **common_ui:** improve red circle graphic ([091400c](https://github.com/fhstp/ergo4all/commit/091400c523d8dd751db33cd6fcecd0f92af83fc2))
+* restyle session start dialog ([5d54644](https://github.com/fhstp/ergo4all/commit/5d54644da6830b93b1c596c99ffbe6914a80a285))
+* use worst score for symmetric scores ([f6145b6](https://github.com/fhstp/ergo4all/commit/f6145b60fc7e6cc1b9978837176c90b40f5c6b93)), closes [#52](https://github.com/fhstp/ergo4all/issues/52)
+
 # [1.36.0](https://github.com/fhstp/ergo4all/compare/v1.35.0...v1.36.0) (2025-04-03)
 
 
