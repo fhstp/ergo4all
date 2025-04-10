@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "@home_welcome": {
     "placeholders": {
       "firstName": {
