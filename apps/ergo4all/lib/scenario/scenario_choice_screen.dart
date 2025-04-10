@@ -25,8 +25,9 @@ class ScenarioChoiceScreen extends StatelessWidget {
           Scenario.conveyorBelt => localizations.scenario_conveyor_label,
         };
 
-    void goToDetailScreen() async {
-      await Navigator.of(context).pushNamed(Routes.scenarioDetail.path);
+    void goToDetailScreen(Scenario scenario) async {
+      await Navigator.of(context)
+          .pushNamed(Routes.scenarioDetail.path, arguments: scenario);
     }
 
     return Scaffold(
@@ -45,7 +46,9 @@ class ScenarioChoiceScreen extends StatelessWidget {
                 final scenario = Scenario.values[i];
                 return ElevatedButton(
                   style: paleTextButtonStyle,
-                  onPressed: goToDetailScreen,
+                  onPressed: () {
+                    goToDetailScreen(scenario);
+                  },
                   child: Text(titleFor(scenario)),
                 );
               },
