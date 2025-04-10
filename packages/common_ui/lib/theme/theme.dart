@@ -41,7 +41,11 @@ const _elevatedButtonTheme = ElevatedButtonThemeData(
   ),
 );
 
-const _textTheme = TextTheme(headlineLarge: h1Style);
+final _textTheme = TextTheme(
+  headlineLarge: h1Style,
+  headlineMedium: h3Style,
+  headlineSmall: h4Style,
+);
 
 const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(

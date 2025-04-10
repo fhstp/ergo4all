@@ -1,5 +1,6 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// The button style for all primary buttons. It uses a teal color
 /// palette.
@@ -47,3 +48,9 @@ const h1Style =
 /// Text style for H3 headers.
 const h3Style =
     TextStyle(fontWeight: FontWeight.w500, fontSize: 36, color: woodSmoke);
+
+/// Text style for H4 headers.
+final h4Style = GoogleFonts.nunito(
+  fontWeight: FontWeight.w600,
+  fontSize: 30,
+);
