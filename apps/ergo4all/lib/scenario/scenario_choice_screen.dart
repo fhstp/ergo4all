@@ -14,15 +14,15 @@ class ScenarioChoiceScreen extends StatelessWidget {
 
     String titleFor(Scenario scenario) => switch (scenario) {
           Scenario.liftAndCarry25 =>
-            localizations.scenario_lift_and_carry_summary,
-          Scenario.pull150 => localizations.scenario_pull_summary,
-          Scenario.seated => localizations.scenario_seated_summary,
-          Scenario.packaging => localizations.scenario_packaging_summary,
-          Scenario.standingCNC => localizations.scenario_CNC_summary,
-          Scenario.standingAssembly => localizations.scenario_assembly_summary,
-          Scenario.ceiling => localizations.scenario_ceiling_summary,
-          Scenario.lift25 => localizations.scenario_lift_and_carry_summary,
-          Scenario.conveyorBelt => localizations.scenario_conveyor_summary,
+            localizations.scenario_lift_and_carry_label,
+          Scenario.pull150 => localizations.scenario_pull_label,
+          Scenario.seated => localizations.scenario_seated_label,
+          Scenario.packaging => localizations.scenario_packaging_label,
+          Scenario.standingCNC => localizations.scenario_CNC_label,
+          Scenario.standingAssembly => localizations.scenario_assembly_label,
+          Scenario.ceiling => localizations.scenario_ceiling_label,
+          Scenario.lift25 => localizations.scenario_lift_and_carry_label,
+          Scenario.conveyorBelt => localizations.scenario_conveyor_label,
         };
 
     return Scaffold(

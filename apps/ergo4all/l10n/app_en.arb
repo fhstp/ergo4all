@@ -40,15 +40,51 @@
   "professionalIntro_privacy_header": "Your privacy is important to us.",
   "professionalIntro_privacy_text": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. Your data stays on your phone and is not shared with anyone else.",
   "professionalIntro_privacy_title": "Privacy",
+  "scenario_assembly_label": "Standing assembly",
+  "@scenario_assembly_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_assembly_summary": "Assembly standing at a table",
+  "scenario_ceiling_label": "Ceiling cable install",
+  "@scenario_ceiling_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_ceiling_summary": "Cable installation on the ceiling",
   "scenario_choice_title": "CHOOSE",
+  "scenario_CNC_label": "Standing at CNC",
+  "@scenario_CNC_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_CNC_summary": "Working in a standing position on a CNC machine",
+  "scenario_conveyor_label": "Conveyor belt work",
+  "@scenario_conveyor_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_conveyor_summary": "Working on a conveyor belt for long periods",
+  "scenario_lift_and_carry_label": "Lift and carry (25kg)",
+  "@scenario_lift_and_carry_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_lift_and_carry_summary": "Lifting and carrying heavy loads up to 25 kg",
+  "scenario_lift_label": "Lift (25kg)",
+  "@scenario_lift_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_lift_summary": "Lifting a bag weighing up to 25 kg",
+  "scenario_packaging_label": "Repetitive packaging",
+  "@scenario_packaging_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_packaging_summary": "Packaging work with a high repetition rate",
+  "scenario_pull_label": "Push and pull (150kg)",
+  "@scenario_pull_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_pull_summary": "Pushing and pulling material trolleys up to 150 kg",
+  "scenario_seated_label": "Seated work",
+  "@scenario_seated_label": {
+    "description": "Short label text for buttons referencing this scenario"
+  },
   "scenario_seated_summary": "Working in a seated position",
   "termsOfUse_accept": "I accept",
   "termsOfUse_content": "Ergo4A provides ergonomic guidance, not medical advice. Consult healthcare professionals for medical issues. The AI support is an aid, not perfect. You're accountable for the data accuracy you provide.",
