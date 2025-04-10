@@ -54,3 +54,7 @@ final h4Style = GoogleFonts.nunito(
   fontWeight: FontWeight.w600,
   fontSize: 30,
 );
+
+/// Small header for paragraphs
+final paragraphHeader =
+    GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 20);
