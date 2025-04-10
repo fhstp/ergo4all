@@ -18,15 +18,9 @@ class WelcomeScreen extends HookWidget {
     final viewModel = useMemoized(WelcomeViewModel.new);
     final uiState = useValueListenable(viewModel.uiState);
 
-    void navigateToNextScreen(bool doOnboarding) async {
-      final nextRoute = doOnboarding ? Routes.language : Routes.home;
-      await Navigator.of(context).pushReplacementNamed(nextRoute.path);
+    void navigateToNextScreen() async {
+      await Navigator.of(context).pushReplacementNamed(Routes.home.path);
     }
-
-    useEffect(() {
-      viewModel.checkOnboarding();
-      return null;
-    }, [null]);
 
     return Scaffold(
       body: Stack(children: [
@@ -54,8 +48,7 @@ class WelcomeScreen extends HookWidget {
             ElevatedButton(
               key: Key("start"),
               style: primaryTextButtonStyle,
-              onPressed: uiState.shouldDoOnboarding.match(() => null,
-                  (doOnboarding) => () => navigateToNextScreen(doOnboarding)),
+              onPressed: navigateToNextScreen,
               child: Text("Start"),
             ),
             Spacer(flex: 2),
