@@ -13,9 +13,8 @@ class ScenarioChoiceScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     String titleFor(Scenario scenario) => switch (scenario) {
-          Scenario.liftAndCarry25 =>
-            localizations.scenario_lift_and_carry_label,
-          Scenario.pull150 => localizations.scenario_pull_label,
+          Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
+          Scenario.pull => localizations.scenario_pull_label,
           Scenario.seated => localizations.scenario_seated_label,
           Scenario.packaging => localizations.scenario_packaging_label,
           Scenario.standingCNC => localizations.scenario_CNC_label,

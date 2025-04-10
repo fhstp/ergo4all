@@ -1,10 +1,10 @@
 /// The different work scenarios we can evaluate
 enum Scenario {
   /// Lifting and carrying heavy loads up to 25 kg
-  liftAndCarry25,
+  liftAndCarry,
 
   /// Pushing and pulling material trolleys up to 150 kg
-  pull150,
+  pull,
 
   /// Working in a seated position
   seated,
