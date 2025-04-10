@@ -17,6 +17,10 @@
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
   "common_next": "Next",
+  "common_description": "Description",
+  "@common_description": {
+    "description": "The word \"Description\" to be used in any context."
+  },
   "home_firstSession": "Record",
   "home_title": "Home",
   "home_welcome": "Welcome {firstName}",
@@ -40,47 +44,83 @@
   "professionalIntro_privacy_header": "Your privacy is important to us.",
   "professionalIntro_privacy_text": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. Your data stays on your phone and is not shared with anyone else.",
   "professionalIntro_privacy_title": "Privacy",
+  "scenario_assembly_description": "An employee stands at an assembly table, often having to bend forwards.",
+  "@scenario_assembly_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_assembly_label": "Standing assembly",
   "@scenario_assembly_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_assembly_summary": "Assembly standing at a table",
+  "scenario_ceiling_description": "An electrician installs cable trays overhead and holds tools up for long periods of time.",
+  "@scenario_ceiling_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_ceiling_label": "Ceiling cable install",
   "@scenario_ceiling_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_ceiling_summary": "Cable installation on the ceiling",
   "scenario_choice_title": "CHOOSE",
+  "scenario_CNC_description": "A machine operator stands in front of a CNC milling machine all day, taking measurements and checking the process.",
+  "@scenario_CNC_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_CNC_label": "Standing at CNC",
   "@scenario_CNC_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_CNC_summary": "Working in a standing position on a CNC machine",
+  "scenario_conveyor_description": "A labourer stands at a conveyor belt for several hours a day and performs repetitive hand movements. He is forced to work in a slightly inclined position.",
+  "@scenario_conveyor_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_conveyor_label": "Conveyor belt work",
   "@scenario_conveyor_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_conveyor_summary": "Working on a conveyor belt for long periods",
+  "scenario_lift_and_carry_description": "A worker regularly lifts heavy metal plates from the floor onto a workbench, often with his back bent.",
+  "@scenario_lift_and_carry_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_lift_and_carry_label": "Lift and carry (25kg)",
   "@scenario_lift_and_carry_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_and_carry_summary": "Lifting and carrying heavy loads up to 25 kg",
+  "scenario_lift_description": "A warehouse worker regularly lifts 25 kg sacks (cement, grain).",
+  "@scenario_lift_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_lift_label": "Lift (25kg)",
   "@scenario_lift_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_summary": "Lifting a bag weighing up to 25 kg",
+  "scenario_packaging_description": "An employee packs products into boxes and uses an adhesive tape dispenser with repetitive movements.",
+  "@scenario_packaging_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_packaging_label": "Repetitive packaging",
   "@scenario_packaging_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_packaging_summary": "Packaging work with a high repetition rate",
+  "scenario_pull_description": "A warehouse worker pushes material trolleys with a load of approx. 150 kg over a distance of 50 metres every day.",
+  "@scenario_pull_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_pull_label": "Push and pull (150kg)",
   "@scenario_pull_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_pull_summary": "Pushing and pulling material trolleys up to 150 kg",
+  "scenario_seated_description": "An employee assembles small parts on a conveyor line and often has to turn his upper body.",
+  "@scenario_seated_description": {
+    "description": "Long description text for this scenario"
+  },
   "scenario_seated_label": "Seated work",
   "@scenario_seated_label": {
     "description": "Short label text for buttons referencing this scenario"
