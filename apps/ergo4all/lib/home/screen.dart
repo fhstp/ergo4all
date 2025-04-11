@@ -88,7 +88,7 @@ class HomeScreen extends HookWidget {
               key: const Key("start"),
               style: primaryTextButtonStyle,
               onPressed: showStartSessionDialog,
-              child: Text(localizations.home_firstSession))
+              child: Text(localizations.record_label))
         ],
       ))
     ]));

@@ -25,7 +25,10 @@
   "@common_expectation": {
     "description": "The word \"Expectation\" to be used in any context."
   },
-  "home_firstSession": "Record",
+  "record_label": "Record",
+  "@record_label": {
+    "description": "Label for interactive elements which allow the user to record."
+  },
   "home_title": "Home",
   "home_welcome": "Welcome {firstName}",
   "intro_done": "Done",
