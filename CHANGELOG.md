@@ -1,3 +1,12 @@
+# [1.39.0](https://github.com/fhstp/ergo4all/compare/v1.38.0...v1.39.0) (2025-04-11)
+
+
+### Features
+
+* **app:** auto stop recording after 30s ([02e0902](https://github.com/fhstp/ergo4all/commit/02e09026df70ca7e05e056539397a9ab33eb4db0)), closes [#65](https://github.com/fhstp/ergo4all/issues/65)
+* **app:** critical record progress color ([a1113cd](https://github.com/fhstp/ergo4all/commit/a1113cd8acc91fec5f1cb9dc6ba78faf7ffcf453))
+* **app:** visualize recording time ([e7d19d0](https://github.com/fhstp/ergo4all/commit/e7d19d0ec2ed36b7ca0a956390cd31c367687bbf))
+
 # [1.38.0](https://github.com/fhstp/ergo4all/compare/v1.37.0...v1.38.0) (2025-04-11)
 
 
