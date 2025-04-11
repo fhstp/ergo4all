@@ -1,5 +1,6 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,11 @@ class ScenarioDetailScreen extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_expectation,
     };
 
+    void goToRecordScreen() async {
+      await Navigator.of(context).pushNamedAndRemoveUntil(
+          Routes.liveAnalysis.path, ModalRoute.withName(Routes.home.path));
+    }
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,7 +83,11 @@ class ScenarioDetailScreen extends StatelessWidget {
           Text(
             expectation,
             textAlign: TextAlign.start,
-          )
+          ),
+          ElevatedButton(
+              style: primaryTextButtonStyle,
+              onPressed: goToRecordScreen,
+              child: Text(localizations.record_label))
         ],
       ),
     );
