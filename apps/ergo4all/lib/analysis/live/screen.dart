@@ -87,7 +87,13 @@ class LiveAnalysisScreen extends HookWidget {
           const Spacer(),
           RecordButton(
             isRecording: uiState.isRecording,
-            onTap: viewModel.toggleRecording,
+            onTap: () {
+              if (uiState.isRecording) {
+                viewModel.stopRecording();
+              } else {
+                viewModel.startRecording();
+              }
+            },
           ),
         ],
       ),

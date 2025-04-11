@@ -143,15 +143,19 @@ class LiveAnalysisViewModel {
     _timeline.clear();
   }
 
-  /// Toggle whether whether the camera feed should be analyzed and recorded.
-  Future<void> toggleRecording() async {
-    _isRecording = !_isRecording;
+  /// Start recording
+  void startRecording() {
+    _isRecording = true;
+    _uiState.update((it) => it.copyWith(isRecording: _isRecording));
+  }
+
+  ///  Stop recording
+  Future<void> stopRecording() async {
+    _isRecording = false;
     _uiState.update((it) => it.copyWith(isRecording: _isRecording));
 
-    if (!_isRecording) {
-      await _closeCamera();
-      _startTime = null;
-      _uiState.update((it) => it.copyWith(isDone: true));
-    }
+    await _closeCamera();
+    _startTime = null;
+    _uiState.update((it) => it.copyWith(isDone: true));
   }
 }
