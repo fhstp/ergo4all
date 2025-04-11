@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:ergo4all/analysis/live/screen.dart';
 import 'package:ergo4all/analysis/live/types.dart';
 import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/value_notifier_ext.dart';
@@ -29,6 +30,7 @@ Size _getRotatedImageSize(CameraImage image) {
   return Size(image.height.toDouble(), image.width.toDouble());
 }
 
+/// View-model for the [LiveAnalysisScreen].
 class LiveAnalysisViewModel {
   CameraController? _controller;
   bool _isRecording = false;
@@ -37,8 +39,10 @@ class LiveAnalysisViewModel {
   DateTime? _startTime;
   final List<TimelineEntry> _timeline = List.empty(growable: true);
 
+  /// Observable reference to the current [UIState].
   ValueNotifier<UIState> get uiState => _uiState;
 
+  /// The current score timeline.
   RulaTimeline get timeline => _timeline.toIList();
 
   Future<void> _closeCamera() async {
@@ -107,6 +111,7 @@ class LiveAnalysisViewModel {
     _enqueueCapture(capture);
   }
 
+  /// Configures and initializes the camera.
   Future<void> initializeCamera() async {
     final cameras = await availableCameras();
     final frontCamera = cameras
@@ -138,6 +143,7 @@ class LiveAnalysisViewModel {
     _timeline.clear();
   }
 
+  /// Toggle whether whether the camera feed should be analyzed and recorded.
   Future<void> toggleRecording() async {
     _isRecording = !_isRecording;
     _uiState.update((it) => it.copyWith(isRecording: _isRecording));
