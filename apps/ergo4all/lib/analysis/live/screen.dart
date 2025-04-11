@@ -17,6 +17,12 @@ class LiveAnalysisScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = useMemoized(LiveAnalysisViewModel.new);
+    final animationController = useAnimationController(
+      upperBound: 30,
+      initialValue: 30,
+      duration: const Duration(seconds: 30),
+    );
+    final remainingRecordingTime = useAnimation(animationController);
 
     Future<void> askForPermission() async {
       final isCameraPermissionGranted =
@@ -56,6 +62,14 @@ class LiveAnalysisScreen extends HookWidget {
       [uiState.cameraController],
     );
 
+    useEffect(
+      () {
+        if (remainingRecordingTime == 0) viewModel.stopRecording();
+        return null;
+      },
+      [remainingRecordingTime],
+    );
+
     if (uiState.cameraController.isNone()) {
       return const Scaffold(
         body: Center(
@@ -92,6 +106,7 @@ class LiveAnalysisScreen extends HookWidget {
                 viewModel.stopRecording();
               } else {
                 viewModel.startRecording();
+                animationController.reverse();
               }
             },
           ),
