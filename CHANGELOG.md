@@ -1,3 +1,11 @@
+# [1.38.0](https://github.com/fhstp/ergo4all/compare/v1.37.0...v1.38.0) (2025-04-11)
+
+
+### Features
+
+* **app:** navigate to record screen ([2a99e2d](https://github.com/fhstp/ergo4all/commit/2a99e2dcf739ff91594ec4f39bbb91cc6b4959fb))
+* **app:** scenario expectations ([ccb928b](https://github.com/fhstp/ergo4all/commit/ccb928bbd4d9d1feecfd4106dab0e653b0e9e439))
+
 # [1.37.0](https://github.com/fhstp/ergo4all/compare/v1.36.0...v1.37.0) (2025-04-10)
 
 
