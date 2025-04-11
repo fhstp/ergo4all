@@ -34,3 +34,6 @@ const woodSmoke = Color(0xFF131515);
 
 /// #C4D0DA
 const heather = Color(0xFFC4D0DA);
+
+/// #1D1B20
+const balticSea = Color(0xFF1D1B20);
