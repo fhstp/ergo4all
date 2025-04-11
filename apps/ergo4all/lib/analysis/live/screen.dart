@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pose_vis/pose_vis.dart';
 
+/// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends HookWidget {
+  /// Creates a [LiveAnalysisScreen].
   const LiveAnalysisScreen({super.key});
 
   @override
