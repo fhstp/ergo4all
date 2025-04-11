@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class IntroPage {
+  IntroPage({required this.title, required this.widget});
+
   final String title;
   final Widget widget;
-
-  IntroPage({required this.title, required this.widget});
 }
 
 class Intro extends HookWidget {
-  final List<IntroPage> pages;
-
-  Intro({super.key, required this.pages}) {
-    assert(pages.isNotEmpty, "Into can not display 0 pages!");
+  Intro({required this.pages, super.key}) {
+    assert(pages.isNotEmpty, 'Into can not display 0 pages!');
   }
+
+  final List<IntroPage> pages;
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +37,24 @@ class Intro extends HookWidget {
     return Scaffold(
       appBar: makeCustomAppBar(title: pageTitle),
       body: ScreenContent(
-          child: Column(children: [
-        Expanded(
-          child: PageView(
-            controller: pageController,
-            onPageChanged: (newIndex) => pageIndex.value = newIndex,
-            children: pages.map((it) => it.widget).toList(),
-          ),
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                onPageChanged: (newIndex) => pageIndex.value = newIndex,
+                children: pages.map((it) => it.widget).toList(),
+              ),
+            ),
+            ElevatedButton(
+              key: const Key('done'),
+              style: primaryTextButtonStyle,
+              onPressed: navigateToTermsOfUse,
+              child: Text(localizations.intro_done),
+            ),
+          ],
         ),
-        ElevatedButton(
-            key: const Key("done"),
-            style: primaryTextButtonStyle,
-            onPressed: navigateToTermsOfUse,
-            child: Text(localizations.intro_done))
-      ])),
+      ),
     );
   }
 }

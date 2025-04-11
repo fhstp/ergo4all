@@ -25,7 +25,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
           Scenario.conveyorBelt => localizations.scenario_conveyor_label,
         };
 
-    void goToDetailScreen(Scenario scenario) async {
+    Future<void> goToDetailScreen(Scenario scenario) async {
       await Navigator.of(context)
           .pushNamed(Routes.scenarioDetail.path, arguments: scenario);
     }
@@ -36,7 +36,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
           RedCircleTopBar(
             titleText: localizations.scenario_choice_title,
           ),
-          SizedBox(
+          const SizedBox(
             height: largeSpace,
           ),
           Expanded(
@@ -52,12 +52,12 @@ class ScenarioChoiceScreen extends StatelessWidget {
                   child: Text(titleFor(scenario)),
                 );
               },
-              separatorBuilder: (ctx, i) => SizedBox(
+              separatorBuilder: (ctx, i) => const SizedBox(
                 height: largeSpace,
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: largeSpace,
           ),
         ],

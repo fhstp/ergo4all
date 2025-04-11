@@ -7,5 +7,5 @@ Future<void> clearAppStorage() async {
 }
 
 Future<void> openApp(WidgetTester tester) async {
-  await tester.pumpWidget(Ergo4AllApp());
+  await tester.pumpWidget(const Ergo4AllApp());
 }

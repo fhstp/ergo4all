@@ -36,7 +36,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
     ]);
   }
 
-  void _reloadCustomLocale() async {
+  Future<void> _reloadCustomLocale() async {
     final customLocale = await tryGetCustomLocale();
     setState(() {
       _customLocale = customLocale;
@@ -54,30 +54,33 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        routes: {
-          Routes.home.path: (context) => HomeScreen(),
-          Routes.scenarioChoice.path: (context) => ScenarioChoiceScreen(),
-          Routes.scenarioDetail.path: (context) => ScenarioDetailScreen(),
-          Routes.liveAnalysis.path: (context) => LiveAnalysisScreen(),
-          Routes.results.path: (context) => const ResultsScreen(),
-          Routes.preIntro.path: (context) => const PreIntroScreen(),
-          Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
-          Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),
-          Routes.preUserCreator.path: (context) => PreUserCreatorScreen(),
-          Routes.userCreator.path: (context) => UserCreatorScreen(),
-          Routes.language.path: (context) => PickLanguageScreen(),
-          Routes.tou.path: (context) => const TermsOfUseScreen(),
-          Routes.welcome.path: (context) => WelcomeScreen()
-        },
-        navigatorObservers: [
-          RouteLeaveObserver(
-              routeName: Routes.language.path, onLeft: _reloadCustomLocale)
-        ],
-        locale: _customLocale,
-        title: 'Ergo4All',
-        theme: ergo4allTheme,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        initialRoute: Routes.welcome.path);
+      routes: {
+        Routes.home.path: (context) => const HomeScreen(),
+        Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
+        Routes.scenarioDetail.path: (context) => const ScenarioDetailScreen(),
+        Routes.liveAnalysis.path: (context) => const LiveAnalysisScreen(),
+        Routes.results.path: (context) => const ResultsScreen(),
+        Routes.preIntro.path: (context) => const PreIntroScreen(),
+        Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
+        Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),
+        Routes.preUserCreator.path: (context) => const PreUserCreatorScreen(),
+        Routes.userCreator.path: (context) => const UserCreatorScreen(),
+        Routes.language.path: (context) => const PickLanguageScreen(),
+        Routes.tou.path: (context) => const TermsOfUseScreen(),
+        Routes.welcome.path: (context) => const WelcomeScreen(),
+      },
+      navigatorObservers: [
+        RouteLeaveObserver(
+          routeName: Routes.language.path,
+          onLeft: _reloadCustomLocale,
+        ),
+      ],
+      locale: _customLocale,
+      title: 'Ergo4All',
+      theme: ergo4allTheme,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      initialRoute: Routes.welcome.path,
+    );
   }
 }

@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets("should not call completed callback before animation is complete",
+  testWidgets('should not call completed callback before animation is complete',
       (tester) async {
-    bool wasCalled = false;
+    var wasCalled = false;
 
     void onCompleted() {
       wasCalled = true;
     }
 
-    await tester.pumpWidget(Directionality(
+    await tester.pumpWidget(
+      Directionality(
         textDirection: TextDirection.ltr,
         child: TimedLoadingBar(
           duration: const Duration(seconds: 2),
           completed: onCompleted,
-        )));
+        ),
+      ),
+    );
 
     await tester.pump(const Duration(seconds: 1));
 
@@ -24,21 +27,23 @@ void main() {
   });
 
   testWidgets(
-      "should call completed callback exactly once when animation is complete",
+      'should call completed callback exactly once when animation is complete',
       (tester) async {
-    int callCount = 0;
+    var callCount = 0;
 
     void onCompleted() {
       callCount++;
     }
 
-    await tester.pumpWidget(Directionality(
-      textDirection: TextDirection.ltr,
-      child: TimedLoadingBar(
-        duration: const Duration(seconds: 2),
-        completed: onCompleted,
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: TimedLoadingBar(
+          duration: const Duration(seconds: 2),
+          completed: onCompleted,
+        ),
       ),
-    ));
+    );
 
     await tester.pumpAndSettle();
 

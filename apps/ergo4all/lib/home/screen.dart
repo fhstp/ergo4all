@@ -25,7 +25,7 @@ class HomeScreen extends HookWidget {
     final uiState = useValueListenable(viewModel.uiState);
     final localizations = AppLocalizations.of(context)!;
 
-    void showStartSessionDialog() async {
+    Future<void> showStartSessionDialog() async {
       final source = await StartSessionDialog.show(context);
       if (source == null) return;
 
@@ -42,7 +42,7 @@ class HomeScreen extends HookWidget {
       showNotImplementedSnackbar(context);
     }
 
-    void skipTutorial() async {
+    Future<void> skipTutorial() async {
       final userIndex = await loadCurrentUserIndex();
 
       assert(userIndex != null);
@@ -53,9 +53,9 @@ class HomeScreen extends HookWidget {
       showNotImplementedSnackbar(context);
     }
 
-    void showTutorialDialog() async {
+    Future<void> showTutorialDialog() async {
       final takeTutorial = await ShowTutorialDialog.show(context);
-      if (takeTutorial == null) return null;
+      if (takeTutorial == null) return;
 
       if (takeTutorial) {
         showTutorial();
@@ -64,33 +64,47 @@ class HomeScreen extends HookWidget {
       }
     }
 
-    useEffect(() {
-      final user = uiState.user.toNullable();
-      if (user == null || user.hasSeenTutorial) return null;
-      WidgetsBinding.instance.addPostFrameCallback((_) => showTutorialDialog());
-      return null;
-    }, [uiState.user]);
+    useEffect(
+      () {
+        final user = uiState.user.toNullable();
+        if (user == null || user.hasSeenTutorial) return null;
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => showTutorialDialog());
+        return null;
+      },
+      [uiState.user],
+    );
 
-    useEffect(() {
-      viewModel.initialize();
-      return null;
-    }, [null]);
+    useEffect(
+      () {
+        viewModel.initialize();
+        return null;
+      },
+      [null],
+    );
 
     return Scaffold(
-        body: Column(children: [
-      RedCircleTopBar(titleText: 'HOME'),
-      ScreenContent(
-          child: Column(
+      body: Column(
         children: [
-          uiState.user.match(() => ShimmerBox(width: 200, height: 24),
-              (it) => UserWelcomeHeader(it)),
-          ElevatedButton(
-              key: const Key("start"),
-              style: primaryTextButtonStyle,
-              onPressed: showStartSessionDialog,
-              child: Text(localizations.record_label))
+          const RedCircleTopBar(titleText: 'HOME'),
+          ScreenContent(
+            child: Column(
+              children: [
+                uiState.user.match(
+                  () => const ShimmerBox(width: 200, height: 24),
+                  UserWelcomeHeader.new,
+                ),
+                ElevatedButton(
+                  key: const Key('start'),
+                  style: primaryTextButtonStyle,
+                  onPressed: showStartSessionDialog,
+                  child: Text(localizations.record_label),
+                ),
+              ],
+            ),
+          ),
         ],
-      ))
-    ]));
+      ),
+    );
   }
 }

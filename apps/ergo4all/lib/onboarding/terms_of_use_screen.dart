@@ -37,19 +37,21 @@ class TermsOfUseScreen extends HookWidget {
               children: [
                 Text(localizations.termsOfUse_accept),
                 Checkbox(
-                    key: const Key("accept-check"),
-                    value: hasAccepted,
-                    onChanged: (value) => setHasAccepted(value!))
+                  key: const Key('accept-check'),
+                  value: hasAccepted,
+                  onChanged: (value) => setHasAccepted(value!),
+                ),
               ],
             ),
             const SizedBox(
               height: mediumSpace,
             ),
             ElevatedButton(
-                key: const Key("next"),
-                style: paleTextButtonStyle,
-                onPressed: hasAccepted ? navigateToPreUserCreation : null,
-                child: Text(localizations.common_next))
+              key: const Key('next'),
+              style: paleTextButtonStyle,
+              onPressed: hasAccepted ? navigateToPreUserCreation : null,
+              child: Text(localizations.common_next),
+            ),
           ],
         ),
       ),

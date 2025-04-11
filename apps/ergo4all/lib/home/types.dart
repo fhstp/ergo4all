@@ -14,10 +14,10 @@ enum VideoSource {
 /// UI state for home screen.
 @immutable
 class UIState {
+  const UIState({required this.user});
+
   /// The current user. Optional since it needs to be loaded first.
   final Option<User> user;
-
-  const UIState({required this.user});
 
   UIState copyWith({
     Option<User>? user,

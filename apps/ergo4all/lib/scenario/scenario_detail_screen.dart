@@ -12,7 +12,7 @@ class ScenarioDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final scenario = ModalRoute.of(context)!.settings.arguments as Scenario;
+    final scenario = ModalRoute.of(context)!.settings.arguments! as Scenario;
 
     final summary = switch (scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_summary,
@@ -52,9 +52,11 @@ class ScenarioDetailScreen extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_expectation,
     };
 
-    void goToRecordScreen() async {
+    Future<void> goToRecordScreen() async {
       await Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.liveAnalysis.path, ModalRoute.withName(Routes.home.path));
+        Routes.liveAnalysis.path,
+        ModalRoute.withName(Routes.home.path),
+      );
     }
 
     return Scaffold(
@@ -85,9 +87,10 @@ class ScenarioDetailScreen extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           ElevatedButton(
-              style: primaryTextButtonStyle,
-              onPressed: goToRecordScreen,
-              child: Text(localizations.record_label))
+            style: primaryTextButtonStyle,
+            onPressed: goToRecordScreen,
+            child: Text(localizations.record_label),
+          ),
         ],
       ),
     );

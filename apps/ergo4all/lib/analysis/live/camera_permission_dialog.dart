@@ -7,43 +7,47 @@ Future<bool> showCameraPermissionDialog(BuildContext context) async {
 
   if (!context.mounted) return false;
   final isGranted = await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Camera permission not granted"),
-          actions: [
-            if (originalPermission.isDenied)
-              TextButton(
-                  onPressed: () async {
-                    final newPermission = await Permission.camera.request();
-                    if (!context.mounted) return;
-                    if (newPermission.isGranted) Navigator.pop(context, true);
-                  },
-                  child: Text(
-                    "Grant permission",
-                    textAlign: TextAlign.end,
-                  )),
-            if (originalPermission.isPermanentlyDenied)
-              TextButton(
-                  onPressed: () async {
-                    await openAppSettings();
-                    if (!context.mounted) return;
-                    Navigator.pop(context, false);
-                  },
-                  child: Text(
-                    "Grant permission in settings",
-                    textAlign: TextAlign.end,
-                  )),
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Camera permission not granted'),
+        actions: [
+          if (originalPermission.isDenied)
             TextButton(
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-                child: Text(
-                  "Cancel",
-                  textAlign: TextAlign.end,
-                )),
-          ],
-        );
-      });
+              onPressed: () async {
+                final newPermission = await Permission.camera.request();
+                if (!context.mounted) return;
+                if (newPermission.isGranted) Navigator.pop(context, true);
+              },
+              child: const Text(
+                'Grant permission',
+                textAlign: TextAlign.end,
+              ),
+            ),
+          if (originalPermission.isPermanentlyDenied)
+            TextButton(
+              onPressed: () async {
+                await openAppSettings();
+                if (!context.mounted) return;
+                Navigator.pop(context, false);
+              },
+              child: const Text(
+                'Grant permission in settings',
+                textAlign: TextAlign.end,
+              ),
+            ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+            child: const Text(
+              'Cancel',
+              textAlign: TextAlign.end,
+            ),
+          ),
+        ],
+      );
+    },
+  );
   return isGranted ?? false;
 }

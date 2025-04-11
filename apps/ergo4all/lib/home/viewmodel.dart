@@ -10,9 +10,9 @@ class HomeViewModel {
 
   ValueListenable<UIState> get uiState => _uiState;
 
-  void initialize() async {
+  Future<void> initialize() async {
     final user = await loadCurrentUser();
-    assert(user != null, "Must have user on home-screen");
+    assert(user != null, 'Must have user on home-screen');
     _uiState.update((it) => it.copyWith(user: Some(user!)));
   }
 }

@@ -1,5 +1,5 @@
 enum Routes {
-  home("/home"),
+  home('/home'),
   scenarioChoice('/scenario/choice'),
   scenarioDetail('/scenario/detail'),
   liveAnalysis('/analysis/live'),
@@ -13,7 +13,7 @@ enum Routes {
   tou('/tou'),
   welcome('/welcome');
 
-  final String path;
-
   const Routes(this.path);
+
+  final String path;
 }

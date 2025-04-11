@@ -18,57 +18,61 @@ class WelcomeScreen extends HookWidget {
     final viewModel = useMemoized(WelcomeViewModel.new);
     final uiState = useValueListenable(viewModel.uiState);
 
-    void navigateToNextScreen() async {
+    Future<void> navigateToNextScreen() async {
       await Navigator.of(context).pushReplacementNamed(Routes.home.path);
     }
 
     return Scaffold(
-      body: Stack(children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: SvgPicture.asset(
-              'assets/images/top_circle_large.svg',
-              package: "common_ui",
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            Spacer(flex: 2),
-            Text(
-              "Welcome!",
-              style: h3Style.copyWith(color: white),
-            ),
-            const Image(image: CustomImages.logoWhite),
-            Spacer(flex: 3),
-            ElevatedButton(
-              key: Key("start"),
-              style: primaryTextButtonStyle,
-              onPressed: navigateToNextScreen,
-              child: Text("Start"),
-            ),
-            Spacer(flex: 2),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
-              child: SizedBox.fromSize(
-                size: Size.fromHeight(50),
-                child: Row(children: [
-                  const Image(image: CustomImages.logoAk),
-                  Spacer(),
-                  const Image(image: CustomImages.logoTUWien),
-                  SizedBox(width: mediumSpace),
-                  const Image(image: CustomImages.logoFhStp),
-                ]),
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: SvgPicture.asset(
+                'assets/images/top_circle_large.svg',
+                package: 'common_ui',
               ),
             ),
-            VersionDisplay(version: uiState.projectVersion),
-          ],
-        ),
-      ]),
+          ),
+          Column(
+            children: [
+              const Spacer(flex: 2),
+              Text(
+                'Welcome!',
+                style: h3Style.copyWith(color: white),
+              ),
+              const Image(image: CustomImages.logoWhite),
+              const Spacer(flex: 3),
+              ElevatedButton(
+                key: const Key('start'),
+                style: primaryTextButtonStyle,
+                onPressed: navigateToNextScreen,
+                child: const Text('Start'),
+              ),
+              const Spacer(flex: 2),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
+                child: SizedBox.fromSize(
+                  size: const Size.fromHeight(50),
+                  child: const Row(
+                    children: [
+                      Image(image: CustomImages.logoAk),
+                      Spacer(),
+                      Image(image: CustomImages.logoTUWien),
+                      SizedBox(width: mediumSpace),
+                      Image(image: CustomImages.logoFhStp),
+                    ],
+                  ),
+                ),
+              ),
+              VersionDisplay(version: uiState.projectVersion),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

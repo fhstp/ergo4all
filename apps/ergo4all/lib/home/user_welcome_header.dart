@@ -5,9 +5,9 @@ import 'package:user_management/user_management.dart';
 
 /// Displays a welcome header for a given [User].
 class UserWelcomeHeader extends StatelessWidget {
-  final User user;
-
   const UserWelcomeHeader(this.user, {super.key});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {

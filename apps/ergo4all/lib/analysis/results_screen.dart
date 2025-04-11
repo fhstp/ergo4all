@@ -8,10 +8,10 @@ import 'package:rula/rula.dart';
 
 @immutable
 class TimelineEntry {
+  const TimelineEntry({required this.timestamp, required this.sheet});
+
   final int timestamp;
   final RulaSheet sheet;
-
-  const TimelineEntry({required this.timestamp, required this.sheet});
 }
 
 typedef RulaTimeline = IList<TimelineEntry>;
@@ -25,11 +25,11 @@ class ResultsScreen extends StatefulWidget {
 
 class _ResultsScreenState extends State<ResultsScreen> {
   final List<String> labels = [
-    "Upper Arm",
-    "Lower Arm",
-    "Trunk",
-    "Neck",
-    "Legs"
+    'Upper Arm',
+    'Lower Arm',
+    'Trunk',
+    'Neck',
+    'Legs',
   ];
 
   final List<Color> colors = [
@@ -43,7 +43,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
   final Random random = Random();
 
   void _navigateToBodyPartPage(
-      String bodyPart, Color color, List<FlSpot> timelineData) {
+    String bodyPart,
+    Color color,
+    List<FlSpot> timelineData,
+  ) {
     // Map the y-values of FlSpot to specific colors
 
     final List<Color> timelineColors = timelineData.map((spot) {
@@ -72,7 +75,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final timeline = ModalRoute.of(context)!.settings.arguments as RulaTimeline;
+    final timeline =
+        ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
 
     final firstTimestamp = timeline.first.timestamp;
     final lastTimestamp = timeline.last.timestamp;
@@ -88,7 +92,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
 
     List<FlSpot> graphLineFor(
-        RulaScore Function(RulaSheet) selector, int maxValue) {
+      RulaScore Function(RulaSheet) selector,
+      int maxValue,
+    ) {
       return timeline.map((entry) {
         final score = selector(entry.sheet);
         final x = graphXFor(entry.timestamp);
@@ -98,11 +104,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
 
     final lineChartData = IList([
-      graphLineFor((sheet) => calcUpperArmScore(sheet), 6),
-      graphLineFor((sheet) => calcLowerArmScore(sheet), 3),
-      graphLineFor((sheet) => calcTrukScore(sheet), 6),
-      graphLineFor((sheet) => calcNeckScore(sheet), 6),
-      graphLineFor((sheet) => calcLegScore(sheet), 2)
+      graphLineFor(calcUpperArmScore, 6),
+      graphLineFor(calcLowerArmScore, 3),
+      graphLineFor(calcTrukScore, 6),
+      graphLineFor(calcNeckScore, 6),
+      graphLineFor(calcLegScore, 2),
     ]);
 
     return Scaffold(
@@ -110,12 +116,14 @@ class _ResultsScreenState extends State<ResultsScreen> {
       body: Column(
         children: [
           const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('Normalized RULA Score Analysis',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            padding: EdgeInsets.all(8),
+            child: Text(
+              'Normalized RULA Score Analysis',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Wrap(
               spacing: 10,
               runSpacing: 5,
@@ -151,7 +159,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 height: MediaQuery.of(context).size.width *
                     0.7, // Adjusted for a proportional height
 
-                margin: const EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(16),
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -167,7 +175,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ),
 
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Stack(
                     children: [
                       Positioned.fill(
@@ -181,9 +189,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             for (int i = 0; i < lineChartData.length; i++)
                               LineChartBarData(
                                 spots: lineChartData[i],
-                                isCurved: false,
                                 color: colors[i],
-                                barWidth: 2,
                                 isStrokeCapRound: true,
                                 dotData: const FlDotData(show: false),
                               ),
@@ -197,27 +203,31 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 reservedSize: 50,
                                 interval: 0.5,
                                 getTitlesWidget: (value, meta) {
-                                  // Explicitly define labels for fixed positions
+                                  // Explicitly define labels for fixed
+                                  // positions
                                   if (value == 0) {
                                     return const Text(
                                       'Good',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     );
                                   } else if (value == 0.5) {
                                     return const Text(
                                       'Higher Risk',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     );
                                   } else if (value == 1) {
                                     return const Text(
                                       'Bad',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
                                     );
                                   }
 
@@ -233,14 +243,15 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 reservedSize: 40,
                                 getTitlesWidget: (value, meta) {
                                   if (value % 30 == 0) {
-                                    final seconds = value /
-                                        30; // Assuming 30 data points per second
+                                    // Assuming 30 data points per second
+                                    final seconds = value / 30;
 
                                     return Text(
                                       '${seconds.toStringAsFixed(1)} s',
                                       style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     );
                                   }
 
@@ -248,10 +259,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                                 },
                               ),
                             ),
-                            rightTitles: const AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
-                            topTitles: const AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
+                            rightTitles: const AxisTitles(),
+                            topTitles: const AxisTitles(),
                           ),
                           gridData: const FlGridData(show: false),
                           borderData: FlBorderData(show: false),
@@ -270,10 +279,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
 }
 
 class ChartBackgroundPainter extends CustomPainter {
+  ChartBackgroundPainter({required this.minY, required this.maxY});
   final double minY;
   final double maxY;
-
-  ChartBackgroundPainter({required this.minY, required this.maxY});
 
   @override
   void paint(Canvas canvas, Size size) {

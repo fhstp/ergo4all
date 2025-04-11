@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Navigation observer which notifies when navigating away from a given route.
 class RouteLeaveObserver extends NavigatorObserver {
+  RouteLeaveObserver({required this.routeName, required this.onLeft});
+
   final String routeName;
   final void Function() onLeft;
-
-  RouteLeaveObserver({required this.routeName, required this.onLeft});
 
   @override
   void didPush(Route route, Route? previousRoute) {

@@ -16,7 +16,7 @@ class LiveAnalysisScreen extends HookWidget {
   Widget build(BuildContext context) {
     final viewModel = useMemoized(LiveAnalysisViewModel.new);
 
-    void askForPermission() async {
+    Future<void> askForPermission() async {
       final isCameraPermissionGranted =
           await showCameraPermissionDialog(context);
       if (!isCameraPermissionGranted) {
@@ -27,32 +27,41 @@ class LiveAnalysisScreen extends HookWidget {
       viewModel.initializeCamera();
     }
 
-    void goToResults() async {
-      await Navigator.of(context).pushReplacementNamed(Routes.results.path,
-          arguments: viewModel.timeline);
+    Future<void> goToResults() async {
+      await Navigator.of(context).pushReplacementNamed(
+        Routes.results.path,
+        arguments: viewModel.timeline,
+      );
     }
 
     final uiState = useValueListenable(viewModel.uiState);
 
-    useEffect(() {
-      if (uiState.isDone) {
-        WidgetsBinding.instance.addPostFrameCallback((_) => goToResults());
-      }
-      return null;
-    }, [uiState.isDone]);
+    useEffect(
+      () {
+        if (uiState.isDone) {
+          WidgetsBinding.instance.addPostFrameCallback((_) => goToResults());
+        }
+        return null;
+      },
+      [uiState.isDone],
+    );
 
-    useEffect(() {
-      if (uiState.cameraController.isNone()) askForPermission();
-      return null;
-    }, [uiState.cameraController]);
+    useEffect(
+      () {
+        if (uiState.cameraController.isNone()) askForPermission();
+        return null;
+      },
+      [uiState.cameraController],
+    );
 
     if (uiState.cameraController.isNone()) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: SizedBox(
-              width: 200,
-              height: 200,
-              child: const CircularProgressIndicator()),
+            width: 200,
+            height: 200,
+            child: CircularProgressIndicator(),
+          ),
         ),
       );
     }
@@ -61,7 +70,7 @@ class LiveAnalysisScreen extends HookWidget {
       body: Column(
         children: [
           uiState.cameraController.match(
-            () => LoadingIndicator(),
+            LoadingIndicator.new,
             (controller) => PaintOnWidget(
               base: CameraPreview(controller),
               painter: uiState.latestCapture.match(
@@ -77,7 +86,7 @@ class LiveAnalysisScreen extends HookWidget {
           RecordButton(
             isRecording: uiState.isRecording,
             onTap: viewModel.toggleRecording,
-          )
+          ),
         ],
       ),
     );

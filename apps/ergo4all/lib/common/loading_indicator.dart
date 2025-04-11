@@ -10,15 +10,18 @@ class LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return const AspectRatio(
       aspectRatio: 1,
-      child: Stack(children: [
-        Center(
-          child: FractionallySizedBox(
+      child: Stack(
+        children: [
+          Center(
+            child: FractionallySizedBox(
               widthFactor: 0.5,
               heightFactor: 0.5,
-              child: Image(image: CustomImages.iconRed)),
-        ),
-        SizedBox.expand(child: CircularProgressIndicator())
-      ]),
+              child: Image(image: CustomImages.iconRed),
+            ),
+          ),
+          SizedBox.expand(child: CircularProgressIndicator()),
+        ],
+      ),
     );
   }
 }

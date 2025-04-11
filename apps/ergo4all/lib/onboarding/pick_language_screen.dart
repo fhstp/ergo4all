@@ -15,7 +15,7 @@ class PickLanguageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void selectLocale(Locale locale) async {
+    Future<void> selectLocale(Locale locale) async {
       await setCustomLocale(locale);
       if (!context.mounted) return;
       Navigator.pushReplacementNamed(context, Routes.preIntro.path);
@@ -23,7 +23,7 @@ class PickLanguageScreen extends StatelessWidget {
 
     Widget languageButtonFor(String language, Locale locale) {
       return ElevatedButton(
-        key: Key("lang_button_${locale.languageCode.toLowerCase()}"),
+        key: Key('lang_button_${locale.languageCode.toLowerCase()}'),
         style: paleTextButtonStyle,
         onPressed: () => selectLocale(locale),
         child: Text(language),
@@ -42,19 +42,19 @@ class PickLanguageScreen extends StatelessWidget {
             const SizedBox(
               height: largeSpace,
             ),
-            languageButtonFor("Deutsch", const Locale("de")),
+            languageButtonFor('Deutsch', const Locale('de')),
             const SizedBox(
               height: mediumSpace,
             ),
-            languageButtonFor("English", const Locale("en")),
+            languageButtonFor('English', const Locale('en')),
             const SizedBox(
               height: mediumSpace,
             ),
-            languageButtonFor("Bosansko-Hrvatsko-Srpski", const Locale("hbs")),
+            languageButtonFor('Bosansko-Hrvatsko-Srpski', const Locale('hbs')),
             const SizedBox(
               height: mediumSpace,
             ),
-            languageButtonFor("Türkçe", const Locale("tr")),
+            languageButtonFor('Türkçe', const Locale('tr')),
           ],
         ),
       ),

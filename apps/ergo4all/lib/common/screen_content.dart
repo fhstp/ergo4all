@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ScreenContent extends StatelessWidget {
-  final Widget child;
+  const ScreenContent({required this.child, super.key});
 
-  const ScreenContent({super.key, required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

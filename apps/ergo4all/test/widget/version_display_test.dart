@@ -6,21 +6,22 @@ import 'package:fpdart/fpdart.dart';
 void main() {
   Widget makeTestVersionDisplay(Option<String> version) {
     return Directionality(
-        textDirection: TextDirection.ltr,
-        child: VersionDisplay(version: version));
+      textDirection: TextDirection.ltr,
+      child: VersionDisplay(version: version),
+    );
   }
 
-  testWidgets("should display static text when there is no version",
+  testWidgets('should display static text when there is no version',
       (tester) async {
     await tester.pumpWidget(makeTestVersionDisplay(none()));
 
-    expect(find.text("..."), findsOne);
+    expect(find.text('...'), findsOne);
   });
 
-  testWidgets("should display version text when there is a version",
+  testWidgets('should display version text when there is a version',
       (tester) async {
-    await tester.pumpWidget(makeTestVersionDisplay(Some("1.2.3")));
+    await tester.pumpWidget(makeTestVersionDisplay(const Some('1.2.3')));
 
-    expect(find.text("v1.2.3"), findsOne);
+    expect(find.text('v1.2.3'), findsOne);
   });
 }

@@ -2,9 +2,8 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
-  final String content;
-
   const Header(this.content, {super.key});
+  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class Header extends StatelessWidget {
         Text(content, style: style),
         const SizedBox(
           height: largeSpace,
-        )
+        ),
       ],
     );
   }

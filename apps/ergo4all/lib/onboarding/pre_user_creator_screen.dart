@@ -8,7 +8,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:user_management/user_management.dart';
 
-final _defaultUser = makeUserFromName("Ergo-fan");
+final _defaultUser = makeUserFromName('Ergo-fan');
 
 class PreUserCreatorScreen extends StatelessWidget {
   const PreUserCreatorScreen({super.key});
@@ -23,7 +23,7 @@ class PreUserCreatorScreen extends StatelessWidget {
       navigator.pushNamed(Routes.userCreator.path);
     }
 
-    void proceedWithDefaultUser() async {
+    Future<void> proceedWithDefaultUser() async {
       // This is the default user.
       await addUser(_defaultUser);
 
@@ -53,19 +53,20 @@ class PreUserCreatorScreen extends StatelessWidget {
               height: mediumSpace,
             ),
             ElevatedButton(
-                key: const Key("create"),
-                style: primaryTextButtonStyle,
-                onPressed: navigateToUserCreator,
-                child: Text(localizations.preUserCreator_create)),
+              key: const Key('create'),
+              style: primaryTextButtonStyle,
+              onPressed: navigateToUserCreator,
+              child: Text(localizations.preUserCreator_create),
+            ),
             const SizedBox(
               height: mediumSpace,
             ),
             TextButton(
-              key: const Key("default-values"),
+              key: const Key('default-values'),
               onPressed: proceedWithDefaultUser,
               child: Text(localizations.preUserCreator_useDefaults),
             ),
-            Text(localizations.preUserCreator_defaultsExplanation)
+            Text(localizations.preUserCreator_defaultsExplanation),
           ],
         ),
       ),

@@ -1,56 +1,56 @@
 import 'package:flutter/material.dart';
 
 class BodyPartDetailPage extends StatelessWidget {
+  const BodyPartDetailPage({
+    required this.bodyPart,
+    required this.color,
+    required this.timelineColors,
+    super.key,
+  });
+
   final String bodyPart;
   final Color color;
   final List<Color> timelineColors;
 
-  const BodyPartDetailPage({
-    super.key,
-    required this.bodyPart,
-    required this.color,
-    required this.timelineColors,
-  });
-
   @override
   Widget build(BuildContext context) {
     // Unique text for each body part
-    final Map<String, Map<String, String>> bodyPartTexts = {
-      "Upper Arm": {
-        "issue": "The upper arm was often raised above shoulder level.",
-        "risk": "This increases the risk of rotator cuff injuries.",
-        "fix": "Try keeping your upper arm below shoulder height during tasks.",
+    final bodyPartTexts = <String, Map<String, String>>{
+      'Upper Arm': {
+        'issue': 'The upper arm was often raised above shoulder level.',
+        'risk': 'This increases the risk of rotator cuff injuries.',
+        'fix': 'Try keeping your upper arm below shoulder height during tasks.',
       },
-      "Lower Arm": {
-        "issue":
-            "The lower arm was flexed at an extreme angle for long periods.",
-        "risk": "This posture may lead to repetitive strain injuries.",
-        "fix":
-            "Adjust the workstation to keep your lower arms in a neutral position.",
+      'Lower Arm': {
+        'issue':
+            'The lower arm was flexed at an extreme angle for long periods.',
+        'risk': 'This posture may lead to repetitive strain injuries.',
+        'fix':
+            'Adjust the workstation to keep your lower arms in a neutral position.',
       },
-      "Trunk": {
-        "issue": "The trunk was bent forward excessively.",
-        "risk": "This posture can strain the lower back, causing disc issues.",
-        "fix": "Use a chair with lumbar support and avoid leaning forward.",
+      'Trunk': {
+        'issue': 'The trunk was bent forward excessively.',
+        'risk': 'This posture can strain the lower back, causing disc issues.',
+        'fix': 'Use a chair with lumbar support and avoid leaning forward.',
       },
-      "Neck": {
-        "issue": "The neck was bent at a high angle for a prolonged time.",
-        "risk": "This can lead to ligament strain or disc herniation.",
-        "fix":
-            "Keep your neck aligned with your spine and avoid looking up or down.",
+      'Neck': {
+        'issue': 'The neck was bent at a high angle for a prolonged time.',
+        'risk': 'This can lead to ligament strain or disc herniation.',
+        'fix':
+            'Keep your neck aligned with your spine and avoid looking up or down.',
       },
-      "Legs": {
-        "issue": "The legs were unsupported or in awkward postures.",
-        "risk": "This can cause fatigue or circulation problems.",
-        "fix": "Use a footrest to support your legs while seated.",
+      'Legs': {
+        'issue': 'The legs were unsupported or in awkward postures.',
+        'risk': 'This can cause fatigue or circulation problems.',
+        'fix': 'Use a footrest to support your legs while seated.',
       },
     };
 
-    final Map<String, String> texts = bodyPartTexts[bodyPart] ??
+    final texts = bodyPartTexts[bodyPart] ??
         {
-          "issue": "No issue description available.",
-          "risk": "No risk description available.",
-          "fix": "No fix description available.",
+          'issue': 'No issue description available.',
+          'risk': 'No risk description available.',
+          'fix': 'No fix description available.',
         };
 
     return Scaffold(
@@ -59,7 +59,7 @@ class BodyPartDetailPage extends StatelessWidget {
         backgroundColor: color,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -132,7 +132,7 @@ class BodyPartDetailPage extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              texts["issue"]!,
+              texts['issue']!,
               style: const TextStyle(fontSize: 16),
             ),
 
@@ -148,7 +148,7 @@ class BodyPartDetailPage extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              texts["risk"]!,
+              texts['risk']!,
               style: const TextStyle(fontSize: 16),
             ),
 
@@ -164,7 +164,7 @@ class BodyPartDetailPage extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              texts["fix"]!,
+              texts['fix']!,
               style: const TextStyle(fontSize: 16),
             ),
           ],

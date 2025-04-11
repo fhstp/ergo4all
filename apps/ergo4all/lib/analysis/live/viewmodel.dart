@@ -17,7 +17,8 @@ import 'package:pose_transforming/pose_2d.dart';
 
 const _queueSize = 5;
 
-/// Gets the size of a [CameraImage] but rotates it so width and height match  the device orientation.
+/// Gets the size of a [CameraImage] but rotates it so width and height match
+/// the device orientation.
 Size _getRotatedImageSize(CameraImage image) {
   // For some reason, the width and height in the image are flipped in
   // portrait mode.
@@ -62,7 +63,7 @@ class LiveAnalysisViewModel {
     _timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
   }
 
-  _enqueueCapture(Capture capture) {
+  void _enqueueCapture(Capture capture) {
     _captureQueue.add(capture);
 
     // Discard "old" captures
@@ -75,49 +76,61 @@ class LiveAnalysisViewModel {
 
     final averagePose = averagePoses(_captureQueue.map((it) => it.pose));
     final averageCapture = Capture(
-        timestamp: capture.timestamp,
-        pose: averagePose,
-        imageSize: capture.imageSize);
+      timestamp: capture.timestamp,
+      pose: averagePose,
+      imageSize: capture.imageSize,
+    );
 
     if (_isRecording) _processCapture(averageCapture);
   }
 
-  _onImageCaptured(CameraDescription camera, DeviceOrientation orientation,
-      CameraImage cameraImage) async {
+  Future<void> _onImageCaptured(
+    CameraDescription camera,
+    DeviceOrientation orientation,
+    CameraImage cameraImage,
+  ) async {
     final input = poseDetectInputFromCamera(camera, orientation, cameraImage);
     final pose = await detectPose(input);
 
     if (pose == null) {
-      _uiState.update((it) => it.copyWith(latestCapture: None()));
+      _uiState.update((it) => it.copyWith(latestCapture: const None()));
       return;
     }
 
     final capture = Capture(
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-        pose: pose,
-        imageSize: _getRotatedImageSize(cameraImage));
+      timestamp: DateTime.now().millisecondsSinceEpoch,
+      pose: pose,
+      imageSize: _getRotatedImageSize(cameraImage),
+    );
     _uiState.update((it) => it.copyWith(latestCapture: Some(capture)));
 
     _enqueueCapture(capture);
   }
 
-  void initializeCamera() async {
+  Future<void> initializeCamera() async {
     final cameras = await availableCameras();
     final frontCamera = cameras
         .firstWhere((it) => it.lensDirection == CameraLensDirection.back);
 
-    final controller = CameraController(frontCamera, ResolutionPreset.high,
-        enableAudio: false,
-        imageFormatGroup: Platform.isAndroid
-            ? ImageFormatGroup.nv21 // for Android
-            : ImageFormatGroup.bgra8888, // for iOS
-        fps: 15);
+    final controller = CameraController(
+      frontCamera, ResolutionPreset.high,
+      enableAudio: false,
+      imageFormatGroup: Platform.isAndroid
+          ? ImageFormatGroup.nv21 // for Android
+          : ImageFormatGroup.bgra8888, // for iOS
+      fps: 15,
+    );
 
     _controller = controller;
 
     await controller.initialize();
-    await controller.startImageStream((image) => _onImageCaptured(
-        frontCamera, controller.value.deviceOrientation, image));
+    await controller.startImageStream(
+      (image) => _onImageCaptured(
+        frontCamera,
+        controller.value.deviceOrientation,
+        image,
+      ),
+    );
     await startPoseDetection(PoseDetectMode.stream);
 
     _uiState.update((it) => it.copyWith(cameraController: Some(controller)));
@@ -125,7 +138,7 @@ class LiveAnalysisViewModel {
     _timeline.clear();
   }
 
-  void toggleRecording() async {
+  Future<void> toggleRecording() async {
     _isRecording = !_isRecording;
     _uiState.update((it) => it.copyWith(isRecording: _isRecording));
 

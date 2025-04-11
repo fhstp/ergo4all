@@ -1,13 +1,13 @@
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/onboarding/user_creation_form.dart';
 import 'package:flutter/material.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:user_management/user_management.dart';
 
 void main() {
   Widget makeForm(void Function(User user) onUserSubmitted) {
     return MaterialApp(
-      locale: const Locale("en"),
+      locale: const Locale('en'),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       home: Scaffold(
         body: UserCreationForm(
@@ -17,36 +17,43 @@ void main() {
     );
   }
 
-  testWidgets("should not submit user if form is invalid", (tester) async {
+  testWidgets('should not submit user if form is invalid', (tester) async {
     User? submittedUser;
 
-    await tester.pumpWidget(makeForm(
-      (user) => submittedUser = user,
-    ));
+    await tester.pumpWidget(
+      makeForm(
+        (user) => submittedUser = user,
+      ),
+    );
 
     // Set nickname empty. This is an invalid value so we should not be able
     // to progress.
-    await tester.enterText(find.byKey(const Key("nickNameInput")), "");
+    await tester.enterText(find.byKey(const Key('nickNameInput')), '');
 
-    await tester.tap(find.byKey(const Key("create")));
+    await tester.tap(find.byKey(const Key('create')));
     await tester.pumpAndSettle();
 
     expect(submittedUser, null);
   });
 
-  testWidgets("should submit user with entered information", (tester) async {
+  testWidgets('should submit user with entered information', (tester) async {
     User? submittedUser;
 
-    await tester.pumpWidget(makeForm(
-      (user) => submittedUser = user,
-    ));
+    await tester.pumpWidget(
+      makeForm(
+        (user) => submittedUser = user,
+      ),
+    );
 
-    await tester.enterText(find.byKey(const Key("nickNameInput")), "John");
-    await tester.enterText(find.byKey(const Key("sexInput")), "m");
+    await tester.enterText(find.byKey(const Key('nickNameInput')), 'John');
+    await tester.enterText(find.byKey(const Key('sexInput')), 'm');
 
-    await tester.tap(find.byKey(const Key("create")));
+    await tester.tap(find.byKey(const Key('create')));
     await tester.pumpAndSettle();
 
-    expect(submittedUser, equals(User(name: "John", hasSeenTutorial: false)));
+    expect(
+      submittedUser,
+      equals(const User(name: 'John', hasSeenTutorial: false)),
+    );
   });
 }

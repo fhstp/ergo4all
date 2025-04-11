@@ -10,8 +10,11 @@ class Capture {
   final Pose pose;
   final Size imageSize;
 
-  const Capture(
-      {required this.timestamp, required this.pose, required this.imageSize});
+  const Capture({
+    required this.timestamp,
+    required this.pose,
+    required this.imageSize,
+  });
 }
 
 @immutable

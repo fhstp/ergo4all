@@ -5,9 +5,9 @@ import 'package:ergo4all/home/types.dart';
 import 'package:flutter/material.dart';
 
 class StartSessionDialog extends StatelessWidget {
-  static const name = "/start-session-dialog";
-
   const StartSessionDialog({super.key});
+
+  static const name = '/start-session-dialog';
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +21,22 @@ class StartSessionDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                  key: Key("new"),
-                  style: primaryTextButtonStyle,
-                  onPressed: () {
-                    Navigator.of(context).pop(VideoSource.live);
-                  },
-                  child: Text("Record")),
-              SizedBox(height: largeSpace),
+                key: const Key('new'),
+                style: primaryTextButtonStyle,
+                onPressed: () {
+                  Navigator.of(context).pop(VideoSource.live);
+                },
+                child: const Text('Record'),
+              ),
+              const SizedBox(height: largeSpace),
               ElevatedButton(
-                  key: Key("upload"),
-                  style: secondaryTextButtonStyle,
-                  onPressed: () {
-                    Navigator.of(context).pop(VideoSource.gallery);
-                  },
-                  child: Text("Upload from video"))
+                key: const Key('upload'),
+                style: secondaryTextButtonStyle,
+                onPressed: () {
+                  Navigator.of(context).pop(VideoSource.gallery);
+                },
+                child: const Text('Upload from video'),
+              ),
             ],
           ),
         ),
@@ -44,9 +46,10 @@ class StartSessionDialog extends StatelessWidget {
 
   static Future<VideoSource?> show(BuildContext context) {
     return showDialog(
-        context: context,
-        useRootNavigator: false,
-        routeSettings: RouteSettings(name: name),
-        builder: (context) => StartSessionDialog());
+      context: context,
+      useRootNavigator: false,
+      routeSettings: const RouteSettings(name: name),
+      builder: (context) => const StartSessionDialog(),
+    );
   }
 }
