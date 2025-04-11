@@ -107,6 +107,7 @@ class LiveAnalysisScreen extends HookWidget {
             padding: const EdgeInsets.symmetric(horizontal: largeSpace),
             child: RecordingProgressIndicator(
               remainingTime: remainingRecordingTime,
+              criticalTime: 5,
               initialTime: 30,
             ),
           ),
