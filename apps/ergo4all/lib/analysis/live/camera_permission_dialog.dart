@@ -6,7 +6,7 @@ Future<bool> showCameraPermissionDialog(BuildContext context) async {
   if (originalPermission.isGranted) return true;
 
   if (!context.mounted) return false;
-  final isGranted = await showDialog(
+  final isGranted = await showDialog<bool>(
     context: context,
     builder: (context) {
       return AlertDialog(

@@ -46,7 +46,9 @@ class ShowTutorialDialog extends StatelessWidget {
     );
   }
 
-  /// Shows a [ShowTutorialDialog]. Returns a [bool] indicating whether the user wants to see the tutorial. If the user closes the dialog without making a choice `null` will be returned.
+  /// Shows a [ShowTutorialDialog]. Returns a [bool] indicating whether the
+  /// user wants to see the tutorial. If the user closes the dialog without
+  /// making a choice `null` will be returned.
   static Future<bool?> show(BuildContext context) {
     return showDialog(
       context: context,

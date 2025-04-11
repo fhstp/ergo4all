@@ -8,14 +8,14 @@ class RouteLeaveObserver extends NavigatorObserver {
   final void Function() onLeft;
 
   @override
-  void didPush(Route route, Route? previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (previousRoute?.settings.name == routeName) {
       onLeft();
     }
   }
 
   @override
-  void didReplace({Route? newRoute, Route? oldRoute}) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     if (oldRoute?.settings.name == routeName) {
       onLeft();
     }

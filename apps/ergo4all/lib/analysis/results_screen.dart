@@ -63,7 +63,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => BodyPartDetailPage(
           bodyPart: bodyPart,
           color: color,

@@ -27,7 +27,7 @@ class PreUserCreatorScreen extends StatelessWidget {
       // This is the default user.
       await addUser(_defaultUser);
 
-      navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
+      await navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
 
     return Scaffold(

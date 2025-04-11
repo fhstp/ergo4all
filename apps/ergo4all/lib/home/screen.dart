@@ -45,7 +45,7 @@ class HomeScreen extends HookWidget {
     Future<void> skipTutorial() async {
       final userIndex = await loadCurrentUserIndex();
 
-      assert(userIndex != null);
+      assert(userIndex != null, 'Should have user.');
       await updateUser(userIndex!, (it) => it.copyWith(hasSeenTutorial: true));
     }
 
@@ -60,7 +60,7 @@ class HomeScreen extends HookWidget {
       if (takeTutorial) {
         showTutorial();
       } else {
-        skipTutorial();
+        await skipTutorial();
       }
     }
 

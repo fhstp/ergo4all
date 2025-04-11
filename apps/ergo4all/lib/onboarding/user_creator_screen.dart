@@ -19,7 +19,7 @@ class UserCreatorScreen extends HookWidget {
     Future<void> onUserSubmitted(User user) async {
       // Add user and navigate home afterwards
       await addUser(user);
-      navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
+      await navigator.pushNamedAndRemoveUntil(Routes.home.path, (_) => false);
     }
 
     return Scaffold(

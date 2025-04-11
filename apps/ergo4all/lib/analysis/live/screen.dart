@@ -24,7 +24,7 @@ class LiveAnalysisScreen extends HookWidget {
         return;
       }
 
-      viewModel.initializeCamera();
+      await viewModel.initializeCamera();
     }
 
     Future<void> goToResults() async {

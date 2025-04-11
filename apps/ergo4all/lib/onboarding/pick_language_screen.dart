@@ -18,7 +18,7 @@ class PickLanguageScreen extends StatelessWidget {
     Future<void> selectLocale(Locale locale) async {
       await setCustomLocale(locale);
       if (!context.mounted) return;
-      Navigator.pushReplacementNamed(context, Routes.preIntro.path);
+      await Navigator.pushReplacementNamed(context, Routes.preIntro.path);
     }
 
     Widget languageButtonFor(String language, Locale locale) {

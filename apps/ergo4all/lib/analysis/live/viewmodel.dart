@@ -50,7 +50,7 @@ class LiveAnalysisViewModel {
     _controller = null;
   }
 
-  _processCapture(Capture capture) async {
+  void _processCapture(Capture capture) {
     final normalized = normalizePose(capture.pose);
     final sagittal = make2dSagittalPose(normalized);
     final coronal = make2dCoronalPose(normalized);

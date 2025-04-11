@@ -14,9 +14,8 @@ class IntroPage {
 }
 
 class Intro extends HookWidget {
-  Intro({required this.pages, super.key}) {
-    assert(pages.isNotEmpty, 'Into can not display 0 pages!');
-  }
+  Intro({required this.pages, super.key})
+      : assert(pages.isNotEmpty, 'Into can not display 0 pages!');
 
   final List<IntroPage> pages;
 
