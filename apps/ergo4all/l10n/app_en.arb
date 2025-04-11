@@ -21,6 +21,10 @@
   "@common_description": {
     "description": "The word \"Description\" to be used in any context."
   },
+  "common_expectation": "Expectation",
+  "@common_expectation": {
+    "description": "The word \"Expectation\" to be used in any context."
+  },
   "home_firstSession": "Record",
   "home_title": "Home",
   "home_welcome": "Welcome {firstName}",
@@ -48,12 +52,16 @@
   "@scenario_assembly_description": {
     "description": "Long description text for this scenario"
   },
+  "scenario_assembly_expectation": "High strain on the lower back, risk of fatigue or injury.",
+  "@scenario_assembly_expectation": {},
   "scenario_assembly_label": "Standing assembly",
   "@scenario_assembly_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_assembly_summary": "Assembly standing at a table",
   "scenario_ceiling_description": "An electrician installs cable trays overhead and holds tools up for long periods of time.",
+  "scenario_ceiling_expectation": "Strain on the shoulders, arms and neck.",
+  "@scenario_ceiling_expectation": {},
   "@scenario_ceiling_description": {
     "description": "Long description text for this scenario"
   },
@@ -63,6 +71,8 @@
   },
   "scenario_ceiling_summary": "Cable installation on the ceiling",
   "scenario_choice_title": "CHOOSE",
+  "scenario_CNC_expectation": "Fatigue from standing for long periods, strain on the legs and lower back.",
+  "@scenario_CNC_expectation": {},
   "scenario_CNC_description": "A machine operator stands in front of a CNC milling machine all day, taking measurements and checking the process.",
   "@scenario_CNC_description": {
     "description": "Long description text for this scenario"
@@ -72,6 +82,8 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_CNC_summary": "Working in a standing position on a CNC machine",
+  "scenario_conveyor_expectation": "High strain on the lower back, neck tension due to static posture, rapid fatigue of the arms and legs.",
+  "@scenario_conveyor_expectation": {},
   "scenario_conveyor_description": "A labourer stands at a conveyor belt for several hours a day and performs repetitive hand movements. He is forced to work in a slightly inclined position.",
   "@scenario_conveyor_description": {
     "description": "Long description text for this scenario"
@@ -81,6 +93,8 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_conveyor_summary": "Working on a conveyor belt for long periods",
+  "scenario_lift_and_carry_expectation": "High strain on the lower back, risk of fatigue or injury.",
+  "@scenario_lift_and_carry_expectation": {},
   "scenario_lift_and_carry_description": "A worker regularly lifts heavy metal plates from the floor onto a workbench, often with his back bent.",
   "@scenario_lift_and_carry_description": {
     "description": "Long description text for this scenario"
@@ -90,6 +104,8 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_and_carry_summary": "Lifting and carrying heavy loads up to 25 kg",
+  "scenario_lift_expectation": "High strain on the back and knees.",
+  "@scenario_lift_expectation": {},
   "scenario_lift_description": "A warehouse worker regularly lifts 25 kg sacks (cement, grain).",
   "@scenario_lift_description": {
     "description": "Long description text for this scenario"
@@ -99,6 +115,8 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_summary": "Lifting a bag weighing up to 25 kg",
+  "scenario_packaging_expectation": "Risk of tendonitis, muscle tension due to static posture.",
+  "@scenario_packaging_expectation": {},
   "scenario_packaging_description": "An employee packs products into boxes and uses an adhesive tape dispenser with repetitive movements.",
   "@scenario_packaging_description": {
     "description": "Long description text for this scenario"
@@ -108,6 +126,8 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_packaging_summary": "Packaging work with a high repetition rate",
+  "scenario_pull_expectation": "Strain on the shoulders and wrists from pushing heavy trolleys.",
+  "@scenario_pull_expectation": {},
   "scenario_pull_description": "A warehouse worker pushes material trolleys with a load of approx. 150 kg over a distance of 50 metres every day.",
   "@scenario_pull_description": {
     "description": "Long description text for this scenario"
@@ -117,6 +137,8 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_pull_summary": "Pushing and pulling material trolleys up to 150 kg",
+  "scenario_seated_expectation": "Strain on the lower back muscles, high strain on the shoulders.",
+  "@scenario_seated_expectation": {},
   "scenario_seated_description": "An employee assembles small parts on a conveyor line and often has to turn his upper body.",
   "@scenario_seated_description": {
     "description": "Long description text for this scenario"

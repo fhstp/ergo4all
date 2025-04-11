@@ -38,6 +38,19 @@ class ScenarioDetailScreen extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_description,
     };
 
+    final expectation = switch (scenario) {
+      Scenario.liftAndCarry =>
+        localizations.scenario_lift_and_carry_expectation,
+      Scenario.pull => localizations.scenario_pull_expectation,
+      Scenario.seated => localizations.scenario_seated_expectation,
+      Scenario.packaging => localizations.scenario_packaging_expectation,
+      Scenario.standingCNC => localizations.scenario_CNC_expectation,
+      Scenario.standingAssembly => localizations.scenario_assembly_expectation,
+      Scenario.ceiling => localizations.scenario_ceiling_expectation,
+      Scenario.lift25 => localizations.scenario_lift_and_carry_expectation,
+      Scenario.conveyorBelt => localizations.scenario_conveyor_expectation,
+    };
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,6 +67,15 @@ class ScenarioDetailScreen extends StatelessWidget {
           ),
           Text(
             description,
+            textAlign: TextAlign.start,
+          ),
+          Text(
+            localizations.common_expectation,
+            style: paragraphHeader,
+            textAlign: TextAlign.start,
+          ),
+          Text(
+            expectation,
             textAlign: TextAlign.start,
           )
         ],
