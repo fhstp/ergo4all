@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:ergo4all/analysis/live/camera_permission_dialog.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
+import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/viewmodel.dart';
 import 'package:ergo4all/common/loading_indicator.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -105,20 +105,9 @@ class LiveAnalysisScreen extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: largeSpace),
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: balticSea,
-                border: Border.all(color: balticSea),
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-              ),
-              child: LinearProgressIndicator(
-                value: remainingRecordingTime / 30.0,
-                backgroundColor: spindle,
-                color: blueChill,
-                minHeight: 30,
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-              ),
+            child: RecordingProgressIndicator(
+              remainingTime: remainingRecordingTime,
+              initialTime: 30,
             ),
           ),
           const SizedBox(
