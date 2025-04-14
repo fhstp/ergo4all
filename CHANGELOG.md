@@ -1,3 +1,16 @@
+# [1.40.0](https://github.com/fhstp/ergo4all/compare/v1.39.1...v1.40.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* **app:** missing user on home screen ([9a53ec3](https://github.com/fhstp/ergo4all/commit/9a53ec3258005c184a32bd94c79148ed362ade60)), closes [#69](https://github.com/fhstp/ergo4all/issues/69)
+
+
+### Features
+
+* **app:** choose language before home ([2a84eec](https://github.com/fhstp/ergo4all/commit/2a84eec86bfa91485b63c7e920a9459288da16ff)), closes [#71](https://github.com/fhstp/ergo4all/issues/71)
+* **app:** navigation to tips screen ([b88e048](https://github.com/fhstp/ergo4all/commit/b88e04899393d2c754e62f4b15970f1473452271))
+
 ## [1.39.1](https://github.com/fhstp/ergo4all/compare/v1.39.0...v1.39.1) (2025-04-14)
 
 
