@@ -19,7 +19,7 @@ class WelcomeScreen extends HookWidget {
     final uiState = useValueListenable(viewModel.uiState);
 
     Future<void> navigateToNextScreen() async {
-      await Navigator.of(context).pushReplacementNamed(Routes.home.path);
+      await Navigator.of(context).pushReplacementNamed(Routes.language.path);
     }
 
     return Scaffold(
