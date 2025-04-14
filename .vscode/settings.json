@@ -4,7 +4,7 @@
     ".idea": true,
     "build": true
   },
-  "dart.flutterSdkPath": ".fvm/versions/3.27.3",
+  "dart.flutterSdkPath": ".fvm/versions/3.29.2",
   "cSpell.words": [
     "baltic",
     "bgra",
