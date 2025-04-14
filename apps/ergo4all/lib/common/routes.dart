@@ -11,7 +11,10 @@ enum Routes {
   userCreator('/users/new'),
   language('/language'),
   tou('/tou'),
-  welcome('/welcome');
+  welcome('/welcome'),
+
+  /// The tips overview screen.
+  tips('/tips');
 
   const Routes(this.path);
 

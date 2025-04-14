@@ -64,6 +64,10 @@ class HomeScreen extends HookWidget {
       }
     }
 
+    Future<void> goToTips() async {
+      await Navigator.of(context).pushNamed(Routes.tips.path);
+    }
+
     useEffect(
       () {
         final user = uiState.user.toNullable();
@@ -99,6 +103,12 @@ class HomeScreen extends HookWidget {
                   style: primaryTextButtonStyle,
                   onPressed: showStartSessionDialog,
                   child: Text(localizations.record_label),
+                ),
+                ElevatedButton(
+                  key: const Key('tips'),
+                  style: secondaryTextButtonStyle,
+                  onPressed: goToTips,
+                  child: Text(localizations.home_tips_label),
                 ),
               ],
             ),

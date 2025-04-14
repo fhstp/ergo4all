@@ -6,6 +6,7 @@
   "common_expectation": "Erwartung",
   "common_next": "Weiter",
   "home_title": "Hauptmenü",
+  "home_tips_label": "Tipps",
   "home_welcome": "Willkommen {firstName}",
   "record_label": "Aufnehmen",
   "intro_done": "Fertig",
