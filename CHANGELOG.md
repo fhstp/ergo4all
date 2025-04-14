@@ -1,3 +1,10 @@
+## [1.39.1](https://github.com/fhstp/ergo4all/compare/v1.39.0...v1.39.1) (2025-04-14)
+
+
+### Bug Fixes
+
+* camera preview not working in emulator ([17ca9e2](https://github.com/fhstp/ergo4all/commit/17ca9e201ff25e54821cbc03e77932fc6dc1bfa4))
+
 # [1.39.0](https://github.com/fhstp/ergo4all/compare/v1.38.0...v1.39.0) (2025-04-11)
 
 
