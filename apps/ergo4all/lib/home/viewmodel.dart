@@ -8,11 +8,19 @@ import 'package:user_management/user_management.dart';
 class HomeViewModel {
   final _uiState = ValueNotifier(UIState(user: none()));
 
+  /// Current [UIState].
   ValueListenable<UIState> get uiState => _uiState;
 
+  /// Initializes this view-model. Should be called once when the corresponding
+  /// screen is opened.
   Future<void> initialize() async {
-    final user = await loadCurrentUser();
-    assert(user != null, 'Must have user on home-screen');
+    var user = await loadCurrentUser();
+
+    if (user == null) {
+      user = makeUserFromName('Ergo-fan');
+      await addUser(user);
+    }
+
     _uiState.update((it) => it.copyWith(user: Some(user!)));
   }
 }
