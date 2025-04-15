@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 /// A record button widget. It is a text-less button that switches between the
@@ -30,12 +31,12 @@ class RecordButton extends StatelessWidget {
     final icon = isRecording
         ? Icon(
             Icons.stop,
-            color: Colors.black,
+            color: woodSmoke,
             size: iconSize,
           )
         : Icon(
             Icons.fiber_manual_record,
-            color: Colors.red,
+            color: persimmon,
             size: iconSize,
           );
 
@@ -44,7 +45,7 @@ class RecordButton extends StatelessWidget {
       height: size,
       child: ClipOval(
         child: Material(
-          color: Colors.grey,
+          color: heather,
           child: InkWell(
             onTap: onTap,
             child: Center(child: icon),
