@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Dialog asking the user whether they want to see the tutorial.
@@ -10,6 +11,7 @@ class ShowTutorialDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
+    final localizations = AppLocalizations.of(context)!;
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -18,8 +20,8 @@ class ShowTutorialDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Would you like to take the tutorial on how to use this app?',
+            Text(
+              localizations.preIntro_question,
             ),
             Row(
               children: [
@@ -28,7 +30,7 @@ class ShowTutorialDialog extends StatelessWidget {
                     navigator.pop(true);
                   },
                   style: primaryTextButtonStyle,
-                  child: const Text('Yes'),
+                  child: Text(localizations.preIntro_start),
                 ),
                 ElevatedButton(
                   key: const Key('skip'),
@@ -36,7 +38,7 @@ class ShowTutorialDialog extends StatelessWidget {
                   onPressed: () {
                     navigator.pop(false);
                   },
-                  child: const Text('Skip'),
+                  child: Text(localizations.preIntro_skip),
                 ),
               ],
             ),
