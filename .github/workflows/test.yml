@@ -48,5 +48,8 @@ jobs:
       - name: Get dependencies 📦
         run: very_good packages get -r
 
+      - name: Generate Localizations 🗣️
+        run: fvm flutter gen-l10n
+
       - name: Run tests 🧪
         run: very_good test -r
