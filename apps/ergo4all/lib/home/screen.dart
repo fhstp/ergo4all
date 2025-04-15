@@ -19,6 +19,7 @@ import 'package:user_management/user_management.dart';
 
 /// Top-level widget for home screen.
 class HomeScreen extends HookWidget {
+  /// Creates a [HomeScreen].
   const HomeScreen({super.key});
 
   @override
