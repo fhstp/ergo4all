@@ -1,9 +1,9 @@
 import 'package:ergo4all/common/intro.dart';
-import 'package:ergo4all/onboarding/pick_language_screen.dart';
+import 'package:ergo4all/language/screen.dart';
 import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
-import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
+import 'package:ergo4all/terms_of_use/screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';

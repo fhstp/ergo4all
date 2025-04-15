@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+/// Shows a dialog to ask users to grant camera permissions. The returned
+/// [Future] completes with `true` if the permission was granted or `false`
+/// otherwise.
+///
+/// If the permission is already granted no dialog opens and `true` is
+/// returned right away.
 Future<bool> showCameraPermissionDialog(BuildContext context) async {
   final originalPermission = await Permission.camera.status;
   if (originalPermission.isGranted) return true;
