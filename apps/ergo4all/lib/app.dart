@@ -1,7 +1,6 @@
 import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/live/screen.dart';
-import 'package:ergo4all/analysis/results_screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
@@ -12,6 +11,7 @@ import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
+import 'package:ergo4all/results/results_screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';

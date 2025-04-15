@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:ergo4all/analysis/body_part_detail_page.dart';
+import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
