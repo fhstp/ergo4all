@@ -1,3 +1,14 @@
+# [1.41.0](https://github.com/fhstp/ergo4all/compare/v1.40.0...v1.41.0) (2025-04-15)
+
+
+### Features
+
+* **app:** change language from home ([2efa843](https://github.com/fhstp/ergo4all/commit/2efa843225752b8e142c6e570a6856a2dd797662))
+* **app:** change record button colors ([9dc3271](https://github.com/fhstp/ergo4all/commit/9dc3271e1a653d32dd120f6d3993489cc1525834))
+* **app:** drop unsupported languages ([a3f63a1](https://github.com/fhstp/ergo4all/commit/a3f63a18330423deba622e77000f8a6194c264ce))
+* **app:** fix home text align ([bd6acc1](https://github.com/fhstp/ergo4all/commit/bd6acc1efc11606303d0ce1863e8a1ba2083f101))
+* **common_ui:** button label style ([8e95f38](https://github.com/fhstp/ergo4all/commit/8e95f3857b0825a4807b5195b92898860305b1e4))
+
 # [1.40.0](https://github.com/fhstp/ergo4all/compare/v1.39.1...v1.40.0) (2025-04-14)
 
 
