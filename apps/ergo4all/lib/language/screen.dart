@@ -8,7 +8,10 @@ import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+/// Screen for picking a language. Once a user has picked a language,
+/// they will be navigated to [Routes.home].
 class PickLanguageScreen extends StatelessWidget {
+  /// Creates a [PickLanguageScreen].
   const PickLanguageScreen({super.key});
 
   @override
