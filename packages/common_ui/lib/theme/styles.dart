@@ -2,43 +2,50 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Text style for button labels.
+final buttonLabelStyle =
+    GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 20);
+
 /// The button style for all primary buttons. It uses a teal color
 /// palette.
-const primaryTextButtonStyle = ButtonStyle(
-  minimumSize: WidgetStatePropertyAll(Size(75, 48)),
-  maximumSize: WidgetStatePropertyAll(Size(222, 48)),
-  foregroundColor: WidgetStatePropertyAll(white),
-  backgroundColor: WidgetStateColor.fromMap({
+final primaryTextButtonStyle = ButtonStyle(
+  minimumSize: const WidgetStatePropertyAll(Size(75, 48)),
+  maximumSize: const WidgetStatePropertyAll(Size(222, 48)),
+  foregroundColor: const WidgetStatePropertyAll(white),
+  backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: tealBlue,
     WidgetState.disabled: heather,
     WidgetState.any: blueChill,
   }),
+  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
 );
 
 /// The button style for all secondary buttons. It uses a dark blue color
 /// palette.
-const secondaryTextButtonStyle = ButtonStyle(
-  minimumSize: WidgetStatePropertyAll(Size(75, 48)),
-  maximumSize: WidgetStatePropertyAll(Size(222, 48)),
-  foregroundColor: WidgetStatePropertyAll(white),
-  backgroundColor: WidgetStateColor.fromMap({
+final secondaryTextButtonStyle = ButtonStyle(
+  minimumSize: const WidgetStatePropertyAll(Size(75, 48)),
+  maximumSize: const WidgetStatePropertyAll(Size(222, 48)),
+  foregroundColor: const WidgetStatePropertyAll(white),
+  backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: blackPearl,
     WidgetState.disabled: heather,
     WidgetState.any: tarawera,
   }),
+  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
 );
 
 /// The button style for all buttons which are surrounded by a lot of white.
 /// It uses the pale blue color palette.
-const paleTextButtonStyle = ButtonStyle(
-  minimumSize: WidgetStatePropertyAll(Size(75, 48)),
-  maximumSize: WidgetStatePropertyAll(Size(222, 48)),
-  foregroundColor: WidgetStatePropertyAll(woodSmoke),
-  backgroundColor: WidgetStateColor.fromMap({
+final paleTextButtonStyle = ButtonStyle(
+  minimumSize: const WidgetStatePropertyAll(Size(75, 48)),
+  maximumSize: const WidgetStatePropertyAll(Size(222, 48)),
+  foregroundColor: const WidgetStatePropertyAll(woodSmoke),
+  backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: hippieBlue,
     WidgetState.disabled: heather,
     WidgetState.any: spindle,
   }),
+  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
 );
 
 /// Text style for H1 headers.
