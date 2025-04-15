@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -5,6 +6,7 @@ import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
 import 'package:ergo4all/common/snack.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/home/menu_dialog.dart';
 import 'package:ergo4all/home/pick_video_dialog.dart';
 import 'package:ergo4all/home/session_start_dialog.dart';
 import 'package:ergo4all/home/show_tutorial_dialog.dart';
@@ -90,7 +92,17 @@ class HomeScreen extends HookWidget {
     return Scaffold(
       body: Column(
         children: [
-          const RedCircleTopBar(titleText: 'HOME'),
+          RedCircleTopBar(
+            titleText: 'HOME',
+            menuButton: IconButton(
+              onPressed: () {
+                showHomeMenuDialog(context);
+              },
+              icon: const Icon(Icons.menu),
+              color: white,
+              iconSize: 48,
+            ),
+          ),
           ScreenContent(
             child: Column(
               children: [

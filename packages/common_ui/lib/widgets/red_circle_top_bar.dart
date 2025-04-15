@@ -10,11 +10,16 @@ class RedCircleTopBar extends StatelessWidget {
   /// Construct a circle bar.
   const RedCircleTopBar({
     required this.titleText,
+    this.menuButton,
     super.key,
   });
 
   /// The title text displayed on the circle.
   final String titleText;
+
+  /// An optional (pressable) widget which is displayed on the top right of the
+  /// bar.
+  final Widget? menuButton;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +33,10 @@ class RedCircleTopBar extends StatelessWidget {
             package: 'common_ui',
           ),
         ),
+        if (menuButton != null)
+          Positioned(top: 70, right: 40, child: menuButton!),
         Positioned(
-          top: 80,
+          top: 120,
           child: Text(
             titleText,
             style: h1Style.copyWith(color: white),
