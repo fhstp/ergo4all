@@ -1,3 +1,12 @@
+# [1.44.0](https://github.com/fhstp/ergo4all/compare/v1.43.0...v1.44.0) (2025-04-15)
+
+
+### Features
+
+* **app:** localize text on "show tutorial" dialog ([b3a8c33](https://github.com/fhstp/ergo4all/commit/b3a8c33186f4d80af7a75d23bd6e6eb3d02efe1e)), closes [#47](https://github.com/fhstp/ergo4all/issues/47)
+* **app:** localize text on welcome page ([4784d3b](https://github.com/fhstp/ergo4all/commit/4784d3b417ea4badb12e7ff8dd09f85447261da2)), closes [#48](https://github.com/fhstp/ergo4all/issues/48)
+* **app:** use correct FH logo ([8084bf0](https://github.com/fhstp/ergo4all/commit/8084bf0f05b71d89ac062cf8665cbb7943770490)), closes [#54](https://github.com/fhstp/ergo4all/issues/54)
+
 # [1.43.0](https://github.com/fhstp/ergo4all/compare/v1.42.0...v1.43.0) (2025-04-15)
 
 
