@@ -17,6 +17,7 @@ class UserWelcomeHeader extends StatelessWidget {
     return Text(
       localizations.home_welcome(user.name),
       style: h3Style,
+      textAlign: TextAlign.center,
     );
   }
 }
