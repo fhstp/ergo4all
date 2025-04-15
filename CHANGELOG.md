@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/fhstp/ergo4all/compare/v1.41.0...v1.42.0) (2025-04-15)
+
+
+### Features
+
+* **app:** localize text on welcome page ([ec5202b](https://github.com/fhstp/ergo4all/commit/ec5202b2ce5eab9fd7fd6c5c31581f0568bd2d92))
+
 # [1.41.0](https://github.com/fhstp/ergo4all/compare/v1.40.0...v1.41.0) (2025-04-15)
 
 
