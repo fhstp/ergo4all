@@ -111,6 +111,10 @@ class HomeScreen extends HookWidget {
                   () => const ShimmerBox(width: 200, height: 24),
                   UserWelcomeHeader.new,
                 ),
+                Image.asset(
+                  'assets/images/full_body_blue.png',
+                  height: 240,
+                ),
                 ElevatedButton(
                   key: const Key('start'),
                   style: primaryTextButtonStyle,
