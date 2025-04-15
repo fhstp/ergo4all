@@ -1,4 +1,4 @@
-import 'package:ergo4all/common/header.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:user_management/user_management.dart';
@@ -14,6 +14,9 @@ class UserWelcomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    return Header(localizations.home_welcome(user.name));
+    return Text(
+      localizations.home_welcome(user.name),
+      style: h3Style,
+    );
   }
 }

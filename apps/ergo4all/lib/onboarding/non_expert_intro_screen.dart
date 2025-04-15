@@ -1,4 +1,4 @@
-import 'package:ergo4all/common/header.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/intro.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,9 @@ class NonExpertIntroScreen extends StatelessWidget {
       title: localizations.workerIntro_welcome_title,
       widget: Column(
         children: [
-          Header(
+          Text(
             localizations.workerIntro_welcome_header,
+            style: h3Style,
           ),
           Text(localizations.workerIntro_welcome_text),
         ],
@@ -27,8 +28,9 @@ class NonExpertIntroScreen extends StatelessWidget {
 
     final overview1Page = IntroPage(
       title: localizations.workerIntro_overview_title,
-      widget: Header(
+      widget: Text(
         localizations.workerIntro_overview1_text,
+        style: h3Style,
       ),
     );
 
@@ -36,8 +38,9 @@ class NonExpertIntroScreen extends StatelessWidget {
       title: localizations.workerIntro_overview_title,
       widget: Column(
         children: [
-          Header(
+          Text(
             localizations.workerIntro_overview2_header,
+            style: h3Style,
           ),
           Text(localizations.workerIntro_overview2_text1),
           Text(
@@ -52,8 +55,9 @@ class NonExpertIntroScreen extends StatelessWidget {
       title: localizations.workerIntro_privacy_title,
       widget: Column(
         children: [
-          Header(
+          Text(
             localizations.workerIntro_privacy_header,
+            style: h3Style,
           ),
           Text(localizations.workerIntro_privacy_text1),
           Text(localizations.workerIntro_privacy_text2, style: boldStyle),

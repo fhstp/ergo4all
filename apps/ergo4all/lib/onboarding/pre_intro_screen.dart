@@ -1,7 +1,6 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
-import 'package:ergo4all/common/header.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -37,7 +36,10 @@ class PreIntroScreen extends StatelessWidget {
               const SizedBox(
                 height: largeSpace,
               ),
-              Header(localizations.preIntro_chooseProfile),
+              Text(
+                localizations.preIntro_chooseProfile,
+                style: h3Style,
+              ),
               ElevatedButton(
                 key: const Key('expert'),
                 style: paleTextButtonStyle,

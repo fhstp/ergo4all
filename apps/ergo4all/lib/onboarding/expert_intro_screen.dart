@@ -1,4 +1,4 @@
-import 'package:ergo4all/common/header.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/intro.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +14,9 @@ class ExpertIntroScreen extends StatelessWidget {
       title: localizations.professionalIntro_overview_title,
       widget: Column(
         children: [
-          Header(
+          Text(
             localizations.professionalIntro_overview_header,
+            style: h3Style,
           ),
           Text(localizations.professionalIntro_overview_text),
         ],
@@ -26,8 +27,9 @@ class ExpertIntroScreen extends StatelessWidget {
       title: localizations.professionalIntro_privacy_title,
       widget: Column(
         children: [
-          Header(
+          Text(
             localizations.professionalIntro_privacy_header,
+            style: h3Style,
           ),
           Text(localizations.professionalIntro_privacy_text),
         ],
