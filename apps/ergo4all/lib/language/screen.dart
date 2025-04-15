@@ -47,14 +47,6 @@ class PickLanguageScreen extends StatelessWidget {
               height: mediumSpace,
             ),
             languageButtonFor('English', const Locale('en')),
-            const SizedBox(
-              height: mediumSpace,
-            ),
-            languageButtonFor('Bosansko-Hrvatsko-Srpski', const Locale('hbs')),
-            const SizedBox(
-              height: mediumSpace,
-            ),
-            languageButtonFor('Türkçe', const Locale('tr')),
           ],
         ),
       ),
