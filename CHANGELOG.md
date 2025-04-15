@@ -1,3 +1,10 @@
+# [1.43.0](https://github.com/fhstp/ergo4all/compare/v1.42.0...v1.43.0) (2025-04-15)
+
+
+### Features
+
+* **app:** add blue body to home ([80e0bdc](https://github.com/fhstp/ergo4all/commit/80e0bdcf65e4c9cac7f850bee83fe54fc36d7449)), closes [#55](https://github.com/fhstp/ergo4all/issues/55)
+
 # [1.42.0](https://github.com/fhstp/ergo4all/compare/v1.41.0...v1.42.0) (2025-04-15)
 
 
