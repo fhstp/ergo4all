@@ -3,6 +3,7 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:ergo4all/welcome/viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class WelcomeScreen extends HookWidget {
   Widget build(BuildContext context) {
     final viewModel = useMemoized(WelcomeViewModel.new);
     final uiState = useValueListenable(viewModel.uiState);
+    final localizations = AppLocalizations.of(context)!;
 
     Future<void> navigateToNextScreen() async {
       await Navigator.of(context).pushReplacementNamed(Routes.language.path);
@@ -41,7 +43,7 @@ class WelcomeScreen extends HookWidget {
             children: [
               const Spacer(flex: 2),
               Text(
-                'Welcome!',
+                localizations.welcome_header,
                 style: h3Style.copyWith(color: white),
               ),
               const Image(image: CustomImages.logoWhite),
@@ -50,7 +52,7 @@ class WelcomeScreen extends HookWidget {
                 key: const Key('start'),
                 style: primaryTextButtonStyle,
                 onPressed: navigateToNextScreen,
-                child: const Text('Start'),
+                child: Text(localizations.welcome_start),
               ),
               const Spacer(flex: 2),
               Padding(
