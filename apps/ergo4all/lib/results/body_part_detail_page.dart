@@ -122,16 +122,38 @@ class BodyPartDetailPage extends StatelessWidget {
             //   ),
             // ),
 
-            Container(
-              height: 50, // Increased height to better show the line variation
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black12),
-              ),
-              child: CustomPaint(
-                painter: TimelinePainter(timelineColors, timelineValues),
-                size: Size(MediaQuery.of(context).size.width - 32, 50),
-              ),
+            // Replace the Container widget with this Stack
+            Stack(
+              children: [
+                // Y-axis labels
+                SizedBox(
+                  height: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text('Improve', style: TextStyle(fontSize: 12)),
+                      Text('Check', style: TextStyle(fontSize: 12)),
+                      Text('OK', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ),
+                // Timeline visualization
+                Padding(
+                  padding: const EdgeInsets.only(left: 50), // Space for labels
+                  child: Container(
+                    height: 100,
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(8),
+                    //   border: Border.all(color: Colors.black12),
+                    // ),
+                    child: CustomPaint(
+                      painter: TimelinePainter(timelineColors, timelineValues),
+                      size: Size(MediaQuery.of(context).size.width - 82, 50), // Adjusted width for padding
+                    ),
+                  ),
+                ),
+              ],
             ),
 
             const SizedBox(height: 20),
@@ -198,6 +220,23 @@ class TimelinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (values.isEmpty || colors.isEmpty) return;
 
+    // Draw grid lines first
+    final gridPaint = Paint()
+      ..color = Colors.grey.withOpacity(0.2)
+      ..strokeWidth = 1.0
+      ..style = PaintingStyle.stroke;
+
+    // Draw horizontal grid lines at 0.0, 0.5, and 1.0
+    for (var y in [0.0, 0.5, 1.0]) {
+      final yPos = size.height * (1 - y);
+      canvas.drawLine(
+        Offset(0, yPos),
+        Offset(size.width, yPos),
+        gridPaint,
+      );
+    }
+
+    // Draw the timeline path
     final paint = Paint()
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
@@ -211,16 +250,14 @@ class TimelinePainter extends CustomPainter {
     // Draw line through all points
     for (var i = 1; i < values.length; i++) {
       final x = i * segmentWidth;
-      final y = size.height * (1 - values[i]); // Invert y since 0 is at top
+      final y = size.height * (1 - values[i]);
       path.lineTo(x, y);
     }
 
     // Create gradient from all colors
     paint.shader = LinearGradient(
       colors: colors,
-      stops: List.generate(colors.length,
-              (index) => index / (colors.length - 1)
-      ),
+      stops: List.generate(colors.length, (index) => index / (colors.length - 1)),
     ).createShader(
       Rect.fromLTWH(0, 0, size.width, size.height),
     );

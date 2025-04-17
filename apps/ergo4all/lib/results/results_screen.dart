@@ -157,6 +157,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
       }
     }).toList();
 
+    final List<double> timelineValues = timelineData.map((spot) { return spot.y; }).toList();
+
     // Navigate to BodyPartDetailPage with the updated timelineColors
 
     Navigator.push(
