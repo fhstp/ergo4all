@@ -5,12 +5,14 @@ class BodyPartDetailPage extends StatelessWidget {
     required this.bodyPart,
     required this.color,
     required this.timelineColors,
+    required this.timelineValues,
     super.key,
   });
 
   final String bodyPart;
   final Color color;
   final List<Color> timelineColors;
+  final List<double> timelineValues;
 
   @override
   Widget build(BuildContext context) {
@@ -93,30 +95,42 @@ class BodyPartDetailPage extends StatelessWidget {
             // Timeline Visualization
 
             const Text(
-              'Timeline Behavior',
+              'Timeline Behavior New',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 8),
 
+            // Container(
+            //   height: 20,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(8),
+            //     border: Border.all(color: Colors.black12),
+            //   ),
+            //   child: SingleChildScrollView(
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: List.generate(timelineColors.length, (index) {
+            //         return Container(
+            //           width: MediaQuery.of(context).size.width /
+            //               timelineColors.length, // Proportional width
+            //
+            //           color: timelineColors[index],
+            //         );
+            //       }),
+            //     ),
+            //   ),
+            // ),
+
             Container(
-              height: 20,
+              height: 50, // Increased height to better show the line variation
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.black12),
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(timelineColors.length, (index) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width /
-                          timelineColors.length, // Proportional width
-
-                      color: timelineColors[index],
-                    );
-                  }),
-                ),
+              child: CustomPaint(
+                painter: TimelinePainter(timelineColors, timelineValues),
+                size: Size(MediaQuery.of(context).size.width - 32, 50),
               ),
             ),
 
@@ -172,4 +186,49 @@ class BodyPartDetailPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class TimelinePainter extends CustomPainter {
+  final List<Color> colors;
+  final List<double> values; // Add this line to store y-values
+
+  TimelinePainter(this.colors, this.values);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (values.isEmpty || colors.isEmpty) return;
+
+    final paint = Paint()
+      ..strokeWidth = 3.0
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+    final segmentWidth = size.width / (values.length - 1);
+
+    // Start path at first point
+    path.moveTo(0, size.height * (1 - values[0]));
+
+    // Draw line through all points
+    for (var i = 1; i < values.length; i++) {
+      final x = i * segmentWidth;
+      final y = size.height * (1 - values[i]); // Invert y since 0 is at top
+      path.lineTo(x, y);
+    }
+
+    // Create gradient from all colors
+    paint.shader = LinearGradient(
+      colors: colors,
+      stops: List.generate(colors.length,
+              (index) => index / (colors.length - 1)
+      ),
+    ).createShader(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+    );
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(TimelinePainter oldDelegate) =>
+      colors != oldDelegate.colors || values != oldDelegate.values;
 }

@@ -82,7 +82,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       theme: ergo4allTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: Routes.welcome.path,
+      initialRoute: Routes.results.path,
     );
   }
 }

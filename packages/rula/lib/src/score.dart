@@ -8,6 +8,8 @@ import 'package:flutter/foundation.dart';
 class RulaScore {
   const RulaScore._(this.value);
 
+  const RulaScore.stub(this.value);
+
   /// The wrapped value. Guaranteed to be in the valid range.
   final int value;
 
