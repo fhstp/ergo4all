@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/fhstp/ergo4all/compare/v1.44.0...v1.45.0) (2025-04-22)
+
+
+### Features
+
+* **app:** localize text on "camera permission" dialog ([b88ca2e](https://github.com/fhstp/ergo4all/commit/b88ca2e42503755de6bf39208a86d30d28653e23)), closes [#72](https://github.com/fhstp/ergo4all/issues/72)
+
 # [1.44.0](https://github.com/fhstp/ergo4all/compare/v1.43.0...v1.44.0) (2025-04-15)
 
 
