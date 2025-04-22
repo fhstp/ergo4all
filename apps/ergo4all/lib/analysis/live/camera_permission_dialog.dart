@@ -1,3 +1,4 @@
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -9,6 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 /// returned right away.
 Future<bool> showCameraPermissionDialog(BuildContext context) async {
   final originalPermission = await Permission.camera.status;
+  final localizations = AppLocalizations.of(context)!;
+
   if (originalPermission.isGranted) return true;
 
   if (!context.mounted) return false;
@@ -16,7 +19,7 @@ Future<bool> showCameraPermissionDialog(BuildContext context) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Camera permission not granted'),
+        title: Text(localizations.permission_camera_text),
         actions: [
           if (originalPermission.isDenied)
             TextButton(
@@ -25,8 +28,8 @@ Future<bool> showCameraPermissionDialog(BuildContext context) async {
                 if (!context.mounted) return;
                 if (newPermission.isGranted) Navigator.pop(context, true);
               },
-              child: const Text(
-                'Grant permission',
+              child: Text(
+                localizations.permission_camera_label_allow,
                 textAlign: TextAlign.end,
               ),
             ),
@@ -37,8 +40,8 @@ Future<bool> showCameraPermissionDialog(BuildContext context) async {
                 if (!context.mounted) return;
                 Navigator.pop(context, false);
               },
-              child: const Text(
-                'Grant permission in settings',
+              child: Text(
+                localizations.permission_camera_label_denied,
                 textAlign: TextAlign.end,
               ),
             ),
@@ -46,8 +49,8 @@ Future<bool> showCameraPermissionDialog(BuildContext context) async {
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text(
-              'Cancel',
+            child: Text(
+              localizations.permission_camera_label_cancel,
               textAlign: TextAlign.end,
             ),
           ),
