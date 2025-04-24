@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/fhstp/ergo4all/compare/v1.45.0...v1.46.0) (2025-04-24)
+
+
+### Features
+
+* **app:** store video after recording ([6b9d43c](https://github.com/fhstp/ergo4all/commit/6b9d43c973456d3b83c46ed9f25f63da4fc2ed38))
+
 # [1.45.0](https://github.com/fhstp/ergo4all/compare/v1.44.0...v1.45.0) (2025-04-22)
 
 
