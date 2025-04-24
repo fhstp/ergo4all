@@ -143,9 +143,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
     // }).toList();
 
 
-    var good = const Color.fromARGB(255, 123, 194, 255); // Good (Blue)
-    var mid = const Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
-    var bad = const Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
+    const good = const Color.fromARGB(255, 123, 194, 255); // Good (Blue)
+    const mid = const Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
+    const bad = const Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
 
     final List<Color> timelineColors = timelineData.map((spot) {
       if (spot.y < 0.33) {
@@ -251,6 +251,74 @@ class _ResultsScreenState extends State<ResultsScreen> {
               }),
             ),
           ),
+          const SizedBox(height: 20),
+
+          Expanded( 
+            child: Container(
+              width: MediaQuery.of(context).size.width *
+                  0.95, // Adjusted for larger width
+
+              height: MediaQuery.of(context).size.width *
+                  0.5, // Adjusted for a proportional height
+
+              margin: const EdgeInsets.all(16),
+              child:  Padding(
+                  padding: const EdgeInsets.only(left: 50),
+                  // Replace the LineChart widget with this:
+                  // child: SizedBox(
+                  //   width: MediaQuery.of(context).size.width * 0.8,
+                  //   height: MediaQuery.of(context).size.width * 0.5,
+                      child: CustomPaint(
+                      painter: HeatmapPainter(
+                        data: lineChartData.map((spots) {
+                          return spots.map((spot) => spot.y).toList();
+                        }).toList(),
+                        rows: labels.length,
+                        timestamps: timeline.map((entry) => entry.timestamp).toList(),
+                        labels: labels, // Add this line
+                      ),
+                    ),
+                  // ),
+                ),
+              ),
+          ),
+
+          // const SizedBox(height: 20),
+
+          // Color legend
+          Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width * 0.95,
+
+            margin: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 123, 194, 255), // Good (Blue)
+                        Color.fromARGB(255, 255, 218, 10),  // Mid (Yellow)
+                        Color.fromARGB(255, 220, 50, 32),   // Bad (Red)
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4), // Space between line and labels
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('OK', style: TextStyle(fontSize: 14)),
+                    Text('Check', style: TextStyle(fontSize: 14)),
+                    Text('Improve', style: TextStyle(fontSize: 14)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
           Expanded(
             child: Center(
               child: Container(
@@ -274,7 +342,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     ),
                   ],
                 ),
-
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Stack(
@@ -373,6 +440,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
               ),
             ),
           ),
+
         ],
       ),
     );
@@ -424,4 +492,83 @@ class ChartBackgroundPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
+}
+
+class HeatmapPainter extends CustomPainter {
+  HeatmapPainter({
+    required this.data,
+    required this.rows,
+    required this.timestamps,
+    required this.labels, // Add this parameter
+  });
+
+  final List<List<double>> data;
+  final int rows;
+  final List<int> timestamps;
+  final List<String> labels; // Add this field
+
+  static const good = Color.fromARGB(255, 123, 194, 255); // Blue
+  static const mid = Color.fromARGB(255, 255, 218, 10);   // Yellow
+  static const bad = Color.fromARGB(255, 220, 50, 32);    // Red
+
+  Color getColorForValue(double value) {
+    if (value < 0.33) {
+      // return Color.lerp(good, mid, value * 3) ?? good;
+      return good;
+    } else if (value < 0.66) {
+      // return Color.lerp(mid, bad, (value - 0.33) * 3) ?? mid;
+      return mid;
+    }
+    return bad;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cellWidth = size.width / timestamps.length;
+    final cellHeight = size.height / rows;
+    final paint = Paint()..style = PaintingStyle.fill;
+    final textPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.right,
+    );
+
+    // Draw heatmap cells
+    for (var row = 0; row < rows; row++) {
+      for (var col = 0; col < timestamps.length; col++) {
+        final value = data[row][col];
+        paint.color = getColorForValue(value);
+
+        canvas.drawRect(
+          Rect.fromLTWH(
+            col * cellWidth,
+            row * cellHeight,
+            cellWidth,
+            cellHeight,
+          ),
+          paint,
+        );
+      }
+
+      // Draw row labels
+      textPainter.text = TextSpan(
+        text: labels[row].replaceAll(' ', '\n'),
+        style: const TextStyle(
+          color: Colors.black87,
+          fontSize: 14,
+        ),
+      );
+      textPainter.layout(maxWidth: 60); // Adjust width as needed
+      textPainter.paint(
+        canvas,
+        Offset(
+          -textPainter.width - 8, // Add some padding
+          row * cellHeight + (cellHeight - textPainter.height) / 2,
+        ),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(HeatmapPainter oldDelegate) => false;
+
 }

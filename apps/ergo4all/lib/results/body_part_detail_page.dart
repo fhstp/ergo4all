@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 class BodyPartDetailPage extends StatelessWidget {
@@ -55,6 +56,11 @@ class BodyPartDetailPage extends StatelessWidget {
           'fix': 'No fix description available.',
         };
 
+    // Declare gridNames outside the widget tree
+    final gridLabels = bodyPart != 'Legs' 
+        ? ['Improve', 'Check', 'OK']
+        : ['Improve', 'OK'];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('$bodyPart Analysis'),
@@ -95,7 +101,7 @@ class BodyPartDetailPage extends StatelessWidget {
             // Timeline Visualization
 
             const Text(
-              'Timeline Behavior New',
+              'Timeline Behavior',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
@@ -131,24 +137,21 @@ class BodyPartDetailPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('Improve', style: TextStyle(fontSize: 12)),
-                      Text('Check', style: TextStyle(fontSize: 12)),
-                      Text('OK', style: TextStyle(fontSize: 12)),
-                    ],
+                    children: gridLabels
+                      .map((name) => Text(
+                            name,
+                            style: const TextStyle(fontSize: 12),
+                          ))
+                      .toList(),
                   ),
                 ),
                 // Timeline visualization
                 Padding(
-                  padding: const EdgeInsets.only(left: 50), // Space for labels
-                  child: Container(
+                  padding: const EdgeInsets.only(left: 50), // Add label space
+                  child: SizedBox(
                     height: 100,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.circular(8),
-                    //   border: Border.all(color: Colors.black12),
-                    // ),
                     child: CustomPaint(
-                      painter: TimelinePainter(timelineColors, timelineValues),
+                      painter: TimelinePainter(timelineColors, timelineValues, bodyPart),
                       size: Size(MediaQuery.of(context).size.width - 82, 50), // Adjusted width for padding
                     ),
                   ),
@@ -211,23 +214,38 @@ class BodyPartDetailPage extends StatelessWidget {
 }
 
 class TimelinePainter extends CustomPainter {
-  final List<Color> colors;
-  final List<double> values; // Add this line to store y-values
+  TimelinePainter(this.colors, this.values, this.bodyPart);
 
-  TimelinePainter(this.colors, this.values);
+  final List<Color> colors;
+  final List<double> values;
+  final String bodyPart;
+
+  Color getColorForValue(double value) {
+    if (value < 0.33) {
+      return const Color.fromARGB(255, 123, 194, 255); // Blue for good
+    } else if (value < 0.66) {
+      return const Color.fromARGB(255, 255, 218, 10); // Yellow for check
+    } else {
+      return const Color.fromARGB(255, 220, 50, 32); // Red for improve
+    }
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
     if (values.isEmpty || colors.isEmpty) return;
 
-    // Draw grid lines first
+    // Set color, width and style for grid lines
     final gridPaint = Paint()
-      ..color = Colors.grey.withOpacity(0.2)
-      ..strokeWidth = 1.0
+      ..color = Colors.grey.withValues(alpha: 0.2)
+      ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    // Draw horizontal grid lines at 0.0, 0.5, and 1.0
-    for (var y in [0.0, 0.5, 1.0]) {
+    final gridLines = bodyPart != 'Legs' 
+        ? [0.0, 0.5, 1.0]
+        : [0.0, 1.0];
+
+    // Draw the grid lines
+    for (final y in gridLines) {
       final yPos = size.height * (1 - y);
       canvas.drawLine(
         Offset(0, yPos),
@@ -236,7 +254,7 @@ class TimelinePainter extends CustomPainter {
       );
     }
 
-    // Draw the timeline path
+    // Draw the score line over time
     final paint = Paint()
       ..strokeWidth = 3.0
       ..style = PaintingStyle.stroke;
@@ -257,7 +275,9 @@ class TimelinePainter extends CustomPainter {
     // Create gradient from all colors
     paint.shader = LinearGradient(
       colors: colors,
-      stops: List.generate(colors.length, (index) => index / (colors.length - 1)),
+      stops: List.generate(
+          colors.length, (index) => index / (colors.length - 1),
+        ),
     ).createShader(
       Rect.fromLTWH(0, 0, size.width, size.height),
     );
