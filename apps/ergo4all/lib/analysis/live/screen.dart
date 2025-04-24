@@ -1,14 +1,16 @@
 import 'package:camera/camera.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/paint_on_image.dart';
-import 'package:ergo4all/analysis/live/camera_permission_dialog.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/viewmodel.dart';
 import 'package:ergo4all/common/loading_indicator.dart';
+import 'package:ergo4all/common/permission_dialog.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pose_vis/pose_vis.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
@@ -18,6 +20,7 @@ class LiveAnalysisScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final viewModel = useMemoized(LiveAnalysisViewModel.new);
     final animationController = useAnimationController(
       upperBound: 30,
@@ -27,8 +30,11 @@ class LiveAnalysisScreen extends HookWidget {
     final remainingRecordingTime = useAnimation(animationController);
 
     Future<void> askForPermission() async {
-      final isCameraPermissionGranted =
-          await showCameraPermissionDialog(context);
+      final isCameraPermissionGranted = await showPermissionDialog(
+        context,
+        Permission.camera,
+        header: localizations.permission_camera_text,
+      );
       if (!isCameraPermissionGranted) {
         if (context.mounted) Navigator.of(context).pop();
         return;
