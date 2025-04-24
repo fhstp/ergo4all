@@ -184,6 +184,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
       graphLineFor(calcLegScore, 2),
     ]);
 
+    final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Charts Overview')),
       body: Column(
@@ -196,25 +198,40 @@ class _ResultsScreenState extends State<ResultsScreen> {
             ),
           ),
 
-          Expanded( 
-            child: Container(
-              width: MediaQuery.of(context).size.width *
-                  0.95, // Adjusted for larger width
+          Expanded(
+            child: Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width *
+                    0.95, // Adjusted for larger width
 
-              height: MediaQuery.of(context).size.width *
-                  0.5, // Adjusted for a proportional height
+                height: heatmapHeight, // Adjusted for a proportional height
 
-              margin: const EdgeInsets.all(16),
-              child:  Padding(
-                padding: const EdgeInsets.only(left: 50),
-                child: CustomPaint(
-                  painter: HeatmapPainter(
-                    data: lineChartData.map((spots) {
-                      return spots.map((spot) => spot.y).toList();
-                    }).toList(),
-                    rows: labels.length,
-                    timestamps: timeline.map((entry) => entry.timestamp).toList(),
-                    labels: labels, // Add this line
+                margin: const EdgeInsets.all(16),
+                child:  Padding(
+                  padding: const EdgeInsets.only(left: 50),
+                  child: GestureDetector(
+                    onTapDown: (details) {
+                      // Find row of the bar that was tapped
+                      final rowHeight = heatmapHeight / labels.length;
+                      final rowIndex = (details.localPosition.dy / rowHeight).floor();
+                      if (rowIndex >= 0 && rowIndex < labels.length) {
+                        _navigateToBodyPartPage(
+                          labels[rowIndex],
+                          colors[rowIndex],
+                          lineChartData[rowIndex],
+                        );
+                      }
+                    },
+                    child: CustomPaint(
+                      painter: HeatmapPainter(
+                        data: lineChartData.map((spots) {
+                          return spots.map((spot) => spot.y).toList();
+                        }).toList(),
+                        rows: labels.length,
+                        timestamps: timeline.map((entry) => entry.timestamp).toList(),
+                        labels: labels, // Add this line
+                      ),
+                    ),
                   ),
                 ),
               ),
