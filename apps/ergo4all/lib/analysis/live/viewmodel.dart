@@ -10,6 +10,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:path/path.dart' as p;
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_transforming/denoise.dart';
@@ -45,13 +46,28 @@ class LiveAnalysisViewModel {
   /// The current score timeline.
   RulaTimeline get timeline => _timeline.toIList();
 
+  Future<void> _saveRecording(XFile tempFile) async {
+    final recordingsDir = Directory(
+      '/storage/emulated/0/Android/media/at.ac.fhstp.ergo4all/Ergo4All Recordings',
+    );
+    await recordingsDir.create(recursive: true);
+
+    final recordingPath = p.join(recordingsDir.path, tempFile.name);
+    await tempFile.saveTo(recordingPath);
+  }
+
   Future<void> _closeCamera() async {
     _uiState.value = UIState.initial;
 
-    await _controller?.stopImageStream();
-    await _controller?.dispose();
+    if (_controller != null) {
+      final outputFile = await _controller!.stopVideoRecording();
+      await _controller!.dispose();
+      _controller = null;
+
+      await _saveRecording(outputFile);
+    }
+
     await stopPoseDetection();
-    _controller = null;
   }
 
   void _processCapture(Capture capture) {
@@ -129,8 +145,8 @@ class LiveAnalysisViewModel {
     _controller = controller;
 
     await controller.initialize();
-    await controller.startImageStream(
-      (image) => _onImageCaptured(
+    await controller.startVideoRecording(
+      onAvailable: (image) => _onImageCaptured(
         frontCamera,
         controller.value.deviceOrientation,
         image,
