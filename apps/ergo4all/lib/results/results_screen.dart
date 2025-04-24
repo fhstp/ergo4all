@@ -61,7 +61,7 @@ RulaSheet _createFakeSheet() {
 RulaTimeline createFakeTimeline() {
   final now = DateTime.now().millisecondsSinceEpoch;
   final entries = List.generate(
-    20, // 100 data points
+    50, // 100 data points
     (index) => TimelineEntry(
       timestamp: now + (index * 100), // 100ms intervals
       sheet: _createFakeSheet(),
@@ -107,47 +107,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
     Colors.red,
   ];
 
-  final Random random = Random();
+  final Random random = Random();     
 
   void _navigateToBodyPartPage(
     String bodyPart,
     Color color,
     List<FlSpot> timelineData,
   ) {
-    // Map the y-values of FlSpot to specific colors
 
-    // final List<Color> gradientColors = [
-    //   const Color.fromARGB(255, 123, 194, 255), // Good (Blue)
-    //   const Color.fromARGB(255, 255, 218, 10),  // Improve (Yellow)
-    //   const Color.fromARGB(255, 220, 50, 32),   // Bad (Red)
-    // ];
-    //
-    // final List<Color> timelineColors = timelineData.map((spot) {
-    //   final value = spot.y.clamp(0.0, 1.0);
-    //
-    //   if (value <= 0.5) {
-    //     // Interpolate between first and second color
-    //     return Color.lerp(
-    //       gradientColors[0],
-    //       gradientColors[1],
-    //       value * 2, // Scale 0-0.5 to 0-1
-    //     )!;
-    //   } else {
-    //     // Interpolate between second and third color
-    //     return Color.lerp(
-    //       gradientColors[1],
-    //       gradientColors[2],
-    //       (value - 0.5) * 2, // Scale 0.5-1 to 0-1
-    //     )!;
-    //   }
-    // }).toList();
+    const good =  Color.fromARGB(255, 123, 194, 255); // Good (Blue)
+    const mid =  Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
+    const bad =  Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
 
-
-    const good = const Color.fromARGB(255, 123, 194, 255); // Good (Blue)
-    const mid = const Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
-    const bad = const Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
-
-    final List<Color> timelineColors = timelineData.map((spot) {
+    final timelineColors = timelineData.map((spot) {
       if (spot.y < 0.33) {
         return good; // Good
       } else if (spot.y < 0.66) {
@@ -157,7 +129,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
       }
     }).toList();
 
-    final List<double> timelineValues = timelineData.map((spot) { return spot.y; }).toList();
+    final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
 
     // Navigate to BodyPartDetailPage with the updated timelineColors
 
@@ -223,35 +195,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Wrap(
-              spacing: 10,
-              runSpacing: 5,
-              children: List.generate(labels.length, (index) {
-                return GestureDetector(
-                  onTap: () => _navigateToBodyPartPage(
-                    labels[index],
-                    colors[index],
-                    lineChartData[index],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 16,
-                        height: 16,
-                        color: colors[index],
-                      ),
-                      const SizedBox(width: 5),
-                      Text(labels[index], style: const TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
-          const SizedBox(height: 20),
 
           Expanded( 
             child: Container(
@@ -263,24 +206,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
               margin: const EdgeInsets.all(16),
               child:  Padding(
-                  padding: const EdgeInsets.only(left: 50),
-                  // Replace the LineChart widget with this:
-                  // child: SizedBox(
-                  //   width: MediaQuery.of(context).size.width * 0.8,
-                  //   height: MediaQuery.of(context).size.width * 0.5,
-                      child: CustomPaint(
-                      painter: HeatmapPainter(
-                        data: lineChartData.map((spots) {
-                          return spots.map((spot) => spot.y).toList();
-                        }).toList(),
-                        rows: labels.length,
-                        timestamps: timeline.map((entry) => entry.timestamp).toList(),
-                        labels: labels, // Add this line
-                      ),
-                    ),
-                  // ),
+                padding: const EdgeInsets.only(left: 50),
+                child: CustomPaint(
+                  painter: HeatmapPainter(
+                    data: lineChartData.map((spots) {
+                      return spots.map((spot) => spot.y).toList();
+                    }).toList(),
+                    rows: labels.length,
+                    timestamps: timeline.map((entry) => entry.timestamp).toList(),
+                    labels: labels, // Add this line
+                  ),
                 ),
               ),
+            ),
           ),
 
           // const SizedBox(height: 20),
@@ -318,6 +256,37 @@ class _ResultsScreenState extends State<ResultsScreen> {
               ],
             ),
           ),
+
+
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 5,
+              children: List.generate(labels.length, (index) {
+                return GestureDetector(
+                  onTap: () => _navigateToBodyPartPage(
+                    labels[index],
+                    colors[index],
+                    lineChartData[index],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 16,
+                        height: 16,
+                        color: colors[index],
+                      ),
+                      const SizedBox(width: 5),
+                      Text(labels[index], style: const TextStyle(fontSize: 14)),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 20),
 
           Expanded(
             child: Center(
@@ -508,65 +477,75 @@ class HeatmapPainter extends CustomPainter {
   final List<String> labels; // Add this field
 
   static const good = Color.fromARGB(255, 123, 194, 255); // Blue
+  static const goodMid = Color.fromARGB(255, 181, 205, 147); // blue-yellow
   static const mid = Color.fromARGB(255, 255, 218, 10);   // Yellow
+  static const midBad = Color.fromARGB(255, 235, 124, 22); // yellow-red
   static const bad = Color.fromARGB(255, 220, 50, 32);    // Red
 
   Color getColorForValue(double value) {
-    if (value < 0.33) {
+    // map between value and color
+    if (value < 0.20) {
       // return Color.lerp(good, mid, value * 3) ?? good;
       return good;
-    } else if (value < 0.66) {
-      // return Color.lerp(mid, bad, (value - 0.33) * 3) ?? mid;
+    } else if (value <= 0.40) {
+      return goodMid;
+    } else if (value <= 0.60) {
       return mid;
+    } else if (value <= 0.80) {
+      return midBad;
     }
     return bad;
   }
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final cellWidth = size.width / timestamps.length;
-    final cellHeight = size.height / rows;
-    final paint = Paint()..style = PaintingStyle.fill;
-    final textPainter = TextPainter(
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.right,
-    );
+@override
+void paint(Canvas canvas, Size size) {
+  const spacing = 10.0; // Space between rows
+  final cellWidth = size.width / timestamps.length;
+  final availableHeight = size.height - (spacing * (rows - 1)); // Subtract total spacing
+  final cellHeight = availableHeight / rows;
+  final paint = Paint()..style = PaintingStyle.fill;
+  final textPainter = TextPainter(
+    textDirection: TextDirection.ltr,
+    textAlign: TextAlign.right,
+  );
 
-    // Draw heatmap cells
-    for (var row = 0; row < rows; row++) {
-      for (var col = 0; col < timestamps.length; col++) {
-        final value = data[row][col];
-        paint.color = getColorForValue(value);
+  // Draw heatmap cells
+  for (var row = 0; row < rows; row++) {
+    final yOffset = row * (cellHeight + spacing); // Add spacing to y position
 
-        canvas.drawRect(
-          Rect.fromLTWH(
-            col * cellWidth,
-            row * cellHeight,
-            cellWidth,
-            cellHeight,
-          ),
-          paint,
-        );
-      }
+    for (var col = 0; col < timestamps.length; col++) {
+      final value = data[row][col];
+      paint.color = getColorForValue(value);
 
-      // Draw row labels
-      textPainter.text = TextSpan(
-        text: labels[row].replaceAll(' ', '\n'),
-        style: const TextStyle(
-          color: Colors.black87,
-          fontSize: 14,
+      canvas.drawRect(
+        Rect.fromLTWH(
+          col * cellWidth,
+          yOffset,
+          cellWidth,
+          cellHeight,
         ),
-      );
-      textPainter.layout(maxWidth: 60); // Adjust width as needed
-      textPainter.paint(
-        canvas,
-        Offset(
-          -textPainter.width - 8, // Add some padding
-          row * cellHeight + (cellHeight - textPainter.height) / 2,
-        ),
+        paint,
       );
     }
+
+    // Draw row labels
+    textPainter.text = TextSpan(
+      text: labels[row].replaceAll(' ', '\n'),
+      style: const TextStyle(
+        color: Colors.black87,
+        fontSize: 14,
+      ),
+    );
+    textPainter.layout(maxWidth: 60);
+    textPainter.paint(
+      canvas,
+      Offset(
+        -textPainter.width - 8,
+        yOffset + (cellHeight - textPainter.height) / 2,
+      ),
+    );
   }
+}
 
   @override
   bool shouldRepaint(HeatmapPainter oldDelegate) => false;
