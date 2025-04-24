@@ -185,6 +185,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     ]);
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
+    final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Charts Overview')),
@@ -200,13 +201,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
           Expanded(
             child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width *
-                    0.95, // Adjusted for larger width
-
+              child: SizedBox(
+                width: heatmapWidth, // Adjusted for larger width
                 height: heatmapHeight, // Adjusted for a proportional height
 
-                margin: const EdgeInsets.all(16),
                 child:  Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: GestureDetector(
@@ -238,14 +236,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
             ),
           ),
 
-          // const SizedBox(height: 20),
-
           // Color legend
-          Container(
+          SizedBox(
             height: 50,
-            width: MediaQuery.of(context).size.width * 0.95,
+            width: heatmapWidth,
 
-            margin: const EdgeInsets.all(16),
             child: Column(
               children: [
                 Container(
@@ -274,6 +269,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
             ),
           ),
 
+          const SizedBox(height: 20),
 
           Padding(
             padding: const EdgeInsets.all(8),
