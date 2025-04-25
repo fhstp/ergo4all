@@ -4,7 +4,6 @@ import 'package:common/pair_utils.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
-import 'package:ergo4all/results/color_manager.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -91,14 +90,6 @@ class ResultsScreen extends StatefulWidget {
 }
 
 class _ResultsScreenState extends State<ResultsScreen> {
-  final List<String> labels = [
-    'Upper Arm',
-    'Lower Arm',
-    'Trunk',
-    'Neck',
-    'Legs',
-  ];
-
   final Random random = Random();
 
   void _navigateToBodyPartPage(
@@ -126,6 +117,13 @@ class _ResultsScreenState extends State<ResultsScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final labels = [
+      localizations.results_body_upper_arms,
+      localizations.results_body_lower_arms,
+      localizations.results_body_trunk,
+      localizations.results_body_neck,
+      localizations.results_body_legs,
+    ];
     final timeline =
         ResultsScreen.timeline;
 
@@ -169,24 +167,26 @@ class _ResultsScreenState extends State<ResultsScreen> {
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Charts Overview')),
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              'Normalized RULA Score Analysis',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      appBar: AppBar(title: Text(localizations.results_title)),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              // 'Normalized RULA Score Analysis',
+              localizations.results_plot_title,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          ),
 
-          Expanded(
-            child: Center(
+            const SizedBox(height: 40),
+
+            // Heatmap
+            Center(
               child: SizedBox(
-                width: heatmapWidth, // Adjusted for larger width
-                height: heatmapHeight, // Adjusted for a proportional height
-
-                child:  Padding(
+                width: heatmapWidth,
+                height: heatmapHeight,
+                child: Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: GestureDetector(
                     onTapDown: (details) {
@@ -207,49 +207,54 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         }).toList(),
                         rows: labels.length,
                         timestamps: timeline.map((entry) => entry.timestamp).toList(),
-                        labels: labels, // Add this line
+                        labels: labels,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          // Color legend
-          SizedBox(
-            height: 50,
-            width: heatmapWidth,
+            const SizedBox(height: 40),
 
-            child: Column(
-              children: [
-                Container(
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    gradient: const LinearGradient(
-                      colors: [
-                        rulaLow,
-                        rulaLowMid,
-                        rulaMid,
-                        rulaMidHigh,
-                        rulaHigh,
+            // Color legend
+            Center(
+              child: SizedBox(
+                height: 50,
+                width: heatmapWidth,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        gradient: const LinearGradient(
+                          colors: [
+                            rulaLow,
+                            rulaLowMid,
+                            rulaMid,
+                            rulaMidHigh,
+                            rulaHigh,
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(localizations.results_score_low, 
+                            style: const TextStyle(fontSize: 14)),
+                        Text(localizations.results_score_high, 
+                            style: const TextStyle(fontSize: 14)),
                       ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 4), // Space between line and labels
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(localizations.results_score_low, style: const TextStyle(fontSize: 14)),
-                    Text(localizations.results_score_high, style: const TextStyle(fontSize: 14)),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

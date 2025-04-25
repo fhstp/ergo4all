@@ -61,7 +61,7 @@ class BodyPartDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart Analysis', style: const TextStyle(color: white)),
+        title: Text('$bodyPart ${localizations.body_part_title}', style: const TextStyle(color: white)),
         backgroundColor: color,
       ),
       body: SingleChildScrollView(
@@ -98,8 +98,8 @@ class BodyPartDetailPage extends StatelessWidget {
 
             // Timeline Visualization
 
-            const Text(
-              'Timeline Behavior',
+            Text(
+              localizations.body_part_timeline_plot_title,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
