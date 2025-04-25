@@ -238,7 +238,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     gradient: const LinearGradient(
                       colors: [
                         Color.fromARGB(255, 191, 215, 234), // Good (Blue)
+                        Color.fromARGB(255, 247, 255, 155),
                         Color.fromARGB(255, 255, 229, 83),  // Mid (Yellow)
+                        // Color.fromARGB(255, 255, 162, 89),
+                        Color.fromARGB(255, 255, 166, 97),
                         Color.fromARGB(255, 255, 90, 95),   // Bad (Red)
                         // Color.fromARGB(255, 123, 194, 255), // Good (Blue)
                         // Color.fromARGB(255, 255, 218, 10),  // Mid (Yellow)
@@ -252,8 +255,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Neutral', style: TextStyle(fontSize: 14)),
-                    Text('Check', style: TextStyle(fontSize: 14)),
-                    Text('Improve', style: TextStyle(fontSize: 14)),
+                    // Text('Check', style: TextStyle(fontSize: 14)),
+                    Text('Strained', style: TextStyle(fontSize: 14)),
                   ],
                 ),
               ],
@@ -481,9 +484,9 @@ class HeatmapPainter extends CustomPainter {
   final List<String> labels; // Add this field
 
   static const good = Color.fromARGB(255, 191, 215, 234); // Blue
-  static const goodMid = Color.fromARGB(255, 222, 222, 162); // blue-yellow
+  static const goodMid = Color.fromARGB(255, 247, 255, 155); // blue-yellow
   static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
-  static const midBad = Color.fromARGB(255, 255, 162, 89); // yellow-red
+  static const midBad = Color.fromARGB(255, 255, 166, 97); // yellow-red
   static const bad = Color.fromARGB(255, 255, 90, 95);    // Red
 
   // static const good = Color.fromARGB(255, 123, 194, 255); // Blue
@@ -495,7 +498,6 @@ class HeatmapPainter extends CustomPainter {
   Color getColorForValue(double value) {
     // map between value and color
     if (value < 0.20) {
-      // return Color.lerp(good, mid, value * 3) ?? good;
       return good;
     } else if (value <= 0.40) {
       return goodMid;

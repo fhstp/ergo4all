@@ -57,11 +57,6 @@ class BodyPartDetailPage extends StatelessWidget {
           'fix': 'No fix description available.',
         };
 
-    // Declare gridNames outside the widget tree
-    final gridLabels = bodyPart != 'Legs' 
-        ? ['Improve', 'Check', 'OK']
-        : ['Improve', 'OK'];
-
     return Scaffold(
       appBar: AppBar(
         title: Text('$bodyPart Analysis'),
@@ -106,33 +101,9 @@ class BodyPartDetailPage extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 8),
-
-            // Container(
-            //   height: 20,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(8),
-            //     border: Border.all(color: Colors.black12),
-            //   ),
-            //   child: SingleChildScrollView(
-            //     scrollDirection: Axis.horizontal,
-            //     child: Row(
-            //       children: List.generate(timelineColors.length, (index) {
-            //         return Container(
-            //           width: MediaQuery.of(context).size.width /
-            //               timelineColors.length, // Proportional width
-            //
-            //           color: timelineColors[index],
-            //         );
-            //       }),
-            //     ),
-            //   ),
-            // ),
-
             const SizedBox(height: 20),
 
-            // Replace the Container widget with this Stack
-            // Replace the Stack widget containing CustomPaint with this:
+            // Timeline Chart
             SizedBox(
               height: 132,
               child: Padding(
@@ -141,7 +112,7 @@ class BodyPartDetailPage extends StatelessWidget {
                   LineChartData(
                     gridData: FlGridData(
                       drawVerticalLine: false,
-                      horizontalInterval: bodyPart == 'Legs'? 1.0 : 0.5,
+                      horizontalInterval: 0.5,
                       getDrawingHorizontalLine: (value) {
                         return FlLine(
                           color: Colors.grey.withValues(alpha: 0.2),
@@ -160,9 +131,9 @@ class BodyPartDetailPage extends StatelessWidget {
                           reservedSize: 60,
                           getTitlesWidget: (value, meta) {
                             var text = ''; // TODO: take this out so that labels are not hardcoded
-                            if (value == 0.0) { text = 'OK'; } 
-                            else if (value == 0.5 && bodyPart != 'Legs') { text = 'Check'; }
-                            else if (value == 1.0) { text = 'Improve'; }
+                            if (value == 0.0) { text = 'Neutral'; } 
+                            // else if (value == 0.5 && bodyPart != 'Legs') { text = 'Check'; }
+                            else if (value == 1.0) { text = 'Strained'; }
                             return Text(
                                 text,
                                 style: const TextStyle(fontSize: 14),
@@ -182,7 +153,6 @@ class BodyPartDetailPage extends StatelessWidget {
                           timelineValues.length,
                           (i) => FlSpot(i.toDouble(), timelineValues[i]),
                         ),
-                        isCurved: false,
                         gradient: LinearGradient(
                           colors: timelineColors,
                           stops: List.generate(
@@ -192,43 +162,13 @@ class BodyPartDetailPage extends StatelessWidget {
                         ),
                         barWidth: 3,
                         isStrokeCapRound: true,
-                        dotData: FlDotData(show: false),
-                        belowBarData: BarAreaData(show: false),
+                        dotData: const FlDotData(show: false),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            // Stack(
-            //   children: [
-            //     // Y-axis labels
-            //     SizedBox(
-            //       height: 100,
-            //       child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: gridLabels
-            //           .map((name) => Text(
-            //                 name,
-            //                 style: const TextStyle(fontSize: 12),
-            //               ))
-            //           .toList(),
-            //       ),
-            //     ),
-            //     // Timeline visualization
-            //     Padding(
-            //       padding: const EdgeInsets.only(left: 50), // Add label space
-            //       child: SizedBox(
-            //         height: 100,
-            //         child: CustomPaint(
-            //           painter: TimelinePainter(timelineColors, timelineValues, bodyPart),
-            //           size: Size(MediaQuery.of(context).size.width - 82, 50), // Adjusted width for padding
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
 
             const SizedBox(height: 20),
 
@@ -282,84 +222,4 @@ class BodyPartDetailPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class TimelinePainter extends CustomPainter {
-  TimelinePainter(this.colors, this.values, this.bodyPart);
-
-  final List<Color> colors;
-  final List<double> values;
-  final String bodyPart;
-
-  Color getColorForValue(double value) {
-    if (value < 0.33) {
-      return const Color.fromARGB(255, 191, 215, 234);
-      // return const Color.fromARGB(255, 123, 194, 255); // Blue for good
-    } else if (value < 0.66) {
-      return const Color.fromARGB(255, 255, 229, 83);
-      // return const Color.fromARGB(255, 255, 218, 10); // Yellow for check
-    } else {
-      return const Color.fromARGB(255, 255, 90, 95);
-      // return const Color.fromARGB(255, 220, 50, 32); // Red for improve
-    }
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (values.isEmpty || colors.isEmpty) return;
-
-    // Set color, width and style for grid lines
-    final gridPaint = Paint()
-      ..color = Colors.grey.withValues(alpha: 0.2)
-      ..strokeWidth = 2.0
-      ..style = PaintingStyle.stroke;
-
-    final gridLines = bodyPart != 'Legs' 
-        ? [0.0, 0.5, 1.0]
-        : [0.0, 1.0];
-
-    // Draw the grid lines
-    for (final y in gridLines) {
-      final yPos = size.height * (1 - y);
-      canvas.drawLine(
-        Offset(0, yPos),
-        Offset(size.width, yPos),
-        gridPaint,
-      );
-    }
-
-    // Draw the score line over time
-    final paint = Paint()
-      ..strokeWidth = 3.0
-      ..style = PaintingStyle.stroke;
-
-    final path = Path();
-    final segmentWidth = size.width / (values.length - 1);
-
-    // Start path at first point
-    path.moveTo(0, size.height * (1 - values[0]));
-
-    // Draw line through all points
-    for (var i = 1; i < values.length; i++) {
-      final x = i * segmentWidth;
-      final y = size.height * (1 - values[i]);
-      path.lineTo(x, y);
-    }
-
-    // Create gradient from all colors
-    paint.shader = LinearGradient(
-      colors: colors,
-      stops: List.generate(
-          colors.length, (index) => index / (colors.length - 1),
-        ),
-    ).createShader(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-    );
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(TimelinePainter oldDelegate) =>
-      colors != oldDelegate.colors || values != oldDelegate.values;
 }
