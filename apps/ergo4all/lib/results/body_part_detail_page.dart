@@ -1,5 +1,6 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class BodyPartDetailPage extends StatelessWidget {
   const BodyPartDetailPage({
@@ -128,36 +129,106 @@ class BodyPartDetailPage extends StatelessWidget {
             //   ),
             // ),
 
+            const SizedBox(height: 20),
+
             // Replace the Container widget with this Stack
-            Stack(
-              children: [
-                // Y-axis labels
-                SizedBox(
-                  height: 100,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: gridLabels
-                      .map((name) => Text(
-                            name,
-                            style: const TextStyle(fontSize: 12),
-                          ))
-                      .toList(),
-                  ),
-                ),
-                // Timeline visualization
-                Padding(
-                  padding: const EdgeInsets.only(left: 50), // Add label space
-                  child: SizedBox(
-                    height: 100,
-                    child: CustomPaint(
-                      painter: TimelinePainter(timelineColors, timelineValues, bodyPart),
-                      size: Size(MediaQuery.of(context).size.width - 82, 50), // Adjusted width for padding
+            // Replace the Stack widget containing CustomPaint with this:
+            SizedBox(
+              height: 132,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: LineChart(
+                  LineChartData(
+                    gridData: FlGridData(
+                      drawVerticalLine: false,
+                      horizontalInterval: bodyPart == 'Legs'? 1.0 : 0.5,
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey.withValues(alpha: 0.2),
+                          strokeWidth: 3,
+                        );
+                      },
                     ),
+                    titlesData: FlTitlesData(
+                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 0.5,
+                          reservedSize: 60,
+                          getTitlesWidget: (value, meta) {
+                            var text = ''; // TODO: take this out so that labels are not hardcoded
+                            if (value == 0.0) { text = 'OK'; } 
+                            else if (value == 0.5 && bodyPart != 'Legs') { text = 'Check'; }
+                            else if (value == 1.0) { text = 'Improve'; }
+                            return Text(
+                                text,
+                                style: const TextStyle(fontSize: 14),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(show: false),
+                    minX: 0,
+                    maxX: timelineValues.length.toDouble() - 1,
+                    minY: 0 - 0.01, // Adjusted to fit the grid
+                    maxY: 1 + 0.01, // Adjusted to fit the grid
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: List.generate(
+                          timelineValues.length,
+                          (i) => FlSpot(i.toDouble(), timelineValues[i]),
+                        ),
+                        isCurved: false,
+                        gradient: LinearGradient(
+                          colors: timelineColors,
+                          stops: List.generate(
+                            timelineColors.length,
+                            (index) => index / (timelineColors.length - 1),
+                          ),
+                        ),
+                        barWidth: 3,
+                        isStrokeCapRound: true,
+                        dotData: FlDotData(show: false),
+                        belowBarData: BarAreaData(show: false),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
+            // Stack(
+            //   children: [
+            //     // Y-axis labels
+            //     SizedBox(
+            //       height: 100,
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: gridLabels
+            //           .map((name) => Text(
+            //                 name,
+            //                 style: const TextStyle(fontSize: 12),
+            //               ))
+            //           .toList(),
+            //       ),
+            //     ),
+            //     // Timeline visualization
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 50), // Add label space
+            //       child: SizedBox(
+            //         height: 100,
+            //         child: CustomPaint(
+            //           painter: TimelinePainter(timelineColors, timelineValues, bodyPart),
+            //           size: Size(MediaQuery.of(context).size.width - 82, 50), // Adjusted width for padding
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
             const SizedBox(height: 20),
 

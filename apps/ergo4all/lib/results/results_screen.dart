@@ -11,25 +11,6 @@ import 'dart:math';
 
 /// Creates fake RULA sheet with random scores
 RulaSheet _createFakeSheet() {
-    // return RulaSheet(
-    //   shoulderFlexion: (
-    //   const Degree.makeFrom180(120),
-    //   const Degree.makeFrom180(110)
-    //   ),
-    //   shoulderAbduction: Pair.of(Degree.zero),
-    //   elbowFlexion: (
-    //   const Degree.makeFrom180(80),
-    //   const Degree.makeFrom180(70)
-    //   ),
-    //   wristFlexion: Pair.of(Degree.zero),
-    //   neckFlexion: const Degree.makeFrom180(-30),
-    //   neckRotation: Degree.zero,
-    //   neckLateralFlexion: Degree.zero,
-    //   hipFlexion: Degree.zero,
-    //   trunkRotation: Degree.zero,
-    //   trunkLateralFlexion: Degree.zero,
-    //   isStandingOnBothLegs: true,
-    // );
   final random = Random();
 
   var r1 = Degree.makeFrom180(random.nextInt(180).toDouble());
@@ -61,7 +42,7 @@ RulaSheet _createFakeSheet() {
 RulaTimeline createFakeTimeline() {
   final now = DateTime.now().millisecondsSinceEpoch;
   final entries = List.generate(
-    50, // 100 data points
+    30, // 100 data points
     (index) => TimelineEntry(
       timestamp: now + (index * 100), // 100ms intervals
       sheet: _createFakeSheet(),
@@ -154,6 +135,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Widget build(BuildContext context) {
     final timeline =
         ResultsScreen.timeline;
+
+    // final timeline =
+    //   ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
 
     final firstTimestamp = timeline.first.timestamp;
     final lastTimestamp = timeline.last.timestamp;
@@ -267,7 +251,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('OK', style: TextStyle(fontSize: 14)),
+                    Text('Neutral', style: TextStyle(fontSize: 14)),
                     Text('Check', style: TextStyle(fontSize: 14)),
                     Text('Improve', style: TextStyle(fontSize: 14)),
                   ],

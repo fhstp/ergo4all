@@ -83,6 +83,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       initialRoute: Routes.results.path,
+      // initialRoute: Routes.welcome.path,
     );
   }
 }
