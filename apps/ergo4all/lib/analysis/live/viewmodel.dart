@@ -8,7 +8,6 @@ import 'package:ergo4all/common/value_notifier_ext.dart';
 import 'package:ergo4all/results/results_screen.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' as p;
 import 'package:pose_analysis/pose_analysis.dart';
@@ -105,11 +104,10 @@ class LiveAnalysisViewModel {
   }
 
   Future<void> _onImageCaptured(
-    CameraDescription camera,
-    DeviceOrientation orientation,
+    CameraValue camera,
     CameraImage cameraImage,
   ) async {
-    final input = poseDetectInputFromCamera(camera, orientation, cameraImage);
+    final input = poseDetectInputFromCamera(camera, cameraImage);
     final pose = await detectPose(input);
 
     if (pose == null) {
@@ -147,8 +145,7 @@ class LiveAnalysisViewModel {
     await controller.initialize();
     await controller.startVideoRecording(
       onAvailable: (image) => _onImageCaptured(
-        frontCamera,
-        controller.value.deviceOrientation,
+        controller.value,
         image,
       ),
     );

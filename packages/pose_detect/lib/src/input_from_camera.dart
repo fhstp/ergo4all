@@ -14,21 +14,20 @@ final _orientations = {
 };
 
 mlkit.InputImageRotation? _tryGetCameraRotation(
-  DeviceOrientation deviceOrientation,
-  CameraDescription camera,
+  CameraValue camera,
 ) {
   // get image rotation
   // it is used in android to convert the InputImage from Dart to Java
   // `rotation` is not used in iOS to convert the InputImage from Dart to Obj-C
   // in both platforms `rotation` and `camera.lensDirection` can be used to
   // compensate `x` and `y` coordinates on a canvas
-  final sensorOrientation = camera.sensorOrientation;
+  final sensorOrientation = camera.description.sensorOrientation;
   if (Platform.isIOS) {
     return mlkit.InputImageRotationValue.fromRawValue(sensorOrientation);
   } else if (Platform.isAndroid) {
-    var rotationCompensation = _orientations[deviceOrientation];
+    var rotationCompensation = _orientations[camera.deviceOrientation];
     if (rotationCompensation == null) return null;
-    if (camera.lensDirection == CameraLensDirection.front) {
+    if (camera.description.lensDirection == CameraLensDirection.front) {
       // front-facing
       rotationCompensation = (sensorOrientation + rotationCompensation) % 360;
     } else {
@@ -43,14 +42,12 @@ mlkit.InputImageRotation? _tryGetCameraRotation(
 }
 
 /// Constructs a [PoseDetectInput] object from camera information. Specifically
-/// the [camera] which took the picture, the [deviceOrientation] when the
-/// picture was taken and the [image] itself.
+/// the [camera] which took the picture and the [image] itself.
 PoseDetectInput poseDetectInputFromCamera(
-  CameraDescription camera,
-  DeviceOrientation deviceOrientation,
+  CameraValue camera,
   CameraImage image,
 ) {
-  final rotation = _tryGetCameraRotation(deviceOrientation, camera);
+  final rotation = _tryGetCameraRotation(camera);
   assert(rotation != null, 'Could not determine camera rotation.');
 
   // get image format
