@@ -1,13 +1,13 @@
 import 'dart:math';
 
+import 'package:common/pair_utils.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
+import 'package:ergo4all/results/color_manager.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
-import 'package:common/pair_utils.dart';
-
-import 'dart:math';
 
 /// Creates fake RULA sheet with random scores
 RulaSheet _createFakeSheet() {
@@ -88,7 +88,30 @@ class _ResultsScreenState extends State<ResultsScreen> {
     Colors.red,
   ];
 
-  final Random random = Random();     
+  final Random random = Random();
+
+
+  static ColorManager colorManager = ColorManager();
+
+  // static const good = Color.fromARGB(255, 191, 215, 234); // Blue
+  // static const goodMid = Color.fromARGB(255, 247, 255, 155); // blue-yellow
+  // static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
+  // static const midBad = Color.fromARGB(255, 255, 166, 97); // yellow-red
+  // static const bad = Color.fromARGB(255, 255, 90, 95);   
+
+  // Color _getColorForValue(double value) {
+  //   // map between value and color
+  //   if (value < 0.20) {
+  //     return good;
+  //   } else if (value <= 0.40) {
+  //     return goodMid;
+  //   } else if (value <= 0.60) {
+  //     return mid;
+  //   } else if (value <= 0.80) {
+  //     return midBad;
+  //   }
+  //   return bad;
+  // }  
 
   void _navigateToBodyPartPage(
     String bodyPart,
@@ -96,22 +119,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
     List<FlSpot> timelineData,
   ) {
 
-    const good =  Color.fromARGB(255, 191, 215, 234); // Good (Blue)
-    const mid =  Color.fromARGB(255, 255, 229, 83);  // Improve (Yellow)
-    const bad =  Color.fromARGB(255, 255, 90, 95);   // Bad (Red)
+    // const good =  Color.fromARGB(255, 191, 215, 234); // Good (Blue)
+    // const mid =  Color.fromARGB(255, 255, 229, 83);  // Improve (Yellow)
+    // const bad =  Color.fromARGB(255, 255, 90, 95);   // Bad (Red)
 
     // const good =  Color.fromARGB(255, 123, 194, 255); // Good (Blue)
     // const mid =  Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
     // const bad =  Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
 
     final timelineColors = timelineData.map((spot) {
-      if (spot.y < 0.33) {
-        return good; // Good
-      } else if (spot.y < 0.66) {
-        return mid; // Improve
-      } else {
-        return bad; // Bad
-      }
+      return colorManager.getColorForValue(spot.y);
     }).toList();
 
     final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
@@ -133,6 +150,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final timeline =
         ResultsScreen.timeline;
 
@@ -237,26 +255,21 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     borderRadius: BorderRadius.circular(4),
                     gradient: const LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 191, 215, 234), // Good (Blue)
-                        Color.fromARGB(255, 247, 255, 155),
-                        Color.fromARGB(255, 255, 229, 83),  // Mid (Yellow)
-                        // Color.fromARGB(255, 255, 162, 89),
-                        Color.fromARGB(255, 255, 166, 97),
-                        Color.fromARGB(255, 255, 90, 95),   // Bad (Red)
-                        // Color.fromARGB(255, 123, 194, 255), // Good (Blue)
-                        // Color.fromARGB(255, 255, 218, 10),  // Mid (Yellow)
-                        // Color.fromARGB(255, 220, 50, 32),   // Bad (Red)
+                        ColorManager.good, 
+                        ColorManager.goodMid, 
+                        ColorManager.mid, 
+                        ColorManager.midBad, 
+                        ColorManager.bad
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 4), // Space between line and labels
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Neutral', style: TextStyle(fontSize: 14)),
-                    // Text('Check', style: TextStyle(fontSize: 14)),
-                    Text('Strained', style: TextStyle(fontSize: 14)),
+                    Text(localizations.results_score_low, style: const TextStyle(fontSize: 14)),
+                    Text(localizations.results_score_high, style: const TextStyle(fontSize: 14)),
                   ],
                 ),
               ],
@@ -483,11 +496,11 @@ class HeatmapPainter extends CustomPainter {
   final List<int> timestamps;
   final List<String> labels; // Add this field
 
-  static const good = Color.fromARGB(255, 191, 215, 234); // Blue
-  static const goodMid = Color.fromARGB(255, 247, 255, 155); // blue-yellow
-  static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
-  static const midBad = Color.fromARGB(255, 255, 166, 97); // yellow-red
-  static const bad = Color.fromARGB(255, 255, 90, 95);    // Red
+  // static const good = Color.fromARGB(255, 191, 215, 234); // Blue
+  // static const goodMid = Color.fromARGB(255, 247, 255, 155); // blue-yellow
+  // static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
+  // static const midBad = Color.fromARGB(255, 255, 166, 97); // yellow-red
+  // static const bad = Color.fromARGB(255, 255, 90, 95);    // Red
 
   // static const good = Color.fromARGB(255, 123, 194, 255); // Blue
   // static const goodMid = Color.fromARGB(255, 181, 205, 147); // blue-yellow
@@ -495,19 +508,19 @@ class HeatmapPainter extends CustomPainter {
   // static const midBad = Color.fromARGB(255, 235, 124, 22); // yellow-red
   // static const bad = Color.fromARGB(255, 220, 50, 32);    // Red
 
-  Color getColorForValue(double value) {
-    // map between value and color
-    if (value < 0.20) {
-      return good;
-    } else if (value <= 0.40) {
-      return goodMid;
-    } else if (value <= 0.60) {
-      return mid;
-    } else if (value <= 0.80) {
-      return midBad;
-    }
-    return bad;
-  }
+  // Color getColorForValue(double value) {
+  //   // map between value and color
+  //   if (value < 0.20) {
+  //     return good;
+  //   } else if (value <= 0.40) {
+  //     return goodMid;
+  //   } else if (value <= 0.60) {
+  //     return mid;
+  //   } else if (value <= 0.80) {
+  //     return midBad;
+  //   }
+  //   return bad;
+  // }
 
 @override
 void paint(Canvas canvas, Size size) {
@@ -521,13 +534,15 @@ void paint(Canvas canvas, Size size) {
     textAlign: TextAlign.right,
   );
 
+  final colorManager = ColorManager();
+
   // Draw heatmap cells
   for (var row = 0; row < rows; row++) {
     final yOffset = row * (cellHeight + spacing); // Add spacing to y position
 
     for (var col = 0; col < timestamps.length; col++) {
       final value = data[row][col];
-      paint.color = getColorForValue(value);
+      paint.color = colorManager.getColorForValue(value);
 
       canvas.drawRect(
         Rect.fromLTWH(

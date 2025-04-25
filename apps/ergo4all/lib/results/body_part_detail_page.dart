@@ -1,6 +1,6 @@
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 
 class BodyPartDetailPage extends StatelessWidget {
   const BodyPartDetailPage({
@@ -18,6 +18,8 @@ class BodyPartDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     // Unique text for each body part
     final bodyPartTexts = <String, Map<String, String>>{
       'Upper Arm': {
@@ -123,6 +125,13 @@ class BodyPartDetailPage extends StatelessWidget {
                     titlesData: FlTitlesData(
                       rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      // bottomTitles: AxisTitles(
+                      //   axisNameWidget: const Text(
+                      //     'time',
+                      //     style: TextStyle(fontSize: 14),
+                      //   ),
+                      //   sideTitles: SideTitles(showTitles: false),
+                      // ),
                       bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
@@ -130,10 +139,9 @@ class BodyPartDetailPage extends StatelessWidget {
                           interval: 0.5,
                           reservedSize: 60,
                           getTitlesWidget: (value, meta) {
-                            var text = ''; // TODO: take this out so that labels are not hardcoded
-                            if (value == 0.0) { text = 'Neutral'; } 
-                            // else if (value == 0.5 && bodyPart != 'Legs') { text = 'Check'; }
-                            else if (value == 1.0) { text = 'Strained'; }
+                            var text = '';
+                            if (value == 0.0) { text = localizations.results_score_low_short; } 
+                            else if (value == 1.0) { text = localizations.results_score_high_short; }
                             return Text(
                                 text,
                                 style: const TextStyle(fontSize: 14),
