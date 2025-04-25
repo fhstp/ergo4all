@@ -115,9 +115,13 @@ class _ResultsScreenState extends State<ResultsScreen> {
     List<FlSpot> timelineData,
   ) {
 
-    const good =  Color.fromARGB(255, 123, 194, 255); // Good (Blue)
-    const mid =  Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
-    const bad =  Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
+    const good =  Color.fromARGB(255, 191, 215, 234); // Good (Blue)
+    const mid =  Color.fromARGB(255, 255, 229, 83);  // Improve (Yellow)
+    const bad =  Color.fromARGB(255, 255, 90, 95);   // Bad (Red)
+
+    // const good =  Color.fromARGB(255, 123, 194, 255); // Good (Blue)
+    // const mid =  Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
+    // const bad =  Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
 
     final timelineColors = timelineData.map((spot) {
       if (spot.y < 0.33) {
@@ -249,9 +253,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     borderRadius: BorderRadius.circular(4),
                     gradient: const LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 123, 194, 255), // Good (Blue)
-                        Color.fromARGB(255, 255, 218, 10),  // Mid (Yellow)
-                        Color.fromARGB(255, 220, 50, 32),   // Bad (Red)
+                        Color.fromARGB(255, 191, 215, 234), // Good (Blue)
+                        Color.fromARGB(255, 255, 229, 83),  // Mid (Yellow)
+                        Color.fromARGB(255, 255, 90, 95),   // Bad (Red)
+                        // Color.fromARGB(255, 123, 194, 255), // Good (Blue)
+                        // Color.fromARGB(255, 255, 218, 10),  // Mid (Yellow)
+                        // Color.fromARGB(255, 220, 50, 32),   // Bad (Red)
                       ],
                     ),
                   ),
@@ -489,11 +496,17 @@ class HeatmapPainter extends CustomPainter {
   final List<int> timestamps;
   final List<String> labels; // Add this field
 
-  static const good = Color.fromARGB(255, 123, 194, 255); // Blue
-  static const goodMid = Color.fromARGB(255, 181, 205, 147); // blue-yellow
-  static const mid = Color.fromARGB(255, 255, 218, 10);   // Yellow
-  static const midBad = Color.fromARGB(255, 235, 124, 22); // yellow-red
-  static const bad = Color.fromARGB(255, 220, 50, 32);    // Red
+  static const good = Color.fromARGB(255, 191, 215, 234); // Blue
+  static const goodMid = Color.fromARGB(255, 222, 222, 162); // blue-yellow
+  static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
+  static const midBad = Color.fromARGB(255, 255, 162, 89); // yellow-red
+  static const bad = Color.fromARGB(255, 255, 90, 95);    // Red
+
+  // static const good = Color.fromARGB(255, 123, 194, 255); // Blue
+  // static const goodMid = Color.fromARGB(255, 181, 205, 147); // blue-yellow
+  // static const mid = Color.fromARGB(255, 255, 218, 10);   // Yellow
+  // static const midBad = Color.fromARGB(255, 235, 124, 22); // yellow-red
+  // static const bad = Color.fromARGB(255, 220, 50, 32);    // Red
 
   Color getColorForValue(double value) {
     // map between value and color

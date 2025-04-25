@@ -222,11 +222,14 @@ class TimelinePainter extends CustomPainter {
 
   Color getColorForValue(double value) {
     if (value < 0.33) {
-      return const Color.fromARGB(255, 123, 194, 255); // Blue for good
+      return const Color.fromARGB(255, 191, 215, 234);
+      // return const Color.fromARGB(255, 123, 194, 255); // Blue for good
     } else if (value < 0.66) {
-      return const Color.fromARGB(255, 255, 218, 10); // Yellow for check
+      return const Color.fromARGB(255, 255, 229, 83);
+      // return const Color.fromARGB(255, 255, 218, 10); // Yellow for check
     } else {
-      return const Color.fromARGB(255, 220, 50, 32); // Red for improve
+      return const Color.fromARGB(255, 255, 90, 95);
+      // return const Color.fromARGB(255, 220, 50, 32); // Red for improve
     }
   }
 
