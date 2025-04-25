@@ -1,137 +1,276 @@
+import 'dart:async';
+import 'dart:collection';
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:common/func_ext.dart';
+import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
-import 'package:common_ui/widgets/paint_on_image.dart';
+import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
-import 'package:ergo4all/analysis/live/viewmodel.dart';
-import 'package:ergo4all/common/loading_indicator.dart';
-import 'package:ergo4all/common/permission_dialog.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/results/results_screen.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:fpdart/fpdart.dart' hide State;
+import 'package:path/path.dart' as p;
+import 'package:pose/pose.dart';
+import 'package:pose_analysis/pose_analysis.dart';
+import 'package:pose_detect/pose_detect.dart';
+import 'package:pose_transforming/denoise.dart';
+import 'package:pose_transforming/normalization.dart';
+import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
-class LiveAnalysisScreen extends HookWidget {
-  /// Creates a [LiveAnalysisScreen].
+class LiveAnalysisScreen extends StatefulWidget {
+  /// Creates an instance of the screen.
   const LiveAnalysisScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final viewModel = useMemoized(LiveAnalysisViewModel.new);
-    final animationController = useAnimationController(
-      upperBound: 30,
-      initialValue: 30,
-      duration: const Duration(seconds: 30),
-    );
-    final remainingRecordingTime = useAnimation(animationController);
+  State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
+}
 
-    Future<void> askForPermission() async {
-      final isCameraPermissionGranted = await showPermissionDialog(
-        context,
-        Permission.camera,
-        header: localizations.permission_camera_text,
-      );
-      if (!isCameraPermissionGranted) {
-        if (context.mounted) Navigator.of(context).pop();
-        return;
-      }
+@immutable
+class _Frame {
+  const _Frame(this.timestamp, this.pose, this.imageSize);
 
-      await viewModel.initializeCamera();
-    }
+  final int timestamp;
+  final Option<Pose> pose;
+  final Size imageSize;
+}
 
-    Future<void> goToResults() async {
-      await Navigator.of(context).pushReplacementNamed(
+enum _AnalysisMode { none, poseOnly, full }
+
+// TODO: Move to own package for video storage
+Future<void> _saveRecording(XFile tempFile) async {
+  final recordingsDir = Directory(
+    '/storage/emulated/0/Android/media/at.ac.fhstp.ergo4all/Ergo4All Recordings',
+  );
+  await recordingsDir.create(recursive: true);
+
+  final recordingPath = p.join(recordingsDir.path, tempFile.name);
+  await tempFile.saveTo(recordingPath);
+}
+
+class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
+    with SingleTickerProviderStateMixin {
+  Option<CameraController> cameraController = none();
+  Queue<_Frame> frameQueue = Queue();
+  _AnalysisMode analysisMode = _AnalysisMode.none;
+  List<TimelineEntry> timeline = List.empty(growable: true);
+  late final AnimationController progressAnimationController =
+      AnimationController(
+    value: 30,
+    duration: const Duration(seconds: 30),
+    upperBound: 30,
+    vsync: this,
+  );
+
+  void goToResults() {
+    unawaited(
+      Navigator.of(context).pushReplacementNamed(
         Routes.results.path,
-        arguments: viewModel.timeline,
-      );
+        arguments: timeline.toIList(),
+      ),
+    );
+  }
+
+  void _analyzePose(int timestamp, Pose pose) {
+    final normalized = normalizePose(pose);
+    final sagittal = make2dSagittalPose(normalized);
+    final coronal = make2dCoronalPose(normalized);
+    final transverse = make2dTransversePose(normalized);
+    final angles = calculateAngles(pose, coronal, sagittal, transverse);
+
+    final sheet = rulaSheetFromAngles(angles);
+    timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
+  }
+
+  void onFrame(_Frame frame) {
+    if (analysisMode == _AnalysisMode.none) return;
+
+    final targetQueueCount = analysisMode == _AnalysisMode.full ? 5 : 1;
+    while (frameQueue.length >= targetQueueCount) {
+      frameQueue.removeFirst();
     }
 
-    final uiState = useValueListenable(viewModel.uiState);
+    setState(() {
+      frameQueue.add(frame);
+    });
 
-    useEffect(
-      () {
-        if (uiState.isDone) {
-          WidgetsBinding.instance.addPostFrameCallback((_) => goToResults());
-        }
-        return null;
-      },
-      [uiState.isDone],
+    if (analysisMode != _AnalysisMode.full) return;
+
+    // Here we discard all frames where there is no pose
+    // This would be the place where we, for example, replace missing poses
+    // with interpolated or repeated poses.
+    final poses = frameQueue.filterMap((it) => it.pose).toIList();
+
+    // Check if we have enough captures to do the average
+    if (poses.length < 5) return;
+
+    final averagePose = averagePoses(poses);
+    _analyzePose(frame.timestamp, averagePose);
+  }
+
+  void onPoseInput(PoseDetectInput input) {
+    if (analysisMode == _AnalysisMode.none) return;
+
+    // For some reason, the width and height in the image are flipped in
+    // portrait mode.
+    // So in order for the math in following code to be correct, we need
+    // to flip it back.
+    // This might be an issue if we ever allow landscape mode. Then we
+    // would need to use some dynamic logic to determine the image orientation.
+    final imageSize = input.metadata!.size.flipped;
+
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+    detectPose(input).then((pose) {
+      final frame = _Frame(timestamp, Option.fromNullable(pose), imageSize);
+      onFrame(frame);
+    });
+  }
+
+  void onCameraImage(CameraValue camera, CameraImage image) {
+    final input = poseDetectInputFromCamera(camera, image);
+    onPoseInput(input);
+  }
+
+  Future<void> tryCompleteAnalysis() async {
+    assert(
+      analysisMode == _AnalysisMode.full,
+      'Should only complete analysis from full analysis.',
     );
 
-    useEffect(
-      () {
-        if (uiState.cameraController.isNone()) askForPermission();
-        return null;
-      },
-      [uiState.cameraController],
+    final cameraController =
+        this.cameraController.expect('Must have a camera controller.');
+
+    await stopPoseDetection();
+
+    final outputFile = await cameraController.stopVideoRecording();
+    await _saveRecording(outputFile);
+
+    await cameraController.dispose();
+
+    goToResults();
+  }
+
+  Future<void> tryStartFullAnalysis() async {
+    assert(
+      analysisMode == _AnalysisMode.poseOnly,
+      'Should only switch to full analysis from pose-only analysis.',
     );
 
-    useEffect(
-      () {
-        if (remainingRecordingTime == 0) viewModel.stopRecording();
-        return null;
+    final cameraController =
+        this.cameraController.expect('Must have a camera controller.');
+
+    setState(() {
+      analysisMode = _AnalysisMode.full;
+    });
+
+    await cameraController.stopImageStream();
+    await cameraController.startVideoRecording(
+      onAvailable: (image) {
+        onCameraImage(cameraController.value, image);
       },
-      [remainingRecordingTime],
     );
 
-    if (uiState.cameraController.isNone()) {
-      return const Scaffold(
-        body: Center(
-          child: SizedBox(
-            width: 200,
-            height: 200,
-            child: CircularProgressIndicator(),
-          ),
-        ),
-      );
+    unawaited(
+      progressAnimationController.reverse().then((_) {
+        tryCompleteAnalysis();
+      }),
+    );
+  }
+
+  Future<void> tryStartPoseOnlyAnalysis() async {
+    assert(
+      analysisMode == _AnalysisMode.none,
+      'Should only switch to pose-only analysis from no analysis.',
+    );
+
+    final cameraController =
+        this.cameraController.expect('Must have a camera controller.');
+
+    setState(() {
+      analysisMode = _AnalysisMode.poseOnly;
+    });
+
+    await startPoseDetection(PoseDetectMode.stream);
+    await cameraController.startImageStream((image) {
+      onCameraImage(cameraController.value, image);
+    });
+  }
+
+  void onRecordButtonPressed() {
+    switch (analysisMode) {
+      case _AnalysisMode.none:
+        break;
+      case _AnalysisMode.poseOnly:
+        tryStartFullAnalysis();
+      case _AnalysisMode.full:
+        tryCompleteAnalysis();
     }
+  }
 
-    return Scaffold(
-      body: Column(
-        children: [
-          uiState.cameraController.match(
-            LoadingIndicator.new,
-            (controller) => PaintOnWidget(
-              base: CameraPreview(controller),
-              painter: uiState.latestCapture.match(
-                () => null,
-                (capture) => Pose3dPainter(
-                  pose: capture.pose,
-                  imageSize: capture.imageSize,
+  @override
+  void initState() {
+    super.initState();
+
+    openPoseDetectionCamera().then((controller) {
+      setState(() {
+        cameraController = Some(controller);
+      });
+
+      tryStartPoseOnlyAnalysis();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cameraPreview = cameraController.match(
+      Container.new,
+      (cameraController) => CameraPreview(
+        cameraController,
+        child: frameQueue.lastOption
+            .flatMap(
+              (frame) => frame.pose.map(
+                (pose) => CustomPaint(
+                  willChange: true,
+                  painter: Pose3dPainter(
+                    pose: pose,
+                    imageSize: frame.imageSize,
+                  ),
                 ),
               ),
+            )
+            .toNullable(),
+      ),
+    );
+
+    return Scaffold(
+      body: SizedBox.expand(
+        child: Column(
+          children: [
+            cameraPreview,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: largeSpace),
+              child: RecordingProgressIndicator(
+                remainingTime: progressAnimationController.value,
+                criticalTime: 5,
+                initialTime: 30,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: mediumSpace,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: largeSpace),
-            child: RecordingProgressIndicator(
-              remainingTime: remainingRecordingTime,
-              criticalTime: 5,
-              initialTime: 30,
+            const SizedBox(
+              height: mediumSpace,
             ),
-          ),
-          const SizedBox(
-            height: mediumSpace,
-          ),
-          RecordButton(
-            isRecording: uiState.isRecording,
-            onTap: () {
-              if (uiState.isRecording) {
-                viewModel.stopRecording();
-              } else {
-                viewModel.startRecording();
-                animationController.reverse();
-              }
-            },
-          ),
-        ],
+            RecordButton(
+              isRecording: analysisMode == _AnalysisMode.full,
+              onTap: onRecordButtonPressed,
+            ),
+          ],
+        ),
       ),
     );
   }

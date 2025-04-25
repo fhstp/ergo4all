@@ -1,3 +1,5 @@
+import 'package:fpdart/fpdart.dart';
+
 /// Useful extensions for iterables.
 extension UtilExt<T> on Iterable<T> {
   /// Average a collection of items by providing a function [sumF] to add two
@@ -7,5 +9,13 @@ extension UtilExt<T> on Iterable<T> {
     final list = toList();
     final sum = list.reduce(sumF);
     return divideF(sum, list.length);
+  }
+
+  /// Applies the mapping function [f] to each element in the iterable
+  /// and returns only elements for which it returned [Some].
+  Iterable<U> filterMap<U>(Option<U> Function(T) f) sync* {
+    for (final item in this) {
+      if (f(item) case Some(:final value)) yield value;
+    }
   }
 }

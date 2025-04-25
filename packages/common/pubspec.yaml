@@ -9,6 +9,7 @@ resolution: workspace
 dependencies:
   equatable: ^2.0.5
   fast_immutable_collections: ^11.0.0
+  fpdart: ^1.1.1
 
 dev_dependencies:
   very_good_analysis: ^7.0.0
