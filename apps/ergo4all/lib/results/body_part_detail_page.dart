@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -5,16 +6,15 @@ import 'package:flutter/material.dart';
 class BodyPartDetailPage extends StatelessWidget {
   const BodyPartDetailPage({
     required this.bodyPart,
-    required this.color,
     required this.timelineColors,
     required this.timelineValues,
     super.key,
   });
 
   final String bodyPart;
-  final Color color;
   final List<Color> timelineColors;
   final List<double> timelineValues;
+  final Color color = cardinal;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class BodyPartDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart Analysis'),
+        title: Text('$bodyPart Analysis', style: const TextStyle(color: white)),
         backgroundColor: color,
       ),
       body: SingleChildScrollView(

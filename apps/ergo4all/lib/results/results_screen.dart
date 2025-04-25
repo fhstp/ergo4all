@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:common/pair_utils.dart';
+import 'package:common_ui/theme/colors.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:ergo4all/results/color_manager.dart';
@@ -53,6 +54,24 @@ RulaTimeline createFakeTimeline() {
 }
 
 @immutable
+/// Manages colors for the RULA score visualization
+class ColorMapper {
+  /// Maps normalized RULA score values to colors
+  static Color getColorForValue(double value) {
+    if (value < 0.20) {
+      return rulaLow;
+    } else if (value <= 0.40) {
+      return rulaLowMid;
+    } else if (value <= 0.60) {
+      return rulaMid;
+    } else if (value <= 0.80) {
+      return rulaMidHigh;
+    }
+    return rulaHigh;
+  }
+}
+
+@immutable
 class TimelineEntry {
   const TimelineEntry({required this.timestamp, required this.sheet});
 
@@ -80,67 +99,23 @@ class _ResultsScreenState extends State<ResultsScreen> {
     'Legs',
   ];
 
-  final List<Color> colors = [
-    Colors.blue,
-    Colors.green,
-    Colors.orange,
-    Colors.purple,
-    Colors.red,
-  ];
-
   final Random random = Random();
-
-
-  static ColorManager colorManager = ColorManager();
-
-  // static const good = Color.fromARGB(255, 191, 215, 234); // Blue
-  // static const goodMid = Color.fromARGB(255, 247, 255, 155); // blue-yellow
-  // static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
-  // static const midBad = Color.fromARGB(255, 255, 166, 97); // yellow-red
-  // static const bad = Color.fromARGB(255, 255, 90, 95);   
-
-  // Color _getColorForValue(double value) {
-  //   // map between value and color
-  //   if (value < 0.20) {
-  //     return good;
-  //   } else if (value <= 0.40) {
-  //     return goodMid;
-  //   } else if (value <= 0.60) {
-  //     return mid;
-  //   } else if (value <= 0.80) {
-  //     return midBad;
-  //   }
-  //   return bad;
-  // }  
 
   void _navigateToBodyPartPage(
     String bodyPart,
-    Color color,
     List<FlSpot> timelineData,
   ) {
-
-    // const good =  Color.fromARGB(255, 191, 215, 234); // Good (Blue)
-    // const mid =  Color.fromARGB(255, 255, 229, 83);  // Improve (Yellow)
-    // const bad =  Color.fromARGB(255, 255, 90, 95);   // Bad (Red)
-
-    // const good =  Color.fromARGB(255, 123, 194, 255); // Good (Blue)
-    // const mid =  Color.fromARGB(255, 255, 218, 10);  // Improve (Yellow)
-    // const bad =  Color.fromARGB(255, 220, 50, 32);   // Bad (Red)
-
     final timelineColors = timelineData.map((spot) {
-      return colorManager.getColorForValue(spot.y);
+      return ColorMapper.getColorForValue(spot.y);
     }).toList();
 
     final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
-
-    // Navigate to BodyPartDetailPage with the updated timelineColors
 
     Navigator.push(
       context,
       MaterialPageRoute<void>(
         builder: (context) => BodyPartDetailPage(
           bodyPart: bodyPart,
-          color: color,
           timelineColors: timelineColors,
           timelineValues: timelineValues,
         ),
@@ -221,7 +196,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       if (rowIndex >= 0 && rowIndex < labels.length) {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
-                          colors[rowIndex],
                           lineChartData[rowIndex],
                         );
                       }
@@ -255,11 +229,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     borderRadius: BorderRadius.circular(4),
                     gradient: const LinearGradient(
                       colors: [
-                        ColorManager.good, 
-                        ColorManager.goodMid, 
-                        ColorManager.mid, 
-                        ColorManager.midBad, 
-                        ColorManager.bad
+                        rulaLow,
+                        rulaLowMid,
+                        rulaMid,
+                        rulaMidHigh,
+                        rulaHigh,
                       ],
                     ),
                   ),
@@ -275,211 +249,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
               ],
             ),
           ),
-
-          const SizedBox(height: 20),
-
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Wrap(
-              spacing: 10,
-              runSpacing: 5,
-              children: List.generate(labels.length, (index) {
-                return GestureDetector(
-                  onTap: () => _navigateToBodyPartPage(
-                    labels[index],
-                    colors[index],
-                    lineChartData[index],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 16,
-                        height: 16,
-                        color: colors[index],
-                      ),
-                      const SizedBox(width: 5),
-                      Text(labels[index], style: const TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          Expanded(
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width *
-                    0.95, // Adjusted for larger width
-
-                height: MediaQuery.of(context).size.width *
-                    0.7, // Adjusted for a proportional height
-
-                margin: const EdgeInsets.all(16),
-
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: ChartBackgroundPainter(minY: 0, maxY: 1),
-                        ),
-                      ),
-                      LineChart(
-                        LineChartData(
-                          lineBarsData: [
-                            for (int i = 0; i < lineChartData.length; i++)
-                              LineChartBarData(
-                                spots: lineChartData[i],
-                                color: colors[i],
-                                isStrokeCapRound: true,
-                                dotData: const FlDotData(show: false),
-                              ),
-                          ],
-                          minY: 0,
-                          maxY: 1,
-                          titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 50,
-                                interval: 0.5,
-                                getTitlesWidget: (value, meta) {
-                                  // Explicitly define labels for fixed
-                                  // positions
-                                  if (value == 0) {
-                                    return const Text(
-                                      'OK',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  } else if (value == 0.5) {
-                                    return const Text(
-                                      'Check',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  } else if (value == 1) {
-                                    return const Text(
-                                      'Improve',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  }
-
-                                  return const SizedBox(); // Hide other labels
-                                },
-
-                                //interval: 1, // Ensure consistent spacing
-                              ),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40,
-                                getTitlesWidget: (value, meta) {
-                                  if (value % 30 == 0) {
-                                    // Assuming 30 data points per second
-                                    final seconds = value / 30;
-
-                                    return Text(
-                                      '${seconds.toStringAsFixed(1)} s',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    );
-                                  }
-
-                                  return const SizedBox();
-                                },
-                              ),
-                            ),
-                            rightTitles: const AxisTitles(),
-                            topTitles: const AxisTitles(),
-                          ),
-                          gridData: const FlGridData(show: false),
-                          borderData: FlBorderData(show: false),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
         ],
       ),
     );
-  }
-}
-
-class ChartBackgroundPainter extends CustomPainter {
-  ChartBackgroundPainter({required this.minY, required this.maxY});
-  final double minY;
-  final double maxY;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
-
-    double mapYToCanvas(double y) {
-      return size.height - ((y - minY) / (maxY - minY) * size.height);
-    }
-
-    // Green region (Good)
-
-    paint.color = const Color.fromARGB(255, 123, 194, 255).withValues(alpha: 0.2);
-
-    canvas.drawRect(
-      Rect.fromLTRB(0, mapYToCanvas(0.33), size.width, size.height),
-      paint,
-    );
-
-    // Yellow region (Improve)
-
-    paint.color = Colors.yellow.withValues(alpha: 0.2);
-
-    canvas.drawRect(
-      Rect.fromLTRB(0, mapYToCanvas(0.66), size.width, mapYToCanvas(0.33)),
-      paint,
-    );
-
-    // Red region (Bad)
-
-    paint.color = Colors.red.withValues(alpha: 0.2);
-
-    canvas.drawRect(
-      Rect.fromLTRB(0, 0, size.width, mapYToCanvas(0.66)),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }
 
@@ -496,32 +268,6 @@ class HeatmapPainter extends CustomPainter {
   final List<int> timestamps;
   final List<String> labels; // Add this field
 
-  // static const good = Color.fromARGB(255, 191, 215, 234); // Blue
-  // static const goodMid = Color.fromARGB(255, 247, 255, 155); // blue-yellow
-  // static const mid = Color.fromARGB(255, 255, 229, 83);   // Yellow
-  // static const midBad = Color.fromARGB(255, 255, 166, 97); // yellow-red
-  // static const bad = Color.fromARGB(255, 255, 90, 95);    // Red
-
-  // static const good = Color.fromARGB(255, 123, 194, 255); // Blue
-  // static const goodMid = Color.fromARGB(255, 181, 205, 147); // blue-yellow
-  // static const mid = Color.fromARGB(255, 255, 218, 10);   // Yellow
-  // static const midBad = Color.fromARGB(255, 235, 124, 22); // yellow-red
-  // static const bad = Color.fromARGB(255, 220, 50, 32);    // Red
-
-  // Color getColorForValue(double value) {
-  //   // map between value and color
-  //   if (value < 0.20) {
-  //     return good;
-  //   } else if (value <= 0.40) {
-  //     return goodMid;
-  //   } else if (value <= 0.60) {
-  //     return mid;
-  //   } else if (value <= 0.80) {
-  //     return midBad;
-  //   }
-  //   return bad;
-  // }
-
 @override
 void paint(Canvas canvas, Size size) {
   const spacing = 10.0; // Space between rows
@@ -534,15 +280,13 @@ void paint(Canvas canvas, Size size) {
     textAlign: TextAlign.right,
   );
 
-  final colorManager = ColorManager();
-
   // Draw heatmap cells
   for (var row = 0; row < rows; row++) {
     final yOffset = row * (cellHeight + spacing); // Add spacing to y position
 
     for (var col = 0; col < timestamps.length; col++) {
       final value = data[row][col];
-      paint.color = colorManager.getColorForValue(value);
+      paint.color = ColorMapper.getColorForValue(value);
 
       canvas.drawRect(
         Rect.fromLTWH(
