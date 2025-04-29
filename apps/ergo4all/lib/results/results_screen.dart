@@ -133,7 +133,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
             const SizedBox(height: 40),
 
-            // Heatmap
+            // Heatmap vis of the body parts
             Center(
               child: SizedBox(
                 width: heatmapWidth,
@@ -144,7 +144,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     onTapDown: (details) {
                       // Find row of the bar that was tapped
                       final rowHeight = heatmapHeight / labels.length;
-                      final rowIndex = (details.localPosition.dy / rowHeight).floor();
+                      final rowIndex = 
+                        (details.localPosition.dy / rowHeight).floor();
                       if (rowIndex >= 0 && rowIndex < labels.length) {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
@@ -158,7 +159,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           return spots.map((spot) => spot.y).toList();
                         }).toList(),
                         rows: labels.length,
-                        timestamps: timeline.map((entry) => entry.timestamp).toList(),
+                        timestamps: 
+                          timeline.map((entry) => entry.timestamp).toList(),
                         labels: labels,
                       ),
                     ),
@@ -212,24 +214,30 @@ class _ResultsScreenState extends State<ResultsScreen> {
   }
 }
 
+/// Custom heatmap painter for body parts overview visualization
 class HeatmapPainter extends CustomPainter {
+  /// Creates a heatmap painter
   HeatmapPainter({
     required this.data,
     required this.rows,
     required this.timestamps,
-    required this.labels, // Add this parameter
+    required this.labels,
   });
 
+  /// The data for the heatmap, where each row represents a body part
   final List<List<double>> data;
+  /// The number of body parts / rows in the heatmap
   final int rows;
+  /// The timestamps for the x-axis of the heatmap
   final List<int> timestamps;
-  final List<String> labels; // Add this field
+  /// The labels for each body part
+  final List<String> labels; 
 
 @override
 void paint(Canvas canvas, Size size) {
   const spacing = 10.0; // Space between rows
   final cellWidth = size.width / timestamps.length;
-  final availableHeight = size.height - (spacing * (rows - 1)); // Subtract total spacing
+  final availableHeight = size.height - (spacing * (rows - 1));
   final cellHeight = availableHeight / rows;
   final paint = Paint()..style = PaintingStyle.fill;
   final textPainter = TextPainter(
@@ -239,7 +247,7 @@ void paint(Canvas canvas, Size size) {
 
   // Draw heatmap cells
   for (var row = 0; row < rows; row++) {
-    final yOffset = row * (cellHeight + spacing); // Add spacing to y position
+    final yOffset = row * (cellHeight + spacing); 
 
     for (var col = 0; col < timestamps.length; col++) {
       final value = data[row][col];
@@ -256,16 +264,16 @@ void paint(Canvas canvas, Size size) {
       );
     }
 
-    // Draw row labels
-    textPainter.text = TextSpan(
+    // Add body part labels
+    textPainter..text = TextSpan(
       text: labels[row].replaceAll(' ', '\n'),
       style: const TextStyle(
-        color: Colors.black87,
         fontSize: 14,
+        color: Colors.black,
       ),
-    );
-    textPainter.layout(maxWidth: 60);
-    textPainter.paint(
+    )
+    ..layout(maxWidth: 60)
+    ..paint(
       canvas,
       Offset(
         -textPainter.width - 8,
