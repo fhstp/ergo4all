@@ -38,6 +38,24 @@
   "intro_done": "Done",
   "language_header": "Choose language",
   "language_title": "Languages",
+  "menu_delete_data_label": "Delete all my data",
+  "@menu_delete_data_label": {
+    "description": "Label for button to delete all user data"
+  },
+  "menu_home_label": "Home",
+  "@menu_home_label": {
+    "description": "Label for button to navigate to the home screen"
+  },
+  "menu_imprint_label": "Imprint",
+  "menu_language_label": "Change Language",
+  "@menu_language_label": {
+    "description": "Label for button to change the app language"
+  },
+  "menu_privacy_label": "Privacy Manifest",
+  "menu_user_label": "Change User",
+  "@menu_user_label": {
+    "description": "Label for button to switch between user accounts"
+  },
   "permission_label_allow": "Allow",
   "permission_label_cancel": "Cancel",
   "permission_label_denied": "Grant permission in settings",
