@@ -99,5 +99,18 @@
   "workerIntro_privacy_title": "Datenschutz",
   "workerIntro_welcome_header": "Ihre Reise zu besserer Ergonomie beginnt hier.",
   "workerIntro_welcome_text": "Ergonomie bedeutet, eine korrekte Haltung beizubehalten und richtige Techniken anzuwenden, um Aufgaben am Arbeitsplatz sicher auszuführen.",
-  "workerIntro_welcome_title": "Willkommen"
+  "workerIntro_welcome_title": "Willkommen",
+  "results_title": "Darstellungsübersicht",
+  "results_score_low": "Neutral",
+  "results_score_low_short": "Neutral",
+  "results_score_high": "Beansprucht",
+  "results_score_high_short": "Beanspr.",
+  "results_body_upper_arms": "Oberarm",
+  "results_body_lower_arms": "Unterarm",
+  "results_body_trunk": "Rumpf",
+  "results_body_neck": "Nacken",
+  "results_body_legs": "Beine",
+  "results_plot_title": "Analyse der Ergonomiebewertung",
+  "body_part_title": "Analyse",
+  "body_part_timeline_plot_title": "Zeitverlauf"
 }

@@ -1,19 +1,25 @@
+import 'package:common_ui/theme/colors.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BodyPartDetailPage extends StatelessWidget {
   const BodyPartDetailPage({
     required this.bodyPart,
-    required this.color,
     required this.timelineColors,
+    required this.timelineValues,
     super.key,
   });
 
   final String bodyPart;
-  final Color color;
   final List<Color> timelineColors;
+  final List<double> timelineValues;
+  final Color color = cardinal;
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     // Unique text for each body part
     final bodyPartTexts = <String, Map<String, String>>{
       'Upper Arm': {
@@ -55,7 +61,7 @@ class BodyPartDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart Analysis'),
+        title: Text('$bodyPart ${localizations.body_part_title}', style: const TextStyle(color: white)),
         backgroundColor: color,
       ),
       body: SingleChildScrollView(
@@ -92,30 +98,75 @@ class BodyPartDetailPage extends StatelessWidget {
 
             // Timeline Visualization
 
-            const Text(
-              'Timeline Behavior',
+            Text(
+              localizations.body_part_timeline_plot_title,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
 
-            Container(
-              height: 20,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.black12),
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(timelineColors.length, (index) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width /
-                          timelineColors.length, // Proportional width
-
-                      color: timelineColors[index],
-                    );
-                  }),
+            // Timeline Chart
+            SizedBox(
+              height: 132,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: LineChart(
+                  LineChartData(
+                    gridData: FlGridData(
+                      drawVerticalLine: false,
+                      horizontalInterval: 0.5,
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey.withValues(alpha: 0.2),
+                          strokeWidth: 3,
+                        );
+                      },
+                    ),
+                    titlesData: FlTitlesData(
+                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 0.5,
+                          reservedSize: 60,
+                          getTitlesWidget: (value, meta) {
+                            var text = '';
+                            if (value == 0.0) { text = localizations.results_score_low_short; } 
+                            else if (value == 1.0) { text = localizations.results_score_high_short; }
+                            return Text(
+                                text,
+                                style: const TextStyle(fontSize: 14),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(show: false),
+                    minX: 0,
+                    maxX: timelineValues.length.toDouble() - 1,
+                    minY: 0 - 0.01, // Adjusted to fit the grid
+                    maxY: 1 + 0.01, // Adjusted to fit the grid
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: List.generate(
+                          timelineValues.length,
+                          (i) => FlSpot(i.toDouble(), timelineValues[i]),
+                        ),
+                        gradient: LinearGradient(
+                          colors: timelineColors,
+                          stops: List.generate(
+                            timelineColors.length,
+                            (index) => index / (timelineColors.length - 1),
+                          ),
+                        ),
+                        barWidth: 3,
+                        isStrokeCapRound: true,
+                        dotData: const FlDotData(show: false),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

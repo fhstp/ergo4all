@@ -1,10 +1,44 @@
 import 'dart:math';
 
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
+
+@immutable
+/// Manages colors for the RULA score visualization
+class ColorMapper {
+  /// #BFD7EA
+  static const rulaLow = Color(0xFFBFD7EA);
+
+  /// #F9F9C4
+  static const rulaLowMid = Color(0xFFF9F9C4);
+
+  /// #FFE553
+  static const rulaMid =  Color(0xFFFFE553);
+
+  /// #FFA259
+  static const rulaMidHigh = Color(0xFFFFA259);
+
+  /// #FF5A5F
+  static const rulaHigh = Color(0xFFFF5A5F);
+
+  /// Maps normalized RULA score values to colors
+  static Color getColorForValue(double value) {
+    if (value < 0.20) {
+      return rulaLow;
+    } else if (value <= 0.40) {
+      return rulaLowMid;
+    } else if (value <= 0.60) {
+      return rulaMid;
+    } else if (value <= 0.80) {
+      return rulaMidHigh;
+    }
+    return rulaHigh;
+  }
+}
 
 @immutable
 class TimelineEntry {
@@ -24,50 +58,25 @@ class ResultsScreen extends StatefulWidget {
 }
 
 class _ResultsScreenState extends State<ResultsScreen> {
-  final List<String> labels = [
-    'Upper Arm',
-    'Lower Arm',
-    'Trunk',
-    'Neck',
-    'Legs',
-  ];
-
-  final List<Color> colors = [
-    Colors.blue,
-    Colors.green,
-    Colors.orange,
-    Colors.purple,
-    Colors.red,
-  ];
-
   final Random random = Random();
 
   void _navigateToBodyPartPage(
     String bodyPart,
-    Color color,
     List<FlSpot> timelineData,
   ) {
-    // Map the y-values of FlSpot to specific colors
-
-    final List<Color> timelineColors = timelineData.map((spot) {
-      if (spot.y < 0.33) {
-        return Colors.green; // Good
-      } else if (spot.y < 0.66) {
-        return Colors.yellow; // Improve
-      } else {
-        return Colors.red; // Bad
-      }
+    final timelineColors = timelineData.map((spot) {
+      return ColorMapper.getColorForValue(spot.y);
     }).toList();
 
-    // Navigate to BodyPartDetailPage with the updated timelineColors
+    final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
 
     Navigator.push(
       context,
       MaterialPageRoute<void>(
         builder: (context) => BodyPartDetailPage(
           bodyPart: bodyPart,
-          color: color,
           timelineColors: timelineColors,
+          timelineValues: timelineValues,
         ),
       ),
     );
@@ -75,8 +84,17 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final labels = [
+      localizations.results_body_upper_arms,
+      localizations.results_body_lower_arms,
+      localizations.results_body_trunk,
+      localizations.results_body_neck,
+      localizations.results_body_legs,
+    ];
+
     final timeline =
-        ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
+      ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
 
     final firstTimestamp = timeline.first.timestamp;
     final lastTimestamp = timeline.last.timestamp;
@@ -111,216 +129,175 @@ class _ResultsScreenState extends State<ResultsScreen> {
       graphLineFor(calcLegScore, 2),
     ]);
 
+    final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
+    final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Charts Overview')),
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              'Normalized RULA Score Analysis',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      appBar: AppBar(title: Text(localizations.results_title)),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              // 'Normalized RULA Score Analysis',
+              localizations.results_plot_title,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Wrap(
-              spacing: 10,
-              runSpacing: 5,
-              children: List.generate(labels.length, (index) {
-                return GestureDetector(
-                  onTap: () => _navigateToBodyPartPage(
-                    labels[index],
-                    colors[index],
-                    lineChartData[index],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 16,
-                        height: 16,
-                        color: colors[index],
-                      ),
-                      const SizedBox(width: 5),
-                      Text(labels[index], style: const TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width *
-                    0.95, // Adjusted for larger width
 
-                height: MediaQuery.of(context).size.width *
-                    0.7, // Adjusted for a proportional height
+            const SizedBox(height: 40),
 
-                margin: const EdgeInsets.all(16),
-
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-
+            // Heatmap vis of the body parts
+            Center(
+              child: SizedBox(
+                width: heatmapWidth,
+                height: heatmapHeight,
                 child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: ChartBackgroundPainter(minY: 0, maxY: 1),
-                        ),
+                  padding: const EdgeInsets.only(left: 50),
+                  child: GestureDetector(
+                    onTapDown: (details) {
+                      // Find row of the bar that was tapped
+                      final rowHeight = heatmapHeight / labels.length;
+                      final rowIndex = 
+                        (details.localPosition.dy / rowHeight).floor();
+                      if (rowIndex >= 0 && rowIndex < labels.length) {
+                        _navigateToBodyPartPage(
+                          labels[rowIndex],
+                          lineChartData[rowIndex],
+                        );
+                      }
+                    },
+                    child: CustomPaint(
+                      painter: HeatmapPainter(
+                        data: lineChartData.map((spots) {
+                          return spots.map((spot) => spot.y).toList();
+                        }).toList(),
+                        rows: labels.length,
+                        timestamps: 
+                          timeline.map((entry) => entry.timestamp).toList(),
+                        labels: labels,
                       ),
-                      LineChart(
-                        LineChartData(
-                          lineBarsData: [
-                            for (int i = 0; i < lineChartData.length; i++)
-                              LineChartBarData(
-                                spots: lineChartData[i],
-                                color: colors[i],
-                                isStrokeCapRound: true,
-                                dotData: const FlDotData(show: false),
-                              ),
-                          ],
-                          minY: 0,
-                          maxY: 1,
-                          titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 50,
-                                interval: 0.5,
-                                getTitlesWidget: (value, meta) {
-                                  // Explicitly define labels for fixed
-                                  // positions
-                                  if (value == 0) {
-                                    return const Text(
-                                      'Good',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  } else if (value == 0.5) {
-                                    return const Text(
-                                      'Higher Risk',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  } else if (value == 1) {
-                                    return const Text(
-                                      'Bad',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  }
-
-                                  return const SizedBox(); // Hide other labels
-                                },
-
-                                //interval: 1, // Ensure consistent spacing
-                              ),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40,
-                                getTitlesWidget: (value, meta) {
-                                  if (value % 30 == 0) {
-                                    // Assuming 30 data points per second
-                                    final seconds = value / 30;
-
-                                    return Text(
-                                      '${seconds.toStringAsFixed(1)} s',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    );
-                                  }
-
-                                  return const SizedBox();
-                                },
-                              ),
-                            ),
-                            rightTitles: const AxisTitles(),
-                            topTitles: const AxisTitles(),
-                          ),
-                          gridData: const FlGridData(show: false),
-                          borderData: FlBorderData(show: false),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 40),
+
+            // Color legend
+            Center(
+              child: SizedBox(
+                height: 50,
+                width: heatmapWidth,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        gradient: const LinearGradient(
+                          colors: [
+                            ColorMapper.rulaLow,
+                            ColorMapper.rulaLowMid,
+                            ColorMapper.rulaMid,
+                            ColorMapper.rulaMidHigh,
+                            ColorMapper.rulaHigh,
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(localizations.results_score_low, 
+                            style: const TextStyle(fontSize: 14)),
+                        Text(localizations.results_score_high, 
+                            style: const TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class ChartBackgroundPainter extends CustomPainter {
-  ChartBackgroundPainter({required this.minY, required this.maxY});
-  final double minY;
-  final double maxY;
+/// Custom heatmap painter for body parts overview visualization
+class HeatmapPainter extends CustomPainter {
+  /// Creates a heatmap painter
+  HeatmapPainter({
+    required this.data,
+    required this.rows,
+    required this.timestamps,
+    required this.labels,
+  });
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
+  /// The data for the heatmap, where each row represents a body part
+  final List<List<double>> data;
+  /// The number of body parts / rows in the heatmap
+  final int rows;
+  /// The timestamps for the x-axis of the heatmap
+  final List<int> timestamps;
+  /// The labels for each body part
+  final List<String> labels; 
 
-    double mapYToCanvas(double y) {
-      return size.height - ((y - minY) / (maxY - minY) * size.height);
+@override
+void paint(Canvas canvas, Size size) {
+  const spacing = 10.0; // Space between rows
+  final cellWidth = size.width / timestamps.length;
+  final availableHeight = size.height - (spacing * (rows - 1));
+  final cellHeight = availableHeight / rows;
+  final paint = Paint()..style = PaintingStyle.fill;
+  final textPainter = TextPainter(
+    textDirection: TextDirection.ltr,
+    textAlign: TextAlign.right,
+  );
+
+  // Draw heatmap cells
+  for (var row = 0; row < rows; row++) {
+    final yOffset = row * (cellHeight + spacing); 
+
+    for (var col = 0; col < timestamps.length; col++) {
+      final value = data[row][col];
+      paint.color = ColorMapper.getColorForValue(value);
+
+      canvas.drawRect(
+        Rect.fromLTWH(
+          col * cellWidth,
+          yOffset,
+          cellWidth,
+          cellHeight,
+        ),
+        paint,
+      );
     }
 
-    // Green region (Good)
-
-    paint.color = Colors.green.withValues(alpha: 0.2);
-
-    canvas.drawRect(
-      Rect.fromLTRB(0, mapYToCanvas(0.33), size.width, size.height),
-      paint,
-    );
-
-    // Yellow region (Improve)
-
-    paint.color = Colors.yellow.withValues(alpha: 0.2);
-
-    canvas.drawRect(
-      Rect.fromLTRB(0, mapYToCanvas(0.66), size.width, mapYToCanvas(0.33)),
-      paint,
-    );
-
-    // Red region (Bad)
-
-    paint.color = Colors.red.withValues(alpha: 0.2);
-
-    canvas.drawRect(
-      Rect.fromLTRB(0, 0, size.width, mapYToCanvas(0.66)),
-      paint,
+    // Add body part labels
+    textPainter..text = TextSpan(
+      text: labels[row].replaceAll(' ', '\n'),
+      style: const TextStyle(
+        fontSize: 14,
+        color: Colors.black,
+      ),
+    )
+    ..layout(maxWidth: 60)
+    ..paint(
+      canvas,
+      Offset(
+        -textPainter.width - 8,
+        yOffset + (cellHeight - textPainter.height) / 2,
+      ),
     );
   }
+}
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(HeatmapPainter oldDelegate) => false;
+
 }

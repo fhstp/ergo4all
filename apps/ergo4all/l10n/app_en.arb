@@ -188,5 +188,18 @@
   "workerIntro_privacy_title": "Privacy",
   "workerIntro_welcome_header": "Your journey to better ergonomics starts here.",
   "workerIntro_welcome_text": "Ergonomics involves maintaining proper posture and using correct techniques to safely perform tasks in the workplace",
-  "workerIntro_welcome_title": "Welcome"
+  "workerIntro_welcome_title": "Welcome",
+  "results_title": "Charts Overview",
+  "results_score_low": "Neutral",
+  "results_score_low_short": "Neutral",
+  "results_score_high": "Awkward",
+  "results_score_high_short": "Awkward",
+  "results_body_upper_arms": "Upper Arm",
+  "results_body_lower_arms": "Lower Arm",
+  "results_body_trunk": "Trunk",
+  "results_body_neck": "Neck",
+  "results_body_legs": "Legs",
+  "results_plot_title": "Ergonomics Score Analysis",
+  "body_part_title": "Analysis",
+  "body_part_timeline_plot_title": "Timeline Behaviour"
 }
