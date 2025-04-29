@@ -1,15 +1,13 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
-import 'package:ergo4all/common/snack.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
-import 'package:ergo4all/home/pick_video_dialog.dart';
-import 'package:ergo4all/home/session_start_dialog.dart';
-import 'package:ergo4all/home/types.dart';
 import 'package:ergo4all/home/user_welcome_header.dart';
 import 'package:ergo4all/home/viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -26,21 +24,8 @@ class HomeScreen extends HookWidget {
     final uiState = useValueListenable(viewModel.uiState);
     final localizations = AppLocalizations.of(context)!;
 
-    Future<void> showStartSessionDialog() async {
-      final source = await StartSessionDialog.show(context);
-      if (source == null) return;
-
-      if (source == VideoSource.live) {
-        if (!context.mounted) return;
-        await Navigator.pushNamed(context, Routes.scenarioChoice.path);
-        return;
-      }
-
-      final videoFile = await showVideoPickDialog();
-      if (videoFile == null) return;
-
-      if (!context.mounted) return;
-      showNotImplementedSnackbar(context);
+    void startSession() {
+      unawaited(Navigator.pushNamed(context, Routes.scenarioChoice.path));
     }
 
     Future<void> goToTips() async {
@@ -83,7 +68,7 @@ class HomeScreen extends HookWidget {
                 ElevatedButton(
                   key: const Key('start'),
                   style: primaryTextButtonStyle,
-                  onPressed: showStartSessionDialog,
+                  onPressed: startSession,
                   child: Text(localizations.record_label),
                 ),
                 ElevatedButton(
