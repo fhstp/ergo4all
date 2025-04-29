@@ -125,13 +125,6 @@ class BodyPartDetailPage extends StatelessWidget {
                     titlesData: FlTitlesData(
                       rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      // bottomTitles: AxisTitles(
-                      //   axisNameWidget: const Text(
-                      //     'time',
-                      //     style: TextStyle(fontSize: 14),
-                      //   ),
-                      //   sideTitles: SideTitles(showTitles: false),
-                      // ),
                       bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
