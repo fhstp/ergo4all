@@ -9,13 +9,11 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
 import 'package:ergo4all/home/pick_video_dialog.dart';
 import 'package:ergo4all/home/session_start_dialog.dart';
-import 'package:ergo4all/home/show_tutorial_dialog.dart';
 import 'package:ergo4all/home/types.dart';
 import 'package:ergo4all/home/user_welcome_header.dart';
 import 'package:ergo4all/home/viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:user_management/user_management.dart';
 
 /// Top-level widget for home screen.
 class HomeScreen extends HookWidget {
@@ -45,42 +43,9 @@ class HomeScreen extends HookWidget {
       showNotImplementedSnackbar(context);
     }
 
-    Future<void> skipTutorial() async {
-      final userIndex = await loadCurrentUserIndex();
-
-      assert(userIndex != null, 'Should have user.');
-      await updateUser(userIndex!, (it) => it.copyWith(hasSeenTutorial: true));
-    }
-
-    void showTutorial() {
-      showNotImplementedSnackbar(context);
-    }
-
-    Future<void> showTutorialDialog() async {
-      final takeTutorial = await ShowTutorialDialog.show(context);
-      if (takeTutorial == null) return;
-
-      if (takeTutorial) {
-        showTutorial();
-      } else {
-        await skipTutorial();
-      }
-    }
-
     Future<void> goToTips() async {
       await Navigator.of(context).pushNamed(Routes.tips.path);
     }
-
-    useEffect(
-      () {
-        final user = uiState.user.toNullable();
-        if (user == null || user.hasSeenTutorial) return null;
-        WidgetsBinding.instance
-            .addPostFrameCallback((_) => showTutorialDialog());
-        return null;
-      },
-      [uiState.user],
-    );
 
     useEffect(
       () {
