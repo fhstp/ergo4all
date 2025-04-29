@@ -40,7 +40,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   Future<void> _reloadCustomLocale() async {
     final customLocale = await tryGetCustomLocale();
     setState(() {
-      _customLocale = customLocale;
+      // _customLocale = customLocale;
+      _customLocale = const Locale('en');
     });
   }
 

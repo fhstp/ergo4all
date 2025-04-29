@@ -8,12 +8,16 @@ class BodyPartDetailPage extends StatelessWidget {
     required this.bodyPart,
     required this.timelineColors,
     required this.timelineValues,
+    required this.avgTimelineColors,
+    required this.avgTimelineValues,
     super.key,
   });
 
   final String bodyPart;
   final List<Color> timelineColors;
   final List<double> timelineValues;
+  final List<Color> avgTimelineColors;
+  final List<double> avgTimelineValues;
   final Color color = cardinal;
 
   @override
@@ -105,6 +109,13 @@ class BodyPartDetailPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
+            Text(
+              'Raw Ergonomics Score:',
+              style: const TextStyle(fontSize: 16),
+            ),
+
+            const SizedBox(height: 20),
+
             // Timeline Chart
             SizedBox(
               height: 132,
@@ -125,13 +136,6 @@ class BodyPartDetailPage extends StatelessWidget {
                     titlesData: FlTitlesData(
                       rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      // bottomTitles: AxisTitles(
-                      //   axisNameWidget: const Text(
-                      //     'time',
-                      //     style: TextStyle(fontSize: 14),
-                      //   ),
-                      //   sideTitles: SideTitles(showTitles: false),
-                      // ),
                       bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
@@ -166,6 +170,80 @@ class BodyPartDetailPage extends StatelessWidget {
                           stops: List.generate(
                             timelineColors.length,
                             (index) => index / (timelineColors.length - 1),
+                          ),
+                        ),
+                        barWidth: 3,
+                        isStrokeCapRound: true,
+                        dotData: const FlDotData(show: false),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Text(
+              'Averaged Ergonomics Score:',
+              style: const TextStyle(fontSize: 16),
+            ),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              height: 132,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: LineChart(
+                  LineChartData(
+                    gridData: FlGridData(
+                      drawVerticalLine: false,
+                      horizontalInterval: 0.5,
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey.withValues(alpha: 0.2),
+                          strokeWidth: 3,
+                        );
+                      },
+                    ),
+                    titlesData: FlTitlesData(
+                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 0.5,
+                          reservedSize: 60,
+                          getTitlesWidget: (value, meta) {
+                            var text = '';
+                            if (value == 0.0) { text = localizations.results_score_low_short; } 
+                            else if (value == 1.0) { text = localizations.results_score_high_short; }
+                            return Text(
+                                text,
+                                style: const TextStyle(fontSize: 14),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(show: false),
+                    minX: 0,
+                    maxX: avgTimelineValues.length.toDouble() - 1,
+                    minY: 0 - 0.01, // Adjusted to fit the grid
+                    maxY: 1 + 0.01, // Adjusted to fit the grid
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: List.generate(
+                          avgTimelineValues.length,
+                          (i) => FlSpot(i.toDouble(), avgTimelineValues[i]),
+                        ),
+                        gradient: LinearGradient(
+                          colors: avgTimelineColors,
+                          stops: List.generate(
+                            avgTimelineColors.length,
+                            (index) => index / (avgTimelineColors.length - 1),
                           ),
                         ),
                         barWidth: 3,

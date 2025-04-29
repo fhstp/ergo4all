@@ -95,12 +95,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
   void _navigateToBodyPartPage(
     String bodyPart,
     List<FlSpot> timelineData,
+    List<FlSpot> avgTimelineData,
   ) {
     final timelineColors = timelineData.map((spot) {
       return ColorMapper.getColorForValue(spot.y);
     }).toList();
 
     final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
+
+    final avgTimelineColors = avgTimelineData.map((spot) {
+      return ColorMapper.getColorForValue(spot.y);
+    }).toList();
+
+    final avgTimelineValues = avgTimelineData.map((spot) { return spot.y; }).toList();
 
     Navigator.push(
       context,
@@ -109,6 +116,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
           bodyPart: bodyPart,
           timelineColors: timelineColors,
           timelineValues: timelineValues,
+          avgTimelineColors: avgTimelineColors,
+          avgTimelineValues: avgTimelineValues,
         ),
       ),
     );
@@ -155,6 +164,21 @@ class _ResultsScreenState extends State<ResultsScreen> {
       }).toList();
     }
 
+    List<FlSpot> calculateRunningAverage(List<FlSpot> data, int windowSize) {
+      if (data.length < windowSize) return data;
+      
+      final result = <FlSpot>[];
+      
+      for (var i = 0; i <= data.length - windowSize; i++) {
+        final window = data.sublist(i, i + windowSize);
+        final avgY = window.map((spot) => spot.y).reduce((a, b) => a + b) / windowSize;
+        final avgX = window[windowSize ~/ 2].x; // Use middle point's x value
+        result.add(FlSpot(avgX, avgY));
+      }
+      
+      return result;
+    }
+
     final lineChartData = IList([
       graphLineFor(calcUpperArmScore, 6),
       graphLineFor(calcLowerArmScore, 3),
@@ -162,6 +186,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
       graphLineFor(calcNeckScore, 6),
       graphLineFor(calcLegScore, 2),
     ]);
+
+    final avgLineChartData = IList(
+      lineChartData.map((spots) => calculateRunningAverage(spots, 5)).toList()
+    );
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
@@ -197,6 +225,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
                           lineChartData[rowIndex],
+                          avgLineChartData[rowIndex],
                         );
                       }
                     },
