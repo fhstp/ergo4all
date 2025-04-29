@@ -1,3 +1,11 @@
+# [1.47.0](https://github.com/fhstp/ergo4all/compare/v1.46.0...v1.47.0) (2025-04-29)
+
+
+### Features
+
+* **app:** redesign results screens ([dce4647](https://github.com/fhstp/ergo4all/commit/dce46478a530730cbe40d0c245def261689d57b1))
+* **app:** rework live analysis ([073117c](https://github.com/fhstp/ergo4all/commit/073117ce3d1d218f169f52a67de46d0dd4df6875))
+
 # [1.46.0](https://github.com/fhstp/ergo4all/compare/v1.45.0...v1.46.0) (2025-04-24)
 
 
