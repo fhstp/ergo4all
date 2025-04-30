@@ -116,7 +116,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     String bodyPart,
     List<FlSpot> timelineData,
     List<FlSpot> avgTimelineData,
-    List<FlSpot> rangeTimelineData,
+    List<double> modeTimelineValues
   ) {
     final timelineColors = timelineData.map((spot) {
       return ColorMapper.getColorForValue(spot.y, dark: true);
@@ -128,10 +128,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
       return ColorMapper.getColorForValue(spot.y, dark: true);
     }).toList();
 
-    // TODO: collect ys right away instead of returning List<FlSpot>
+    // TODO: collect vs right away instead of returning List<FlSpot>
     final avgTimelineValues = avgTimelineData.map((spot) { return spot.y; }).toList();
 
-    final rangeTimelineValues = rangeTimelineData.map((spot) { return spot.y; }).toList();
+    // final rangeTimelineValues = rangeTimelineData.map((spot) { return spot.y; }).toList();
+
+    // final avgRangeTimelineValues = avgRangeTimelineData.map((spot) { return spot.y; }).toList();
 
     Navigator.push(
       context,
@@ -142,7 +144,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
           timelineValues: timelineValues,
           avgTimelineColors: avgTimelineColors,
           avgTimelineValues: avgTimelineValues,
-          rangeTimelineValues: rangeTimelineValues,
+          modeTimelineValues: modeTimelineValues,
+          // rangeTimelineValues: rangeTimelineValues,
+          // avgRangeTimelineData: avgRangeTimelineValues,
         ),
       ),
     );
@@ -204,23 +208,30 @@ class _ResultsScreenState extends State<ResultsScreen> {
       return result;
     }
 
-    List<FlSpot> calculateRunningRange(List<FlSpot> data, int windowSize) {
-      if (data.length < windowSize) return data;
+    List<double> calculateRunningMode(List<double> data, int windowSize) {
+    if (data.length < windowSize) return data;
+    
+    final result = <double>[];
+    
+    for (var i = 0; i <= data.length - windowSize; i++) {
+      final window = data.sublist(i, i + windowSize);
       
-      final result = <FlSpot>[];
+      // Count occurrences of each y value
+      final counts = window.fold<Map<double, int>>({}, (map, element) {
+        map[element] = (map[element] ?? 0) + 1;
+        return map;
+      });
+
+      // Find value with highest count
+      final modeEntry = counts.entries.reduce(
+        (a, b) => a.value > b.value ? a : b,
+      );
       
-      for (var i = 0; i <= data.length - windowSize; i++) {
-        final window = data.sublist(i, i + windowSize);
-        final yValues = window.map((spot) => spot.y);
-        final maxY = yValues.reduce(max);
-        final minY = yValues.reduce(min);
-        final range = maxY - minY;
-        final avgX = window[windowSize ~/ 2].x; // Use middle point's x value
-        result.add(FlSpot(avgX, range));
-      }
-      
-      return result;
+      result.add(modeEntry.key);
     }
+    
+    return result;
+  }
 
     final lineChartData = IList([
       graphLineFor(calcUpperArmScore, 6),
@@ -230,13 +241,24 @@ class _ResultsScreenState extends State<ResultsScreen> {
       graphLineFor(calcLegScore, 2),
     ]);
 
+
+
     final avgLineChartData = IList(
       lineChartData.map((spots) => calculateRunningAverage(spots, 5)).toList(),
     );
 
-    final rangeTimelineData = IList(
-      lineChartData.map((spots) => calculateRunningRange(spots, 3)).toList(),
+    final modeTimelineValues = IList(
+      lineChartData.map((spots) => calculateRunningMode(spots.map((spot) => spot.y).toList(), 5)).toList(),
     );
+
+    // final rangeTimelineData = IList(
+    //   lineChartData.map((spots) => calculateRunningRange(spots, 3)).toList(),
+    // );
+
+    // final avgRangeTimelineData = IList(
+    //   lineChartData.map((spots) => calculateRunningRange(spots, 3)).toList(),
+    // );
+
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
@@ -273,7 +295,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           labels[rowIndex],
                           lineChartData[rowIndex],
                           avgLineChartData[rowIndex],
-                          rangeTimelineData[rowIndex],
+                          modeTimelineValues[rowIndex],
                         );
                       }
                     },
