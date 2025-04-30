@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
 @immutable
+
 /// Manages colors for the RULA score visualization
 class ColorMapper {
   /// #BFD7EA
@@ -17,7 +18,7 @@ class ColorMapper {
   static const rulaLowMid = Color(0xFFF9F9C4);
 
   /// #FFE553
-  static const rulaMid =  Color(0xFFFFE553);
+  static const rulaMid = Color(0xFFFFE553);
 
   /// #FFA259
   static const rulaMidHigh = Color(0xFFFFA259);
@@ -68,7 +69,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
       return ColorMapper.getColorForValue(spot.y);
     }).toList();
 
-    final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
+    final timelineValues = timelineData.map((spot) {
+      return spot.y;
+    }).toList();
 
     Navigator.push(
       context,
@@ -94,7 +97,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
     ];
 
     final timeline =
-      ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
+        ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
+
+    if (timeline == null || timeline.isEmpty) {
+      Navigator.of(context).pop();
+      return Container();
+    }
 
     final firstTimestamp = timeline.first.timestamp;
     final lastTimestamp = timeline.last.timestamp;
@@ -150,6 +158,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
             // Heatmap vis of the body parts
             Center(
               child: SizedBox(
+                key: const Key('heatmap'),
                 width: heatmapWidth,
                 height: heatmapHeight,
                 child: Padding(
@@ -158,8 +167,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     onTapDown: (details) {
                       // Find row of the bar that was tapped
                       final rowHeight = heatmapHeight / labels.length;
-                      final rowIndex = 
-                        (details.localPosition.dy / rowHeight).floor();
+                      final rowIndex =
+                          (details.localPosition.dy / rowHeight).floor();
                       if (rowIndex >= 0 && rowIndex < labels.length) {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
@@ -173,8 +182,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           return spots.map((spot) => spot.y).toList();
                         }).toList(),
                         rows: labels.length,
-                        timestamps: 
-                          timeline.map((entry) => entry.timestamp).toList(),
+                        timestamps:
+                            timeline.map((entry) => entry.timestamp).toList(),
                         labels: labels,
                       ),
                     ),
@@ -211,9 +220,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(localizations.results_score_low, 
+                        Text(localizations.results_score_low,
                             style: const TextStyle(fontSize: 14)),
-                        Text(localizations.results_score_high, 
+                        Text(localizations.results_score_high,
                             style: const TextStyle(fontSize: 14)),
                       ],
                     ),
@@ -240,64 +249,67 @@ class HeatmapPainter extends CustomPainter {
 
   /// The data for the heatmap, where each row represents a body part
   final List<List<double>> data;
+
   /// The number of body parts / rows in the heatmap
   final int rows;
+
   /// The timestamps for the x-axis of the heatmap
   final List<int> timestamps;
+
   /// The labels for each body part
-  final List<String> labels; 
+  final List<String> labels;
 
-@override
-void paint(Canvas canvas, Size size) {
-  const spacing = 10.0; // Space between rows
-  final cellWidth = size.width / timestamps.length;
-  final availableHeight = size.height - (spacing * (rows - 1));
-  final cellHeight = availableHeight / rows;
-  final paint = Paint()..style = PaintingStyle.fill;
-  final textPainter = TextPainter(
-    textDirection: TextDirection.ltr,
-    textAlign: TextAlign.right,
-  );
-
-  // Draw heatmap cells
-  for (var row = 0; row < rows; row++) {
-    final yOffset = row * (cellHeight + spacing); 
-
-    for (var col = 0; col < timestamps.length; col++) {
-      final value = data[row][col];
-      paint.color = ColorMapper.getColorForValue(value);
-
-      canvas.drawRect(
-        Rect.fromLTWH(
-          col * cellWidth,
-          yOffset,
-          cellWidth,
-          cellHeight,
-        ),
-        paint,
-      );
-    }
-
-    // Add body part labels
-    textPainter..text = TextSpan(
-      text: labels[row].replaceAll(' ', '\n'),
-      style: const TextStyle(
-        fontSize: 14,
-        color: Colors.black,
-      ),
-    )
-    ..layout(maxWidth: 60)
-    ..paint(
-      canvas,
-      Offset(
-        -textPainter.width - 8,
-        yOffset + (cellHeight - textPainter.height) / 2,
-      ),
+  @override
+  void paint(Canvas canvas, Size size) {
+    const spacing = 10.0; // Space between rows
+    final cellWidth = size.width / timestamps.length;
+    final availableHeight = size.height - (spacing * (rows - 1));
+    final cellHeight = availableHeight / rows;
+    final paint = Paint()..style = PaintingStyle.fill;
+    final textPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.right,
     );
+
+    // Draw heatmap cells
+    for (var row = 0; row < rows; row++) {
+      final yOffset = row * (cellHeight + spacing);
+
+      for (var col = 0; col < timestamps.length; col++) {
+        final value = data[row][col];
+        paint.color = ColorMapper.getColorForValue(value);
+
+        canvas.drawRect(
+          Rect.fromLTWH(
+            col * cellWidth,
+            yOffset,
+            cellWidth,
+            cellHeight,
+          ),
+          paint,
+        );
+      }
+
+      // Add body part labels
+      textPainter
+        ..text = TextSpan(
+          text: labels[row].replaceAll(' ', '\n'),
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+          ),
+        )
+        ..layout(maxWidth: 60)
+        ..paint(
+          canvas,
+          Offset(
+            -textPainter.width - 8,
+            yOffset + (cellHeight - textPainter.height) / 2,
+          ),
+        );
+    }
   }
-}
 
   @override
   bool shouldRepaint(HeatmapPainter oldDelegate) => false;
-
 }

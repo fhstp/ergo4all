@@ -52,3 +52,4 @@ macos
 
 # Generated files
 **/lib/**/gen
+apps/ergo4all/integration_test/test_bundle.dart

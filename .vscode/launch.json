@@ -11,6 +11,13 @@
             "program": "./test/"
         },
         {
+            "name": "attach debugger",
+            "request": "attach",
+            "type": "dart",
+            "cwd": "apps/ergo4all/integration_test",
+            "vmServiceUri": "${command:dart.promptForVmService}"
+        },
+        {
             "name": "ergo4all",
             "request": "launch",
             "type": "dart",

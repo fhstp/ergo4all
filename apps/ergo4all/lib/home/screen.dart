@@ -46,6 +46,7 @@ class HomeScreen extends HookWidget {
           RedCircleTopBar(
             titleText: 'HOME',
             menuButton: IconButton(
+              key: const Key('burger'),
               onPressed: () {
                 showHomeMenuDialog(context);
               },

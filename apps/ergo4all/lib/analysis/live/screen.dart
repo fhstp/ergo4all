@@ -69,6 +69,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   );
 
   void goToResults() {
+    if (!context.mounted) return;
     unawaited(
       Navigator.of(context).pushReplacementNamed(
         Routes.results.path,
@@ -89,7 +90,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   }
 
   void onFrame(_Frame frame) {
-    if (analysisMode == _AnalysisMode.none) return;
+    if (analysisMode == _AnalysisMode.none || !mounted) return;
 
     final targetQueueCount = analysisMode == _AnalysisMode.full ? 5 : 1;
     while (frameQueue.length >= targetQueueCount) {
@@ -146,18 +147,27 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final cameraController =
         this.cameraController.expect('Must have a camera controller.');
-
-    await stopPoseDetection();
+    assert(
+      cameraController.value.isInitialized,
+      'Camera controller must be initialized.',
+    );
 
     final outputFile = await cameraController.stopVideoRecording();
     await _saveRecording(outputFile);
 
     await cameraController.dispose();
+    await stopPoseDetection();
 
     goToResults();
+
+    setState(() {
+      this.cameraController = none();
+    });
   }
 
   Future<void> tryStartFullAnalysis() async {
+    if (!mounted) return;
+
     assert(
       analysisMode == _AnalysisMode.poseOnly,
       'Should only switch to full analysis from pose-only analysis.',
@@ -185,6 +195,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   }
 
   Future<void> tryStartPoseOnlyAnalysis() async {
+    if (!mounted) return;
+
     assert(
       analysisMode == _AnalysisMode.none,
       'Should only switch to pose-only analysis from no analysis.',
@@ -208,9 +220,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       case _AnalysisMode.none:
         break;
       case _AnalysisMode.poseOnly:
-        tryStartFullAnalysis();
+        unawaited(tryStartFullAnalysis());
       case _AnalysisMode.full:
-        tryCompleteAnalysis();
+        unawaited(tryCompleteAnalysis());
     }
   }
 
@@ -225,6 +237,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
       tryStartPoseOnlyAnalysis();
     });
+  }
+
+  @override
+  void dispose() {
+    progressAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -266,6 +284,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
               height: mediumSpace,
             ),
             RecordButton(
+              key: const Key('record'),
               isRecording: analysisMode == _AnalysisMode.full,
               onTap: onRecordButtonPressed,
             ),

@@ -45,6 +45,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
               itemBuilder: (ctx, i) {
                 final scenario = Scenario.values[i];
                 return ElevatedButton(
+                  key: Key('scenario_button_${scenario.name}'),
                   style: paleTextButtonStyle,
                   onPressed: () {
                     goToDetailScreen(scenario);

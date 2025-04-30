@@ -3,8 +3,9 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:flutter/material.dart';
 
-Widget _makeOptionButton(String text, void Function() onPressed) {
+Widget _makeOptionButton(String key, String text, void Function() onPressed) {
   return SimpleDialogOption(
+    key: Key(key),
     onPressed: onPressed,
     child: Text(
       text,
@@ -29,7 +30,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         horizontal: 20,
       ),
       children: [
-        _makeOptionButton('Change language', goToLanguage),
+        _makeOptionButton('button-lang', 'Change language', goToLanguage),
       ],
     ),
   );

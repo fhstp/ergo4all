@@ -87,6 +87,7 @@ class ScenarioDetailScreen extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           ElevatedButton(
+            key: const Key('start'),
             style: primaryTextButtonStyle,
             onPressed: goToRecordScreen,
             child: Text(localizations.record_label),
