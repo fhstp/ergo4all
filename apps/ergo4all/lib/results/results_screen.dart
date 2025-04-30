@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:common/pair_utils.dart';
-import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -55,12 +55,32 @@ RulaTimeline createFakeTimeline() {
 @immutable
 /// Manages colors for the RULA score visualization
 class ColorMapper {
+  /// #BFD7EA
+  static const rulaLow = Color(0xFFBFD7EA);
+
+  /// #F9F9C4
+  // Use for better visibility in the heatmap plot
+  static const rulaLowMid = Color(0xFFF9F9C4);
+
+  /// #DEDEA2
+  // Use for better visibility in the line plot
+  static const rulaLowMidDark = Color(0xFFE7E7B2);
+
+  /// #FFE553
+  static const rulaMid = Color(0xFFFFE553);
+
+  /// #FFA259
+  static const rulaMidHigh = Color(0xFFFFA259);
+
+  /// #FF5A5F
+  static const rulaHigh = Color(0xFFFF5A5F);
+
   /// Maps normalized RULA score values to colors
-  static Color getColorForValue(double value) {
+  static Color getColorForValue(double value, {bool dark = false}) {
     if (value < 0.20) {
       return rulaLow;
     } else if (value <= 0.40) {
-      return rulaLowMid;
+      return dark ? rulaLowMidDark : rulaLowMid;
     } else if (value <= 0.60) {
       return rulaMid;
     } else if (value <= 0.80) {
@@ -98,13 +118,13 @@ class _ResultsScreenState extends State<ResultsScreen> {
     List<FlSpot> avgTimelineData,
   ) {
     final timelineColors = timelineData.map((spot) {
-      return ColorMapper.getColorForValue(spot.y);
+      return ColorMapper.getColorForValue(spot.y, dark: true);
     }).toList();
 
     final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
 
     final avgTimelineColors = avgTimelineData.map((spot) {
-      return ColorMapper.getColorForValue(spot.y);
+      return ColorMapper.getColorForValue(spot.y, dark: true);
     }).toList();
 
     final avgTimelineValues = avgTimelineData.map((spot) { return spot.y; }).toList();
@@ -195,7 +215,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
     return Scaffold(
-      appBar: AppBar(title: Text(localizations.results_title)),
+      appBar: AppBar(title: Text(localizations.results_title, style: h3Style)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -204,7 +224,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
             Text(
               // 'Normalized RULA Score Analysis',
               localizations.results_plot_title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: h4Style,
             ),
 
             const SizedBox(height: 40),
@@ -259,11 +279,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         borderRadius: BorderRadius.circular(4),
                         gradient: const LinearGradient(
                           colors: [
-                            rulaLow,
-                            rulaLowMid,
-                            rulaMid,
-                            rulaMidHigh,
-                            rulaHigh,
+                            ColorMapper.rulaLow,
+                            ColorMapper.rulaLowMid,
+                            ColorMapper.rulaMid,
+                            ColorMapper.rulaMidHigh,
+                            ColorMapper.rulaHigh,
                           ],
                         ),
                       ),
@@ -273,9 +293,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(localizations.results_score_low, 
-                            style: const TextStyle(fontSize: 14)),
+                            style: infoText,),
                         Text(localizations.results_score_high, 
-                            style: const TextStyle(fontSize: 14)),
+                            style: infoText,),
                       ],
                     ),
                   ],
@@ -333,16 +353,15 @@ void paint(Canvas canvas, Size size) {
       );
     }
 
+    final infoTextSmall = infoText.copyWith(fontSize: 14);
+
     // Draw row labels
-    textPainter.text = TextSpan(
+    textPainter..text = TextSpan(
       text: labels[row].replaceAll(' ', '\n'),
-      style: const TextStyle(
-        color: Colors.black87,
-        fontSize: 14,
-      ),
-    );
-    textPainter.layout(maxWidth: 60);
-    textPainter.paint(
+      style: infoTextSmall,
+    )
+    ..layout(maxWidth: 60)
+    ..paint(
       canvas,
       Offset(
         -textPainter.width - 8,

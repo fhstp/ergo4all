@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -63,10 +64,13 @@ class BodyPartDetailPage extends StatelessWidget {
           'fix': 'No fix description available.',
         };
 
+    final infoTextSmall = infoText.copyWith(fontSize: 14);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart ${localizations.body_part_title}', style: const TextStyle(color: white)),
-        backgroundColor: color,
+        title:
+            Text('$bodyPart ${localizations.body_part_title}', style: h3Style),
+        backgroundColor: white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -104,14 +108,14 @@ class BodyPartDetailPage extends StatelessWidget {
 
             Text(
               localizations.body_part_timeline_plot_title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 20),
 
             Text(
               'Raw Ergonomics Score:',
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
 
             const SizedBox(height: 20),
@@ -134,9 +138,9 @@ class BodyPartDetailPage extends StatelessWidget {
                       },
                     ),
                     titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      rightTitles: const AxisTitles(),
+                      topTitles: const AxisTitles(),
+                      bottomTitles: const AxisTitles(),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
@@ -144,12 +148,12 @@ class BodyPartDetailPage extends StatelessWidget {
                           reservedSize: 60,
                           getTitlesWidget: (value, meta) {
                             var text = '';
-                            if (value == 0.0) { text = localizations.results_score_low_short; } 
-                            else if (value == 1.0) { text = localizations.results_score_high_short; }
-                            return Text(
-                                text,
-                                style: const TextStyle(fontSize: 14),
-                            );
+                            if (value == 0.0) {
+                              text = localizations.results_score_low_short;
+                            } else if (value == 1.0) {
+                              text = localizations.results_score_high_short;
+                            }
+                            return Text(text, style: infoTextSmall,);
                           },
                         ),
                       ),
@@ -186,7 +190,7 @@ class BodyPartDetailPage extends StatelessWidget {
 
             Text(
               'Averaged Ergonomics Score:',
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
 
             const SizedBox(height: 20),
@@ -208,9 +212,9 @@ class BodyPartDetailPage extends StatelessWidget {
                       },
                     ),
                     titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      rightTitles: const AxisTitles(),
+                      topTitles: const AxisTitles(),
+                      bottomTitles: const AxisTitles(),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
@@ -218,12 +222,12 @@ class BodyPartDetailPage extends StatelessWidget {
                           reservedSize: 60,
                           getTitlesWidget: (value, meta) {
                             var text = '';
-                            if (value == 0.0) { text = localizations.results_score_low_short; } 
-                            else if (value == 1.0) { text = localizations.results_score_high_short; }
-                            return Text(
-                                text,
-                                style: const TextStyle(fontSize: 14),
-                            );
+                            if (value == 0.0) {
+                              text = localizations.results_score_low_short;
+                            } else if (value == 1.0) {
+                              text = localizations.results_score_high_short;
+                            }
+                            return Text(text, style: infoTextSmall,);
                           },
                         ),
                       ),
@@ -260,48 +264,48 @@ class BodyPartDetailPage extends StatelessWidget {
 
             // Issue Section
 
-            const Text(
+            Text(
               'Issue:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 8),
 
             Text(
               texts['issue']!,
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
 
             const SizedBox(height: 20),
 
             // Risk Section
 
-            const Text(
+            Text(
               'Risk:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 8),
 
             Text(
               texts['risk']!,
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
 
             const SizedBox(height: 20),
 
             // Fix Section
 
-            const Text(
+            Text(
               'Fix:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 8),
 
             Text(
               texts['fix']!,
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
           ],
         ),

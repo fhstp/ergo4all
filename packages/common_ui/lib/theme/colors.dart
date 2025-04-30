@@ -37,18 +37,3 @@ const heather = Color(0xFFC4D0DA);
 
 /// #1D1B20
 const balticSea = Color(0xFF1D1B20);
-
-/// #BFD7EA
-const rulaLow = Color(0xFFBFD7EA);
-
-/// #F9F9C4
-const rulaLowMid = Color(0xFFF9F9C4);
-
-/// #FFE553
-const rulaMid = Color(0xFFFFE553);
-
-/// #FFA259
-const rulaMidHigh = Color(0xFFFFA259);
-
-/// #FF5A5F
-const rulaHigh = Color(0xFFFF5A5F);
