@@ -11,6 +11,7 @@ class BodyPartDetailPage extends StatelessWidget {
     required this.timelineValues,
     required this.avgTimelineColors,
     required this.avgTimelineValues,
+    required this.rangeTimelineValues,
     super.key,
   });
 
@@ -19,6 +20,7 @@ class BodyPartDetailPage extends StatelessWidget {
   final List<double> timelineValues;
   final List<Color> avgTimelineColors;
   final List<double> avgTimelineValues;
+  final List<double> rangeTimelineValues;
   final Color color = cardinal;
 
   @override
@@ -250,6 +252,74 @@ class BodyPartDetailPage extends StatelessWidget {
                             (index) => index / (avgTimelineColors.length - 1),
                           ),
                         ),
+                        barWidth: 3,
+                        isStrokeCapRound: true,
+                        dotData: const FlDotData(show: false),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Text(
+              'Dynamics Score:',
+              style: infoText,
+            ),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              height: 132,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: LineChart(
+                  LineChartData(
+                    gridData: FlGridData(
+                      drawVerticalLine: false,
+                      horizontalInterval: 0.5,
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey.withValues(alpha: 0.2),
+                          strokeWidth: 3,
+                        );
+                      },
+                    ),
+                    titlesData: FlTitlesData(
+                      rightTitles: const AxisTitles(),
+                      topTitles: const AxisTitles(),
+                      bottomTitles: const AxisTitles(),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 0.5,
+                          reservedSize: 60,
+                          getTitlesWidget: (value, meta) {
+                            var text = '';
+                            if (value == 0.0) {
+                              text = 'Static';
+                            } else if (value == 1.0) {
+                              text = 'Dynamic';
+                            }
+                            return Text(text, style: infoTextSmall,);
+                          },
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(show: false),
+                    minX: 0,
+                    maxX: rangeTimelineValues.length.toDouble() - 1,
+                    minY: 0 - 0.01, // Adjusted to fit the grid
+                    maxY: 1 + 0.01, // Adjusted to fit the grid
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: List.generate(
+                          rangeTimelineValues.length,
+                          (i) => FlSpot(i.toDouble(), rangeTimelineValues[i]),
+                        ),
+                        color: Colors.grey,
                         barWidth: 3,
                         isStrokeCapRound: true,
                         dotData: const FlDotData(show: false),
