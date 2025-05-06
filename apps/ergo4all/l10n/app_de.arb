@@ -7,7 +7,7 @@
   "common_next": "Weiter",
   "home_title": "Hauptmenü",
   "home_tips_label": "Allgemeine Tipps",
-  "home_welcome": "Willkommen {firstName}",
+  "home_welcome": "Willkommen \n {firstName}",
   "record_label": "Aufnehmen",
   "intro_done": "Fertig",
   "language_header": "Wähle eine Sprache",
