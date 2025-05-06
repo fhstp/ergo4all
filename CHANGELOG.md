@@ -1,3 +1,15 @@
+# [1.48.0](https://github.com/fhstp/ergo4all/compare/v1.47.0...v1.48.0) (2025-05-06)
+
+
+### Features
+
+* **app:** Auf dem Homescreen den Titel lokalisiert, die Reihenfolge der Elemente gemäß  Mockup angepasst bzw. den lokalisierten Text des "Tipp" Buttons umgeändert ([bb1d524](https://github.com/fhstp/ergo4all/commit/bb1d5242a9798906b5db23f3738e7a9cc9d8297e))
+* **app:** disable tutorial ([4a18c10](https://github.com/fhstp/ergo4all/commit/4a18c105242793108a6df1c7ca50ecedabaa2074))
+* **app:** drop session start dialog ([54d2222](https://github.com/fhstp/ergo4all/commit/54d2222756c0ee7ef096053f3dbd8183d190f962))
+* **app:** Kreisradius bei der roten Form am Welcome Screen korrigiert. ([09a5f86](https://github.com/fhstp/ergo4all/commit/09a5f8634a44a768210039f896b713d65263d193)), closes [#67](https://github.com/fhstp/ergo4all/issues/67)
+* **app:** Lokalisierung der Menüpunkte ([eda78de](https://github.com/fhstp/ergo4all/commit/eda78de190b0d7530630c1131c61993c151ddb47)), closes [#75](https://github.com/fhstp/ergo4all/issues/75)
+* **app:** Zusätzliche Menüpunkte hinzugefügt ([c6eddae](https://github.com/fhstp/ergo4all/commit/c6eddae99827f54cfe82b1c1cef1e4df88c1841d)), closes [#76](https://github.com/fhstp/ergo4all/issues/76)
+
 # [1.47.0](https://github.com/fhstp/ergo4all/compare/v1.46.0...v1.47.0) (2025-04-29)
 
 
