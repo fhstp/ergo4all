@@ -31,7 +31,7 @@
   },
   "home_title": "Home",
   "home_welcome": "Welcome {firstName}",
-  "home_tips_label": "Tips",
+  "home_tips_label": "General Tips",
   "@home_tips_label": {
     "description": "Button label for navigation to tips screen"
   },

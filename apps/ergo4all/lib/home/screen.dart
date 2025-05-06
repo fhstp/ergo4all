@@ -44,7 +44,7 @@ class HomeScreen extends HookWidget {
       body: Column(
         children: [
           RedCircleTopBar(
-            titleText: 'HOME',
+            titleText: localizations.home_title,
             menuButton: IconButton(
               key: const Key('burger'),
               onPressed: () {
@@ -58,13 +58,14 @@ class HomeScreen extends HookWidget {
           ScreenContent(
             child: Column(
               children: [
-                uiState.user.match(
-                  () => const ShimmerBox(width: 200, height: 24),
-                  UserWelcomeHeader.new,
-                ),
                 Image.asset(
                   'assets/images/full_body_blue.png',
                   height: 240,
+                ),
+                //const Spacer(flex: 2),
+                uiState.user.match(
+                      () => const ShimmerBox(width: 200, height: 24),
+                  UserWelcomeHeader.new,
                 ),
                 ElevatedButton(
                   key: const Key('start'),
