@@ -54,6 +54,10 @@ class BodyScoreDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double getNormalizedScoreForPart(_BodyPart part) {
+      /* TODO: Currently we display the same score for left and right body part
+       * We should probably calc the score for each body part separately
+       * for presentation.
+       */
       return switch (part) {
         _BodyPart.head => calcNeckScore(sheet).normalize(6),
         _BodyPart.leftHand ||
