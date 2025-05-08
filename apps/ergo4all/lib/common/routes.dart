@@ -3,7 +3,12 @@ enum Routes {
   scenarioChoice('/scenario/choice'),
   scenarioDetail('/scenario/detail'),
   liveAnalysis('/analysis/live'),
-  results('/analysis/results'),
+
+  /// The results overview screen.
+  resultsOverview('/analysis/results'),
+
+  /// The results detail screen.
+  resultsDetail('/analysis/results/detail'),
   preIntro('/intro/pre'),
   expertIntro('/intro/expert'),
   nonExpertIntro('/intro/non-expert'),

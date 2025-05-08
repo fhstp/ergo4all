@@ -10,7 +10,7 @@ import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/results/results_detail_screen.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart' hide State;
@@ -72,7 +72,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     if (!context.mounted) return;
     unawaited(
       Navigator.of(context).pushReplacementNamed(
-        Routes.results.path,
+        Routes.resultsOverview.path,
         arguments: timeline.toIList(),
       ),
     );
