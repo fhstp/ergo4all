@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -15,8 +13,6 @@ class BodyPartDetailPage extends StatelessWidget {
     required this.avgTimelineColors,
     required this.avgTimelineValues,
     required this.medianTimelineValues,
-    // required this.rangeTimelineValues,
-    // required this.avgRangeTimelineValues,
     super.key,
   });
 
@@ -26,28 +22,7 @@ class BodyPartDetailPage extends StatelessWidget {
   final List<Color> avgTimelineColors;
   final List<double> avgTimelineValues;
   final List<double> medianTimelineValues;
-  // final List<double> rangeTimelineValues;
-  // final List<double> avgRangeTimelineValues;
   final Color color = cardinal;
-
-  List<double> calculateDynamicWeightedScore(List<double> data, int windowSize) {
-      if (data.length < windowSize) return data;
-      
-      final result = <double>[];
-      
-      for (var i = 0; i <= data.length - windowSize; i++) {
-        final window = data.sublist(i, i + windowSize);
-        final maxY = window.reduce(max);
-        final minY = window.reduce(min);
-        final range = maxY - minY;
-        // Weight the score based on how dynamic the data is
-        // The more dynamic, the lower the score
-        final score = window[windowSize ~/ 2] * (1 - range);
-        result.add(score);
-      }
-      
-      return result;
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +68,9 @@ class BodyPartDetailPage extends StatelessWidget {
         };
 
     final infoTextSmall = infoText.copyWith(fontSize: 14);
-    final List<double> dynamicWeightedScores = calculateDynamicWeightedScore(
-      avgTimelineValues,
-      5,
-    );
+
+    // Need at least 15s of data to show the static load chart
+    final showStaticLoad = medianTimelineValues.length > 150; 
 
     return Scaffold(
       appBar: AppBar(
@@ -138,18 +112,18 @@ class BodyPartDetailPage extends StatelessWidget {
 
             // Timeline Visualization
 
-            Text(
-              localizations.body_part_timeline_plot_title,
-              style: paragraphHeader,
-            ),
+            // Text(
+            //   localizations.body_part_timeline_plot_title,
+            //   style: paragraphHeader,
+            // ),
 
             // Timeline Chart
 
             const SizedBox(height: 20),
 
             Text(
-              'Averaged Ergonomics Score:',
-              style: infoText,
+              localizations.body_part_score_plot_title,
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 20),
@@ -222,69 +196,72 @@ class BodyPartDetailPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             Text(
-              'Static Load Score:',
-              style: infoText,
+              localizations.body_part_static_plot_title,
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 20),
 
-            SizedBox(
-              height: 132,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: LineChart(
-                  LineChartData(
-                    gridData: FlGridData(
-                      drawVerticalLine: false,
-                      horizontalInterval: 0.5,
-                      getDrawingHorizontalLine: (value) {
-                        return FlLine(
-                          color: Colors.grey.withValues(alpha: 0.2),
-                          strokeWidth: 3,
-                        );
-                      },
-                    ),
-                    titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(),
-                      topTitles: const AxisTitles(),
-                      bottomTitles: const AxisTitles(),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          interval: 0.5,
-                          reservedSize: 60,
-                          getTitlesWidget: (value, meta) {
-                            var text = '';
-                            if (value == 0.0) {
-                              text = 'Low';
-                            } else if (value == 1.0) {
-                              text = 'High';
-                            }
-                            return Text(text, style: infoTextSmall,);
-                          },
+            if (showStaticLoad) SizedBox(
+                height: 132,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: LineChart(
+                    LineChartData(
+                      gridData: FlGridData(
+                        drawVerticalLine: false,
+                        horizontalInterval: 0.5,
+                        getDrawingHorizontalLine: (value) {
+                          return FlLine(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                            strokeWidth: 3,
+                          );
+                        },
+                      ),
+                      titlesData: FlTitlesData(
+                        rightTitles: const AxisTitles(),
+                        topTitles: const AxisTitles(),
+                        bottomTitles: const AxisTitles(),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 0.5,
+                            reservedSize: 60,
+                            getTitlesWidget: (value, meta) {
+                              var text = '';
+                              if (value == 0.0) {
+                                text = 'Low';
+                              } else if (value == 1.0) {
+                                text = 'High';
+                              }
+                              return Text(text, style: infoTextSmall,);
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    borderData: FlBorderData(show: false),
-                    minX: 0,
-                    maxX: medianTimelineValues.length.toDouble() - 1,
-                    minY: 0 - 0.01, // Adjusted to fit the grid
-                    maxY: 1 + 0.01, // Adjusted to fit the grid
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: List.generate(
-                          medianTimelineValues.length,
-                          (i) => FlSpot(i.toDouble(), medianTimelineValues[i]),
+                      borderData: FlBorderData(show: false),
+                      minX: 0,
+                      maxX: medianTimelineValues.length.toDouble() - 1,
+                      minY: 0 - 0.01, // Adjusted to fit the grid
+                      maxY: 1 + 0.01, // Adjusted to fit the grid
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: List.generate(
+                            medianTimelineValues.length,
+                            (i) => FlSpot(i.toDouble(), medianTimelineValues[i]),
+                          ),
+                          color: Colors.grey,
+                          barWidth: 3,
+                          isStrokeCapRound: true,
+                          dotData: const FlDotData(show: false),
                         ),
-                        color: Colors.grey,
-                        barWidth: 3,
-                        isStrokeCapRound: true,
-                        dotData: const FlDotData(show: false),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ) else Text(
+                localizations.body_part_static_plot_condition,
+                style: infoText,
             ),
 
             const SizedBox(height: 20),

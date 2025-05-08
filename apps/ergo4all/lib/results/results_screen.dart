@@ -5,7 +5,6 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
@@ -103,7 +102,7 @@ typedef RulaTimeline = IList<TimelineEntry>;
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
 
-  // static RulaTimeline timeline = createFakeTimeline();
+  static RulaTimeline timeline = createFakeTimeline();
 
   @override
   State<ResultsScreen> createState() => _ResultsScreenState();
@@ -139,8 +138,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
           avgTimelineColors: avgTimelineColors,
           avgTimelineValues: avgTimelineValues,
           medianTimelineValues: medianTimelineValues,
-          // rangeTimelineValues: rangeTimelineValues,
-          // avgRangeTimelineData: avgRangeTimelineValues,
         ),
       ),
     );
@@ -156,35 +153,15 @@ class _ResultsScreenState extends State<ResultsScreen> {
       localizations.results_body_neck,
       localizations.results_body_legs,
     ];
-    // final timeline =
-    //     ResultsScreen.timeline;
-
     final timeline =
-      ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
+        ResultsScreen.timeline;
 
-    final firstTimestamp = timeline.first.timestamp;
-    final lastTimestamp = timeline.last.timestamp;
-    final timeRange = lastTimestamp - firstTimestamp;
-
-    double graphXFor(int timestamp) {
-      return (timestamp - firstTimestamp) / timeRange;
-    }
+    // final timeline =
+    //   ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
 
     double graphYFor(RulaScore score, int maxValue) {
       final value = score.value;
       return (value - 1) / (maxValue - 1);
-    }
-
-    List<FlSpot> graphLineFor(
-      RulaScore Function(RulaSheet) selector,
-      int maxValue,
-    ) {
-      return timeline.map((entry) {
-        final score = selector(entry.sheet);
-        final x = graphXFor(entry.timestamp);
-        final y = graphYFor(score, maxValue);
-        return FlSpot(x, y);
-      }).toList();
     }
 
     List<double> transformData(
@@ -218,10 +195,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
       final result = <double>[];
       
       for (var i = 0; i <= data.length - windowSize; i++) {
-        final window = data.sublist(i, i + windowSize);
+        final window = data.sublist(i, i + windowSize)
         
         // Sort the window values
-        window.sort();
+        ..sort();
         
         // Calculate median
         final median = windowSize.isOdd
@@ -233,14 +210,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
       
       return result;
     }
-
-    // final lineChartData = IList([
-    //   graphLineFor(calcUpperArmScore, 6),
-    //   graphLineFor(calcLowerArmScore, 3),
-    //   graphLineFor(calcTrukScore, 6),
-    //   graphLineFor(calcNeckScore, 6),
-    //   graphLineFor(calcLegScore, 2),
-    // ]);
 
     final lineChartData = IList([
       transformData(calcUpperArmScore, 6),
