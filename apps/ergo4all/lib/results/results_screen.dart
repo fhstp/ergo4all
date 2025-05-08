@@ -209,29 +209,51 @@ class _ResultsScreenState extends State<ResultsScreen> {
     }
 
     List<double> calculateRunningMode(List<double> data, int windowSize) {
-    if (data.length < windowSize) return data;
-    
-    final result = <double>[];
-    
-    for (var i = 0; i <= data.length - windowSize; i++) {
-      final window = data.sublist(i, i + windowSize);
+      if (data.length < windowSize) return data;
       
-      // Count occurrences of each y value
-      final counts = window.fold<Map<double, int>>({}, (map, element) {
-        map[element] = (map[element] ?? 0) + 1;
-        return map;
-      });
+      final result = <double>[];
+      
+      for (var i = 0; i <= data.length - windowSize; i++) {
+        final window = data.sublist(i, i + windowSize);
+        
+        // Count occurrences of each y value
+        final counts = window.fold<Map<double, int>>({}, (map, element) {
+          map[element] = (map[element] ?? 0) + 1;
+          return map;
+        });
 
-      // Find value with highest count
-      final modeEntry = counts.entries.reduce(
-        (a, b) => a.value > b.value ? a : b,
-      );
+        // Find value with highest count
+        final modeEntry = counts.entries.reduce(
+          (a, b) => a.value > b.value ? a : b,
+        );
+        
+        result.add(modeEntry.key);
+      }
       
-      result.add(modeEntry.key);
+      return result;
     }
-    
-    return result;
-  }
+
+    List<double> calculateRunningMedian(List<double> data, int windowSize) {
+      if (data.length < windowSize) return data;
+      
+      final result = <double>[];
+      
+      for (var i = 0; i <= data.length - windowSize; i++) {
+        final window = data.sublist(i, i + windowSize);
+        
+        // Sort the window values
+        window.sort();
+        
+        // Calculate median
+        final median = windowSize.isOdd
+            ? window[windowSize ~/ 2]
+            : (window[(windowSize - 1) ~/ 2] + window[windowSize ~/ 2]) / 2;
+        
+        result.add(median);
+      }
+      
+      return result;
+    }
 
     final lineChartData = IList([
       graphLineFor(calcUpperArmScore, 6),
@@ -242,13 +264,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
     ]);
 
 
-
     final avgLineChartData = IList(
       lineChartData.map((spots) => calculateRunningAverage(spots, 5)).toList(),
     );
 
     final modeTimelineValues = IList(
-      lineChartData.map((spots) => calculateRunningMode(spots.map((spot) => spot.y).toList(), 5)).toList(),
+      lineChartData.map((spots) => calculateRunningMedian(spots.map((spot) => spot.y).toList(), 5)).toList(),
     );
 
     // final rangeTimelineData = IList(
@@ -301,11 +322,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     },
                     child: CustomPaint(
                       painter: HeatmapPainter(
-                        data: lineChartData.map((spots) {
+                        data: avgLineChartData.map((spots) {
                           return spots.map((spot) => spot.y).toList();
                         }).toList(),
                         rows: labels.length,
-                        timestamps: timeline.map((entry) => entry.timestamp).toList(),
                         labels: labels,
                       ),
                     ),
@@ -363,63 +383,61 @@ class HeatmapPainter extends CustomPainter {
   HeatmapPainter({
     required this.data,
     required this.rows,
-    required this.timestamps,
     required this.labels, // Add this parameter
   });
 
   final List<List<double>> data;
   final int rows;
-  final List<int> timestamps;
-  final List<String> labels; // Add this field
+  final List<String> labels; 
 
-@override
-void paint(Canvas canvas, Size size) {
-  const spacing = 10.0; // Space between rows
-  final cellWidth = size.width / timestamps.length;
-  final availableHeight = size.height - (spacing * (rows - 1)); // Subtract total spacing
-  final cellHeight = availableHeight / rows;
-  final paint = Paint()..style = PaintingStyle.fill;
-  final textPainter = TextPainter(
-    textDirection: TextDirection.ltr,
-    textAlign: TextAlign.right,
-  );
+  @override
+  void paint(Canvas canvas, Size size) {
+    const spacing = 10.0; // Space between rows
+    final availableHeight = size.height - (spacing * (rows - 1)); // Subtract total spacing
+    final cellHeight = availableHeight / rows;
+    final paint = Paint()..style = PaintingStyle.fill;
+    final textPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.right,
+    );
 
-  // Draw heatmap cells
-  for (var row = 0; row < rows; row++) {
-    final yOffset = row * (cellHeight + spacing); // Add spacing to y position
+    // Draw heatmap cells
+    for (var row = 0; row < rows; row++) {
+      final yOffset = row * (cellHeight + spacing); // Add spacing to y position
+      final cellWidth = size.width / data[row].length;
 
-    for (var col = 0; col < timestamps.length; col++) {
-      final value = data[row][col];
-      paint.color = ColorMapper.getColorForValue(value);
+      for (var col = 0; col < data[row].length; col++) {
+        final value = data[row][col];
+        paint.color = ColorMapper.getColorForValue(value);
 
-      canvas.drawRect(
-        Rect.fromLTWH(
-          col * cellWidth,
-          yOffset,
-          cellWidth,
-          cellHeight,
+        canvas.drawRect(
+          Rect.fromLTWH(
+            col * cellWidth,
+            yOffset,
+            cellWidth,
+            cellHeight,
+          ),
+          paint,
+        );
+      }
+
+      final infoTextSmall = infoText.copyWith(fontSize: 14);
+
+      // Draw row labels
+      textPainter..text = TextSpan(
+        text: labels[row].replaceAll(' ', '\n'),
+        style: infoTextSmall,
+      )
+      ..layout(maxWidth: 60)
+      ..paint(
+        canvas,
+        Offset(
+          -textPainter.width - 8,
+          yOffset + (cellHeight - textPainter.height) / 2,
         ),
-        paint,
       );
     }
-
-    final infoTextSmall = infoText.copyWith(fontSize: 14);
-
-    // Draw row labels
-    textPainter..text = TextSpan(
-      text: labels[row].replaceAll(' ', '\n'),
-      style: infoTextSmall,
-    )
-    ..layout(maxWidth: 60)
-    ..paint(
-      canvas,
-      Offset(
-        -textPainter.width - 8,
-        yOffset + (cellHeight - textPainter.height) / 2,
-      ),
-    );
   }
-}
 
   @override
   bool shouldRepaint(HeatmapPainter oldDelegate) => false;
