@@ -3,8 +3,8 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BodyPartDetailPage extends StatelessWidget {
-  const BodyPartDetailPage({
+class BodyPartResultsScreen extends StatelessWidget {
+  const BodyPartResultsScreen({
     required this.bodyPart,
     required this.timelineColors,
     required this.timelineValues,
@@ -61,7 +61,8 @@ class BodyPartDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart ${localizations.body_part_title}', style: const TextStyle(color: white)),
+        title: Text('$bodyPart ${localizations.body_part_title}',
+            style: const TextStyle(color: white)),
         backgroundColor: color,
       ),
       body: SingleChildScrollView(
@@ -123,9 +124,12 @@ class BodyPartDetailPage extends StatelessWidget {
                       },
                     ),
                     titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      bottomTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false)),
+                      topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false)),
+                      bottomTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false)),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
@@ -133,11 +137,14 @@ class BodyPartDetailPage extends StatelessWidget {
                           reservedSize: 60,
                           getTitlesWidget: (value, meta) {
                             var text = '';
-                            if (value == 0.0) { text = localizations.results_score_low_short; } 
-                            else if (value == 1.0) { text = localizations.results_score_high_short; }
+                            if (value == 0.0) {
+                              text = localizations.results_score_low_short;
+                            } else if (value == 1.0) {
+                              text = localizations.results_score_high_short;
+                            }
                             return Text(
-                                text,
-                                style: const TextStyle(fontSize: 14),
+                              text,
+                              style: const TextStyle(fontSize: 14),
                             );
                           },
                         ),

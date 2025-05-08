@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/body_part_detail_page.dart';
+import 'package:ergo4all/results/body_part_results_screen.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -51,14 +51,14 @@ class TimelineEntry {
 
 typedef RulaTimeline = IList<TimelineEntry>;
 
-class ResultsScreen extends StatefulWidget {
-  const ResultsScreen({super.key});
+class ResultsDetailScreen extends StatefulWidget {
+  const ResultsDetailScreen({super.key});
 
   @override
-  State<ResultsScreen> createState() => _ResultsScreenState();
+  State<ResultsDetailScreen> createState() => _ResultsDetailScreenState();
 }
 
-class _ResultsScreenState extends State<ResultsScreen> {
+class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
   final Random random = Random();
 
   void _navigateToBodyPartPage(
@@ -76,7 +76,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => BodyPartDetailPage(
+        builder: (context) => BodyPartResultsScreen(
           bodyPart: bodyPart,
           timelineColors: timelineColors,
           timelineValues: timelineValues,
