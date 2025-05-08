@@ -27,15 +27,17 @@ class ResultsOverviewScreen extends StatelessWidget {
     // TODO: This should be an aggregate of all sheets in the timeline
     final displaySheet = timeline.first.sheet;
 
-    return Column(
-      children: [
-        BodyScoreDisplay(displaySheet),
-        ElevatedButton(
-          onPressed: goToDetails,
-          style: secondaryTextButtonStyle,
-          child: const Text('Details'),
-        ),
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          BodyScoreDisplay(displaySheet),
+          ElevatedButton(
+            onPressed: goToDetails,
+            style: secondaryTextButtonStyle,
+            child: const Text('Details'),
+          ),
+        ],
+      ),
     );
   }
 }
