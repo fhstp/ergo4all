@@ -1,55 +1,11 @@
 import 'dart:math';
 
-import 'package:common/pair_utils.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
-
-/// Creates fake RULA sheet with random scores
-RulaSheet _createFakeSheet() {
-  final random = Random();
-
-  var r1 = Degree.makeFrom180(random.nextInt(180).toDouble());
-  var r2 = Degree.makeFrom180(random.nextInt(180).toDouble());
-  var r3 = Degree.makeFrom180(random.nextInt(180).toDouble());
-
-  return RulaSheet(
-    shoulderFlexion: (
-      r1, // Random value 0-180
-      r2
-    ),
-    shoulderAbduction: Pair.of(r1),
-    elbowFlexion: (
-      r2,
-      r3
-    ),
-    wristFlexion: Pair.of(r3),
-    neckFlexion: r1,
-    neckRotation: r2,
-    neckLateralFlexion: r3,
-    hipFlexion: r2,
-    trunkRotation: r1,
-    trunkLateralFlexion: r1,
-    isStandingOnBothLegs: random.nextBool(),
-  );
-}
-
-/// Creates fake timeline data for testing
-RulaTimeline createFakeTimeline() {
-  final now = DateTime.now().millisecondsSinceEpoch;
-  final entries = List.generate(
-    30, // 100 data points
-    (index) => TimelineEntry(
-      timestamp: now + (index * 100), // 100ms intervals
-      sheet: _createFakeSheet(),
-    ),
-  );
-  
-  return IList(entries);
-}
 
 @immutable
 /// Manages colors for the RULA score visualization
@@ -102,8 +58,6 @@ typedef RulaTimeline = IList<TimelineEntry>;
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
 
-  static RulaTimeline timeline = createFakeTimeline();
-
   @override
   State<ResultsScreen> createState() => _ResultsScreenState();
 }
@@ -153,11 +107,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
       localizations.results_body_neck,
       localizations.results_body_legs,
     ];
-    final timeline =
-        ResultsScreen.timeline;
 
-    // final timeline =
-    //   ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
+    final timeline =
+      ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
 
     double graphYFor(RulaScore score, int maxValue) {
       final value = score.value;
@@ -197,10 +149,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
       for (var i = 0; i <= data.length - windowSize; i++) {
         final window = data.sublist(i, i + windowSize)
         
-        // Sort the window values
         ..sort();
         
-        // Calculate median
         final median = windowSize.isOdd
             ? window[windowSize ~/ 2]
             : (window[(windowSize - 1) ~/ 2] + window[windowSize ~/ 2]) / 2;

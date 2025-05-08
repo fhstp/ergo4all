@@ -40,8 +40,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   Future<void> _reloadCustomLocale() async {
     final customLocale = await tryGetCustomLocale();
     setState(() {
-      // _customLocale = customLocale;
-      _customLocale = const Locale('en');
+      _customLocale = customLocale;
     });
   }
 
@@ -83,8 +82,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       theme: ergo4allTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: Routes.results.path,
-      // initialRoute: Routes.welcome.path,
+      initialRoute: Routes.welcome.path,
     );
   }
 }

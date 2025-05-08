@@ -112,13 +112,6 @@ class BodyPartDetailPage extends StatelessWidget {
 
             // Timeline Visualization
 
-            // Text(
-            //   localizations.body_part_timeline_plot_title,
-            //   style: paragraphHeader,
-            // ),
-
-            // Timeline Chart
-
             const SizedBox(height: 20),
 
             Text(
