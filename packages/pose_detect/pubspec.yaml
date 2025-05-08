@@ -1,4 +1,5 @@
 name: pose_detect
+version: 1.48.0
 description: Contains logic for detecting poses in images.
 
 resolution: workspace

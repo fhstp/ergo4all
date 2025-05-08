@@ -1,4 +1,5 @@
 name: common
+version: 1.48.0
 description: Common logic which can be used in all project packages.
 
 environment:

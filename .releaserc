@@ -21,6 +21,12 @@
       }
     ],
     [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "dart ./tools/update_versions.dart"
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         "assets": [

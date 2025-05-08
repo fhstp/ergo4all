@@ -1,4 +1,5 @@
 name: rula
+version: 1.48.0
 description: Calculation logic for rula scoring
 
 environment:
