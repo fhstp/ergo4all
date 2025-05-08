@@ -21,7 +21,8 @@ enum _BodyPart {
 
 enum _PartColor {
   blue,
-  red;
+  red,
+  yellow;
 }
 
 Widget _getBodyPartImage(_BodyPart bodyPart, _PartColor color) {
@@ -73,7 +74,11 @@ class BodyScoreDisplay extends StatelessWidget {
 
     _PartColor getColorForPart(_BodyPart part) {
       final score = getNormalizedScoreForPart(part);
-      return switch (score) { < 0.3 => _PartColor.blue, _ => _PartColor.red };
+      return switch (score) {
+        < 0.3 => _PartColor.blue,
+        < 0.6 => _PartColor.yellow,
+        _ => _PartColor.red
+      };
     }
 
     return Stack(
