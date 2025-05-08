@@ -103,7 +103,7 @@ typedef RulaTimeline = IList<TimelineEntry>;
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
 
-  static RulaTimeline timeline = createFakeTimeline();
+  // static RulaTimeline timeline = createFakeTimeline();
 
   @override
   State<ResultsScreen> createState() => _ResultsScreenState();
@@ -114,26 +114,20 @@ class _ResultsScreenState extends State<ResultsScreen> {
 
   void _navigateToBodyPartPage(
     String bodyPart,
-    List<FlSpot> timelineData,
-    List<FlSpot> avgTimelineData,
-    List<double> modeTimelineValues
+    List<double> timelineData,
+    List<double> avgTimelineValues,
+    List<double> medianTimelineValues,
   ) {
     final timelineColors = timelineData.map((spot) {
-      return ColorMapper.getColorForValue(spot.y, dark: true);
+      return ColorMapper.getColorForValue(spot, dark: true);
     }).toList();
 
-    final timelineValues = timelineData.map((spot) { return spot.y; }).toList();
+    final timelineValues = timelineData.map((spot) { return spot; }).toList();
 
-    final avgTimelineColors = avgTimelineData.map((spot) {
-      return ColorMapper.getColorForValue(spot.y, dark: true);
+    final avgTimelineColors = avgTimelineValues.map((spot) {
+      return ColorMapper.getColorForValue(spot, dark: true);
     }).toList();
 
-    // TODO: collect vs right away instead of returning List<FlSpot>
-    final avgTimelineValues = avgTimelineData.map((spot) { return spot.y; }).toList();
-
-    // final rangeTimelineValues = rangeTimelineData.map((spot) { return spot.y; }).toList();
-
-    // final avgRangeTimelineValues = avgRangeTimelineData.map((spot) { return spot.y; }).toList();
 
     Navigator.push(
       context,
@@ -144,7 +138,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
           timelineValues: timelineValues,
           avgTimelineColors: avgTimelineColors,
           avgTimelineValues: avgTimelineValues,
-          modeTimelineValues: modeTimelineValues,
+          medianTimelineValues: medianTimelineValues,
           // rangeTimelineValues: rangeTimelineValues,
           // avgRangeTimelineData: avgRangeTimelineValues,
         ),
@@ -162,11 +156,11 @@ class _ResultsScreenState extends State<ResultsScreen> {
       localizations.results_body_neck,
       localizations.results_body_legs,
     ];
-    final timeline =
-        ResultsScreen.timeline;
-
     // final timeline =
-    //   ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
+    //     ResultsScreen.timeline;
+
+    final timeline =
+      ModalRoute.of(context)!.settings.arguments! as RulaTimeline;
 
     final firstTimestamp = timeline.first.timestamp;
     final lastTimestamp = timeline.last.timestamp;
@@ -193,41 +187,26 @@ class _ResultsScreenState extends State<ResultsScreen> {
       }).toList();
     }
 
-    List<FlSpot> calculateRunningAverage(List<FlSpot> data, int windowSize) {
-      if (data.length < windowSize) return data;
-      
-      final result = <FlSpot>[];
-      
-      for (var i = 0; i <= data.length - windowSize; i++) {
-        final window = data.sublist(i, i + windowSize);
-        final avgY = window.map((spot) => spot.y).reduce((a, b) => a + b) / windowSize;
-        final avgX = window[windowSize ~/ 2].x; // Use middle point's x value
-        result.add(FlSpot(avgX, avgY));
-      }
-      
-      return result;
+    List<double> transformData(
+      RulaScore Function(RulaSheet) selector,
+      int maxValue,
+    ) {
+      return timeline.map((entry) {
+        final score = selector(entry.sheet);
+        final y = graphYFor(score, maxValue);
+        return y;
+      }).toList();
     }
 
-    List<double> calculateRunningMode(List<double> data, int windowSize) {
+    List<double> calculateRunningAverage(List<double> data, int windowSize) {
       if (data.length < windowSize) return data;
       
       final result = <double>[];
       
       for (var i = 0; i <= data.length - windowSize; i++) {
         final window = data.sublist(i, i + windowSize);
-        
-        // Count occurrences of each y value
-        final counts = window.fold<Map<double, int>>({}, (map, element) {
-          map[element] = (map[element] ?? 0) + 1;
-          return map;
-        });
-
-        // Find value with highest count
-        final modeEntry = counts.entries.reduce(
-          (a, b) => a.value > b.value ? a : b,
-        );
-        
-        result.add(modeEntry.key);
+        final avgY = window.map((spot) => spot).reduce((a, b) => a + b) / windowSize;
+        result.add(avgY);
       }
       
       return result;
@@ -255,31 +234,29 @@ class _ResultsScreenState extends State<ResultsScreen> {
       return result;
     }
 
+    // final lineChartData = IList([
+    //   graphLineFor(calcUpperArmScore, 6),
+    //   graphLineFor(calcLowerArmScore, 3),
+    //   graphLineFor(calcTrukScore, 6),
+    //   graphLineFor(calcNeckScore, 6),
+    //   graphLineFor(calcLegScore, 2),
+    // ]);
+
     final lineChartData = IList([
-      graphLineFor(calcUpperArmScore, 6),
-      graphLineFor(calcLowerArmScore, 3),
-      graphLineFor(calcTrukScore, 6),
-      graphLineFor(calcNeckScore, 6),
-      graphLineFor(calcLegScore, 2),
+      transformData(calcUpperArmScore, 6),
+      transformData(calcLowerArmScore, 3),
+      transformData(calcTrukScore, 6),
+      transformData(calcNeckScore, 6),
+      transformData(calcLegScore, 2),
     ]);
 
-
     final avgLineChartData = IList(
-      lineChartData.map((spots) => calculateRunningAverage(spots, 5)).toList(),
+      lineChartData.map((spots) => calculateRunningAverage(spots, 20)).toList(),
     );
 
-    final modeTimelineValues = IList(
-      lineChartData.map((spots) => calculateRunningMedian(spots.map((spot) => spot.y).toList(), 3)).toList(),
+    final medianTimelineValues = IList(
+      lineChartData.map((spots) => calculateRunningMedian(spots, 60)).toList(),
     );
-
-    // final rangeTimelineData = IList(
-    //   lineChartData.map((spots) => calculateRunningRange(spots, 3)).toList(),
-    // );
-
-    // final avgRangeTimelineData = IList(
-    //   lineChartData.map((spots) => calculateRunningRange(spots, 3)).toList(),
-    // );
-
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
@@ -316,15 +293,13 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           labels[rowIndex],
                           lineChartData[rowIndex],
                           avgLineChartData[rowIndex],
-                          modeTimelineValues[rowIndex],
+                          medianTimelineValues[rowIndex],
                         );
                       }
                     },
                     child: CustomPaint(
                       painter: HeatmapPainter(
-                        data: avgLineChartData.map((spots) {
-                          return spots.map((spot) => spot.y).toList();
-                        }).toList(),
+                        data: avgLineChartData,
                         rows: labels.length,
                         labels: labels,
                       ),
@@ -386,7 +361,7 @@ class HeatmapPainter extends CustomPainter {
     required this.labels, // Add this parameter
   });
 
-  final List<List<double>> data;
+  final IList<List<double>> data;
   final int rows;
   final List<String> labels; 
 

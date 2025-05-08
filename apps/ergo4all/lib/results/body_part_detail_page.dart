@@ -6,6 +6,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+
 class BodyPartDetailPage extends StatelessWidget {
   const BodyPartDetailPage({
     required this.bodyPart,
@@ -13,7 +14,7 @@ class BodyPartDetailPage extends StatelessWidget {
     required this.timelineValues,
     required this.avgTimelineColors,
     required this.avgTimelineValues,
-    required this.modeTimelineValues,
+    required this.medianTimelineValues,
     // required this.rangeTimelineValues,
     // required this.avgRangeTimelineValues,
     super.key,
@@ -24,7 +25,7 @@ class BodyPartDetailPage extends StatelessWidget {
   final List<double> timelineValues;
   final List<Color> avgTimelineColors;
   final List<double> avgTimelineValues;
-  final List<double> modeTimelineValues;
+  final List<double> medianTimelineValues;
   // final List<double> rangeTimelineValues;
   // final List<double> avgRangeTimelineValues;
   final Color color = cardinal;
@@ -142,80 +143,7 @@ class BodyPartDetailPage extends StatelessWidget {
               style: paragraphHeader,
             ),
 
-            const SizedBox(height: 20),
-
-            Text(
-              'Raw Ergonomics Score:',
-              style: infoText,
-            ),
-
-            const SizedBox(height: 20),
-
             // Timeline Chart
-            SizedBox(
-              height: 132,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: LineChart(
-                  LineChartData(
-                    gridData: FlGridData(
-                      drawVerticalLine: false,
-                      horizontalInterval: 0.5,
-                      getDrawingHorizontalLine: (value) {
-                        return FlLine(
-                          color: Colors.grey.withValues(alpha: 0.2),
-                          strokeWidth: 3,
-                        );
-                      },
-                    ),
-                    titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(),
-                      topTitles: const AxisTitles(),
-                      bottomTitles: const AxisTitles(),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          interval: 0.5,
-                          reservedSize: 60,
-                          getTitlesWidget: (value, meta) {
-                            var text = '';
-                            if (value == 0.0) {
-                              text = localizations.results_score_low_short;
-                            } else if (value == 1.0) {
-                              text = localizations.results_score_high_short;
-                            }
-                            return Text(text, style: infoTextSmall,);
-                          },
-                        ),
-                      ),
-                    ),
-                    borderData: FlBorderData(show: false),
-                    minX: 0,
-                    maxX: timelineValues.length.toDouble() - 1,
-                    minY: 0 - 0.01, // Adjusted to fit the grid
-                    maxY: 1 + 0.01, // Adjusted to fit the grid
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: List.generate(
-                          timelineValues.length,
-                          (i) => FlSpot(i.toDouble(), timelineValues[i]),
-                        ),
-                        gradient: LinearGradient(
-                          colors: timelineColors,
-                          stops: List.generate(
-                            timelineColors.length,
-                            (index) => index / (timelineColors.length - 1),
-                          ),
-                        ),
-                        barWidth: 3,
-                        isStrokeCapRound: true,
-                        dotData: const FlDotData(show: false),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
 
             const SizedBox(height: 20),
 
@@ -339,82 +267,14 @@ class BodyPartDetailPage extends StatelessWidget {
                     ),
                     borderData: FlBorderData(show: false),
                     minX: 0,
-                    maxX: modeTimelineValues.length.toDouble() - 1,
+                    maxX: medianTimelineValues.length.toDouble() - 1,
                     minY: 0 - 0.01, // Adjusted to fit the grid
                     maxY: 1 + 0.01, // Adjusted to fit the grid
                     lineBarsData: [
                       LineChartBarData(
                         spots: List.generate(
-                          modeTimelineValues.length,
-                          (i) => FlSpot(i.toDouble(), modeTimelineValues[i]),
-                        ),
-                        color: Colors.grey,
-                        barWidth: 3,
-                        isStrokeCapRound: true,
-                        dotData: const FlDotData(show: false),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            Text(
-              'Dynamically Weighted Load Score:',
-              style: infoText,
-            ),
-
-            const SizedBox(height: 20),
-
-            SizedBox(
-              height: 132,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: LineChart(
-                  LineChartData(
-                    gridData: FlGridData(
-                      drawVerticalLine: false,
-                      horizontalInterval: 0.5,
-                      getDrawingHorizontalLine: (value) {
-                        return FlLine(
-                          color: Colors.grey.withValues(alpha: 0.2),
-                          strokeWidth: 3,
-                        );
-                      },
-                    ),
-                    titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(),
-                      topTitles: const AxisTitles(),
-                      bottomTitles: const AxisTitles(),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          interval: 0.5,
-                          reservedSize: 60,
-                          getTitlesWidget: (value, meta) {
-                            var text = '';
-                            if (value == 0.0) {
-                              text = 'Awk.';
-                            } else if (value == 1.0) {
-                              text = 'Neutral';
-                            }
-                            return Text(text, style: infoTextSmall,);
-                          },
-                        ),
-                      ),
-                    ),
-                    borderData: FlBorderData(show: false),
-                    minX: 0,
-                    maxX: dynamicWeightedScores.length.toDouble() - 1,
-                    minY: 0 - 0.01, // Adjusted to fit the grid
-                    maxY: 1 + 0.01, // Adjusted to fit the grid
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: List.generate(
-                          dynamicWeightedScores.length,
-                          (i) => FlSpot(i.toDouble(), dynamicWeightedScores[i]),
+                          medianTimelineValues.length,
+                          (i) => FlSpot(i.toDouble(), medianTimelineValues[i]),
                         ),
                         color: Colors.grey,
                         barWidth: 3,
