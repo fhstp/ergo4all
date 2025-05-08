@@ -140,11 +140,8 @@ RulaScore calcShoulderFlexionScore(RulaSheet sheet) => sheet.shoulderFlexion
 /// Calculates the shoulder abduction score based on the given [sheet].
 /// Produces a value in range [0; 1].
 int calcShoulderAbductionBonus(RulaSheet sheet) => sheet.shoulderAbduction
-    .pipe(
-      Pair.map(
-        (angle) => angle.value > _minBadShoulderAbductionAngle ? 1 : 0,
-      ),
-    )
+    .pipe(Pair.map((angle) => angle.value > _minBadShoulderAbductionAngle))
+    .pipe(Pair.map((isBad) => isBad ? 1 : 0))
     .pipe(Pair.reduce(max));
 
 /// Calculates the upper arm score for the given [sheet]. Produces a
