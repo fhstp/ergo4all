@@ -102,11 +102,6 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       return (timestamp - firstTimestamp) / timeRange;
     }
 
-    double graphYFor(RulaScore score, int maxValue) {
-      final value = score.value;
-      return (value - 1) / (maxValue - 1);
-    }
-
     List<FlSpot> graphLineFor(
       RulaScore Function(RulaSheet) selector,
       int maxValue,
@@ -114,7 +109,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       return timeline.map((entry) {
         final score = selector(entry.sheet);
         final x = graphXFor(entry.timestamp);
-        final y = graphYFor(score, maxValue);
+        final y = score.normalize(maxValue);
         return FlSpot(x, y);
       }).toList();
     }
