@@ -18,9 +18,27 @@ enum _BodyPart {
   final String fileName;
 }
 
-Widget _getBodyPartImage(_BodyPart bodyPart) {
-  return Image.asset('assets/images/puppet/${bodyPart.fileName}_blue.png');
+enum _PartColor {
+  blue;
 }
+
+Widget _getBodyPartImage(_BodyPart bodyPart, _PartColor color) {
+  return Image.asset(
+      'assets/images/puppet/${bodyPart.fileName}_${color.name}.png');
+}
+
+const _bodyPartsInDisplayOrder = [
+  _BodyPart.head,
+  _BodyPart.leftLeg,
+  _BodyPart.leftUpperArm,
+  _BodyPart.leftLowerArm,
+  _BodyPart.leftHand,
+  _BodyPart.upperBody,
+  _BodyPart.rightLeg,
+  _BodyPart.rightUpperArm,
+  _BodyPart.rightLowerArm,
+  _BodyPart.rightHand,
+];
 
 /// Displays the aggregate score of a user using a puppet.
 class BodyScoreDisplay extends StatelessWidget {
@@ -29,19 +47,15 @@ class BodyScoreDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _PartColor getColorForPart(_BodyPart part) {
+      return _PartColor.blue;
+    }
+
     return Stack(
-      children: [
-        _getBodyPartImage(_BodyPart.head),
-        _getBodyPartImage(_BodyPart.leftLeg),
-        _getBodyPartImage(_BodyPart.leftUpperArm),
-        _getBodyPartImage(_BodyPart.leftLowerArm),
-        _getBodyPartImage(_BodyPart.leftHand),
-        _getBodyPartImage(_BodyPart.upperBody),
-        _getBodyPartImage(_BodyPart.rightLeg),
-        _getBodyPartImage(_BodyPart.rightUpperArm),
-        _getBodyPartImage(_BodyPart.rightLowerArm),
-        _getBodyPartImage(_BodyPart.rightHand),
-      ],
+      children: _bodyPartsInDisplayOrder.map((part) {
+        final color = getColorForPart(part);
+        return _getBodyPartImage(part, color);
+      }).toList(),
     );
   }
 }
