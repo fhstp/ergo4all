@@ -4,9 +4,9 @@ import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:rula/rula.dart';
 
-void Function(int) _assertInRange(int min, int max, String message) {
+void Function(int) _assertInRange(int min, int max, [String? message]) {
   return (i) {
-    assert(i >= min && i <= max, message);
+    assert(i >= min && i <= max, message ?? '$i is not in range [$min, $max].');
   };
 }
 
@@ -150,7 +150,7 @@ int calcUpperArmScore(RulaSheet sheet) {
   final shoulderAbductionBonus = calcShoulderAbductionBonus(sheet);
   final upperArmScore = shoulderFlexionScore + shoulderAbductionBonus;
 
-  _assertInRange(1, 6, 'Score must be in range [1, 6]')(upperArmScore);
+  _assertInRange(1, 6)(upperArmScore);
 
   return upperArmScore;
 }
@@ -181,7 +181,7 @@ int calcLowerArmScore(RulaSheet sheet) {
   //  In theory you could get +1 here for lateral flexion but we don't track
   //  that. I still say the range is [1; 3].
 
-  _assertInRange(1, 3, 'Score must be in range [1, 3]')(lowerArmScore);
+  _assertInRange(1, 3)(lowerArmScore);
   return lowerArmScore;
 }
 
@@ -194,7 +194,7 @@ int calcNeckFlexionScore(RulaSheet sheet) {
     < 20 => 2,
     _ => 3
   };
-  _assertInRange(1, 4, 'Score must be in range [1, 4]')(score);
+  _assertInRange(1, 4)(score);
   return score;
 }
 
@@ -220,7 +220,7 @@ int calcNeckScore(RulaSheet sheet) {
   final neckLateralFlexionBonus = calcLateralNeckFlexionBonus(sheet);
   final neckScore =
       neckFlexionScore + neckRotationBonus + neckLateralFlexionBonus;
-  _assertInRange(1, 6, 'Score must be in range [1, 6]')(neckScore);
+  _assertInRange(1, 6)(neckScore);
   return neckScore;
 }
 
@@ -258,7 +258,7 @@ int calcTrukScore(RulaSheet sheet) {
   final trunkLateralFlexionBonus = calcTrunkLateralFlexionBonus(sheet);
   final trunkScore =
       hipFlexionScore + trunkTwistBonus + trunkLateralFlexionBonus;
-  _assertInRange(1, 6, 'Score must be in range [1, 6]')(trunkScore);
+  _assertInRange(1, 6)(trunkScore);
   return trunkScore;
 }
 
@@ -267,7 +267,7 @@ int calcTrukScore(RulaSheet sheet) {
 int calcLegScore(RulaSheet sheet) {
   final oneLeggedBonus = sheet.isStandingOnBothLegs ? 1 : 2;
   final legScore = oneLeggedBonus;
-  _assertInRange(1, 2, 'Score must be in range [1, 2]')(legScore);
+  _assertInRange(1, 2)(legScore);
   return legScore;
 }
 
@@ -280,7 +280,7 @@ int calcWristScore(RulaSheet sheet) => sheet.wristFlexion
       ),
     )
     .pipe(Pair.reduce(max))
-    .tap(_assertInRange(1, 4, 'Score must be in range [1, 4]'));
+    .tap(_assertInRange(1, 4));
 
 /// Does the full Rula calculation based on the given [sheet] and produces a
 /// [int] in the range [0; 7].
@@ -292,7 +292,7 @@ int calcFullScore(RulaSheet sheet) {
 
   final armHandScore =
       _tableA[upperArmScore - 1][lowerArmScore - 1][wristScore - 1];
-  _assertInRange(1, 9, 'Score must be in range [1, 9]')(armHandScore);
+  _assertInRange(1, 9)(armHandScore);
 
   final neckScore = calcNeckScore(sheet);
   final trunkScore = calcTrukScore(sheet);
@@ -300,11 +300,11 @@ int calcFullScore(RulaSheet sheet) {
 
   final neckTrunkLegScore =
       _tableB[neckScore - 1][trunkScore - 1][legScore - 1];
-  _assertInRange(1, 9, 'Score must be in range [1, 9]')(neckTrunkLegScore);
+  _assertInRange(1, 9)(neckTrunkLegScore);
 
   final finalScore =
       _tableC[min(armHandScore - 1, 7)][min(neckTrunkLegScore - 1, 6)];
-  _assertInRange(1, 7, 'Score must be in range [1, 9]')(finalScore);
+  _assertInRange(1, 7)(finalScore);
 
   return finalScore;
 }
