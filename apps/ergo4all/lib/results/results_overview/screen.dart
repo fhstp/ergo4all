@@ -24,9 +24,12 @@ class ResultsOverviewScreen extends StatelessWidget {
           .pushNamed(Routes.resultsDetail.path, arguments: timeline);
     }
 
+    // TODO: This should be an aggregate of all sheets in the timeline
+    final displaySheet = timeline.first.sheet;
+
     return Column(
       children: [
-        const BodyScoreDisplay(),
+        BodyScoreDisplay(displaySheet),
         ElevatedButton(
           onPressed: goToDetails,
           style: secondaryTextButtonStyle,

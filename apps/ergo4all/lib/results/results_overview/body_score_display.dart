@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rula/rula.dart';
 
 enum _BodyPart {
   head('head'),
@@ -19,7 +20,8 @@ enum _BodyPart {
 }
 
 enum _PartColor {
-  blue;
+  blue,
+  red;
 }
 
 Widget _getBodyPartImage(_BodyPart bodyPart, _PartColor color) {
@@ -43,12 +45,35 @@ const _bodyPartsInDisplayOrder = [
 /// Displays the aggregate score of a user using a puppet.
 class BodyScoreDisplay extends StatelessWidget {
   ///
-  const BodyScoreDisplay({super.key});
+  const BodyScoreDisplay(this.sheet, {super.key});
+
+  /// The sheet to display.
+  final RulaSheet sheet;
 
   @override
   Widget build(BuildContext context) {
+    double getNormalizedScoreForPart(_BodyPart part) {
+      return switch (part) {
+        _BodyPart.head => calcNeckScore(sheet).normalize(6),
+        _BodyPart.leftHand ||
+        _BodyPart.rightHand =>
+          calcWristScore(sheet).normalize(4),
+        _BodyPart.leftLeg ||
+        _BodyPart.rightLeg =>
+          calcLegScore(sheet).normalize(2),
+        _BodyPart.rightUpperArm ||
+        _BodyPart.leftUpperArm =>
+          calcUpperArmScore(sheet).normalize(6),
+        _BodyPart.leftLowerArm ||
+        _BodyPart.rightLowerArm =>
+          calcLowerArmScore(sheet).normalize(3),
+        _BodyPart.upperBody => calcTrukScore(sheet).normalize(6),
+      };
+    }
+
     _PartColor getColorForPart(_BodyPart part) {
-      return _PartColor.blue;
+      final score = getNormalizedScoreForPart(part);
+      return switch (score) { < 0.3 => _PartColor.blue, _ => _PartColor.red };
     }
 
     return Stack(
