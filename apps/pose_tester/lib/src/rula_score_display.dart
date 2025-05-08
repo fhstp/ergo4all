@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 /// Displays a rula score in a small chip.
-class RulaScoreDisplay extends StatelessWidget {
+class ScoreDisplay extends StatelessWidget {
   /// Creates an instance of the widget.
-  const RulaScoreDisplay({
+  const ScoreDisplay({
     required this.label,
     required this.score,
     required this.maxScore,

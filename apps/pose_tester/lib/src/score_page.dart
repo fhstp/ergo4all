@@ -58,102 +58,102 @@ class _ScorePageState extends State<ScorePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Full',
-                score: calcFullRulaScore(sheet).value,
+                score: calcFullScore(sheet),
                 maxScore: 7,
                 level: 0,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Upper arm',
-                score: calcUpperArmScore(sheet).value,
+                score: calcUpperArmScore(sheet),
                 maxScore: 6,
                 level: 1,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Shoulder flexion',
-                score: calcShoulderFlexionScore(sheet).value,
+                score: calcShoulderFlexionScore(sheet),
                 maxScore: 4,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Shoulder abduction',
                 score: calcShoulderAbductionBonus(sheet),
                 maxScore: 1,
                 minScore: 0,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Lower arm',
-                score: calcLowerArmScore(sheet).value,
+                score: calcLowerArmScore(sheet),
                 maxScore: 3,
                 level: 1,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Elbow flexion',
-                score: calcElbowFlexionScore(sheet).value,
+                score: calcElbowFlexionScore(sheet),
                 maxScore: 2,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Wrist flexion',
-                score: calcWristScore(sheet).value,
+                score: calcWristScore(sheet),
                 maxScore: 4,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Neck',
-                score: calcNeckScore(sheet).value,
+                score: calcNeckScore(sheet),
                 maxScore: 6,
                 level: 1,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Flexion',
-                score: calcNeckFlexionScore(sheet).value,
+                score: calcNeckFlexionScore(sheet),
                 maxScore: 4,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Lateral flexion',
                 score: calcLateralNeckFlexionBonus(sheet),
                 minScore: 0,
                 maxScore: 1,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Twist',
                 score: calcNeckTwistBonus(sheet),
                 minScore: 0,
                 maxScore: 1,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Trunk',
-                score: calcTrukScore(sheet).value,
+                score: calcTrukScore(sheet),
                 maxScore: 6,
                 level: 1,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Hip flexion',
-                score: calcHipFlexionScore(sheet).value,
+                score: calcHipFlexionScore(sheet),
                 maxScore: 4,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Twist',
                 score: calcTrunkTwistBonus(sheet),
                 maxScore: 1,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Lateral flexion',
                 score: calcTrunkLateralFlexionBonus(sheet),
                 maxScore: 1,
                 level: 2,
               ),
-              RulaScoreDisplay(
+              ScoreDisplay(
                 label: 'Leg',
-                score: calcLegScore(sheet).value,
+                score: calcLegScore(sheet),
                 maxScore: 2,
                 level: 1,
               ),

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_results_screen.dart';
 import 'package:ergo4all/results/common.dart';
@@ -103,13 +104,13 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     List<FlSpot> graphLineFor(
-      RulaScore Function(RulaSheet) selector,
+      int Function(RulaSheet) selector,
       int maxValue,
     ) {
       return timeline.map((entry) {
         final score = selector(entry.sheet);
         final x = graphXFor(entry.timestamp);
-        final y = score.normalize(maxValue);
+        final y = normalizeScore(score, maxValue);
         return FlSpot(x, y);
       }).toList();
     }

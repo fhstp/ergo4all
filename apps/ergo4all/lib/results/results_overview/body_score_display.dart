@@ -1,3 +1,4 @@
+import 'package:ergo4all/common/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
@@ -59,20 +60,20 @@ class BodyScoreDisplay extends StatelessWidget {
        * for presentation.
        */
       return switch (part) {
-        _BodyPart.head => calcNeckScore(sheet).normalize(6),
+        _BodyPart.head => normalizeScore(calcNeckScore(sheet), 6),
         _BodyPart.leftHand ||
         _BodyPart.rightHand =>
-          calcWristScore(sheet).normalize(4),
+          normalizeScore(calcWristScore(sheet), 4),
         _BodyPart.leftLeg ||
         _BodyPart.rightLeg =>
-          calcLegScore(sheet).normalize(2),
+          normalizeScore(calcLegScore(sheet), 2),
         _BodyPart.rightUpperArm ||
         _BodyPart.leftUpperArm =>
-          calcUpperArmScore(sheet).normalize(6),
+          normalizeScore(calcUpperArmScore(sheet), 6),
         _BodyPart.leftLowerArm ||
         _BodyPart.rightLowerArm =>
-          calcLowerArmScore(sheet).normalize(3),
-        _BodyPart.upperBody => calcTrukScore(sheet).normalize(6),
+          normalizeScore(calcLowerArmScore(sheet), 3),
+        _BodyPart.upperBody => normalizeScore(calcTrukScore(sheet), 6),
       };
     }
 
