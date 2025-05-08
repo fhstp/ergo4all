@@ -1,3 +1,5 @@
+import 'package:common/func_ext.dart';
+import 'package:common/pair_utils.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_analysis/pose_analysis.dart';
@@ -66,38 +68,39 @@ class _ScorePageState extends State<ScorePage> {
               ),
               ScoreDisplay(
                 label: 'Upper arm',
-                score: calcUpperArmScore(sheet),
+                score: calcUpperArmScore(sheet).pipe(Pair.reduce(worse)),
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Shoulder flexion',
-                score: calcShoulderFlexionScore(sheet),
+                score: calcShoulderFlexionScore(sheet).pipe(Pair.reduce(worse)),
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Shoulder abduction',
-                score: calcShoulderAbductionBonus(sheet),
+                score:
+                    calcShoulderAbductionBonus(sheet).pipe(Pair.reduce(worse)),
                 maxScore: 1,
                 minScore: 0,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Lower arm',
-                score: calcLowerArmScore(sheet),
+                score: calcLowerArmScore(sheet).pipe(Pair.reduce(worse)),
                 maxScore: 3,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Elbow flexion',
-                score: calcElbowFlexionScore(sheet),
+                score: calcElbowFlexionScore(sheet).pipe(Pair.reduce(worse)),
                 maxScore: 2,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Wrist flexion',
-                score: calcWristScore(sheet),
+                score: calcWristScore(sheet).pipe(Pair.reduce(worse)),
                 maxScore: 4,
                 level: 2,
               ),

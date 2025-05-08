@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:common/func_ext.dart';
+import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_results_screen.dart';
@@ -116,8 +118,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     final lineChartData = IList([
-      graphLineFor(calcUpperArmScore, 6),
-      graphLineFor(calcLowerArmScore, 3),
+      graphLineFor(calcUpperArmScore.compose(Pair.reduce(worse)), 6),
+      graphLineFor(calcLowerArmScore.compose(Pair.reduce(worse)), 3),
       graphLineFor(calcTrukScore, 6),
       graphLineFor(calcNeckScore, 6),
       graphLineFor(calcLegScore, 2),

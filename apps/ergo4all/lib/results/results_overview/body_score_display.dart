@@ -55,24 +55,23 @@ class BodyScoreDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double getNormalizedScoreForPart(_BodyPart part) {
-      /* TODO: Currently we display the same score for left and right body part
-       * We should probably calc the score for each body part separately
-       * for presentation.
-       */
+      // This is really unoptimized. We recalculate a whole bunch of
+      // scores multiple times. Oh well.
       return switch (part) {
         _BodyPart.head => normalizeScore(calcNeckScore(sheet), 6),
-        _BodyPart.leftHand ||
-        _BodyPart.rightHand =>
-          normalizeScore(calcWristScore(sheet), 4),
+        _BodyPart.leftHand => normalizeScore(calcWristScore(sheet).$1, 4),
+        _BodyPart.rightHand => normalizeScore(calcWristScore(sheet).$2, 4),
         _BodyPart.leftLeg ||
         _BodyPart.rightLeg =>
           normalizeScore(calcLegScore(sheet), 2),
-        _BodyPart.rightUpperArm ||
         _BodyPart.leftUpperArm =>
-          normalizeScore(calcUpperArmScore(sheet), 6),
-        _BodyPart.leftLowerArm ||
+          normalizeScore(calcUpperArmScore(sheet).$1, 6),
+        _BodyPart.rightUpperArm =>
+          normalizeScore(calcUpperArmScore(sheet).$2, 6),
+        _BodyPart.leftLowerArm =>
+          normalizeScore(calcLowerArmScore(sheet).$1, 3),
         _BodyPart.rightLowerArm =>
-          normalizeScore(calcLowerArmScore(sheet), 3),
+          normalizeScore(calcLowerArmScore(sheet).$2, 3),
         _BodyPart.upperBody => normalizeScore(calcTrukScore(sheet), 6),
       };
     }

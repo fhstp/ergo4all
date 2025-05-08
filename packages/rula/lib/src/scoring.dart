@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:common/func_ext.dart';
+import 'package:common/math_utils.dart';
 import 'package:common/pair_utils.dart';
 import 'package:rula/rula.dart';
 
@@ -120,10 +121,16 @@ const _tableC = [
   [5, 5, 6, 7, 7, 7, 7],
 ];
 
+/// Picks the worse of two scores.
+const int Function(int, int) worse = max;
+
+/// Pairwise addition.
+final addPair = Pair.pairwise(Math.add<int>);
+
 /// Calculates the shoulder flexion score for the given [sheet]. Produces a
 /// [int] in the range [1; 4].
-int calcShoulderFlexionScore(RulaSheet sheet) => sheet.shoulderFlexion
-    .pipe(
+(int, int) calcShoulderFlexionScore(RulaSheet sheet) =>
+    sheet.shoulderFlexion.pipe(
       Pair.map(
         (angle) => switch (angle.value) {
           < -20.0 => 2,
@@ -133,56 +140,48 @@ int calcShoulderFlexionScore(RulaSheet sheet) => sheet.shoulderFlexion
           _ => 4,
         },
       ),
-    )
-    .pipe(Pair.reduce(max));
+    );
 
 /// Calculates the shoulder abduction score based on the given [sheet].
 /// Produces a  in range [0; 1].
-int calcShoulderAbductionBonus(RulaSheet sheet) => sheet.shoulderAbduction
-    .pipe(Pair.map((angle) => angle.value > _minBadShoulderAbductionAngle))
-    .pipe(Pair.map((isBad) => isBad ? 1 : 0))
-    .pipe(Pair.reduce(max));
+(int, int) calcShoulderAbductionBonus(RulaSheet sheet) =>
+    sheet.shoulderAbduction
+        .pipe(Pair.map((angle) => angle.value > _minBadShoulderAbductionAngle))
+        .pipe(Pair.map((isBad) => isBad ? 1 : 0));
 
 /// Calculates the upper arm score for the given [sheet]. Produces a
 /// [int] in the range [1; 6].
-int calcUpperArmScore(RulaSheet sheet) {
+(int, int) calcUpperArmScore(RulaSheet sheet) {
   final shoulderFlexionScore = calcShoulderFlexionScore(sheet);
   final shoulderAbductionBonus = calcShoulderAbductionBonus(sheet);
-  final upperArmScore = shoulderFlexionScore + shoulderAbductionBonus;
-
-  _assertInRange(1, 6)(upperArmScore);
-
-  return upperArmScore;
+  final upperArmScore = addPair(shoulderFlexionScore, shoulderAbductionBonus);
+  return upperArmScore..pipe(Pair.map(_assertInRange(1, 6)));
 }
 
 /// Calculates the elbow flexion score for the given [sheet]. Produces a
 /// [int] in the range [1; 2].
-int calcElbowFlexionScore(RulaSheet sheet) {
-  return sheet.elbowFlexion
-      .pipe(
-        Pair.map(
-          (angle) => switch (angle.value) {
-            <= 60 => 2,
-            <= 100 => 1,
-            _ => 2,
-          },
-        ),
-      )
-      .pipe(Pair.reduce(max));
+(int, int) calcElbowFlexionScore(RulaSheet sheet) {
+  return sheet.elbowFlexion.pipe(
+    Pair.map(
+      (angle) => switch (angle.value) {
+        <= 60 => 2,
+        <= 100 => 1,
+        _ => 2,
+      },
+    ),
+  );
 }
 
 /// Calculates the lower arm score for the given [sheet]. Produces a
 /// [int] in the range [1; 3].
-int calcLowerArmScore(RulaSheet sheet) {
+(int, int) calcLowerArmScore(RulaSheet sheet) {
   final elbowFlexionScore = calcElbowFlexionScore(sheet);
   final lowerArmScore = elbowFlexionScore;
 
   // NOTE:
   //  In theory you could get +1 here for lateral flexion but we don't track
   //  that. I still say the range is [1; 3].
-
-  _assertInRange(1, 3)(lowerArmScore);
-  return lowerArmScore;
+  return lowerArmScore..pipe(Pair.map(_assertInRange(1, 3)));
 }
 
 /// Calculates the neck flexion score based on the given [sheet]. Produces a
@@ -200,17 +199,13 @@ int calcNeckFlexionScore(RulaSheet sheet) {
 
 /// Calculates the neck lateral flexion score based on the given [sheet].
 /// Produces a  in range [0; 1].
-int calcLateralNeckFlexionBonus(RulaSheet sheet) {
-  return sheet.neckLateralFlexion.value.abs() > _minBadNeckLateralFlexAngle
-      ? 1
-      : 0;
-}
+int calcLateralNeckFlexionBonus(RulaSheet sheet) =>
+    sheet.neckLateralFlexion.value.abs() > _minBadNeckLateralFlexAngle ? 1 : 0;
 
 /// Calculates the neck twist score based on the given [sheet].
 /// Produces a  in range [0; 1].
-int calcNeckTwistBonus(RulaSheet sheet) {
-  return sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
-}
+int calcNeckTwistBonus(RulaSheet sheet) =>
+    sheet.neckRotation.value.abs() > _minBadNeckTwistAngle ? 1 : 0;
 
 /// Calculates the neck score for the given [sheet]. Produces a [int] in
 /// the range [1; 6].
@@ -238,17 +233,15 @@ int calcHipFlexionScore(RulaSheet sheet) {
 
 /// Calculates the trunk twist score based on the given [sheet].
 /// Produces a  in range [0; 1].
-int calcTrunkTwistBonus(RulaSheet sheet) {
-  return sheet.trunkRotation.value.abs() > _minBadTrunkTwistAngle ? 1 : 0;
-}
+int calcTrunkTwistBonus(RulaSheet sheet) =>
+    sheet.trunkRotation.value.abs() > _minBadTrunkTwistAngle ? 1 : 0;
 
 /// Calculates the trunk lateral flexion score based on the given [sheet].
 /// Produces a  in range [0; 1].
-int calcTrunkLateralFlexionBonus(RulaSheet sheet) {
-  return sheet.trunkLateralFlexion.value.abs() > _minBadTrunkLateralTwistAngle
-      ? 1
-      : 0;
-}
+int calcTrunkLateralFlexionBonus(RulaSheet sheet) =>
+    sheet.trunkLateralFlexion.value.abs() > _minBadTrunkLateralTwistAngle
+        ? 1
+        : 0;
 
 /// Calculates the trunk score for the given [sheet]. Produces a [int] in
 /// the range [1; 6].
@@ -273,26 +266,24 @@ int calcLegScore(RulaSheet sheet) {
 
 /// Calculates the wrist score for the given [sheet]. Produces a [int] in
 /// the range [1; 4].
-int calcWristScore(RulaSheet sheet) => sheet.wristFlexion
-    .pipe(
+(int, int) calcWristScore(RulaSheet sheet) => sheet.wristFlexion.pipe(
       Pair.map(
         (angle) => switch (angle.value) { < -15 => 3, < 15 => 1, _ => 3 },
       ),
-    )
-    .pipe(Pair.reduce(max))
-    .tap(_assertInRange(1, 4));
+    )..pipe(Pair.map(_assertInRange(1, 4)));
 
 /// Does the full Rula calculation based on the given [sheet] and produces a
 /// [int] in the range [0; 7].
 int calcFullScore(RulaSheet sheet) {
   final upperArmScore = calcUpperArmScore(sheet);
   final lowerArmScore = calcLowerArmScore(sheet);
-
   final wristScore = calcWristScore(sheet);
 
-  final armHandScore =
-      _tableA[upperArmScore - 1][lowerArmScore - 1][wristScore - 1];
-  _assertInRange(1, 9)(armHandScore);
+  final armHandScore = ((
+    _tableA[upperArmScore.$1 - 1][lowerArmScore.$1 - 1][wristScore.$1 - 1],
+    _tableA[upperArmScore.$2 - 1][lowerArmScore.$2 - 1][wristScore.$2 - 1]
+  )..pipe(Pair.map(_assertInRange(1, 9))))
+      .pipe(Pair.reduce(worse));
 
   final neckScore = calcNeckScore(sheet);
   final trunkScore = calcTrukScore(sheet);
