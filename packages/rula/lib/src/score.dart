@@ -42,4 +42,13 @@ class RulaScore {
   String toString() {
     return value.toString();
   }
+
+  /// Normalized this score into the range [0, 1], based on the [max] value
+  /// this category of score is expected to reach.
+  ///
+  /// For example, the full body score is in the range [0, 7], so to normalize
+  /// a score of this category, you should set [max] to 7.
+  double normalize(int max) {
+    return (value - 1) / (max - 1);
+  }
 }
