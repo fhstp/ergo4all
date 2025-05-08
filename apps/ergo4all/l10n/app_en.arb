@@ -211,7 +211,7 @@
   "results_score_low": "Neutral",
   "results_score_low_short": "Neutral",
   "results_score_high": "Awkward",
-  "results_score_high_short": "Awkward",
+  "results_score_high_short": "Awk.",
   "results_body_upper_arms": "Upper Arm",
   "results_body_lower_arms": "Lower Arm",
   "results_body_trunk": "Trunk",
@@ -219,5 +219,7 @@
   "results_body_legs": "Legs",
   "results_plot_title": "Ergonomics Score Analysis",
   "body_part_title": "Analysis",
-  "body_part_timeline_plot_title": "Timeline Behaviour"
+  "body_part_score_plot_title": "Ergonomics Score",
+  "body_part_static_plot_title": "Muscle Load Score",
+  "body_part_static_plot_condition": "Recording is too short. At least 15s needed for analysis."
 }

@@ -118,5 +118,7 @@
   "results_body_legs": "Beine",
   "results_plot_title": "Analyse der Ergonomiebewertung",
   "body_part_title": "Analyse",
-  "body_part_timeline_plot_title": "Zeitverlauf"
+  "body_part_score_plot_title": "Ergonomiebewertung",
+  "body_part_static_plot_title": "Akkumulierte Muskelbelastung",
+  "body_part_static_plot_condition": "Aufnahme zu kurz. Mindestens 15 Sekunden für die Analyse erforderlich."
 }

@@ -65,3 +65,10 @@ final h4Style = GoogleFonts.nunito(
 /// Small header for paragraphs
 final paragraphHeader =
     GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 20);
+
+/// Text style for body text
+final infoText = GoogleFonts.nunito(
+  fontWeight: FontWeight.w400,
+  fontSize: 16,
+  color: woodSmoke,
+);

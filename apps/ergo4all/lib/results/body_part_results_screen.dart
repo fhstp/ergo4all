@@ -1,19 +1,26 @@
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BodyPartResultsScreen extends StatelessWidget {
-  const BodyPartResultsScreen({
+class BodyPartDetailPage extends StatelessWidget {
+  const BodyPartDetailPage({
     required this.bodyPart,
     required this.timelineColors,
     required this.timelineValues,
+    required this.avgTimelineColors,
+    required this.avgTimelineValues,
+    required this.medianTimelineValues,
     super.key,
   });
 
   final String bodyPart;
   final List<Color> timelineColors;
   final List<double> timelineValues;
+  final List<Color> avgTimelineColors;
+  final List<double> avgTimelineValues;
+  final List<double> medianTimelineValues;
   final Color color = cardinal;
 
   @override
@@ -59,11 +66,16 @@ class BodyPartResultsScreen extends StatelessWidget {
           'fix': 'No fix description available.',
         };
 
+    final infoTextSmall = infoText.copyWith(fontSize: 14);
+
+    // Need at least 15s of data to show the static load chart
+    final showStaticLoad = medianTimelineValues.length > 150; 
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart ${localizations.body_part_title}',
-            style: const TextStyle(color: white)),
-        backgroundColor: color,
+        title:
+            Text('$bodyPart ${localizations.body_part_title}', style: h3Style),
+        backgroundColor: white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -99,14 +111,15 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             // Timeline Visualization
 
+            const SizedBox(height: 20),
+
             Text(
-              localizations.body_part_timeline_plot_title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              localizations.body_part_score_plot_title,
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 20),
 
-            // Timeline Chart
             SizedBox(
               height: 132,
               child: Padding(
@@ -124,12 +137,9 @@ class BodyPartResultsScreen extends StatelessWidget {
                       },
                     ),
                     titlesData: FlTitlesData(
-                      rightTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
-                      topTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
-                      bottomTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
+                      rightTitles: const AxisTitles(),
+                      topTitles: const AxisTitles(),
+                      bottomTitles: const AxisTitles(),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
@@ -142,30 +152,27 @@ class BodyPartResultsScreen extends StatelessWidget {
                             } else if (value == 1.0) {
                               text = localizations.results_score_high_short;
                             }
-                            return Text(
-                              text,
-                              style: const TextStyle(fontSize: 14),
-                            );
+                            return Text(text, style: infoTextSmall,);
                           },
                         ),
                       ),
                     ),
                     borderData: FlBorderData(show: false),
                     minX: 0,
-                    maxX: timelineValues.length.toDouble() - 1,
+                    maxX: avgTimelineValues.length.toDouble() - 1,
                     minY: 0 - 0.01, // Adjusted to fit the grid
                     maxY: 1 + 0.01, // Adjusted to fit the grid
                     lineBarsData: [
                       LineChartBarData(
                         spots: List.generate(
-                          timelineValues.length,
-                          (i) => FlSpot(i.toDouble(), timelineValues[i]),
+                          avgTimelineValues.length,
+                          (i) => FlSpot(i.toDouble(), avgTimelineValues[i]),
                         ),
                         gradient: LinearGradient(
-                          colors: timelineColors,
+                          colors: avgTimelineColors,
                           stops: List.generate(
-                            timelineColors.length,
-                            (index) => index / (timelineColors.length - 1),
+                            avgTimelineColors.length,
+                            (index) => index / (avgTimelineColors.length - 1),
                           ),
                         ),
                         barWidth: 3,
@@ -180,50 +187,121 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
+            Text(
+              localizations.body_part_static_plot_title,
+              style: paragraphHeader,
+            ),
+
+            const SizedBox(height: 20),
+
+            if (showStaticLoad) SizedBox(
+                height: 132,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: LineChart(
+                    LineChartData(
+                      gridData: FlGridData(
+                        drawVerticalLine: false,
+                        horizontalInterval: 0.5,
+                        getDrawingHorizontalLine: (value) {
+                          return FlLine(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                            strokeWidth: 3,
+                          );
+                        },
+                      ),
+                      titlesData: FlTitlesData(
+                        rightTitles: const AxisTitles(),
+                        topTitles: const AxisTitles(),
+                        bottomTitles: const AxisTitles(),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 0.5,
+                            reservedSize: 60,
+                            getTitlesWidget: (value, meta) {
+                              var text = '';
+                              if (value == 0.0) {
+                                text = 'Low';
+                              } else if (value == 1.0) {
+                                text = 'High';
+                              }
+                              return Text(text, style: infoTextSmall,);
+                            },
+                          ),
+                        ),
+                      ),
+                      borderData: FlBorderData(show: false),
+                      minX: 0,
+                      maxX: medianTimelineValues.length.toDouble() - 1,
+                      minY: 0 - 0.01, // Adjusted to fit the grid
+                      maxY: 1 + 0.01, // Adjusted to fit the grid
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: List.generate(
+                            medianTimelineValues.length,
+                            (i) => FlSpot(i.toDouble(), medianTimelineValues[i]),
+                          ),
+                          color: Colors.grey,
+                          barWidth: 3,
+                          isStrokeCapRound: true,
+                          dotData: const FlDotData(show: false),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ) else Text(
+                localizations.body_part_static_plot_condition,
+                style: infoText,
+            ),
+
+            const SizedBox(height: 20),
+
             // Issue Section
 
-            const Text(
+            Text(
               'Issue:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 8),
 
             Text(
               texts['issue']!,
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
 
             const SizedBox(height: 20),
 
             // Risk Section
 
-            const Text(
+            Text(
               'Risk:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 8),
 
             Text(
               texts['risk']!,
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
 
             const SizedBox(height: 20),
 
             // Fix Section
 
-            const Text(
+            Text(
               'Fix:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: paragraphHeader,
             ),
 
             const SizedBox(height: 8),
 
             Text(
               texts['fix']!,
-              style: const TextStyle(fontSize: 16),
+              style: infoText,
             ),
           ],
         ),
