@@ -269,7 +269,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     );
 
     final modeTimelineValues = IList(
-      lineChartData.map((spots) => calculateRunningMedian(spots.map((spot) => spot.y).toList(), 5)).toList(),
+      lineChartData.map((spots) => calculateRunningMedian(spots.map((spot) => spot.y).toList(), 3)).toList(),
     );
 
     // final rangeTimelineData = IList(
