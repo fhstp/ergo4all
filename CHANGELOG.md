@@ -1,3 +1,24 @@
+# [1.50.0](https://github.com/fhstp/ergo4all/compare/v1.49.0...v1.50.0) (2025-05-09)
+
+
+### Features
+
+* **rula:** fine tuning angle logic ([22a415c](https://github.com/fhstp/ergo4all/commit/22a415c0a9d50440251f24e4bb2c4963ee248402))
+
+# [1.49.0](https://github.com/fhstp/ergo4all/compare/v1.48.1...v1.49.0) (2025-05-09)
+
+
+### Features
+
+* **app:** add placeholder results overview screen ([9aadc33](https://github.com/fhstp/ergo4all/commit/9aadc33a3c2fa68fe4fc1cf018d07f495153fddd))
+* **app:** add red color for score puppet ([7a432c2](https://github.com/fhstp/ergo4all/commit/7a432c2b85bf9a9fc54242302cd0652993b925c4))
+* **app:** add single-color puppet to result screen ([4b4519d](https://github.com/fhstp/ergo4all/commit/4b4519d29ed3b113bb1c353fbcbadcbd22ca0a2b))
+* **app:** add yellow color for score pupped ([1de364f](https://github.com/fhstp/ergo4all/commit/1de364f7918adce454051feda95fa5799f7c66e3))
+* **app:** aggregate score data ([b686b70](https://github.com/fhstp/ergo4all/commit/b686b70064c9d80f45c0cc372476c546bb684057))
+* **app:** make screen background white ([fe23e6b](https://github.com/fhstp/ergo4all/commit/fe23e6b00a599c511c6ea06ed297c778a9bdbb61))
+* **rula:** add score normalization function ([3d4b4b7](https://github.com/fhstp/ergo4all/commit/3d4b4b72e8c5c6aa9d05d1a007c706ee02b63c0f))
+* split side rula scoring ([4a4fc21](https://github.com/fhstp/ergo4all/commit/4a4fc217f3cd75e0995f55444cce87d8b3b2165e))
+
 ## [1.48.1](https://github.com/fhstp/ergo4all/compare/v1.48.0...v1.48.1) (2025-05-08)
 
 

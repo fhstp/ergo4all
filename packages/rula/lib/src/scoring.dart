@@ -225,6 +225,7 @@ const int Function(int, int) worse = max;
 /// Pairwise addition.
 final _addPair = Pair.pairwise(Math.add<int>);
 
+/// Calculates the full [RulaScores] for the given [sheet].
 RulaScores scoresOf(RulaSheet sheet) {
   final upperArmPositionScores = sheet.shoulderFlexion.pipe(
     Pair.map(
