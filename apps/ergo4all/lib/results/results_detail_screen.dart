@@ -180,11 +180,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     final medianTimelineValues = IList(
       lineChartData.map((spots) => calculateRunningMedian(spots, 60)).toList(),
     );
-
-<<<<<<< HEAD
-=======
-
->>>>>>> main
+    
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
