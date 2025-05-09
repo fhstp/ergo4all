@@ -111,8 +111,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     List<double> transformData(
-        int Function(RulaScores) selector,
-        int maxValue,
+      int Function(RulaScores) selector,
+      int maxValue,
     ) {
       return timeline.map((entry) {
         final score = selector(entry.scores);
@@ -165,9 +165,9 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
 
     final lineChartData = IList([
       transformData(((RulaScores scores) => scores.upperArmScores)
-          .compose(Pair.reduce(worse)), 6,),
+            .compose(Pair.reduce(worse)), 6,),
       transformData(((RulaScores scores) => scores.lowerArmScores)
-          .compose(Pair.reduce(worse)), 3,),
+            .compose(Pair.reduce(worse)), 3,),
       transformData((RulaScores scores) => scores.trunkScore, 6),
       transformData((RulaScores scores) => scores.neckScore, 6),
       transformData((RulaScores scores) => scores.legScore, 2),
