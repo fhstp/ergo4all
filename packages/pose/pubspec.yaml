@@ -1,4 +1,5 @@
 name: pose
+version: 1.48.0
 description: Pose detection files.
 
 environment:

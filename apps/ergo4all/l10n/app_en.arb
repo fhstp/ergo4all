@@ -211,7 +211,7 @@
   "results_score_low": "Neutral",
   "results_score_low_short": "Neutral",
   "results_score_high": "Awkward",
-  "results_score_high_short": "Awkward",
+  "results_score_high_short": "Awk.",
   "results_body_upper_arms": "Upper Arm",
   "results_body_lower_arms": "Lower Arm",
   "results_body_trunk": "Trunk",
@@ -219,7 +219,6 @@
   "results_body_legs": "Legs",
   "results_plot_title": "Ergonomics Score Analysis",
   "body_part_title": "Analysis",
-  "body_part_timeline_plot_title": "Timeline Behaviour",
   "upperArmGood": "Great! Your arm is staying low and close to your side, just like when you're holding a briefcase or grocery bag. This helps protect your shoulder and keeps it strong!",
   "upperArmMedium": "Sometimes your arm lifts a bit higher than it should, like you're reaching into a high cupboard. Try to keep it down more often, as if you're carrying something at your side. It’ll reduce shoulder strain.",
   "upperArmLow": "Uh-oh! Your arm is too high too often, almost like you're constantly waving or reaching overhead. That can wear out your shoulder. Try to lower it, like you're standing with your hands relaxed by your hips.",
@@ -234,5 +233,8 @@
   "neckLow": "Oops! Your neck is bent too often, like you’re constantly looking down at your phone or craning up at a ceiling light. This can put a lot of strain on your neck. Try to keep your head level, like you're walking confidently and looking straight ahead.",
   "legsGood": "Great! Your legs are positioned comfortably and evenly, like you're seated at a desk or dining table. That supports blood flow and reduces pressure.",
   "legsMedium": "Sometimes your legs dangle or float, like when sitting on a tall stool. Try resting them on the floor or a footrest to stay comfortable and grounded.",
-  "legsLow": "Uh-oh! Your legs are twisted or unsupported like sitting sideways or perching on the edge of a chair. This can lead to soreness. Aim for a stable, flat-footed position like you're sitting in a proper office chair."
+  "legsLow": "Uh-oh! Your legs are twisted or unsupported like sitting sideways or perching on the edge of a chair. This can lead to soreness. Aim for a stable, flat-footed position like you're sitting in a proper office chair.",
+  "body_part_score_plot_title": "Ergonomics Score",
+  "body_part_static_plot_title": "Muscle Load Score",
+  "body_part_static_plot_condition": "The recording is too short to display the muscle load score. Please record at least 15 seconds to visualize the muscle load diagram."
 }

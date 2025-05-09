@@ -1,4 +1,5 @@
 name: pose_analysis
+version: 1.48.0
 description: Pose analysis
 
 environment:

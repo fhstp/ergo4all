@@ -5,8 +5,9 @@ import 'package:ergo4all/common/snack.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-Widget _makeOptionButton(String text, void Function() onPressed) {
+Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
   return SimpleDialogOption(
+    key: key,
     onPressed: onPressed,
     child: Text(
       text,
@@ -42,7 +43,11 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           Navigator.of(context).pop();
           showNotImplementedSnackbar(context);
         }),
-        _makeOptionButton(localizations.menu_language_label, goToLanguage),
+        _makeOptionButton(
+          localizations.menu_language_label,
+          goToLanguage,
+          const Key('button-lang'),
+        ),
         _makeOptionButton(localizations.menu_imprint_label, () {
           Navigator.of(context).pop();
           showNotImplementedSnackbar(context);

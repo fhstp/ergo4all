@@ -1,22 +1,29 @@
 import 'dart:math';
 
+import 'package:common/func_ext.dart';
+import 'package:common/pair_utils.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/body_part_detail_page.dart';
 import 'package:ergo4all/results/body_part_detail_view_model.dart';
+import 'package:ergo4all/results/body_part_results_screen.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
-@immutable
-
 /// Manages colors for the RULA score visualization
+@immutable
 class ColorMapper {
   /// #BFD7EA
   static const rulaLow = Color(0xFFBFD7EA);
 
   /// #F9F9C4
+  // Use for better visibility in the heatmap plot
   static const rulaLowMid = Color(0xFFF9F9C4);
+
+  /// #DEDEA2
+  // Use for better visibility in the line plot
+  static const rulaLowMidDark = Color(0xFFE7E7B2);
 
   /// #FFE553
   static const rulaMid = Color(0xFFFFE553);
@@ -28,11 +35,11 @@ class ColorMapper {
   static const rulaHigh = Color(0xFFFF5A5F);
 
   /// Maps normalized RULA score values to colors
-  static Color getColorForValue(double value) {
+  static Color getColorForValue(double value, {bool dark = false}) {
     if (value < 0.20) {
       return rulaLow;
     } else if (value <= 0.40) {
-      return rulaLowMid;
+      return dark ? rulaLowMidDark : rulaLowMid;
     } else if (value <= 0.60) {
       return rulaMid;
     } else if (value <= 0.80) {
@@ -42,47 +49,35 @@ class ColorMapper {
   }
 }
 
-@immutable
-class TimelineEntry {
-  const TimelineEntry({required this.timestamp, required this.sheet});
-
-  final int timestamp;
-  final RulaSheet sheet;
-}
-
-typedef RulaTimeline = IList<TimelineEntry>;
-
-class ResultsScreen extends StatefulWidget {
-  const ResultsScreen({super.key});
+class ResultsDetailScreen extends StatefulWidget {
+  const ResultsDetailScreen({super.key});
 
   @override
-  State<ResultsScreen> createState() => _ResultsScreenState();
+  State<ResultsDetailScreen> createState() => _ResultsDetailScreenState();
 }
 
-class _ResultsScreenState extends State<ResultsScreen> {
+class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
   final Random random = Random();
 
   void _navigateToBodyPartPage(
-    String bodyPartName,
-    List<FlSpot> timelineData,
-    BodyPart bodyPart
+    String bodyPartTitle,
+    BodyPart bodyPart,
+    List<double> avgTimelineValues,
+    List<double> medianTimelineValues,
   ) {
 
-    final timelineValues = timelineData.map((spot) {
-      return spot.y;
-    }).toList();
-
     final bodyPartDetailViewModel = BodyPartDetailPageViewModel(
-        bodyPartName: bodyPartName,
-        timelineValues: timelineValues,
+        bodyPartName: bodyPartTitle,
+        timelineValues: avgTimelineValues,
+        medianTimelineValues: medianTimelineValues,
         bodyPart: bodyPart
     );
 
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => BodyPartDetailPage(
-            viewModel: bodyPartDetailViewModel,
+        builder: (context) => BodyPartResultsScreen(
+          viewModel: bodyPartDetailViewModel,
         ),
       ),
     );
@@ -115,38 +110,76 @@ class _ResultsScreenState extends State<ResultsScreen> {
       return Container();
     }
 
-    final firstTimestamp = timeline.first.timestamp;
-    final lastTimestamp = timeline.last.timestamp;
-    final timeRange = lastTimestamp - firstTimestamp;
-
-    double graphXFor(int timestamp) {
-      return (timestamp - firstTimestamp) / timeRange;
-    }
-
-    double graphYFor(RulaScore score, int maxValue) {
-      final value = score.value;
-      return (value - 1) / (maxValue - 1);
-    }
-
-    List<FlSpot> graphLineFor(
-      RulaScore Function(RulaSheet) selector,
-      int maxValue,
+    List<double> transformData(
+        int Function(RulaScores) selector,
+        int maxValue,
     ) {
       return timeline.map((entry) {
-        final score = selector(entry.sheet);
-        final x = graphXFor(entry.timestamp);
-        final y = graphYFor(score, maxValue);
-        return FlSpot(x, y);
+        final score = selector(entry.scores);
+        return normalizeScore(score, maxValue);
       }).toList();
     }
 
+    List<double> getPaddedData(List<double> data, int windowSize) {
+      final halfWindow = windowSize ~/ 2;
+      return [
+        ...List.filled(halfWindow, data.first),
+        ...data,
+        ...List.filled(halfWindow, data.last),
+      ];
+    }
+
+    List<double> calculateRunningAverage(List<double> data, int windowSize) {
+      if (data.length < windowSize) return data;
+      
+      final paddedData = getPaddedData(data, windowSize);
+      final result = <double>[];
+      
+      for (var i = 0; i <= paddedData.length - windowSize; i++) {
+        final window = paddedData.sublist(i, i + windowSize);
+        final avgY = window.reduce((a, b) => a + b) / windowSize;
+        result.add(avgY);
+      }
+      
+      return result;
+    }
+
+    List<double> calculateRunningMedian(List<double> data, int windowSize) {
+      if (data.length < windowSize) return data;
+      
+      final paddedData = getPaddedData(data, windowSize);
+      final result = <double>[];
+      
+      for (var i = 0; i <= paddedData.length - windowSize; i++) {
+        final window = paddedData.sublist(i, i + windowSize)..sort();
+        
+        final median = windowSize.isOdd
+            ? window[windowSize ~/ 2]
+            : (window[(windowSize - 1) ~/ 2] + window[windowSize ~/ 2]) / 2;
+        
+        result.add(median);
+      }
+      
+      return result;
+    }
+
     final lineChartData = IList([
-      graphLineFor(calcUpperArmScore, 6),
-      graphLineFor(calcLowerArmScore, 3),
-      graphLineFor(calcTrukScore, 6),
-      graphLineFor(calcNeckScore, 6),
-      graphLineFor(calcLegScore, 2),
+      transformData(((RulaScores scores) => scores.upperArmScores)
+          .compose(Pair.reduce(worse)), 6,),
+      transformData(((RulaScores scores) => scores.lowerArmScores)
+          .compose(Pair.reduce(worse)), 3,),
+      transformData((RulaScores scores) => scores.trunkScore, 6),
+      transformData((RulaScores scores) => scores.neckScore, 6),
+      transformData((RulaScores scores) => scores.legScore, 2),
     ]);
+
+    final avgLineChartValues = IList(
+      lineChartData.map((spots) => calculateRunningAverage(spots, 20)).toList(),
+    );
+
+    final medianTimelineValues = IList(
+      lineChartData.map((spots) => calculateRunningMedian(spots, 60)).toList(),
+    );
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
@@ -183,19 +216,16 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       if (rowIndex >= 0 && rowIndex < labels.length) {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
-                          lineChartData[rowIndex],
-                            bodyParts[rowIndex]
+                          bodyParts[rowIndex],
+                          avgLineChartValues[rowIndex],
+                          medianTimelineValues[rowIndex],
                         );
                       }
                     },
                     child: CustomPaint(
                       painter: HeatmapPainter(
-                        data: lineChartData.map((spots) {
-                          return spots.map((spot) => spot.y).toList();
-                        }).toList(),
+                        data: avgLineChartValues,
                         rows: labels.length,
-                        timestamps:
-                            timeline.map((entry) => entry.timestamp).toList(),
                         labels: labels,
                       ),
                     ),
@@ -242,6 +272,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
@@ -255,18 +286,14 @@ class HeatmapPainter extends CustomPainter {
   HeatmapPainter({
     required this.data,
     required this.rows,
-    required this.timestamps,
     required this.labels,
   });
 
   /// The data for the heatmap, where each row represents a body part
-  final List<List<double>> data;
+  final IList<List<double>> data;
 
   /// The number of body parts / rows in the heatmap
   final int rows;
-
-  /// The timestamps for the x-axis of the heatmap
-  final List<int> timestamps;
 
   /// The labels for each body part
   final List<String> labels;
@@ -274,7 +301,6 @@ class HeatmapPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const spacing = 10.0; // Space between rows
-    final cellWidth = size.width / timestamps.length;
     final availableHeight = size.height - (spacing * (rows - 1));
     final cellHeight = availableHeight / rows;
     final paint = Paint()..style = PaintingStyle.fill;
@@ -286,8 +312,9 @@ class HeatmapPainter extends CustomPainter {
     // Draw heatmap cells
     for (var row = 0; row < rows; row++) {
       final yOffset = row * (cellHeight + spacing);
+      final cellWidth = size.width / data[row].length;
 
-      for (var col = 0; col < timestamps.length; col++) {
+      for (var col = 0; col < data[row].length; col++) {
         final value = data[row][col];
         paint.color = ColorMapper.getColorForValue(value);
 

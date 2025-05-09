@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/results_screen.dart';
+import 'package:ergo4all/results/results_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, String Function(AppLocalizations)> _localizationMap = {
@@ -48,6 +48,7 @@ class BodyPartDetailPageViewModel {
   BodyPartDetailPageViewModel({
     required this.bodyPartName,
     required this.timelineValues,
+    required this.medianTimelineValues,
     required this.bodyPart
   })  : timelineColors = _colorForValue(timelineValues);
 
@@ -55,10 +56,13 @@ class BodyPartDetailPageViewModel {
   final BodyPart bodyPart;
   final List<double> timelineValues;
   final List<Color> timelineColors;
+  final List<double> medianTimelineValues;
 
   static List<Color> _colorForValue(List<double> values) {
     if (values.isEmpty) return [];
-    return values.map(ColorMapper.getColorForValue).toList();
+    return values.map((spot) {
+      return ColorMapper.getColorForValue(spot, dark: true);
+    }).toList();
   }
 
   static double calculateMean(List<double> numbers) {
@@ -99,7 +103,7 @@ class BodyPartDetailPageViewModel {
   String getLocalizedMessage(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final rating = _getRating();
-    final key = '${bodyPart?.name}${rating.name.capitalize()}';
+    final key = '${bodyPart.name}${rating.name.capitalize()}';
 
     return _localizationMap[key]?.call(loc) ?? 'Missing translation for $key';
   }

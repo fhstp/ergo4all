@@ -1,3 +1,10 @@
+## [1.48.1](https://github.com/fhstp/ergo4all/compare/v1.48.0...v1.48.1) (2025-05-08)
+
+
+### Bug Fixes
+
+* incorrect version number ([01e3e8f](https://github.com/fhstp/ergo4all/commit/01e3e8fcf7acb23b3e90ec7a6c52b04cab8746ba))
+
 # [1.48.0](https://github.com/fhstp/ergo4all/compare/v1.47.0...v1.48.0) (2025-05-06)
 
 

@@ -28,4 +28,9 @@ abstract final class Pair {
   /// Checks whether both values in a pair match the given [predicate].
   static bool Function((T, T)) all<T>(bool Function(T) predicate) =>
       (pair) => predicate(left(pair)) && predicate(right(pair));
+
+  /// Promotes a binary function [f] to work on pairs of it's inputs.
+  static (V, V) Function((T, T), (U, U)) pairwise<T, U, V>(V Function(T, U) f) {
+    return (t, u) => (f(t.$1, u.$1), f(t.$2, u.$2));
+  }
 }

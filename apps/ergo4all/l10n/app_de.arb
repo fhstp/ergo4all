@@ -118,7 +118,6 @@
   "results_body_legs": "Beine",
   "results_plot_title": "Analyse der Ergonomiebewertung",
   "body_part_title": "Analyse",
-  "body_part_timeline_plot_title": "Zeitverlauf",
   "upperArmGood": "Gut gemacht! Ihr Arm bleibt tief und nahe an der Seite, wie wenn Sie eine Aktentasche oder eine Einkaufstasche halten. Das schont Ihre Schulter und hält sie stark!",
   "upperArmMedium": "Manchmal hebt sich Ihr Arm ein bisschen höher als er sollte, wie wenn Sie in einen hohen Schrank greifen. Versuchen Sie, ihn öfter nach unten zu halten, so als ob Sie etwas an der Seite tragen würden. Das verringert die Belastung der Schultern.",
   "upperArmLow": "Oh-oh! Ihr Arm ist zu oft zu hoch, fast so, als würden Sie ständig winken oder über den Kopf greifen. Das kann Ihre Schulter ermüden. Versuchen Sie, ihn zu senken, so als ob Sie mit entspannten Händen in der Hüfte stehen würden.",
@@ -133,5 +132,8 @@
   "neckLow": "Oops! Ihr Nacken ist zu oft gebeugt, als würden Sie ständig auf Ihr Telefon oder eine Deckenleuchte schauen. Das kann Ihren Nacken stark belasten. Versuchen Sie, Ihren Kopf waagerecht zu halten, so als würden Sie selbstbewusst gehen und geradeaus schauen.",
   "legsGood": "Großartig! Ihre Beine sind bequem und gleichmäßig gelagert, als säßen Sie an einem Schreibtisch oder Esstisch. Das fördert die Durchblutung und reduziert den Druck.",
   "legsMedium": "Manchmal baumeln oder schweben Ihre Beine, z. B. wenn Sie auf einem hohen Hocker sitzen. Versuchen Sie, sie auf dem Boden oder einer Fußstütze abzustützen, um bequem und geerdet zu bleiben.",
-  "legsLow": "Oh-oh! Ihre Beine sind verdreht oder nicht gestützt, z. B. wenn Sie seitlich sitzen oder auf der Kante eines Stuhls hocken. Das kann zu Muskelkater führen. Streben Sie eine stabile, flachfüßige Position an, als ob Sie auf einem richtigen Bürostuhl sitzen würden."
+  "legsLow": "Oh-oh! Ihre Beine sind verdreht oder nicht gestützt, z. B. wenn Sie seitlich sitzen oder auf der Kante eines Stuhls hocken. Das kann zu Muskelkater führen. Streben Sie eine stabile, flachfüßige Position an, als ob Sie auf einem richtigen Bürostuhl sitzen würden.",
+  "body_part_score_plot_title": "Ergonomiebewertung",
+  "body_part_static_plot_title": "Akkumulierte Muskelbelastung",
+  "body_part_static_plot_condition": "Die Aufnahme ist zu kurz, um den Muskelbelastungswert anzuzeigen. Bitte nehmen Sie mindestens 15 Sekunden auf, um das Muskelbelastungsdiagramm anzuzeigen."
 }

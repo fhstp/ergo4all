@@ -1,7 +1,7 @@
 name: ergo4all_workspace
 description: Workspace package for all ergo4all apps and packages
 
-version: 1.48.0
+version: 1.48.1
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 workspace:
@@ -20,3 +20,5 @@ workspace:
 
 environment:
   sdk: ^3.6.0
+dependencies:
+  glob: ^2.1.3

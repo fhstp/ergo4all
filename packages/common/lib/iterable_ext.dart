@@ -18,4 +18,20 @@ extension UtilExt<T> on Iterable<T> {
       if (f(item) case Some(:final value)) yield value;
     }
   }
+
+  /// Calculates the median of a series of items, ie. the item which came
+  /// up the most often. If multiple items have the same count then
+  /// one of them is picked in an undefined behavior.
+  T? median() {
+    final counts = <T, int>{};
+
+    for (final item in this) {
+      counts[item] = (counts[item] ?? 0) + 1;
+    }
+
+    return counts.entries
+        .sortWith((e) => e.value, Order.orderInt.reverse)
+        .firstOrNull
+        ?.key;
+  }
 }

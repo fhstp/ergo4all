@@ -10,7 +10,7 @@ import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/results/results_screen.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart' hide State;
@@ -22,6 +22,7 @@ import 'package:pose_transforming/denoise.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
+import 'package:rula/rula.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
@@ -72,7 +73,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     if (!context.mounted) return;
     unawaited(
       Navigator.of(context).pushReplacementNamed(
-        Routes.results.path,
+        Routes.resultsOverview.path,
         arguments: timeline.toIList(),
       ),
     );
@@ -86,7 +87,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final angles = calculateAngles(pose, coronal, sagittal, transverse);
 
     final sheet = rulaSheetFromAngles(angles);
-    timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
+    timeline.add(TimelineEntry(timestamp: timestamp, scores: scoresOf(sheet)));
   }
 
   void onFrame(_Frame frame) {
