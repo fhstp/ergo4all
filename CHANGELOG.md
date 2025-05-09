@@ -1,3 +1,10 @@
+# [1.50.0](https://github.com/fhstp/ergo4all/compare/v1.49.0...v1.50.0) (2025-05-09)
+
+
+### Features
+
+* **rula:** fine tuning angle logic ([22a415c](https://github.com/fhstp/ergo4all/commit/22a415c0a9d50440251f24e4bb2c4963ee248402))
+
 # [1.49.0](https://github.com/fhstp/ergo4all/compare/v1.48.1...v1.49.0) (2025-05-09)
 
 
