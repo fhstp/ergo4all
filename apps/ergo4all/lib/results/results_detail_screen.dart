@@ -4,6 +4,7 @@ import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/results/body_part_detail_view_model.dart';
 import 'package:ergo4all/results/body_part_results_screen.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -59,22 +60,22 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
   final Random random = Random();
 
   void _navigateToBodyPartPage(
-    String bodyPart,
+    String bodyPartTitle,
+    BodyPartGroup bodyPart,
     List<double> avgTimelineValues,
     List<double> medianTimelineValues,
   ) {
-    final avgTimelineColors = avgTimelineValues.map((spot) {
-      return ColorMapper.getColorForValue(spot, dark: true);
-    }).toList();
+    final bodyPartDetailViewModel = BodyPartDetailPageViewModel(
+        bodyPartName: bodyPartTitle,
+        timelineValues: avgTimelineValues,
+        medianTimelineValues: medianTimelineValues,
+        bodyPartGroup: bodyPart);
 
     Navigator.push(
       context,
       MaterialPageRoute<void>(
         builder: (context) => BodyPartResultsScreen(
-          bodyPart: bodyPart,
-          avgTimelineColors: avgTimelineColors,
-          avgTimelineValues: avgTimelineValues,
-          medianTimelineValues: medianTimelineValues,
+          viewModel: bodyPartDetailViewModel,
         ),
       ),
     );
@@ -120,43 +121,49 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
 
     List<double> calculateRunningAverage(List<double> data, int windowSize) {
       if (data.length < windowSize) return data;
-      
+
       final paddedData = getPaddedData(data, windowSize);
       final result = <double>[];
-      
+
       for (var i = 0; i <= paddedData.length - windowSize; i++) {
         final window = paddedData.sublist(i, i + windowSize);
         final avgY = window.reduce((a, b) => a + b) / windowSize;
         result.add(avgY);
       }
-      
+
       return result;
     }
 
     List<double> calculateRunningMedian(List<double> data, int windowSize) {
       if (data.length < windowSize) return data;
-      
+
       final paddedData = getPaddedData(data, windowSize);
       final result = <double>[];
-      
+
       for (var i = 0; i <= paddedData.length - windowSize; i++) {
         final window = paddedData.sublist(i, i + windowSize)..sort();
-        
+
         final median = windowSize.isOdd
             ? window[windowSize ~/ 2]
             : (window[(windowSize - 1) ~/ 2] + window[windowSize ~/ 2]) / 2;
-        
+
         result.add(median);
       }
-      
+
       return result;
     }
 
     final lineChartData = IList([
-      transformData(((RulaScores scores) => scores.upperArmScores)
-            .compose(Pair.reduce(worse)), 6,),
-      transformData(((RulaScores scores) => scores.lowerArmScores)
-            .compose(Pair.reduce(worse)), 3,),
+      transformData(
+        ((RulaScores scores) => scores.upperArmScores)
+            .compose(Pair.reduce(worse)),
+        6,
+      ),
+      transformData(
+        ((RulaScores scores) => scores.lowerArmScores)
+            .compose(Pair.reduce(worse)),
+        3,
+      ),
       transformData((RulaScores scores) => scores.trunkScore, 6),
       transformData((RulaScores scores) => scores.neckScore, 6),
       transformData((RulaScores scores) => scores.legScore, 2),
@@ -169,7 +176,6 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     final medianTimelineValues = IList(
       lineChartData.map((spots) => calculateRunningMedian(spots, 60)).toList(),
     );
-
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
@@ -206,6 +212,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                       if (rowIndex >= 0 && rowIndex < labels.length) {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
+                          BodyPartGroup.values[rowIndex],
                           avgLineChartValues[rowIndex],
                           medianTimelineValues[rowIndex],
                         );

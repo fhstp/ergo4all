@@ -105,3 +105,21 @@ enum BodyPart {
   ///
   upperBody
 }
+
+/// Groups of body parts which are displayed / scored together.
+enum BodyPartGroup {
+  /// The upper arm, ie. the shoulder.
+  upperArm,
+
+  /// The lower arm. This includes elbow and hand.
+  lowerArm,
+
+  /// The trunk.
+  trunk,
+
+  /// The neck.
+  neck,
+
+  /// The legs.
+  legs,
+}
