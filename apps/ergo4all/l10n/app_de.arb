@@ -118,5 +118,20 @@
   "results_body_legs": "Beine",
   "results_plot_title": "Analyse der Ergonomiebewertung",
   "body_part_title": "Analyse",
-  "body_part_timeline_plot_title": "Zeitverlauf"
+  "body_part_timeline_plot_title": "Zeitverlauf",
+  "upperArmGood": "Gut gemacht! Ihr Arm bleibt tief und nahe an der Seite, wie wenn Sie eine Aktentasche oder eine Einkaufstasche halten. Das schont Ihre Schulter und hält sie stark!",
+  "upperArmMedium": "Manchmal hebt sich Ihr Arm ein bisschen höher als er sollte, wie wenn Sie in einen hohen Schrank greifen. Versuchen Sie, ihn öfter nach unten zu halten, so als ob Sie etwas an der Seite tragen würden. Das verringert die Belastung der Schultern.",
+  "upperArmLow": "Oh-oh! Ihr Arm ist zu oft zu hoch, fast so, als würden Sie ständig winken oder über den Kopf greifen. Das kann Ihre Schulter ermüden. Versuchen Sie, ihn zu senken, so als ob Sie mit entspannten Händen in der Hüfte stehen würden.",
+  "lowerArmGood": "Großartig! Ihr Arm ist von Natur aus gerade und entspannt, wie wenn er locker an Ihrer Seite hängt oder sanft auf einem Tisch ruht. Das ist gut, um bequem zu bleiben und unnötige Verspannungen zu vermeiden!",
+  "lowerArmMedium": "Ihr Arm ist manchmal zu stark gebeugt, als würden Sie sich beugen oder eine schwere Tasche festhalten. Versuchen Sie, sich in eine neutralere Position zu begeben, z. B. indem Sie Ihren Arm auf einem Schreibtisch ablegen.",
+  "lowerArmLow": "Oops! Ihr Arm bleibt zu lange angewinkelt, fast so, als ob Sie ein Telefon nahe an der Brust halten würden. Versuchen Sie, ihn etwas weiter auszustrecken, etwa wenn Ihr Arm locker an der Seite hängt.",
+  "trunkGood": "Gut gemacht! Dein Rumpf ist aufrecht und stabil, wie ein starker Baumstamm oder ein sicherer Stand. Das ist gut für die Unterstützung der Wirbelsäule. Machen Sie weiter so!",
+  "trunkMedium": "Du lehnst dich manchmal nach vorne, als würdest du in einen Computerbildschirm starren. Versuchen Sie, aufrechter zu sitzen oder zu stehen, als würden Sie sich strecken, um über eine Menschenmenge hinwegzusehen.",
+  "trunkLow": "Oh nein! Sie lehnen sich zu weit nach vorne, fast so, als ob Sie auf einer Couch lümmeln oder nach vorne kippen würden. Das belastet Ihren Rücken. Streben Sie eine Haltung an, als wären Sie bereit, eine Präsentation zu halten, und zwar ausgeglichen und aufrecht.",
+  "neckGood": "Ihr Kopf und Ihr Nacken sind so ausgerichtet, als würden sie fest auf einer Säule ruhen. Das stützt Ihre Wirbelsäule und reduziert Nackenverspannungen. Machen Sie weiter so!",
+  "neckMedium": "Manchmal neigen Sie Ihren Kopf zu weit nach oben oder unten, z. B. wenn Sie auf Ihr Telefon oder die Deckenlampe schauen. Versuchen Sie, Ihren Kopf gerade zu halten, als ob Sie etwas auf Augenhöhe betrachten würden.",
+  "neckLow": "Oops! Ihr Nacken ist zu oft gebeugt, als würden Sie ständig auf Ihr Telefon oder eine Deckenleuchte schauen. Das kann Ihren Nacken stark belasten. Versuchen Sie, Ihren Kopf waagerecht zu halten, so als würden Sie selbstbewusst gehen und geradeaus schauen.",
+  "legsGood": "Großartig! Ihre Beine sind bequem und gleichmäßig gelagert, als säßen Sie an einem Schreibtisch oder Esstisch. Das fördert die Durchblutung und reduziert den Druck.",
+  "legsMedium": "Manchmal baumeln oder schweben Ihre Beine, z. B. wenn Sie auf einem hohen Hocker sitzen. Versuchen Sie, sie auf dem Boden oder einer Fußstütze abzustützen, um bequem und geerdet zu bleiben.",
+  "legsLow": "Oh-oh! Ihre Beine sind verdreht oder nicht gestützt, z. B. wenn Sie seitlich sitzen oder auf der Kante eines Stuhls hocken. Das kann zu Muskelkater führen. Streben Sie eine stabile, flachfüßige Position an, als ob Sie auf einem richtigen Bürostuhl sitzen würden."
 }

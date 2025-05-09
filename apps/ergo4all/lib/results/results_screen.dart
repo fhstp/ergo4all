@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail_page.dart';
+import 'package:ergo4all/results/body_part_detail_view_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -62,24 +63,26 @@ class _ResultsScreenState extends State<ResultsScreen> {
   final Random random = Random();
 
   void _navigateToBodyPartPage(
-    String bodyPart,
+    String bodyPartName,
     List<FlSpot> timelineData,
+    BodyPart bodyPart
   ) {
-    final timelineColors = timelineData.map((spot) {
-      return ColorMapper.getColorForValue(spot.y);
-    }).toList();
 
     final timelineValues = timelineData.map((spot) {
       return spot.y;
     }).toList();
 
+    final bodyPartDetailViewModel = BodyPartDetailPageViewModel(
+        bodyPartName: bodyPartName,
+        timelineValues: timelineValues,
+        bodyPart: bodyPart
+    );
+
     Navigator.push(
       context,
       MaterialPageRoute<void>(
         builder: (context) => BodyPartDetailPage(
-          bodyPart: bodyPart,
-          timelineColors: timelineColors,
-          timelineValues: timelineValues,
+            viewModel: bodyPartDetailViewModel,
         ),
       ),
     );
@@ -94,6 +97,14 @@ class _ResultsScreenState extends State<ResultsScreen> {
       localizations.results_body_trunk,
       localizations.results_body_neck,
       localizations.results_body_legs,
+    ];
+
+    final bodyParts = [
+      BodyPart.upperArm,
+      BodyPart.lowerArm,
+      BodyPart.trunk,
+      BodyPart.neck,
+      BodyPart.legs
     ];
 
     final timeline =
@@ -173,6 +184,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         _navigateToBodyPartPage(
                           labels[rowIndex],
                           lineChartData[rowIndex],
+                            bodyParts[rowIndex]
                         );
                       }
                     },

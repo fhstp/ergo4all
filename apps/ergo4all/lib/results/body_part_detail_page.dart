@@ -1,67 +1,25 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/results/body_part_detail_view_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BodyPartDetailPage extends StatelessWidget {
   const BodyPartDetailPage({
-    required this.bodyPart,
-    required this.timelineColors,
-    required this.timelineValues,
+    required this.viewModel,
     super.key,
   });
 
-  final String bodyPart;
-  final List<Color> timelineColors;
-  final List<double> timelineValues;
+  final BodyPartDetailPageViewModel viewModel;
   final Color color = cardinal;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    // Unique text for each body part
-    final bodyPartTexts = <String, Map<String, String>>{
-      'Upper Arm': {
-        'issue': 'The upper arm was often raised above shoulder level.',
-        'risk': 'This increases the risk of rotator cuff injuries.',
-        'fix': 'Try keeping your upper arm below shoulder height during tasks.',
-      },
-      'Lower Arm': {
-        'issue':
-            'The lower arm was flexed at an extreme angle for long periods.',
-        'risk': 'This posture may lead to repetitive strain injuries.',
-        'fix':
-            'Adjust the workstation to keep your lower arms in a neutral position.',
-      },
-      'Trunk': {
-        'issue': 'The trunk was bent forward excessively.',
-        'risk': 'This posture can strain the lower back, causing disc issues.',
-        'fix': 'Use a chair with lumbar support and avoid leaning forward.',
-      },
-      'Neck': {
-        'issue': 'The neck was bent at a high angle for a prolonged time.',
-        'risk': 'This can lead to ligament strain or disc herniation.',
-        'fix':
-            'Keep your neck aligned with your spine and avoid looking up or down.',
-      },
-      'Legs': {
-        'issue': 'The legs were unsupported or in awkward postures.',
-        'risk': 'This can cause fatigue or circulation problems.',
-        'fix': 'Use a footrest to support your legs while seated.',
-      },
-    };
-
-    final texts = bodyPartTexts[bodyPart] ??
-        {
-          'issue': 'No issue description available.',
-          'risk': 'No risk description available.',
-          'fix': 'No fix description available.',
-        };
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('$bodyPart ${localizations.body_part_title}', style: const TextStyle(color: white)),
+        title: Text('${viewModel.bodyPartName} ${localizations.body_part_title}', style: const TextStyle(color: white),),
         backgroundColor: color,
       ),
       body: SingleChildScrollView(
@@ -82,7 +40,7 @@ class BodyPartDetailPage extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        bodyPart,
+                        viewModel.bodyPartName,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -145,20 +103,20 @@ class BodyPartDetailPage extends StatelessWidget {
                     ),
                     borderData: FlBorderData(show: false),
                     minX: 0,
-                    maxX: timelineValues.length.toDouble() - 1,
+                    maxX: viewModel.timelineValues.length.toDouble() - 1,
                     minY: 0 - 0.01, // Adjusted to fit the grid
                     maxY: 1 + 0.01, // Adjusted to fit the grid
                     lineBarsData: [
                       LineChartBarData(
                         spots: List.generate(
-                          timelineValues.length,
-                          (i) => FlSpot(i.toDouble(), timelineValues[i]),
+                          viewModel.timelineValues.length,
+                          (i) => FlSpot(i.toDouble(), viewModel.timelineValues[i]),
                         ),
                         gradient: LinearGradient(
-                          colors: timelineColors,
+                          colors: viewModel.timelineColors,
                           stops: List.generate(
-                            timelineColors.length,
-                            (index) => index / (timelineColors.length - 1),
+                            viewModel.timelineColors.length,
+                            (index) => index / (viewModel.timelineColors.length - 1),
                           ),
                         ),
                         barWidth: 3,
@@ -173,51 +131,12 @@ class BodyPartDetailPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // Issue Section
-
-            const Text(
-              'Issue:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 8),
-
             Text(
-              texts['issue']!,
+              viewModel.getLocalizedMessage(context),
               style: const TextStyle(fontSize: 16),
             ),
 
             const SizedBox(height: 20),
-
-            // Risk Section
-
-            const Text(
-              'Risk:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 8),
-
-            Text(
-              texts['risk']!,
-              style: const TextStyle(fontSize: 16),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Fix Section
-
-            const Text(
-              'Fix:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 8),
-
-            Text(
-              texts['fix']!,
-              style: const TextStyle(fontSize: 16),
-            ),
           ],
         ),
       ),
