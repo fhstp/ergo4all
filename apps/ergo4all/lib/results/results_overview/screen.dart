@@ -24,8 +24,7 @@ class ResultsOverviewScreen extends StatelessWidget {
           .pushNamed(Routes.resultsDetail.path, arguments: timeline);
     }
 
-    // TODO: This should be an aggregate of all scores in the timeline
-    final aggregate = timeline.first.scores;
+    final aggregate = aggregateTimeline(timeline)!;
 
     return Scaffold(
       body: Column(
