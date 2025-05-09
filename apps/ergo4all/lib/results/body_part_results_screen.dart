@@ -209,6 +209,13 @@ class BodyPartResultsScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             Text(
+              localizations.body_part_title,
+              style: paragraphHeader,
+            ),
+
+            const SizedBox(height: 8),
+
+            Text(
               viewModel.getLocalizedMessage(context),
               style: infoText,
             ),
