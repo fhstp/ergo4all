@@ -1,5 +1,3 @@
-import 'package:rula/src/score.dart';
-
 /// The different rula scoring labels which can be derived from the final score.
 ///
 /// See https://www.dguv.de/medien/ifa/de/pub/rep/pdf/rep07/biar0207/rula.pdf
@@ -18,14 +16,13 @@ enum RulaLabel {
   changeImmediately
 }
 
-/// Gets the corresponding [RulaLabel] for a [RulaScore].
-RulaLabel rulaLabelFor(RulaScore score) {
-  return switch (score.value) {
+/// Gets the corresponding [RulaLabel] for a [score].
+RulaLabel rulaLabelFor(int score) {
+  return switch (score) {
     1 || 2 => RulaLabel.acceptable,
     3 || 4 => RulaLabel.changeInFuture,
     5 || 6 => RulaLabel.changeSoon,
     >= 7 => RulaLabel.changeImmediately,
-    _ =>
-      throw AssertionError('Score is out of range for valid RulaScore values')
+    _ => throw AssertionError('Score is out of range for valid int values')
   };
 }

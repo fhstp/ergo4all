@@ -1,14 +1,17 @@
 import 'dart:math';
 
+import 'package:common/func_ext.dart';
+import 'package:common/pair_utils.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_results_screen.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
-@immutable
-
 /// Manages colors for the RULA score visualization
+@immutable
 class ColorMapper {
   /// #BFD7EA
   static const rulaLow = Color(0xFFBFD7EA);
@@ -44,16 +47,6 @@ class ColorMapper {
     return rulaHigh;
   }
 }
-
-@immutable
-class TimelineEntry {
-  const TimelineEntry({required this.timestamp, required this.sheet});
-
-  final int timestamp;
-  final RulaSheet sheet;
-}
-
-typedef RulaTimeline = IList<TimelineEntry>;
 
 class ResultsDetailScreen extends StatefulWidget {
   const ResultsDetailScreen({super.key});

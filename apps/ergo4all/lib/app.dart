@@ -11,6 +11,7 @@ import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
 import 'package:ergo4all/results/results_detail_screen.dart';
+import 'package:ergo4all/results/results_overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
@@ -60,7 +61,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
         Routes.scenarioDetail.path: (context) => const ScenarioDetailScreen(),
         Routes.liveAnalysis.path: (context) => const LiveAnalysisScreen(),
-        Routes.results.path: (context) => const ResultsDetailScreen(),
+        Routes.resultsOverview.path: (context) => const ResultsOverviewScreen(),
+        Routes.resultsDetail.path: (context) => const ResultsDetailScreen(),
         Routes.preIntro.path: (context) => const PreIntroScreen(),
         Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
         Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),

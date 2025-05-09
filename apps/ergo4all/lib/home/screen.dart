@@ -59,12 +59,12 @@ class HomeScreen extends HookWidget {
             child: Column(
               children: [
                 Image.asset(
-                  'assets/images/full_body_blue.png',
+                  'assets/images/puppet/full_body_blue.png',
                   height: 240,
                 ),
                 //const Spacer(flex: 2),
                 uiState.user.match(
-                      () => const ShimmerBox(width: 200, height: 24),
+                  () => const ShimmerBox(width: 200, height: 24),
                   UserWelcomeHeader.new,
                 ),
                 ElevatedButton(

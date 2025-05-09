@@ -7,13 +7,6 @@ extension PipeExt<T> on T {
   U pipe<U>(U Function(T) f) {
     return f(this);
   }
-
-  /// Pipes this value into the given function [f], but returns the original
-  /// value. This is similar to the `..` operator.
-  T tap<U>(U Function(T) f) {
-    f(this);
-    return this;
-  }
 }
 
 /// Extensions for function composition
