@@ -185,14 +185,14 @@ class BodyPartResultsScreen extends StatelessWidget {
                       ),
                       borderData: FlBorderData(show: false),
                       minX: 0,
-                      maxX: medianTimelineValues.length.toDouble() - 1,
+                      maxX: viewModel.medianTimelineValues.length.toDouble() - 1,
                       minY: 0 - 0.01, // Adjusted to fit the grid
                       maxY: 1 + 0.01, // Adjusted to fit the grid
                       lineBarsData: [
                         LineChartBarData(
                           spots: List.generate(
-                            medianTimelineValues.length,
-                            (i) => FlSpot(i.toDouble(), medianTimelineValues[i]),
+                            viewModel.medianTimelineValues.length,
+                            (i) => FlSpot(i.toDouble(), viewModel.medianTimelineValues[i]),
                           ),
                           color: Colors.grey,
                           barWidth: 3,
