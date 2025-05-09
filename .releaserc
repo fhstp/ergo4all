@@ -30,7 +30,7 @@
       "@semantic-release/git",
       {
         "assets": [
-          "pubspec.yaml",
+          "**/pubspec.yaml",
           "CHANGELOG.md"
         ],
         "message": "ci: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
