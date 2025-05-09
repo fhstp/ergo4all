@@ -106,11 +106,12 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     List<FlSpot> graphLineFor(
-      int Function(RulaSheet) selector,
+      int Function(RulaScores) selector,
       int maxValue,
     ) {
       return timeline.map((entry) {
-        final score = selector(entry.sheet);
+        final scores = scoresOf(entry.sheet);
+        final score = selector(scores);
         final x = graphXFor(entry.timestamp);
         final y = normalizeScore(score, maxValue);
         return FlSpot(x, y);
@@ -118,11 +119,19 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     final lineChartData = IList([
-      graphLineFor(calcUpperArmScore.compose(Pair.reduce(worse)), 6),
-      graphLineFor(calcLowerArmScore.compose(Pair.reduce(worse)), 3),
-      graphLineFor(calcTrukScore, 6),
-      graphLineFor(calcNeckScore, 6),
-      graphLineFor(calcLegScore, 2),
+      graphLineFor(
+        ((RulaScores scores) => scores.upperArmScores)
+            .compose(Pair.reduce(worse)),
+        6,
+      ),
+      graphLineFor(
+        ((RulaScores scores) => scores.lowerArmScores)
+            .compose(Pair.reduce(worse)),
+        3,
+      ),
+      graphLineFor((RulaScores scores) => scores.trunkScore, 6),
+      graphLineFor((RulaScores scores) => scores.neckScore, 6),
+      graphLineFor((RulaScores scores) => scores.legScore, 2),
     ]);
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;

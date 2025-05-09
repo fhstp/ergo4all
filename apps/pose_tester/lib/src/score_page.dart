@@ -21,18 +21,18 @@ class ScorePage extends StatefulWidget {
 }
 
 class _ScorePageState extends State<ScorePage> {
-  Option<RulaSheet> currentSheet = none();
+  Option<RulaScores> currentScores = none();
 
   Future<void> refreshSheet() async {
     setState(() {
-      currentSheet = none();
+      currentScores = none();
     });
 
     await Future.value(Null);
 
     widget.angles.match(() {}, (angles) {
       setState(() {
-        currentSheet = Some(rulaSheetFromAngles(angles));
+        currentScores = Some(rulaSheetFromAngles(angles)).map(scoresOf);
       });
     });
   }
@@ -54,109 +54,109 @@ class _ScorePageState extends State<ScorePage> {
   Widget build(BuildContext context) {
     return Page(
       title: 'Score',
-      body: currentSheet.match(
+      body: currentScores.match(
         ProgressIndicator.new,
-        (sheet) => SingleChildScrollView(
+        (scores) => SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ScoreDisplay(
                 label: 'Full',
-                score: calcFullScore(sheet),
+                score: scores.fullScore,
                 maxScore: 7,
                 level: 0,
               ),
               ScoreDisplay(
                 label: 'Upper arm',
-                score: calcUpperArmScore(sheet).pipe(Pair.reduce(worse)),
+                score: scores.upperArmScores.pipe(Pair.reduce(worse)),
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Shoulder flexion',
-                score: calcShoulderFlexionScore(sheet).pipe(Pair.reduce(worse)),
+                score: scores.upperArmPositionScores.pipe(Pair.reduce(worse)),
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Shoulder abduction',
                 score:
-                    calcShoulderAbductionBonus(sheet).pipe(Pair.reduce(worse)),
+                    scores.upperArmAbductedAdjustments.pipe(Pair.reduce(worse)),
                 maxScore: 1,
                 minScore: 0,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Lower arm',
-                score: calcLowerArmScore(sheet).pipe(Pair.reduce(worse)),
+                score: scores.lowerArmScores.pipe(Pair.reduce(worse)),
                 maxScore: 3,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Elbow flexion',
-                score: calcElbowFlexionScore(sheet).pipe(Pair.reduce(worse)),
+                score: scores.lowerArmPositionScores.pipe(Pair.reduce(worse)),
                 maxScore: 2,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Wrist flexion',
-                score: calcWristScore(sheet).pipe(Pair.reduce(worse)),
+                score: scores.wristScores.pipe(Pair.reduce(worse)),
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Neck',
-                score: calcNeckScore(sheet),
+                score: scores.neckScore,
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Flexion',
-                score: calcNeckFlexionScore(sheet),
+                score: scores.neckPositionScore,
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Lateral flexion',
-                score: calcLateralNeckFlexionBonus(sheet),
+                score: scores.neckSideBendAdjustment,
                 minScore: 0,
                 maxScore: 1,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Twist',
-                score: calcNeckTwistBonus(sheet),
+                score: scores.neckTwistAdjustment,
                 minScore: 0,
                 maxScore: 1,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Trunk',
-                score: calcTrukScore(sheet),
+                score: scores.trunkScore,
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Hip flexion',
-                score: calcHipFlexionScore(sheet),
+                score: scores.trunkPositionScore,
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Twist',
-                score: calcTrunkTwistBonus(sheet),
+                score: scores.trunkTwistAdjustment,
                 maxScore: 1,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Lateral flexion',
-                score: calcTrunkLateralFlexionBonus(sheet),
+                score: scores.trunkSideBendAdjustment,
                 maxScore: 1,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Leg',
-                score: calcLegScore(sheet),
+                score: scores.legScore,
                 maxScore: 2,
                 level: 1,
               ),

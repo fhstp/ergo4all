@@ -47,10 +47,10 @@ const _bodyPartsInDisplayOrder = [
 /// Displays the aggregate score of a user using a puppet.
 class BodyScoreDisplay extends StatelessWidget {
   ///
-  const BodyScoreDisplay(this.sheet, {super.key});
+  const BodyScoreDisplay(this.scores, {super.key});
 
-  /// The sheet to display.
-  final RulaSheet sheet;
+  /// The scores to display.
+  final RulaScores scores;
 
   @override
   Widget build(BuildContext context) {
@@ -58,21 +58,17 @@ class BodyScoreDisplay extends StatelessWidget {
       // This is really unoptimized. We recalculate a whole bunch of
       // scores multiple times. Oh well.
       return switch (part) {
-        _BodyPart.head => normalizeScore(calcNeckScore(sheet), 6),
-        _BodyPart.leftHand => normalizeScore(calcWristScore(sheet).$1, 4),
-        _BodyPart.rightHand => normalizeScore(calcWristScore(sheet).$2, 4),
+        _BodyPart.head => normalizeScore(scores.neckScore, 6),
+        _BodyPart.leftHand => normalizeScore(scores.wristScores.$1, 4),
+        _BodyPart.rightHand => normalizeScore(scores.wristScores.$2, 4),
         _BodyPart.leftLeg ||
         _BodyPart.rightLeg =>
-          normalizeScore(calcLegScore(sheet), 2),
-        _BodyPart.leftUpperArm =>
-          normalizeScore(calcUpperArmScore(sheet).$1, 6),
-        _BodyPart.rightUpperArm =>
-          normalizeScore(calcUpperArmScore(sheet).$2, 6),
-        _BodyPart.leftLowerArm =>
-          normalizeScore(calcLowerArmScore(sheet).$1, 3),
-        _BodyPart.rightLowerArm =>
-          normalizeScore(calcLowerArmScore(sheet).$2, 3),
-        _BodyPart.upperBody => normalizeScore(calcTrukScore(sheet), 6),
+          normalizeScore(scores.legScore, 2),
+        _BodyPart.leftUpperArm => normalizeScore(scores.upperArmScores.$1, 6),
+        _BodyPart.rightUpperArm => normalizeScore(scores.upperArmScores.$2, 6),
+        _BodyPart.leftLowerArm => normalizeScore(scores.lowerArmScores.$1, 3),
+        _BodyPart.rightLowerArm => normalizeScore(scores.lowerArmScores.$2, 3),
+        _BodyPart.upperBody => normalizeScore(scores.trunkScore, 6),
       };
     }
 

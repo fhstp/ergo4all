@@ -8,9 +8,9 @@ import 'sheet_data.dart';
 
 void main() {
   Glados(any.rulaSheet).test('should have output in range [1; 7]', (sheet) {
-    final finalScore = calcFullScore(sheet);
-    expect(finalScore, greaterThanOrEqualTo(1));
-    expect(finalScore, lessThanOrEqualTo(7));
+    final scores = scoresOf(sheet);
+    expect(scores.fullScore, greaterThanOrEqualTo(1));
+    expect(scores.fullScore, lessThanOrEqualTo(7));
   });
 
   test('should have correct score for person standing straight', () {
@@ -28,9 +28,9 @@ void main() {
       isStandingOnBothLegs: true,
     );
 
-    final finalScore = calcFullScore(sheet);
+    final scores = scoresOf(sheet);
 
-    expect(finalScore, equals(2));
+    expect(scores.fullScore, equals(2));
   });
 
   test('should have correct score for person picking something off ground', () {
@@ -51,9 +51,9 @@ void main() {
       isStandingOnBothLegs: true,
     );
 
-    final finalScore = calcFullScore(sheet);
+    final scores = scoresOf(sheet);
 
-    expect(finalScore, equals(4));
+    expect(scores.fullScore, equals(4));
   });
 
   test('should have correct score for person lifting something above head', () {
@@ -77,8 +77,8 @@ void main() {
       isStandingOnBothLegs: true,
     );
 
-    final finalScore = calcFullScore(sheet);
+    final scores = scoresOf(sheet);
 
-    expect(finalScore, equals(5));
+    expect(scores.fullScore, equals(5));
   });
 }

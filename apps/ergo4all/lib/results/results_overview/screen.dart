@@ -3,6 +3,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/results_overview/body_score_display.dart';
 import 'package:flutter/material.dart';
+import 'package:rula/rula.dart';
 
 /// The screen for viewing an overview over the analysis results.
 class ResultsOverviewScreen extends StatelessWidget {
@@ -24,13 +25,13 @@ class ResultsOverviewScreen extends StatelessWidget {
           .pushNamed(Routes.resultsDetail.path, arguments: timeline);
     }
 
-    // TODO: This should be an aggregate of all sheets in the timeline
-    final displaySheet = timeline.first.sheet;
+    // TODO: This should be an aggregate of all scores in the timeline
+    final aggregate = scoresOf(timeline.first.sheet);
 
     return Scaffold(
       body: Column(
         children: [
-          BodyScoreDisplay(displaySheet),
+          BodyScoreDisplay(aggregate),
           ElevatedButton(
             onPressed: goToDetails,
             style: secondaryTextButtonStyle,
