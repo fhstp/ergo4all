@@ -1,3 +1,10 @@
+# [1.51.0](https://github.com/fhstp/ergo4all/compare/v1.50.0...v1.51.0) (2025-05-09)
+
+
+### Features
+
+* rework results and body part screens ([dcecab8](https://github.com/fhstp/ergo4all/commit/dcecab89ac6a5f8c71b054cedb2b04a735c9a9e7))
+
 # [1.50.0](https://github.com/fhstp/ergo4all/compare/v1.49.0...v1.50.0) (2025-05-09)
 
 
