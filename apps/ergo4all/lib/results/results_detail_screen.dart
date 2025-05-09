@@ -100,12 +100,12 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     List<double> transformData(
-      RulaScore Function(RulaSheet) selector,
+      int Function(RulaScores) selector,
       int maxValue,
     ) {
       return timeline.map((entry) {
-        final value = selector(entry.sheet).value;
-        return (value - 1) / (maxValue - 1);
+        final score = selector(entry.scores);
+        return normalizeScore(score, maxValue);
       }).toList();
     }
 
@@ -153,11 +153,13 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     final lineChartData = IList([
-      transformData(calcUpperArmScore, 6),
-      transformData(calcLowerArmScore, 3),
-      transformData(calcTrukScore, 6),
-      transformData(calcNeckScore, 6),
-      transformData(calcLegScore, 2),
+      transformData(((RulaScores scores) => scores.upperArmScores)
+            .compose(Pair.reduce(worse)), 6,),
+      transformData(((RulaScores scores) => scores.lowerArmScores)
+            .compose(Pair.reduce(worse)), 3,),
+      transformData((RulaScores scores) => scores.trunkScore, 6),
+      transformData((RulaScores scores) => scores.neckScore, 6),
+      transformData((RulaScores scores) => scores.legScore, 2),
     ]);
 
     final avgLineChartValues = IList(
