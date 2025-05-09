@@ -110,8 +110,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       int maxValue,
     ) {
       return timeline.map((entry) {
-        final scores = scoresOf(entry.sheet);
-        final score = selector(scores);
+        final score = selector(entry.scores);
         final x = graphXFor(entry.timestamp);
         final y = normalizeScore(score, maxValue);
         return FlSpot(x, y);

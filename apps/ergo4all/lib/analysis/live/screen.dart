@@ -22,6 +22,7 @@ import 'package:pose_transforming/denoise.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
+import 'package:rula/rula.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
@@ -86,7 +87,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final angles = calculateAngles(pose, coronal, sagittal, transverse);
 
     final sheet = rulaSheetFromAngles(angles);
-    timeline.add(TimelineEntry(timestamp: timestamp, sheet: sheet));
+    timeline.add(TimelineEntry(timestamp: timestamp, scores: scoresOf(sheet)));
   }
 
   void onFrame(_Frame frame) {
