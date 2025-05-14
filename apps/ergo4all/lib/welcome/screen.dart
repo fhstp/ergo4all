@@ -48,7 +48,12 @@ class WelcomeScreen extends HookWidget {
                 localizations.welcome_header,
                 style: h3Style.copyWith(color: white),
               ),
-              const Image(image: CustomImages.logoWhite),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(
+                    xlargeSpace, mediumSpace, xlargeSpace,0,
+                ),
+                child: Image(image: CustomImages.logoWhite),
+              ),
               const Spacer(flex: 3),
               ElevatedButton(
                 key: const Key('start'),
