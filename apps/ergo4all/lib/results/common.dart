@@ -72,3 +72,36 @@ RulaScores? aggregateTimeline(RulaTimeline timeline) {
     fullScore: aggregateScoreOf((scores) => scores.fullScore),
   );
 }
+
+/// The different body parts for which we collect and display scores.
+enum BodyPart {
+  ///
+  head,
+
+  ///
+  leftHand,
+
+  ///
+  leftLeg,
+
+  ///
+  leftLowerArm,
+
+  ///
+  leftUpperArm,
+
+  ///
+  rightHand,
+
+  ///
+  rightLeg,
+
+  ///
+  rightLowerArm,
+
+  ///
+  rightUpperArm,
+
+  ///
+  upperBody
+}
