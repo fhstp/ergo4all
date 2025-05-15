@@ -1,5 +1,6 @@
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/results_overview/body_score_display.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class ResultsOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     final timeline =
         ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
 
@@ -29,6 +32,11 @@ class ResultsOverviewScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
+          Text(
+            '${localizations.results_ergo_score_header}:',
+            style: h2Style,
+            textAlign: TextAlign.center,
+          ),
           BodyScoreDisplay(aggregate),
           ElevatedButton(
             onPressed: goToDetails,

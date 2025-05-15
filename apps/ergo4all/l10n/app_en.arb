@@ -221,5 +221,7 @@
   "body_part_title": "Analysis",
   "body_part_score_plot_title": "Ergonomics Score",
   "body_part_static_plot_title": "Muscle Load Score",
-  "body_part_static_plot_condition": "The recording is too short to display the muscle load score. Please record at least 15 seconds to visualize the muscle load diagram."
+  "body_part_static_plot_condition": "The recording is too short to display the muscle load score. Please record at least 15 seconds to visualize the muscle load diagram.",
+  "results_ergo_score_header": "Your Ergo Score",
+  "@results_ergo_score_header": {}
 }
