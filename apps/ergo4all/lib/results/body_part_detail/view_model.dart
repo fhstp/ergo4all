@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
-import 'package:ergo4all/results/results_detail_screen.dart';
+import 'package:ergo4all/results/detail/screen.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, String Function(AppLocalizations)> _localizationMap = {

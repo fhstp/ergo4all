@@ -10,7 +10,7 @@ import 'package:ergo4all/onboarding/non_expert_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
-import 'package:ergo4all/results/results_detail_screen.dart';
+import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
