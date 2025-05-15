@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/color_mapper.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:flutter/material.dart';
 
@@ -39,22 +38,14 @@ class BodyPartResultsViewModel {
     required this.timelineValues,
     required this.medianTimelineValues,
     required this.bodyPartGroup,
-  }) : timelineColors = _colorForValue(timelineValues);
+  });
 
   final String bodyPartName;
 
   /// The [BodyPartGroup] to display.
   final BodyPartGroup bodyPartGroup;
   final List<double> timelineValues;
-  final List<Color> timelineColors;
   final List<double> medianTimelineValues;
-
-  static List<Color> _colorForValue(List<double> values) {
-    if (values.isEmpty) return [];
-    return values.map((spot) {
-      return ColorMapper.getColorForValue(spot, dark: true);
-    }).toList();
-  }
 
   static double calculateMean(List<double> numbers) {
     if (numbers.isEmpty) return 0;
