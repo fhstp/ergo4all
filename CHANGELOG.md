@@ -1,3 +1,14 @@
+# [1.52.0](https://github.com/fhstp/ergo4all/compare/v1.51.0...v1.52.0) (2025-05-15)
+
+
+### Features
+
+* adjust text styles ([7942953](https://github.com/fhstp/ergo4all/commit/79429533c40cd082232828967b60b6f6d994a6d0))
+* **app:** add body-part choice text ([657721a](https://github.com/fhstp/ergo4all/commit/657721a922723a71c56371cbfad25476115ca6e2))
+* **app:** add ergo-score header ([7609f98](https://github.com/fhstp/ergo4all/commit/7609f98b81e3b8234678ebcf085c34bfd91d3e21))
+* **common_ui:** add h2 style ([1bd57df](https://github.com/fhstp/ergo4all/commit/1bd57df043b73515e108a82e7ec1bdb931c2c534))
+* **common_ui:** adjust header styles ([260cc33](https://github.com/fhstp/ergo4all/commit/260cc33dd014ae9af2cd4821ef103885ec9f9dbb))
+
 # [1.51.0](https://github.com/fhstp/ergo4all/compare/v1.50.0...v1.51.0) (2025-05-09)
 
 
