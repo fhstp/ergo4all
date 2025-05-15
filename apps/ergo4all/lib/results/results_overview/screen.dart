@@ -38,6 +38,11 @@ class ResultsOverviewScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           BodyScoreDisplay(aggregate),
+          Text(
+            localizations.results_press_body_part,
+            style: staticBodyStyle,
+            textAlign: TextAlign.center,
+          ),
           ElevatedButton(
             onPressed: goToDetails,
             style: secondaryTextButtonStyle,

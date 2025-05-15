@@ -223,5 +223,9 @@
   "body_part_static_plot_title": "Muscle Load Score",
   "body_part_static_plot_condition": "The recording is too short to display the muscle load score. Please record at least 15 seconds to visualize the muscle load diagram.",
   "results_ergo_score_header": "Your Ergo Score",
-  "@results_ergo_score_header": {}
+  "@results_ergo_score_header": {},
+  "results_press_body_part": "Press on a body part to get more information.",
+  "@results_press_body_part": {
+    "description": "Text that informs users that they can press a body part on the puppet."
+  }
 }

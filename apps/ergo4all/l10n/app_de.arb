@@ -121,5 +121,6 @@
   "body_part_score_plot_title": "Ergonomiebewertung",
   "body_part_static_plot_title": "Akkumulierte Muskelbelastung",
   "body_part_static_plot_condition": "Die Aufnahme ist zu kurz, um den Muskelbelastungswert anzuzeigen. Bitte nehmen Sie mindestens 15 Sekunden auf, um das Muskelbelastungsdiagramm anzuzeigen.",
-  "results_ergo_score_header": "Dein Ergo Score"
+  "results_ergo_score_header": "Dein Ergo Score",
+  "results_press_body_part": "Tippe einen Körperteil um mehr Informationen zu bekommen."
 }
