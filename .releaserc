@@ -23,7 +23,7 @@
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "dart ./tools/update_versions.dart"
+        "prepareCmd": "dart ./tools/update_versions.dart"
       }
     ],
     [
