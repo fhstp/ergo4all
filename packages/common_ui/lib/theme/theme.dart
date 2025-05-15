@@ -21,30 +21,22 @@ final _appBarTheme = AppBarTheme(
   titleTextStyle: h1Style,
 );
 
-const _elevatedButtonTheme = ElevatedButtonThemeData(
+final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    minimumSize: WidgetStatePropertyAll(Size(128, 48)),
-    padding: WidgetStatePropertyAll(
+    minimumSize: const WidgetStatePropertyAll(Size(128, 48)),
+    padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(
         vertical: smallSpace,
         horizontal: mediumSpace,
       ),
     ),
-    textStyle: WidgetStatePropertyAll(
-      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    ),
-    shape: WidgetStatePropertyAll(
+    textStyle: WidgetStatePropertyAll(buttonLabelStyle),
+    shape: const WidgetStatePropertyAll(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
     ),
   ),
-);
-
-final _textTheme = TextTheme(
-  headlineLarge: h1Style,
-  headlineMedium: h3Style,
-  headlineSmall: h4Style,
 );
 
 const _textButtonTheme = TextButtonThemeData(
@@ -61,7 +53,6 @@ final ergo4allTheme = ThemeData(
   appBarTheme: _appBarTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   textButtonTheme: _textButtonTheme,
-  textTheme: _textTheme,
   fontFamily: 'Montserrat',
   useMaterial3: true,
 );

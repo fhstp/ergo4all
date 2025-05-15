@@ -31,7 +31,8 @@ class WelcomeScreen extends HookWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: SizedBox(// Stretches to screen width
+            child: SizedBox(
+              // Stretches to screen width
               height: 600, // Keeps fixed height
               child: SvgPicture.asset(
                 'assets/images/top_circle_large.svg',

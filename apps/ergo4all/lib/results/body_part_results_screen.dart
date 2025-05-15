@@ -65,7 +65,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     final infoTextSmall = infoText.copyWith(fontSize: 14);
 
     // Need at least 15s of data to show the static load chart
-    final showStaticLoad = medianTimelineValues.length > 140; 
+    final showStaticLoad = medianTimelineValues.length > 140;
 
     return Scaffold(
       appBar: AppBar(
@@ -111,7 +111,7 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             Text(
               localizations.body_part_score_plot_title,
-              style: paragraphHeader,
+              style: paragraphHeaderStyle,
             ),
 
             const SizedBox(height: 20),
@@ -148,7 +148,10 @@ class BodyPartResultsScreen extends StatelessWidget {
                             } else if (value == 1.0) {
                               text = localizations.results_score_high_short;
                             }
-                            return Text(text, style: infoTextSmall,);
+                            return Text(
+                              text,
+                              style: infoTextSmall,
+                            );
                           },
                         ),
                       ),
@@ -185,12 +188,13 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             Text(
               localizations.body_part_static_plot_title,
-              style: paragraphHeader,
+              style: paragraphHeaderStyle,
             ),
 
             const SizedBox(height: 20),
 
-            if (showStaticLoad) SizedBox(
+            if (showStaticLoad)
+              SizedBox(
                 height: 132,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
@@ -222,7 +226,10 @@ class BodyPartResultsScreen extends StatelessWidget {
                               } else if (value == 1.0) {
                                 text = 'High';
                               }
-                              return Text(text, style: infoTextSmall,);
+                              return Text(
+                                text,
+                                style: infoTextSmall,
+                              );
                             },
                           ),
                         ),
@@ -236,7 +243,8 @@ class BodyPartResultsScreen extends StatelessWidget {
                         LineChartBarData(
                           spots: List.generate(
                             medianTimelineValues.length,
-                            (i) => FlSpot(i.toDouble(), medianTimelineValues[i]),
+                            (i) =>
+                                FlSpot(i.toDouble(), medianTimelineValues[i]),
                           ),
                           color: Colors.grey,
                           barWidth: 3,
@@ -247,10 +255,12 @@ class BodyPartResultsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ) else Text(
+              )
+            else
+              Text(
                 localizations.body_part_static_plot_condition,
                 style: infoText,
-            ),
+              ),
 
             const SizedBox(height: 20),
 
@@ -258,7 +268,7 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             Text(
               'Issue:',
-              style: paragraphHeader,
+              style: paragraphHeaderStyle,
             ),
 
             const SizedBox(height: 8),
@@ -274,7 +284,7 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             Text(
               'Risk:',
-              style: paragraphHeader,
+              style: paragraphHeaderStyle,
             ),
 
             const SizedBox(height: 8),
@@ -290,7 +300,7 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             Text(
               'Fix:',
-              style: paragraphHeader,
+              style: paragraphHeaderStyle,
             ),
 
             const SizedBox(height: 8),

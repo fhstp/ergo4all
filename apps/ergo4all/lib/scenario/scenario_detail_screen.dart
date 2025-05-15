@@ -70,20 +70,22 @@ class ScenarioDetailScreen extends StatelessWidget {
           ),
           Text(
             localizations.common_description,
-            style: paragraphHeader,
+            style: paragraphHeaderStyle,
             textAlign: TextAlign.start,
           ),
           Text(
             description,
+            style: dynamicBodyStyle,
             textAlign: TextAlign.start,
           ),
           Text(
             localizations.common_expectation,
-            style: paragraphHeader,
+            style: paragraphHeaderStyle,
             textAlign: TextAlign.start,
           ),
           Text(
             expectation,
+            style: dynamicBodyStyle,
             textAlign: TextAlign.start,
           ),
           ElevatedButton(

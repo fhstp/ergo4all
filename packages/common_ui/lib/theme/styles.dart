@@ -63,20 +63,53 @@ final h2Style = GoogleFonts.montserrat(
 );
 
 /// Text style for H3 headers.
-const h3Style =
-    TextStyle(fontWeight: FontWeight.w500, fontSize: 36, color: woodSmoke);
+final h3Style = GoogleFonts.montserrat(
+  fontWeight: FontWeight.w500,
+  fontSize: 36,
+  color: woodSmoke,
+);
 
 /// Text style for H4 headers.
 final h4Style = GoogleFonts.nunito(
   fontWeight: FontWeight.w600,
   fontSize: 30,
+  color: woodSmoke,
 );
 
 /// Small header for paragraphs
-final paragraphHeader =
-    GoogleFonts.nunito(fontWeight: FontWeight.w700, fontSize: 20);
+/// This corresponds to "Überschrift Fließtext" in the Figma.
+final paragraphHeaderStyle = GoogleFonts.nunito(
+  fontWeight: FontWeight.w700,
+  fontSize: 20,
+  color: woodSmoke,
+);
 
-/// Text style for body text
+/// Body text for static content
+/// This corresponds to "Fließtext statisch" in the Figma.
+final staticBodyStyle = GoogleFonts.nunito(
+  fontWeight: FontWeight.w400,
+  fontSize: 24,
+  color: woodSmoke,
+);
+
+/// Body text for dynamic content
+/// This corresponds to "Fließtext dynamisch" in the Figma.
+final dynamicBodyStyle = GoogleFonts.nunito(
+  fontWeight: FontWeight.w400,
+  fontSize: 20,
+  color: woodSmoke,
+);
+
+/// Text style for text input fields.
+/// This corresponds to "Eingabefeld" in the Figma.
+final inputTextStyle = GoogleFonts.nunito(
+  fontWeight: FontWeight.w400,
+  fontSize: 20,
+  color: woodSmoke,
+);
+
+/// Text style for smaller info texts.
+/// This corresponds to "Infotext" in the Figma.
 final infoText = GoogleFonts.nunito(
   fontWeight: FontWeight.w400,
   fontSize: 16,
