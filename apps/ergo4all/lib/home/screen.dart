@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
-import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
@@ -29,7 +28,7 @@ class HomeScreen extends HookWidget {
     }
 
     Future<void> goToTips() async {
-      await Navigator.of(context).pushNamed(Routes.tips.path);
+      await Navigator.of(context).pushNamed(Routes.tipChoice.path);
     }
 
     useEffect(
@@ -62,7 +61,6 @@ class HomeScreen extends HookWidget {
                   'assets/images/puppet/full_body_blue.png',
                   height: 240,
                 ),
-                //const Spacer(flex: 2),
                 uiState.user.match(
                   () => const ShimmerBox(width: 200, height: 24),
                   UserWelcomeHeader.new,
