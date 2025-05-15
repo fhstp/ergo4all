@@ -120,31 +120,42 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                 key: const Key('heatmap'),
                 width: heatmapWidth,
                 height: heatmapHeight,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 50),
-                  child: GestureDetector(
-                    onTapDown: (details) {
-                      // Find row of the bar that was tapped
-                      final rowHeight = heatmapHeight / labels.length;
-                      final rowIndex =
-                          (details.localPosition.dy / rowHeight).floor();
-                      if (rowIndex >= 0 && rowIndex < labels.length) {
-                        _navigateToBodyPartPage(
-                          labels[rowIndex],
-                          BodyPartGroup.values[rowIndex],
-                          avgLineChartValues[rowIndex],
-                          medianTimelineValues[rowIndex],
-                        );
-                      }
-                    },
-                    child: CustomPaint(
-                      painter: HeatmapPainter(
-                        data: avgLineChartValues,
-                        rows: labels.length,
-                        labels: labels,
-                      ),
-                    ),
-                  ),
+                child: Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: BodyPartGroup.values
+                      .map(
+                        (part) => Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              _navigateToBodyPartPage(
+                                labels[part.index],
+                                BodyPartGroup.values[part.index],
+                                avgLineChartValues[part.index],
+                                medianTimelineValues[part.index],
+                              );
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                SizedBox(
+                                  width: 50,
+                                  child: Text(labels[part.index]),
+                                ),
+                                Expanded(
+                                  child: CustomPaint(
+                                    painter: HeatmapPainter(
+                                      normalizedScores:
+                                          avgLineChartValues[part.index],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
             ),
