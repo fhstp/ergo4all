@@ -20,29 +20,6 @@ class ResultsDetailScreen extends StatefulWidget {
 }
 
 class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
-  void _navigateToBodyPartPage(
-    String bodyPartTitle,
-    BodyPartGroup bodyPart,
-    List<double> avgTimelineValues,
-    List<double> medianTimelineValues,
-  ) {
-    final bodyPartDetailViewModel = BodyPartResultsViewModel(
-      bodyPartName: bodyPartTitle,
-      timelineValues: avgTimelineValues,
-      medianTimelineValues: medianTimelineValues,
-      bodyPartGroup: bodyPart,
-    );
-
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (context) => BodyPartResultsScreen(
-          viewModel: bodyPartDetailViewModel,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -96,6 +73,24 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       lineChartData.map((spots) => calculateRunningMedian(spots, 60)).toList(),
     );
 
+    void navigateToBodyPartPage(BodyPartGroup bodyPart) {
+      final bodyPartDetailViewModel = BodyPartResultsViewModel(
+        bodyPartName: labels[bodyPart.index],
+        timelineValues: avgLineChartValues[bodyPart.index],
+        medianTimelineValues: medianTimelineValues[bodyPart.index],
+        bodyPartGroup: bodyPart,
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (context) => BodyPartResultsScreen(
+            viewModel: bodyPartDetailViewModel,
+          ),
+        ),
+      );
+    }
+
     final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
@@ -128,12 +123,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                         (part) => Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              _navigateToBodyPartPage(
-                                labels[part.index],
-                                BodyPartGroup.values[part.index],
-                                avgLineChartValues[part.index],
-                                medianTimelineValues[part.index],
-                              );
+                              navigateToBodyPartPage(part);
                             },
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
