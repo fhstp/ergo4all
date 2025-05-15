@@ -11,7 +11,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     super.key,
   });
 
-  final BodyPartDetailPageViewModel viewModel;
+  final BodyPartResultsViewModel viewModel;
   final Color color = cardinal;
 
   @override

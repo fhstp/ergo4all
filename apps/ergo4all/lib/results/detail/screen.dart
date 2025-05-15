@@ -25,7 +25,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     List<double> avgTimelineValues,
     List<double> medianTimelineValues,
   ) {
-    final bodyPartDetailViewModel = BodyPartDetailPageViewModel(
+    final bodyPartDetailViewModel = BodyPartResultsViewModel(
       bodyPartName: bodyPartTitle,
       timelineValues: avgTimelineValues,
       medianTimelineValues: medianTimelineValues,

@@ -33,8 +33,8 @@ extension StringExtensions on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
 }
 
-class BodyPartDetailPageViewModel {
-  BodyPartDetailPageViewModel({
+class BodyPartResultsViewModel {
+  BodyPartResultsViewModel({
     required this.bodyPartName,
     required this.timelineValues,
     required this.medianTimelineValues,
