@@ -2,22 +2,52 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
+/// The different body parts for which we collect and display scores.
 enum _BodyPart {
-  head('head'),
-  leftHand('left_hand'),
-  leftLeg('left_leg'),
-  leftLowerArm('left_lower_arm'),
-  leftUpperArm('left_upper_arm'),
-  rightHand('right_hand'),
-  rightLeg('right_leg'),
-  rightLowerArm('right_lower_arm'),
-  rightUpperArm('right_upper_arm'),
-  upperBody('upper_body'),
-  ;
+  ///
+  head,
 
-  const _BodyPart(this.fileName);
+  ///
+  leftHand,
 
-  final String fileName;
+  ///
+  leftLeg,
+
+  ///
+  leftLowerArm,
+
+  ///
+  leftUpperArm,
+
+  ///
+  rightHand,
+
+  ///
+  rightLeg,
+
+  ///
+  rightLowerArm,
+
+  ///
+  rightUpperArm,
+
+  ///
+  upperBody
+}
+
+String _fileNameForPart(_BodyPart part) {
+  return switch (part) {
+    _BodyPart.head => 'head',
+    _BodyPart.leftHand => 'left_hand',
+    _BodyPart.leftLeg => 'left_leg',
+    _BodyPart.leftLowerArm => 'left_lower_arm',
+    _BodyPart.leftUpperArm => 'left_upper_arm',
+    _BodyPart.rightHand => 'right_hand',
+    _BodyPart.rightLeg => 'right_leg',
+    _BodyPart.rightLowerArm => 'right_lower_arm',
+    _BodyPart.rightUpperArm => 'right_upper_arm',
+    _BodyPart.upperBody => 'upper_body'
+  };
 }
 
 enum _PartColor {
@@ -27,8 +57,10 @@ enum _PartColor {
 }
 
 Widget _getBodyPartImage(_BodyPart bodyPart, _PartColor color) {
+  final fileName = _fileNameForPart(bodyPart);
   return Image.asset(
-      'assets/images/puppet/${bodyPart.fileName}_${color.name}.png');
+    'assets/images/puppet/${fileName}_${color.name}.png',
+  );
 }
 
 const _bodyPartsInDisplayOrder = [
