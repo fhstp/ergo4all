@@ -1,13 +1,11 @@
-import 'dart:math';
-
 import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_detail/view_model.dart';
-import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/color_mapper.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +19,6 @@ class ResultsDetailScreen extends StatefulWidget {
 }
 
 class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
-  final Random random = Random();
-
   void _navigateToBodyPartPage(
     String bodyPartTitle,
     BodyPartGroup bodyPart,
