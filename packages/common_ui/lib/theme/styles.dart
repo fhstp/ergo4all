@@ -52,6 +52,13 @@ final paleTextButtonStyle = ButtonStyle(
 const h1Style =
     TextStyle(fontWeight: FontWeight.w700, fontSize: 38, color: cardinal);
 
+/// Text style for H2 headers.
+final h2Style = GoogleFonts.montserrat(
+  fontWeight: FontWeight.w700,
+  fontSize: 36,
+  color: woodSmoke,
+);
+
 /// Text style for H3 headers.
 const h3Style =
     TextStyle(fontWeight: FontWeight.w500, fontSize: 36, color: woodSmoke);
