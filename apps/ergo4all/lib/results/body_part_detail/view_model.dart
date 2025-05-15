@@ -34,12 +34,12 @@ extension StringExtensions on String {
 }
 
 class BodyPartDetailPageViewModel {
-  BodyPartDetailPageViewModel(
-      {required this.bodyPartName,
-      required this.timelineValues,
-      required this.medianTimelineValues,
-      required this.bodyPartGroup})
-      : timelineColors = _colorForValue(timelineValues);
+  BodyPartDetailPageViewModel({
+    required this.bodyPartName,
+    required this.timelineValues,
+    required this.medianTimelineValues,
+    required this.bodyPartGroup,
+  }) : timelineColors = _colorForValue(timelineValues);
 
   final String bodyPartName;
 

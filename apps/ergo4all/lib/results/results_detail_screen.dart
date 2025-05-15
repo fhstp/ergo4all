@@ -66,10 +66,11 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     List<double> medianTimelineValues,
   ) {
     final bodyPartDetailViewModel = BodyPartDetailPageViewModel(
-        bodyPartName: bodyPartTitle,
-        timelineValues: avgTimelineValues,
-        medianTimelineValues: medianTimelineValues,
-        bodyPartGroup: bodyPart);
+      bodyPartName: bodyPartTitle,
+      timelineValues: avgTimelineValues,
+      medianTimelineValues: medianTimelineValues,
+      bodyPartGroup: bodyPart,
+    );
 
     Navigator.push(
       context,
@@ -258,10 +259,14 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(localizations.results_score_low,
-                            style: const TextStyle(fontSize: 14)),
-                        Text(localizations.results_score_high,
-                            style: const TextStyle(fontSize: 14)),
+                        Text(
+                          localizations.results_score_low,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        Text(
+                          localizations.results_score_high,
+                          style: const TextStyle(fontSize: 14),
+                        ),
                       ],
                     ),
                   ],
