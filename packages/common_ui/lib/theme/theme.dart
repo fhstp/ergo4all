@@ -15,7 +15,7 @@ const _colorScheme = ColorScheme(
   onSurface: woodSmoke,
 );
 
-const _appBarTheme = AppBarTheme(
+final _appBarTheme = AppBarTheme(
   backgroundColor: white,
   foregroundColor: woodSmoke,
   titleTextStyle: h1Style,
