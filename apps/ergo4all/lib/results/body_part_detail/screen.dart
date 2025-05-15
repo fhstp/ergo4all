@@ -12,7 +12,6 @@ class BodyPartResultsScreen extends StatelessWidget {
   });
 
   final BodyPartResultsViewModel viewModel;
-  final Color color = cardinal;
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +42,16 @@ class BodyPartResultsScreen extends StatelessWidget {
                     height: 100,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: color.withValues(alpha: 0.3),
+                      color: cardinal.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
                       child: Text(
                         viewModel.bodyPartName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: color,
+                          color: cardinal,
                         ),
                       ),
                     ),
