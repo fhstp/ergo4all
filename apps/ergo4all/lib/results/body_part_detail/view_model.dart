@@ -1,35 +1,11 @@
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart';
-
-final Map<String, String Function(AppLocalizations)> _localizationMap = {
-  'upperArmGood': (l) => l.upperArmGood,
-  'upperArmMedium': (l) => l.upperArmMedium,
-  'upperArmLow': (l) => l.upperArmLow,
-  'lowerArmGood': (l) => l.lowerArmGood,
-  'lowerArmMedium': (l) => l.lowerArmMedium,
-  'lowerArmLow': (l) => l.lowerArmLow,
-  'trunkGood': (l) => l.trunkGood,
-  'trunkMedium': (l) => l.trunkMedium,
-  'trunkLow': (l) => l.trunkLow,
-  'neckGood': (l) => l.neckGood,
-  'neckMedium': (l) => l.neckMedium,
-  'neckLow': (l) => l.neckLow,
-  'legsGood': (l) => l.legsGood,
-  'legsMedium': (l) => l.legsMedium,
-  'legsLow': (l) => l.legsLow,
-};
 
 enum Rating {
   good,
   medium,
   low,
-}
-
-extension StringExtensions on String {
-  String capitalize() => this[0].toUpperCase() + substring(1);
 }
 
 class BodyPartResultsViewModel {
@@ -44,7 +20,7 @@ class BodyPartResultsViewModel {
   final IList<double> timelineValues;
   final IList<double> medianTimelineValues;
 
-  Rating _getRating() {
+  Rating getRating() {
     final mean = calculateMean(timelineValues);
     final coefficientOfVariation =
         calculateCoefficientOfVariation(timelineValues);
@@ -56,13 +32,5 @@ class BodyPartResultsViewModel {
     } else {
       return (coefficientOfVariation <= 0.3) ? Rating.low : Rating.medium;
     }
-  }
-
-  String getLocalizedMessage(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    final rating = _getRating();
-    final key = '${bodyPartGroup.name}${rating.name.capitalize()}';
-
-    return _localizationMap[key]?.call(loc) ?? 'Missing translation for $key';
   }
 }

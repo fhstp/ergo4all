@@ -8,6 +8,28 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+final Map<String, String Function(AppLocalizations)> _localizationMap = {
+  'upperArmGood': (l) => l.upperArmGood,
+  'upperArmMedium': (l) => l.upperArmMedium,
+  'upperArmLow': (l) => l.upperArmLow,
+  'lowerArmGood': (l) => l.lowerArmGood,
+  'lowerArmMedium': (l) => l.lowerArmMedium,
+  'lowerArmLow': (l) => l.lowerArmLow,
+  'trunkGood': (l) => l.trunkGood,
+  'trunkMedium': (l) => l.trunkMedium,
+  'trunkLow': (l) => l.trunkLow,
+  'neckGood': (l) => l.neckGood,
+  'neckMedium': (l) => l.neckMedium,
+  'neckLow': (l) => l.neckLow,
+  'legsGood': (l) => l.legsGood,
+  'legsMedium': (l) => l.legsMedium,
+  'legsLow': (l) => l.legsLow,
+};
+
+extension StringExtensions on String {
+  String capitalize() => this[0].toUpperCase() + substring(1);
+}
+
 class BodyPartResultsScreen extends StatelessWidget {
   const BodyPartResultsScreen({
     required this.viewModel,
@@ -25,6 +47,12 @@ class BodyPartResultsScreen extends StatelessWidget {
 
     final bodyPartLabel =
         bodyPartGroupLabelFor(localizations, viewModel.bodyPartGroup);
+    final rating = viewModel.getRating();
+    final message = _localizationMap[
+        '${viewModel.bodyPartGroup.name}${rating.name.capitalize()}']!(
+      localizations,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -176,10 +204,7 @@ class BodyPartResultsScreen extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            Text(
-              viewModel.getLocalizedMessage(context),
-              style: infoText,
-            ),
+            Text(message, style: infoText),
           ],
         ),
       ),
