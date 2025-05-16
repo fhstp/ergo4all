@@ -33,7 +33,7 @@
           "**/pubspec.yaml",
           "CHANGELOG.md"
         ],
-        "message": "ci: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        "message": "ci: release ${nextRelease.version}\n\n${nextRelease.notes}"
       }
     ]
   ]

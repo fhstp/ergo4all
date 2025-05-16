@@ -6,6 +6,8 @@ on:
 jobs:
   changes:
     name: Check for relevant changes
+    if: |
+      !startsWith(github.event.head_commit.message, 'ci: release')
     runs-on: ubuntu-latest
     outputs:
       unit: ${{ steps.filter.outputs.changes }}
