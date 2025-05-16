@@ -1,3 +1,11 @@
+# [1.54.0](https://github.com/fhstp/ergo4all/compare/v1.53.0...v1.54.0) (2025-05-16)
+
+
+### Features
+
+* **app:** Tip Screen ([240b1bd](https://github.com/fhstp/ergo4all/commit/240b1bde82a32c8d5d80d803aebcb1c99556f61c)), closes [#78](https://github.com/fhstp/ergo4all/issues/78)
+* **app:** Umrandung der Puppe am Home Screen & Abstände zw. den Elementen ([5957ac9](https://github.com/fhstp/ergo4all/commit/5957ac9e0c2b5bcf5dc8853d94ab94e2822d8b4d))
+
 # [1.53.0](https://github.com/fhstp/ergo4all/compare/v1.52.0...v1.53.0) (2025-05-16)
 
 
