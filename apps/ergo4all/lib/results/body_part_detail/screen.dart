@@ -26,7 +26,7 @@ final Map<String, String Function(AppLocalizations)> _localizationMap = {
   'legsLow': (l) => l.legsLow,
 };
 
-extension StringExtensions on String {
+extension on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
 }
 
