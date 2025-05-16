@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/detail/utils.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -44,28 +43,6 @@ class BodyPartResultsViewModel {
   final BodyPartGroup bodyPartGroup;
   final IList<double> timelineValues;
   final IList<double> medianTimelineValues;
-
-  static double calculateMean(IList<double> numbers) {
-    if (numbers.isEmpty) return 0;
-    return numbers.reduce((a, b) => a + b) / numbers.length;
-  }
-
-  static double calculateStandardDeviation(IList<double> numbers) {
-    if (numbers.isEmpty) return 0;
-    final mean = calculateMean(numbers);
-    final sumOfSquaredDiffs = numbers
-        .map((number) => (number - mean) * (number - mean))
-        .reduce((a, b) => a + b);
-    return sqrt(sumOfSquaredDiffs / numbers.length);
-  }
-
-  static double calculateCoefficientOfVariation(IList<double> numbers) {
-    final mean = calculateMean(numbers);
-    if (mean == 0) return 0;
-    final standardDeviation = calculateStandardDeviation(numbers);
-
-    return standardDeviation / mean;
-  }
 
   Rating _getRating() {
     final mean = calculateMean(timelineValues);
