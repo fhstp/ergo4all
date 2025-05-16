@@ -71,7 +71,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.language.path: (context) => const PickLanguageScreen(),
         Routes.tou.path: (context) => const TermsOfUseScreen(),
         Routes.welcome.path: (context) => const WelcomeScreen(),
-        Routes.tips.path: (context) => const TipsScreen(),
+        Routes.tipChoice.path: (context) => const TipsScreen(),
       },
       navigatorObservers: [
         RouteLeaveObserver(

@@ -19,7 +19,7 @@ enum Routes {
   welcome('/welcome'),
 
   /// The tips overview screen.
-  tips('/tips');
+  tipChoice('/tips');
 
   const Routes(this.path);
 
