@@ -1,16 +1,12 @@
-import 'package:common/func_ext.dart';
-import 'package:common/pair_utils.dart';
-import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_detail/view_model.dart';
-import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
+import 'package:ergo4all/results/rula_colors.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 
 class ResultsDetailScreen extends StatefulWidget {
   const ResultsDetailScreen({super.key});
@@ -39,30 +35,21 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       return Container();
     }
 
-    List<double> transformData(
-      int Function(RulaScores) selector,
-      int maxValue,
-    ) {
-      return timeline.map((entry) {
-        final score = selector(entry.scores);
-        return normalizeScore(score, maxValue);
-      }).toList();
-    }
+    List<double> transformData(BodyPartGroup bodyPartGroup) => timeline
+        .map(
+          (entry) => normalizedBodyPartGroupScoreOf(
+            entry.scores,
+            bodyPartGroup,
+          ),
+        )
+        .toList();
 
     final lineChartData = IList([
-      transformData(
-        ((RulaScores scores) => scores.upperArmScores)
-            .compose(Pair.reduce(worse)),
-        6,
-      ),
-      transformData(
-        ((RulaScores scores) => scores.lowerArmScores)
-            .compose(Pair.reduce(worse)),
-        3,
-      ),
-      transformData((RulaScores scores) => scores.trunkScore, 6),
-      transformData((RulaScores scores) => scores.neckScore, 6),
-      transformData((RulaScores scores) => scores.legScore, 2),
+      transformData(BodyPartGroup.upperArm),
+      transformData(BodyPartGroup.lowerArm),
+      transformData(BodyPartGroup.trunk),
+      transformData(BodyPartGroup.neck),
+      transformData(BodyPartGroup.legs),
     ]);
 
     final avgLineChartValues = IList(

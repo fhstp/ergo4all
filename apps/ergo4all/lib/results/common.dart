@@ -1,4 +1,7 @@
+import 'package:common/func_ext.dart';
 import 'package:common/iterable_ext.dart';
+import 'package:common/pair_utils.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
@@ -122,4 +125,19 @@ enum BodyPartGroup {
 
   /// The legs.
   legs,
+}
+
+/// Get normalized scores for a [BodyPartGroup] from a [RulaScores] object.
+double normalizedBodyPartGroupScoreOf(RulaScores scores, BodyPartGroup group) {
+  return switch (group) {
+    BodyPartGroup.upperArm => scores.upperArmScores
+        .pipe(Pair.reduce(worse))
+        .pipe((score) => normalizeScore(score, 6)),
+    BodyPartGroup.lowerArm => scores.lowerArmScores
+        .pipe(Pair.reduce(worse))
+        .pipe((score) => normalizeScore(score, 3)),
+    BodyPartGroup.trunk => normalizeScore(scores.trunkScore, 6),
+    BodyPartGroup.neck => normalizeScore(scores.neckScore, 6),
+    BodyPartGroup.legs => normalizeScore(scores.legScore, 2),
+  };
 }
