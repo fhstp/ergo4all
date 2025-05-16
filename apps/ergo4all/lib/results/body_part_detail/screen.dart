@@ -2,8 +2,8 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/body_part_line_chart.dart';
-import 'package:ergo4all/results/body_part_detail/view_model.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -32,17 +32,20 @@ extension StringExtensions on String {
 
 class BodyPartResultsScreen extends StatelessWidget {
   const BodyPartResultsScreen({
-    required this.viewModel,
     required this.staticLoadScores,
+    required this.normalizedScores,
     required this.bodyPartGroup,
     super.key,
   });
 
-  final BodyPartResultsViewModel viewModel;
-
   /// Time-line values to display in the static-load graph.
   /// These should be normalized to [0; 1].
   final IList<double> staticLoadScores;
+
+  /// The normalized scores over time. The displayed [Rating] will be
+  /// calculated from these. They are also displayed in the ergonomic
+  /// rating chart.
+  final IList<double> normalizedScores;
   final BodyPartGroup bodyPartGroup;
 
   @override
@@ -53,7 +56,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     final showStaticLoad = staticLoadScores.length > 140;
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
-    final rating = viewModel.getRating();
+    final rating = calculateRating(normalizedScores);
     final message =
         _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
       localizations,
@@ -114,9 +117,7 @@ class BodyPartResultsScreen extends StatelessWidget {
               height: 132,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
-                child: BodyPartLineChart(
-                  normalizedScores: viewModel.timelineValues.toIList(),
-                ),
+                child: BodyPartLineChart(normalizedScores: normalizedScores),
               ),
             ),
 

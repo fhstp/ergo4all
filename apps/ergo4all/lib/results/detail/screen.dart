@@ -1,7 +1,6 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
-import 'package:ergo4all/results/body_part_detail/view_model.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
@@ -43,16 +42,13 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
         .mapValues((scores) => calculateRunningAverage(scores, 20));
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
-      final bodyPartDetailViewModel = BodyPartResultsViewModel(
-        timelineValues: averageScoresByGroup[bodyPart]!,
-      );
-
       Navigator.push(
         context,
         MaterialPageRoute<void>(
           builder: (context) => BodyPartResultsScreen(
-            viewModel: bodyPartDetailViewModel,
             bodyPartGroup: bodyPart,
+            // We use the averaged scores on the detail screen
+            normalizedScores: averageScoresByGroup[bodyPart]!,
             // We display the median values on the detail screen
             staticLoadScores:
                 calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
