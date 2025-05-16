@@ -2,7 +2,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/body_part_line_chart.dart';
-import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';

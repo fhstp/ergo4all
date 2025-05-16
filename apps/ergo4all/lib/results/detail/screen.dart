@@ -1,6 +1,7 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
+import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
