@@ -3,7 +3,6 @@ name: Build
 
 on: 
   push:
-    branches: [main]
     tags: ["v*.*.*"]
 
 env: 
@@ -12,6 +11,7 @@ env:
 jobs:
   build-android:
     name: Build Android
+    if: github.event.base_ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -70,6 +70,7 @@ jobs:
           
   github-release:
     runs-on: ubuntu-latest
+    if: github.event.base_ref == 'refs/heads/main'
     needs:
         - build-android
     steps:
