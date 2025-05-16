@@ -1,3 +1,18 @@
+# [1.53.0](https://github.com/fhstp/ergo4all/compare/v1.52.0...v1.53.0) (2025-05-16)
+
+
+### Bug Fixes
+
+* partial rename ([3e0d969](https://github.com/fhstp/ergo4all/commit/3e0d9699752d272bf0f0b72f7d68de481ffc9e4d))
+
+
+### Features
+
+* **app:** Tips Screen Verlinkung ([aa75600](https://github.com/fhstp/ergo4all/commit/aa756003290232ad0ec9a35559a41a54ddf7c36a)), closes [#88](https://github.com/fhstp/ergo4all/issues/88)
+* **app:** Tips Screen Verlinkung ([52d29c1](https://github.com/fhstp/ergo4all/commit/52d29c10f8ceeab299a677fb91c55ea9d2341965)), closes [#88](https://github.com/fhstp/ergo4all/issues/88)
+* **app:** Umbruch vorm Username im Titel am Homescreen ([fa5181f](https://github.com/fhstp/ergo4all/commit/fa5181f466e3c5014e27b48939d7c50dfb2bbcb9)), closes [#83](https://github.com/fhstp/ergo4all/issues/83)
+* **app:** Verkleinerung Hauptlogo am Welcome Screen & Abstand zw. Titel und Logo ([3b459b1](https://github.com/fhstp/ergo4all/commit/3b459b107fe490d3b41096d45093453b1055bbb7)), closes [#79](https://github.com/fhstp/ergo4all/issues/79)
+
 # [1.52.0](https://github.com/fhstp/ergo4all/compare/v1.51.0...v1.52.0) (2025-05-15)
 
 
