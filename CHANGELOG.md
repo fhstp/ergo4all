@@ -1,3 +1,10 @@
+## [1.54.1](https://github.com/fhstp/ergo4all/compare/v1.54.0...v1.54.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* broken import ([ed6e0c4](https://github.com/fhstp/ergo4all/commit/ed6e0c495ba108a6a0295a425f3d34f32e549415))
+
 # [1.54.0](https://github.com/fhstp/ergo4all/compare/v1.53.0...v1.54.0) (2025-05-16)
 
 
