@@ -47,10 +47,13 @@ const _bodyPartsInDisplayOrder = [
 /// Displays the aggregate score of a user using a puppet.
 class BodyScoreDisplay extends StatelessWidget {
   ///
-  const BodyScoreDisplay(this.scores, {super.key});
+  const BodyScoreDisplay(this.scores, {super.key, this.onBodyPartTapped});
 
   /// The scores to display.
   final RulaScores scores;
+
+  /// Callback for when a [BodyPart] was tapped on the display.
+  final void Function(BodyPart)? onBodyPartTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +85,12 @@ class BodyScoreDisplay extends StatelessWidget {
     return Stack(
       children: _bodyPartsInDisplayOrder.map((part) {
         final color = getColorForPart(part);
-        return _getBodyPartImage(part, color);
+        return GestureDetector(
+          onTap: () {
+            onBodyPartTapped?.call(part);
+          },
+          child: _getBodyPartImage(part, color),
+        );
       }).toList(),
     );
   }

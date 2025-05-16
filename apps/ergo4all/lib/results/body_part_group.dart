@@ -2,6 +2,7 @@ import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:rula/rula.dart';
 
 /// Groups of body parts which are displayed / scored together.
@@ -50,3 +51,16 @@ String bodyPartGroupLabelFor(
     BodyPartGroup.legs => localizations.results_body_legs,
   };
 }
+
+/// Gets the [BodyPartGroup] for a [BodyPart].
+BodyPartGroup groupOf(BodyPart part) => switch (part) {
+      BodyPart.head => BodyPartGroup.neck,
+      BodyPart.leftHand ||
+      BodyPart.leftUpperArm ||
+      BodyPart.rightHand ||
+      BodyPart.rightLowerArm =>
+        BodyPartGroup.upperArm,
+      BodyPart.leftLeg || BodyPart.rightLeg => BodyPartGroup.legs,
+      BodyPart.leftLowerArm || BodyPart.rightUpperArm => BodyPartGroup.upperArm,
+      BodyPart.upperBody => BodyPartGroup.trunk,
+    };
