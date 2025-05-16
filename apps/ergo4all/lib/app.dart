@@ -16,7 +16,6 @@ import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
 import 'package:ergo4all/terms_of_use/screen.dart';
-import 'package:ergo4all/tips/screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,7 +70,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.language.path: (context) => const PickLanguageScreen(),
         Routes.tou.path: (context) => const TermsOfUseScreen(),
         Routes.welcome.path: (context) => const WelcomeScreen(),
-        Routes.tipChoice.path: (context) => const TipsScreen(),
       },
       navigatorObservers: [
         RouteLeaveObserver(
