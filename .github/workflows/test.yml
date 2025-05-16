@@ -22,11 +22,11 @@ jobs:
         with:
           filters: |
             changes:
-              - 'lib/**'
-              - 'packages/**'
-              - 'test/**'
-              - 'assets/**'
-              - 'pub*'
+              - '**/lib/**'
+              - '**/packages/**'
+              - '**/test/**'
+              - '**/assets/**'
+              - '**/pub*'
 
   unit-test:
     name: Unit Test
