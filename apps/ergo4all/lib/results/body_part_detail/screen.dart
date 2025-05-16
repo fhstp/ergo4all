@@ -33,11 +33,16 @@ extension StringExtensions on String {
 class BodyPartResultsScreen extends StatelessWidget {
   const BodyPartResultsScreen({
     required this.viewModel,
+    required this.staticLoadScores,
     required this.bodyPartGroup,
     super.key,
   });
 
   final BodyPartResultsViewModel viewModel;
+
+  /// Time-line values to display in the static-load graph.
+  /// These should be normalized to [0; 1].
+  final IList<double> staticLoadScores;
   final BodyPartGroup bodyPartGroup;
 
   @override
@@ -45,7 +50,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     // Need at least 15s of data to show the static load chart
-    final showStaticLoad = viewModel.medianTimelineValues.length > 140;
+    final showStaticLoad = staticLoadScores.length > 140;
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
     final rating = viewModel.getRating();
@@ -167,17 +172,16 @@ class BodyPartResultsScreen extends StatelessWidget {
                       ),
                       borderData: FlBorderData(show: false),
                       minX: 0,
-                      maxX:
-                          viewModel.medianTimelineValues.length.toDouble() - 1,
+                      maxX: staticLoadScores.length.toDouble() - 1,
                       minY: 0 - 0.01, // Adjusted to fit the grid
                       maxY: 1 + 0.01, // Adjusted to fit the grid
                       lineBarsData: [
                         LineChartBarData(
                           spots: List.generate(
-                            viewModel.medianTimelineValues.length,
+                            staticLoadScores.length,
                             (i) => FlSpot(
                               i.toDouble(),
-                              viewModel.medianTimelineValues[i],
+                              staticLoadScores[i],
                             ),
                           ),
                           color: Colors.grey,

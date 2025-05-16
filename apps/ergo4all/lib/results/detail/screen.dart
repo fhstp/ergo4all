@@ -42,13 +42,9 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     final averageScoresByGroup = normalizedScoresByGroup
         .mapValues((scores) => calculateRunningAverage(scores, 20));
 
-    final medianScoresByGroup = normalizedScoresByGroup
-        .mapValues((scores) => calculateRunningMedian(scores, 20));
-
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       final bodyPartDetailViewModel = BodyPartResultsViewModel(
         timelineValues: averageScoresByGroup[bodyPart]!,
-        medianTimelineValues: medianScoresByGroup[bodyPart]!,
       );
 
       Navigator.push(
@@ -57,6 +53,9 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
           builder: (context) => BodyPartResultsScreen(
             viewModel: bodyPartDetailViewModel,
             bodyPartGroup: bodyPart,
+            // We display the median values on the detail screen
+            staticLoadScores:
+                calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
           ),
         ),
       );
