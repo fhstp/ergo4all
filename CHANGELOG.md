@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/fhstp/ergo4all/compare/v1.54.1...v1.55.0) (2025-05-16)
+
+
+### Features
+
+* **app:** go to body-detail screen from overview ([550acd8](https://github.com/fhstp/ergo4all/commit/550acd80f85fd5e6cb42db2b5c19c546eeb7e98c))
+
 ## [1.54.1](https://github.com/fhstp/ergo4all/compare/v1.54.0...v1.54.1) (2025-05-16)
 
 
