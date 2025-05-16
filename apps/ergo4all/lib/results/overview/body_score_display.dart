@@ -55,8 +55,6 @@ class BodyScoreDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double getNormalizedScoreForPart(BodyPart part) {
-      // This is really unoptimized. We recalculate a whole bunch of
-      // scores multiple times. Oh well.
       return switch (part) {
         BodyPart.head => normalizeScore(scores.neckScore, 6),
         BodyPart.leftHand => normalizeScore(scores.wristScores.$1, 4),
