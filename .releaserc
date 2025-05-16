@@ -35,21 +35,6 @@
         ],
         "message": "ci: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
-    ],
-    [
-      "@semantic-release/github",
-      {
-        "assets": [
-          {
-            "path": "build/android/apk/release/app-release.apk",
-            "label": "Android APK"
-          },
-          {
-            "path": "build/android/bundle/release/app-release.aab",
-            "label": "Android App Bundle"
-          }
-        ]
-      }
     ]
   ]
 }
