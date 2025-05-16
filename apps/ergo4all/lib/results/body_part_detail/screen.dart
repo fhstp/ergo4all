@@ -52,6 +52,21 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// The body to display.
   final BodyPartGroup bodyPartGroup;
 
+  /// Makes a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute({
+    required BodyPartGroup bodyPartGroup,
+    required IList<double> normalizedScores,
+    required IList<double> staticLoadScores,
+  }) {
+    return MaterialPageRoute<void>(
+      builder: (context) => BodyPartResultsScreen(
+        bodyPartGroup: bodyPartGroup,
+        normalizedScores: normalizedScores,
+        staticLoadScores: staticLoadScores,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
