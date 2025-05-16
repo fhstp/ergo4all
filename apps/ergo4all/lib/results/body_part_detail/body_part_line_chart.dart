@@ -1,6 +1,6 @@
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/color_mapper.dart';
+import 'package:ergo4all/results/rula_colors.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class BodyPartLineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final colors = normalizedScores
-        .map((score) => ColorMapper.getColorForValue(score, dark: true))
+        .map((score) => rulaColorFor(score, dark: true))
         .toList();
 
     return LineChart(

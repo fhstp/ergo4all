@@ -4,7 +4,7 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_detail/view_model.dart';
-import 'package:ergo4all/results/color_mapper.dart';
+import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
@@ -165,11 +165,11 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                         borderRadius: BorderRadius.circular(4),
                         gradient: const LinearGradient(
                           colors: [
-                            ColorMapper.rulaLow,
-                            ColorMapper.rulaLowMid,
-                            ColorMapper.rulaMid,
-                            ColorMapper.rulaMidHigh,
-                            ColorMapper.rulaHigh,
+                            RulaColors.low,
+                            RulaColors.lowMid,
+                            RulaColors.mid,
+                            RulaColors.midHigh,
+                            RulaColors.high,
                           ],
                         ),
                       ),
