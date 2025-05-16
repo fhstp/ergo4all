@@ -8,7 +8,9 @@ import 'package:ergo4all/results/rula_colors.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
+/// Screen for displaying detailed information about a [RulaTimeline].
 class ResultsDetailScreen extends StatefulWidget {
+  ///
   const ResultsDetailScreen({super.key});
 
   @override
