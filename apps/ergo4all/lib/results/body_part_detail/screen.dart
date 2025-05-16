@@ -30,7 +30,9 @@ extension StringExtensions on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
 }
 
+/// Screen display detailed score information about a specific [BodyPartGroup].
 class BodyPartResultsScreen extends StatelessWidget {
+  ///
   const BodyPartResultsScreen({
     required this.staticLoadScores,
     required this.normalizedScores,
@@ -46,6 +48,8 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// calculated from these. They are also displayed in the ergonomic
   /// rating chart.
   final IList<double> normalizedScores;
+
+  /// The body to display.
   final BodyPartGroup bodyPartGroup;
 
   @override
