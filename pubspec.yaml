@@ -22,3 +22,8 @@ environment:
   sdk: ^3.6.0
 dependencies:
   glob: ^2.1.3
+
+flutter:
+  # We need to include this here, in addition to the actual flutter apps in
+  # /apps to get rid of some warnings. Not sure why.
+  uses-material-design: true
