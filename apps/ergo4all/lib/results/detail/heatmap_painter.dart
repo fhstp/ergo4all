@@ -1,4 +1,5 @@
 import 'package:ergo4all/results/rula_colors.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 /// Custom heatmap painter for body parts overview visualization
@@ -10,7 +11,7 @@ class HeatmapPainter extends CustomPainter {
 
   /// Normalized scores to be displayed. These are expected to be in the range
   /// [0; 1].
-  final List<double> normalizedScores;
+  final IList<double> normalizedScores;
 
   @override
   void paint(Canvas canvas, Size size) {

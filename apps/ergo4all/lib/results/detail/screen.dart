@@ -1,3 +1,4 @@
+import 'package:common/immutable_collection_ext.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_detail/view_model.dart';
@@ -35,36 +36,32 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       return Container();
     }
 
-    List<double> transformData(BodyPartGroup bodyPartGroup) => timeline
-        .map(
-          (entry) => normalizedBodyPartGroupScoreOf(
-            entry.scores,
-            bodyPartGroup,
-          ),
-        )
-        .toList();
+    IList<double> normalizedScoreTimeLineFor(BodyPartGroup bodyPartGroup) =>
+        timeline
+            .map(
+              (entry) => normalizedBodyPartGroupScoreOf(
+                entry.scores,
+                bodyPartGroup,
+              ),
+            )
+            .toIList();
 
-    final lineChartData = IList([
-      transformData(BodyPartGroup.upperArm),
-      transformData(BodyPartGroup.lowerArm),
-      transformData(BodyPartGroup.trunk),
-      transformData(BodyPartGroup.neck),
-      transformData(BodyPartGroup.legs),
-    ]);
-
-    final avgLineChartValues = IList(
-      lineChartData.map((spots) => calculateRunningAverage(spots, 20)).toList(),
+    final normalizedScoresByGroup = IMap.fromKeys(
+      keys: BodyPartGroup.values,
+      valueMapper: normalizedScoreTimeLineFor,
     );
 
-    final medianTimelineValues = IList(
-      lineChartData.map((spots) => calculateRunningMedian(spots, 60)).toList(),
-    );
+    final averageScoresByGroup = normalizedScoresByGroup
+        .mapValues((scores) => calculateRunningAverage(scores, 20));
+
+    final medianScoresByGroup = normalizedScoresByGroup
+        .mapValues((scores) => calculateRunningMedian(scores, 20));
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       final bodyPartDetailViewModel = BodyPartResultsViewModel(
         bodyPartName: labels[bodyPart.index],
-        timelineValues: avgLineChartValues[bodyPart.index],
-        medianTimelineValues: medianTimelineValues[bodyPart.index],
+        timelineValues: averageScoresByGroup[bodyPart]!,
+        medianTimelineValues: medianScoresByGroup[bodyPart]!,
         bodyPartGroup: bodyPart,
       );
 
@@ -123,7 +120,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                                   child: CustomPaint(
                                     painter: HeatmapPainter(
                                       normalizedScores:
-                                          avgLineChartValues[part.index],
+                                          averageScoresByGroup[part]!,
                                     ),
                                   ),
                                 ),

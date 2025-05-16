@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, String Function(AppLocalizations)> _localizationMap = {
@@ -44,15 +45,15 @@ class BodyPartResultsViewModel {
 
   /// The [BodyPartGroup] to display.
   final BodyPartGroup bodyPartGroup;
-  final List<double> timelineValues;
-  final List<double> medianTimelineValues;
+  final IList<double> timelineValues;
+  final IList<double> medianTimelineValues;
 
-  static double calculateMean(List<double> numbers) {
+  static double calculateMean(IList<double> numbers) {
     if (numbers.isEmpty) return 0;
     return numbers.reduce((a, b) => a + b) / numbers.length;
   }
 
-  static double calculateStandardDeviation(List<double> numbers) {
+  static double calculateStandardDeviation(IList<double> numbers) {
     if (numbers.isEmpty) return 0;
     final mean = calculateMean(numbers);
     final sumOfSquaredDiffs = numbers
@@ -61,7 +62,7 @@ class BodyPartResultsViewModel {
     return sqrt(sumOfSquaredDiffs / numbers.length);
   }
 
-  static double calculateCoefficientOfVariation(List<double> numbers) {
+  static double calculateCoefficientOfVariation(IList<double> numbers) {
     final mean = calculateMean(numbers);
     if (mean == 0) return 0;
     final standardDeviation = calculateStandardDeviation(numbers);
