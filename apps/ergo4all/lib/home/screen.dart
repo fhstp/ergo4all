@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -58,20 +59,43 @@ class HomeScreen extends HookWidget {
           ScreenContent(
             child: Column(
               children: [
-                Image.asset(
-                  'assets/images/puppet/full_body_blue.png',
-                  height: 240,
+                Container(
+                  width: 350,
+                  height: 350,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 8,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    child: Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Image.asset(
+                        'assets/images/puppet/full_body_blue.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
                 ),
+                const SizedBox(height: mediumSpace),
                 uiState.user.match(
                   () => const ShimmerBox(width: 200, height: 24),
                   UserWelcomeHeader.new,
                 ),
+                const SizedBox(height: mediumSpace),
                 ElevatedButton(
                   key: const Key('start'),
                   style: primaryTextButtonStyle,
                   onPressed: startSession,
                   child: Text(localizations.record_label),
                 ),
+                const SizedBox(height: mediumSpace),
                 ElevatedButton(
                   key: const Key('tips'),
                   style: secondaryTextButtonStyle,
