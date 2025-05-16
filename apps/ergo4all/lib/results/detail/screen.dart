@@ -20,13 +20,6 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final labels = [
-      localizations.results_body_upper_arms,
-      localizations.results_body_lower_arms,
-      localizations.results_body_trunk,
-      localizations.results_body_neck,
-      localizations.results_body_legs,
-    ];
 
     final timeline =
         ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
@@ -54,7 +47,6 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       final bodyPartDetailViewModel = BodyPartResultsViewModel(
-        bodyPartName: labels[bodyPart.index],
         timelineValues: averageScoresByGroup[bodyPart]!,
         medianTimelineValues: medianScoresByGroup[bodyPart]!,
         bodyPartGroup: bodyPart,
@@ -109,7 +101,12 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                               children: [
                                 SizedBox(
                                   width: 50,
-                                  child: Text(labels[part.index]),
+                                  child: Text(
+                                    bodyPartGroupLabelFor(
+                                      localizations,
+                                      part,
+                                    ),
+                                  ),
                                 ),
                                 Expanded(
                                   child: CustomPaint(

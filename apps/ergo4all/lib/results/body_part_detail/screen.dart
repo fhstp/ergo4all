@@ -3,6 +3,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/body_part_line_chart.dart';
 import 'package:ergo4all/results/body_part_detail/view_model.dart';
+import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,12 @@ class BodyPartResultsScreen extends StatelessWidget {
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = viewModel.medianTimelineValues.length > 140;
 
+    final bodyPartLabel =
+        bodyPartGroupLabelFor(localizations, viewModel.bodyPartGroup);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${viewModel.bodyPartName} ${localizations.body_part_title}',
+          '$bodyPartLabel ${localizations.body_part_title}',
           style: h3Style,
         ),
         backgroundColor: white,
@@ -48,7 +51,7 @@ class BodyPartResultsScreen extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        viewModel.bodyPartName,
+                        bodyPartLabel,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

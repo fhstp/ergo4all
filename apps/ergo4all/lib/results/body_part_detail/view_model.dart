@@ -35,13 +35,10 @@ extension StringExtensions on String {
 
 class BodyPartResultsViewModel {
   BodyPartResultsViewModel({
-    required this.bodyPartName,
     required this.timelineValues,
     required this.medianTimelineValues,
     required this.bodyPartGroup,
   });
-
-  final String bodyPartName;
 
   /// The [BodyPartGroup] to display.
   final BodyPartGroup bodyPartGroup;
