@@ -49,7 +49,6 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       final bodyPartDetailViewModel = BodyPartResultsViewModel(
         timelineValues: averageScoresByGroup[bodyPart]!,
         medianTimelineValues: medianScoresByGroup[bodyPart]!,
-        bodyPartGroup: bodyPart,
       );
 
       Navigator.push(
@@ -57,6 +56,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
         MaterialPageRoute<void>(
           builder: (context) => BodyPartResultsScreen(
             viewModel: bodyPartDetailViewModel,
+            bodyPartGroup: bodyPart,
           ),
         ),
       );

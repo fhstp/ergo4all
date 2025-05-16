@@ -33,10 +33,12 @@ extension StringExtensions on String {
 class BodyPartResultsScreen extends StatelessWidget {
   const BodyPartResultsScreen({
     required this.viewModel,
+    required this.bodyPartGroup,
     super.key,
   });
 
   final BodyPartResultsViewModel viewModel;
+  final BodyPartGroup bodyPartGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +47,10 @@ class BodyPartResultsScreen extends StatelessWidget {
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = viewModel.medianTimelineValues.length > 140;
 
-    final bodyPartLabel =
-        bodyPartGroupLabelFor(localizations, viewModel.bodyPartGroup);
+    final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
     final rating = viewModel.getRating();
-    final message = _localizationMap[
-        '${viewModel.bodyPartGroup.name}${rating.name.capitalize()}']!(
+    final message =
+        _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
       localizations,
     );
 

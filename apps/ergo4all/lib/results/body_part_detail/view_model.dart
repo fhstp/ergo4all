@@ -1,4 +1,3 @@
-import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
@@ -12,11 +11,8 @@ class BodyPartResultsViewModel {
   BodyPartResultsViewModel({
     required this.timelineValues,
     required this.medianTimelineValues,
-    required this.bodyPartGroup,
   });
 
-  /// The [BodyPartGroup] to display.
-  final BodyPartGroup bodyPartGroup;
   final IList<double> timelineValues;
   final IList<double> medianTimelineValues;
 
