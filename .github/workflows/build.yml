@@ -3,7 +3,7 @@ name: Build
 
 on: 
   push:
-    tags: ["v*.*.*"]
+    tags: ['v*']
 
 env: 
   JAVA_VERSION: 21
