@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 IList<double> getPaddedData(IList<double> data, int windowSize) {
@@ -43,26 +41,4 @@ IList<double> calculateRunningMedian(IList<double> data, int windowSize) {
   }
 
   return result.toIList();
-}
-
-double calculateMean(IList<double> numbers) {
-  if (numbers.isEmpty) return 0;
-  return numbers.reduce((a, b) => a + b) / numbers.length;
-}
-
-double calculateStandardDeviation(IList<double> numbers) {
-  if (numbers.isEmpty) return 0;
-  final mean = calculateMean(numbers);
-  final sumOfSquaredDiffs = numbers
-      .map((number) => (number - mean) * (number - mean))
-      .reduce((a, b) => a + b);
-  return sqrt(sumOfSquaredDiffs / numbers.length);
-}
-
-double calculateCoefficientOfVariation(IList<double> numbers) {
-  final mean = calculateMean(numbers);
-  if (mean == 0) return 0;
-  final standardDeviation = calculateStandardDeviation(numbers);
-
-  return standardDeviation / mean;
 }
