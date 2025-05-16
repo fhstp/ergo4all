@@ -3,6 +3,7 @@ enum Routes {
   scenarioChoice('/scenario/choice'),
   scenarioDetail('/scenario/detail'),
   liveAnalysis('/analysis/live'),
+  tipChoice('/tip/choice'),
 
   /// The results overview screen.
   resultsOverview('/analysis/results'),
@@ -16,10 +17,7 @@ enum Routes {
   userCreator('/users/new'),
   language('/language'),
   tou('/tou'),
-  welcome('/welcome'),
-
-  /// The tips overview screen.
-  tipChoice('/tips');
+  welcome('/welcome');
 
   const Routes(this.path);
 
