@@ -36,19 +36,14 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       return Container();
     }
 
-    IList<double> normalizedScoreTimeLineFor(BodyPartGroup bodyPartGroup) =>
-        timeline
-            .map(
-              (entry) => normalizedBodyPartGroupScoreOf(
-                entry.scores,
-                bodyPartGroup,
-              ),
-            )
-            .toIList();
-
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: normalizedScoreTimeLineFor,
+      valueMapper: (bodyPartGroup) => timeline
+          .map((entry) => entry.scores)
+          .map(
+            (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
+          )
+          .toIList(),
     );
 
     final averageScoresByGroup = normalizedScoresByGroup
