@@ -1,3 +1,10 @@
+# [1.58.0](https://github.com/fhstp/ergo4all/compare/v1.57.0...v1.58.0) (2025-05-19)
+
+
+### Features
+
+* **app:** Infografiken zu den Tipps ([d2bf1a7](https://github.com/fhstp/ergo4all/commit/d2bf1a7e12e3138dd916449fc0b4985e06cf64d9))
+
 # [1.57.0](https://github.com/fhstp/ergo4all/compare/v1.56.2...v1.57.0) (2025-05-19)
 
 
