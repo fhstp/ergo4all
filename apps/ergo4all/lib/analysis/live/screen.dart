@@ -274,6 +274,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       body: SizedBox.expand(
         child: Column(
           children: [
+            Expanded(child: Container()),
             Stack(
               children: [
                 cameraPreview,
@@ -289,14 +290,15 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                 ),
               ],
             ),
-            const SizedBox(
-              height: mediumSpace,
+            const SizedBox(height: smallSpace),
+            Center(
+              child: RecordButton(
+                key: const Key('record'),
+                isRecording: analysisMode == _AnalysisMode.full,
+                onTap: onRecordButtonPressed,
+              ),
             ),
-            RecordButton(
-              key: const Key('record'),
-              isRecording: analysisMode == _AnalysisMode.full,
-              onTap: onRecordButtonPressed,
-            ),
+            const SizedBox(height: mediumSpace),
           ],
         ),
       ),
