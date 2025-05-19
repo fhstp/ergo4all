@@ -33,7 +33,9 @@ class RedCircleTopBar extends StatelessWidget {
             package: 'common_ui',
           ),
         ),
-        if (menuButton != null)
+        if (menuButton != null && menuButton?.key?.toString() == "[<'back'>]")
+          Positioned(top: 70, left: 20, child: menuButton!),
+        if (menuButton != null && menuButton?.key?.toString() == "[<'burger'>]")
           Positioned(top: 70, right: 40, child: menuButton!),
         Positioned(
           top: 120,
