@@ -1,3 +1,10 @@
+## [1.55.1](https://github.com/fhstp/ergo4all/compare/v1.55.0...v1.55.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* incorrect body part grouping ([d33ea95](https://github.com/fhstp/ergo4all/commit/d33ea95dc3c77f07bd676bce55cf479f665087ef))
+
 # [1.55.0](https://github.com/fhstp/ergo4all/compare/v1.54.1...v1.55.0) (2025-05-16)
 
 
