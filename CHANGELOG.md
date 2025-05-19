@@ -1,3 +1,12 @@
+# [1.60.0](https://github.com/fhstp/ergo4all/compare/v1.59.4...v1.60.0) (2025-05-19)
+
+
+### Features
+
+* **app:** add ergo-score-badge ([3d79cc8](https://github.com/fhstp/ergo4all/commit/3d79cc874715a7d89695a996babc2e466bbc9b92))
+* **app:** add first page of recording tutorial ([e138956](https://github.com/fhstp/ergo4all/commit/e13895693502f79dc9f0e6eeddb3e3317c0247c3))
+* **app:** add second page of recording tutorial ([ff59e37](https://github.com/fhstp/ergo4all/commit/ff59e3733b1ced7bf9dbbad9efeb7dbdcd91cb6e))
+
 ## [1.59.4](https://github.com/fhstp/ergo4all/compare/v1.59.3...v1.59.4) (2025-05-19)
 
 
