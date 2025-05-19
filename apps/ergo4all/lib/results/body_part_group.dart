@@ -56,11 +56,11 @@ String bodyPartGroupLabelFor(
 BodyPartGroup groupOf(BodyPart part) => switch (part) {
       BodyPart.head => BodyPartGroup.neck,
       BodyPart.leftHand ||
-      BodyPart.leftUpperArm ||
+      BodyPart.leftLowerArm ||
       BodyPart.rightHand ||
       BodyPart.rightLowerArm =>
-        BodyPartGroup.upperArm,
+        BodyPartGroup.lowerArm,
       BodyPart.leftLeg || BodyPart.rightLeg => BodyPartGroup.legs,
-      BodyPart.leftLowerArm || BodyPart.rightUpperArm => BodyPartGroup.upperArm,
+      BodyPart.leftUpperArm || BodyPart.rightUpperArm => BodyPartGroup.upperArm,
       BodyPart.upperBody => BodyPartGroup.trunk,
     };
