@@ -272,5 +272,9 @@
   "results_press_body_part": "Press on a body part to get more information.",
   "@results_press_body_part": {
     "description": "Text that informs users that they can press a body part on the puppet."
+  },
+  "tutorial_dialog_page_1": "The results will be more accurate if you record the person from a 45° angle",
+  "@tutorial_dialog_page_1": {
+    "description": "The text which is displayed on the first page of the video recording tutorial."
   }
 }

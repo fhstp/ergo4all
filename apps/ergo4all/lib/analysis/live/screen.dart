@@ -10,10 +10,12 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
+import 'package:ergo4all/analysis/live/tutorial_dialog.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:path/path.dart' as p;
 import 'package:pose/pose.dart';
@@ -239,6 +241,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
       tryStartPoseOnlyAnalysis();
     });
+
+    SchedulerBinding.instance
+        .addPostFrameCallback((_) => unawaited(showTutorialDialog(context)));
   }
 
   @override
