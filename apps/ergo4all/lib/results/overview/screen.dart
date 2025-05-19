@@ -1,12 +1,16 @@
+import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
+import 'package:ergo4all/results/overview/ergo_score_badge.dart';
+import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -61,6 +65,12 @@ class ResultsOverviewScreen extends StatelessWidget {
 
     final aggregate = aggregateTimeline(timeline)!;
 
+    final totalRating = timeline
+        .map((entry) => entry.scores.fullScore)
+        .map((score) => normalizeScore(score, 7))
+        .toIList()
+        .pipe(calculateRating);
+
     return Scaffold(
       body: Column(
         children: [
@@ -69,6 +79,7 @@ class ResultsOverviewScreen extends StatelessWidget {
             style: h2Style,
             textAlign: TextAlign.center,
           ),
+          SizedBox(height: 80, child: ErgoScoreBadge(rating: totalRating)),
           BodyScoreDisplay(
             aggregate,
             onBodyPartTapped: (part) {

@@ -81,6 +81,7 @@ flutter:
   assets:
     - assets/images/puppet/
     - assets/images/logos/
+    - assets/images/ergo_score_badge/
 
 flutter_icons:
   android: true
