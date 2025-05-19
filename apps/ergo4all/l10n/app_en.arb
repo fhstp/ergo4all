@@ -16,6 +16,7 @@
   },
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
+  "choice_title": "CHOOSE",
   "common_next": "Next",
   "common_description": "Description",
   "@common_description": {
@@ -101,7 +102,6 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_ceiling_summary": "Cable installation on the ceiling",
-  "scenario_choice_title": "CHOOSE",
   "scenario_CNC_expectation": "Fatigue from standing for long periods, strain on the legs and lower back.",
   "@scenario_CNC_expectation": {},
   "scenario_CNC_description": "A machine operator stands in front of a CNC milling machine all day, taking measurements and checking the process.",

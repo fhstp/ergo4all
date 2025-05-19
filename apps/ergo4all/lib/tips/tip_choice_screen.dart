@@ -49,7 +49,7 @@ class TipChoiceScreen extends StatelessWidget {
       body: Column(
         children: [
           RedCircleTopBar(
-            titleText: 'Choose',
+            titleText: localizations.choice_title,
             menuButton: menuButton,
           ),
           const SizedBox(
