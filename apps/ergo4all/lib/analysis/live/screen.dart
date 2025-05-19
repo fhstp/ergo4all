@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
 import 'package:common/iterable_ext.dart';
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
@@ -269,6 +270,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
 
     return Scaffold(
+      backgroundColor: woodSmoke,
       body: SizedBox.expand(
         child: Column(
           children: [
