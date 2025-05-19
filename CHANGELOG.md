@@ -1,3 +1,10 @@
+## [1.59.1](https://github.com/fhstp/ergo4all/compare/v1.59.0...v1.59.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* **app:** Fixed nicht vorhandene Lokalisierung & Back-Pfeil auch am Scenario Screen eingebaut ([24e4064](https://github.com/fhstp/ergo4all/commit/24e4064bc61c20ff9b611044f3ac73007b55f14f))
+
 # [1.59.0](https://github.com/fhstp/ergo4all/compare/v1.58.0...v1.59.0) (2025-05-19)
 
 
