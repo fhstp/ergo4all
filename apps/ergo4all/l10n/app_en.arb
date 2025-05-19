@@ -179,6 +179,36 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_seated_summary": "Working in a seated position",
+  "tip_body_posture_label": "General body posture",
+  "@tip_body_posture_label": {
+    "description": "Short label text for buttons referencing this tip"
+  },
+  "tip_body_posture_summary": "Maintain an upright posture, keep your shoulders relaxed, look straight ahead (maintain the natural S-curve of the spine). Position feet shoulder-width apart, take the weight off one leg occasionally, use padded floor mats. When standing, objects that are used frequently should not be more than 35 cm away for two-handed work and 45 cm away for one-handed work. Take short breaks to stretch or take a few steps.",
+  "tip_handAndArm_label": "Hand & arm position",
+  "@tip_handAndArm_label": {
+    "description": "Short label text for buttons referencing this tip"
+  },
+  "tip_handAndArm_summary": "Do not overstretch your wrists, make gentle movements, do regular relaxation exercises. Keep wrists in a neutral position, support forearms, vary gripping movements. Keep your hands at elbow height while working.",
+  "tip_lift_and_carry_label": "Lift and carry",
+  "@tip_lift_and_carry_label": {
+    "description": "Short label text for buttons referencing this tip"
+  },
+  "tip_lift_and_carry_summary": "Keep your back straight, lift from your legs, hold the load close to your body, avoid twisting movements. For generally light loads, use different lifting techniques, including the less ergonomically correct techniques, to ensure that the body is relieved. In addition, make sure that you do not remain in a bent-over position for too long.",
+  "tip_pushAndPull_label": "Push & pull",
+  "@tip_pushAndPull_label": {
+    "description": "Short label text for buttons referencing this tip"
+  },
+  "tip_pushAndPull_summary": "Choose an ergonomic handle height, push with your legs and body strength instead of just with your arms.",
+  "tip_sitting_label": "Sitting",
+  "@tip_sitting_label": {
+    "description": "Short label text for buttons referencing this tip"
+  },
+  "tip_sitting_summary": "Use the backrest, knees and hips at a 90° angle, feet flat on the floor. Alternate between sitting and standing, use weight shifting, do not remain in one position for too long. (approx. at intervals of one hour) Objects that are used frequently should not be more than 40 cm away from the worker and 25 cm above the workstation.",
+  "tip_workingOverhead_label": "Working overhead",
+  "@tip_workingOverhead_label": {
+    "description": "Short label text for buttons referencing this tip"
+  },
+  "tip_workingOverhead_summary": "Do not hold your arms above shoulder height for too long, use telescopic tools, relax your neck regularly.  Change positions, use weight shifting, do not remain in one position for too long.",
   "termsOfUse_accept": "I accept",
   "termsOfUse_content": "Ergo4A provides ergonomic guidance, not medical advice. Consult healthcare professionals for medical issues. The AI support is an aid, not perfect. You're accountable for the data accuracy you provide.",
   "termsOfUse_title": "Terms of use",
