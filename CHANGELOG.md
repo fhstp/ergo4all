@@ -1,3 +1,10 @@
+## [1.59.2](https://github.com/fhstp/ergo4all/compare/v1.59.1...v1.59.2) (2025-05-19)
+
+
+### Bug Fixes
+
+* **app:** Fixed deutsche Lokalisierung bei ein paar Szenarien ([99c4289](https://github.com/fhstp/ergo4all/commit/99c42899f80b107bcf5e422c9447a588a3a99a39))
+
 ## [1.59.1](https://github.com/fhstp/ergo4all/compare/v1.59.0...v1.59.1) (2025-05-19)
 
 
