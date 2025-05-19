@@ -1,3 +1,10 @@
+## [1.56.2](https://github.com/fhstp/ergo4all/compare/v1.56.1...v1.56.2) (2025-05-19)
+
+
+### Bug Fixes
+
+* **app:** Erstversion Tip Detail Screen ([2c1906e](https://github.com/fhstp/ergo4all/commit/2c1906e1386e41efcf6d1f0c93b2cb2856496d49))
+
 ## [1.56.1](https://github.com/fhstp/ergo4all/compare/v1.56.0...v1.56.1) (2025-05-19)
 
 
