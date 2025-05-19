@@ -1,6 +1,10 @@
 
 name: Build
-on: workflow_dispatch
+
+on: 
+  push:
+    tags: ['v*']
+
 env: 
   JAVA_VERSION: 21
 
