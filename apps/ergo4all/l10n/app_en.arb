@@ -276,5 +276,9 @@
   "tutorial_dialog_page_1": "The results will be more accurate if you record the person from a 45° angle",
   "@tutorial_dialog_page_1": {
     "description": "The text which is displayed on the first page of the video recording tutorial."
+  },
+  "tutorial_dialog_page_2": "Record the scenario for up to 30 seconds and make sure the whole body is visible.",
+  "@tutorial_dialog_page_2": {
+    "description": "The text which is displayed on the second page of the video recording tutorial."
   }
 }
