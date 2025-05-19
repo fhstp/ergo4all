@@ -1,3 +1,10 @@
+## [1.56.1](https://github.com/fhstp/ergo4all/compare/v1.56.0...v1.56.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* **app:** Menü-Button am Homescreen ist wieder rechtsbündig ([a76f8eb](https://github.com/fhstp/ergo4all/commit/a76f8ebd0361f38f0a915e74cd2bf1bc58e4d145))
+
 # [1.56.0](https://github.com/fhstp/ergo4all/compare/v1.55.1...v1.56.0) (2025-05-19)
 
 
