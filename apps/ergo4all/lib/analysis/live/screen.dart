@@ -274,14 +274,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       body: SizedBox.expand(
         child: Column(
           children: [
-            cameraPreview,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: largeSpace),
-              child: RecordingProgressIndicator(
-                remainingTime: progressAnimationController.value,
-                criticalTime: 5,
-                initialTime: 30,
-              ),
+            Stack(
+              children: [
+                cameraPreview,
+                Positioned(
+                  bottom: largeSpace,
+                  left: largeSpace,
+                  right: largeSpace,
+                  child: RecordingProgressIndicator(
+                    remainingTime: progressAnimationController.value,
+                    criticalTime: 5,
+                    initialTime: 30,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: mediumSpace,
