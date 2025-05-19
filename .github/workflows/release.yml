@@ -1,14 +1,44 @@
 name: Release
 
 on: 
-  workflow_run:
-    workflows: [Test]
-    types:
-      - completed
+  push:
+    branches:
+      - main 
 
 jobs:
+  unit-test:
+    name: Unit Test
+    if: |
+      !startsWith(github.event.head_commit.message, 'ci: release')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter 🐦
+        uses: kuhnroyal/flutter-fvm-config-action@v2
+        with: 
+          setup: true
+          cache: true
+
+      - name: Setup Very Good CLI 🦄
+        run: dart pub global activate very_good_cli
+
+      - name: Get dependencies 📦
+        run: very_good packages get -r
+
+      - name: Generate Localizations 🗣️
+        run: cd apps/ergo4all && flutter gen-l10n
+
+      - name: Run tests 🧪
+        run: very_good test -r
+
   semantic-release:
     name: Semantic release
+    if: |
+      !startsWith(github.event.head_commit.message, 'ci: release')
+    needs: unit-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
