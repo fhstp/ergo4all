@@ -1,3 +1,10 @@
+## [1.59.3](https://github.com/fhstp/ergo4all/compare/v1.59.2...v1.59.3) (2025-05-19)
+
+
+### Bug Fixes
+
+* ci ([fb9c0a5](https://github.com/fhstp/ergo4all/commit/fb9c0a5ff6e48e60a31bf8d1a34b38242b8aefcf))
+
 ## [1.59.2](https://github.com/fhstp/ergo4all/compare/v1.59.1...v1.59.2) (2025-05-19)
 
 
