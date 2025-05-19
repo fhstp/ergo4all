@@ -1,3 +1,12 @@
+# [1.59.0](https://github.com/fhstp/ergo4all/compare/v1.58.0...v1.59.0) (2025-05-19)
+
+
+### Features
+
+* **app:** camera screen background color ([7dbf5f2](https://github.com/fhstp/ergo4all/commit/7dbf5f2446b8ca030fd194a0865427c176bd0eec))
+* **app:** move progress bar ([08b2196](https://github.com/fhstp/ergo4all/commit/08b21960a7db3822a7b2434d26bae9e0f6d95434))
+* **app:** record button spacing ([d349e68](https://github.com/fhstp/ergo4all/commit/d349e68ba708edc1f7fa4341c52d2eb9035c1c13))
+
 # [1.58.0](https://github.com/fhstp/ergo4all/compare/v1.57.0...v1.58.0) (2025-05-19)
 
 

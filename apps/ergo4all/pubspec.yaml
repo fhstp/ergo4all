@@ -1,5 +1,5 @@
 name: ergo4all
-version: 1.58.0
+version: 1.59.0
 description: "The Flutter app for the Ergo4All project."
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
