@@ -1,3 +1,15 @@
+# [1.56.0](https://github.com/fhstp/ergo4all/compare/v1.55.1...v1.56.0) (2025-05-19)
+
+
+### Bug Fixes
+
+* **app:** Verlinkung zum Tips Screen/Tip Detail Screen ([27c108e](https://github.com/fhstp/ergo4all/commit/27c108e40a2a2f6df9214d7e64f92a57ce9299eb))
+
+
+### Features
+
+* **app:** Lokalisierung Tips Screen/Tip Detail Screen ([ee4d66c](https://github.com/fhstp/ergo4all/commit/ee4d66c5cbd39070a060f757e7e6b3e3d014da99))
+
 ## [1.55.1](https://github.com/fhstp/ergo4all/compare/v1.55.0...v1.55.1) (2025-05-19)
 
 
