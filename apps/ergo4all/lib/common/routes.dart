@@ -4,6 +4,7 @@ enum Routes {
   scenarioDetail('/scenario/detail'),
   liveAnalysis('/analysis/live'),
   tipChoice('/tip/choice'),
+  tipDetail('/tip/detail'),
 
   /// The results overview screen.
   resultsOverview('/analysis/results'),
