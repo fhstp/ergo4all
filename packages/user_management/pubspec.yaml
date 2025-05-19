@@ -1,5 +1,5 @@
 name: user_management
-version: 1.59.3
+version: 1.59.4
 description: User management logic.
 
 environment:
