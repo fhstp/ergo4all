@@ -10,12 +10,16 @@ class RedCircleTopBar extends StatelessWidget {
   /// Construct a circle bar.
   const RedCircleTopBar({
     required this.titleText,
+    this.withBackButton = false,
     this.menuButton,
     super.key,
   });
 
   /// The title text displayed on the circle.
   final String titleText;
+
+  /// Whether to include a back-button in the bar.
+  final bool withBackButton;
 
   /// An optional (pressable) widget which is displayed on the top right of the
   /// bar.
@@ -33,9 +37,13 @@ class RedCircleTopBar extends StatelessWidget {
             package: 'common_ui',
           ),
         ),
-        if (menuButton != null && menuButton?.key?.toString() != "[<'burger'>]")
-          Positioned(top: 70, left: 20, child: menuButton!),
-        if (menuButton != null && menuButton?.key?.toString() == "[<'burger'>]")
+        if (withBackButton)
+          const Positioned(
+            top: 70,
+            left: 20,
+            child: BackButton(color: white),
+          ),
+        if (menuButton != null)
           Positioned(top: 70, right: 40, child: menuButton!),
         Positioned(
           top: 120,

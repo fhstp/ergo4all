@@ -1,4 +1,3 @@
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
@@ -31,26 +30,12 @@ class TipChoiceScreen extends StatelessWidget {
           .pushNamed(Routes.tipDetail.path, arguments: tip);
     }
 
-    void goToHomeScreen(BuildContext context) {
-      Navigator.of(context).pushReplacementNamed(Routes.home.path);
-    }
-
-    final Widget menuButton = IconButton(
-      key: const Key('back'),
-      icon: const Icon(Icons.arrow_back_ios_new),
-      color: white,
-      iconSize: 48,
-      onPressed: () {
-        goToHomeScreen(context);
-      },
-    );
-
     return Scaffold(
       body: Column(
         children: [
           RedCircleTopBar(
             titleText: localizations.choice_title,
-            menuButton: menuButton,
+            withBackButton: true,
           ),
           const SizedBox(
             height: largeSpace,
