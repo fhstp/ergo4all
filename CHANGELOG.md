@@ -1,3 +1,10 @@
+# [1.72.0](https://github.com/fhstp/ergo4all/compare/v1.71.1...v1.72.0) (2025-05-20)
+
+
+### Features
+
+* **app:** Homescreen Welcometext Umbruchlogik ([daf4816](https://github.com/fhstp/ergo4all/commit/daf481678441732941d7aa668361abb27c1e5b4c))
+
 ## [1.71.1](https://github.com/fhstp/ergo4all/compare/v1.71.0...v1.71.1) (2025-05-20)
 
 
