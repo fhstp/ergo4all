@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -49,8 +51,8 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           const Key('button-lang'),
         ),
         _makeOptionButton(localizations.menu_imprint_label, () {
-          Navigator.of(context).pop();
-          showNotImplementedSnackbar(context);
+          final navigator = Navigator.of(context)..pop();
+          unawaited(navigator.pushNamed(Routes.imprint.path));
         }),
         _makeOptionButton(localizations.menu_privacy_label, () {
           Navigator.of(context).pop();

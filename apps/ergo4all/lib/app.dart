@@ -4,6 +4,7 @@ import 'package:ergo4all/analysis/live/screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language/screen.dart';
 import 'package:ergo4all/onboarding/expert_intro_screen.dart';
 import 'package:ergo4all/onboarding/non_expert_intro_screen.dart';
@@ -74,6 +75,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.welcome.path: (context) => const WelcomeScreen(),
         Routes.tipChoice.path: (context) => const TipChoiceScreen(),
         Routes.tipDetail.path: (context) => const TipDetailScreen(),
+        Routes.imprint.path: (_) => const ImprintScreen(),
       },
       navigatorObservers: [
         RouteLeaveObserver(
