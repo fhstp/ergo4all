@@ -87,7 +87,7 @@ class HomeScreen extends HookWidget {
                     ),
                   ),
                 ),
-                //const SizedBox(height: mediumSpace),
+                const SizedBox(height: mediumSpace),
                 uiState.user.match(
                   () => const ShimmerBox(width: 200, height: 24),
                   UserWelcomeHeader.new,
