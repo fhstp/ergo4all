@@ -42,7 +42,6 @@ class WelcomeScreen extends HookWidget {
                     package: 'common_ui',
                     fit: BoxFit.fitHeight,
                   ),
-                  child: Image(image: CustomImages.logoWhite),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
