@@ -12,7 +12,6 @@ class _ContactBlock extends StatelessWidget {
     required this.contactPersonName,
     required this.contactEmail,
     required this.contactTelephone,
-    super.key,
   });
 
   final AssetImage logo;
