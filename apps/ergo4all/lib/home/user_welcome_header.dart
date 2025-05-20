@@ -14,8 +14,11 @@ class UserWelcomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final welcomeText = localizations.home_welcome(user.name).length < 15
+        ? localizations.home_welcome(user.name)
+        : localizations.home_welcome_break(user.name);
     return Text(
-      localizations.home_welcome(user.name),
+      welcomeText.trim(),
       style: h3Style,
       textAlign: TextAlign.center,
     );
