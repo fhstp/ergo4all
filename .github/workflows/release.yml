@@ -37,7 +37,8 @@ jobs:
   semantic-release:
     name: Semantic release
     if: |
-      !startsWith(github.event.head_commit.message, 'ci: release')
+      !startsWith(github.event.head_commit.message, 'ci: release') &&
+      github.ref == 'refs/heads/main'
     needs: unit-test
     runs-on: ubuntu-latest
     steps:
