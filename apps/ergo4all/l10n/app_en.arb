@@ -87,7 +87,7 @@
   "@scenario_assembly_description": {
     "description": "Long description text for this scenario"
   },
-  "scenario_assembly_expectation": "High strain on the lower back, risk of fatigue or injury.",
+  "scenario_assembly_expectation": "Unfavorable posture and bending can cause strain on the back and neck.",
   "@scenario_assembly_expectation": {},
   "scenario_assembly_label": "Standing assembly",
   "@scenario_assembly_label": {
@@ -95,7 +95,7 @@
   },
   "scenario_assembly_summary": "Assembly standing at a table",
   "scenario_ceiling_description": "An electrician installs cable trays overhead and holds tools up for long periods of time.",
-  "scenario_ceiling_expectation": "Strain on the shoulders, arms and neck.",
+  "scenario_ceiling_expectation": "A high amount of static overhead work can strain the shoulder, arm, and neck muscles.",
   "@scenario_ceiling_expectation": {},
   "@scenario_ceiling_description": {
     "description": "Long description text for this scenario"
@@ -105,7 +105,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_ceiling_summary": "Cable installation on the ceiling",
-  "scenario_CNC_expectation": "Fatigue from standing for long periods, strain on the legs and lower back.",
+  "scenario_CNC_expectation": "Poor posture can cause significant neck tension due to static positions and lead to quick arm fatigue.",
   "@scenario_CNC_expectation": {},
   "scenario_CNC_description": "A machine operator stands in front of a CNC milling machine all day, taking measurements and checking the process.",
   "@scenario_CNC_description": {
@@ -116,7 +116,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_CNC_summary": "Working in a standing position on a CNC machine",
-  "scenario_conveyor_expectation": "High strain on the lower back, neck tension due to static posture, rapid fatigue of the arms and legs.",
+  "scenario_conveyor_expectation": "Unfavorable posture can cause severe neck tension due to static holding and rapid arm fatigue.",
   "@scenario_conveyor_expectation": {},
   "scenario_conveyor_description": "A labourer stands at a conveyor belt for several hours a day and performs repetitive hand movements. He is forced to work in a slightly inclined position.",
   "@scenario_conveyor_description": {
@@ -127,7 +127,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_conveyor_summary": "Working on a conveyor belt for long periods",
-  "scenario_lift_and_carry_expectation": "High strain on the lower back, risk of fatigue or injury.",
+  "scenario_lift_and_carry_expectation": "Poor ergonomic posture can lead to high strain on the lower back, increasing the risk of fatigue or injury.",
   "@scenario_lift_and_carry_expectation": {},
   "scenario_lift_and_carry_description": "A worker regularly lifts heavy metal plates from the floor onto a workbench, often with his back bent.",
   "@scenario_lift_and_carry_description": {
@@ -138,7 +138,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_and_carry_summary": "Lifting and carrying heavy loads up to 25 kg",
-  "scenario_lift_expectation": "High strain on the back and knees.",
+  "scenario_lift_expectation": "Poor posture while lifting can result in high stress on the back and legs. Unergonomic posture can also lead to strain on lower arms.",
   "@scenario_lift_expectation": {},
   "scenario_lift_description": "A warehouse worker regularly lifts 25 kg sacks (cement, grain).",
   "@scenario_lift_description": {
@@ -149,7 +149,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_summary": "Lifting a bag weighing up to 25 kg",
-  "scenario_packaging_expectation": "Risk of tendonitis, muscle tension due to static posture.",
+  "scenario_packaging_expectation": "Unfavorable positions of the arms and wrists can lead to muscle tension and raise the risk of tendonitis.",
   "@scenario_packaging_expectation": {},
   "scenario_packaging_description": "An employee packs products into boxes and uses an adhesive tape dispenser with repetitive movements.",
   "@scenario_packaging_description": {
@@ -160,7 +160,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_packaging_summary": "Packaging work with a high repetition rate",
-  "scenario_pull_expectation": "Strain on the shoulders and wrists from pushing heavy trolleys.",
+  "scenario_pull_expectation": "Poor posture can strain the shoulders and wrists when pushing heavy carts. Likewise, it can cause stress on the back.",
   "@scenario_pull_expectation": {},
   "scenario_pull_description": "A warehouse worker pushes material trolleys with a load of approx. 150 kg over a distance of 50 metres every day.",
   "@scenario_pull_description": {
@@ -171,7 +171,7 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_pull_summary": "Pushing and pulling material trolleys up to 150 kg",
-  "scenario_seated_expectation": "Strain on the lower back muscles, high strain on the shoulders.",
+  "scenario_seated_expectation": "Bending and twisting the upper body can put strain on the lower back muscles. Ergonomically unfavorable positions increase the load on the shoulders and neck.",
   "@scenario_seated_expectation": {},
   "scenario_seated_description": "An employee assembles small parts on a conveyor line and often has to turn his upper body.",
   "@scenario_seated_description": {
@@ -252,21 +252,21 @@
   "results_body_legs": "Legs",
   "results_plot_title": "Ergonomics Score Analysis",
   "body_part_title": "Analysis",
-  "upperArmGood": "Great! Your arm is staying low and close to your side, just like when you're holding a briefcase or grocery bag. This helps protect your shoulder and keeps it strong!",
-  "upperArmMedium": "Sometimes your arm lifts a bit higher than it should, like you're reaching into a high cupboard. Try to keep it down more often, as if you're carrying something at your side. It’ll reduce shoulder strain.",
-  "upperArmLow": "Uh-oh! Your arm is too high too often, almost like you're constantly waving or reaching overhead. That can wear out your shoulder. Try to lower it, like you're standing with your hands relaxed by your hips.",
-  "lowerArmGood": "Awesome! Your arm is naturally straight and relaxed like when it's hanging loosely at your side or gently resting on a table. That’s great for staying comfortable and avoiding unnecessary tension!",
-  "lowerArmMedium": "Your arm sometimes bends too much, like you’re flexing or holding a heavy bag close. Try easing into a more neutral position, like resting your arm on a desk.",
-  "lowerArmLow": "Oops! Your arm is staying overly bent for too long, almost like you’re holding a phone close to your chest. Try letting it extend a bit more, like when your arm hangs loosely at your side.",
-  "trunkGood": "Nice! Your torso is upright and steady, like a strong tree trunk or a confident stance. That’s great for spinal support. Keep it going!",
-  "trunkMedium": "You’re leaning forward at times, like you’re peering into a computer screen. Try sitting or standing straighter like you're stretching up to see over a crowd.",
-  "trunkLow": "Oh no! You’re leaning too much, almost like you're slouched on a couch or about to tip forward. That puts strain on your back. Aim for a posture like you're ready to give a presentation balanced and upright.",
-  "neckGood": "Yay! Your head and neck are in great alignment like it's resting steadily on a pillar. This supports your spine and reduces neck tension. Keep it going!",
-  "neckMedium": "Sometimes you tilt your head too far up or down like looking at your phone or ceiling light. Try to hold your head level, like you're watching something at eye height.",
-  "neckLow": "Oops! Your neck is bent too often, like you’re constantly looking down at your phone or craning up at a ceiling light. This can put a lot of strain on your neck. Try to keep your head level, like you're walking confidently and looking straight ahead.",
-  "legsGood": "Great! Your legs are positioned comfortably and evenly, like you're seated at a desk or dining table. That supports blood flow and reduces pressure.",
-  "legsMedium": "Sometimes your legs dangle or float, like when sitting on a tall stool. Try resting them on the floor or a footrest to stay comfortable and grounded.",
-  "legsLow": "Uh-oh! Your legs are twisted or unsupported like sitting sideways or perching on the edge of a chair. This can lead to soreness. Aim for a stable, flat-footed position like you're sitting in a proper office chair.",
+  "upperArmGood": "The analysis shows that your uppor arm posture was ergonomic.",
+  "upperArmMedium": "Sometimes your upper arms were raised slightly above the neutral posture.",
+  "upperArmLow": "The posture of your upper arms was not optimal. Over time, this could lead to shoulder strain. Try to lower your arms, or take breaks to relieve tension.",
+  "lowerArmGood": "Your elbows and wrists were mostly in ergonomic position.",
+  "lowerArmMedium": "Sometimes your elbows and wrists deviated from the neutral posture.",
+  "lowerArmLow": "The analysis showed that your lower arm posture was suboptimal. Over time, this could lead to elbow and wrist strain. Try to be more aware of your arm position.",
+  "trunkGood": "Your upper body remained in a well-aligned, ergonomic posture.",
+  "trunkMedium": "There were moments where your trunk leaned slightly forward or to the side.",
+  "trunkLow": "The analysis showed that your trunk posture was outside the neutral range. This could increase pressure on your lower back. Try to maintain an upright position.",
+  "neckGood": "Your head and neck alignment was mostly ergonomic throughout the task.",
+  "neckMedium": "At times, your neck was slightly tilted forward or backward.",
+  "neckLow": "Your neck posture was frequently out of alignment. Over time, this could cause discomfort or strain. Try to keep your head at a level angle aligned with your spine.",
+  "legsGood": "Your legs were positioned in a balanced and ergonomic way.",
+  "legsMedium": "Occasionally, your legs were unevenly placed or loaded.",
+  "legsLow": "The analysis indicates your leg posture was not ideal, which may lead to discomfort. Try to be more aware of your leg position during tasks.",
   "body_part_score_plot_title": "Ergonomics Score",
   "body_part_static_plot_title": "Muscle Load Score",
   "body_part_static_plot_condition": "The recording is too short to display the muscle load score. Please record at least 15 seconds to visualize the muscle load diagram.",
@@ -283,5 +283,25 @@
   "tutorial_dialog_page_2": "Record the scenario for up to 30 seconds and make sure the whole body is visible.",
   "@tutorial_dialog_page_2": {
     "description": "The text which is displayed on the second page of the video recording tutorial."
-  }
+  },
+  "ergonomics_tipps": "General ergonomics tips",
+  "scenario_lift_and_carry_tips": "When lifting, keep your back straight, lift from your legs, hold the load close to your body. Strengthening exercises for back and legs.",
+  "scenario_pull_tips": "Pushing is preffered. Choose an ergonomic grip height, keep your arms close to your body, push with your legs instead of your arms. Loosening exercises for shoulders and wrists.",
+  "scenario_seated_tips": "Use the backrest, place both feet on the floor, arms at a 90° angle. Stretching exercises for neck and shoulders.",
+  "scenario_packaging_tips": "Take the strain off your hands. Loosen your wrists regularly, use wrist supports, exercises such as finger stretches and circles.",
+  "scenario_CNC_tips": "Shift your weight between both legs, use a footrest, soft floor mats. Calf and foot mobilisation exercises.",
+  "scenario_assembly_tips": "Set up your standing workstation correctly. Adjust work surface to elbow height, favour slightly inclined surfaces so that you don't have to lean forward. Use a footrest when standing for long periods and alternate feet occasionally.",
+  "scenario_ceiling_tips": "Ergonomically optimise overhead work - where possible, carry out work at hip height or chest height. Limit the time spent working overhead and take breaks to relax your shoulders. Use telescopic tools or work platforms.",
+  "scenario_lift_tips": "Hold the bag as close to your body as possible, lift from a squatting position, keep your back straight, do not twist. If possible, grip evenly with both hands and distribute the weight evenly over both legs.",
+  "scenario_conveyor_tips": "Regular small changes of position, use of anti-fatigue mats, shoulder and neck relaxation.",
+  "improvements": "Approaches & Tools",
+  "scenario_lift_and_carry_tools": "Height-adjustable workbenches, lifting aids, better storage of panels, exoskeleton.",
+  "scenario_pull_tools": "Ergonomic handles, smooth-running castors, electric pushers.",
+  "scenario_seated_tools": "Ergonomic swivel chairs, height-adjustable work surfaces, micro-breaks.",
+  "scenario_packaging_tools": "Ergonomic handles for adhesive tape dispensers, changing working postures.",
+  "scenario_CNC_tools": "Standing aids, anti-fatigue mats, rotating activities to reduce strain.",
+  "scenario_assembly_tools": "Height-adjustable tables, upholstered standing mats.",
+  "scenario_ceiling_tools": "Height-adjustable platforms, telescopic tools, exoskeleton.",
+  "scenario_lift_tools": "Sack trucks, carrying handles, vacuum lifters, exoskeleton.",
+  "scenario_conveyor_tools": "Height-adjustable workstations, padded floor mats, regular change of working position."
 }

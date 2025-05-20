@@ -5,6 +5,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:ergo4all/common/utils.dart';
 
 class ScenarioDetailScreen extends StatelessWidget {
   const ScenarioDetailScreen({super.key});
@@ -13,7 +14,9 @@ class ScenarioDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final scenario = ModalRoute.of(context)!.settings.arguments! as Scenario;
+    // final scenario = ModalRoute.of(context)!.settings.arguments! as Scenario;
+    final args = ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
+    final scenario = args.scenario;
 
     final summary = switch (scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_summary,
@@ -36,7 +39,7 @@ class ScenarioDetailScreen extends StatelessWidget {
       Scenario.standingCNC => localizations.scenario_CNC_description,
       Scenario.standingAssembly => localizations.scenario_assembly_description,
       Scenario.ceiling => localizations.scenario_ceiling_description,
-      Scenario.lift25 => localizations.scenario_lift_and_carry_description,
+      Scenario.lift25 => localizations.scenario_lift_description,
       Scenario.conveyorBelt => localizations.scenario_conveyor_description,
     };
 
@@ -49,14 +52,16 @@ class ScenarioDetailScreen extends StatelessWidget {
       Scenario.standingCNC => localizations.scenario_CNC_expectation,
       Scenario.standingAssembly => localizations.scenario_assembly_expectation,
       Scenario.ceiling => localizations.scenario_ceiling_expectation,
-      Scenario.lift25 => localizations.scenario_lift_and_carry_expectation,
+      Scenario.lift25 => localizations.scenario_lift_expectation,
       Scenario.conveyorBelt => localizations.scenario_conveyor_expectation,
     };
 
+    // Pass scenario context
     Future<void> goToRecordScreen() async {
       await Navigator.of(context).pushNamedAndRemoveUntil(
         Routes.liveAnalysis.path,
         ModalRoute.withName(Routes.home.path),
+        arguments: ScenarioRouteArgs(scenario: scenario),
       );
     }
 

@@ -11,6 +11,9 @@ import 'package:ergo4all/results/rula_colors.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
+import 'package:ergo4all/scenario/domain.dart';
+import 'package:ergo4all/common/utils.dart';
+
 /// Screen for displaying detailed information about a [RulaTimeline].
 class ResultsDetailScreen extends StatefulWidget {
   ///
@@ -25,8 +28,39 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final timeline =
-        ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
+    final Scenario scenario;
+    final RulaTimeline timeline;
+
+    final args = ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
+    scenario = args.scenario; 
+    timeline = args.timeline!; // Timeline should exist at this point??
+
+    final tips = switch (scenario) {
+      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_tips,
+      Scenario.pull => localizations.scenario_pull_tips,
+      Scenario.seated => localizations.scenario_seated_tips,
+      Scenario.packaging => localizations.scenario_packaging_tips,
+      Scenario.standingCNC => localizations.scenario_CNC_tips,
+      Scenario.standingAssembly => localizations.scenario_assembly_tips,
+      Scenario.ceiling => localizations.scenario_ceiling_tips,
+      Scenario.lift25 => localizations.scenario_lift_tips,
+      Scenario.conveyorBelt => localizations.scenario_conveyor_tips,
+    };
+
+    final improvements = switch (scenario) {
+      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_tools,
+      Scenario.pull => localizations.scenario_pull_tools,
+      Scenario.seated => localizations.scenario_seated_tools,
+      Scenario.packaging => localizations.scenario_packaging_tools,
+      Scenario.standingCNC => localizations.scenario_CNC_tools,
+      Scenario.standingAssembly => localizations.scenario_assembly_tools,
+      Scenario.ceiling => localizations.scenario_ceiling_tools,
+      Scenario.lift25 => localizations.scenario_lift_tools,
+      Scenario.conveyorBelt => localizations.scenario_conveyor_tools,
+    };
+
+    // final timeline =
+    //     ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
 
     if (timeline == null || timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -197,7 +231,36 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
               ),
             ),
             const SizedBox(height: 40),
-          ],
+
+          // New feature: show tipps
+          Text(
+            localizations.ergonomics_tipps,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
+          ),
+
+          Text(
+            tips,
+            style: const TextStyle(fontSize: 20),
+            textAlign: TextAlign.left,
+          ),
+
+          const SizedBox(height: 20),
+          
+          // New feature: show improvement solutions
+          Text(
+            localizations.improvements,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.left,
+          ),
+
+          Text(
+            improvements,
+            style: const TextStyle(fontSize: 20),
+            textAlign: TextAlign.left,
+          ),
+
+          ],          
         ),
       ),
     );

@@ -6,6 +6,8 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
 
+import 'package:ergo4all/common/utils.dart';
+
 class ScenarioChoiceScreen extends StatelessWidget {
   const ScenarioChoiceScreen({super.key});
 
@@ -21,13 +23,34 @@ class ScenarioChoiceScreen extends StatelessWidget {
           Scenario.standingCNC => localizations.scenario_CNC_label,
           Scenario.standingAssembly => localizations.scenario_assembly_label,
           Scenario.ceiling => localizations.scenario_ceiling_label,
-          Scenario.lift25 => localizations.scenario_lift_and_carry_label,
+          Scenario.lift25 => localizations.scenario_lift_label,
           Scenario.conveyorBelt => localizations.scenario_conveyor_label,
         };
 
+
+    // Added scenario passing
     Future<void> goToDetailScreen(Scenario scenario) async {
-      await Navigator.of(context)
-          .pushNamed(Routes.scenarioDetail.path, arguments: scenario);
+      // await Navigator.of(context)
+      //     .pushNamed(Routes.scenarioDetail.path, arguments: scenario); //Routes.resultsOverview.path
+
+      // also pass scenario to the analysis
+
+      // final result = await Navigator.of(context).pushNamed(
+      //   Routes.scenarioDetail.path,
+      //   arguments: ScenarioRouteArgs(scenario: scenario),
+      // );
+
+      // if (result == 'goToAnalysis') {
+      //   await Navigator.of(context).pushNamed(
+      //     Routes.liveAnalysis.path,
+      //     arguments: ScenarioRouteArgs(scenario: scenario),
+      //   );
+      // }
+      
+      await Navigator.of(context).pushNamed(
+        Routes.scenarioDetail.path,
+        arguments: ScenarioRouteArgs(scenario: scenario),
+      ); 
     }
 
     return Scaffold(

@@ -27,6 +27,8 @@ import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:rula/rula.dart';
 
+import 'package:ergo4all/common/utils.dart';
+
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
@@ -74,10 +76,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   void goToResults() {
     if (!context.mounted) return;
+    final args = ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
+    final scenario = args.scenario;
+
     unawaited(
       Navigator.of(context).pushReplacementNamed(
         Routes.resultsOverview.path,
-        arguments: timeline.toIList(),
+        arguments: ScenarioRouteArgs(scenario: scenario, timeline: timeline.toIList()),
+        //arguments: timeline.toIList(),
       ),
     );
   }
@@ -156,8 +162,13 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Camera controller must be initialized.',
     );
 
+
+    // Comment out
     final outputFile = await cameraController.stopVideoRecording();
     await _saveRecording(outputFile);
+
+    // Comment in
+    // await cameraController.stopImageStream();
 
     await cameraController.dispose();
     await stopPoseDetection();
@@ -184,12 +195,16 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       analysisMode = _AnalysisMode.full;
     });
 
+    // Comment out
+
     await cameraController.stopImageStream();
     await cameraController.startVideoRecording(
       onAvailable: (image) {
         onCameraImage(cameraController.value, image);
       },
     );
+
+    // ...
 
     unawaited(
       progressAnimationController.reverse().then((_) {
