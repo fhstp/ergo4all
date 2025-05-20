@@ -1,3 +1,12 @@
+# [1.63.0](https://github.com/fhstp/ergo4all/compare/v1.62.0...v1.63.0) (2025-05-20)
+
+
+### Features
+
+* **app:** add app-bar to imprint screen ([206f896](https://github.com/fhstp/ergo4all/commit/206f896c1f751a74bdb6dc673c1a2999a9c85d48))
+* **app:** add placeholder imprint screen ([2c8dfa5](https://github.com/fhstp/ergo4all/commit/2c8dfa56fc74cbeb7a2ac1531deb1ba0911da73f))
+* **app:** overhaul red app bar ([6252f7d](https://github.com/fhstp/ergo4all/commit/6252f7d3a233724ef279f63a65c69717a7254451))
+
 # [1.62.0](https://github.com/fhstp/ergo4all/compare/v1.61.0...v1.62.0) (2025-05-20)
 
 
