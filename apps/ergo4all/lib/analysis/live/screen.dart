@@ -266,6 +266,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                   painter: Pose3dPainter(
                     pose: pose,
                     imageSize: frame.imageSize,
+                    color: hippieBlue,
                   ),
                 ),
               ),
