@@ -1,3 +1,10 @@
+## [1.71.1](https://github.com/fhstp/ergo4all/compare/v1.71.0...v1.71.1) (2025-05-20)
+
+
+### Bug Fixes
+
+* **app:** kleinere Änderungen ([443eab5](https://github.com/fhstp/ergo4all/commit/443eab5365c480d16cf7521a061245dea82532ab))
+
 # [1.71.0](https://github.com/fhstp/ergo4all/compare/v1.70.0...v1.71.0) (2025-05-20)
 
 
