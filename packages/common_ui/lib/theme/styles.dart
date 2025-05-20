@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -114,4 +115,21 @@ final infoText = GoogleFonts.nunito(
   fontWeight: FontWeight.w400,
   fontSize: 16,
   color: woodSmoke,
+);
+
+/// Button style for elevated buttons in the app.
+final elevatedButtonStyle = ButtonStyle(
+  minimumSize: const WidgetStatePropertyAll(Size(128, 48)),
+  padding: const WidgetStatePropertyAll(
+    EdgeInsets.symmetric(
+      vertical: smallSpace,
+      horizontal: mediumSpace,
+    ),
+  ),
+  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
+  shape: const WidgetStatePropertyAll(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    ),
+  ),
 );

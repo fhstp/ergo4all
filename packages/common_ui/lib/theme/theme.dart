@@ -1,5 +1,4 @@
 import 'package:common_ui/theme/colors.dart';
-import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,21 +22,7 @@ final _appBarTheme = AppBarTheme(
 );
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(
-  style: ButtonStyle(
-    minimumSize: const WidgetStatePropertyAll(Size(128, 48)),
-    padding: const WidgetStatePropertyAll(
-      EdgeInsets.symmetric(
-        vertical: smallSpace,
-        horizontal: mediumSpace,
-      ),
-    ),
-    textStyle: WidgetStatePropertyAll(buttonLabelStyle),
-    shape: const WidgetStatePropertyAll(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-    ),
-  ),
+  style: elevatedButtonStyle,
 );
 
 final _textButtonTheme = TextButtonThemeData(
