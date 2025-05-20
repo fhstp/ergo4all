@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -68,36 +69,43 @@ class ScenarioDetailScreen extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            localizations.common_description,
-            style: paragraphHeaderStyle,
-            textAlign: TextAlign.start,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: largeSpace, right: largeSpace),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                localizations.common_description,
+                style: paragraphHeaderStyle,
+                textAlign: TextAlign.start,
+              ),
+              Text(
+                description,
+                style: dynamicBodyStyle,
+                textAlign: TextAlign.start,
+              ),
+              const SizedBox(height: mediumSpace),
+              Text(
+                localizations.common_expectation,
+                style: paragraphHeaderStyle,
+                textAlign: TextAlign.start,
+              ),
+              Text(
+                expectation,
+                style: dynamicBodyStyle,
+                textAlign: TextAlign.start,
+              ),
+              const SizedBox(height: mediumSpace),
+              ElevatedButton(
+                key: const Key('start'),
+                style: primaryTextButtonStyle,
+                onPressed: goToRecordScreen,
+                child: Text(localizations.record_label),
+              ),
+            ],
           ),
-          Text(
-            description,
-            style: dynamicBodyStyle,
-            textAlign: TextAlign.start,
-          ),
-          Text(
-            localizations.common_expectation,
-            style: paragraphHeaderStyle,
-            textAlign: TextAlign.start,
-          ),
-          Text(
-            expectation,
-            style: dynamicBodyStyle,
-            textAlign: TextAlign.start,
-          ),
-          ElevatedButton(
-            key: const Key('start'),
-            style: primaryTextButtonStyle,
-            onPressed: goToRecordScreen,
-            child: Text(localizations.record_label),
-          ),
-        ],
+        ),
       ),
     );
   }

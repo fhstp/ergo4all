@@ -28,68 +28,70 @@ class WelcomeScreen extends HookWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            // The background graphic should fill 60% of the screen
-            height: screenHeight * 0.6,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox.expand(
-                  child: SvgPicture.asset(
-                    'assets/images/top_circle_large.svg',
-                    package: 'common_ui',
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      localizations.welcome_header,
-                      style: h3Style.copyWith(color: white),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        xLargeSpace,
-                        mediumSpace,
-                        xLargeSpace,
-                        0,
-                      ),
-                      child: Image(image: CustomImages.logoWhite),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Spacer(),
-          ElevatedButton(
-            key: const Key('start'),
-            style: primaryTextButtonStyle,
-            onPressed: navigateToNextScreen,
-            child: Text(localizations.welcome_start),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
-            child: SizedBox.fromSize(
-              size: const Size.fromHeight(50),
-              child: const Row(
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              // The background graphic should fill 60% of the screen
+              height: screenHeight * 0.6,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  Image(image: CustomImages.logoAk),
-                  Spacer(),
-                  Image(image: CustomImages.logoTUWien),
-                  SizedBox(width: mediumSpace),
-                  Image(image: CustomImages.logoFhStp),
+                  SizedBox.expand(
+                    child: SvgPicture.asset(
+                      'assets/images/top_circle_large.svg',
+                      package: 'common_ui',
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        localizations.welcome_header,
+                        style: h3Style.copyWith(color: white),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          xLargeSpace,
+                          mediumSpace,
+                          xLargeSpace,
+                          0,
+                        ),
+                        child: Image(image: CustomImages.logoWhite),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-          ),
-          VersionDisplay(version: uiState.projectVersion),
-          const SizedBox(height: mediumSpace),
-        ],
+            const Spacer(),
+            ElevatedButton(
+              key: const Key('start'),
+              style: primaryTextButtonStyle,
+              onPressed: navigateToNextScreen,
+              child: Text(localizations.welcome_start),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
+              child: SizedBox.fromSize(
+                size: const Size.fromHeight(50),
+                child: const Row(
+                  children: [
+                    Image(image: CustomImages.logoAk),
+                    Spacer(),
+                    Image(image: CustomImages.logoTUWien),
+                    SizedBox(width: mediumSpace),
+                    Image(image: CustomImages.logoFhStp),
+                  ],
+                ),
+              ),
+            ),
+            VersionDisplay(version: uiState.projectVersion),
+            const SizedBox(height: mediumSpace),
+          ],
+        ),
       ),
     );
   }

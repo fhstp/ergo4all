@@ -40,6 +40,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
           const SizedBox(height: largeSpace),
           Expanded(
             child: ListView.separated(
+              padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
               itemCount: Scenario.values.length,
               itemBuilder: (ctx, i) {
                 final scenario = Scenario.values[i];
@@ -55,7 +56,6 @@ class ScenarioChoiceScreen extends StatelessWidget {
               separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
             ),
           ),
-          const SizedBox(height: largeSpace),
         ],
       ),
     );

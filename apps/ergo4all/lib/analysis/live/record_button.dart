@@ -9,7 +9,7 @@ class RecordButton extends StatelessWidget {
     required this.isRecording,
     required this.onTap,
     super.key,
-    this.size = 80.0,
+    this.size = 61,
   }) : iconSize = size * 0.75;
 
   /// Whether we are currently recording.
