@@ -1,3 +1,14 @@
+# [1.68.0](https://github.com/fhstp/ergo4all/compare/v1.67.0...v1.68.0) (2025-05-20)
+
+
+### Features
+
+* **app:** adjust welcome screen button ([e941570](https://github.com/fhstp/ergo4all/commit/e94157017b8e6bdff33cb8ae7c210a5d333ca3ba))
+* **app:** adjust welcome screen graphic size ([8535a1b](https://github.com/fhstp/ergo4all/commit/8535a1b26f4fd53f0e6f27923920b6452ab6ae97))
+* **app:** adjust welcome screen spacings ([110c736](https://github.com/fhstp/ergo4all/commit/110c73679f8a9e6964df6763f34a2157f4da92e0))
+* increase elevated button elevation ([268022a](https://github.com/fhstp/ergo4all/commit/268022a904d35793c8b64b1c401b1bcba1f45361))
+* set fixed button width ([01000ca](https://github.com/fhstp/ergo4all/commit/01000ca111b5253e6b40c5085ddddc7a6e2a19b7))
+
 # [1.67.0](https://github.com/fhstp/ergo4all/compare/v1.66.0...v1.67.0) (2025-05-20)
 
 
