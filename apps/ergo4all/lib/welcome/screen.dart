@@ -12,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 
 /// Top-level widget for the welcome screen.
 class WelcomeScreen extends HookWidget {
+  ///
   const WelcomeScreen({super.key});
 
   @override
@@ -24,6 +25,8 @@ class WelcomeScreen extends HookWidget {
       await Navigator.of(context).pushReplacementNamed(Routes.language.path);
     }
 
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -31,14 +34,12 @@ class WelcomeScreen extends HookWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: SizedBox(
-              // Stretches to screen width
-              height: 600, // Keeps fixed height
-              child: SvgPicture.asset(
-                'assets/images/top_circle_large.svg',
-                package: 'common_ui',
-                fit: BoxFit.fitHeight,
-              ),
+            // The background graphic should fill 60% of the screen
+            height: screenHeight * 0.6,
+            child: SvgPicture.asset(
+              'assets/images/top_circle_large.svg',
+              package: 'common_ui',
+              fit: BoxFit.fitHeight,
             ),
           ),
           Column(
