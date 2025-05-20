@@ -43,6 +43,7 @@ class HomeScreen extends HookWidget {
 
     return Scaffold(
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           RedCircleTopBar(
             titleText: localizations.home_title,
@@ -56,12 +57,14 @@ class HomeScreen extends HookWidget {
               iconSize: 48,
             ),
           ),
-          ScreenContent(
+          SafeArea(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  width: 350,
-                  height: 350,
+                  width: 309,
+                  height: 309,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
@@ -83,7 +86,7 @@ class HomeScreen extends HookWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: mediumSpace),
+                //const SizedBox(height: mediumSpace),
                 uiState.user.match(
                   () => const ShimmerBox(width: 200, height: 24),
                   UserWelcomeHeader.new,
@@ -102,6 +105,7 @@ class HomeScreen extends HookWidget {
                   onPressed: goToTips,
                   child: Text(localizations.home_tips_label),
                 ),
+                const SizedBox(height: mediumSpace),
               ],
             ),
           ),

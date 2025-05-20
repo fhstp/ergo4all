@@ -41,22 +41,24 @@ class PickLanguageScreen extends StatelessWidget {
         title: localizations.language_title,
       ),
       body: ScreenContent(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              localizations.language_header,
-              style: h3Style,
-            ),
-            const SizedBox(
-              height: largeSpace,
-            ),
-            languageButtonFor('Deutsch', const Locale('de')),
-            const SizedBox(
-              height: mediumSpace,
-            ),
-            languageButtonFor('English', const Locale('en')),
-          ],
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                localizations.language_header,
+                style: h3Style,
+              ),
+              const SizedBox(
+                height: largeSpace,
+              ),
+              languageButtonFor('Deutsch', const Locale('de')),
+              const SizedBox(
+                height: mediumSpace,
+              ),
+              languageButtonFor('English', const Locale('en')),
+            ],
+          ),
         ),
       ),
     );

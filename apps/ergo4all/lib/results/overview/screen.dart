@@ -1,5 +1,6 @@
 import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/utils.dart';
@@ -92,6 +93,7 @@ class ResultsOverviewScreen extends StatelessWidget {
             style: staticBodyStyle,
             textAlign: TextAlign.center,
           ),
+          const SizedBox(height: mediumSpace),
           ElevatedButton(
             onPressed: goToDetails,
             style: secondaryTextButtonStyle,

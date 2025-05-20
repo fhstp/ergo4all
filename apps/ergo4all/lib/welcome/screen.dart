@@ -41,44 +41,46 @@ class WelcomeScreen extends HookWidget {
               ),
             ),
           ),
-          Column(
-            children: [
-              const Spacer(flex: 2),
-              Text(
-                localizations.welcome_header,
-                style: h3Style.copyWith(color: white),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(
-                    xlargeSpace, mediumSpace, xlargeSpace,0,
+          SafeArea(
+            child: Column(
+              children: [
+                const Spacer(flex: 2),
+                Text(
+                  localizations.welcome_header,
+                  style: h3Style.copyWith(color: white),
                 ),
-                child: Image(image: CustomImages.logoWhite),
-              ),
-              const Spacer(flex: 3),
-              ElevatedButton(
-                key: const Key('start'),
-                style: primaryTextButtonStyle,
-                onPressed: navigateToNextScreen,
-                child: Text(localizations.welcome_start),
-              ),
-              const Spacer(flex: 2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
-                child: SizedBox.fromSize(
-                  size: const Size.fromHeight(50),
-                  child: const Row(
-                    children: [
-                      Image(image: CustomImages.logoAk),
-                      Spacer(),
-                      Image(image: CustomImages.logoTUWien),
-                      SizedBox(width: mediumSpace),
-                      Image(image: CustomImages.logoFhStp),
-                    ],
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      xlargeSpace, mediumSpace, xlargeSpace,0,
+                  ),
+                  child: Image(image: CustomImages.logoWhite),
+                ),
+                const Spacer(flex: 3),
+                ElevatedButton(
+                  key: const Key('start'),
+                  style: primaryTextButtonStyle,
+                  onPressed: navigateToNextScreen,
+                  child: Text(localizations.welcome_start),
+                ),
+                const Spacer(flex: 2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
+                  child: SizedBox.fromSize(
+                    size: const Size.fromHeight(50),
+                    child: const Row(
+                      children: [
+                        Image(image: CustomImages.logoAk),
+                        Spacer(),
+                        Image(image: CustomImages.logoTUWien),
+                        SizedBox(width: mediumSpace),
+                        Image(image: CustomImages.logoFhStp),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              VersionDisplay(version: uiState.projectVersion),
-            ],
+                VersionDisplay(version: uiState.projectVersion),
+              ],
+            ),
           ),
         ],
       ),
