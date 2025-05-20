@@ -1,3 +1,10 @@
+# [1.71.0](https://github.com/fhstp/ergo4all/compare/v1.70.0...v1.71.0) (2025-05-20)
+
+
+### Features
+
+* **app:** BackButton in einen IconButton umgewandelt ([1e28d1e](https://github.com/fhstp/ergo4all/commit/1e28d1ebad07e099b59e4eaa6d5e2763cadd8eaf))
+
 # [1.70.0](https://github.com/fhstp/ergo4all/compare/v1.69.0...v1.70.0) (2025-05-20)
 
 
