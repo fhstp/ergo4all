@@ -2,11 +2,12 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ergo4all/common/utils.dart';
+
 
 class ScenarioChoiceScreen extends StatelessWidget {
   const ScenarioChoiceScreen({super.key});
@@ -63,7 +64,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
           const SizedBox(height: largeSpace),
           Expanded(
             child: ListView.separated(
-              padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+              padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
               itemCount: Scenario.values.length,
               itemBuilder: (ctx, i) {
                 final scenario = Scenario.values[i];
