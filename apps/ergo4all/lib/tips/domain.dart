@@ -1,4 +1,4 @@
-enum Tip{
+enum Tip {
   bodyPosture,
   sitting,
   liftAndCarry,
