@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/fhstp/ergo4all/compare/v1.63.0...v1.64.0) (2025-05-20)
+
+
+### Features
+
+* **app:** contact placeholders on imprint screen ([6b7475e](https://github.com/fhstp/ergo4all/commit/6b7475e80ec8175b4ae07bb07f8fc876543eeeb8))
+
 # [1.63.0](https://github.com/fhstp/ergo4all/compare/v1.62.0...v1.63.0) (2025-05-20)
 
 
