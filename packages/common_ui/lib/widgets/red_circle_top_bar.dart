@@ -43,10 +43,14 @@ class RedCircleAppBar extends StatelessWidget implements PreferredSizeWidget {
             'assets/images/top_circle.svg',
           ),
           if (withBackButton)
-            const Positioned(
+            Positioned(
               top: 50,
               left: mediumSpace,
-              child: BackButton(color: white),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, color: white),
+                onPressed: () => Navigator.of(context).pop(),
+                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+              ),
             ),
           if (menuButton != null)
             Positioned(
