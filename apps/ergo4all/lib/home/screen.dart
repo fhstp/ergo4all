@@ -5,7 +5,6 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
