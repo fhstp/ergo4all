@@ -11,6 +11,7 @@ import 'package:ergo4all/onboarding/non_expert_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
 import 'package:ergo4all/onboarding/user_creator_screen.dart';
+import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
@@ -76,6 +77,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.tipChoice.path: (context) => const TipChoiceScreen(),
         Routes.tipDetail.path: (context) => const TipDetailScreen(),
         Routes.imprint.path: (_) => const ImprintScreen(),
+        Routes.privacy.path: (_) => const PrivacyScreen(),
       },
       navigatorObservers: [
         RouteLeaveObserver(

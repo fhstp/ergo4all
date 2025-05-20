@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/custom_images.dart';
+import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +50,10 @@ class ImprintScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
+    void goToPrivacy() {
+      unawaited(Navigator.of(context).pushNamed(Routes.privacy.path));
+    }
+
     return Scaffold(
       appBar: RedCircleAppBar(
         titleText: localizations.imprint,
@@ -87,7 +94,7 @@ class ImprintScreen extends StatelessWidget {
               contactTelephone: '[Contact Telephone]',
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: goToPrivacy,
               child: Text(localizations.menu_privacy_label),
             ),
           ],

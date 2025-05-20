@@ -32,6 +32,11 @@ Future<void> showHomeMenuDialog(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(Routes.home.path);
   }
 
+  void goToPrivacy() {
+    final navigator = Navigator.of(context)..pop();
+    unawaited(navigator.pushNamed(Routes.privacy.path));
+  }
+
   return showDialog<void>(
     context: context,
     builder: (context) => SimpleDialog(
@@ -54,10 +59,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           final navigator = Navigator.of(context)..pop();
           unawaited(navigator.pushNamed(Routes.imprint.path));
         }),
-        _makeOptionButton(localizations.menu_privacy_label, () {
-          Navigator.of(context).pop();
-          showNotImplementedSnackbar(context);
-        }),
+        _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
         _makeOptionButton(localizations.menu_delete_data_label, () {
           Navigator.of(context).pop();
           showNotImplementedSnackbar(context);

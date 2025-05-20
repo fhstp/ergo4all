@@ -21,7 +21,10 @@ enum Routes {
   welcome('/welcome'),
 
   /// Screen for viewing imprint information.
-  imprint('/imprint');
+  imprint('/imprint'),
+
+  /// Screen for viewing privacy information.
+  privacy('/privacy');
 
   const Routes(this.path);
 
