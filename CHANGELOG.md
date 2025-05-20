@@ -1,3 +1,10 @@
+# [1.62.0](https://github.com/fhstp/ergo4all/compare/v1.61.0...v1.62.0) (2025-05-20)
+
+
+### Features
+
+* **app:** use native back-button in red app-bar ([970cd3c](https://github.com/fhstp/ergo4all/commit/970cd3c23d07522833ec04bb4696b65d49cea580))
+
 # [1.61.0](https://github.com/fhstp/ergo4all/compare/v1.60.0...v1.61.0) (2025-05-20)
 
 
