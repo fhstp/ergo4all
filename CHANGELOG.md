@@ -1,3 +1,13 @@
+# [1.61.0](https://github.com/fhstp/ergo4all/compare/v1.60.0...v1.61.0) (2025-05-20)
+
+
+### Features
+
+* **app:** add back button to results overview ([a50719e](https://github.com/fhstp/ergo4all/commit/a50719e9635ee07040373c7a4e42553db6b413ba))
+* **app:** add back button to scenario detail ([d313748](https://github.com/fhstp/ergo4all/commit/d3137489904da4ac7b32e241b5aabfd3e071f876))
+* **app:** use blue color for pose painter ([4544bae](https://github.com/fhstp/ergo4all/commit/4544bae72d062208d7a0abec2baf6e1590b2c955))
+* **pose_vis:** configure pose paint color ([96378de](https://github.com/fhstp/ergo4all/commit/96378dece434ed33d7e0f650aed52eaeb3d9759d))
+
 # [1.60.0](https://github.com/fhstp/ergo4all/compare/v1.59.4...v1.60.0) (2025-05-19)
 
 
