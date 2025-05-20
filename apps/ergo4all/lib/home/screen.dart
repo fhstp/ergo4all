@@ -56,19 +56,8 @@ class HomeScreen extends HookWidget {
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          RedCircleTopBar(
-            titleText: localizations.home_title,
-            menuButton: IconButton(
-              key: const Key('burger'),
-              onPressed: () {
-                showHomeMenuDialog(context);
-              },
-              icon: const Icon(Icons.menu),
-              color: white,
-              iconSize: 48,
-            ),
-          ),
           SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.min,
