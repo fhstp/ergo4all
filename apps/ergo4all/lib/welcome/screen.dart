@@ -64,14 +64,14 @@ class WelcomeScreen extends HookWidget {
               ],
             ),
           ),
-          const Spacer(flex: 3),
+          const Spacer(),
           ElevatedButton(
             key: const Key('start'),
             style: primaryTextButtonStyle,
             onPressed: navigateToNextScreen,
             child: Text(localizations.welcome_start),
           ),
-          const Spacer(flex: 2),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
             child: SizedBox.fromSize(
