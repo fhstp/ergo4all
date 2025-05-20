@@ -1,3 +1,11 @@
+# [1.66.0](https://github.com/fhstp/ergo4all/compare/v1.65.0...v1.66.0) (2025-05-20)
+
+
+### Features
+
+* **app:** complete privacy screen ([0ddc746](https://github.com/fhstp/ergo4all/commit/0ddc74643aec44161050e5377e90a1cfe49f2606))
+* **app:** placeholder privacy screen ([2227d80](https://github.com/fhstp/ergo4all/commit/2227d80eb58ce7c71192f3962b52eaf63291f10c))
+
 # [1.65.0](https://github.com/fhstp/ergo4all/compare/v1.64.0...v1.65.0) (2025-05-20)
 
 
