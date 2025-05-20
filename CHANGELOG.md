@@ -1,3 +1,10 @@
+# [1.65.0](https://github.com/fhstp/ergo4all/compare/v1.64.0...v1.65.0) (2025-05-20)
+
+
+### Features
+
+* **app:** privacy button on imprint screen ([1370240](https://github.com/fhstp/ergo4all/commit/1370240bf778a9ab1809b80686352541af429f42))
+
 # [1.64.0](https://github.com/fhstp/ergo4all/compare/v1.63.0...v1.64.0) (2025-05-20)
 
 
