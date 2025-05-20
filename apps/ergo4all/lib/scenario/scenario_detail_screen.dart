@@ -60,14 +60,17 @@ class ScenarioDetailScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(color: cardinal),
+        title: Text(
+          summary,
+          style: h4Style.copyWith(color: cardinal),
+          textAlign: TextAlign.center,
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            summary,
-            style: h4Style.copyWith(color: cardinal),
-            textAlign: TextAlign.center,
-          ),
           Text(
             localizations.common_description,
             style: paragraphHeaderStyle,
