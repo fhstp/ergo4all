@@ -47,7 +47,7 @@ class _Frame {
 
 enum _AnalysisMode { none, poseOnly, full }
 
-// TODO: Move to own package for video storage
+// TODO(comradevanti): Move to own package for video storage
 Future<void> _saveRecording(XFile tempFile) async {
   final recordingsDir = Directory(
     '/storage/emulated/0/Android/media/at.ac.fhstp.ergo4all/Ergo4All Recordings',

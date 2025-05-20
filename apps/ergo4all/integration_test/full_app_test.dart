@@ -127,7 +127,7 @@ void main() {
     await tester.tap(find.byKey(const Key('tips')));
     await tester.pump(const Duration(seconds: 1));
 
-    // TODO: Add more tips tests here
+    // TODO(comradevanti): Add more tips tests here
     // For now we just go pack
     await tester.native.pressBack();
     await tester.pumpAndSettle();
