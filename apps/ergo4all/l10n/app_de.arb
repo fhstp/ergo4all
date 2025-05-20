@@ -15,7 +15,7 @@
   "language_title": "Sprachen",
   "menu_delete_data_label": "Meine Daten löschen",
   "menu_home_label": "Hauptmenü",
-  "menu_imprint_label": "Impressum",
+  "imprint": "Impressum",
   "menu_language_label": "Sprache ändern",
   "menu_privacy_label": "Datenschutz",
   "menu_user_label": "Account wechseln",

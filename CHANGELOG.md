@@ -1,3 +1,41 @@
+# [1.66.0](https://github.com/fhstp/ergo4all/compare/v1.65.0...v1.66.0) (2025-05-20)
+
+
+### Features
+
+* **app:** complete privacy screen ([0ddc746](https://github.com/fhstp/ergo4all/commit/0ddc74643aec44161050e5377e90a1cfe49f2606))
+* **app:** placeholder privacy screen ([2227d80](https://github.com/fhstp/ergo4all/commit/2227d80eb58ce7c71192f3962b52eaf63291f10c))
+
+# [1.65.0](https://github.com/fhstp/ergo4all/compare/v1.64.0...v1.65.0) (2025-05-20)
+
+
+### Features
+
+* **app:** privacy button on imprint screen ([1370240](https://github.com/fhstp/ergo4all/commit/1370240bf778a9ab1809b80686352541af429f42))
+
+# [1.64.0](https://github.com/fhstp/ergo4all/compare/v1.63.0...v1.64.0) (2025-05-20)
+
+
+### Features
+
+* **app:** contact placeholders on imprint screen ([6b7475e](https://github.com/fhstp/ergo4all/commit/6b7475e80ec8175b4ae07bb07f8fc876543eeeb8))
+
+# [1.63.0](https://github.com/fhstp/ergo4all/compare/v1.62.0...v1.63.0) (2025-05-20)
+
+
+### Features
+
+* **app:** add app-bar to imprint screen ([206f896](https://github.com/fhstp/ergo4all/commit/206f896c1f751a74bdb6dc673c1a2999a9c85d48))
+* **app:** add placeholder imprint screen ([2c8dfa5](https://github.com/fhstp/ergo4all/commit/2c8dfa56fc74cbeb7a2ac1531deb1ba0911da73f))
+* **app:** overhaul red app bar ([6252f7d](https://github.com/fhstp/ergo4all/commit/6252f7d3a233724ef279f63a65c69717a7254451))
+
+# [1.62.0](https://github.com/fhstp/ergo4all/compare/v1.61.0...v1.62.0) (2025-05-20)
+
+
+### Features
+
+* **app:** use native back-button in red app-bar ([970cd3c](https://github.com/fhstp/ergo4all/commit/970cd3c23d07522833ec04bb4696b65d49cea580))
+
 # [1.61.0](https://github.com/fhstp/ergo4all/compare/v1.60.0...v1.61.0) (2025-05-20)
 
 

@@ -47,7 +47,10 @@
   "@menu_home_label": {
     "description": "Label for button to navigate to the home screen"
   },
-  "menu_imprint_label": "Imprint",
+  "imprint": "Imprint",
+  "@imprint": {
+    "description": "The word \"imprint\" to be used in a variety of contexts."
+  },
   "menu_language_label": "Change Language",
   "@menu_language_label": {
     "description": "Label for button to change the app language"

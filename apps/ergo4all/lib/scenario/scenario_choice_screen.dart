@@ -1,4 +1,3 @@
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
@@ -31,30 +30,14 @@ class ScenarioChoiceScreen extends StatelessWidget {
           .pushNamed(Routes.scenarioDetail.path, arguments: scenario);
     }
 
-    void goToHomeScreen(BuildContext context) {
-      Navigator.of(context).pushReplacementNamed(Routes.home.path);
-    }
-
-    final Widget menuButton = IconButton(
-      key: const Key('back'),
-      icon: const Icon(Icons.arrow_back_ios_new),
-      color: white,
-      iconSize: 48,
-      onPressed: () {
-        goToHomeScreen(context);
-      },
-    );
-
     return Scaffold(
+      appBar: RedCircleAppBar(
+        titleText: localizations.choice_title,
+        withBackButton: true,
+      ),
       body: Column(
         children: [
-          RedCircleTopBar(
-            titleText: localizations.choice_title,
-            menuButton: menuButton,
-          ),
-          const SizedBox(
-            height: largeSpace,
-          ),
+          const SizedBox(height: largeSpace),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
@@ -70,9 +53,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
                   child: Text(titleFor(scenario)),
                 );
               },
-              separatorBuilder: (ctx, i) => const SizedBox(
-                height: largeSpace,
-              ),
+              separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
             ),
           ),
         ],

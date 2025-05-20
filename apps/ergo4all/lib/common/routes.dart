@@ -18,9 +18,17 @@ enum Routes {
   userCreator('/users/new'),
   language('/language'),
   tou('/tou'),
-  welcome('/welcome');
+  welcome('/welcome'),
+
+  /// Screen for viewing imprint information.
+  imprint('/imprint'),
+
+  /// Screen for viewing privacy information.
+  privacy('/privacy');
 
   const Routes(this.path);
 
+  /// The path of this route. Use this as the name when navigating to this
+  /// route.
   final String path;
 }
