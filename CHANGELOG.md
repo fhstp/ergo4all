@@ -1,3 +1,10 @@
+# [1.70.0](https://github.com/fhstp/ergo4all/compare/v1.69.0...v1.70.0) (2025-05-20)
+
+
+### Features
+
+* added tips to the detail screen ([889e5dc](https://github.com/fhstp/ergo4all/commit/889e5dcda4ea0ffc86bde2a6c8a72e08564b6581))
+
 # [1.69.0](https://github.com/fhstp/ergo4all/compare/v1.68.0...v1.69.0) (2025-05-20)
 
 
