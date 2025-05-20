@@ -1,4 +1,5 @@
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,46 +7,60 @@ import 'package:google_fonts/google_fonts.dart';
 final buttonLabelStyle =
     GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 20);
 
+/// The intended width for most buttons in the app.
+const buttonWidth = 220.0;
+
+/// Button style for elevated buttons in the app.
+final elevatedButtonStyle = ButtonStyle(
+  minimumSize: const WidgetStatePropertyAll(Size(128, 48)),
+  fixedSize: const WidgetStatePropertyAll(Size.fromWidth(buttonWidth)),
+  maximumSize: const WidgetStatePropertyAll(Size.fromWidth(buttonWidth)),
+  padding: const WidgetStatePropertyAll(
+    EdgeInsets.symmetric(
+      vertical: smallSpace,
+      horizontal: mediumSpace,
+    ),
+  ),
+  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
+  elevation: const WidgetStatePropertyAll(3),
+  shape: const WidgetStatePropertyAll(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    ),
+  ),
+);
+
 /// The button style for all primary buttons. It uses a teal color
 /// palette.
-final primaryTextButtonStyle = ButtonStyle(
-  minimumSize: const WidgetStatePropertyAll(Size(75, 48)),
-  maximumSize: const WidgetStatePropertyAll(Size(222, 48)),
+final primaryTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(white),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: tealBlue,
     WidgetState.disabled: heather,
     WidgetState.any: blueChill,
   }),
-  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
 );
 
 /// The button style for all secondary buttons. It uses a dark blue color
 /// palette.
-final secondaryTextButtonStyle = ButtonStyle(
-  minimumSize: const WidgetStatePropertyAll(Size(75, 48)),
-  maximumSize: const WidgetStatePropertyAll(Size(222, 48)),
+final secondaryTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(white),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: blackPearl,
     WidgetState.disabled: heather,
     WidgetState.any: tarawera,
   }),
-  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
 );
 
 /// The button style for all buttons which are surrounded by a lot of white.
 /// It uses the pale blue color palette.
-final paleTextButtonStyle = ButtonStyle(
-  minimumSize: const WidgetStatePropertyAll(Size(75, 48)),
-  maximumSize: const WidgetStatePropertyAll(Size(222, 48)),
+final paleTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(woodSmoke),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: hippieBlue,
     WidgetState.disabled: heather,
     WidgetState.any: spindle,
   }),
-  textStyle: WidgetStatePropertyAll(buttonLabelStyle),
 );
 
 /// Text style for H1 headers.
