@@ -127,6 +127,7 @@ final elevatedButtonStyle = ButtonStyle(
     ),
   ),
   textStyle: WidgetStatePropertyAll(buttonLabelStyle),
+  elevation: const WidgetStatePropertyAll(3),
   shape: const WidgetStatePropertyAll(
     RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
