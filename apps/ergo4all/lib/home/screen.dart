@@ -42,20 +42,20 @@ class HomeScreen extends HookWidget {
     );
 
     return Scaffold(
+      appBar: RedCircleAppBar(
+        titleText: localizations.home_title,
+        menuButton: IconButton(
+          key: const Key('burger'),
+          onPressed: () {
+            showHomeMenuDialog(context);
+          },
+          icon: const Icon(Icons.menu),
+          color: white,
+          iconSize: 48,
+        ),
+      ),
       body: Column(
         children: [
-          RedCircleTopBar(
-            titleText: localizations.home_title,
-            menuButton: IconButton(
-              key: const Key('burger'),
-              onPressed: () {
-                showHomeMenuDialog(context);
-              },
-              icon: const Icon(Icons.menu),
-              color: white,
-              iconSize: 48,
-            ),
-          ),
           ScreenContent(
             child: Column(
               children: [

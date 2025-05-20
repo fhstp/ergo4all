@@ -31,15 +31,13 @@ class TipChoiceScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: RedCircleAppBar(
+        titleText: localizations.choice_title,
+        withBackButton: true,
+      ),
       body: Column(
         children: [
-          RedCircleTopBar(
-            titleText: localizations.choice_title,
-            withBackButton: true,
-          ),
-          const SizedBox(
-            height: largeSpace,
-          ),
+          const SizedBox(height: largeSpace),
           Expanded(
             child: ListView.separated(
               itemCount: Tip.values.length,
@@ -57,14 +55,10 @@ class TipChoiceScreen extends StatelessWidget {
                   ),
                 );
               },
-              separatorBuilder: (ctx, i) => const SizedBox(
-                height: largeSpace,
-              ),
+              separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
             ),
           ),
-          const SizedBox(
-            height: largeSpace,
-          ),
+          const SizedBox(height: largeSpace),
         ],
       ),
     );

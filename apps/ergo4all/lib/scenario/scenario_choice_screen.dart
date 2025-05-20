@@ -31,15 +31,13 @@ class ScenarioChoiceScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: RedCircleAppBar(
+        titleText: localizations.choice_title,
+        withBackButton: true,
+      ),
       body: Column(
         children: [
-          RedCircleTopBar(
-            titleText: localizations.choice_title,
-            withBackButton: true,
-          ),
-          const SizedBox(
-            height: largeSpace,
-          ),
+          const SizedBox(height: largeSpace),
           Expanded(
             child: ListView.separated(
               itemCount: Scenario.values.length,
@@ -54,14 +52,10 @@ class ScenarioChoiceScreen extends StatelessWidget {
                   child: Text(titleFor(scenario)),
                 );
               },
-              separatorBuilder: (ctx, i) => const SizedBox(
-                height: largeSpace,
-              ),
+              separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
             ),
           ),
-          const SizedBox(
-            height: largeSpace,
-          ),
+          const SizedBox(height: largeSpace),
         ],
       ),
     );
