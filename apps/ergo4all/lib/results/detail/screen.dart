@@ -1,4 +1,6 @@
 import 'package:common/immutable_collection_ext.dart';
+import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
@@ -31,6 +33,10 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       return Container();
     }
 
+    final recordingDuration = Duration(
+          milliseconds: timeline.last.timestamp - timeline.first.timestamp,
+        ).inSeconds;
+
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
       valueMapper: (bodyPartGroup) => timeline
@@ -58,12 +64,14 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       );
     }
 
-    final heatmapHeight = MediaQuery.of(context).size.width * 0.6;
+    final heatmapHeight = MediaQuery.of(context).size.width * 0.65;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
+    const labelSpaceWidth = 65.0;
+    final bodyLabelStyle = infoText.copyWith(fontSize: 13);
 
     return Scaffold(
       appBar: AppBar(title: Text(localizations.results_title)),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +79,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
             Text(
               // 'Normalized RULA Score Analysis',
               localizations.results_plot_title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: paragraphHeaderStyle,
             ),
 
             const SizedBox(height: 40),
@@ -85,7 +93,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                 child: Column(
                   spacing: 10,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: BodyPartGroup.values
+                  children: [
+                    ...BodyPartGroup.values
                       .map(
                         (part) => Expanded(
                           child: GestureDetector(
@@ -96,12 +105,13 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 SizedBox(
-                                  width: 50,
+                                  width: labelSpaceWidth,
                                   child: Text(
                                     bodyPartGroupLabelFor(
                                       localizations,
                                       part,
                                     ),
+                                    style: bodyLabelStyle,
                                   ),
                                 ),
                                 Expanded(
@@ -116,8 +126,30 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                             ),
                           ),
                         ),
-                      )
-                      .toList(),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: labelSpaceWidth),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 2,
+                            color: woodSmoke.withValues(alpha:0.5),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('0s', style: bodyLabelStyle),
+                              Text(
+                                '${recordingDuration}s', 
+                                style: bodyLabelStyle,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -152,11 +184,11 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                       children: [
                         Text(
                           localizations.results_score_low,
-                          style: const TextStyle(fontSize: 14),
+                          style: infoText,
                         ),
                         Text(
                           localizations.results_score_high,
-                          style: const TextStyle(fontSize: 14),
+                          style: infoText,
                         ),
                       ],
                     ),
