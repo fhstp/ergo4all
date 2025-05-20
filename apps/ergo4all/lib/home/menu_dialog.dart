@@ -50,7 +50,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           goToLanguage,
           const Key('button-lang'),
         ),
-        _makeOptionButton(localizations.menu_imprint_label, () {
+        _makeOptionButton(localizations.imprint, () {
           final navigator = Navigator.of(context)..pop();
           unawaited(navigator.pushNamed(Routes.imprint.path));
         }),

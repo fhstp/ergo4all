@@ -1,3 +1,5 @@
+import 'package:common_ui/widgets/red_circle_top_bar.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Screen for displaying information about project partners and contributors.
@@ -7,6 +9,13 @@ class ImprintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('[Impressum]');
+    final localizations = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: RedCircleAppBar(
+        titleText: localizations.imprint,
+        withBackButton: true,
+      ),
+    );
   }
 }
