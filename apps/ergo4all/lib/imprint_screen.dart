@@ -52,14 +52,15 @@ class ImprintScreen extends StatelessWidget {
         titleText: localizations.imprint,
         withBackButton: true,
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
           horizontal: mediumSpace,
           vertical: largeSpace,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _ContactBlock(
+            const _ContactBlock(
               logo: CustomImages.logoAk,
               companyName: 'AK Niederösterreich',
               companyAddress: '[Address]',
@@ -67,8 +68,8 @@ class ImprintScreen extends StatelessWidget {
               contactEmail: '[Contact Email]',
               contactTelephone: '[Contact Telephone]',
             ),
-            SizedBox(height: largeSpace),
-            _ContactBlock(
+            const SizedBox(height: largeSpace),
+            const _ContactBlock(
               logo: CustomImages.logoFhStp,
               companyName: 'FH St. Pölten',
               companyAddress: '[Address]',
@@ -76,14 +77,18 @@ class ImprintScreen extends StatelessWidget {
               contactEmail: '[Contact Email]',
               contactTelephone: '[Contact Telephone]',
             ),
-            SizedBox(height: largeSpace),
-            _ContactBlock(
+            const SizedBox(height: largeSpace),
+            const _ContactBlock(
               logo: CustomImages.logoTUWien,
               companyName: 'TU Wien',
               companyAddress: '[Address]',
               contactPersonName: '[Contact Name]',
               contactEmail: '[Contact Email]',
               contactTelephone: '[Contact Telephone]',
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(localizations.menu_privacy_label),
             ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const _colorScheme = ColorScheme(
   brightness: Brightness.light,
@@ -39,11 +40,17 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
   ),
 );
 
-const _textButtonTheme = TextButtonThemeData(
+final _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     textStyle: WidgetStatePropertyAll(
-      TextStyle(decoration: TextDecoration.underline),
+      GoogleFonts.nunito(
+        fontWeight: FontWeight.w400,
+        fontSize: 20,
+        decoration: TextDecoration.underline,
+      ),
     ),
+    padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+    splashFactory: NoSplash.splashFactory,
   ),
 );
 
