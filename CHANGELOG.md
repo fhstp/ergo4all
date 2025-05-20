@@ -1,3 +1,11 @@
+# [1.69.0](https://github.com/fhstp/ergo4all/compare/v1.68.0...v1.69.0) (2025-05-20)
+
+
+### Features
+
+* add safe area and spacing in main app screens ([6a5881d](https://github.com/fhstp/ergo4all/commit/6a5881d05d62e02974b516f904ef66a21e365a83))
+* add spacing in home screen ([4f9278f](https://github.com/fhstp/ergo4all/commit/4f9278f29ac7a826a7140e2edeef0b95ef0d1d3f))
+
 # [1.68.0](https://github.com/fhstp/ergo4all/compare/v1.67.0...v1.68.0) (2025-05-20)
 
 
