@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 
+/// Opens the front-camera for recording and returns a [CameraController] for
+/// interacting with it.
 Future<CameraController> openPoseDetectionCamera() async {
   final cameras = await availableCameras();
   final frontCamera =
