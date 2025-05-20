@@ -72,13 +72,14 @@ class ResultsOverviewScreen extends StatelessWidget {
         .pipe(calculateRating);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          '${localizations.results_ergo_score_header}:',
+          style: h2Style,
+        ),
+      ),
       body: Column(
         children: [
-          Text(
-            '${localizations.results_ergo_score_header}:',
-            style: h2Style,
-            textAlign: TextAlign.center,
-          ),
           SizedBox(height: 80, child: ErgoScoreBadge(rating: totalRating)),
           BodyScoreDisplay(
             aggregate,
