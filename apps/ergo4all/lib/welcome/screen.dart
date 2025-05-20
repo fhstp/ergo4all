@@ -50,7 +50,10 @@ class WelcomeScreen extends HookWidget {
               ),
               const Padding(
                 padding: EdgeInsets.fromLTRB(
-                    xlargeSpace, mediumSpace, xlargeSpace,0,
+                  xLargeSpace,
+                  mediumSpace,
+                  xLargeSpace,
+                  0,
                 ),
                 child: Image(image: CustomImages.logoWhite),
               ),

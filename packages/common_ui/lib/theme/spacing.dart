@@ -7,4 +7,5 @@ const mediumSpace = 15.0;
 /// A large space to put between unrelated widgets.
 const largeSpace = 35.0;
 
-const xlargeSpace = 50.0;
+/// Extra large space.
+const xLargeSpace = 50.0;
