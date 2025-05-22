@@ -2,6 +2,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
+import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
@@ -85,54 +86,62 @@ class ScenarioDetailScreen extends StatelessWidget {
         leading: const IconBackButton(color: cardinal),
         title: Text(localizations.scenario_detail_title),
       ),
-      body: SafeArea(
-        minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
-        child: Align(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: mediumSpace),
-                Text(
-                  summary,
-                  style: h4Style.copyWith(color: cardinal),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: mediumSpace),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: RedCircleBottomBar(),
+          ),
+          SafeArea(
+            minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
+            child: Align(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Text(
-                      localizations.common_description,
-                      style: paragraphHeaderStyle,
-                    ),
-                    Text(
-                      description,
-                      style: dynamicBodyStyle,
-                    ),
                     const SizedBox(height: mediumSpace),
                     Text(
-                      localizations.common_expectation,
-                      style: paragraphHeaderStyle,
+                      summary,
+                      style: h4Style.copyWith(color: cardinal),
+                      textAlign: TextAlign.center,
                     ),
-                    Text(
-                      expectation,
-                      style: dynamicBodyStyle,
+                    const SizedBox(height: mediumSpace),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          localizations.common_description,
+                          style: paragraphHeaderStyle,
+                        ),
+                        Text(
+                          description,
+                          style: dynamicBodyStyle,
+                        ),
+                        const SizedBox(height: mediumSpace),
+                        Text(
+                          localizations.common_expectation,
+                          style: paragraphHeaderStyle,
+                        ),
+                        Text(
+                          expectation,
+                          style: dynamicBodyStyle,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: mediumSpace),
+                    SvgPicture.asset(graphicKey, height: 330),
+                    const SizedBox(height: mediumSpace),
+                    ElevatedButton(
+                      key: const Key('start'),
+                      style: primaryTextButtonStyle,
+                      onPressed: goToRecordScreen,
+                      child: Text(localizations.record_label),
                     ),
                   ],
                 ),
-                const SizedBox(height: mediumSpace),
-                SvgPicture.asset(graphicKey, height: 330),
-                const SizedBox(height: mediumSpace),
-                ElevatedButton(
-                  key: const Key('start'),
-                  style: primaryTextButtonStyle,
-                  onPressed: goToRecordScreen,
-                  child: Text(localizations.record_label),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
