@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="grafisches_element_unterer_akzent" data-name="grafisches element unterer akzent" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 2400">
+  <defs>
+    <linearGradient id="Unbenannter_Verlauf_41" data-name="Unbenannter Verlauf 41" x1="2.62" y1="2134.78" x2="1080" y2="2134.78" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff5a5f"/>
+      <stop offset=".5" stop-color="#e13940"/>
+      <stop offset="1" stop-color="#c81d25"/>
+    </linearGradient>
+  </defs>
+  <path d="M1080,1869.56c-181.5,199.98-443.51,325.57-734.86,325.57-120.39,0-235.76-21.45-342.52-60.72v265.6h1077.38v-530.44Z" fill="url(#Unbenannter_Verlauf_41)"/>
+</svg>

@@ -1,8 +1,11 @@
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/tips/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class TipDetailScreen extends StatelessWidget {
   const TipDetailScreen({super.key});
@@ -31,18 +34,56 @@ class TipDetailScreen extends StatelessWidget {
       Tip.handAndArm => localizations.tip_handAndArm_summary,
     };
 
+    final imagePath = switch (tip) {
+      Tip.handAndArm => 'assets/images/puppets_good_bad/good_bad_hand.svg',
+      Tip.liftAndCarry => 'assets/images/puppets_good_bad/good_bad_lifting.svg',
+      Tip.workingOverhead =>
+        'assets/images/puppets_good_bad/good_bad_overhead_work.svg',
+      Tip.pushAndPull => 'assets/images/puppets_good_bad/good_bad_pushing.svg',
+      Tip.sitting => 'assets/images/puppets_good_bad/good_bad_sitting.svg',
+      Tip.bodyPosture => 'assets/images/puppets_good_bad/good_bad_standing.svg',
+    };
+
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: cardinal),
+          onPressed: () => Navigator.of(context).pop(),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        ),
+        title: Text(
+          summary,
+          style: h4Style.copyWith(color: cardinal),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: Stack(
         children: [
-          Text(
-            summary,
-            style: h1Style.copyWith(color: cardinal),
-            textAlign: TextAlign.center,
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: RedCircleBottomBar(),
           ),
-          Text(
-            description,
-            textAlign: TextAlign.start,
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: largeSpace),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    description,
+                    style: dynamicBodyStyle,
+                    textAlign: TextAlign.start,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: SvgPicture.asset(
+                      imagePath,
+                      height: 200,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
