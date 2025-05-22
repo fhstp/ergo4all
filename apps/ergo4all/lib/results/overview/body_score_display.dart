@@ -81,10 +81,6 @@ class BodyScoreDisplay extends StatelessWidget {
       };
     }
 
-    final bodyPartsCallbacks = _bodyPartsInDisplayOrder.map((part) {
-      return () => onBodyPartTapped?.call(part);
-    }).toList();
-
     final bodyPartsImagePaths = _bodyPartsInDisplayOrder.map((part) {
       final color = getColorForPart(part);
       return _getAssetPathForPart(part, color);
@@ -92,7 +88,7 @@ class BodyScoreDisplay extends StatelessWidget {
 
     return TransparentImageStack(
       imagePaths: bodyPartsImagePaths,
-      onTaps: bodyPartsCallbacks,
+      onTap: (i) => onBodyPartTapped?.call(_bodyPartsInDisplayOrder[i]),
     );
   }
 }

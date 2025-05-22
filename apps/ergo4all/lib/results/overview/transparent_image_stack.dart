@@ -12,16 +12,16 @@ class TransparentImageStack extends StatefulWidget {
   ///
   const TransparentImageStack({
     required this.imagePaths,
-    required this.onTaps,
+    required this.onTap,
     super.key,
   });
 
   /// List of paths of the images to display.
   final List<String> imagePaths;
 
-  /// List of callbacks for when images are tapped. These are analogous
-  /// to the [imagePaths] list.
-  final List<VoidCallback> onTaps;
+  /// Callback for when an image in the stack was tapped. It receives the
+  /// index of the tapped image as an argument.
+  final void Function(int) onTap;
 
   @override
   State<TransparentImageStack> createState() => _TransparentImageStackState();
@@ -84,7 +84,7 @@ class _TransparentImageStackState extends State<TransparentImageStack> {
         final pixel = decoded.getPixelSafe(dx, dy);
         final alpha = pixel.a;
         if (alpha > 10) {
-          widget.onTaps[i](); // Found opaque pixel
+          widget.onTap(i); // Found opaque pixel
           break;
         }
       }
