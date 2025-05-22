@@ -6,7 +6,9 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
 
+/// Screen where users can choose which [Scenario] they want to record.
 class ScenarioChoiceScreen extends StatelessWidget {
+  ///
   const ScenarioChoiceScreen({super.key});
 
   @override
