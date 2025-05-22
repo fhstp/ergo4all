@@ -46,6 +46,7 @@ dependencies:
   flutter_svg: ^2.0.17
   path: ^1.9.1
   svg_flutter: ^0.0.1
+  image: ^4.1.3
 
 dev_dependencies:
   flutter_test:

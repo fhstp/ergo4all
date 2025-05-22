@@ -1,5 +1,6 @@
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/overview/transparent_image_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
@@ -24,11 +25,9 @@ enum _PartColor {
   yellow;
 }
 
-Widget _getBodyPartImage(BodyPart bodyPart, _PartColor color) {
+String _getAssetPathForPart(BodyPart bodyPart, _PartColor color) {
   final fileName = _fileNameForPart(bodyPart);
-  return Image.asset(
-    'assets/images/puppet/${fileName}_${color.name}.png',
-  );
+  return 'assets/images/puppet/${fileName}_${color.name}.png';
 }
 
 const _bodyPartsInDisplayOrder = [
@@ -82,16 +81,18 @@ class BodyScoreDisplay extends StatelessWidget {
       };
     }
 
-    return Stack(
-      children: _bodyPartsInDisplayOrder.map((part) {
-        final color = getColorForPart(part);
-        return GestureDetector(
-          onTap: () {
-            onBodyPartTapped?.call(part);
-          },
-          child: _getBodyPartImage(part, color),
-        );
-      }).toList(),
+    final bodyPartsCallbacks = _bodyPartsInDisplayOrder.map((part) {
+      return () => onBodyPartTapped?.call(part);
+    }).toList();
+
+    final bodyPartsImagePaths = _bodyPartsInDisplayOrder.map((part) {
+      final color = getColorForPart(part);
+      return _getAssetPathForPart(part, color);
+    }).toList();
+
+    return TransparentImageStack(
+      imagePaths: bodyPartsImagePaths,
+      onTaps: bodyPartsCallbacks,
     );
   }
 }
