@@ -92,7 +92,6 @@ class WelcomeScreen extends HookWidget {
               ),
             ),
             VersionDisplay(version: uiState.projectVersion),
-            const SizedBox(height: mediumSpace),
           ],
         ),
       ),
