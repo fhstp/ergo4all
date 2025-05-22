@@ -8,11 +8,6 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language/screen.dart';
-import 'package:ergo4all/onboarding/expert_intro_screen.dart';
-import 'package:ergo4all/onboarding/non_expert_intro_screen.dart';
-import 'package:ergo4all/onboarding/pre_intro_screen.dart';
-import 'package:ergo4all/onboarding/pre_user_creator_screen.dart';
-import 'package:ergo4all/onboarding/user_creator_screen.dart';
 import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';
@@ -20,7 +15,6 @@ import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
-import 'package:ergo4all/terms_of_use/screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
@@ -91,13 +85,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           final analysisResult = _getRouteArgs<AnalysisResult>(context);
           return ResultsDetailScreen(analysisResult: analysisResult);
         },
-        Routes.preIntro.path: (context) => const PreIntroScreen(),
-        Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
-        Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),
-        Routes.preUserCreator.path: (context) => const PreUserCreatorScreen(),
-        Routes.userCreator.path: (context) => const UserCreatorScreen(),
         Routes.language.path: (context) => const PickLanguageScreen(),
-        Routes.tou.path: (context) => const TermsOfUseScreen(),
         Routes.welcome.path: (context) => const WelcomeScreen(),
         Routes.tipChoice.path: (context) => const TipChoiceScreen(),
         Routes.tipDetail.path: (context) => const TipDetailScreen(),

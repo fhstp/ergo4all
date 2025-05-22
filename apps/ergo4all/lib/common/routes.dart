@@ -11,13 +11,7 @@ enum Routes {
 
   /// The results detail screen.
   resultsDetail('/analysis/results/detail'),
-  preIntro('/intro/pre'),
-  expertIntro('/intro/expert'),
-  nonExpertIntro('/intro/non-expert'),
-  preUserCreator('/users/new/pre'),
-  userCreator('/users/new'),
   language('/language'),
-  tou('/tou'),
   welcome('/welcome'),
 
   /// Screen for viewing imprint information.

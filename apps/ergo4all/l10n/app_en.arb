@@ -7,13 +7,6 @@
       }
     }
   },
-  "@userCreator_error_empty": {
-    "placeholders": {
-      "field": {
-        "type": "String"
-      }
-    }
-  },
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
   "choice_title": "CHOOSE",
@@ -37,7 +30,6 @@
   "@home_tips_label": {
     "description": "Button label for navigation to tips screen"
   },
-  "intro_done": "Done",
   "language_header": "Choose language",
   "language_title": "Languages",
   "menu_delete_data_label": "Delete all my data",
@@ -65,25 +57,6 @@
   "permission_label_cancel": "Cancel",
   "permission_label_denied": "Grant permission in settings",
   "permission_camera_text": "Allow Camera permission?",
-  "preInto_expert": "Ergonomics expert",
-  "preInto_non_expert": "Non-expert",
-  "preIntro_chooseProfile": "Choose your profile",
-  "preIntro_question": "Would you like to take the tutorial on how to use this app?",
-  "preIntro_skip": "Skip introduction",
-  "preIntro_start": "Yes",
-  "preUserCreator_create": "Create profile",
-  "preUserCreator_defaultsExplanation": "*Use preset values to get general suggestions",
-  "preUserCreator_header": "Creating a user profile",
-  "preUserCreator_text1": "allows to tailor ergonomic recommendations specifically for you, enhancing the effectiveness of the app. ",
-  "preUserCreator_text2": "While not mandatory, providing some personal details enables more personalized and accurate suggestions. ",
-  "preUserCreator_title": "Creating user",
-  "preUserCreator_useDefaults": "Use default profile*",
-  "professionalIntro_overview_header": "Maintain healthy posture, avoid injuries",
-  "professionalIntro_overview_text": "By analysing posture through the phone's camera, we provide personalized tips and exercises to improve one’s ergonomics, and provide results of analysis for professionals to asses.",
-  "professionalIntro_overview_title": "App overview",
-  "professionalIntro_privacy_header": "Your privacy is important to us.",
-  "professionalIntro_privacy_text": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. Your data stays on your phone and is not shared with anyone else.",
-  "professionalIntro_privacy_title": "Privacy",
   "scenario_assembly_description": "An employee stands at an assembly table, often having to bend forwards.",
   "@scenario_assembly_description": {
     "description": "Long description text for this scenario"
@@ -213,34 +186,8 @@
     "description": "Short label text for buttons referencing this tip"
   },
   "tip_workingOverhead_summary": "Do not hold your arms above shoulder height for too long, use telescopic tools, relax your neck regularly.  Change positions, use weight shifting, do not remain in one position for too long.",
-  "termsOfUse_accept": "I accept",
-  "termsOfUse_content": "Ergo4A provides ergonomic guidance, not medical advice. Consult healthcare professionals for medical issues. The AI support is an aid, not perfect. You're accountable for the data accuracy you provide.",
-  "termsOfUse_title": "Terms of use",
-  "userCreator_ageRange_header": "Age Range",
-  "userCreator_ageRange_placeholder": "E.g. 20-30. Important for much weight you should lift",
-  "userCreator_create": "Create profile",
-  "userCreator_error_empty": "{field} may not be empty.",
-  "userCreator_header": "User information",
-  "userCreator_intro": "Data provided here is used to give you more precise suggestions and they stay on your phone",
-  "userCreator_nickname_header": "Nickname",
-  "userCreator_nickname_placeholder": "You don't need to put your real name",
-  "userCreator_sex_header": "Sex",
-  "userCreator_sex_placeholder": "Important for how much weight you can legally lift",
-  "userCreator_title": "Creating user",
   "welcome_header": "Welcome!",
   "welcome_start": "Start",
-  "workerIntro_overview_title": "App overview",
-  "workerIntro_overview1_text": "Ergo4A designed to help you maintain a healthy working posture, reducing the risk of work-related musculoskeletal disorders. ",
-  "workerIntro_overview2_header": "How do we achieve that?",
-  "workerIntro_overview2_text1": "By analysing your posture through your phone's camera, we provide personalized tips and exercises to improve your ergonomics.",
-  "workerIntro_overview2_text2": "Record or upload a video of performing a task and get advice and lessons tailored for you!",
-  "workerIntro_privacy_header": "Your privacy is important to us.",
-  "workerIntro_privacy_text1": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. We are committed to safeguarding your privacy.",
-  "workerIntro_privacy_text2": "Your data stays on your phone.",
-  "workerIntro_privacy_title": "Privacy",
-  "workerIntro_welcome_header": "Your journey to better ergonomics starts here.",
-  "workerIntro_welcome_text": "Ergonomics involves maintaining proper posture and using correct techniques to safely perform tasks in the workplace",
-  "workerIntro_welcome_title": "Welcome",
   "results_title": "Charts Overview",
   "results_score_low": "Neutral",
   "results_score_low_short": "Neutral",
@@ -308,5 +255,17 @@
   "scenario_detail_title": "Scenario",
   "@scenario_detail_title": {
     "description": "Title to be used on the scenario-detail screen"
+  },
+  "privacy_title": "Privacy",
+  "@privacy_title": {
+    "description": "Title for the privacy screen"
+  },
+  "privacy_important": "Your privacy is important to us.",
+  "@privacy_important": {
+    "description": "Text that tells users that privacy is important to us."
+  },
+  "privacy_content": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. We are committed to safeguarding your privacy.",
+  "@privacy_content": {
+    "description": "Text that describes the privacy policy of the app to the user."
   }
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/snack.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -28,10 +27,6 @@ Future<void> showHomeMenuDialog(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(Routes.language.path);
   }
 
-  void goToHome() {
-    Navigator.of(context).pushReplacementNamed(Routes.home.path);
-  }
-
   void goToPrivacy() {
     final navigator = Navigator.of(context)..pop();
     unawaited(navigator.pushNamed(Routes.privacy.path));
@@ -45,11 +40,6 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         horizontal: 20,
       ),
       children: [
-        _makeOptionButton(localizations.menu_home_label, goToHome),
-        _makeOptionButton(localizations.menu_user_label, () {
-          Navigator.of(context).pop();
-          showNotImplementedSnackbar(context);
-        }),
         _makeOptionButton(
           localizations.menu_language_label,
           goToLanguage,
@@ -60,10 +50,6 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           unawaited(navigator.pushNamed(Routes.imprint.path));
         }),
         _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
-        _makeOptionButton(localizations.menu_delete_data_label, () {
-          Navigator.of(context).pop();
-          showNotImplementedSnackbar(context);
-        }),
       ],
     ),
   );

@@ -15,7 +15,7 @@ class PrivacyScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: RedCircleAppBar(
-        titleText: localizations.workerIntro_privacy_title,
+        titleText: localizations.privacy_title,
         withBackButton: true,
       ),
       body: Padding(
@@ -26,13 +26,13 @@ class PrivacyScreen extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              localizations.workerIntro_privacy_header,
+              localizations.privacy_important,
               style: h3Style,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: largeSpace),
             Text(
-              localizations.workerIntro_privacy_text1,
+              localizations.privacy_content,
               style: staticBodyStyle,
               textAlign: TextAlign.center,
             ),
