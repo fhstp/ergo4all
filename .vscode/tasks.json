@@ -13,6 +13,17 @@
             "presentation": {
                 "close": true
             }
+        },
+        {
+            "label": "gen locales",
+            "type": "shell",
+            "command": "cd apps/ergo4all && fvm flutter gen-l10n",
+            "runOptions": {
+                "runOn": "folderOpen",
+            },
+            "presentation": {
+                "close": true
+            }
         }
     ]
 }
