@@ -1,3 +1,12 @@
+# [1.76.0](https://github.com/fhstp/ergo4all/compare/v1.75.1...v1.76.0) (2025-05-22)
+
+
+### Features
+
+* add puppet loading indicator ([c07ea23](https://github.com/fhstp/ergo4all/commit/c07ea23f3fa10dfbc7d053721af69cf4854bb890))
+* optimize puppet display load time ([95e55df](https://github.com/fhstp/ergo4all/commit/95e55df3bc4777bfd9c7054b3c6fe22e47140b9d))
+* standardize back button ([0accdb1](https://github.com/fhstp/ergo4all/commit/0accdb1d7e5c7f615176e746377562fcc8d2127f))
+
 ## [1.75.1](https://github.com/fhstp/ergo4all/compare/v1.75.0...v1.75.1) (2025-05-22)
 
 
