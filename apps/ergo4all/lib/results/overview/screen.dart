@@ -139,18 +139,6 @@ class ResultsOverviewScreen extends StatelessWidget {
             style: secondaryTextButtonStyle,
             child: const Text('Details'),
           ),
-
-          // Text(
-          //   localizations.ergonomics_tipps,
-          //   style: paragraphHeaderStyle,
-          //   textAlign: TextAlign.left,
-          // ),
-
-          // Text(
-          //   tips,
-          //   style: dynamicBodyStyle,
-          //   textAlign: TextAlign.left,
-          // ),
         ],
       ),
     );

@@ -31,23 +31,6 @@ class ScenarioChoiceScreen extends StatelessWidget {
 
     // Added scenario passing
     Future<void> goToDetailScreen(Scenario scenario) async {
-      // await Navigator.of(context)
-      //     .pushNamed(Routes.scenarioDetail.path, arguments: scenario); //Routes.resultsOverview.path
-
-      // also pass scenario to the analysis
-
-      // final result = await Navigator.of(context).pushNamed(
-      //   Routes.scenarioDetail.path,
-      //   arguments: ScenarioRouteArgs(scenario: scenario),
-      // );
-
-      // if (result == 'goToAnalysis') {
-      //   await Navigator.of(context).pushNamed(
-      //     Routes.liveAnalysis.path,
-      //     arguments: ScenarioRouteArgs(scenario: scenario),
-      //   );
-      // }
-      
       await Navigator.of(context).pushNamed(
         Routes.scenarioDetail.path,
         arguments: ScenarioRouteArgs(scenario: scenario),
