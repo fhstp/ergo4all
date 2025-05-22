@@ -68,11 +68,7 @@ class ScenarioDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(color: cardinal),
-        title: Text(
-          summary,
-          style: h4Style.copyWith(color: cardinal),
-          textAlign: TextAlign.center,
-        ),
+        title: Text(localizations.scenario_detail_title),
       ),
       body: SafeArea(
         child: Padding(
@@ -80,6 +76,13 @@ class ScenarioDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const SizedBox(height: mediumSpace),
+              Text(
+                summary,
+                style: h4Style.copyWith(color: cardinal),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: mediumSpace),
               Text(
                 localizations.common_description,
                 style: paragraphHeaderStyle,

@@ -304,5 +304,9 @@
   "scenario_assembly_tools": "Height-adjustable tables, upholstered standing mats.",
   "scenario_ceiling_tools": "Height-adjustable platforms, telescopic tools, exoskeleton.",
   "scenario_lift_tools": "Sack trucks, carrying handles, vacuum lifters, exoskeleton.",
-  "scenario_conveyor_tools": "Height-adjustable workstations, padded floor mats, regular change of working position."
+  "scenario_conveyor_tools": "Height-adjustable workstations, padded floor mats, regular change of working position.",
+  "scenario_detail_title": "Scenario",
+  "@scenario_detail_title": {
+    "description": "Title to be used on the scenario-detail screen"
+  }
 }
