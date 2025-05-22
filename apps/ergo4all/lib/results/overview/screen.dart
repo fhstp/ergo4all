@@ -16,27 +16,41 @@ import 'package:ergo4all/scenario/domain.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
+/// Arguments which should be passed to the [ResultsOverviewScreen] when
+/// navigating through named routes.
+@immutable
+class ResultsOverviewScreenArgs {
+  ///
+  const ResultsOverviewScreenArgs({
+    required this.scenario,
+    required this.timeline,
+  });
+
+  /// The scenario which was recorded.
+  final Scenario scenario;
+
+  /// The recorded score time-line.
+  final RulaTimeline timeline;
+}
+
 /// The screen for viewing an overview over the analysis results.
 class ResultsOverviewScreen extends StatelessWidget {
   ///
-  const ResultsOverviewScreen({super.key});
+  const ResultsOverviewScreen({
+    required this.scenario,
+    required this.timeline,
+    super.key,
+  });
+
+  /// The scenario which was recorded.
+  final Scenario scenario;
+
+  /// The recorded score time-line.
+  final RulaTimeline timeline;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    final Scenario scenario;
-    final RulaTimeline timeline;
-
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
-    scenario = args.scenario;
-    timeline = args.timeline!; // Timeline should exist at this point??
-
-    // previously only passing timeline as arguements
-
-    // final timeline =
-    //     ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
 
     // Take out and move to results detail screen??
     final tips = switch (scenario) {
@@ -51,7 +65,7 @@ class ResultsOverviewScreen extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_tips,
     };
 
-    if (timeline == null || timeline.isEmpty) {
+    if (timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }

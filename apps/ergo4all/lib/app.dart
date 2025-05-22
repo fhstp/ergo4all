@@ -72,7 +72,19 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
 
           return LiveAnalysisScreen(scenario: scenario!);
         },
-        Routes.resultsOverview.path: (context) => const ResultsOverviewScreen(),
+        Routes.resultsOverview.path: (context) {
+          final args = ModalRoute.of(context)
+              ?.settings
+              .arguments
+              ?.tryAs<ResultsOverviewScreenArgs>();
+
+          assert(args != null, 'Incorrect route args');
+
+          return ResultsOverviewScreen(
+            scenario: args!.scenario,
+            timeline: args.timeline,
+          );
+        },
         Routes.resultsDetail.path: (context) => const ResultsDetailScreen(),
         Routes.preIntro.path: (context) => const PreIntroScreen(),
         Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
