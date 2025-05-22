@@ -24,12 +24,16 @@
     "description": "Label for interactive elements which allow the user to record."
   },
   "home_title": "Home",
-  "home_welcome": "Welcome {firstName}",
-  "home_welcome_break": "Welcome \n {firstName}",
   "home_tips_label": "General Tips",
   "@home_tips_label": {
     "description": "Button label for navigation to tips screen"
   },
+  "home_start_label": "Start",
+  "@home_start_label": {
+    "description": "Button label for navigation to scenario screen"
+  },
+  "home_welcome": "Welcome {firstName}",
+  "home_welcome_break": "Welcome \n {firstName}",
   "language_header": "Choose language",
   "language_title": "Languages",
   "menu_delete_data_label": "Delete all my data",

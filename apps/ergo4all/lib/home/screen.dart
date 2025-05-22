@@ -65,7 +65,7 @@ class HomeScreen extends HookWidget {
     }
 
     useEffect(
-      () {
+          () {
         viewModel.initialize();
         return null;
       },
@@ -94,7 +94,7 @@ class HomeScreen extends HookWidget {
               const _PuppetGraphic(),
               const SizedBox(height: mediumSpace),
               uiState.user.match(
-                () => const ShimmerBox(width: 200, height: 24),
+                    () => const ShimmerBox(width: 200, height: 24),
                 UserWelcomeHeader.new,
               ),
               const Spacer(),
@@ -102,7 +102,7 @@ class HomeScreen extends HookWidget {
                 key: const Key('start'),
                 style: primaryTextButtonStyle,
                 onPressed: startSession,
-                child: Text(localizations.record_label),
+                child: Text(localizations.home_start_label),
               ),
               const SizedBox(height: mediumSpace),
               ElevatedButton(
