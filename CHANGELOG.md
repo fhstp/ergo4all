@@ -1,3 +1,16 @@
+# [1.73.0](https://github.com/fhstp/ergo4all/compare/v1.72.0...v1.73.0) (2025-05-22)
+
+
+### Bug Fixes
+
+* bad screen margin on welcome screen ([24520ed](https://github.com/fhstp/ergo4all/commit/24520ed8a5e41426f5c3b26b10361c251bf5170d))
+* double bottom margin on welcome screen ([ebc5475](https://github.com/fhstp/ergo4all/commit/ebc54755a11f6780cf308fd278cc4471500787ad))
+
+
+### Features
+
+* overhaul language screen ([312c503](https://github.com/fhstp/ergo4all/commit/312c5031c1495ca3bc2feb0b1206c4e424f74820))
+
 # [1.72.0](https://github.com/fhstp/ergo4all/compare/v1.71.1...v1.72.0) (2025-05-20)
 
 
