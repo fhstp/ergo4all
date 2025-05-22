@@ -61,7 +61,10 @@ class WelcomeScreen extends HookWidget {
                           xLargeSpace,
                           0,
                         ),
-                        child: Image(image: CustomImages.logoWhite),
+                        child: SvgPicture(
+                          CustomImages.logoWhite,
+                          height: 100,
+                        ),
                       ),
                     ],
                   ),

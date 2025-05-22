@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 /// Contains custom image assets for use in an [Image] widget.
 abstract final class CustomImages {
@@ -9,10 +10,10 @@ abstract final class CustomImages {
   static const iconRed = AssetImage('assets/images/logos/IconRed.png');
 
   /// The app logo (icon + text) in solid red color.
-  static const logoRed = AssetImage('assets/images/logos/LogoRed.png');
+  static const logoRed = SvgAssetLoader('assets/images/logos/logo_red.svg');
 
   /// The app logo (icon + text) in solid white color.
-  static const logoWhite = AssetImage('assets/images/logos/LogoWhite.png');
+  static const logoWhite = SvgAssetLoader('assets/images/logos/logo_white.svg');
 
   /// The logo for AK Niederösterreich
   static const logoAk = AssetImage('assets/images/logos/ak.jpg');

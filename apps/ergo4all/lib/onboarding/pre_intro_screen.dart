@@ -5,6 +5,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/screen_content.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PreIntroScreen extends StatelessWidget {
   const PreIntroScreen({super.key});
@@ -32,7 +33,7 @@ class PreIntroScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Image(image: CustomImages.logoRed),
+              const SvgPicture(CustomImages.logoRed),
               const SizedBox(
                 height: largeSpace,
               ),
