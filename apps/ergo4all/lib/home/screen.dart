@@ -87,17 +87,17 @@ class HomeScreen extends HookWidget {
       ),
       body: SafeArea(
         child: Align(
+          alignment: Alignment.topCenter,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              const SizedBox(height: largeSpace),
               const _PuppetGraphic(),
               const SizedBox(height: mediumSpace),
               uiState.user.match(
                 () => const ShimmerBox(width: 200, height: 24),
                 UserWelcomeHeader.new,
               ),
-              const SizedBox(height: mediumSpace),
+              const Spacer(),
               ElevatedButton(
                 key: const Key('start'),
                 style: primaryTextButtonStyle,
@@ -111,7 +111,7 @@ class HomeScreen extends HookWidget {
                 onPressed: goToTips,
                 child: Text(localizations.home_tips_label),
               ),
-              const SizedBox(height: mediumSpace),
+              const Spacer(),
             ],
           ),
         ),
