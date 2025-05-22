@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:common_ui/widgets/red_circle_top_bar.dart';
+import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/shimmer_box.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
