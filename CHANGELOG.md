@@ -1,3 +1,20 @@
+# [1.74.0](https://github.com/fhstp/ergo4all/compare/v1.73.0...v1.74.0) (2025-05-22)
+
+
+### Bug Fixes
+
+* alignment on home screen ([09e767f](https://github.com/fhstp/ergo4all/commit/09e767f5c509b8ef838f4436d86ac2d7adfae11c))
+* typo in localized text ([4c8050d](https://github.com/fhstp/ergo4all/commit/4c8050dc1c0384b350146f66081effbbe6471fa2))
+
+
+### Features
+
+* add scenario graphics ([b9f1a10](https://github.com/fhstp/ergo4all/commit/b9f1a10a55426247d9cc960444b79f1f79b5edb9))
+* adjust spacing on home screen ([941acf2](https://github.com/fhstp/ergo4all/commit/941acf2b577447cf69000d1fbeb1134bcb0052de))
+* adjust spacing on scenario choice screen ([1de2a63](https://github.com/fhstp/ergo4all/commit/1de2a630660795339cbfe5b1f977a19faf10dbe8))
+* change title on scenario detail screen ([2e65426](https://github.com/fhstp/ergo4all/commit/2e65426ff3088a100afa3d82b60f053d185f2c05))
+* use svg logos ([682d53d](https://github.com/fhstp/ergo4all/commit/682d53d594f6a2b33f6a2de32706ce281b10870e))
+
 # [1.73.0](https://github.com/fhstp/ergo4all/compare/v1.72.0...v1.73.0) (2025-05-22)
 
 
