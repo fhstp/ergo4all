@@ -1,6 +1,7 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
@@ -81,7 +82,7 @@ class ScenarioDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: cardinal),
+        leading: const IconBackButton(color: cardinal),
         title: Text(localizations.scenario_detail_title),
       ),
       body: SafeArea(

@@ -1,6 +1,7 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/tips/domain.dart';
@@ -46,11 +47,7 @@ class TipDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: cardinal),
-          onPressed: () => Navigator.of(context).pop(),
-          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-        ),
+        leading: const IconBackButton(color: cardinal),
         title: Text(
           summary,
           style: h4Style.copyWith(color: cardinal),

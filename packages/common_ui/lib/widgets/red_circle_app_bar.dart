@@ -1,6 +1,7 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -43,14 +44,10 @@ class RedCircleAppBar extends StatelessWidget implements PreferredSizeWidget {
             'assets/images/top_circle.svg',
           ),
           if (withBackButton)
-            Positioned(
+            const Positioned(
               top: 50,
               left: mediumSpace,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: white),
-                onPressed: () => Navigator.of(context).pop(),
-                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-              ),
+              child: IconBackButton(color: white),
             ),
           if (menuButton != null)
             Positioned(

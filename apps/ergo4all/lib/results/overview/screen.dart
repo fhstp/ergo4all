@@ -2,6 +2,7 @@ import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/utils.dart';
@@ -81,6 +82,7 @@ class ResultsOverviewScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: const IconBackButton(),
         title: Text(
           '${localizations.results_ergo_score_header}:',
           style: h2Style,
