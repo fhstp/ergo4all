@@ -53,63 +53,59 @@ class HomeScreen extends HookWidget {
           iconSize: 48,
         ),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 309,
-                  height: 309,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 8,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Image.asset(
-                        'assets/images/puppet/full_body_blue.png',
-                        fit: BoxFit.contain,
-                      ),
+      body: SafeArea(
+        child: Align(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: 309,
+                height: 309,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 8,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: ClipOval(
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Image.asset(
+                      'assets/images/puppet/full_body_blue.png',
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                const SizedBox(height: mediumSpace),
-                uiState.user.match(
-                  () => const ShimmerBox(width: 200, height: 24),
-                  UserWelcomeHeader.new,
-                ),
-                const SizedBox(height: mediumSpace),
-                ElevatedButton(
-                  key: const Key('start'),
-                  style: primaryTextButtonStyle,
-                  onPressed: startSession,
-                  child: Text(localizations.record_label),
-                ),
-                const SizedBox(height: mediumSpace),
-                ElevatedButton(
-                  key: const Key('tips'),
-                  style: secondaryTextButtonStyle,
-                  onPressed: goToTips,
-                  child: Text(localizations.home_tips_label),
-                ),
-                const SizedBox(height: mediumSpace),
-              ],
-            ),
+              ),
+              const SizedBox(height: mediumSpace),
+              uiState.user.match(
+                () => const ShimmerBox(width: 200, height: 24),
+                UserWelcomeHeader.new,
+              ),
+              const SizedBox(height: mediumSpace),
+              ElevatedButton(
+                key: const Key('start'),
+                style: primaryTextButtonStyle,
+                onPressed: startSession,
+                child: Text(localizations.record_label),
+              ),
+              const SizedBox(height: mediumSpace),
+              ElevatedButton(
+                key: const Key('tips'),
+                style: secondaryTextButtonStyle,
+                onPressed: goToTips,
+                child: Text(localizations.home_tips_label),
+              ),
+              const SizedBox(height: mediumSpace),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
