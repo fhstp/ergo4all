@@ -13,6 +13,38 @@ import 'package:ergo4all/home/viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+class _PuppetGraphic extends StatelessWidget {
+  const _PuppetGraphic();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 309,
+      height: 309,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Image.asset(
+            'assets/images/puppet/full_body_blue.png',
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Top-level widget for home screen.
 class HomeScreen extends HookWidget {
   /// Creates a [HomeScreen].
@@ -59,30 +91,7 @@ class HomeScreen extends HookWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                width: 309,
-                height: 309,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Image.asset(
-                      'assets/images/puppet/full_body_blue.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
+              const _PuppetGraphic(),
               const SizedBox(height: mediumSpace),
               uiState.user.match(
                 () => const ShimmerBox(width: 200, height: 24),
