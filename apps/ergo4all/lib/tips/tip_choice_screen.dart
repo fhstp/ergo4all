@@ -35,31 +35,38 @@ class TipChoiceScreen extends StatelessWidget {
         titleText: localizations.choice_title,
         withBackButton: true,
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: largeSpace),
-          Expanded(
-            child: ListView.separated(
-              itemCount: Tip.values.length,
-              itemBuilder: (ctx, i) {
-                final tip = Tip.values[i];
-                return FractionallySizedBox(
-                  widthFactor: 0.7,
-                  child: ElevatedButton(
-                    key: Key('tip_button_${tip.name}'),
-                    style: paleTextButtonStyle,
-                    onPressed: () {
-                      goToDetailScreen(tip);
+      body: SafeArea(
+        child: Align(
+          child: Column(
+            children: [
+              const SizedBox(height: largeSpace),
+              Expanded(
+                child: SizedBox(
+                  width: 275,
+                  child: ListView.separated(
+                    itemCount: Tip.values.length,
+                    itemBuilder: (ctx, i) {
+                      final tip = Tip.values[i];
+                      return ElevatedButton(
+                        key: Key('tip_button_${tip.name}'),
+                        style: paleTextButtonStyle,
+                        onPressed: () {
+                          goToDetailScreen(tip);
+                        },
+                        child: Text(
+                          titleFor(tip),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
                     },
-                    child: Text(titleFor(tip)),
+                    separatorBuilder: (ctx, i) =>
+                        const SizedBox(height: largeSpace),
                   ),
-                );
-              },
-              separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
-            ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: largeSpace),
-        ],
+        ),
       ),
     );
   }
