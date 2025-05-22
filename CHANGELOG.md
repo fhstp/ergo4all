@@ -1,3 +1,10 @@
+# [1.78.0](https://github.com/fhstp/ergo4all/compare/v1.77.1...v1.78.0) (2025-05-22)
+
+
+### Features
+
+* **app:** Neue Bottom Bar (roter Kreis) am Scenario Screen ([8953ac0](https://github.com/fhstp/ergo4all/commit/8953ac0dd7e6b2332cea34194d34e77c60619105))
+
 ## [1.77.1](https://github.com/fhstp/ergo4all/compare/v1.77.0...v1.77.1) (2025-05-22)
 
 
