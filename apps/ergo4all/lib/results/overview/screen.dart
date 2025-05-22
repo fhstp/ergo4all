@@ -13,7 +13,6 @@ import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
-import 'package:ergo4all/scenario/domain.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -31,19 +30,6 @@ class ResultsOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    // Take out and move to results detail screen??
-    final tips = switch (analysisResult.scenario) {
-      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_tips,
-      Scenario.pull => localizations.scenario_pull_tips,
-      Scenario.seated => localizations.scenario_seated_tips,
-      Scenario.packaging => localizations.scenario_packaging_tips,
-      Scenario.standingCNC => localizations.scenario_CNC_tips,
-      Scenario.standingAssembly => localizations.scenario_assembly_tips,
-      Scenario.ceiling => localizations.scenario_ceiling_tips,
-      Scenario.lift25 => localizations.scenario_lift_tips,
-      Scenario.conveyorBelt => localizations.scenario_conveyor_tips,
-    };
 
     if (analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
