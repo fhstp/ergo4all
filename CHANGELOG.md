@@ -1,3 +1,10 @@
+# [1.77.0](https://github.com/fhstp/ergo4all/compare/v1.76.0...v1.77.0) (2025-05-22)
+
+
+### Features
+
+* **app:** neue Lokalisierung bzw. Lokalisierung angepasst ([1dba801](https://github.com/fhstp/ergo4all/commit/1dba80158e02ba5a3f839f9964063fee515834f9))
+
 # [1.76.0](https://github.com/fhstp/ergo4all/compare/v1.75.1...v1.76.0) (2025-05-22)
 
 
