@@ -1,6 +1,7 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
@@ -8,16 +9,17 @@ import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rula_colors.dart';
+import 'package:ergo4all/scenario/domain.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-
-import 'package:ergo4all/scenario/domain.dart';
-import 'package:ergo4all/common/utils.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
 class ResultsDetailScreen extends StatefulWidget {
   ///
-  const ResultsDetailScreen({super.key});
+  const ResultsDetailScreen({required this.analysisResult, super.key});
+
+  /// The result for which to view details.
+  final AnalysisResult analysisResult;
 
   @override
   State<ResultsDetailScreen> createState() => _ResultsDetailScreenState();
@@ -28,14 +30,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final Scenario scenario;
-    final RulaTimeline timeline;
-
-    final args = ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
-    scenario = args.scenario; 
-    timeline = args.timeline!; // Timeline should exist at this point??
-
-    final tips = switch (scenario) {
+    final tips = switch (widget.analysisResult.scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_tips,
       Scenario.pull => localizations.scenario_pull_tips,
       Scenario.seated => localizations.scenario_seated_tips,
@@ -47,7 +42,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       Scenario.conveyorBelt => localizations.scenario_conveyor_tips,
     };
 
-    final improvements = switch (scenario) {
+    final improvements = switch (widget.analysisResult.scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_tools,
       Scenario.pull => localizations.scenario_pull_tools,
       Scenario.seated => localizations.scenario_seated_tools,
@@ -59,21 +54,19 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       Scenario.conveyorBelt => localizations.scenario_conveyor_tools,
     };
 
-    // final timeline =
-    //     ModalRoute.of(context)!.settings.arguments as RulaTimeline?;
-
-    if (timeline == null || timeline.isEmpty) {
+    if (widget.analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }
 
     final recordingDuration = Duration(
-          milliseconds: timeline.last.timestamp - timeline.first.timestamp,
-        ).inSeconds;
+      milliseconds: widget.analysisResult.timeline.last.timestamp -
+          widget.analysisResult.timeline.first.timestamp,
+    ).inSeconds;
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => timeline
+      valueMapper: (bodyPartGroup) => widget.analysisResult.timeline
           .map((entry) => entry.scores)
           .map(
             (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
@@ -128,46 +121,45 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                   spacing: 10,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ...BodyPartGroup.values
-                      .map(
-                        (part) => Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateToBodyPartPage(part);
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                SizedBox(
-                                  width: labelSpaceWidth,
-                                  child: Text(
-                                    bodyPartGroupLabelFor(
-                                      localizations,
-                                      part,
-                                    ),
-                                    style: bodyLabelStyle,
+                    ...BodyPartGroup.values.map(
+                      (part) => Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            navigateToBodyPartPage(part);
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              SizedBox(
+                                width: labelSpaceWidth,
+                                child: Text(
+                                  bodyPartGroupLabelFor(
+                                    localizations,
+                                    part,
+                                  ),
+                                  style: bodyLabelStyle,
+                                ),
+                              ),
+                              Expanded(
+                                child: CustomPaint(
+                                  painter: HeatmapPainter(
+                                    normalizedScores:
+                                        averageScoresByGroup[part]!,
                                   ),
                                 ),
-                                Expanded(
-                                  child: CustomPaint(
-                                    painter: HeatmapPainter(
-                                      normalizedScores:
-                                          averageScoresByGroup[part]!,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: labelSpaceWidth),
                       child: Column(
                         children: [
                           Container(
                             height: 2,
-                            color: woodSmoke.withValues(alpha:0.5),
+                            color: woodSmoke.withValues(alpha: 0.5),
                           ),
                           const SizedBox(height: 4),
                           Row(
@@ -175,7 +167,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                             children: [
                               Text('0s', style: bodyLabelStyle),
                               Text(
-                                '${recordingDuration}s', 
+                                '${recordingDuration}s',
                                 style: bodyLabelStyle,
                               ),
                             ],
@@ -232,35 +224,34 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
             ),
             const SizedBox(height: 40),
 
-          // New feature: show tipps
-          Text(
-            localizations.ergonomics_tipps,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.left,
-          ),
+            // New feature: show tipps
+            Text(
+              localizations.ergonomics_tipps,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
 
-          Text(
-            tips,
-            style: const TextStyle(fontSize: 20),
-            textAlign: TextAlign.left,
-          ),
+            Text(
+              tips,
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.left,
+            ),
 
-          const SizedBox(height: 20),
-          
-          // New feature: show improvement solutions
-          Text(
-            localizations.improvements,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.left,
-          ),
+            const SizedBox(height: 20),
 
-          Text(
-            improvements,
-            style: const TextStyle(fontSize: 20),
-            textAlign: TextAlign.left,
-          ),
+            // New feature: show improvement solutions
+            Text(
+              localizations.improvements,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
 
-          ],          
+            Text(
+              improvements,
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.left,
+            ),
+          ],
         ),
       ),
     );

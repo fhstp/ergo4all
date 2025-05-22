@@ -2,22 +2,21 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
 
+/// Screen for viewing a detailed description of a [Scenario].
 class ScenarioDetailScreen extends StatelessWidget {
-  const ScenarioDetailScreen({super.key});
+  ///
+  const ScenarioDetailScreen({required this.scenario, super.key});
+
+  /// The scenario for which to view detail.
+  final Scenario scenario;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    // final scenario = ModalRoute.of(context)!.settings.arguments! as Scenario;
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
-    final scenario = args.scenario;
 
     final summary = switch (scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_summary,

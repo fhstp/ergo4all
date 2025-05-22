@@ -2,6 +2,7 @@ import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -16,44 +17,23 @@ import 'package:ergo4all/scenario/domain.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-/// Arguments which should be passed to the [ResultsOverviewScreen] when
-/// navigating through named routes.
-@immutable
-class ResultsOverviewScreenArgs {
-  ///
-  const ResultsOverviewScreenArgs({
-    required this.scenario,
-    required this.timeline,
-  });
-
-  /// The scenario which was recorded.
-  final Scenario scenario;
-
-  /// The recorded score time-line.
-  final RulaTimeline timeline;
-}
-
-/// The screen for viewing an overview over the analysis results.
+/// The screen for viewing an overview over the [AnalysisResult].
 class ResultsOverviewScreen extends StatelessWidget {
   ///
   const ResultsOverviewScreen({
-    required this.scenario,
-    required this.timeline,
+    required this.analysisResult,
     super.key,
   });
 
-  /// The scenario which was recorded.
-  final Scenario scenario;
-
-  /// The recorded score time-line.
-  final RulaTimeline timeline;
+  /// The result to view.
+  final AnalysisResult analysisResult;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
     // Take out and move to results detail screen??
-    final tips = switch (scenario) {
+    final tips = switch (analysisResult.scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_tips,
       Scenario.pull => localizations.scenario_pull_tips,
       Scenario.seated => localizations.scenario_seated_tips,
@@ -65,14 +45,14 @@ class ResultsOverviewScreen extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_tips,
     };
 
-    if (timeline.isEmpty) {
+    if (analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => timeline
+      valueMapper: (bodyPartGroup) => analysisResult.timeline
           .map((entry) => entry.scores)
           .map(
             (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
@@ -84,9 +64,10 @@ class ResultsOverviewScreen extends StatelessWidget {
         .mapValues((scores) => calculateRunningAverage(scores, 20));
 
     void goToDetails() {
-      Navigator.of(context).pushNamed(Routes.resultsDetail.path,
-          arguments: ScenarioRouteArgs(
-              scenario: scenario, timeline: timeline.toIList()));
+      Navigator.of(context).pushNamed(
+        Routes.resultsDetail.path,
+        arguments: analysisResult,
+      );
       //arguments: timeline);
     }
 
@@ -104,9 +85,9 @@ class ResultsOverviewScreen extends StatelessWidget {
       );
     }
 
-    final aggregate = aggregateTimeline(timeline)!;
+    final aggregate = aggregateTimeline(analysisResult.timeline)!;
 
-    final totalRating = timeline
+    final totalRating = analysisResult.timeline
         .map((entry) => entry.scores.fullScore)
         .map((score) => normalizeScore(score, 7))
         .toIList()

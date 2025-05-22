@@ -8,13 +8,13 @@ import 'package:common/func_ext.dart';
 import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
+import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/tutorial_dialog.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
-import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +87,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     unawaited(
       Navigator.of(context).pushReplacementNamed(
         Routes.resultsOverview.path,
-        arguments: ResultsOverviewScreenArgs(
+        arguments: AnalysisResult(
           scenario: widget.scenario,
           timeline: timeline.toIList(),
         ),

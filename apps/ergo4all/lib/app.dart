@@ -1,6 +1,7 @@
 import 'package:common/casting.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
+import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/analysis/live/screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -25,6 +26,16 @@ import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+/// Utility function for getting the current route args casted as a specific
+/// type [T].
+T _getRouteArgs<T extends Object>(BuildContext context) {
+  final args = ModalRoute.of(context)?.settings.arguments?.tryAs<T>();
+
+  assert(args != null, 'Incorrect route args');
+
+  return args!;
+}
 
 class Ergo4AllApp extends StatefulWidget {
   const Ergo4AllApp({super.key});
@@ -64,28 +75,22 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       routes: {
         Routes.home.path: (context) => const HomeScreen(),
         Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
-        Routes.scenarioDetail.path: (context) => const ScenarioDetailScreen(),
+        Routes.scenarioDetail.path: (context) {
+          final scenario = _getRouteArgs<Scenario>(context);
+          return ScenarioDetailScreen(scenario: scenario);
+        },
         Routes.liveAnalysis.path: (context) {
-          final args = ModalRoute.of(context)?.settings.arguments;
-          final scenario = args.tryAs<Scenario>();
-          assert(scenario != null, 'Incorrect route args!');
-
-          return LiveAnalysisScreen(scenario: scenario!);
+          final scenario = _getRouteArgs<Scenario>(context);
+          return LiveAnalysisScreen(scenario: scenario);
         },
         Routes.resultsOverview.path: (context) {
-          final args = ModalRoute.of(context)
-              ?.settings
-              .arguments
-              ?.tryAs<ResultsOverviewScreenArgs>();
-
-          assert(args != null, 'Incorrect route args');
-
-          return ResultsOverviewScreen(
-            scenario: args!.scenario,
-            timeline: args.timeline,
-          );
+          final analysisResult = _getRouteArgs<AnalysisResult>(context);
+          return ResultsOverviewScreen(analysisResult: analysisResult);
         },
-        Routes.resultsDetail.path: (context) => const ResultsDetailScreen(),
+        Routes.resultsDetail.path: (context) {
+          final analysisResult = _getRouteArgs<AnalysisResult>(context);
+          return ResultsDetailScreen(analysisResult: analysisResult);
+        },
         Routes.preIntro.path: (context) => const PreIntroScreen(),
         Routes.expertIntro.path: (context) => const ExpertIntroScreen(),
         Routes.nonExpertIntro.path: (context) => const NonExpertIntroScreen(),

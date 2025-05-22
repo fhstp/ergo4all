@@ -2,12 +2,9 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_top_bar.dart';
 import 'package:ergo4all/common/routes.dart';
-import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
-
-
 
 class ScenarioChoiceScreen extends StatelessWidget {
   const ScenarioChoiceScreen({super.key});
@@ -28,13 +25,12 @@ class ScenarioChoiceScreen extends StatelessWidget {
           Scenario.conveyorBelt => localizations.scenario_conveyor_label,
         };
 
-
     // Added scenario passing
     Future<void> goToDetailScreen(Scenario scenario) async {
       await Navigator.of(context).pushNamed(
         Routes.scenarioDetail.path,
-        arguments: ScenarioRouteArgs(scenario: scenario),
-      ); 
+        arguments: scenario,
+      );
     }
 
     return Scaffold(
