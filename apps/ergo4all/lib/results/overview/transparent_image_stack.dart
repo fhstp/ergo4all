@@ -93,18 +93,20 @@ class _TransparentImageStackState extends State<TransparentImageStack> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTapDown: _handleTap,
-      child: Stack(
-        children: List.generate(images.length, (index) {
-          return Image.memory(
-            images[index].bytes,
-            key: _imageKeys[index],
-            fit: BoxFit.contain,
-          );
-        }),
-      ),
-    );
+    return images.isNotEmpty
+        ? GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTapDown: _handleTap,
+            child: Stack(
+              children: List.generate(images.length, (index) {
+                return Image.memory(
+                  images[index].bytes,
+                  key: _imageKeys[index],
+                  fit: BoxFit.contain,
+                );
+              }),
+            ),
+          )
+        : const CircularProgressIndicator();
   }
 }
