@@ -38,28 +38,38 @@ class ScenarioChoiceScreen extends StatelessWidget {
         titleText: localizations.choice_title,
         withBackButton: true,
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: largeSpace),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-              itemCount: Scenario.values.length,
-              itemBuilder: (ctx, i) {
-                final scenario = Scenario.values[i];
-                return ElevatedButton(
-                  key: Key('scenario_button_${scenario.name}'),
-                  style: paleTextButtonStyle,
-                  onPressed: () {
-                    goToDetailScreen(scenario);
-                  },
-                  child: Text(titleFor(scenario)),
-                );
-              },
-              separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
-            ),
+      body: SafeArea(
+        child: Align(
+          child: Column(
+            children: [
+              const SizedBox(height: largeSpace),
+              Expanded(
+                child: SizedBox(
+                  width: 275,
+                  child: ListView.separated(
+                    itemCount: Scenario.values.length,
+                    itemBuilder: (ctx, i) {
+                      final scenario = Scenario.values[i];
+                      return ElevatedButton(
+                        key: Key('scenario_button_${scenario.name}'),
+                        style: paleTextButtonStyle,
+                        onPressed: () {
+                          goToDetailScreen(scenario);
+                        },
+                        child: Text(
+                          titleFor(scenario),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (ctx, i) =>
+                        const SizedBox(height: largeSpace),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -28,6 +28,7 @@ final elevatedButtonStyle = ButtonStyle(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
   ),
+  alignment: Alignment.center,
 );
 
 /// The button style for all primary buttons. It uses a teal color
