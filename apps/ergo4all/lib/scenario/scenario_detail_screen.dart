@@ -2,10 +2,10 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:ergo4all/common/utils.dart';
 
 class ScenarioDetailScreen extends StatelessWidget {
   const ScenarioDetailScreen({super.key});
@@ -15,7 +15,8 @@ class ScenarioDetailScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     // final scenario = ModalRoute.of(context)!.settings.arguments! as Scenario;
-    final args = ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
     final scenario = args.scenario;
 
     final summary = switch (scenario) {

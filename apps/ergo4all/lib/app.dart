@@ -1,3 +1,4 @@
+import 'package:common/casting.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/live/screen.dart';
@@ -15,6 +16,7 @@ import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
+import 'package:ergo4all/scenario/domain.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
 import 'package:ergo4all/terms_of_use/screen.dart';
@@ -63,7 +65,13 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.home.path: (context) => const HomeScreen(),
         Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
         Routes.scenarioDetail.path: (context) => const ScenarioDetailScreen(),
-        Routes.liveAnalysis.path: (context) => const LiveAnalysisScreen(),
+        Routes.liveAnalysis.path: (context) {
+          final args = ModalRoute.of(context)?.settings.arguments;
+          final scenario = args.tryAs<Scenario>();
+          assert(scenario != null, 'Incorrect route args!');
+
+          return LiveAnalysisScreen(scenario: scenario!);
+        },
         Routes.resultsOverview.path: (context) => const ResultsOverviewScreen(),
         Routes.resultsDetail.path: (context) => const ResultsDetailScreen(),
         Routes.preIntro.path: (context) => const PreIntroScreen(),

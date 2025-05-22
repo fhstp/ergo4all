@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
@@ -12,7 +13,9 @@ import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/tutorial_dialog.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/scenario/domain.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,12 +30,16 @@ import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:rula/rula.dart';
 
-import 'package:ergo4all/common/utils.dart';
-
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
-  const LiveAnalysisScreen({super.key});
+  const LiveAnalysisScreen({
+    required this.scenario,
+    super.key,
+  });
+
+  /// The scenario for which to make an analysis.
+  final Scenario scenario;
 
   @override
   State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
@@ -76,13 +83,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   void goToResults() {
     if (!context.mounted) return;
-    final args = ModalRoute.of(context)!.settings.arguments as ScenarioRouteArgs;
-    final scenario = args.scenario;
 
     unawaited(
       Navigator.of(context).pushReplacementNamed(
         Routes.resultsOverview.path,
-        arguments: ScenarioRouteArgs(scenario: scenario, timeline: timeline.toIList()),
+        arguments: ScenarioRouteArgs(
+          scenario: widget.scenario,
+          timeline: timeline.toIList(),
+        ),
         //arguments: timeline.toIList(),
       ),
     );
@@ -161,7 +169,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       cameraController.value.isInitialized,
       'Camera controller must be initialized.',
     );
-
 
     // Comment out
     final outputFile = await cameraController.stopVideoRecording();
