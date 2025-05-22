@@ -1,3 +1,10 @@
+## [1.77.1](https://github.com/fhstp/ergo4all/compare/v1.77.0...v1.77.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* **app:** Ausrichtung der Elemente (Texte, etc.) am Tip Screen ([bd5ddc1](https://github.com/fhstp/ergo4all/commit/bd5ddc19da48584dc74fd320fc2919cc0af14a21))
+
 # [1.77.0](https://github.com/fhstp/ergo4all/compare/v1.76.0...v1.77.0) (2025-05-22)
 
 
