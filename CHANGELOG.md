@@ -1,3 +1,10 @@
+# [1.75.0](https://github.com/fhstp/ergo4all/compare/v1.74.0...v1.75.0) (2025-05-22)
+
+
+### Features
+
+* **app:** Tip Detail Page Design fertiggestellt ([48bbddc](https://github.com/fhstp/ergo4all/commit/48bbddc24d9f1a8b3cc22e49bb1079832fc94a0b)), closes [#89](https://github.com/fhstp/ergo4all/issues/89)
+
 # [1.74.0](https://github.com/fhstp/ergo4all/compare/v1.73.0...v1.74.0) (2025-05-22)
 
 
