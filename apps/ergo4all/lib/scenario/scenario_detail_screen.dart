@@ -71,10 +71,9 @@ class ScenarioDetailScreen extends StatelessWidget {
         title: Text(localizations.scenario_detail_title),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: largeSpace, right: largeSpace),
+        minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
+        child: Align(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: mediumSpace),
               Text(
@@ -83,26 +82,27 @@ class ScenarioDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: mediumSpace),
-              Text(
-                localizations.common_description,
-                style: paragraphHeaderStyle,
-                textAlign: TextAlign.start,
-              ),
-              Text(
-                description,
-                style: dynamicBodyStyle,
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(height: mediumSpace),
-              Text(
-                localizations.common_expectation,
-                style: paragraphHeaderStyle,
-                textAlign: TextAlign.start,
-              ),
-              Text(
-                expectation,
-                style: dynamicBodyStyle,
-                textAlign: TextAlign.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    localizations.common_description,
+                    style: paragraphHeaderStyle,
+                  ),
+                  Text(
+                    description,
+                    style: dynamicBodyStyle,
+                  ),
+                  const SizedBox(height: mediumSpace),
+                  Text(
+                    localizations.common_expectation,
+                    style: paragraphHeaderStyle,
+                  ),
+                  Text(
+                    expectation,
+                    style: dynamicBodyStyle,
+                  ),
+                ],
               ),
               const SizedBox(height: mediumSpace),
               ElevatedButton(
