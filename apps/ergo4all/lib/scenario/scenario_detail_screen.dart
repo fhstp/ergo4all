@@ -62,7 +62,7 @@ class ScenarioDetailScreen extends StatelessWidget {
       await Navigator.of(context).pushNamedAndRemoveUntil(
         Routes.liveAnalysis.path,
         ModalRoute.withName(Routes.home.path),
-        arguments: ScenarioRouteArgs(scenario: scenario),
+        arguments: scenario,
       );
     }
 
