@@ -29,6 +29,9 @@ class WelcomeScreen extends HookWidget {
 
     return Scaffold(
       body: SafeArea(
+        top: false,
+        left: false,
+        right: false,
         child: Column(
           children: [
             SizedBox(
