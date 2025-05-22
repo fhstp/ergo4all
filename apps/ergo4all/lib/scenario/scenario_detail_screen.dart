@@ -5,6 +5,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 /// Screen for viewing a detailed description of a [Scenario].
 class ScenarioDetailScreen extends StatelessWidget {
@@ -56,6 +57,19 @@ class ScenarioDetailScreen extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_expectation,
     };
 
+    final graphicFileName = switch (scenario) {
+      Scenario.liftAndCarry || Scenario.lift25 => 'lifting',
+      Scenario.pull => 'pushing',
+      Scenario.seated => 'sitting',
+      Scenario.packaging ||
+      Scenario.standingCNC ||
+      Scenario.standingAssembly ||
+      Scenario.conveyorBelt =>
+        'standing',
+      Scenario.ceiling => 'overhead_work',
+    };
+    final graphicKey = 'assets/images/puppet_scenario/$graphicFileName.svg';
+
     // Pass scenario context
     Future<void> goToRecordScreen() async {
       await Navigator.of(context).pushNamedAndRemoveUntil(
@@ -73,45 +87,49 @@ class ScenarioDetailScreen extends StatelessWidget {
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
         child: Align(
-          child: Column(
-            children: [
-              const SizedBox(height: mediumSpace),
-              Text(
-                summary,
-                style: h4Style.copyWith(color: cardinal),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: mediumSpace),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    localizations.common_description,
-                    style: paragraphHeaderStyle,
-                  ),
-                  Text(
-                    description,
-                    style: dynamicBodyStyle,
-                  ),
-                  const SizedBox(height: mediumSpace),
-                  Text(
-                    localizations.common_expectation,
-                    style: paragraphHeaderStyle,
-                  ),
-                  Text(
-                    expectation,
-                    style: dynamicBodyStyle,
-                  ),
-                ],
-              ),
-              const SizedBox(height: mediumSpace),
-              ElevatedButton(
-                key: const Key('start'),
-                style: primaryTextButtonStyle,
-                onPressed: goToRecordScreen,
-                child: Text(localizations.record_label),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: mediumSpace),
+                Text(
+                  summary,
+                  style: h4Style.copyWith(color: cardinal),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: mediumSpace),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      localizations.common_description,
+                      style: paragraphHeaderStyle,
+                    ),
+                    Text(
+                      description,
+                      style: dynamicBodyStyle,
+                    ),
+                    const SizedBox(height: mediumSpace),
+                    Text(
+                      localizations.common_expectation,
+                      style: paragraphHeaderStyle,
+                    ),
+                    Text(
+                      expectation,
+                      style: dynamicBodyStyle,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: mediumSpace),
+                SvgPicture.asset(graphicKey, height: 330),
+                const SizedBox(height: mediumSpace),
+                ElevatedButton(
+                  key: const Key('start'),
+                  style: primaryTextButtonStyle,
+                  onPressed: goToRecordScreen,
+                  child: Text(localizations.record_label),
+                ),
+              ],
+            ),
           ),
         ),
       ),
