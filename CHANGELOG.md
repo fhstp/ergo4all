@@ -1,3 +1,10 @@
+## [1.75.1](https://github.com/fhstp/ergo4all/compare/v1.75.0...v1.75.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* puppet clickable body-parts ([fc50126](https://github.com/fhstp/ergo4all/commit/fc50126188c90f6c850047f4d37a015f18cbd30c))
+
 # [1.75.0](https://github.com/fhstp/ergo4all/compare/v1.74.0...v1.75.0) (2025-05-22)
 
 
