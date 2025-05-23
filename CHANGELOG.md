@@ -1,3 +1,10 @@
+# [1.81.0](https://github.com/fhstp/ergo4all/compare/v1.80.0...v1.81.0) (2025-05-23)
+
+
+### Features
+
+* shorten title on body part screen ([e9a2abf](https://github.com/fhstp/ergo4all/commit/e9a2abf1b001a3de21a58b9d6bc486899b889895))
+
 # [1.80.0](https://github.com/fhstp/ergo4all/compare/v1.79.0...v1.80.0) (2025-05-23)
 
 
