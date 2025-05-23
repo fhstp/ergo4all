@@ -10,7 +10,7 @@ import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rula_colors.dart';
-import 'package:ergo4all/scenario/domain.dart';
+import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 

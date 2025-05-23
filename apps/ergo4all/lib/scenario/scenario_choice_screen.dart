@@ -3,7 +3,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/scenario/domain.dart';
+import 'package:ergo4all/scenario/common.dart';
 import 'package:flutter/material.dart';
 
 /// Screen where users can choose which [Scenario] they want to record.

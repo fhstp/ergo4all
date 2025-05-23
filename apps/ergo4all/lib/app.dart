@@ -12,7 +12,7 @@ import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
-import 'package:ergo4all/scenario/domain.dart';
+import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';

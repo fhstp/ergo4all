@@ -1,5 +1,5 @@
 import 'package:ergo4all/common/value_notifier_ext.dart';
-import 'package:ergo4all/welcome/types.dart';
+import 'package:ergo4all/welcome/common.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:package_info_plus/package_info_plus.dart';

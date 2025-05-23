@@ -1,5 +1,5 @@
 import 'package:ergo4all/results/common.dart';
-import 'package:ergo4all/scenario/domain.dart';
+import 'package:ergo4all/scenario/common.dart';
 import 'package:flutter/widgets.dart';
 
 /// The result of analyzing a video.
