@@ -7,7 +7,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/imprint_screen.dart';
-import 'package:ergo4all/language/screen.dart';
+import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';

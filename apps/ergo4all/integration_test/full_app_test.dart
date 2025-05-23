@@ -1,6 +1,6 @@
 import 'package:ergo4all/app.dart';
 import 'package:ergo4all/home/screen.dart';
-import 'package:ergo4all/language/screen.dart';
+import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
