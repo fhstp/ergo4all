@@ -196,7 +196,7 @@
   "results_body_neck": "Neck",
   "results_body_legs": "Legs",
   "results_plot_title": "Ergonomics Score Analysis",
-  "body_part_title": "Analysis",
+  "analysis": "Analysis",
   "upperArmGood": "The analysis shows that your uppor arm posture was ergonomic.",
   "upperArmMedium": "Sometimes your upper arms were raised slightly above the neutral posture.",
   "upperArmLow": "The posture of your upper arms was not optimal. Over time, this could lead to shoulder strain. Try to lower your arms, or take breaks to relieve tension.",

@@ -222,7 +222,7 @@ class BodyPartResultsScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             Text(
-              localizations.body_part_title,
+              localizations.analysis,
               style: paragraphHeaderStyle,
             ),
 
