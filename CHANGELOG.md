@@ -1,3 +1,15 @@
+# [1.80.0](https://github.com/fhstp/ergo4all/compare/v1.79.0...v1.80.0) (2025-05-23)
+
+
+### Bug Fixes
+
+* various typos ([9c27265](https://github.com/fhstp/ergo4all/commit/9c2726556fc5b3cf35903d3976daa72040288baf))
+
+
+### Features
+
+* remove colon on result overview ([6e6dbe2](https://github.com/fhstp/ergo4all/commit/6e6dbe2866d8cd11ff6cbf0447dd71059127353c))
+
 # [1.79.0](https://github.com/fhstp/ergo4all/compare/v1.78.0...v1.79.0) (2025-05-23)
 
 
