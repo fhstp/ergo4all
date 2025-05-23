@@ -1,12 +1,5 @@
 {
   "@@locale": "en",
-  "@home_welcome": {
-    "placeholders": {
-      "firstName": {
-        "type": "String"
-      }
-    }
-  },
   "analysis_header": "Analyzing your ergonomics",
   "analysis_wait": "It may take a few minutes, please do not close the app.",
   "choice_title": "CHOOSE",
@@ -33,7 +26,21 @@
     "description": "Button label for navigation to scenario screen"
   },
   "home_welcome": "Welcome {firstName}",
+  "@home_welcome": {
+    "placeholders": {
+      "firstName": {
+        "type": "String"
+      }
+    }
+  },
   "home_welcome_break": "Welcome \n {firstName}",
+  "@home_welcome_break": {
+    "placeholders": {
+      "firstName": {
+        "type": "String"
+      }
+    }
+  },
   "language_header": "Choose language",
   "language_title": "Languages",
   "menu_delete_data_label": "Delete all my data",
