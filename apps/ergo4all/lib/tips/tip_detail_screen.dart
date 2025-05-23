@@ -64,6 +64,7 @@ class TipDetailScreen extends StatelessWidget {
           SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
             child: Align(
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -84,6 +85,7 @@ class TipDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+          ),
         ],
       ),
     );
