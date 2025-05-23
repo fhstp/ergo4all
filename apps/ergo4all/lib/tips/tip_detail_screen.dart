@@ -36,14 +36,15 @@ class TipDetailScreen extends StatelessWidget {
     };
 
     final imagePath = switch (tip) {
-      Tip.handAndArm => 'assets/images/puppets_good_bad/good_bad_hand.svg',
-      Tip.liftAndCarry => 'assets/images/puppets_good_bad/good_bad_lifting.svg',
-      Tip.workingOverhead =>
-        'assets/images/puppets_good_bad/good_bad_overhead_work.svg',
-      Tip.pushAndPull => 'assets/images/puppets_good_bad/good_bad_pushing.svg',
-      Tip.sitting => 'assets/images/puppets_good_bad/good_bad_sitting.svg',
-      Tip.bodyPosture => 'assets/images/puppets_good_bad/good_bad_standing.svg',
+      Tip.handAndArm => 'hand',
+      Tip.liftAndCarry => 'lifting',
+      Tip.workingOverhead => 'overhead_work',
+      Tip.pushAndPull => 'pushing',
+      Tip.sitting => 'sitting',
+      Tip.bodyPosture => 'standing',
     };
+
+    final graphicKey = 'assets/images/puppets_good_bad/good_bad_$imagePath.svg';
 
     return Scaffold(
       appBar: AppBar(
@@ -61,27 +62,28 @@ class TipDetailScreen extends StatelessWidget {
             child: RedCircleBottomBar(),
           ),
           SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: largeSpace),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    description,
-                    style: dynamicBodyStyle,
-                    textAlign: TextAlign.start,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: SvgPicture.asset(
-                      imagePath,
-                      height: 200,
+            minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
+            child: Align(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: largeSpace),
+                    Text(
+                      description,
+                      style: dynamicBodyStyle,
+                      textAlign: TextAlign.start,
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: SvgPicture.asset(
+                        graphicKey,
+                        height: 300,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
