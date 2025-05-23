@@ -1,3 +1,16 @@
+# [1.85.0](https://github.com/fhstp/ergo4all/compare/v1.84.1...v1.85.0) (2025-05-23)
+
+
+### Bug Fixes
+
+* overflow on tip detail screen ([3bcf626](https://github.com/fhstp/ergo4all/commit/3bcf6269b6acd74404e8c5c56a740f38d4cef268))
+
+
+### Features
+
+* **app:** update body details screen ([8f29ad1](https://github.com/fhstp/ergo4all/commit/8f29ad1ddfa15e6153689b92be29cbc6796172f0))
+* make app-bar headers smaller ([9449dd0](https://github.com/fhstp/ergo4all/commit/9449dd03b10de116882be118134d012c5419e981))
+
 ## [1.84.1](https://github.com/fhstp/ergo4all/compare/v1.84.0...v1.84.1) (2025-05-23)
 
 
