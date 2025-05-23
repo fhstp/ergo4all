@@ -1,3 +1,10 @@
+# [1.82.0](https://github.com/fhstp/ergo4all/compare/v1.81.0...v1.82.0) (2025-05-23)
+
+
+### Features
+
+* impressum screen info ([db424f9](https://github.com/fhstp/ergo4all/commit/db424f9c4fe7147896f16b72b952c78324fca4b7))
+
 # [1.81.0](https://github.com/fhstp/ergo4all/compare/v1.80.0...v1.81.0) (2025-05-23)
 
 
