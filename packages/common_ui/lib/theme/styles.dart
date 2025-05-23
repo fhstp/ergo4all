@@ -88,7 +88,7 @@ final h3Style = GoogleFonts.montserrat(
 /// Text style for H4 headers.
 final h4Style = GoogleFonts.nunito(
   fontWeight: FontWeight.w600,
-  fontSize: 30,
+  fontSize: 24,
   color: woodSmoke,
 );
 

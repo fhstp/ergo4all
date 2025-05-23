@@ -51,7 +51,6 @@ class TipDetailScreen extends StatelessWidget {
         leading: const IconBackButton(color: cardinal),
         title: Text(
           summary,
-          style: h4Style.copyWith(color: cardinal),
           textAlign: TextAlign.center,
         ),
       ),

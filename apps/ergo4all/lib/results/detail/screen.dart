@@ -68,7 +68,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
         'standing',
       Scenario.ceiling => 'overhead_work',
     };
-    final graphicKey = 'assets/images/puppets_good_bad/good_bad_$graphicFileName.svg';
+    final graphicKey =
+        'assets/images/puppets_good_bad/good_bad_$graphicFileName.svg';
 
     if (widget.analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -114,7 +115,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const IconBackButton(color: cardinal),
+        leading: const IconBackButton(),
         title: Text(localizations.results_title),
       ),
       body: SingleChildScrollView(

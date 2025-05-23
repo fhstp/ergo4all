@@ -18,7 +18,7 @@ const _colorScheme = ColorScheme(
 final _appBarTheme = AppBarTheme(
   backgroundColor: white,
   foregroundColor: woodSmoke,
-  titleTextStyle: h1Style,
+  titleTextStyle: h4Style.copyWith(color: cardinal),
 );
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(

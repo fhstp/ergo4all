@@ -103,8 +103,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const IconBackButton(),
-        title: Text(bodyPartLabel, style: h3Style),
-        backgroundColor: white,
+        title: Text(bodyPartLabel),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

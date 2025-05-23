@@ -83,10 +83,7 @@ class ResultsOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const IconBackButton(),
-        title: Text(
-          localizations.results_ergo_score_header,
-          style: h2Style,
-        ),
+        title: Text(localizations.results_ergo_score_header),
       ),
       body: Column(
         children: [
