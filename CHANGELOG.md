@@ -1,3 +1,10 @@
+# [1.79.0](https://github.com/fhstp/ergo4all/compare/v1.78.0...v1.79.0) (2025-05-23)
+
+
+### Features
+
+* add recording explanation text ([beb1b4b](https://github.com/fhstp/ergo4all/commit/beb1b4b5d8c2416ff585f0a3483138262e944871)), closes [#90](https://github.com/fhstp/ergo4all/issues/90)
+
 # [1.78.0](https://github.com/fhstp/ergo4all/compare/v1.77.1...v1.78.0) (2025-05-22)
 
 
