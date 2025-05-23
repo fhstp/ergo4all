@@ -13,6 +13,8 @@ import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg_flutter.dart';
+import 'package:common_ui/theme/spacing.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
 class ResultsDetailScreen extends StatefulWidget {
@@ -54,6 +56,19 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
       Scenario.lift25 => localizations.scenario_lift_tools,
       Scenario.conveyorBelt => localizations.scenario_conveyor_tools,
     };
+
+    final graphicFileName = switch (widget.analysisResult.scenario) {
+      Scenario.liftAndCarry || Scenario.lift25 => 'lifting',
+      Scenario.pull => 'pushing',
+      Scenario.seated => 'sitting',
+      Scenario.packaging ||
+      Scenario.standingCNC ||
+      Scenario.standingAssembly ||
+      Scenario.conveyorBelt =>
+        'standing',
+      Scenario.ceiling => 'overhead_work',
+    };
+    final graphicKey = 'assets/images/puppets_good_bad/good_bad_$graphicFileName.svg';
 
     if (widget.analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -113,7 +128,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
               style: paragraphHeaderStyle,
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: largeSpace),
 
             // Heatmap vis of the body parts
             Center(
@@ -184,7 +199,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
               ),
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: largeSpace),
 
             // Color legend
             Center(
@@ -226,34 +241,42 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
 
-            // New feature: show tipps
-            Text(
-              localizations.ergonomics_tipps,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: largeSpace),
 
-            Text(
-              tips,
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.left,
-            ),
+                // New feature: show tips
+                Text(
+                  localizations.ergonomics_tipps,
+                  style: paragraphHeaderStyle,
+                  textAlign: TextAlign.left,
+                ),
 
-            const SizedBox(height: 20),
+                Text(
+                  tips,
+                  style: dynamicBodyStyle,
+                  textAlign: TextAlign.left,
+                ),
 
-            // New feature: show improvement solutions
-            Text(
-              localizations.improvements,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
+                const SizedBox(height: mediumSpace),
 
-            Text(
-              improvements,
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.left,
+                // New feature: show improvement solutions
+                Text(
+                  localizations.improvements,
+                  style: paragraphHeaderStyle,
+                  textAlign: TextAlign.left,
+                ),
+
+                Text(
+                  improvements,
+                  style: dynamicBodyStyle,
+                  textAlign: TextAlign.left,
+                ),
+
+                SvgPicture.asset(graphicKey, height: 330),
+              ],
             ),
           ],
         ),
