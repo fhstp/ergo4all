@@ -1,3 +1,10 @@
+# [1.83.0](https://github.com/fhstp/ergo4all/compare/v1.82.0...v1.83.0) (2025-05-23)
+
+
+### Features
+
+* **app:** good-bad pics in results detail screen ([a3eb92b](https://github.com/fhstp/ergo4all/commit/a3eb92bd8c6a9f1b1b26ebf1832cdce1edeeadd2))
+
 # [1.82.0](https://github.com/fhstp/ergo4all/compare/v1.81.0...v1.82.0) (2025-05-23)
 
 
