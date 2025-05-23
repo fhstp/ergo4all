@@ -1,3 +1,10 @@
+## [1.83.1](https://github.com/fhstp/ergo4all/compare/v1.83.0...v1.83.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* **app:** Bildordner global einbinden ([abfca0d](https://github.com/fhstp/ergo4all/commit/abfca0dc18bb7cb356b82dd6fe5980c7351e881a))
+
 # [1.83.0](https://github.com/fhstp/ergo4all/compare/v1.82.0...v1.83.0) (2025-05-23)
 
 
