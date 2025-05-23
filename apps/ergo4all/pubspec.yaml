@@ -82,6 +82,7 @@ flutter:
     - assets/images/puppets_good_bad/
     - assets/images/logos/
     - assets/images/ergo_score_badge/
+    - assets/images/puppets_good_bad/
 
 flutter_icons:
   android: true
