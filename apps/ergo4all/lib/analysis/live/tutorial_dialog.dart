@@ -19,9 +19,9 @@ class _TutorialDialogState extends State<_TutorialDialog> {
     final localizations = AppLocalizations.of(context)!;
 
     void onNextPressed() {
-      if (pageIndex == 0) {
+      if (pageIndex < 2) {
         setState(() {
-          pageIndex = 1;
+          pageIndex++;
         });
       } else {
         Navigator.of(context).pop();
@@ -30,7 +30,8 @@ class _TutorialDialogState extends State<_TutorialDialog> {
 
     final text = switch (pageIndex) {
       0 => localizations.tutorial_dialog_page_1,
-      _ => localizations.tutorial_dialog_page_2
+      1 => localizations.tutorial_dialog_page_2,
+      _ => localizations.tutorial_dialog_page_3
     };
 
     return Dialog(
