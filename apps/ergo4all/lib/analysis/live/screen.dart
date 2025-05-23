@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
@@ -12,6 +11,7 @@ import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/tutorial_dialog.dart';
+import 'package:ergo4all/analysis/live/video_storage.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -19,7 +19,6 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
-import 'package:path/path.dart' as p;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
@@ -54,17 +53,6 @@ class _Frame {
 }
 
 enum _AnalysisMode { none, poseOnly, full }
-
-// TODO(comradevanti): Move to own package for video storage
-Future<void> _saveRecording(XFile tempFile) async {
-  final recordingsDir = Directory(
-    '/storage/emulated/0/Android/media/at.ac.fhstp.ergo4all/Ergo4All Recordings',
-  );
-  await recordingsDir.create(recursive: true);
-
-  final recordingPath = p.join(recordingsDir.path, tempFile.name);
-  await tempFile.saveTo(recordingPath);
-}
 
 class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     with SingleTickerProviderStateMixin {
@@ -170,7 +158,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     // Comment out
     final outputFile = await cameraController.stopVideoRecording();
-    await _saveRecording(outputFile);
+    await copyToRecordingFolder(outputFile);
 
     // Comment in
     // await cameraController.stopImageStream();
