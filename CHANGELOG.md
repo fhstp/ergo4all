@@ -1,3 +1,10 @@
+## [1.84.1](https://github.com/fhstp/ergo4all/compare/v1.84.0...v1.84.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* good bad image position in result details screen ([b933ac8](https://github.com/fhstp/ergo4all/commit/b933ac85b48fd9a6a3930bbe7c8d5b62e64170ed))
+
 # [1.84.0](https://github.com/fhstp/ergo4all/compare/v1.83.1...v1.84.0) (2025-05-23)
 
 
