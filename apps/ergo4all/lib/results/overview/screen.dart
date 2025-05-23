@@ -84,7 +84,7 @@ class ResultsOverviewScreen extends StatelessWidget {
       appBar: AppBar(
         leading: const IconBackButton(),
         title: Text(
-          '${localizations.results_ergo_score_header}:',
+          localizations.results_ergo_score_header,
           style: h2Style,
         ),
       ),
