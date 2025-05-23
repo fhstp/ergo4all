@@ -1,4 +1,6 @@
+import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -30,6 +32,12 @@ final Map<String, String Function(AppLocalizations)> _localizationMap = {
 extension on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
 }
+
+enum _PartColor {
+    blue,
+    red,
+    yellow;
+  }
 
 /// Screen display detailed score information about a specific [BodyPartGroup].
 class BodyPartResultsScreen extends StatelessWidget {
@@ -70,12 +78,22 @@ class BodyPartResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _PartColor getColorForPart(IList<double> normalizedScores) {
+      final score = normalizedScores.median()!;
+      return switch (score) {
+        < 0.3 => _PartColor.blue,
+        < 0.6 => _PartColor.yellow,
+        _ => _PartColor.red
+      };
+    }
+
     final localizations = AppLocalizations.of(context)!;
 
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = staticLoadScores.length > 140;
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
+    final bodyPartColor = getColorForPart(normalizedScores);
     final rating = calculateRating(normalizedScores);
     final message =
         _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
@@ -97,39 +115,34 @@ class BodyPartResultsScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: cardinal.withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        bodyPartLabel,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: cardinal,
+                  Center(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          getGraphicKeyFor(bodyPartColor.name, bodyPartGroup),
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.contain,
                         ),
-                      ),
+                        const SizedBox(height: mediumSpace),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: mediumSpace),
                 ],
               ),
             ),
 
             // Timeline Visualization
 
-            const SizedBox(height: 20),
+            const SizedBox(height: mediumSpace),
 
             Text(
               localizations.body_part_score_plot_title,
               style: paragraphHeaderStyle,
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: largeSpace),
 
             SizedBox(
               height: 132,
@@ -139,14 +152,14 @@ class BodyPartResultsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: largeSpace),
 
             Text(
               localizations.body_part_static_plot_title,
               style: paragraphHeaderStyle,
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: mediumSpace),
 
             if (showStaticLoad)
               SizedBox(
@@ -216,19 +229,19 @@ class BodyPartResultsScreen extends StatelessWidget {
             else
               Text(
                 localizations.body_part_static_plot_condition,
-                style: infoText,
+                style: dynamicBodyStyle,
               ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: mediumSpace),
 
             Text(
               localizations.analysis,
               style: paragraphHeaderStyle,
             ),
 
-            const SizedBox(height: 8),
+            const SizedBox(height: smallSpace),
 
-            Text(message, style: infoText),
+            Text(message, style: dynamicBodyStyle),
           ],
         ),
       ),
