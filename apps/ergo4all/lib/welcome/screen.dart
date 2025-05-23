@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
@@ -5,20 +7,38 @@ import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/welcome/version_display.dart';
-import 'package:ergo4all/welcome/viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fpdart/fpdart.dart' hide State;
+import 'package:package_info_plus/package_info_plus.dart';
 
 /// Top-level widget for the welcome screen.
-class WelcomeScreen extends HookWidget {
+class WelcomeScreen extends StatefulWidget {
   ///
   const WelcomeScreen({super.key});
 
   @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  Option<String> projectVersion = none();
+
+  Future<void> loadProjectVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      projectVersion = Some(info.version);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(loadProjectVersion());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final viewModel = useMemoized(WelcomeViewModel.new);
-    final uiState = useValueListenable(viewModel.uiState);
     final localizations = AppLocalizations.of(context)!;
 
     Future<void> navigateToNextScreen() async {
@@ -94,7 +114,7 @@ class WelcomeScreen extends HookWidget {
                 ),
               ),
             ),
-            VersionDisplay(version: uiState.projectVersion),
+            VersionDisplay(version: projectVersion),
           ],
         ),
       ),
