@@ -1,5 +1,6 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/common.dart';
@@ -14,7 +15,6 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg_flutter.dart';
-import 'package:common_ui/theme/spacing.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
 class ResultsDetailScreen extends StatefulWidget {
@@ -275,7 +275,9 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                   textAlign: TextAlign.left,
                 ),
 
-                SvgPicture.asset(graphicKey, height: 330),
+                Center(
+                  child: SvgPicture.asset(graphicKey, height: 330),
+                ),
               ],
             ),
           ],
