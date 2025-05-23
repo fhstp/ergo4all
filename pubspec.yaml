@@ -14,7 +14,6 @@ workspace:
   - ./packages/pose_transforming
   - ./packages/pose_vis
   - ./packages/rula
-  - ./packages/user_management
   - ./apps/ergo4all
   - ./apps/pose_tester
 

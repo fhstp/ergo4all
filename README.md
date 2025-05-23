@@ -39,7 +39,6 @@ with the following parts.
 | [pose_transforming](./packages/pose_transforming/README.md) | Logic for transforming and normalizing pose data |
 | [pose_vis](./packages/pose_vis/README.md)                   | UI logic for visualizing poses                   |
 | [rula](./packages/rula/README.md)                           | Logic modelling the RULA sheet                   |
-| [user_management](./packages/user_management/README.md)     | User management logic                            |
 
 ## Develop
 

@@ -8,11 +8,6 @@ import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
-import 'package:user_management/user_management.dart';
-
-Future<void> clearAppStorage() async {
-  await clearAllUserData();
-}
 
 void expectScreen(Type screenType) {
   expect(find.byType(screenType), findsOneWidget);
@@ -33,7 +28,6 @@ Future<void> pumpContinuously(
 void main() {
   patrolTest('full app play-through', (tester) async {
     // Open the app
-    await clearAppStorage();
     await tester.pumpWidget(const Ergo4AllApp());
 
     // We should be on welcome screen

@@ -30,7 +30,6 @@ dependencies:
   pose_analysis: any
   pose_vis: any
   rula: any
-  user_management: any
 
   intl: any
   package_info_plus: ^8.0.2
