@@ -85,10 +85,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const IconBackButton(),
-        title: Text(
-          '$bodyPartLabel ${localizations.body_part_title}',
-          style: h3Style,
-        ),
+        title: Text(bodyPartLabel, style: h3Style),
         backgroundColor: white,
       ),
       body: SingleChildScrollView(
