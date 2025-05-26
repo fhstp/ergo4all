@@ -1,5 +1,4 @@
 import 'package:common/iterable_ext.dart';
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
@@ -46,6 +45,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     required this.staticLoadScores,
     required this.normalizedScores,
     required this.bodyPartGroup,
+    required this.recordingDuration,
     super.key,
   });
 
@@ -61,17 +61,22 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// The body to display.
   final BodyPartGroup bodyPartGroup;
 
+  /// The duration of the recording in seconds.
+  final int recordingDuration;
+
   /// Makes a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute({
     required BodyPartGroup bodyPartGroup,
     required IList<double> normalizedScores,
     required IList<double> staticLoadScores,
+    required int recordingDuration,
   }) {
     return MaterialPageRoute<void>(
       builder: (context) => BodyPartResultsScreen(
         bodyPartGroup: bodyPartGroup,
         normalizedScores: normalizedScores,
         staticLoadScores: staticLoadScores,
+        recordingDuration: recordingDuration,
       ),
     );
   }
@@ -90,7 +95,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     // Need at least 15s of data to show the static load chart
-    final showStaticLoad = staticLoadScores.length > 140;
+    final showStaticLoad = recordingDuration >= 15;
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
     final bodyPartColor = getColorForPart(normalizedScores);

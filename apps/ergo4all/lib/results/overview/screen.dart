@@ -50,6 +50,11 @@ class ResultsOverviewScreen extends StatelessWidget {
     final averageScoresByGroup = normalizedScoresByGroup
         .mapValues((scores) => calculateRunningAverage(scores, 20));
 
+    final recordingDuration = Duration(
+      milliseconds: analysisResult.timeline.last.timestamp -
+          analysisResult.timeline.first.timestamp,
+    ).inSeconds;
+
     void goToDetails() {
       Navigator.of(context).pushNamed(
         Routes.resultsDetail.path,
@@ -68,6 +73,7 @@ class ResultsOverviewScreen extends StatelessWidget {
           // We display the median values on the detail screen
           staticLoadScores:
               calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
+          recordingDuration: recordingDuration,
         ),
       );
     }

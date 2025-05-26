@@ -104,6 +104,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
           // We display the median values on the detail screen
           staticLoadScores:
               calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
+          recordingDuration: recordingDuration,
         ),
       );
     }
