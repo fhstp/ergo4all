@@ -1,3 +1,10 @@
+## [1.85.1](https://github.com/fhstp/ergo4all/compare/v1.85.0...v1.85.1) (2025-05-26)
+
+
+### Bug Fixes
+
+* second plot must appear when recording is at least 15 s ([9d5cb7b](https://github.com/fhstp/ergo4all/commit/9d5cb7bf084ee27623a542e89e8a17261cba9325))
+
 # [1.85.0](https://github.com/fhstp/ergo4all/compare/v1.84.1...v1.85.0) (2025-05-23)
 
 
