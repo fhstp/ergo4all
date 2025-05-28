@@ -18,7 +18,10 @@ enum Routes {
   imprint('/imprint'),
 
   /// Screen for viewing privacy information.
-  privacy('/privacy');
+  privacy('/privacy'),
+
+  /// Screen for viewing all the stored record sessions
+  sessions('/sessions');
 
   const Routes(this.path);
 

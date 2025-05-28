@@ -32,6 +32,10 @@ Future<void> showHomeMenuDialog(BuildContext context) {
     unawaited(navigator.pushNamed(Routes.privacy.path));
   }
 
+  Future<void> goToAllSessions() async {
+    await Navigator.of(context).pushNamed(Routes.sessions.path);
+  }
+
   return showDialog<void>(
     context: context,
     builder: (context) => SimpleDialog(
@@ -40,6 +44,10 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         horizontal: 20,
       ),
       children: [
+        _makeOptionButton(
+          localizations.sessions_header,
+          goToAllSessions,
+        ),
         _makeOptionButton(
           localizations.menu_language_label,
           goToLanguage,

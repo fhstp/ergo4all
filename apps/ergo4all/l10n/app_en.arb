@@ -268,5 +268,7 @@
   "privacy_content": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. We are committed to safeguarding your privacy.",
   "@privacy_content": {
     "description": "Text that describes the privacy policy of the app to the user."
-  }
+  },
+  "no_sessions_placeholder": "No sessions available",
+  "sessions_header": "Sessions"
 }
