@@ -15,6 +15,7 @@ import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
+import 'package:ergo4all/sessions/screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
@@ -91,6 +92,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.tipDetail.path: (context) => const TipDetailScreen(),
         Routes.imprint.path: (_) => const ImprintScreen(),
         Routes.privacy.path: (_) => const PrivacyScreen(),
+        Routes.sessions.path: (context) => const SessionsScreen(),
       },
       navigatorObservers: [
         RouteLeaveObserver(

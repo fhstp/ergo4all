@@ -15,6 +15,8 @@ import 'package:ergo4all/analysis/live/video_storage.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
+import 'package:ergo4all/storage/rula_session.dart';
+import 'package:ergo4all/storage/rula_session_repository.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,6 +29,7 @@ import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:rula/rula.dart';
+import 'package:provider/provider.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
@@ -68,8 +71,18 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     vsync: this,
   );
 
+  late RulaSessionRepository dataStorage;
+
   void goToResults() {
     if (!context.mounted) return;
+
+    dataStorage.save(
+      RulaSession(
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        scenario: widget.scenario,
+        timeline: timeline.toIList(),
+      ),
+    );
 
     unawaited(
       Navigator.of(context).pushReplacementNamed(
@@ -282,6 +295,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
             .toNullable(),
       ),
     );
+
+    dataStorage = Provider.of<RulaSessionRepository>(context);
 
     return Scaffold(
       backgroundColor: woodSmoke,

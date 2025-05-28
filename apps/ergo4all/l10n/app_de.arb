@@ -128,5 +128,7 @@
   "scenario_detail_title": "Szenario",
   "privacy_title": "Datenschutz",
   "privacy_important": "Ihre Privatsphäre ist uns wichtig.",
-  "privacy_content": "Ergo4A verarbeitet alle Daten lokal auf Ihrem Gerät, sodass keine persönlichen Informationen an externe Server gesendet werden. Wir sind verpflichtet, Ihre Privatsphäre zu schützen."
+  "privacy_content": "Ergo4A verarbeitet alle Daten lokal auf Ihrem Gerät, sodass keine persönlichen Informationen an externe Server gesendet werden. Wir sind verpflichtet, Ihre Privatsphäre zu schützen.",
+  "no_sessions_placeholder": "Keine Sitzungen verfügbar",
+  "sessions_header": "Sitzungen"
 }
