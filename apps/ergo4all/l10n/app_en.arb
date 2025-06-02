@@ -270,5 +270,6 @@
     "description": "Text that describes the privacy policy of the app to the user."
   },
   "no_sessions_placeholder": "No sessions available",
-  "sessions_header": "Sessions"
+  "sessions_header": "Sessions",
+  "delete_session_message": "session deleted successfully"
 }
