@@ -111,4 +111,56 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       );
     }).toList();
   }
+
+  @override
+  void deleteSession(int timestamp) {
+    final sessionBox = store.box<RulaSessionEntity>();
+    final timelineBox = store.box<TimelineEntryEntity>();
+    final scoresBox = store.box<RulaScoresEntity>();
+    final pairBox = store.box<IntPairEntity>();
+
+    final query = sessionBox.query(RulaSessionEntity_.timestamp.equals(timestamp)).build();
+    final session = query.findFirst();
+    query.close();
+
+    if (session == null) return;
+
+    for (final entry in session.timeline) {
+      final scores = entry.scores.target;
+      if (scores != null) {
+        final pairs = [
+          scores.upperArmPositionScores.target,
+          scores.upperArmAbductedAdjustments.target,
+          scores.upperArmScores.target,
+          scores.lowerArmPositionScores.target,
+          scores.lowerArmScores.target,
+          scores.wristScores.target,
+        ];
+        // Delete IntPairEntity instances
+        for (final pair in pairs) {
+          if (pair != null) {
+            pairBox.remove(pair.id);
+          }
+        }
+        scoresBox.remove(scores.id);
+      }
+      timelineBox.remove(entry.id);
+    }
+
+    sessionBox.remove(session.id);
+  }
+
+  @override
+  void deleteAllSessions() {
+    final sessionBox = store.box<RulaSessionEntity>();
+    final timelineBox = store.box<TimelineEntryEntity>();
+    final scoresBox = store.box<RulaScoresEntity>();
+    final pairBox = store.box<IntPairEntity>();
+
+    // Order matters: delete from children to parents
+    pairBox.removeAll();
+    scoresBox.removeAll();
+    timelineBox.removeAll();
+    sessionBox.removeAll();
+  }
 }

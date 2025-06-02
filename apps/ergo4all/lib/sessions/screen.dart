@@ -62,16 +62,32 @@ class _SessionsScreenState extends State<SessionsScreen>
         sessions.isEmpty
             ? Center(child:
         Text(localizations.no_sessions_placeholder, style: paragraphHeaderStyle))
-            : ListView.builder(
+            :
+        ListView.builder(
           itemCount: sessions.length,
           itemBuilder: (context, index) {
             final dateTime = DateTime.fromMillisecondsSinceEpoch(sessions[index].timestamp);
             final formattedDate = DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
-            return ListTile(
-              title: Text(formattedDate, style: paragraphHeaderStyle),
-              onTap: () {
-                goToResults(sessions[index]);
+            return Dismissible(
+              key: Key(sessions[index].timestamp.toString()),
+              onDismissed: (direction) {
+                dataStorage.deleteSession(sessions[index].timestamp);
+                setState(() {
+                  sessions.removeAt(index);
+                });
+
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(
+                  SnackBar(content: Text(localizations.delete_session_message)),
+                );
               },
+              child: ListTile(
+                title: Text(formattedDate, style: paragraphHeaderStyle),
+                onTap: () {
+                  goToResults(sessions[index]);
+                },
+              ),
             );
           },
         ),

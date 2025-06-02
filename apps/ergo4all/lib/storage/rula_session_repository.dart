@@ -7,4 +7,10 @@ abstract class RulaSessionRepository {
 
   /// Retrieves all stored RulaSessions
   List<RulaSession> getAll();
+
+  /// fins a session based on its timestamp and deletes it
+  void deleteSession(int timestamp);
+
+  /// deletes all database information
+  void deleteAllSessions();
 }
