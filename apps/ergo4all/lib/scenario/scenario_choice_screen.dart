@@ -15,18 +15,6 @@ class ScenarioChoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    String titleFor(Scenario scenario) => switch (scenario) {
-          Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
-          Scenario.pull => localizations.scenario_pull_label,
-          Scenario.seated => localizations.scenario_seated_label,
-          Scenario.packaging => localizations.scenario_packaging_label,
-          Scenario.standingCNC => localizations.scenario_CNC_label,
-          Scenario.standingAssembly => localizations.scenario_assembly_label,
-          Scenario.ceiling => localizations.scenario_ceiling_label,
-          Scenario.lift25 => localizations.scenario_lift_label,
-          Scenario.conveyorBelt => localizations.scenario_conveyor_label,
-        };
-
     // Added scenario passing
     Future<void> goToDetailScreen(Scenario scenario) async {
       await Navigator.of(context).pushNamed(
@@ -59,7 +47,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
                           goToDetailScreen(scenario);
                         },
                         child: Text(
-                          titleFor(scenario),
+                          scenario.title(localizations),
                           textAlign: TextAlign.center,
                         ),
                       );
