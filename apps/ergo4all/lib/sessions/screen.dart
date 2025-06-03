@@ -67,6 +67,8 @@ class _SessionsScreenState extends State<SessionsScreen>
           itemCount: sessions.length,
           itemBuilder: (context, index) {
             final dateTime = DateTime.fromMillisecondsSinceEpoch(sessions[index].timestamp);
+            final scenario = sessions[index].scenario;
+            final scenatioLabel = scenario.title(localizations);
             final formattedDate = DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
             return Dismissible(
               key: Key(sessions[index].timestamp.toString()),
@@ -83,7 +85,7 @@ class _SessionsScreenState extends State<SessionsScreen>
                 );
               },
               child: ListTile(
-                title: Text(formattedDate, style: paragraphHeaderStyle),
+                title: Text('$scenatioLabel ($formattedDate)', style: paragraphHeaderStyle),
                 onTap: () {
                   goToResults(sessions[index]);
                 },
