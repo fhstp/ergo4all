@@ -1,3 +1,14 @@
+# [1.86.0](https://github.com/fhstp/ergo4all/compare/v1.85.1...v1.86.0) (2025-06-10)
+
+
+### Features
+
+* add ability to delete sessions, on swipe gestures on the sessions screen ([cb504b6](https://github.com/fhstp/ergo4all/commit/cb504b67b8e08207ae86d3f8bc37dc3ed79ab632))
+* add scenario label into sessions list ([2caf66c](https://github.com/fhstp/ergo4all/commit/2caf66c8fa95e1b4f94fe52e2b16b9a7b503f83d))
+* apply change request changes; inline object store class, improve docs, move UI logic out of domain objects ([d6b086b](https://github.com/fhstp/ergo4all/commit/d6b086b38945a684ab06f145e645467dd7eee28b))
+* implement object box local database in order to store complete rula sessions ([0d7f0a1](https://github.com/fhstp/ergo4all/commit/0d7f0a108d1da48ef7ac1f335ffeb843d8a344a4))
+* improve flutter docs on RulaSession ([bf3c124](https://github.com/fhstp/ergo4all/commit/bf3c1241d71b23805c5f0d418b69be835bffa427))
+
 ## [1.85.1](https://github.com/fhstp/ergo4all/compare/v1.85.0...v1.85.1) (2025-05-26)
 
 
