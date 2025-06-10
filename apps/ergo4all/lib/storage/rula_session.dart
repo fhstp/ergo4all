@@ -6,8 +6,8 @@ class RulaSession {
   const RulaSession({required this.timestamp, required this.scenario, required this.timeline});
   /// session timestamp: corresponds to the date and time at which the session was recorded.
   final int timestamp;
-  /// session scenario
+  /// session scenario: corresponds to the sceneario which was recorded in this session
   final Scenario scenario;
-  /// session RulaTimeline
+  /// session RulaTimeline: corresponds to the RulaTimeline data recorded in this session
   final RulaTimeline timeline;
 }
