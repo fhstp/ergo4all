@@ -6,6 +6,7 @@ import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/storage/rula_session.dart';
 import 'package:ergo4all/storage/rula_session_repository.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,18 @@ class _SessionsScreenState extends State<SessionsScreen>
       );
     }
 
+    String titleFor(Scenario scenario) => switch (scenario) {
+      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
+      Scenario.pull => localizations.scenario_pull_label,
+      Scenario.seated => localizations.scenario_seated_label,
+      Scenario.packaging => localizations.scenario_packaging_label,
+      Scenario.standingCNC => localizations.scenario_CNC_label,
+      Scenario.standingAssembly => localizations.scenario_assembly_label,
+      Scenario.ceiling => localizations.scenario_ceiling_label,
+      Scenario.lift25 => localizations.scenario_lift_label,
+      Scenario.conveyorBelt => localizations.scenario_conveyor_label,
+    };
+
     return
       Scaffold(
         appBar: AppBar(
@@ -68,7 +81,7 @@ class _SessionsScreenState extends State<SessionsScreen>
           itemBuilder: (context, index) {
             final dateTime = DateTime.fromMillisecondsSinceEpoch(sessions[index].timestamp);
             final scenario = sessions[index].scenario;
-            final scenatioLabel = scenario.title(localizations);
+            final scenarioLabel = titleFor(scenario);
             final formattedDate = DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
             return Dismissible(
               key: Key(sessions[index].timestamp.toString()),
@@ -85,7 +98,7 @@ class _SessionsScreenState extends State<SessionsScreen>
                 );
               },
               child: ListTile(
-                title: Text('$scenatioLabel ($formattedDate)', style: paragraphHeaderStyle),
+                title: Text('$scenarioLabel ($formattedDate)', style: paragraphHeaderStyle),
                 onTap: () {
                   goToResults(sessions[index]);
                 },

@@ -1,5 +1,3 @@
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
-
 /// The different work scenarios we can evaluate
 enum Scenario {
   /// Lifting and carrying heavy loads up to 25 kg
@@ -27,17 +25,6 @@ enum Scenario {
   lift25,
 
   /// Working on a conveyor belt for long periods
-  conveyorBelt;
+  conveyorBelt
 
-  String title(AppLocalizations localizations) => switch (this) {
-    Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
-    Scenario.pull => localizations.scenario_pull_label,
-    Scenario.seated => localizations.scenario_seated_label,
-    Scenario.packaging => localizations.scenario_packaging_label,
-    Scenario.standingCNC => localizations.scenario_CNC_label,
-    Scenario.standingAssembly => localizations.scenario_assembly_label,
-    Scenario.ceiling => localizations.scenario_ceiling_label,
-    Scenario.lift25 => localizations.scenario_lift_label,
-    Scenario.conveyorBelt => localizations.scenario_conveyor_label,
-  };
 }
