@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
@@ -60,7 +62,16 @@ class ResultsOverviewScreen extends StatelessWidget {
         Routes.resultsDetail.path,
         arguments: analysisResult,
       );
-      //arguments: timeline);
+    }
+
+    void recordAgain() {
+      unawaited(
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          Routes.liveAnalysis.path,
+          ModalRoute.withName(Routes.home.path),
+          arguments: analysisResult.scenario,
+        ),
+      );
     }
 
     void goToBodyPartPage(BodyPartGroup bodyPart) {
@@ -108,8 +119,14 @@ class ResultsOverviewScreen extends StatelessWidget {
           const SizedBox(height: mediumSpace),
           ElevatedButton(
             onPressed: goToDetails,
-            style: secondaryTextButtonStyle,
+            style: primaryTextButtonStyle,
             child: const Text('Details'),
+          ),
+          const SizedBox(height: smallSpace),
+          ElevatedButton(
+            onPressed: recordAgain,
+            style: secondaryTextButtonStyle,
+            child: Text(localizations.record_again),
           ),
         ],
       ),
