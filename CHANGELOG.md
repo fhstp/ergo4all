@@ -1,3 +1,10 @@
+# [1.87.0](https://github.com/fhstp/ergo4all/compare/v1.86.0...v1.87.0) (2025-06-12)
+
+
+### Features
+
+* record again ([fee4ec4](https://github.com/fhstp/ergo4all/commit/fee4ec413c9cb40248f076b43e93a5881c368a9b)), closes [#96](https://github.com/fhstp/ergo4all/issues/96)
+
 # [1.86.0](https://github.com/fhstp/ergo4all/compare/v1.85.1...v1.86.0) (2025-06-10)
 
 
