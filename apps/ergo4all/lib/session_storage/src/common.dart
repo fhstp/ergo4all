@@ -29,7 +29,7 @@ abstract class RulaSessionRepository {
   Future<List<RulaSession>> getAll();
 
   /// Deletes a [RulaSession] based on it's [timestamp].
-  void deleteByTimestamp(int timestamp);
+  Future<void> deleteByTimestamp(int timestamp);
 
   /// Clears this store.
   void clear();

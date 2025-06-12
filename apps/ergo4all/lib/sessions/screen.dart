@@ -91,8 +91,11 @@ class _SessionsScreenState extends State<SessionsScreen>
                       DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
                   return Dismissible(
                     key: Key(sessions[index].timestamp.toString()),
-                    onDismissed: (direction) {
-                      dataStorage.deleteByTimestamp(sessions[index].timestamp);
+                    onDismissed: (direction) async {
+                      await dataStorage
+                          .deleteByTimestamp(sessions[index].timestamp);
+                      if (!context.mounted) return;
+
                       setState(() {
                         sessions.removeAt(index);
                       });

@@ -192,7 +192,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   }
 
   @override
-  void deleteByTimestamp(int timestamp) {
+  Future<void> deleteByTimestamp(int timestamp) async {
     final sessionBox = _store.box<RulaSessionEntity>();
     final timelineBox = _store.box<TimelineEntryEntity>();
     final scoresBox = _store.box<RulaScoresEntity>();
@@ -201,7 +201,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
     final query = sessionBox
         .query(RulaSessionEntity_.timestamp.equals(timestamp))
         .build();
-    final session = query.findFirst();
+    final session = await query.findFirstAsync();
     query.close();
 
     if (session == null) return;
@@ -220,15 +220,15 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
         // Delete IntPairEntity instances
         for (final pair in pairs) {
           if (pair != null) {
-            pairBox.remove(pair.id);
+            await pairBox.removeAsync(pair.id);
           }
         }
-        scoresBox.remove(scores.id);
+        await scoresBox.removeAsync(scores.id);
       }
-      timelineBox.remove(entry.id);
+      await timelineBox.removeAsync(entry.id);
     }
 
-    sessionBox.remove(session.id);
+    await sessionBox.removeAsync(session.id);
   }
 
   @override
