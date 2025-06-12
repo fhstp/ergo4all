@@ -82,9 +82,9 @@ class RulaSessionEntity {
 /// an object-box [Store].
 class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   ///
-  ObjectBoxRulaSessionRepository(this.store);
+  ObjectBoxRulaSessionRepository(this._store);
 
-  final Store store;
+  final Store _store;
 
   @override
   Future<void> save(RulaSession session) async {
@@ -92,8 +92,8 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       timestamp: session.timestamp,
       scenarioIndex: session.scenario.index,
     );
-    final pairBox = store.box<IntPairEntity>();
-    final scoresBox = store.box<RulaScoresEntity>();
+    final pairBox = _store.box<IntPairEntity>();
+    final scoresBox = _store.box<RulaScoresEntity>();
 
     for (var entry in session.timeline) {
       final score = entry.scores;
@@ -142,12 +142,12 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       sessionEntity.timeline.add(timelineEntryEntity);
     }
 
-    store.box<RulaSessionEntity>().put(sessionEntity);
+    _store.box<RulaSessionEntity>().put(sessionEntity);
   }
 
   @override
   List<RulaSession> getAll() {
-    final sessionBox = store.box<RulaSessionEntity>();
+    final sessionBox = _store.box<RulaSessionEntity>();
     final sessions = sessionBox
         .query()
         .order(RulaSessionEntity_.timestamp, flags: Order.descending)
@@ -193,10 +193,10 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
 
   @override
   void deleteSession(int timestamp) {
-    final sessionBox = store.box<RulaSessionEntity>();
-    final timelineBox = store.box<TimelineEntryEntity>();
-    final scoresBox = store.box<RulaScoresEntity>();
-    final pairBox = store.box<IntPairEntity>();
+    final sessionBox = _store.box<RulaSessionEntity>();
+    final timelineBox = _store.box<TimelineEntryEntity>();
+    final scoresBox = _store.box<RulaScoresEntity>();
+    final pairBox = _store.box<IntPairEntity>();
 
     final query = sessionBox
         .query(RulaSessionEntity_.timestamp.equals(timestamp))
@@ -233,10 +233,10 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
 
   @override
   void deleteAllSessions() {
-    final sessionBox = store.box<RulaSessionEntity>();
-    final timelineBox = store.box<TimelineEntryEntity>();
-    final scoresBox = store.box<RulaScoresEntity>();
-    final pairBox = store.box<IntPairEntity>();
+    final sessionBox = _store.box<RulaSessionEntity>();
+    final timelineBox = _store.box<TimelineEntryEntity>();
+    final scoresBox = _store.box<RulaScoresEntity>();
+    final pairBox = _store.box<IntPairEntity>();
 
     // Order matters: delete from children to parents
     pairBox.removeAll();
