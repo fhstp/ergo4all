@@ -82,9 +82,16 @@ class RulaSessionEntity {
 /// an object-box [Store].
 class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   ///
-  ObjectBoxRulaSessionRepository(this._store);
+  ObjectBoxRulaSessionRepository(Store store)
+      : _pairBox = store.box<IntPairEntity>(),
+        _scoresBox = store.box<RulaScoresEntity>(),
+        _timelineBox = store.box<TimelineEntryEntity>(),
+        _sessionBox = store.box<RulaSessionEntity>();
 
-  final Store _store;
+  final Box<IntPairEntity> _pairBox;
+  final Box<RulaScoresEntity> _scoresBox;
+  final Box<TimelineEntryEntity> _timelineBox;
+  final Box<RulaSessionEntity> _sessionBox;
 
   @override
   Future<void> put(RulaSession session) async {
@@ -92,8 +99,6 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       timestamp: session.timestamp,
       scenarioIndex: session.scenario.index,
     );
-    final pairBox = _store.box<IntPairEntity>();
-    final scoresBox = _store.box<RulaScoresEntity>();
 
     for (final entry in session.timeline) {
       final score = entry.scores;
@@ -118,7 +123,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       final lowerArmScores = IntPairEntity.fromTuple(score.lowerArmScores);
       final wristScores = IntPairEntity.fromTuple(score.wristScores);
 
-      pairBox.putMany([
+      _pairBox.putMany([
         upperArmPos,
         upperArmAdj,
         upperArmScores,
@@ -134,7 +139,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       scoresEntity.lowerArmScores.target = lowerArmScores;
       scoresEntity.wristScores.target = wristScores;
 
-      scoresBox.put(scoresEntity);
+      _scoresBox.put(scoresEntity);
 
       final timelineEntryEntity =
           TimelineEntryEntity(timestamp: entry.timestamp);
@@ -142,13 +147,12 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       sessionEntity.timeline.add(timelineEntryEntity);
     }
 
-    _store.box<RulaSessionEntity>().put(sessionEntity);
+    _sessionBox.put(sessionEntity);
   }
 
   @override
   Future<List<RulaSession>> getAll() async {
-    final sessionBox = _store.box<RulaSessionEntity>();
-    final sessions = await sessionBox
+    final sessions = await _sessionBox
         .query()
         .order(RulaSessionEntity_.timestamp, flags: Order.descending)
         .build()
@@ -193,12 +197,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
 
   @override
   Future<void> deleteByTimestamp(int timestamp) async {
-    final sessionBox = _store.box<RulaSessionEntity>();
-    final timelineBox = _store.box<TimelineEntryEntity>();
-    final scoresBox = _store.box<RulaScoresEntity>();
-    final pairBox = _store.box<IntPairEntity>();
-
-    final query = sessionBox
+    final query = _sessionBox
         .query(RulaSessionEntity_.timestamp.equals(timestamp))
         .build();
     final session = await query.findFirstAsync();
@@ -220,28 +219,23 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
         // Delete IntPairEntity instances
         for (final pair in pairs) {
           if (pair != null) {
-            await pairBox.removeAsync(pair.id);
+            await _pairBox.removeAsync(pair.id);
           }
         }
-        await scoresBox.removeAsync(scores.id);
+        await _scoresBox.removeAsync(scores.id);
       }
-      await timelineBox.removeAsync(entry.id);
+      await _timelineBox.removeAsync(entry.id);
     }
 
-    await sessionBox.removeAsync(session.id);
+    await _sessionBox.removeAsync(session.id);
   }
 
   @override
   Future<void> clear() async {
-    final sessionBox = _store.box<RulaSessionEntity>();
-    final timelineBox = _store.box<TimelineEntryEntity>();
-    final scoresBox = _store.box<RulaScoresEntity>();
-    final pairBox = _store.box<IntPairEntity>();
-
     // Order matters: delete from children to parents
-    await pairBox.removeAllAsync();
-    await scoresBox.removeAllAsync();
-    await timelineBox.removeAllAsync();
-    await sessionBox.removeAllAsync();
+    await _pairBox.removeAllAsync();
+    await _scoresBox.removeAllAsync();
+    await _timelineBox.removeAllAsync();
+    await _sessionBox.removeAllAsync();
   }
 }
