@@ -78,13 +78,17 @@ class _SessionsScreenState extends State<SessionsScreen>
       body: SafeArea(
         child: sessions.isEmpty
             ? Center(
-                child: Text(localizations.no_sessions_placeholder,
-                    style: paragraphHeaderStyle))
+                child: Text(
+                  localizations.no_sessions_placeholder,
+                  style: paragraphHeaderStyle,
+                ),
+              )
             : ListView.builder(
                 itemCount: sessions.length,
                 itemBuilder: (context, index) {
                   final dateTime = DateTime.fromMillisecondsSinceEpoch(
-                      sessions[index].timestamp);
+                    sessions[index].timestamp,
+                  );
                   final scenario = sessions[index].scenario;
                   final scenarioLabel = titleFor(scenario);
                   final formattedDate =
@@ -104,13 +108,15 @@ class _SessionsScreenState extends State<SessionsScreen>
                         context,
                       ).showSnackBar(
                         SnackBar(
-                            content:
-                                Text(localizations.delete_session_message)),
+                          content: Text(localizations.delete_session_message),
+                        ),
                       );
                     },
                     child: ListTile(
-                      title: Text('$scenarioLabel ($formattedDate)',
-                          style: paragraphHeaderStyle),
+                      title: Text(
+                        '$scenarioLabel ($formattedDate)',
+                        style: paragraphHeaderStyle,
+                      ),
                       onTap: () {
                         goToResults(sessions[index]);
                       },
