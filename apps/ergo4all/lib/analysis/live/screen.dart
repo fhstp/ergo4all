@@ -28,8 +28,8 @@ import 'package:pose_transforming/denoise.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
-import 'package:rula/rula.dart';
 import 'package:provider/provider.dart';
+import 'package:rula/rula.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
