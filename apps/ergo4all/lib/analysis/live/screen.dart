@@ -79,7 +79,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   void goToResults() {
     if (!context.mounted) return;
 
-    dataStorage.save(
+    dataStorage.put(
       RulaSession(
         timestamp: DateTime.now().millisecondsSinceEpoch,
         scenario: widget.scenario,

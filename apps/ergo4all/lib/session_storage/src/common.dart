@@ -23,14 +23,14 @@ class RulaSession {
 /// Store for [RulaSession] objects.
 abstract class RulaSessionRepository {
   /// Stores a [RulaSession] object.
-  Future<void> save(RulaSession session);
+  Future<void> put(RulaSession session);
 
   /// Retrieves all stored [RulaSession]s
   List<RulaSession> getAll();
 
   /// Deletes a [RulaSession] based on it's [timestamp].
-  void deleteSession(int timestamp);
+  void deleteByTimestamp(int timestamp);
 
   /// Clears this store.
-  void deleteAllSessions();
+  void clear();
 }

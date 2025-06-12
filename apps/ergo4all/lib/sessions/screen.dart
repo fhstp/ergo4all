@@ -82,7 +82,7 @@ class _SessionsScreenState extends State<SessionsScreen>
                   return Dismissible(
                     key: Key(sessions[index].timestamp.toString()),
                     onDismissed: (direction) {
-                      dataStorage.deleteSession(sessions[index].timestamp);
+                      dataStorage.deleteByTimestamp(sessions[index].timestamp);
                       setState(() {
                         sessions.removeAt(index);
                       });

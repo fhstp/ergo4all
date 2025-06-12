@@ -87,7 +87,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   final Store _store;
 
   @override
-  Future<void> save(RulaSession session) async {
+  Future<void> put(RulaSession session) async {
     final sessionEntity = RulaSessionEntity(
       timestamp: session.timestamp,
       scenarioIndex: session.scenario.index,
@@ -192,7 +192,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   }
 
   @override
-  void deleteSession(int timestamp) {
+  void deleteByTimestamp(int timestamp) {
     final sessionBox = _store.box<RulaSessionEntity>();
     final timelineBox = _store.box<TimelineEntryEntity>();
     final scoresBox = _store.box<RulaScoresEntity>();
@@ -232,7 +232,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   }
 
   @override
-  void deleteAllSessions() {
+  void clear() {
     final sessionBox = _store.box<RulaSessionEntity>();
     final timelineBox = _store.box<TimelineEntryEntity>();
     final scoresBox = _store.box<RulaScoresEntity>();
