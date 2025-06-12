@@ -23,12 +23,10 @@ class SessionsScreen extends StatefulWidget {
 
 class _SessionsScreenState extends State<SessionsScreen>
     with SingleTickerProviderStateMixin {
-
   late RulaSessionRepository dataStorage;
 
   @override
   Widget build(BuildContext context) {
-
     final localizations = AppLocalizations.of(context)!;
 
     dataStorage = Provider.of<RulaSessionRepository>(context);
@@ -36,7 +34,6 @@ class _SessionsScreenState extends State<SessionsScreen>
     final sessions = dataStorage.getAll();
 
     void goToResults(RulaSession session) {
-
       if (!context.mounted) return;
       unawaited(
         Navigator.of(context).pushReplacementNamed(
@@ -50,63 +47,66 @@ class _SessionsScreenState extends State<SessionsScreen>
     }
 
     String titleFor(Scenario scenario) => switch (scenario) {
-      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
-      Scenario.pull => localizations.scenario_pull_label,
-      Scenario.seated => localizations.scenario_seated_label,
-      Scenario.packaging => localizations.scenario_packaging_label,
-      Scenario.standingCNC => localizations.scenario_CNC_label,
-      Scenario.standingAssembly => localizations.scenario_assembly_label,
-      Scenario.ceiling => localizations.scenario_ceiling_label,
-      Scenario.lift25 => localizations.scenario_lift_label,
-      Scenario.conveyorBelt => localizations.scenario_conveyor_label,
-    };
+          Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
+          Scenario.pull => localizations.scenario_pull_label,
+          Scenario.seated => localizations.scenario_seated_label,
+          Scenario.packaging => localizations.scenario_packaging_label,
+          Scenario.standingCNC => localizations.scenario_CNC_label,
+          Scenario.standingAssembly => localizations.scenario_assembly_label,
+          Scenario.ceiling => localizations.scenario_ceiling_label,
+          Scenario.lift25 => localizations.scenario_lift_label,
+          Scenario.conveyorBelt => localizations.scenario_conveyor_label,
+        };
 
-    return
-      Scaffold(
-        appBar: AppBar(
-          leading: const IconBackButton(color: cardinal),
-          title: Text(
-            localizations.sessions_header,
-            textAlign: TextAlign.center,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const IconBackButton(color: cardinal),
+        title: Text(
+          localizations.sessions_header,
+          textAlign: TextAlign.center,
         ),
-        body:
-        SafeArea(child:
-        sessions.isEmpty
-            ? Center(child:
-        Text(localizations.no_sessions_placeholder, style: paragraphHeaderStyle))
-            :
-        ListView.builder(
-          itemCount: sessions.length,
-          itemBuilder: (context, index) {
-            final dateTime = DateTime.fromMillisecondsSinceEpoch(sessions[index].timestamp);
-            final scenario = sessions[index].scenario;
-            final scenarioLabel = titleFor(scenario);
-            final formattedDate = DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
-            return Dismissible(
-              key: Key(sessions[index].timestamp.toString()),
-              onDismissed: (direction) {
-                dataStorage.deleteSession(sessions[index].timestamp);
-                setState(() {
-                  sessions.removeAt(index);
-                });
+      ),
+      body: SafeArea(
+        child: sessions.isEmpty
+            ? Center(
+                child: Text(localizations.no_sessions_placeholder,
+                    style: paragraphHeaderStyle))
+            : ListView.builder(
+                itemCount: sessions.length,
+                itemBuilder: (context, index) {
+                  final dateTime = DateTime.fromMillisecondsSinceEpoch(
+                      sessions[index].timestamp);
+                  final scenario = sessions[index].scenario;
+                  final scenarioLabel = titleFor(scenario);
+                  final formattedDate =
+                      DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
+                  return Dismissible(
+                    key: Key(sessions[index].timestamp.toString()),
+                    onDismissed: (direction) {
+                      dataStorage.deleteSession(sessions[index].timestamp);
+                      setState(() {
+                        sessions.removeAt(index);
+                      });
 
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(
-                  SnackBar(content: Text(localizations.delete_session_message)),
-                );
-              },
-              child: ListTile(
-                title: Text('$scenarioLabel ($formattedDate)', style: paragraphHeaderStyle),
-                onTap: () {
-                  goToResults(sessions[index]);
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text(localizations.delete_session_message)),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text('$scenarioLabel ($formattedDate)',
+                          style: paragraphHeaderStyle),
+                      onTap: () {
+                        goToResults(sessions[index]);
+                      },
+                    ),
+                  );
                 },
               ),
-            );
-          },
-        ),
-        ),
-      );
+      ),
+    );
   }
 }

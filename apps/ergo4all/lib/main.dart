@@ -11,7 +11,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final docsDir = await getApplicationDocumentsDirectory();
-  final store = await openStore(directory: p.join(docsDir.path, 'rulaSessions-db'));
+  final store =
+      await openStore(directory: p.join(docsDir.path, 'rulaSessions-db'));
   final rulaSessionRepository = ObjectBoxRulaSessionRepository(store);
 
   runApp(
