@@ -95,7 +95,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
     final pairBox = _store.box<IntPairEntity>();
     final scoresBox = _store.box<RulaScoresEntity>();
 
-    for (var entry in session.timeline) {
+    for (final entry in session.timeline) {
       final score = entry.scores;
       final scoresEntity = RulaScoresEntity(
         neckPositionScore: score.neckPositionScore,
