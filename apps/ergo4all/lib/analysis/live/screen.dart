@@ -11,12 +11,12 @@ import 'package:ergo4all/analysis/live/camera_utils.dart';
 import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/tutorial_dialog.dart';
-import 'package:ergo4all/analysis/live/video_storage.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/storage/rula_session.dart';
 import 'package:ergo4all/storage/rula_session_repository.dart';
+import 'package:ergo4all/video_storage/video_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -36,8 +36,12 @@ class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
   const LiveAnalysisScreen({
     required this.scenario,
+    required this.videoStore,
     super.key,
   });
+
+  /// Video store into which to put recorded videos.
+  final VideoStore videoStore;
 
   /// The scenario for which to make an analysis.
   final Scenario scenario;
@@ -171,7 +175,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     // Comment out
     final outputFile = await cameraController.stopVideoRecording();
-    await copyToRecordingFolder(outputFile);
+    await widget.videoStore.putFromFile(outputFile);
 
     // Comment in
     // await cameraController.stopImageStream();

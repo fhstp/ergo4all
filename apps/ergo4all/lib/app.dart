@@ -18,6 +18,7 @@ import 'package:ergo4all/scenario/scenario_detail_screen.dart';
 import 'package:ergo4all/sessions/screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
+import 'package:ergo4all/video_storage/src/local.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,7 +77,10 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         },
         Routes.liveAnalysis.path: (context) {
           final scenario = _getRouteArgs<Scenario>(context);
-          return LiveAnalysisScreen(scenario: scenario);
+          return LiveAnalysisScreen(
+            scenario: scenario,
+            videoStore: LocalVideoStore(),
+          );
         },
         Routes.resultsOverview.path: (context) {
           final analysisResult = _getRouteArgs<AnalysisResult>(context);
