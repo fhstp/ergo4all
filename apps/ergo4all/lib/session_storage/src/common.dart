@@ -32,5 +32,5 @@ abstract class RulaSessionRepository {
   Future<void> deleteByTimestamp(int timestamp);
 
   /// Clears this store.
-  void clear();
+  Future<void> clear();
 }

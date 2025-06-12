@@ -232,16 +232,16 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     final sessionBox = _store.box<RulaSessionEntity>();
     final timelineBox = _store.box<TimelineEntryEntity>();
     final scoresBox = _store.box<RulaScoresEntity>();
     final pairBox = _store.box<IntPairEntity>();
 
     // Order matters: delete from children to parents
-    pairBox.removeAll();
-    scoresBox.removeAll();
-    timelineBox.removeAll();
-    sessionBox.removeAll();
+    await pairBox.removeAllAsync();
+    await scoresBox.removeAllAsync();
+    await timelineBox.removeAllAsync();
+    await sessionBox.removeAllAsync();
   }
 }
