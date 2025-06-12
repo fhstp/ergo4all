@@ -146,13 +146,13 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   }
 
   @override
-  List<RulaSession> getAll() {
+  Future<List<RulaSession>> getAll() async {
     final sessionBox = _store.box<RulaSessionEntity>();
-    final sessions = sessionBox
+    final sessions = await sessionBox
         .query()
         .order(RulaSessionEntity_.timestamp, flags: Order.descending)
         .build()
-        .find();
+        .findAsync();
 
     return sessions.map((sessionEntity) {
       final timeline = sessionEntity.timeline.map((entryEntity) {

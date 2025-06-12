@@ -26,7 +26,7 @@ abstract class RulaSessionRepository {
   Future<void> put(RulaSession session);
 
   /// Retrieves all stored [RulaSession]s
-  List<RulaSession> getAll();
+  Future<List<RulaSession>> getAll();
 
   /// Deletes a [RulaSession] based on it's [timestamp].
   void deleteByTimestamp(int timestamp);

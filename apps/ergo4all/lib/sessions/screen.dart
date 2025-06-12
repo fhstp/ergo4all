@@ -24,13 +24,23 @@ class _SessionsScreenState extends State<SessionsScreen>
     with SingleTickerProviderStateMixin {
   late RulaSessionRepository dataStorage;
 
+  List<RulaSession> sessions = List.empty();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    dataStorage = Provider.of<RulaSessionRepository>(context);
+    dataStorage.getAll().then((it) {
+      setState(() {
+        sessions = it;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    dataStorage = Provider.of<RulaSessionRepository>(context);
-
-    final sessions = dataStorage.getAll();
 
     void goToResults(RulaSession session) {
       if (!context.mounted) return;
