@@ -1,34 +1,36 @@
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 
-/// data class to use in order to store rula sessions on device database
+/// Represents a stored session.
 class RulaSession {
-  const RulaSession(
-      {required this.timestamp,
-      required this.scenario,
-      required this.timeline});
+  ///
+  const RulaSession({
+    required this.timestamp,
+    required this.scenario,
+    required this.timeline,
+  });
 
-  /// session timestamp: corresponds to the date and time at which the session was recorded.
+  /// Unix timestamp at which the session was saved.
   final int timestamp;
 
-  /// session scenario: corresponds to the sceneario which was recorded in this session
+  /// [Scenario] which was recorded in this session.
   final Scenario scenario;
 
-  /// session RulaTimeline: corresponds to the RulaTimeline data recorded in this session
+  /// The recorded timeline.
   final RulaTimeline timeline;
 }
 
-/// abstract class to hide implementation details of the RulaSession repository
+/// Store for [RulaSession] objects.
 abstract class RulaSessionRepository {
-  /// Persists a RulaSession into the database
+  /// Stores a [RulaSession] object.
   Future<void> save(RulaSession session);
 
-  /// Retrieves all stored RulaSessions
+  /// Retrieves all stored [RulaSession]s
   List<RulaSession> getAll();
 
-  /// fins a session based on its timestamp and deletes it
+  /// Deletes a [RulaSession] based on it's [timestamp].
   void deleteSession(int timestamp);
 
-  /// deletes all database information
+  /// Clears this store.
   void deleteAllSessions();
 }

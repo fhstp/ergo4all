@@ -5,7 +5,6 @@ import 'package:ergo4all/session_storage/src/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:rula/rula.dart';
 
-/// Object box entity required in order to store the positions scores in the database
 @Entity()
 class IntPairEntity {
   IntPairEntity({required this.first, required this.second});
@@ -18,7 +17,6 @@ class IntPairEntity {
   (int, int) toTuple() => (first, second);
 }
 
-/// Object box entity required in order to store the RulaScores in the database
 @Entity()
 class RulaScoresEntity {
   RulaScoresEntity({
@@ -54,7 +52,6 @@ class RulaScoresEntity {
   int fullScore;
 }
 
-/// Object box entity required in order to store the TimelineEntry in the database
 @Entity()
 class TimelineEntryEntity {
   TimelineEntryEntity({required this.timestamp});
@@ -81,9 +78,12 @@ class RulaSessionEntity {
   final timeline = ToMany<TimelineEntryEntity>();
 }
 
-/// Implementation of the RulaSessionRepository using the Object box database
+/// Implementation of the [RulaSessionRepository] which is backed by
+/// an object-box [Store].
 class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
+  ///
   ObjectBoxRulaSessionRepository(this.store);
+
   final Store store;
 
   @override
