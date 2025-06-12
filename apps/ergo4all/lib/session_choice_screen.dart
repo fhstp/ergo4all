@@ -13,14 +13,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 /// Sessions screen that displays a list of all the user stored sessions
-class SessionsScreen extends StatefulWidget {
-  const SessionsScreen({super.key});
+class SessionChoiceScreen extends StatefulWidget {
+  const SessionChoiceScreen({super.key});
 
   @override
-  State<SessionsScreen> createState() => _SessionsScreenState();
+  State<SessionChoiceScreen> createState() => _SessionChoiceScreenState();
 }
 
-class _SessionsScreenState extends State<SessionsScreen>
+class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     with SingleTickerProviderStateMixin {
   late RulaSessionRepository dataStorage;
 
