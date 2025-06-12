@@ -14,7 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_sync_flutter_libs/objectbox_sync_flutter_libs.dart';
 
-import 'storage/object_box_entities.dart';
+import 'session_storage/src/object_box.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 

@@ -1,15 +1,88 @@
 import 'package:ergo4all/objectbox.g.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
-import 'package:ergo4all/storage/object_box_entities.dart';
-import 'package:ergo4all/storage/rula_session.dart';
-import 'package:ergo4all/storage/rula_session_repository.dart';
+import 'package:ergo4all/session_storage/src/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:rula/rula.dart';
 
+/// Object box entity required in order to store the positions scores in the database
+@Entity()
+class IntPairEntity {
+  IntPairEntity({required this.first, required this.second});
+  int id = 0;
+  int first;
+  int second;
+
+  static IntPairEntity fromTuple((int, int) t) =>
+      IntPairEntity(first: t.$1, second: t.$2);
+  (int, int) toTuple() => (first, second);
+}
+
+/// Object box entity required in order to store the RulaScores in the database
+@Entity()
+class RulaScoresEntity {
+  RulaScoresEntity({
+    required this.neckPositionScore,
+    required this.neckTwistAdjustment,
+    required this.neckSideBendAdjustment,
+    required this.neckScore,
+    required this.trunkPositionScore,
+    required this.trunkTwistAdjustment,
+    required this.trunkSideBendAdjustment,
+    required this.trunkScore,
+    required this.legScore,
+    required this.fullScore,
+  });
+  int id = 0;
+
+  final upperArmPositionScores = ToOne<IntPairEntity>();
+  final upperArmAbductedAdjustments = ToOne<IntPairEntity>();
+  final upperArmScores = ToOne<IntPairEntity>();
+  final lowerArmPositionScores = ToOne<IntPairEntity>();
+  final lowerArmScores = ToOne<IntPairEntity>();
+  final wristScores = ToOne<IntPairEntity>();
+
+  int neckPositionScore;
+  int neckTwistAdjustment;
+  int neckSideBendAdjustment;
+  int neckScore;
+  int trunkPositionScore;
+  int trunkTwistAdjustment;
+  int trunkSideBendAdjustment;
+  int trunkScore;
+  int legScore;
+  int fullScore;
+}
+
+/// Object box entity required in order to store the TimelineEntry in the database
+@Entity()
+class TimelineEntryEntity {
+  TimelineEntryEntity({required this.timestamp});
+  int id = 0;
+  int timestamp;
+  final scores = ToOne<RulaScoresEntity>();
+
+  final session = ToOne<RulaSessionEntity>();
+}
+
+/// Object box entity required in order to store the RulaSession in the database
+@Entity()
+class RulaSessionEntity {
+  RulaSessionEntity({
+    required this.timestamp,
+    required this.scenarioIndex,
+  });
+  int id = 0;
+  int timestamp;
+
+  int scenarioIndex;
+
+  @Backlink('session')
+  final timeline = ToMany<TimelineEntryEntity>();
+}
+
 /// Implementation of the RulaSessionRepository using the Object box database
 class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
-
   ObjectBoxRulaSessionRepository(this.store);
   final Store store;
 
@@ -38,7 +111,8 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       );
 
       final upperArmPos = IntPairEntity.fromTuple(score.upperArmPositionScores);
-      final upperArmAdj = IntPairEntity.fromTuple(score.upperArmAbductedAdjustments);
+      final upperArmAdj =
+          IntPairEntity.fromTuple(score.upperArmAbductedAdjustments);
       final upperArmScores = IntPairEntity.fromTuple(score.upperArmScores);
       final lowerArmPos = IntPairEntity.fromTuple(score.lowerArmPositionScores);
       final lowerArmScores = IntPairEntity.fromTuple(score.lowerArmScores);
@@ -62,7 +136,8 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
 
       scoresBox.put(scoresEntity);
 
-      final timelineEntryEntity = TimelineEntryEntity(timestamp: entry.timestamp);
+      final timelineEntryEntity =
+          TimelineEntryEntity(timestamp: entry.timestamp);
       timelineEntryEntity.scores.target = scoresEntity;
       sessionEntity.timeline.add(timelineEntryEntity);
     }
@@ -73,7 +148,8 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
   @override
   List<RulaSession> getAll() {
     final sessionBox = store.box<RulaSessionEntity>();
-    final sessions = sessionBox.query()
+    final sessions = sessionBox
+        .query()
         .order(RulaSessionEntity_.timestamp, flags: Order.descending)
         .build()
         .find();
@@ -84,10 +160,13 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
         return TimelineEntry(
           timestamp: entryEntity.timestamp,
           scores: RulaScores(
-            upperArmPositionScores: scoresEntity.upperArmPositionScores.target!.toTuple(),
-            upperArmAbductedAdjustments: scoresEntity.upperArmAbductedAdjustments.target!.toTuple(),
+            upperArmPositionScores:
+                scoresEntity.upperArmPositionScores.target!.toTuple(),
+            upperArmAbductedAdjustments:
+                scoresEntity.upperArmAbductedAdjustments.target!.toTuple(),
             upperArmScores: scoresEntity.upperArmScores.target!.toTuple(),
-            lowerArmPositionScores: scoresEntity.lowerArmPositionScores.target!.toTuple(),
+            lowerArmPositionScores:
+                scoresEntity.lowerArmPositionScores.target!.toTuple(),
             lowerArmScores: scoresEntity.lowerArmScores.target!.toTuple(),
             wristScores: scoresEntity.wristScores.target!.toTuple(),
             neckPositionScore: scoresEntity.neckPositionScore,
@@ -119,7 +198,9 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
     final scoresBox = store.box<RulaScoresEntity>();
     final pairBox = store.box<IntPairEntity>();
 
-    final query = sessionBox.query(RulaSessionEntity_.timestamp.equals(timestamp)).build();
+    final query = sessionBox
+        .query(RulaSessionEntity_.timestamp.equals(timestamp))
+        .build();
     final session = query.findFirst();
     query.close();
 

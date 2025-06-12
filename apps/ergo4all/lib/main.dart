@@ -1,7 +1,6 @@
 import 'package:ergo4all/app.dart';
 import 'package:ergo4all/objectbox.g.dart';
-import 'package:ergo4all/storage/object_box_rula_session_repository.dart';
-import 'package:ergo4all/storage/rula_session_repository.dart';
+import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
