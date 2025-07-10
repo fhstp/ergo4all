@@ -33,10 +33,10 @@ extension on String {
 }
 
 enum _PartColor {
-    blue,
-    red,
-    yellow;
-  }
+  blue,
+  red,
+  yellow;
+}
 
 /// Screen display detailed score information about a specific [BodyPartGroup].
 class BodyPartResultsScreen extends StatelessWidget {
@@ -84,7 +84,7 @@ class BodyPartResultsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _PartColor getColorForPart(IList<double> normalizedScores) {
-      final score = normalizedScores.median()!;
+      final score = normalizedScores.mode()!;
       return switch (score) {
         < 0.3 => _PartColor.blue,
         < 0.6 => _PartColor.yellow,

@@ -19,10 +19,10 @@ extension UtilExt<T> on Iterable<T> {
     }
   }
 
-  /// Calculates the median of a series of items, ie. the item which came
+  /// Calculates the mode of a series of items, ie. the item which came
   /// up the most often. If multiple items have the same count then
   /// one of them is picked in an undefined behavior.
-  T? median() {
+  T? mode() {
     final counts = <T, int>{};
 
     for (final item in this) {

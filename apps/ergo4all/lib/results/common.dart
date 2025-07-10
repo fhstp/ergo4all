@@ -21,14 +21,14 @@ class TimelineEntry {
 typedef RulaTimeline = IList<TimelineEntry>;
 
 /// Aggregates a [RulaTimeline] into a single [RulaScores] sheet. It does this
-/// by doing a median over each score. Currently, time, ie. how long the
+/// by doing a mode over each score. Currently, time, ie. how long the
 /// duration of an entry in the timeline is, is not considered in the
 /// calculation.
 RulaScores? aggregateTimeline(RulaTimeline timeline) {
   if (timeline.isEmpty) return null;
 
   int aggregateScoreOf(int Function(RulaScores) selector) {
-    return timeline.map((entry) => selector(entry.scores)).median()!;
+    return timeline.map((entry) => selector(entry.scores)).mode()!;
   }
 
   return RulaScores(
