@@ -7,11 +7,11 @@ import 'package:rula/rula.dart';
 
 /// Groups of body parts which are displayed / scored together.
 enum BodyPartGroup {
-  /// The upper arm, ie. the shoulder.
-  upperArm,
+  /// The shoulder.
+  shoulder,
 
-  /// The lower arm. This includes elbow and hand.
-  lowerArm,
+  /// The arm. This includes elbow and hand.
+  arm,
 
   /// The trunk.
   trunk,
@@ -26,10 +26,10 @@ enum BodyPartGroup {
 /// Get normalized scores for a [BodyPartGroup] from a [RulaScores] object.
 double normalizedBodyPartGroupScoreOf(RulaScores scores, BodyPartGroup group) {
   return switch (group) {
-    BodyPartGroup.upperArm => scores.upperArmScores
+    BodyPartGroup.shoulder => scores.upperArmScores
         .pipe(Pair.reduce(worse))
         .pipe((score) => normalizeScore(score, 6)),
-    BodyPartGroup.lowerArm => scores.lowerArmScores
+    BodyPartGroup.arm => scores.lowerArmScores
         .pipe(Pair.reduce(worse))
         .pipe((score) => normalizeScore(score, 3)),
     BodyPartGroup.trunk => normalizeScore(scores.trunkScore, 6),
@@ -44,8 +44,8 @@ String bodyPartGroupLabelFor(
   BodyPartGroup group,
 ) {
   return switch (group) {
-    BodyPartGroup.upperArm => localizations.results_body_upper_arms,
-    BodyPartGroup.lowerArm => localizations.results_body_lower_arms,
+    BodyPartGroup.shoulder => localizations.results_body_shoulder,
+    BodyPartGroup.arm => localizations.results_body_arm,
     BodyPartGroup.trunk => localizations.results_body_trunk,
     BodyPartGroup.neck => localizations.results_body_neck,
     BodyPartGroup.legs => localizations.results_body_legs,
@@ -59,8 +59,8 @@ BodyPartGroup groupOf(BodyPart part) => switch (part) {
       BodyPart.leftLowerArm ||
       BodyPart.rightHand ||
       BodyPart.rightLowerArm =>
-        BodyPartGroup.lowerArm,
+        BodyPartGroup.arm,
       BodyPart.leftLeg || BodyPart.rightLeg => BodyPartGroup.legs,
-      BodyPart.leftUpperArm || BodyPart.rightUpperArm => BodyPartGroup.upperArm,
+      BodyPart.leftUpperArm || BodyPart.rightUpperArm => BodyPartGroup.shoulder,
       BodyPart.upperBody => BodyPartGroup.trunk,
     };

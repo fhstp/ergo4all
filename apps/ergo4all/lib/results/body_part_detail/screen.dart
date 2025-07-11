@@ -10,12 +10,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, String Function(AppLocalizations)> _localizationMap = {
-  'upperArmGood': (l) => l.upperArmGood,
-  'upperArmMedium': (l) => l.upperArmMedium,
-  'upperArmLow': (l) => l.upperArmLow,
-  'lowerArmGood': (l) => l.lowerArmGood,
-  'lowerArmMedium': (l) => l.lowerArmMedium,
-  'lowerArmLow': (l) => l.lowerArmLow,
+  'shoulderGood': (l) => l.shoulderGood,
+  'shoulderMedium': (l) => l.shoulderMedium,
+  'shoulderLow': (l) => l.shoulderLow,
+  'armGood': (l) => l.armGood,
+  'armMedium': (l) => l.armMedium,
+  'armLow': (l) => l.armLow,
   'trunkGood': (l) => l.trunkGood,
   'trunkMedium': (l) => l.trunkMedium,
   'trunkLow': (l) => l.trunkLow,
