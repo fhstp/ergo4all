@@ -64,9 +64,3 @@ BodyPartGroup groupOf(BodyPart part) => switch (part) {
       BodyPart.leftUpperArm || BodyPart.rightUpperArm => BodyPartGroup.upperArm,
       BodyPart.upperBody => BodyPartGroup.trunk,
     };
-
-/// Gets the graphic key for the given [group].
-String getGraphicKeyFor(String color, BodyPartGroup group) {
-  final bodyPart = group.name;
-  return 'assets/images/puppet_body_detail/${color}_$bodyPart.png';
-}

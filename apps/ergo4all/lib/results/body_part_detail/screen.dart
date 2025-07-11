@@ -1,4 +1,3 @@
-import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
@@ -30,12 +29,6 @@ final Map<String, String Function(AppLocalizations)> _localizationMap = {
 
 extension on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
-}
-
-enum _PartColor {
-  blue,
-  red,
-  yellow;
 }
 
 /// Screen display detailed score information about a specific [BodyPartGroup].
@@ -83,22 +76,12 @@ class BodyPartResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _PartColor getColorForPart(IList<double> normalizedScores) {
-      final score = normalizedScores.mode()!;
-      return switch (score) {
-        < 0.3 => _PartColor.blue,
-        < 0.6 => _PartColor.yellow,
-        _ => _PartColor.red
-      };
-    }
-
     final localizations = AppLocalizations.of(context)!;
 
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = recordingDuration >= 15;
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
-    final bodyPartColor = getColorForPart(normalizedScores);
     final rating = calculateRating(normalizedScores);
     final message =
         _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
@@ -115,39 +98,11 @@ class BodyPartResultsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with Body Part
-            Center(
-              child: Column(
-                children: [
-                  Center(
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          getGraphicKeyFor(bodyPartColor.name, bodyPartGroup),
-                          height: 150,
-                          width: 150,
-                          fit: BoxFit.contain,
-                        ),
-                        const SizedBox(height: mediumSpace),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: mediumSpace),
-                ],
-              ),
-            ),
-
-            // Timeline Visualization
-
-            const SizedBox(height: mediumSpace),
-
             Text(
               localizations.body_part_score_plot_title,
               style: paragraphHeaderStyle,
             ),
-
             const SizedBox(height: largeSpace),
-
             SizedBox(
               height: 132,
               child: Padding(
@@ -155,16 +110,12 @@ class BodyPartResultsScreen extends StatelessWidget {
                 child: BodyPartLineChart(normalizedScores: normalizedScores),
               ),
             ),
-
             const SizedBox(height: largeSpace),
-
             Text(
               localizations.body_part_static_plot_title,
               style: paragraphHeaderStyle,
             ),
-
             const SizedBox(height: mediumSpace),
-
             if (showStaticLoad)
               SizedBox(
                 height: 132,
@@ -235,16 +186,12 @@ class BodyPartResultsScreen extends StatelessWidget {
                 localizations.body_part_static_plot_condition,
                 style: dynamicBodyStyle,
               ),
-
             const SizedBox(height: mediumSpace),
-
             Text(
               localizations.analysis,
               style: paragraphHeaderStyle,
             ),
-
             const SizedBox(height: smallSpace),
-
             Text(message, style: dynamicBodyStyle),
           ],
         ),
