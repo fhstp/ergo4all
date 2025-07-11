@@ -12,12 +12,17 @@ class TransparentImageStack extends StatefulWidget {
   ///
   const TransparentImageStack({
     required this.imagePaths,
+    required this.colors,
     required this.onTap,
     super.key,
   });
 
   /// List of paths of the images to display.
   final List<String> imagePaths;
+
+  /// Colors to tint the images in the stack. Must match the length of
+  /// [imagePaths]. Leave a color as `null` to not tint it.
+  final List<Color?> colors;
 
   /// Callback for when an image in the stack was tapped. It receives the
   /// index of the tapped image as an argument.
@@ -103,6 +108,8 @@ class _TransparentImageStackState extends State<TransparentImageStack> {
                   images[index].bytes,
                   key: _imageKeys[index],
                   fit: BoxFit.contain,
+                  color: widget.colors[index],
+                  colorBlendMode: BlendMode.modulate,
                 );
               }),
             ),

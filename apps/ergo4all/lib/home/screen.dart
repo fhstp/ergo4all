@@ -7,6 +7,7 @@ import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
+import 'package:ergo4all/results/rula_colors.dart';
 import 'package:flutter/material.dart';
 
 class _PuppetGraphic extends StatelessWidget {
@@ -32,8 +33,10 @@ class _PuppetGraphic extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(30),
           child: Image.asset(
-            'assets/images/puppet/full_body_blue.png',
+            'assets/images/puppet/full_body.png',
+            color: RulaColors.low,
             fit: BoxFit.contain,
+            colorBlendMode: BlendMode.modulate,
           ),
         ),
       ),

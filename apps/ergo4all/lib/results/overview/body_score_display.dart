@@ -1,6 +1,7 @@
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/overview/transparent_image_stack.dart';
+import 'package:ergo4all/results/rula_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
@@ -19,15 +20,9 @@ String _fileNameForPart(BodyPart part) {
   };
 }
 
-enum _PartColor {
-  blue,
-  red,
-  yellow;
-}
-
-String _getAssetPathForPart(BodyPart bodyPart, _PartColor color) {
+String _getAssetPathForPart(BodyPart bodyPart) {
   final fileName = _fileNameForPart(bodyPart);
-  return 'assets/images/puppet/${fileName}_${color.name}.png';
+  return 'assets/images/puppet/$fileName.png';
 }
 
 const _bodyPartsInDisplayOrder = [
@@ -72,22 +67,17 @@ class BodyScoreDisplay extends StatelessWidget {
       };
     }
 
-    _PartColor getColorForPart(BodyPart part) {
-      final score = getNormalizedScoreForPart(part);
-      return switch (score) {
-        < 0.3 => _PartColor.blue,
-        < 0.6 => _PartColor.yellow,
-        _ => _PartColor.red
-      };
-    }
+    final bodyPartsImagePaths =
+        _bodyPartsInDisplayOrder.map(_getAssetPathForPart).toList();
 
-    final bodyPartsImagePaths = _bodyPartsInDisplayOrder.map((part) {
-      final color = getColorForPart(part);
-      return _getAssetPathForPart(part, color);
+    final colors = _bodyPartsInDisplayOrder.map((part) {
+      final score = getNormalizedScoreForPart(part);
+      return rulaColorFor(score);
     }).toList();
 
     return TransparentImageStack(
       imagePaths: bodyPartsImagePaths,
+      colors: colors,
       onTap: (i) => onBodyPartTapped?.call(_bodyPartsInDisplayOrder[i]),
     );
   }
