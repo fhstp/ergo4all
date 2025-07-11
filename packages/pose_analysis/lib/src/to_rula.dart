@@ -8,7 +8,7 @@ RulaSheet rulaSheetFromAngles(PoseAngles angles) {
     return Degree.makeFrom180(angle);
   }
 
-  final isStanding = calcIsStanding(angles, angleThreshold: 45);
+  final isStanding = calcIsStanding(angles, angleThreshold: 20);
 
   return RulaSheet(
     shoulderFlexion: (

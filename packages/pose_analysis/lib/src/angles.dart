@@ -31,6 +31,12 @@ enum KeyAngles {
   /// The flexion angle of the right wrist.
   wristFlexionRight,
 
+  /// The flexion angle of the left upper leg.
+  legFlexionLeft,
+
+  /// The flexion angle of the right upper leg.
+  legFlexionRight,
+
   /// The flexion angle of the left knee.
   kneeFlexionLeft,
 
@@ -92,7 +98,7 @@ PoseAngles calculateAngles(
   Pose2d transverse,
 ) {
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
-        KeyAngles.shoulderFlexionLeft => - _angle2d(
+        KeyAngles.shoulderFlexionLeft => -_angle2d(
             _line2d(sagittal, KeyPoints.leftElbow, KeyPoints.leftShoulder),
             _up,
           ),
@@ -100,7 +106,7 @@ PoseAngles calculateAngles(
             _line2d(coronal, KeyPoints.leftShoulder, KeyPoints.leftElbow),
             _line2d(coronal, KeyPoints.leftShoulder, KeyPoints.leftHip),
           ),
-        KeyAngles.shoulderFlexionRight => - _angle2d(
+        KeyAngles.shoulderFlexionRight => -_angle2d(
             _line2d(sagittal, KeyPoints.rightElbow, KeyPoints.rightShoulder),
             _up,
           ),
@@ -124,28 +130,22 @@ PoseAngles calculateAngles(
             _line(world, KeyPoints.rightWrist, KeyPoints.rightPalm),
             _line(world, KeyPoints.rightElbow, KeyPoints.rightWrist),
           ),
-        KeyAngles.kneeFlexionLeft => (
-              _angle2d(
-                _line2d(sagittal, KeyPoints.leftKnee, KeyPoints.leftAnkle),
-                _line2d(sagittal, KeyPoints.leftHip, KeyPoints.leftKnee),
-              ).abs() 
-              - 
-              _angle2d(
-                _line2d(sagittal, KeyPoints.leftKnee, KeyPoints.leftHip),
-                _line2d(sagittal, KeyPoints.leftHip, KeyPoints.leftShoulder),
-              ).abs() 
-            ).abs(),
-        KeyAngles.kneeFlexionRight => (
-              _angle2d(
-                _line2d(sagittal, KeyPoints.rightKnee, KeyPoints.rightHip),
-                _line2d(sagittal, KeyPoints.rightHip, KeyPoints.rightKnee),
-              ).abs()
-              - 
-              _angle2d(
-                _line2d(sagittal, KeyPoints.rightKnee, KeyPoints.rightAnkle),
-                _line2d(sagittal, KeyPoints.rightHip, KeyPoints.leftShoulder),
-              ).abs()
-            ).abs(),
+        KeyAngles.legFlexionLeft => _angle2d(
+            _line2d(sagittal, KeyPoints.leftHip, KeyPoints.leftKnee),
+            _line2d(sagittal, KeyPoints.leftHip, KeyPoints.leftShoulder),
+          ).abs(),
+        KeyAngles.legFlexionRight => _angle2d(
+            _line2d(sagittal, KeyPoints.rightHip, KeyPoints.rightKnee),
+            _line2d(sagittal, KeyPoints.rightHip, KeyPoints.leftShoulder),
+          ).abs(),
+        KeyAngles.kneeFlexionLeft => _angle2d(
+            _line2d(sagittal, KeyPoints.leftKnee, KeyPoints.leftHip),
+            _line2d(sagittal, KeyPoints.leftKnee, KeyPoints.leftAnkle),
+          ).abs(),
+        KeyAngles.kneeFlexionRight => _angle2d(
+            _line2d(sagittal, KeyPoints.rightKnee, KeyPoints.rightAnkle),
+            _line2d(sagittal, KeyPoints.rightKnee, KeyPoints.rightHip),
+          ).abs(),
         KeyAngles.trunkStoop => _angle2d(
             _line2d(sagittal, KeyPoints.midPelvis, KeyPoints.midNeck),
             _up,
@@ -164,13 +164,11 @@ PoseAngles calculateAngles(
                   _line2d(coronal, KeyPoints.rightHip, KeyPoints.leftHip),
                 ))
             .abs(),
-
-        KeyAngles.neckFlexion => ( 
-           10 + _angle2d(
+        KeyAngles.neckFlexion => (10 +
+            _angle2d(
               _line2d(sagittal, KeyPoints.midNeck, KeyPoints.midHead),
               _line2d(sagittal, KeyPoints.midPelvis, KeyPoints.midNeck),
-            )
-          ),
+            )),
         KeyAngles.neckSideBend => (90 -
                 _angle2d(
                   _line2d(coronal, KeyPoints.midNeck, KeyPoints.midHead),
