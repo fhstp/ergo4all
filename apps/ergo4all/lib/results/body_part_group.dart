@@ -34,7 +34,9 @@ double normalizedBodyPartGroupScoreOf(RulaScores scores, BodyPartGroup group) {
         .pipe((score) => normalizeScore(score, 3)),
     BodyPartGroup.trunk => normalizeScore(scores.trunkScore, 6),
     BodyPartGroup.neck => normalizeScore(scores.neckScore, 6),
-    BodyPartGroup.legs => normalizeScore(scores.legScore, 2),
+    BodyPartGroup.legs => scores.legScores
+        .pipe(Pair.reduce(worse))
+        .pipe((score) => normalizeScore(score, 2)),
   };
 }
 

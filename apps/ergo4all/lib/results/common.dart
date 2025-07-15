@@ -68,7 +68,10 @@ RulaScores? aggregateTimeline(RulaTimeline timeline) {
     trunkSideBendAdjustment:
         aggregateScoreOf((scores) => scores.trunkSideBendAdjustment),
     trunkScore: aggregateScoreOf((scores) => scores.trunkScore),
-    legScore: aggregateScoreOf((scores) => scores.legScore),
+    legScores: (
+      aggregateScoreOf((scores) => scores.legScores.$1),
+      aggregateScoreOf((scores) => scores.legScores.$2),
+    ),
     fullScore: aggregateScoreOf((scores) => scores.fullScore),
   );
 }

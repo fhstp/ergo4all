@@ -46,7 +46,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(2, 7130293042528665444),
       name: 'RulaScoresEntity',
-      lastPropertyId: const obx_int.IdUid(17, 1488518581994251642),
+      lastPropertyId: const obx_int.IdUid(18, 3434131379598199514),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -137,15 +137,17 @@ final _entities = <obx_int.ModelEntity>[
             type: 6,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 3404444209532274186),
-            name: 'legScore',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
             id: const obx_int.IdUid(17, 1488518581994251642),
             name: 'fullScore',
             type: 6,
-            flags: 0)
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 3434131379598199514),
+            name: 'legScoresId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(9, 1584344419947150555),
+            relationTarget: 'IntPairEntity')
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -249,12 +251,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(4, 5921173115527825764),
-      lastIndexId: const obx_int.IdUid(8, 1311924363503071673),
+      lastIndexId: const obx_int.IdUid(9, 1584344419947150555),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [3404444209532274186],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -297,7 +299,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.upperArmScores,
               object.lowerArmPositionScores,
               object.lowerArmScores,
-              object.wristScores
+              object.wristScores,
+              object.legScores
             ],
         toManyRelations: (RulaScoresEntity object) => {},
         getId: (RulaScoresEntity object) => object.id,
@@ -305,7 +308,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (RulaScoresEntity object, fb.Builder fbb) {
-          fbb.startTable(18);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.upperArmPositionScores.targetId);
           fbb.addInt64(2, object.upperArmAbductedAdjustments.targetId);
@@ -321,8 +324,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(12, object.trunkTwistAdjustment);
           fbb.addInt64(13, object.trunkSideBendAdjustment);
           fbb.addInt64(14, object.trunkScore);
-          fbb.addInt64(15, object.legScore);
           fbb.addInt64(16, object.fullScore);
+          fbb.addInt64(17, object.legScores.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -345,8 +348,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           final trunkScoreParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
-          final legScoreParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
           final fullScoreParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
           final object = RulaScoresEntity(
@@ -358,7 +359,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
               trunkTwistAdjustment: trunkTwistAdjustmentParam,
               trunkSideBendAdjustment: trunkSideBendAdjustmentParam,
               trunkScore: trunkScoreParam,
-              legScore: legScoreParam,
               fullScore: fullScoreParam)
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.upperArmPositionScores.targetId =
@@ -379,6 +379,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.wristScores.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.wristScores.attach(store);
+          object.legScores.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0);
+          object.legScores.attach(store);
           return object;
         }),
     RulaSessionEntity: obx_int.EntityDefinition<RulaSessionEntity>(
@@ -539,13 +542,14 @@ class RulaScoresEntity_ {
   static final trunkScore =
       obx.QueryIntegerProperty<RulaScoresEntity>(_entities[1].properties[14]);
 
-  /// See [RulaScoresEntity.legScore].
-  static final legScore =
-      obx.QueryIntegerProperty<RulaScoresEntity>(_entities[1].properties[15]);
-
   /// See [RulaScoresEntity.fullScore].
   static final fullScore =
-      obx.QueryIntegerProperty<RulaScoresEntity>(_entities[1].properties[16]);
+      obx.QueryIntegerProperty<RulaScoresEntity>(_entities[1].properties[15]);
+
+  /// See [RulaScoresEntity.legScores].
+  static final legScores =
+      obx.QueryRelationToOne<RulaScoresEntity, IntPairEntity>(
+          _entities[1].properties[16]);
 }
 
 /// [RulaSessionEntity] entity fields to define ObjectBox queries.

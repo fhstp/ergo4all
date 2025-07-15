@@ -141,7 +141,7 @@ class RulaScores {
     required this.trunkTwistAdjustment,
     required this.trunkSideBendAdjustment,
     required this.trunkScore,
-    required this.legScore,
+    required this.legScores,
     required this.fullScore,
   });
 
@@ -210,9 +210,9 @@ class RulaScores {
   /// Expected range is [1; 6].
   final int trunkScore;
 
-  /// The score for the legs.
+  /// The scores for the legs.
   /// Expected range is [1; 2].
-  final int legScore;
+  final (int, int) legScores;
 
   /// The full rula score
   /// Expected range is [1; 7]
@@ -326,7 +326,7 @@ RulaScores scoresOf(RulaSheet sheet) {
     trunkTwistAdjustment: trunkTwistAdjustment,
     trunkSideBendAdjustment: trunkSideBendAdjustment,
     trunkScore: trunkScore,
-    legScore: legScore,
+    legScores: (legScore, legScore),
     fullScore: fullScore,
   );
 }

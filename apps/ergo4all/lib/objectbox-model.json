@@ -29,7 +29,7 @@
     },
     {
       "id": "2:7130293042528665444",
-      "lastPropertyId": "17:1488518581994251642",
+      "lastPropertyId": "18:3434131379598199514",
       "name": "RulaScoresEntity",
       "properties": [
         {
@@ -127,14 +127,17 @@
           "type": 6
         },
         {
-          "id": "16:3404444209532274186",
-          "name": "legScore",
-          "type": 6
-        },
-        {
           "id": "17:1488518581994251642",
           "name": "fullScore",
           "type": 6
+        },
+        {
+          "id": "18:3434131379598199514",
+          "name": "legScoresId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "9:1584344419947150555",
+          "relationTarget": "IntPairEntity"
         }
       ],
       "relations": []
@@ -200,14 +203,16 @@
     }
   ],
   "lastEntityId": "4:5921173115527825764",
-  "lastIndexId": "8:1311924363503071673",
+  "lastIndexId": "9:1584344419947150555",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    3404444209532274186
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

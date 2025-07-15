@@ -156,7 +156,7 @@ class _ScorePageState extends State<ScorePage> {
               ),
               ScoreDisplay(
                 label: 'Leg',
-                score: scores.legScore,
+                score: scores.legScores.pipe(Pair.reduce(worse)),
                 maxScore: 2,
                 level: 1,
               ),

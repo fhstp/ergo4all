@@ -3,6 +3,7 @@ import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/src/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:rula/rula.dart';
 
 @Entity()
@@ -28,7 +29,6 @@ class RulaScoresEntity {
     required this.trunkTwistAdjustment,
     required this.trunkSideBendAdjustment,
     required this.trunkScore,
-    required this.legScore,
     required this.fullScore,
   });
   int id = 0;
@@ -39,6 +39,7 @@ class RulaScoresEntity {
   final lowerArmPositionScores = ToOne<IntPairEntity>();
   final lowerArmScores = ToOne<IntPairEntity>();
   final wristScores = ToOne<IntPairEntity>();
+  final legScores = ToOne<IntPairEntity>();
 
   int neckPositionScore;
   int neckTwistAdjustment;
@@ -48,7 +49,6 @@ class RulaScoresEntity {
   int trunkTwistAdjustment;
   int trunkSideBendAdjustment;
   int trunkScore;
-  int legScore;
   int fullScore;
 }
 
@@ -111,7 +111,6 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
         trunkTwistAdjustment: score.trunkTwistAdjustment,
         trunkSideBendAdjustment: score.trunkSideBendAdjustment,
         trunkScore: score.trunkScore,
-        legScore: score.legScore,
         fullScore: score.fullScore,
       );
 
@@ -122,6 +121,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       final lowerArmPos = IntPairEntity.fromTuple(score.lowerArmPositionScores);
       final lowerArmScores = IntPairEntity.fromTuple(score.lowerArmScores);
       final wristScores = IntPairEntity.fromTuple(score.wristScores);
+      final legScores = IntPairEntity.fromTuple(score.legScores);
 
       _pairBox.putMany([
         upperArmPos,
@@ -130,6 +130,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
         lowerArmPos,
         lowerArmScores,
         wristScores,
+        legScores,
       ]);
 
       scoresEntity.upperArmPositionScores.target = upperArmPos;
@@ -138,6 +139,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
       scoresEntity.lowerArmPositionScores.target = lowerArmPos;
       scoresEntity.lowerArmScores.target = lowerArmScores;
       scoresEntity.wristScores.target = wristScores;
+      scoresEntity.legScores.target = legScores;
 
       _scoresBox.put(scoresEntity);
 
@@ -181,7 +183,7 @@ class ObjectBoxRulaSessionRepository extends RulaSessionRepository {
             trunkTwistAdjustment: scoresEntity.trunkTwistAdjustment,
             trunkSideBendAdjustment: scoresEntity.trunkSideBendAdjustment,
             trunkScore: scoresEntity.trunkScore,
-            legScore: scoresEntity.legScore,
+            legScores: scoresEntity.legScores.target!.toTuple(),
             fullScore: scoresEntity.fullScore,
           ),
         );

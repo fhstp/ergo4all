@@ -60,9 +60,8 @@ class BodyScoreDisplay extends StatelessWidget {
         BodyPart.rightHand ||
         BodyPart.rightLowerArm =>
           normalizeScore(scores.lowerArmScores.$2, 3),
-        BodyPart.leftLeg ||
-        BodyPart.rightLeg =>
-          normalizeScore(scores.legScore, 2),
+        BodyPart.leftLeg => normalizeScore(scores.legScores.$1, 2),
+        BodyPart.rightLeg => normalizeScore(scores.legScores.$2, 2),
         BodyPart.leftUpperArm => normalizeScore(scores.upperArmScores.$1, 6),
         BodyPart.rightUpperArm => normalizeScore(scores.upperArmScores.$2, 6),
         BodyPart.upperBody => normalizeScore(scores.trunkScore, 6),
