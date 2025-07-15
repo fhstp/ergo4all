@@ -6,9 +6,9 @@ import 'package:common/func_ext.dart';
 import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/analysis/live/camera_utils.dart';
-import 'package:ergo4all/analysis/live/record_button.dart';
 import 'package:ergo4all/analysis/live/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/live/tutorial_dialog.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -300,6 +300,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
 
     dataStorage = Provider.of<RulaSessionRepository>(context);
+    final isRecording = analysisMode == _AnalysisMode.full;
 
     return Scaffold(
       backgroundColor: woodSmoke,
@@ -324,10 +325,16 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
             ),
             const SizedBox(height: smallSpace),
             Center(
-              child: RecordButton(
+              child: ElevatedButton(
                 key: const Key('record'),
-                isRecording: analysisMode == _AnalysisMode.full,
-                onTap: onRecordButtonPressed,
+                onPressed: onRecordButtonPressed,
+                style: elevatedButtonStyle.copyWith(
+                  backgroundColor: WidgetStatePropertyAll(
+                    isRecording ? cardinal : blueChill,
+                  ),
+                  foregroundColor: const WidgetStatePropertyAll(white),
+                ),
+                child: Text(isRecording ? 'Stop' : 'Start'),
               ),
             ),
             const SizedBox(height: mediumSpace),
