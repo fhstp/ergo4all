@@ -22,7 +22,6 @@ const _minBadNeckLateralFlexAngle = 20;
 const _minBadShoulderAbductionAngle = 60;
 const _minBadTrunkTwistAngle = 10;
 const _minBadTrunkLateralTwistAngle = 10;
-const _minBadLegAngleDiff = 20;
 
 /// This matches table A on the Rula sheet, except that we omit the wrist twist
 /// score. Here we just always pick the  like it was 1.
@@ -60,54 +59,59 @@ const _tableA = [
 ];
 
 /// This matches table B on the Rula sheet.
+///
+/// We add a third middle column of values in the final row to account for
+/// our leg scores being in range [1, 3] instead of [1, 2]. For this row we
+/// either use the middle of the adjacent rows or round down if that is not
+/// an integer.
 const _tableB = [
   [
-    [1, 3],
-    [2, 3],
-    [3, 4],
-    [5, 5],
-    [6, 6],
-    [7, 7],
+    [1, 2, 3],
+    [2, 2, 3],
+    [3, 3, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [7, 7, 7],
   ],
   [
-    [2, 3],
-    [2, 3],
-    [4, 5],
-    [5, 5],
-    [6, 7],
-    [7, 7],
+    [2, 2, 3],
+    [2, 2, 3],
+    [4, 4, 5],
+    [5, 5, 5],
+    [6, 6, 7],
+    [7, 7, 7],
   ],
   [
-    [3, 3],
-    [3, 4],
-    [4, 5],
-    [5, 6],
-    [6, 7],
-    [7, 7],
+    [3, 3, 3],
+    [3, 3, 4],
+    [4, 4, 5],
+    [5, 5, 6],
+    [6, 6, 7],
+    [7, 7, 7],
   ],
   [
-    [5, 5],
-    [5, 6],
-    [6, 7],
-    [7, 7],
-    [7, 7],
-    [8, 8],
+    [5, 5, 5],
+    [5, 5, 6],
+    [6, 6, 7],
+    [7, 7, 7],
+    [7, 7, 7],
+    [8, 8, 8],
   ],
   [
-    [7, 7],
-    [7, 7],
-    [7, 8],
-    [8, 8],
-    [8, 8],
-    [8, 8],
+    [7, 7, 7],
+    [7, 7, 7],
+    [7, 7, 8],
+    [8, 8, 8],
+    [8, 8, 8],
+    [8, 8, 8],
   ],
   [
-    [8, 8],
-    [8, 8],
-    [8, 8],
-    [8, 9],
-    [9, 9],
-    [9, 9],
+    [8, 8, 8],
+    [8, 8, 8],
+    [8, 8, 8],
+    [8, 8, 9],
+    [9, 9, 9],
+    [9, 9, 9],
   ]
 ];
 
@@ -297,8 +301,11 @@ RulaScores scoresOf(RulaSheet sheet) {
       trunkPositionScore + trunkTwistAdjustment + trunkSideBendAdjustment;
   _assertInRange(1, 6)(trunkScore);
 
-  final legScores = sheet.legAngleDiff
-      .pipe(Pair.map((diff) => diff.value >= _minBadLegAngleDiff ? 2 : 1));
+  final legScores = sheet.legAngleDiff.pipe(
+    Pair.map(
+      (diff) => switch (diff.value) { < 25 => 1, < 45 => 2, _ => 3 },
+    ),
+  );
 
   final armHandScore = ((
     _tableA[upperArmScores.$1 - 1][lowerArmScores.$1 - 1][wristScores.$1 - 1],
