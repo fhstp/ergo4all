@@ -19,6 +19,7 @@ Generator<Degree> _neckLateralFlexion = any.degreeInRange(-90, 90);
 Generator<Degree> _hipFlexion = any.degreeInRange(0, 180);
 Generator<Degree> _trunkRotation = any.degree;
 Generator<Degree> _trunkLateralFlexion = any.degreeInRange(-90, 90);
+Generator<Degree> _legAngleDiff = any.degreeInRange(0, 90);
 
 Generator<(Degree, Degree)> _shoulderAngles =
     any.combine2(_shoulderFlexion, _shoulderAbduction, (a, b) => (a, b));
@@ -49,13 +50,13 @@ extension AnyRulaSheet on Any {
         ),
         _neckAngles,
         _trunkAngles,
-        any.pairOf(any.bool),
+        any.pairOf(_legAngleDiff),
         (
           shoulderAngles,
           armAngles,
           neckAngles,
           trunkAngles,
-          isStandingStably,
+          legAngleDiff,
         ) =>
             RulaSheet(
           shoulderFlexion: shoulderAngles.$1,
@@ -68,7 +69,7 @@ extension AnyRulaSheet on Any {
           hipFlexion: trunkAngles.$1,
           trunkRotation: trunkAngles.$2,
           trunkLateralFlexion: trunkAngles.$3,
-          isStandingStably: isStandingStably,
+          legAngleDiff: legAngleDiff,
         ),
       );
 }

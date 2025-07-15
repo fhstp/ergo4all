@@ -8,6 +8,13 @@ RulaSheet rulaSheetFromAngles(PoseAngles angles) {
     return Degree.makeFrom180(angle);
   }
 
+  Degree angleDiff(KeyAngles a, KeyAngles b) {
+    final angleA = angles[a]!;
+    final angleB = angles[b]!;
+    final diff = (angleA - angleB).abs();
+    return Degree.makeFrom180(diff);
+  }
+
   return RulaSheet(
     shoulderFlexion: (
       angleOf(KeyAngles.shoulderFlexionLeft),
@@ -31,17 +38,9 @@ RulaSheet rulaSheetFromAngles(PoseAngles angles) {
     hipFlexion: angleOf(KeyAngles.trunkStoop),
     trunkRotation: angleOf(KeyAngles.trunkTwist),
     trunkLateralFlexion: angleOf(KeyAngles.trunkSideBend),
-    isStandingStably: (
-      calcIsStanding(
-        angles[KeyAngles.kneeFlexionLeft]!,
-        angles[KeyAngles.legFlexionLeft]!,
-        angleThreshold: 20,
-      ),
-      calcIsStanding(
-        angles[KeyAngles.kneeFlexionRight]!,
-        angles[KeyAngles.legFlexionRight]!,
-        angleThreshold: 20,
-      ),
+    legAngleDiff: (
+      angleDiff(KeyAngles.kneeFlexionLeft, KeyAngles.legFlexionLeft),
+      angleDiff(KeyAngles.kneeFlexionRight, KeyAngles.legFlexionRight),
     ),
   );
 }

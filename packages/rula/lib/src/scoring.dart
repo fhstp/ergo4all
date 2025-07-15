@@ -22,6 +22,7 @@ const _minBadNeckLateralFlexAngle = 20;
 const _minBadShoulderAbductionAngle = 60;
 const _minBadTrunkTwistAngle = 10;
 const _minBadTrunkLateralTwistAngle = 10;
+const _minBadLegAngleDiff = 20;
 
 /// This matches table A on the Rula sheet, except that we omit the wrist twist
 /// score. Here we just always pick the  like it was 1.
@@ -296,8 +297,8 @@ RulaScores scoresOf(RulaSheet sheet) {
       trunkPositionScore + trunkTwistAdjustment + trunkSideBendAdjustment;
   _assertInRange(1, 6)(trunkScore);
 
-  final legScores =
-      sheet.isStandingStably.pipe(Pair.map((stable) => stable ? 1 : 2));
+  final legScores = sheet.legAngleDiff
+      .pipe(Pair.map((diff) => diff.value >= _minBadLegAngleDiff ? 2 : 1));
 
   final armHandScore = ((
     _tableA[upperArmScores.$1 - 1][lowerArmScores.$1 - 1][wristScores.$1 - 1],

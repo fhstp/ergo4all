@@ -18,6 +18,9 @@ typedef DegreePair = (Degree, Degree);
 ///  - Elbow varus-valgus angle (2a)
 ///  - Wrist ulnar-radial deviation (3a)
 ///  - Forearm pronation-supination (4)
+///
+/// We do track point 8 (stable standing), but use our own heuristic, since
+/// the Rula sheet does not provide one.
 @immutable
 class RulaSheet {
   /// Creates an instance of the [RulaSheet] class with th given parameters.
@@ -33,7 +36,7 @@ class RulaSheet {
     required Degree hipFlexion,
     required this.trunkRotation,
     required Degree trunkLateralFlexion,
-    required this.isStandingStably,
+    required this.legAngleDiff,
   })  : shoulderAbduction = Pair.map(_clampStraightLine)(shoulderAbduction),
         elbowFlexion = Pair.map(_clampStraightLine)(elbowFlexion),
         neckFlexion = _clampRightAngle(neckFlexion),
@@ -91,7 +94,8 @@ class RulaSheet {
   /// point 7a.
   final Degree trunkLateralFlexion;
 
-  /// Indicates whether the person is standing on both legs and distributing
-  /// their weight equally. Corresponds to point 8.
-  final (bool, bool) isStandingStably;
+  /// The difference between the inner angle of the knee and the angle between
+  /// trunk and upper leg. We use the difference between these angles to
+  /// score how 'stably' a person is standing.
+  final DegreePair legAngleDiff;
 }
