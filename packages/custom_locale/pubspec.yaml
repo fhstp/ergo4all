@@ -1,5 +1,5 @@
 name: custom_locale
-version: 1.87.0
+version: 1.88.0
 description: Storage logic for local custom locale.
 
 environment:
