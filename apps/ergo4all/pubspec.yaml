@@ -85,7 +85,6 @@ flutter:
   assets:
     - assets/images/puppet/
     - assets/images/puppet_scenario/
-    - assets/images/puppet_body_detail/
     - assets/images/puppets_good_bad/
     - assets/images/logos/
     - assets/images/ergo_score_badge/
