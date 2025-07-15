@@ -126,7 +126,8 @@ class ResultsOverviewScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: recordAgain,
             style: secondaryTextButtonStyle,
-            child: Text(localizations.record_again),
+            child:
+                Text(localizations.record_again, textAlign: TextAlign.center),
           ),
         ],
       ),
