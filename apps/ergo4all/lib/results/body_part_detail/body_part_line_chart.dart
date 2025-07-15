@@ -58,8 +58,8 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
         .mapWithIndex((IList<double> timeline, int timelineIndex) {
       final isSelectedTimeline = timelineIndex == highlightedTimelineIndex;
 
-      final rulaColors =
-          timeline.map((score) => RulaColor.forScore(score, dark: true));
+      final rulaColors = timeline
+          .map((score) => RulaColor.discreteForScore(score, dark: true));
 
       final colors = isSelectedTimeline
           ? rulaColors.toList()

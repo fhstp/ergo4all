@@ -21,7 +21,7 @@ class HeatmapPainter extends CustomPainter {
 
     for (var i = 0; i < normalizedScores.length; i++) {
       final value = normalizedScores[i];
-      paint.color = RulaColor.forScore(value);
+      paint.color = RulaColor.continuousForScore(value);
 
       canvas.drawRect(
         Rect.fromLTWH(i * cellWidth, 0, cellWidth, size.height),

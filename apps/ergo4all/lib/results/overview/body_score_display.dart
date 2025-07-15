@@ -76,7 +76,7 @@ class BodyScoreDisplay extends StatelessWidget {
 
     final colors = _bodyPartsInDisplayOrder.map((part) {
       final score = getNormalizedScoreForPart(part);
-      return RulaColor.forScore(score);
+      return RulaColor.discreteForScore(score);
     }).toList();
 
     return TransparentImageStack(

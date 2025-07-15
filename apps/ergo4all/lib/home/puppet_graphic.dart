@@ -27,7 +27,7 @@ class PuppetGraphic extends StatelessWidget {
           padding: const EdgeInsets.all(30),
           child: Image.asset(
             'assets/images/puppet/full_body.png',
-            color: RulaColor.forScore(0),
+            color: RulaColor.discreteForScore(0),
             fit: BoxFit.contain,
             colorBlendMode: BlendMode.modulate,
           ),
