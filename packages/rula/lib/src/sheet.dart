@@ -33,7 +33,7 @@ class RulaSheet {
     required Degree hipFlexion,
     required this.trunkRotation,
     required Degree trunkLateralFlexion,
-    required this.isStandingOnBothLegs,
+    required this.isStandingStably,
   })  : shoulderAbduction = Pair.map(_clampStraightLine)(shoulderAbduction),
         elbowFlexion = Pair.map(_clampStraightLine)(elbowFlexion),
         neckFlexion = _clampRightAngle(neckFlexion),
@@ -93,5 +93,5 @@ class RulaSheet {
 
   /// Indicates whether the person is standing on both legs and distributing
   /// their weight equally. Corresponds to point 8.
-  final bool isStandingOnBothLegs;
+  final (bool, bool) isStandingStably;
 }

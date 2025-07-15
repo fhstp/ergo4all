@@ -296,16 +296,16 @@ RulaScores scoresOf(RulaSheet sheet) {
       trunkPositionScore + trunkTwistAdjustment + trunkSideBendAdjustment;
   _assertInRange(1, 6)(trunkScore);
 
-  final legScore = sheet.isStandingOnBothLegs ? 1 : 2;
-  _assertInRange(1, 2)(legScore);
+  final legScores =
+      sheet.isStandingStably.pipe(Pair.map((stable) => stable ? 1 : 2));
 
   final armHandScore = ((
     _tableA[upperArmScores.$1 - 1][lowerArmScores.$1 - 1][wristScores.$1 - 1],
     _tableA[upperArmScores.$2 - 1][lowerArmScores.$2 - 1][wristScores.$2 - 1]
   )..pipe(Pair.map(_assertInRange(1, 9))))
       .pipe(Pair.reduce(worse));
-  final neckTrunkLegScore =
-      _tableB[neckScore - 1][trunkScore - 1][legScore - 1];
+  final neckTrunkLegScore = _tableB[neckScore - 1][trunkScore - 1]
+      [legScores.pipe(Pair.reduce(worse)) - 1];
   _assertInRange(1, 9)(neckTrunkLegScore);
   final fullScore =
       _tableC[min(armHandScore - 1, 7)][min(neckTrunkLegScore - 1, 6)];
@@ -326,7 +326,7 @@ RulaScores scoresOf(RulaSheet sheet) {
     trunkTwistAdjustment: trunkTwistAdjustment,
     trunkSideBendAdjustment: trunkSideBendAdjustment,
     trunkScore: trunkScore,
-    legScores: (legScore, legScore),
+    legScores: legScores,
     fullScore: fullScore,
   );
 }

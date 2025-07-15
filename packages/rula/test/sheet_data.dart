@@ -49,13 +49,13 @@ extension AnyRulaSheet on Any {
         ),
         _neckAngles,
         _trunkAngles,
-        any.bool,
+        any.pairOf(any.bool),
         (
           shoulderAngles,
           armAngles,
           neckAngles,
           trunkAngles,
-          isStrandingOnBothLegs,
+          isStandingStably,
         ) =>
             RulaSheet(
           shoulderFlexion: shoulderAngles.$1,
@@ -68,7 +68,7 @@ extension AnyRulaSheet on Any {
           hipFlexion: trunkAngles.$1,
           trunkRotation: trunkAngles.$2,
           trunkLateralFlexion: trunkAngles.$3,
-          isStandingOnBothLegs: isStrandingOnBothLegs,
+          isStandingStably: isStandingStably,
         ),
       );
 }

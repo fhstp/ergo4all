@@ -25,7 +25,7 @@ void main() {
       hipFlexion: Degree.zero,
       trunkRotation: Degree.zero,
       trunkLateralFlexion: Degree.zero,
-      isStandingOnBothLegs: true,
+      isStandingStably: (true, true),
     );
 
     final scores = scoresOf(sheet);
@@ -48,7 +48,7 @@ void main() {
       hipFlexion: const Degree.makeFrom180(65),
       trunkRotation: Degree.zero,
       trunkLateralFlexion: Degree.zero,
-      isStandingOnBothLegs: true,
+      isStandingStably: (true, true),
     );
 
     final scores = scoresOf(sheet);
@@ -74,7 +74,7 @@ void main() {
       hipFlexion: Degree.zero,
       trunkRotation: Degree.zero,
       trunkLateralFlexion: Degree.zero,
-      isStandingOnBothLegs: true,
+      isStandingStably: (true, true),
     );
 
     final scores = scoresOf(sheet);
