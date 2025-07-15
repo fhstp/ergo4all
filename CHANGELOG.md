@@ -10,6 +10,27 @@
 ### Features
 
 * merge body parts in puppet display ([a6902ed](https://github.com/fhstp/ergo4all/commit/a6902eddca1adfaf2a1c3df44f78ad5da38c6bae)), closes [#95](https://github.com/fhstp/ergo4all/issues/95)
+* nuance leg scores ([aaf60aa](https://github.com/fhstp/ergo4all/commit/aaf60aa2ac58d8e331c2feefe60e03a02910ff8c))
+* **pose_tester:** display symmetric scores ([f774657](https://github.com/fhstp/ergo4all/commit/f774657fb2dc017a874af6af144df9993138f8ac))
+* recolor time remaining bar ([d5b433a](https://github.com/fhstp/ergo4all/commit/d5b433a0a5bd1284062767c64902bc6d3e4bcded))
+* rename body part groups ([a4e857b](https://github.com/fhstp/ergo4all/commit/a4e857b48b6fe44a9673c814f922ffcfb7650005)), closes [#97](https://github.com/fhstp/ergo4all/issues/97)
+* simplify body-part result screen ([0a2eeb3](https://github.com/fhstp/ergo4all/commit/0a2eeb375435b20cbdce0559ca52b486f71f64c5)), closes [#103](https://github.com/fhstp/ergo4all/issues/103)
+* split leg score ([3e8aab3](https://github.com/fhstp/ergo4all/commit/3e8aab3d8f44809434dccc94f39983207947e746)), closes [#102](https://github.com/fhstp/ergo4all/issues/102)
+* tint puppet images in-app ([f748405](https://github.com/fhstp/ergo4all/commit/f7484052043263d09c42615255b6ced3050eee7d)), closes [#99](https://github.com/fhstp/ergo4all/issues/99)
+* use text based record button ([ea91a53](https://github.com/fhstp/ergo4all/commit/ea91a53c76fcf24db1ed0950c703b473c49246ae)), closes [#104](https://github.com/fhstp/ergo4all/issues/104)
+
+# [1.88.0](https://github.com/fhstp/ergo4all/compare/v1.87.0...v1.88.0) (2025-07-15)
+
+
+### Bug Fixes
+
+* bad text align ([e6df98b](https://github.com/fhstp/ergo4all/commit/e6df98b2feef24ed2fa9315ff2ac7449c7f4f454))
+* standing logic ([9960526](https://github.com/fhstp/ergo4all/commit/9960526bd5c242bae4ec52bd496c99a7ba956996))
+
+
+### Features
+
+* merge body parts in puppet display ([a6902ed](https://github.com/fhstp/ergo4all/commit/a6902eddca1adfaf2a1c3df44f78ad5da38c6bae)), closes [#95](https://github.com/fhstp/ergo4all/issues/95)
 * recolor time remaining bar ([d5b433a](https://github.com/fhstp/ergo4all/commit/d5b433a0a5bd1284062767c64902bc6d3e4bcded))
 * rename body part groups ([a4e857b](https://github.com/fhstp/ergo4all/commit/a4e857b48b6fe44a9673c814f922ffcfb7650005)), closes [#97](https://github.com/fhstp/ergo4all/issues/97)
 * simplify body-part result screen ([0a2eeb3](https://github.com/fhstp/ergo4all/commit/0a2eeb375435b20cbdce0559ca52b486f71f64c5)), closes [#103](https://github.com/fhstp/ergo4all/issues/103)
