@@ -25,7 +25,7 @@ class RecordingProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final remainingFraction = remainingTime / initialTime;
-    final color = remainingTime < criticalTime ? persimmon : blueChill;
+    final color = remainingTime < criticalTime ? persimmon : hippieBlue;
 
     return Container(
       padding: const EdgeInsets.all(5),
