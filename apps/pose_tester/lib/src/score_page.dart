@@ -1,5 +1,3 @@
-import 'package:common/func_ext.dart';
-import 'package:common/pair_utils.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_analysis/pose_analysis.dart';
@@ -67,40 +65,76 @@ class _ScorePageState extends State<ScorePage> {
                 level: 0,
               ),
               ScoreDisplay(
-                label: 'Upper arm',
-                score: scores.upperArmScores.pipe(Pair.reduce(worse)),
+                label: 'Upper arm (Left)',
+                score: scores.upperArmScores.$1,
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
-                label: 'Shoulder flexion',
-                score: scores.upperArmPositionScores.pipe(Pair.reduce(worse)),
+                label: 'Upper arm (Right)',
+                score: scores.upperArmScores.$2,
+                maxScore: 6,
+                level: 1,
+              ),
+              ScoreDisplay(
+                label: 'Shoulder flexion (Left)',
+                score: scores.upperArmPositionScores.$1,
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
-                label: 'Shoulder abduction',
-                score:
-                    scores.upperArmAbductedAdjustments.pipe(Pair.reduce(worse)),
+                label: 'Shoulder flexion (Right)',
+                score: scores.upperArmPositionScores.$2,
+                maxScore: 4,
+                level: 2,
+              ),
+              ScoreDisplay(
+                label: 'Shoulder abduction (Left)',
+                score: scores.upperArmAbductedAdjustments.$1,
                 maxScore: 1,
                 minScore: 0,
                 level: 2,
               ),
               ScoreDisplay(
-                label: 'Lower arm',
-                score: scores.lowerArmScores.pipe(Pair.reduce(worse)),
+                label: 'Shoulder abduction (Right)',
+                score: scores.upperArmAbductedAdjustments.$2,
+                maxScore: 1,
+                minScore: 0,
+                level: 2,
+              ),
+              ScoreDisplay(
+                label: 'Lower arm (Left)',
+                score: scores.lowerArmScores.$1,
                 maxScore: 3,
                 level: 1,
               ),
               ScoreDisplay(
-                label: 'Elbow flexion',
-                score: scores.lowerArmPositionScores.pipe(Pair.reduce(worse)),
+                label: 'Lower arm (Right)',
+                score: scores.lowerArmScores.$2,
+                maxScore: 3,
+                level: 1,
+              ),
+              ScoreDisplay(
+                label: 'Elbow flexion (Left)',
+                score: scores.lowerArmPositionScores.$1,
                 maxScore: 2,
                 level: 2,
               ),
               ScoreDisplay(
-                label: 'Wrist flexion',
-                score: scores.wristScores.pipe(Pair.reduce(worse)),
+                label: 'Elbow flexion (Right)',
+                score: scores.lowerArmPositionScores.$2,
+                maxScore: 2,
+                level: 2,
+              ),
+              ScoreDisplay(
+                label: 'Wrist flexion (Left)',
+                score: scores.wristScores.$1,
+                maxScore: 4,
+                level: 2,
+              ),
+              ScoreDisplay(
+                label: 'Wrist flexion (Right)',
+                score: scores.wristScores.$2,
                 maxScore: 4,
                 level: 2,
               ),
@@ -155,8 +189,14 @@ class _ScorePageState extends State<ScorePage> {
                 level: 2,
               ),
               ScoreDisplay(
-                label: 'Leg',
-                score: scores.legScores.pipe(Pair.reduce(worse)),
+                label: 'Leg (Left)',
+                score: scores.legScores.$1,
+                maxScore: 3,
+                level: 1,
+              ),
+              ScoreDisplay(
+                label: 'Leg (Right)',
+                score: scores.legScores.$2,
                 maxScore: 3,
                 level: 1,
               ),
