@@ -81,9 +81,6 @@ class ResultsOverviewScreen extends StatelessWidget {
           bodyPartGroup: bodyPart,
           // We use the averaged scores on the detail screen
           normalizedScores: averageScoresByGroup[bodyPart]!,
-          // We display the median values on the detail screen
-          staticLoadScores:
-              calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
           recordingDuration: recordingDuration,
         ),
       );

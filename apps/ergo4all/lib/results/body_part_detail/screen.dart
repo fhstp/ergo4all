@@ -4,6 +4,7 @@ import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/body_part_line_chart.dart';
 import 'package:ergo4all/results/body_part_group.dart';
+import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -35,16 +36,11 @@ extension on String {
 class BodyPartResultsScreen extends StatelessWidget {
   ///
   const BodyPartResultsScreen({
-    required this.staticLoadScores,
     required this.normalizedScores,
     required this.bodyPartGroup,
     required this.recordingDuration,
     super.key,
   });
-
-  /// Time-line values to display in the static-load graph.
-  /// These should be normalized to [0; 1].
-  final IList<double> staticLoadScores;
 
   /// The normalized scores over time. The displayed [Rating] will be
   /// calculated from these. They are also displayed in the ergonomic
@@ -61,14 +57,12 @@ class BodyPartResultsScreen extends StatelessWidget {
   static MaterialPageRoute<void> makeRoute({
     required BodyPartGroup bodyPartGroup,
     required IList<double> normalizedScores,
-    required IList<double> staticLoadScores,
     required int recordingDuration,
   }) {
     return MaterialPageRoute<void>(
       builder: (context) => BodyPartResultsScreen(
         bodyPartGroup: bodyPartGroup,
         normalizedScores: normalizedScores,
-        staticLoadScores: staticLoadScores,
         recordingDuration: recordingDuration,
       ),
     );
@@ -80,6 +74,9 @@ class BodyPartResultsScreen extends StatelessWidget {
 
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = recordingDuration >= 15;
+    final staticLoadScores = showStaticLoad
+        ? calculateRunningMedian(normalizedScores, 20)
+        : const IList<double>.empty();
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
     final rating = calculateRating(normalizedScores);
