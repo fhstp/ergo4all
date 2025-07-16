@@ -4,7 +4,7 @@ import 'package:ergo4all/results/rula_colors.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:fpdart/fpdart.dart' hide State;
 
 final _lineGray = Colors.grey.withValues(alpha: 0.2);
 
@@ -17,7 +17,7 @@ const _noTitles = AxisTitles();
 
 /// Displays the normalized scores of a body-part over time using a
 /// 2D line-chart.
-class BodyPartLineChart extends StatelessWidget {
+class BodyPartLineChart extends StatefulWidget {
   ///
   const BodyPartLineChart({
     required this.timelines,
@@ -34,10 +34,15 @@ class BodyPartLineChart extends StatelessWidget {
   final IList<IList<double>> timelines;
 
   @override
+  State<BodyPartLineChart> createState() => _BodyPartLineChartState();
+}
+
+class _BodyPartLineChartState extends State<BodyPartLineChart> {
+  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final timeline = timelines[0];
+    final timeline = widget.timelines[0];
 
     final colors =
         timeline.map((score) => rulaColorFor(score, dark: true)).toList();
