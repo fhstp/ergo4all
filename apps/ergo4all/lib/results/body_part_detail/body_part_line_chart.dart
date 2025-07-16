@@ -15,6 +15,11 @@ final _hLine = FlLine(
 
 const _noTitles = AxisTitles();
 
+Color _grayscale(Color c) {
+  final i = (c.r + c.g + c.b) / 3;
+  return Color.from(alpha: c.a, red: i, green: i, blue: i);
+}
+
 /// Displays the normalized scores of a body-part over time using a
 /// 2D line-chart.
 class BodyPartLineChart extends StatefulWidget {
@@ -43,10 +48,16 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
     final localizations = AppLocalizations.of(context)!;
 
     final valueCount = widget.timelines[0].length;
+    final highlightedTimelineIndex = 0;
 
-    LineChartBarData makeLine(IList<double> timeline, int timelineIndex) {
-      final colors =
-          timeline.map((score) => rulaColorFor(score, dark: true)).toList();
+    var graphLines = widget.timelines
+        .mapWithIndex((IList<double> timeline, int timelineIndex) {
+      final rulaColors =
+          timeline.map((score) => rulaColorFor(score, dark: true));
+
+      final colors = timelineIndex == highlightedTimelineIndex
+          ? rulaColors.toList()
+          : rulaColors.map(_grayscale).toList();
 
       final spots = timeline
           .mapWithIndex((score, i) => FlSpot(i.toDouble(), score))
@@ -59,7 +70,12 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
         isStrokeCapRound: true,
         dotData: const FlDotData(show: false),
       );
-    }
+    }).toList();
+
+    // This is the easy way to make the selected line appear on top.
+    // This solution would break if we had more than 2 lines, but this
+    // seems unlikely. (3 arms? lmao)
+    if (highlightedTimelineIndex == 0) graphLines = graphLines.reversedView;
 
     return LineChart(
       LineChartData(
@@ -93,7 +109,7 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
         maxX: valueCount - 1,
         minY: 0,
         maxY: 1,
-        lineBarsData: widget.timelines.mapWithIndex(makeLine).toList(),
+        lineBarsData: graphLines,
       ),
     );
   }
