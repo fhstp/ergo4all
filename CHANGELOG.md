@@ -1,3 +1,15 @@
+# [1.89.0](https://github.com/fhstp/ergo4all/compare/v1.88.0...v1.89.0) (2025-07-16)
+
+
+### Bug Fixes
+
+* incorrect leg score normalization ([f5515b9](https://github.com/fhstp/ergo4all/commit/f5515b919b3dc28d7b782ea6c92b2071a76fae0b))
+
+
+### Features
+
+* enhance body-part group type ([523eea8](https://github.com/fhstp/ergo4all/commit/523eea886768a6ed1768aa02d82ff09e9a7e7de1)), closes [#98](https://github.com/fhstp/ergo4all/issues/98)
+
 # [1.88.0](https://github.com/fhstp/ergo4all/compare/v1.87.0...v1.88.0) (2025-07-15)
 
 
