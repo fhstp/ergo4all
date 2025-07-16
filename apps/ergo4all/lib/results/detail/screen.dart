@@ -5,16 +5,15 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/results/body_part_detail/screen.dart';
+import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rula_colors.dart';
-import 'package:ergo4all/results/score_group.dart';
-import 'package:ergo4all/results/score_group_detail/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
@@ -83,27 +82,28 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     ).inSeconds;
 
     final normalizedScoresByGroup = IMap.fromKeys(
-      keys: ScoreGroup.valuesMerged,
-      valueMapper: (group) => widget.analysisResult.timeline.map((entry) {
-        final scores = entry.scores;
-        final score = scores.scoreOfGroup(group, mergeScores: worse);
-        return ScoreGroup.normalizeFor(group, score);
-      }).toIList(),
+      keys: BodyPartGroup.values,
+      valueMapper: (bodyPartGroup) => widget.analysisResult.timeline
+          .map((entry) => entry.scores)
+          .map(
+            (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
+          )
+          .toIList(),
     );
 
     final averageScoresByGroup = normalizedScoresByGroup
         .mapValues((scores) => calculateRunningAverage(scores, 20));
 
-    void navigateToScoreGroupPage(ScoreGroup group) {
+    void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       Navigator.push(
         context,
-        ScoreGroupResultsScreen.makeRoute(
-          scoreGroup: group,
+        BodyPartResultsScreen.makeRoute(
+          bodyPartGroup: bodyPart,
           // We use the averaged scores on the detail screen
-          normalizedScores: averageScoresByGroup[group]!,
+          normalizedScores: averageScoresByGroup[bodyPart]!,
           // We display the median values on the detail screen
           staticLoadScores:
-              calculateRunningMedian(normalizedScoresByGroup[group]!, 20),
+              calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
           recordingDuration: recordingDuration,
         ),
       );
@@ -142,11 +142,11 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                   spacing: 10,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ...ScoreGroup.valuesMerged.map(
+                    ...BodyPartGroup.values.map(
                       (part) => Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            navigateToScoreGroupPage(part);
+                            navigateToBodyPartPage(part);
                           },
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,7 +154,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                               SizedBox(
                                 width: labelSpaceWidth,
                                 child: Text(
-                                  scoreGroupLabelFor(
+                                  bodyPartGroupLabelFor(
                                     localizations,
                                     part,
                                   ),
