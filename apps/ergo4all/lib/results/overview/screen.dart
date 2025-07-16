@@ -12,13 +12,11 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
-import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 
 /// The screen for viewing an overview over the [AnalysisResult].
 class ResultsOverviewScreen extends StatelessWidget {
@@ -42,15 +40,20 @@ class ResultsOverviewScreen extends StatelessWidget {
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => analysisResult.timeline.map((entry) {
-        final scores = bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
-        final worst = scores.reduce(worse);
-        return normalizeScore(worst, maxScoreOf(bodyPartGroup));
-      }).toIList(),
+      valueMapper: (bodyPartGroup) => analysisResult.timeline
+          .map((entry) {
+            final splitScores =
+                bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
+            return splitScores
+                .map(
+                  (score) => normalizeScore(score, maxScoreOf(bodyPartGroup)),
+                )
+                .toIList();
+          })
+          .toIList()
+          .columns()
+          .toIList(),
     );
-
-    final averageScoresByGroup = normalizedScoresByGroup
-        .mapValues((scores) => calculateRunningAverage(scores, 20));
 
     final recordingDuration = Duration(
       milliseconds: analysisResult.timeline.last.timestamp -
@@ -79,8 +82,7 @@ class ResultsOverviewScreen extends StatelessWidget {
         context,
         BodyPartResultsScreen.makeRoute(
           bodyPartGroup: bodyPart,
-          // We use the averaged scores on the detail screen
-          normalizedScores: averageScoresByGroup[bodyPart]!,
+          timelines: normalizedScoresByGroup[bodyPart]!,
           recordingDuration: recordingDuration,
         ),
       );

@@ -44,9 +44,7 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
 
     final valueCount = widget.timelines[0].length;
 
-    LineChartBarData makeLine(int timelineIndex) {
-      final timeline = widget.timelines[timelineIndex];
-
+    LineChartBarData makeLine(IList<double> timeline, int timelineIndex) {
       final colors =
           timeline.map((score) => rulaColorFor(score, dark: true)).toList();
 
@@ -95,7 +93,7 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
         maxX: valueCount - 1,
         minY: 0,
         maxY: 1,
-        lineBarsData: [makeLine(0)],
+        lineBarsData: widget.timelines.mapWithIndex(makeLine).toList(),
       ),
     );
   }

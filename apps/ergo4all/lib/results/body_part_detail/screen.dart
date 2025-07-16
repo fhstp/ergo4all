@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
@@ -36,7 +39,7 @@ extension on String {
 class BodyPartResultsScreen extends StatelessWidget {
   ///
   const BodyPartResultsScreen({
-    required this.normalizedScores,
+    required this.timelines,
     required this.bodyPartGroup,
     required this.recordingDuration,
     super.key,
@@ -45,7 +48,9 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// The normalized scores over time. The displayed [Rating] will be
   /// calculated from these. They are also displayed in the ergonomic
   /// rating chart.
-  final IList<double> normalizedScores;
+  /// For singular body parts this should be a single list, for
+  /// paired body parts there should be two.
+  final IList<IList<double>> timelines;
 
   /// The body to display.
   final BodyPartGroup bodyPartGroup;
@@ -56,13 +61,13 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// Makes a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute({
     required BodyPartGroup bodyPartGroup,
-    required IList<double> normalizedScores,
+    required IList<IList<double>> timelines,
     required int recordingDuration,
   }) {
     return MaterialPageRoute<void>(
       builder: (context) => BodyPartResultsScreen(
         bodyPartGroup: bodyPartGroup,
-        normalizedScores: normalizedScores,
+        timelines: timelines,
         recordingDuration: recordingDuration,
       ),
     );
@@ -72,14 +77,22 @@ class BodyPartResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
+    final averagedTimelines = timelines
+        .map((scores) => calculateRunningAverage(scores, 20))
+        .toIList();
+
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = recordingDuration >= 15;
     final staticLoadScores = showStaticLoad
-        ? calculateRunningMedian(normalizedScores, 20)
+        ? calculateRunningMedian(timelines.reduce2d(max), 20)
         : const IList<double>.empty();
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
-    final rating = calculateRating(normalizedScores);
+
+    // Here we walk the two timelines for left/right body parts and
+    // pick the worst score for each timestamp. Is this right?
+    // Might be worth rethinking.
+    final rating = calculateRating(averagedTimelines.reduce2d(max));
     final message =
         _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
       localizations,
@@ -104,8 +117,7 @@ class BodyPartResultsScreen extends StatelessWidget {
               height: 132,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
-                child:
-                    BodyPartLineChart(timelines: [normalizedScores].toIList()),
+                child: BodyPartLineChart(timelines: averagedTimelines),
               ),
             ),
             const SizedBox(height: largeSpace),

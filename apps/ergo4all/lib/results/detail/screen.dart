@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
@@ -15,7 +17,6 @@ import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
@@ -85,24 +86,35 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) =>
-          widget.analysisResult.timeline.map((entry) {
-        final scores = bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
-        final worst = scores.reduce(worse);
-        return normalizeScore(worst, maxScoreOf(bodyPartGroup));
-      }).toIList(),
+      valueMapper: (bodyPartGroup) => widget.analysisResult.timeline
+          .map((entry) {
+            final splitScores =
+                bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
+            return splitScores
+                .map(
+                  (score) => normalizeScore(score, maxScoreOf(bodyPartGroup)),
+                )
+                .toIList();
+          })
+          .toIList()
+          .columns()
+          .toIList(),
     );
 
-    final averageScoresByGroup = normalizedScoresByGroup
-        .mapValues((scores) => calculateRunningAverage(scores, 20));
+    final worstAveragesByGroup = normalizedScoresByGroup
+        .mapValues(
+          (splitScores) => splitScores
+              .map((scores) => calculateRunningAverage(scores, 20))
+              .toIList(),
+        )
+        .mapValues((splitScores) => splitScores.reduce2d(max));
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       Navigator.push(
         context,
         BodyPartResultsScreen.makeRoute(
           bodyPartGroup: bodyPart,
-          // We use the averaged scores on the detail screen
-          normalizedScores: averageScoresByGroup[bodyPart]!,
+          timelines: normalizedScoresByGroup[bodyPart]!,
           recordingDuration: recordingDuration,
         ),
       );
@@ -164,7 +176,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                                 child: CustomPaint(
                                   painter: HeatmapPainter(
                                     normalizedScores:
-                                        averageScoresByGroup[part]!,
+                                        worstAveragesByGroup[part]!,
                                   ),
                                 ),
                               ),
