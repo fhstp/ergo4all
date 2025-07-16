@@ -18,6 +18,7 @@ import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:rula/rula.dart';
 
 /// The screen for viewing an overview over the [AnalysisResult].
 class ResultsOverviewScreen extends StatelessWidget {
@@ -40,13 +41,12 @@ class ResultsOverviewScreen extends StatelessWidget {
     }
 
     final normalizedScoresByGroup = IMap.fromKeys(
-      keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => analysisResult.timeline
-          .map((entry) => entry.scores)
-          .map(
-            (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
-          )
-          .toIList(),
+      keys: BodyPartGroup.valuesSplit,
+      valueMapper: (group) => analysisResult.timeline.map((entry) {
+        final scores = entry.scores;
+        final score = scores.scoreOfGroup(group, mergeScores: worse);
+        return BodyPartGroup.normalizeFor(group, score);
+      }).toIList(),
     );
 
     final averageScoresByGroup = normalizedScoresByGroup
@@ -74,16 +74,16 @@ class ResultsOverviewScreen extends StatelessWidget {
       );
     }
 
-    void goToBodyPartPage(BodyPartGroup bodyPart) {
+    void goToBodyPartPage(BodyPartGroup group) {
       Navigator.push(
         context,
         BodyPartResultsScreen.makeRoute(
-          bodyPartGroup: bodyPart,
+          bodyPartGroup: group,
           // We use the averaged scores on the detail screen
-          normalizedScores: averageScoresByGroup[bodyPart]!,
+          normalizedScores: averageScoresByGroup[group]!,
           // We display the median values on the detail screen
           staticLoadScores:
-              calculateRunningMedian(normalizedScoresByGroup[bodyPart]!, 20),
+              calculateRunningMedian(normalizedScoresByGroup[group]!, 20),
           recordingDuration: recordingDuration,
         ),
       );
@@ -108,7 +108,7 @@ class ResultsOverviewScreen extends StatelessWidget {
           BodyScoreDisplay(
             aggregate,
             onBodyPartTapped: (part) {
-              goToBodyPartPage(groupOf(part));
+              goToBodyPartPage(BodyPartGroup.fromBodyPart(part));
             },
           ),
           Text(

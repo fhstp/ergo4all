@@ -14,6 +14,7 @@ import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:rula/rula.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
@@ -82,13 +83,13 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     ).inSeconds;
 
     final normalizedScoresByGroup = IMap.fromKeys(
-      keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => widget.analysisResult.timeline
-          .map((entry) => entry.scores)
-          .map(
-            (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
-          )
-          .toIList(),
+      keys: BodyPartGroup.valuesMerged,
+      valueMapper: (bodyPartGroup) =>
+          widget.analysisResult.timeline.map((entry) {
+        final scores = entry.scores;
+        final score = scores.scoreOfGroup(bodyPartGroup, mergeScores: worse);
+        return BodyPartGroup.normalizeFor(bodyPartGroup, score);
+      }).toIList(),
     );
 
     final averageScoresByGroup = normalizedScoresByGroup
@@ -142,7 +143,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                   spacing: 10,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ...BodyPartGroup.values.map(
+                    ...BodyPartGroup.valuesMerged.map(
                       (part) => Expanded(
                         child: GestureDetector(
                           onTap: () {

@@ -83,8 +83,8 @@ class BodyPartResultsScreen extends StatelessWidget {
 
     final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
     final rating = calculateRating(normalizedScores);
-    final message =
-        _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
+    final groupName = BodyPartGroup.nameOf(bodyPartGroup);
+    final message = _localizationMap['$groupName${rating.name.capitalize()}']!(
       localizations,
     );
 
