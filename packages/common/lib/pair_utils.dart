@@ -1,3 +1,5 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
 /// Contains 2 element pair utility functions.
 abstract final class Pair {
   /// Creates a function which applies the given function [f] to both elements
@@ -33,4 +35,7 @@ abstract final class Pair {
   static (V, V) Function((T, T), (U, U)) pairwise<T, U, V>(V Function(T, U) f) {
     return (t, u) => (f(t.$1, u.$1), f(t.$2, u.$2));
   }
+
+  /// Converts this pair into a 2-item [IList].
+  static IList<T> toList<T>((T, T) pair) => IList([pair.$1, pair.$2]);
 }

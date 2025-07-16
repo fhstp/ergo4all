@@ -1,8 +1,7 @@
-import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
-import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:rula/rula.dart';
 
 /// Groups of body parts which are displayed / scored together.
@@ -23,22 +22,25 @@ enum BodyPartGroup {
   legs,
 }
 
-/// Get normalized scores for a [BodyPartGroup] from a [RulaScores] object.
-double normalizedBodyPartGroupScoreOf(RulaScores scores, BodyPartGroup group) {
+/// Get scores for a [BodyPartGroup] from a [RulaScores] object.
+IList<int> bodyPartGroupScoreOf(RulaScores scores, BodyPartGroup group) {
   return switch (group) {
-    BodyPartGroup.shoulder => scores.upperArmScores
-        .pipe(Pair.reduce(worse))
-        .pipe((score) => normalizeScore(score, 6)),
-    BodyPartGroup.arm => scores.lowerArmScores
-        .pipe(Pair.reduce(worse))
-        .pipe((score) => normalizeScore(score, 3)),
-    BodyPartGroup.trunk => normalizeScore(scores.trunkScore, 6),
-    BodyPartGroup.neck => normalizeScore(scores.neckScore, 6),
-    BodyPartGroup.legs => scores.legScores
-        .pipe(Pair.reduce(worse))
-        .pipe((score) => normalizeScore(score, 3)),
+    BodyPartGroup.shoulder => Pair.toList(scores.upperArmScores),
+    BodyPartGroup.arm => Pair.toList(scores.lowerArmScores),
+    BodyPartGroup.trunk => IList([scores.trunkScore]),
+    BodyPartGroup.neck => IList([scores.neckScore]),
+    BodyPartGroup.legs => Pair.toList(scores.legScores)
   };
 }
+
+/// Gets the maximum value score in a [BodyPartGroup] is expected to reach.
+int maxScoreOf(BodyPartGroup group) => switch (group) {
+      BodyPartGroup.shoulder => 6,
+      BodyPartGroup.arm => 3,
+      BodyPartGroup.trunk => 6,
+      BodyPartGroup.neck => 6,
+      BodyPartGroup.legs => 3
+    };
 
 /// Get the localized label for the given [group].
 String bodyPartGroupLabelFor(

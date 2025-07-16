@@ -18,6 +18,7 @@ import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:rula/rula.dart';
 
 /// The screen for viewing an overview over the [AnalysisResult].
 class ResultsOverviewScreen extends StatelessWidget {
@@ -41,12 +42,11 @@ class ResultsOverviewScreen extends StatelessWidget {
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => analysisResult.timeline
-          .map((entry) => entry.scores)
-          .map(
-            (scores) => normalizedBodyPartGroupScoreOf(scores, bodyPartGroup),
-          )
-          .toIList(),
+      valueMapper: (bodyPartGroup) => analysisResult.timeline.map((entry) {
+        final scores = bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
+        final worst = scores.reduce(worse);
+        return normalizeScore(worst, maxScoreOf(bodyPartGroup));
+      }).toIList(),
     );
 
     final averageScoresByGroup = normalizedScoresByGroup
