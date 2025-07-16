@@ -20,16 +20,24 @@ const _noTitles = AxisTitles();
 class BodyPartLineChart extends StatelessWidget {
   ///
   const BodyPartLineChart({
-    required this.timeline,
+    required this.timelines,
     super.key,
-  });
+  }) : assert(
+          timelines.length == 1 || timelines.length == 2,
+          'Either provide 1 or 2 timelines',
+        );
 
-  /// The scores to display. The values in this list are expected to be [0; 1].
-  final IList<double> timeline;
+  /// The scores to display. A list of timelines. Each timeline will
+  /// be rendered as a graph.
+  /// It is expected to either provide 1 or 2 timelines.
+  /// The values in each timeline are expected to be [0; 1].
+  final IList<IList<double>> timelines;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    final timeline = timelines[0];
 
     final colors =
         timeline.map((score) => rulaColorFor(score, dark: true)).toList();

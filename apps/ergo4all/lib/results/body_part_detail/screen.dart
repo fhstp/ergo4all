@@ -107,7 +107,8 @@ class BodyPartResultsScreen extends StatelessWidget {
               height: 132,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
-                child: BodyPartLineChart(timeline: normalizedScores),
+                child:
+                    BodyPartLineChart(timelines: [normalizedScores].toIList()),
               ),
             ),
             const SizedBox(height: largeSpace),
