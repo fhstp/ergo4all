@@ -42,14 +42,26 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final timeline = widget.timelines[0];
+    final valueCount = widget.timelines[0].length;
 
-    final colors =
-        timeline.map((score) => rulaColorFor(score, dark: true)).toList();
+    LineChartBarData makeLine(int timelineIndex) {
+      final timeline = widget.timelines[timelineIndex];
 
-    final spots = timeline
-        .mapWithIndex((score, i) => FlSpot(i.toDouble(), score))
-        .toList();
+      final colors =
+          timeline.map((score) => rulaColorFor(score, dark: true)).toList();
+
+      final spots = timeline
+          .mapWithIndex((score, i) => FlSpot(i.toDouble(), score))
+          .toList();
+
+      return LineChartBarData(
+        spots: spots,
+        gradient: LinearGradient(colors: colors),
+        barWidth: 3,
+        isStrokeCapRound: true,
+        dotData: const FlDotData(show: false),
+      );
+    }
 
     return LineChart(
       LineChartData(
@@ -80,18 +92,10 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
         ),
         borderData: FlBorderData(show: false),
         minX: 0,
-        maxX: timeline.length.toDouble() - 1,
+        maxX: valueCount - 1,
         minY: 0,
         maxY: 1,
-        lineBarsData: [
-          LineChartBarData(
-            spots: spots,
-            gradient: LinearGradient(colors: colors),
-            barWidth: 3,
-            isStrokeCapRound: true,
-            dotData: const FlDotData(show: false),
-          ),
-        ],
+        lineBarsData: [makeLine(0)],
       ),
     );
   }
