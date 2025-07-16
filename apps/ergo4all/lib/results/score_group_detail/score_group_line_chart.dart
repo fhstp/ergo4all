@@ -1,6 +1,7 @@
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/rula_colors.dart';
+import 'package:ergo4all/results/score_group.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,11 @@ final _hLine = FlLine(
 
 const _noTitles = AxisTitles();
 
-/// Displays the normalized scores of a body-part over time using a
+/// Displays the normalized scores of a [ScoreGroup] over time using a
 /// 2D line-chart.
-class BodyPartLineChart extends StatefulWidget {
+class ScoreGroupLineChart extends StatefulWidget {
   ///
-  const BodyPartLineChart({
+  const ScoreGroupLineChart({
     required this.timelines,
     super.key,
   }) : assert(
@@ -34,10 +35,10 @@ class BodyPartLineChart extends StatefulWidget {
   final IList<IList<double>> timelines;
 
   @override
-  State<BodyPartLineChart> createState() => _BodyPartLineChartState();
+  State<ScoreGroupLineChart> createState() => _ScoreGroupLineChartState();
 }
 
-class _BodyPartLineChartState extends State<BodyPartLineChart> {
+class _ScoreGroupLineChartState extends State<ScoreGroupLineChart> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;

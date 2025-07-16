@@ -9,8 +9,8 @@ import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/body_part_detail/screen.dart';
-import 'package:ergo4all/results/body_part_group.dart';
+import 'package:ergo4all/results/score_group_detail/screen.dart';
+import 'package:ergo4all/results/score_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
@@ -41,11 +41,11 @@ class ResultsOverviewScreen extends StatelessWidget {
     }
 
     final normalizedScoresByGroup = IMap.fromKeys(
-      keys: BodyPartGroup.valuesSplit,
+      keys: ScoreGroup.valuesSplit,
       valueMapper: (group) => analysisResult.timeline.map((entry) {
         final scores = entry.scores;
         final score = scores.scoreOfGroup(group, mergeScores: worse);
-        return BodyPartGroup.normalizeFor(group, score);
+        return ScoreGroup.normalizeFor(group, score);
       }).toIList(),
     );
 
@@ -74,11 +74,11 @@ class ResultsOverviewScreen extends StatelessWidget {
       );
     }
 
-    void goToBodyPartPage(BodyPartGroup group) {
+    void goToScoreGroupPage(ScoreGroup group) {
       Navigator.push(
         context,
-        BodyPartResultsScreen.makeRoute(
-          bodyPartGroup: group,
+        ScoreGroupResultsScreen.makeRoute(
+          scoreGroup: group,
           // We use the averaged scores on the detail screen
           normalizedScores: averageScoresByGroup[group]!,
           // We display the median values on the detail screen
@@ -108,7 +108,7 @@ class ResultsOverviewScreen extends StatelessWidget {
           BodyScoreDisplay(
             aggregate,
             onBodyPartTapped: (part) {
-              goToBodyPartPage(BodyPartGroup.fromBodyPart(part));
+              goToScoreGroupPage(ScoreGroup.forPart(part));
             },
           ),
           Text(

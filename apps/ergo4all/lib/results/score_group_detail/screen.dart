@@ -2,8 +2,8 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/body_part_detail/body_part_line_chart.dart';
-import 'package:ergo4all/results/body_part_group.dart';
+import 'package:ergo4all/results/score_group_detail/score_group_line_chart.dart';
+import 'package:ergo4all/results/score_group.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -31,13 +31,13 @@ extension on String {
   String capitalize() => this[0].toUpperCase() + substring(1);
 }
 
-/// Screen display detailed score information about a specific [BodyPartGroup].
-class BodyPartResultsScreen extends StatelessWidget {
+/// Screen display detailed score information about a specific [ScoreGroup].
+class ScoreGroupResultsScreen extends StatelessWidget {
   ///
-  const BodyPartResultsScreen({
+  const ScoreGroupResultsScreen({
     required this.staticLoadScores,
     required this.normalizedScores,
-    required this.bodyPartGroup,
+    required this.scoreGroup,
     required this.recordingDuration,
     super.key,
   });
@@ -51,22 +51,22 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// rating chart.
   final IList<double> normalizedScores;
 
-  /// The body to display.
-  final BodyPartGroup bodyPartGroup;
+  /// The group to display.
+  final ScoreGroup scoreGroup;
 
   /// The duration of the recording in seconds.
   final int recordingDuration;
 
   /// Makes a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute({
-    required BodyPartGroup bodyPartGroup,
+    required ScoreGroup scoreGroup,
     required IList<double> normalizedScores,
     required IList<double> staticLoadScores,
     required int recordingDuration,
   }) {
     return MaterialPageRoute<void>(
-      builder: (context) => BodyPartResultsScreen(
-        bodyPartGroup: bodyPartGroup,
+      builder: (context) => ScoreGroupResultsScreen(
+        scoreGroup: scoreGroup,
         normalizedScores: normalizedScores,
         staticLoadScores: staticLoadScores,
         recordingDuration: recordingDuration,
@@ -81,9 +81,9 @@ class BodyPartResultsScreen extends StatelessWidget {
     // Need at least 15s of data to show the static load chart
     final showStaticLoad = recordingDuration >= 15;
 
-    final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
+    final groupLabel = scoreGroupLabelFor(localizations, scoreGroup);
     final rating = calculateRating(normalizedScores);
-    final groupName = BodyPartGroup.nameOf(bodyPartGroup);
+    final groupName = ScoreGroup.nameOf(scoreGroup);
     final message = _localizationMap['$groupName${rating.name.capitalize()}']!(
       localizations,
     );
@@ -91,7 +91,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const IconBackButton(),
-        title: Text(bodyPartLabel),
+        title: Text(groupLabel),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -107,8 +107,8 @@ class BodyPartResultsScreen extends StatelessWidget {
               height: 132,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
-                child:
-                    BodyPartLineChart(timelines: [normalizedScores].toIList()),
+                child: ScoreGroupLineChart(
+                    timelines: [normalizedScores].toIList()),
               ),
             ),
             const SizedBox(height: largeSpace),
