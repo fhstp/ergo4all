@@ -20,22 +20,21 @@ const _noTitles = AxisTitles();
 class BodyPartLineChart extends StatelessWidget {
   ///
   const BodyPartLineChart({
-    required this.normalizedScores,
+    required this.timeline,
     super.key,
   });
 
   /// The scores to display. The values in this list are expected to be [0; 1].
-  final IList<double> normalizedScores;
+  final IList<double> timeline;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final colors = normalizedScores
-        .map((score) => rulaColorFor(score, dark: true))
-        .toList();
+    final colors =
+        timeline.map((score) => rulaColorFor(score, dark: true)).toList();
 
-    final spots = normalizedScores
+    final spots = timeline
         .mapWithIndex((score, i) => FlSpot(i.toDouble(), score))
         .toList();
 
@@ -68,7 +67,7 @@ class BodyPartLineChart extends StatelessWidget {
         ),
         borderData: FlBorderData(show: false),
         minX: 0,
-        maxX: normalizedScores.length.toDouble() - 1,
+        maxX: timeline.length.toDouble() - 1,
         minY: 0,
         maxY: 1,
         lineBarsData: [
