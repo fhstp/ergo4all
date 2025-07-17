@@ -71,7 +71,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     // Here we walk the two timelines for left/right body parts and
     // pick the worst score for each timestamp. Is this right?
     // Might be worth rethinking.
-    final rating = calculateRating(averagedTimelines.reduce2d(max));
+    final rating = Rating.calculate(averagedTimelines.reduce2d(max));
     final message = localizations.ratedBodyPartMessage(bodyPartGroup, rating);
 
     return Scaffold(

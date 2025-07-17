@@ -94,7 +94,7 @@ class ResultsOverviewScreen extends StatelessWidget {
         .map((entry) => entry.scores.fullScore)
         .map((score) => normalizeScore(score, 7))
         .toIList()
-        .pipe(calculateRating);
+        .pipe(Rating.calculate);
 
     return Scaffold(
       appBar: AppBar(
