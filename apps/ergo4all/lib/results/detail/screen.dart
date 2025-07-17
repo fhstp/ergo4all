@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
@@ -11,8 +10,8 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
-import 'package:ergo4all/results/detail/heatmap_painter.dart';
 import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
+import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
@@ -48,7 +47,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     final recordingDuration = Duration(
       milliseconds: widget.analysisResult.timeline.last.timestamp -
           widget.analysisResult.timeline.first.timestamp,
-    ).inSeconds;
+    );
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
@@ -81,15 +80,13 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
         BodyPartResultsScreen.makeRoute(
           bodyPartGroup: bodyPart,
           timelines: normalizedScoresByGroup[bodyPart]!,
-          recordingDuration: recordingDuration,
+          recordingDuration: recordingDuration.inSeconds,
         ),
       );
     }
 
     final heatmapHeight = MediaQuery.of(context).size.width * 0.65;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
-    const labelSpaceWidth = 65.0;
-    final bodyLabelStyle = infoText.copyWith(fontSize: 13);
 
     return Scaffold(
       appBar: AppBar(
@@ -115,62 +112,10 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                 key: const Key('heatmap'),
                 width: heatmapWidth,
                 height: heatmapHeight,
-                child: Column(
-                  spacing: 10,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ...BodyPartGroup.values.map(
-                      (part) => Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            navigateToBodyPartPage(part);
-                          },
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SizedBox(
-                                width: labelSpaceWidth,
-                                child: Text(
-                                  localizations.bodyPartGroupLabel(part),
-                                  style: bodyLabelStyle,
-                                ),
-                              ),
-                              Expanded(
-                                child: CustomPaint(
-                                  painter: HeatmapPainter(
-                                    normalizedScores:
-                                        worstAveragesByGroup[part]!,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: labelSpaceWidth),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 2,
-                            color: woodSmoke.withValues(alpha: 0.5),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('0s', style: bodyLabelStyle),
-                              Text(
-                                '${recordingDuration}s',
-                                style: bodyLabelStyle,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                child: ScoreHeatmapGraph(
+                  timelinesByGroup: worstAveragesByGroup,
+                  recordingDuration: recordingDuration,
+                  onGroupTapped: navigateToBodyPartPage,
                 ),
               ),
             ),
