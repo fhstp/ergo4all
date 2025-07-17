@@ -16,6 +16,7 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/scenario_detail_screen.dart';
 import 'package:ergo4all/session_choice_screen.dart';
+import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:ergo4all/video_storage/src/local.dart';
@@ -67,6 +68,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
 
   @override
   Widget build(BuildContext context) {
+    final sessionRepository = FileBasedRulaSessionRepository();
+
     return MaterialApp(
       routes: {
         Routes.home.path: (context) => const HomeScreen(),
@@ -80,6 +83,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           return LiveAnalysisScreen(
             scenario: scenario,
             videoStore: LocalVideoStore(),
+            sessionRepository: sessionRepository,
           );
         },
         Routes.resultsOverview.path: (context) {
@@ -96,7 +100,8 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Routes.tipDetail.path: (context) => const TipDetailScreen(),
         Routes.imprint.path: (_) => const ImprintScreen(),
         Routes.privacy.path: (_) => const PrivacyScreen(),
-        Routes.sessions.path: (context) => const SessionChoiceScreen(),
+        Routes.sessions.path: (context) =>
+            SessionChoiceScreen(sessionRepository: sessionRepository),
       },
       navigatorObservers: [
         RouteLeaveObserver(
