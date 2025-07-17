@@ -1,3 +1,4 @@
+import 'package:common/pair_utils.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_analysis/pose_analysis.dart';
@@ -66,75 +67,75 @@ class _ScorePageState extends State<ScorePage> {
               ),
               ScoreDisplay(
                 label: 'Upper arm (Left)',
-                score: scores.upperArmScores.$1,
+                score: Pair.left(scores.upperArmScores),
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Upper arm (Right)',
-                score: scores.upperArmScores.$2,
+                score: Pair.right(scores.upperArmScores),
                 maxScore: 6,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Shoulder flexion (Left)',
-                score: scores.upperArmPositionScores.$1,
+                score: Pair.left(scores.upperArmPositionScores),
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Shoulder flexion (Right)',
-                score: scores.upperArmPositionScores.$2,
+                score: Pair.right(scores.upperArmPositionScores),
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Shoulder abduction (Left)',
-                score: scores.upperArmAbductedAdjustments.$1,
+                score: Pair.left(scores.upperArmAbductedAdjustments),
                 maxScore: 1,
                 minScore: 0,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Shoulder abduction (Right)',
-                score: scores.upperArmAbductedAdjustments.$2,
+                score: Pair.right(scores.upperArmAbductedAdjustments),
                 maxScore: 1,
                 minScore: 0,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Lower arm (Left)',
-                score: scores.lowerArmScores.$1,
+                score: Pair.left(scores.lowerArmScores),
                 maxScore: 3,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Lower arm (Right)',
-                score: scores.lowerArmScores.$2,
+                score: Pair.right(scores.lowerArmScores),
                 maxScore: 3,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Elbow flexion (Left)',
-                score: scores.lowerArmPositionScores.$1,
+                score: Pair.left(scores.lowerArmPositionScores),
                 maxScore: 2,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Elbow flexion (Right)',
-                score: scores.lowerArmPositionScores.$2,
+                score: Pair.right(scores.lowerArmPositionScores),
                 maxScore: 2,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Wrist flexion (Left)',
-                score: scores.wristScores.$1,
+                score: Pair.left(scores.wristScores),
                 maxScore: 4,
                 level: 2,
               ),
               ScoreDisplay(
                 label: 'Wrist flexion (Right)',
-                score: scores.wristScores.$2,
+                score: Pair.right(scores.wristScores),
                 maxScore: 4,
                 level: 2,
               ),
@@ -190,13 +191,13 @@ class _ScorePageState extends State<ScorePage> {
               ),
               ScoreDisplay(
                 label: 'Leg (Left)',
-                score: scores.legScores.$1,
+                score: Pair.left(scores.legScores),
                 maxScore: 3,
                 level: 1,
               ),
               ScoreDisplay(
                 label: 'Leg (Right)',
-                score: scores.legScores.$2,
+                score: Pair.right(scores.legScores),
                 maxScore: 3,
                 level: 1,
               ),

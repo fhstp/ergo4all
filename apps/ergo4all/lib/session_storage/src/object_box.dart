@@ -1,9 +1,9 @@
+import 'package:common/pair_utils.dart';
 import 'package:ergo4all/objectbox.g.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/src/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:rula/rula.dart';
 
 @Entity()
@@ -14,7 +14,7 @@ class IntPairEntity {
   int second;
 
   static IntPairEntity fromTuple((int, int) t) =>
-      IntPairEntity(first: t.$1, second: t.$2);
+      IntPairEntity(first: Pair.left(t), second: Pair.right(t));
   (int, int) toTuple() => (first, second);
 }
 

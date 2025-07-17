@@ -1,3 +1,4 @@
+import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/rula_color.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
@@ -56,14 +57,16 @@ class BodyScoreDisplay extends StatelessWidget {
         BodyPart.head => normalizeScore(scores.neckScore, 6),
         BodyPart.leftHand ||
         BodyPart.leftLowerArm =>
-          normalizeScore(scores.lowerArmScores.$1, 3),
+          normalizeScore(Pair.left(scores.lowerArmScores), 3),
         BodyPart.rightHand ||
         BodyPart.rightLowerArm =>
-          normalizeScore(scores.lowerArmScores.$2, 3),
-        BodyPart.leftLeg => normalizeScore(scores.legScores.$1, 2),
-        BodyPart.rightLeg => normalizeScore(scores.legScores.$2, 2),
-        BodyPart.leftUpperArm => normalizeScore(scores.upperArmScores.$1, 6),
-        BodyPart.rightUpperArm => normalizeScore(scores.upperArmScores.$2, 6),
+          normalizeScore(Pair.right(scores.lowerArmScores), 3),
+        BodyPart.leftLeg => normalizeScore(Pair.left(scores.legScores), 2),
+        BodyPart.rightLeg => normalizeScore(Pair.right(scores.legScores), 2),
+        BodyPart.leftUpperArm =>
+          normalizeScore(Pair.left(scores.upperArmScores), 6),
+        BodyPart.rightUpperArm =>
+          normalizeScore(Pair.right(scores.upperArmScores), 6),
         BodyPart.upperBody => normalizeScore(scores.trunkScore, 6),
       };
     }

@@ -5,7 +5,7 @@ abstract final class Pair {
   /// Creates a function which applies the given function [f] to both elements
   /// in a pair.
   static (U, U) Function((T, T)) map<T, U>(U Function(T) f) {
-    return (pair) => (f(pair.$1), f(pair.$2));
+    return (pair) => (f(Pair.left(pair)), f(Pair.right(pair)));
   }
 
   /// Selects the first/left element of a pair.
@@ -33,9 +33,10 @@ abstract final class Pair {
 
   /// Promotes a binary function [f] to work on pairs of it's inputs.
   static (V, V) Function((T, T), (U, U)) pairwise<T, U, V>(V Function(T, U) f) {
-    return (t, u) => (f(t.$1, u.$1), f(t.$2, u.$2));
+    return (t, u) =>
+        (f(Pair.left(t), Pair.left(u)), f(Pair.right(t), Pair.right(u)));
   }
 
   /// Converts this pair into a 2-item [IList].
-  static IList<T> toList<T>((T, T) pair) => IList([pair.$1, pair.$2]);
+  static IList<T> toList<T>((T, T) pair) => IList([left(pair), right(pair)]);
 }

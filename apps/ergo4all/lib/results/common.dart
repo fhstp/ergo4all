@@ -1,4 +1,5 @@
 import 'package:common/iterable_ext.dart';
+import 'package:common/pair_utils.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
@@ -33,28 +34,30 @@ RulaScores? aggregateTimeline(RulaTimeline timeline) {
 
   return RulaScores(
     upperArmPositionScores: (
-      aggregateScoreOf((scores) => scores.upperArmPositionScores.$1),
-      aggregateScoreOf((scores) => scores.upperArmPositionScores.$2),
+      aggregateScoreOf((scores) => Pair.left(scores.upperArmPositionScores)),
+      aggregateScoreOf((scores) => Pair.right(scores.upperArmPositionScores)),
     ),
     upperArmAbductedAdjustments: (
-      aggregateScoreOf((scores) => scores.upperArmAbductedAdjustments.$1),
-      aggregateScoreOf((scores) => scores.upperArmAbductedAdjustments.$2),
+      aggregateScoreOf(
+          (scores) => Pair.left(scores.upperArmAbductedAdjustments)),
+      aggregateScoreOf(
+          (scores) => Pair.right(scores.upperArmAbductedAdjustments)),
     ),
     upperArmScores: (
-      aggregateScoreOf((scores) => scores.upperArmScores.$1),
-      aggregateScoreOf((scores) => scores.upperArmScores.$2),
+      aggregateScoreOf((scores) => Pair.left(scores.upperArmScores)),
+      aggregateScoreOf((scores) => Pair.right(scores.upperArmScores)),
     ),
     lowerArmPositionScores: (
-      aggregateScoreOf((scores) => scores.lowerArmPositionScores.$1),
-      aggregateScoreOf((scores) => scores.lowerArmPositionScores.$2),
+      aggregateScoreOf((scores) => Pair.left(scores.lowerArmPositionScores)),
+      aggregateScoreOf((scores) => Pair.right(scores.lowerArmPositionScores)),
     ),
     lowerArmScores: (
-      aggregateScoreOf((scores) => scores.lowerArmScores.$1),
-      aggregateScoreOf((scores) => scores.lowerArmScores.$2),
+      aggregateScoreOf((scores) => Pair.left(scores.lowerArmScores)),
+      aggregateScoreOf((scores) => Pair.right(scores.lowerArmScores)),
     ),
     wristScores: (
-      aggregateScoreOf((scores) => scores.wristScores.$1),
-      aggregateScoreOf((scores) => scores.wristScores.$2),
+      aggregateScoreOf((scores) => Pair.left(scores.wristScores)),
+      aggregateScoreOf((scores) => Pair.right(scores.wristScores)),
     ),
     neckPositionScore: aggregateScoreOf((scores) => scores.neckPositionScore),
     neckTwistAdjustment:
@@ -69,8 +72,8 @@ RulaScores? aggregateTimeline(RulaTimeline timeline) {
         aggregateScoreOf((scores) => scores.trunkSideBendAdjustment),
     trunkScore: aggregateScoreOf((scores) => scores.trunkScore),
     legScores: (
-      aggregateScoreOf((scores) => scores.legScores.$1),
-      aggregateScoreOf((scores) => scores.legScores.$2),
+      aggregateScoreOf((scores) => Pair.left(scores.legScores)),
+      aggregateScoreOf((scores) => Pair.right(scores.legScores)),
     ),
     fullScore: aggregateScoreOf((scores) => scores.fullScore),
   );

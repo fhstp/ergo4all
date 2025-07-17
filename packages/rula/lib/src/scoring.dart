@@ -308,8 +308,10 @@ RulaScores scoresOf(RulaSheet sheet) {
   );
 
   final armHandScore = ((
-    _tableA[upperArmScores.$1 - 1][lowerArmScores.$1 - 1][wristScores.$1 - 1],
-    _tableA[upperArmScores.$2 - 1][lowerArmScores.$2 - 1][wristScores.$2 - 1]
+    _tableA[Pair.left(upperArmScores) - 1][Pair.left(lowerArmScores) - 1]
+        [Pair.left(wristScores) - 1],
+    _tableA[Pair.right(upperArmScores) - 1][Pair.right(lowerArmScores) - 1]
+        [Pair.right(wristScores) - 1]
   )..pipe(Pair.map(_assertInRange(1, 9))))
       .pipe(Pair.reduce(worse));
   final neckTrunkLegScore = _tableB[neckScore - 1][trunkScore - 1]
