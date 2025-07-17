@@ -1,6 +1,7 @@
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/rating.dart';
+import 'package:ergo4all/scenario/common.dart';
 
 /// Extensions for getting variable localized texts.
 extension VariableLocalizations on AppLocalizations {
@@ -33,5 +34,31 @@ extension VariableLocalizations on AppLocalizations {
         (BodyPartGroup.legs, Rating.good) => legsGood,
         (BodyPartGroup.legs, Rating.medium) => legsMedium,
         (BodyPartGroup.legs, Rating.low) => legsLow,
+      };
+
+  /// Gets a localized tip for the given [scenario].
+  String scenarioTip(Scenario scenario) => switch (scenario) {
+        Scenario.liftAndCarry => scenario_lift_and_carry_tips,
+        Scenario.pull => scenario_pull_tips,
+        Scenario.seated => scenario_seated_tips,
+        Scenario.packaging => scenario_packaging_tips,
+        Scenario.standingCNC => scenario_CNC_tips,
+        Scenario.standingAssembly => scenario_assembly_tips,
+        Scenario.ceiling => scenario_ceiling_tips,
+        Scenario.lift25 => scenario_lift_tips,
+        Scenario.conveyorBelt => scenario_conveyor_tips,
+      };
+
+  /// Gets a localized improvement suggestion for the given [scenario].
+  String scenarioImprovement(Scenario scenario) => switch (scenario) {
+        Scenario.liftAndCarry => scenario_lift_and_carry_tools,
+        Scenario.pull => scenario_pull_tools,
+        Scenario.seated => scenario_seated_tools,
+        Scenario.packaging => scenario_packaging_tools,
+        Scenario.standingCNC => scenario_CNC_tools,
+        Scenario.standingAssembly => scenario_assembly_tools,
+        Scenario.ceiling => scenario_ceiling_tools,
+        Scenario.lift25 => scenario_lift_tools,
+        Scenario.conveyorBelt => scenario_conveyor_tools,
       };
 }
