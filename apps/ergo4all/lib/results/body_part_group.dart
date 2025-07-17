@@ -1,3 +1,4 @@
+import 'package:common/immutable_collection_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -53,3 +54,23 @@ BodyPartGroup groupOf(BodyPart part) => switch (part) {
       BodyPart.leftUpperArm || BodyPart.rightUpperArm => BodyPartGroup.shoulder,
       BodyPart.upperBody => BodyPartGroup.trunk,
     };
+
+/// Groups scores in a [RulaTimeline] by [BodyPartGroup].
+///
+/// For singular body-parts, like the neck, there will be one list,
+/// while for paired ones, like the arms, there will be two, for left and right.
+///
+/// `neck => [[1, 2, 3]]`
+///
+/// `arms => [[1, 2, 3], [3, 4, 5]]`
+IMap<BodyPartGroup, IList<IList<int>>> groupTimelineScores(
+  RulaTimeline timeline,
+) =>
+    IMap.fromKeys(
+      keys: BodyPartGroup.values,
+      valueMapper: (bodyPartGroup) => timeline
+          .map((entry) => bodyPartGroupScoreOf(entry.scores, bodyPartGroup))
+          .toIList()
+          .columns()
+          .toIList(),
+    );

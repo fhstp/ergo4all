@@ -44,22 +44,17 @@ class ResultsDetailScreen extends StatelessWidget {
           analysisResult.timeline.first.timestamp,
     );
 
-    final normalizedScoresByGroup = IMap.fromKeys(
-      keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => analysisResult.timeline
-          .map((entry) {
-            final splitScores =
-                bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
-            return splitScores
-                .map(
-                  (score) => normalizeScore(score, maxScoreOf(bodyPartGroup)),
-                )
-                .toIList();
-          })
-          .toIList()
-          .columns()
-          .toIList(),
-    );
+    final normalizedScoresByGroup = groupTimelineScores(analysisResult.timeline)
+        .mapValues((group, splitScores) {
+      final maxScore = maxScoreOf(group);
+      return splitScores
+          .map(
+            (timeline) => timeline
+                .map((score) => normalizeScore(score, maxScore))
+                .toIList(),
+          )
+          .toIList();
+    });
 
     final worstAveragesByGroup = normalizedScoresByGroup
         .mapValues(
