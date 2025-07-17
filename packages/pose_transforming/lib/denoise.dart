@@ -21,7 +21,7 @@ Landmark _divideLandmark(Landmark landmark, int i) {
 }
 
 Pose _dividePose(Pose pose, int i) {
-  return pose.mapValues((landmark) => _divideLandmark(landmark, i));
+  return pose.mapValues((_, landmark) => _divideLandmark(landmark, i));
 }
 
 /// Averages a collection of poses in order to get a more denoised pose.

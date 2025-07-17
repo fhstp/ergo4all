@@ -23,7 +23,7 @@ extension _ScalingExt on Pose2d {
   Pose2d scaleToFit(Size size) {
     final bounds = boundingBox;
     final scale = min(size.width / bounds.width, size.height / bounds.height);
-    return mapValues((pos) => pos * scale);
+    return mapValues((_, pos) => pos * scale);
   }
 
   Vector2 get center {
@@ -33,7 +33,7 @@ extension _ScalingExt on Pose2d {
 
   Pose2d centerAt(Offset newCenter) {
     final translate = Vector2(newCenter.dx, newCenter.dy) - center;
-    return mapValues((p) => p + translate);
+    return mapValues((_, p) => p + translate);
   }
 }
 

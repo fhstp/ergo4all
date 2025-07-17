@@ -80,6 +80,7 @@ typedef Pose = IMap<KeyPoints, Landmark>;
 
 /// Maps the positions in a [Pose] by applying [map] to each.
 Pose mapPosePositions(Pose pose, Vector3 Function(Vector3) map) {
-  return pose
-      .mapValues((landmark) => (map(posOf(landmark)), visibilityOf(landmark)));
+  return pose.mapValues(
+    (_, landmark) => (map(posOf(landmark)), visibilityOf(landmark)),
+  );
 }

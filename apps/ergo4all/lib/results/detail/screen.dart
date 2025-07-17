@@ -63,11 +63,11 @@ class ResultsDetailScreen extends StatelessWidget {
 
     final worstAveragesByGroup = normalizedScoresByGroup
         .mapValues(
-          (splitScores) => splitScores
+          (_, splitScores) => splitScores
               .map((scores) => calculateRunningAverage(scores, 20))
               .toIList(),
         )
-        .mapValues((splitScores) => splitScores.reduce2d(max));
+        .mapValues((_, splitScores) => splitScores.reduce2d(max));
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       Navigator.push(

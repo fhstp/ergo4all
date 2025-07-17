@@ -14,8 +14,8 @@ Pose2d _make2dPose(
 }) =>
     pose
         .where((_, landmark) => visibilityOf(landmark) >= minVisibility)
-        .mapValues(posOf)
-        .mapValues(makePoint2d);
+        .mapValues((_, landmark) => posOf(landmark))
+        .mapValues((_, pos) => makePoint2d(pos));
 
 /// Projects the given pose onto the coronal plane in order to make it 2d.
 /// Landmarks with visibility < [minVisibility] will be discarded.
