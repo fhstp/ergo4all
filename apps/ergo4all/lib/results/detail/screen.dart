@@ -12,13 +12,12 @@ import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/heatmap_painter.dart';
+import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
-import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
 class ResultsDetailScreen extends StatefulWidget {
@@ -40,20 +39,6 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     final tips = localizations.scenarioTip(widget.analysisResult.scenario);
     final improvements =
         localizations.scenarioImprovement(widget.analysisResult.scenario);
-
-    final graphicFileName = switch (widget.analysisResult.scenario) {
-      Scenario.liftAndCarry || Scenario.lift25 => 'lifting',
-      Scenario.pull => 'pushing',
-      Scenario.seated => 'sitting',
-      Scenario.packaging ||
-      Scenario.standingCNC ||
-      Scenario.standingAssembly ||
-      Scenario.conveyorBelt =>
-        'standing',
-      Scenario.ceiling => 'overhead_work',
-    };
-    final graphicKey =
-        'assets/images/puppets_good_bad/good_bad_$graphicFileName.svg';
 
     if (widget.analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -267,7 +252,10 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                 ),
 
                 Center(
-                  child: SvgPicture.asset(graphicKey, height: 330),
+                  child: ScenarioGoodBadGraphic(
+                    widget.analysisResult.scenario,
+                    height: 330,
+                  ),
                 ),
               ],
             ),
