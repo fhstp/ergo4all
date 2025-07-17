@@ -22,15 +22,18 @@ enum BodyPartGroup {
   legs,
 }
 
-/// Get scores for a [BodyPartGroup] from a [RulaScores] object.
-IList<int> bodyPartGroupScoreOf(RulaScores scores, BodyPartGroup group) {
-  return switch (group) {
-    BodyPartGroup.shoulder => Pair.toList(scores.upperArmScores),
-    BodyPartGroup.arm => Pair.toList(scores.lowerArmScores),
-    BodyPartGroup.trunk => IList([scores.trunkScore]),
-    BodyPartGroup.neck => IList([scores.neckScore]),
-    BodyPartGroup.legs => Pair.toList(scores.legScores)
-  };
+/// Extension for accessing scores for [BodyPartGroup]s from [RulaScores].
+extension ScoreAccess on RulaScores {
+  /// Get scores for a [BodyPartGroup].
+  IList<int> bodyPartGroupScoreOf(BodyPartGroup group) {
+    return switch (group) {
+      BodyPartGroup.shoulder => Pair.toList(upperArmScores),
+      BodyPartGroup.arm => Pair.toList(lowerArmScores),
+      BodyPartGroup.trunk => IList([trunkScore]),
+      BodyPartGroup.neck => IList([neckScore]),
+      BodyPartGroup.legs => Pair.toList(legScores)
+    };
+  }
 }
 
 /// Gets the maximum value score in a [BodyPartGroup] is expected to reach.
@@ -69,7 +72,7 @@ IMap<BodyPartGroup, IList<IList<int>>> groupTimelineScores(
     IMap.fromKeys(
       keys: BodyPartGroup.values,
       valueMapper: (bodyPartGroup) => timeline
-          .map((entry) => bodyPartGroupScoreOf(entry.scores, bodyPartGroup))
+          .map((entry) => entry.scores.bodyPartGroupScoreOf(bodyPartGroup))
           .toIList()
           .columns()
           .toIList(),
