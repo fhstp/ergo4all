@@ -2,7 +2,7 @@ import 'package:common/casting.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/common.dart';
-import 'package:ergo4all/analysis/live/screen.dart';
+import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
