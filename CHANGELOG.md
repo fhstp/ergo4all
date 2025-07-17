@@ -1,3 +1,10 @@
+# [1.91.0](https://github.com/fhstp/ergo4all/compare/v1.90.0...v1.91.0) (2025-07-17)
+
+
+### Features
+
+* new puppet graphics ([d08d49b](https://github.com/fhstp/ergo4all/commit/d08d49b43543030db58004c7242653065f182ee2))
+
 # [1.90.0](https://github.com/fhstp/ergo4all/compare/v1.89.0...v1.90.0) (2025-07-17)
 
 
