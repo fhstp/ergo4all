@@ -7,42 +7,8 @@ import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
-import 'package:ergo4all/results/rula_colors.dart';
+import 'package:ergo4all/home/puppet_graphic.dart';
 import 'package:flutter/material.dart';
-
-class _PuppetGraphic extends StatelessWidget {
-  const _PuppetGraphic();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 309,
-      height: 309,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipOval(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Image.asset(
-            'assets/images/puppet/full_body.png',
-            color: RulaColors.low,
-            fit: BoxFit.contain,
-            colorBlendMode: BlendMode.modulate,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 /// Top-level widget for home screen.
 class HomeScreen extends StatelessWidget {
@@ -80,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: largeSpace),
-              const _PuppetGraphic(),
+              const PuppetGraphic(),
               const SizedBox(height: mediumSpace),
               Text(
                 localizations.home_welcome_break('Ergo-fan'),
