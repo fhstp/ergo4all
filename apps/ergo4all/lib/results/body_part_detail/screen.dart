@@ -14,28 +14,6 @@ import 'package:ergo4all/results/variable_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-final Map<String, String Function(AppLocalizations)> _localizationMap = {
-  'shoulderGood': (l) => l.shoulderGood,
-  'shoulderMedium': (l) => l.shoulderMedium,
-  'shoulderLow': (l) => l.shoulderLow,
-  'armGood': (l) => l.armGood,
-  'armMedium': (l) => l.armMedium,
-  'armLow': (l) => l.armLow,
-  'trunkGood': (l) => l.trunkGood,
-  'trunkMedium': (l) => l.trunkMedium,
-  'trunkLow': (l) => l.trunkLow,
-  'neckGood': (l) => l.neckGood,
-  'neckMedium': (l) => l.neckMedium,
-  'neckLow': (l) => l.neckLow,
-  'legsGood': (l) => l.legsGood,
-  'legsMedium': (l) => l.legsMedium,
-  'legsLow': (l) => l.legsLow,
-};
-
-extension on String {
-  String capitalize() => this[0].toUpperCase() + substring(1);
-}
-
 /// Screen display detailed score information about a specific [BodyPartGroup].
 class BodyPartResultsScreen extends StatelessWidget {
   ///
@@ -94,10 +72,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     // pick the worst score for each timestamp. Is this right?
     // Might be worth rethinking.
     final rating = calculateRating(averagedTimelines.reduce2d(max));
-    final message =
-        _localizationMap['${bodyPartGroup.name}${rating.name.capitalize()}']!(
-      localizations,
-    );
+    final message = localizations.ratedBodyPartMessage(bodyPartGroup, rating);
 
     return Scaffold(
       appBar: AppBar(
