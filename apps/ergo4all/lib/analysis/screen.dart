@@ -194,16 +194,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       analysisMode = _AnalysisMode.full;
     });
 
-    // Comment out
-
     await cameraController.stopImageStream();
     await cameraController.startVideoRecording(
       onAvailable: (image) {
         onCameraImage(cameraController.value, image);
       },
     );
-
-    // ...
 
     unawaited(
       progressAnimationController.reverse().then((_) {

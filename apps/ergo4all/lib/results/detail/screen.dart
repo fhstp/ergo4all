@@ -222,35 +222,27 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: largeSpace),
-
-                // New feature: show tips
                 Text(
                   localizations.ergonomics_tipps,
                   style: paragraphHeaderStyle,
                   textAlign: TextAlign.left,
                 ),
-
                 Text(
                   tips,
                   style: dynamicBodyStyle,
                   textAlign: TextAlign.left,
                 ),
-
                 const SizedBox(height: mediumSpace),
-
-                // New feature: show improvement solutions
                 Text(
                   localizations.improvements,
                   style: paragraphHeaderStyle,
                   textAlign: TextAlign.left,
                 ),
-
                 Text(
                   improvements,
                   style: dynamicBodyStyle,
                   textAlign: TextAlign.left,
                 ),
-
                 Center(
                   child: ScenarioGoodBadGraphic(
                     widget.analysisResult.scenario,
