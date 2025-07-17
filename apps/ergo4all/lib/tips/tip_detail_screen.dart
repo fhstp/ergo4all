@@ -75,10 +75,7 @@ class TipDetailScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(30),
-                      child: SvgPicture.asset(
-                        graphicKey,
-                        height: 300,
-                      ),
+                      child: SvgPicture.asset(graphicKey, height: 300),
                     ),
                   ],
                 ),

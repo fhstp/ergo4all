@@ -83,10 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           xLargeSpace,
                           0,
                         ),
-                        child: SvgPicture(
-                          CustomImages.logoWhite,
-                          height: 100,
-                        ),
+                        child: SvgPicture(CustomImages.logoWhite, height: 100),
                       ),
                     ],
                   ),

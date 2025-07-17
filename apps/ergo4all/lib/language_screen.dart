@@ -49,13 +49,9 @@ class PickLanguageScreen extends StatelessWidget {
                 style: h3Style,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: largeSpace,
-              ),
+              const SizedBox(height: largeSpace),
               languageButtonFor('Deutsch', const Locale('de')),
-              const SizedBox(
-                height: largeSpace,
-              ),
+              const SizedBox(height: largeSpace),
               languageButtonFor('English', const Locale('en')),
             ],
           ),
