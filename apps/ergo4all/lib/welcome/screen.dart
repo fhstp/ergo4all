@@ -41,8 +41,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    Future<void> navigateToNextScreen() async {
-      await Navigator.of(context).pushReplacementNamed(Routes.language.path);
+    void navigateToNextScreen() {
+      unawaited(
+        Navigator.of(context).pushReplacementNamed(Routes.language.path),
+      );
     }
 
     final screenHeight = MediaQuery.of(context).size.height;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
@@ -73,11 +75,13 @@ class ScenarioDetailScreen extends StatelessWidget {
     final graphicKey = 'assets/images/puppet_scenario/$graphicFileName.svg';
 
     // Pass scenario context
-    Future<void> goToRecordScreen() async {
-      await Navigator.of(context).pushNamedAndRemoveUntil(
-        Routes.liveAnalysis.path,
-        ModalRoute.withName(Routes.home.path),
-        arguments: scenario,
+    void goToRecordScreen() {
+      unawaited(
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          Routes.liveAnalysis.path,
+          ModalRoute.withName(Routes.home.path),
+          arguments: scenario,
+        ),
       );
     }
 

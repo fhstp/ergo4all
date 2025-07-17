@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:custom_locale/custom_locale.dart';
@@ -18,10 +20,12 @@ class PickLanguageScreen extends StatelessWidget {
     Future<void> selectLocale(Locale locale) async {
       await setCustomLocale(locale);
       if (!context.mounted) return;
-      await Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.home.path,
-        ModalRoute.withName(Routes.home.name),
+      unawaited(
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.home.path,
+          ModalRoute.withName(Routes.home.name),
+        ),
       );
     }
 

@@ -32,8 +32,8 @@ Future<void> showHomeMenuDialog(BuildContext context) {
     unawaited(navigator.pushNamed(Routes.privacy.path));
   }
 
-  Future<void> goToAllSessions() async {
-    await Navigator.of(context).pushNamed(Routes.sessions.path);
+  void goToAllSessions() {
+    unawaited(Navigator.of(context).pushNamed(Routes.sessions.path));
   }
 
   return showDialog<void>(

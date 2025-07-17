@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
@@ -25,9 +27,10 @@ class TipChoiceScreen extends StatelessWidget {
           Tip.handAndArm => localizations.tip_handAndArm_label,
         };
 
-    Future<void> goToDetailScreen(Tip tip) async {
-      await Navigator.of(context)
-          .pushNamed(Routes.tipDetail.path, arguments: tip);
+    void goToDetailScreen(Tip tip) {
+      unawaited(
+        Navigator.of(context).pushNamed(Routes.tipDetail.path, arguments: tip),
+      );
     }
 
     return Scaffold(

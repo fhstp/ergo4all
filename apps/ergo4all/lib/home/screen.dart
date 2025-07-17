@@ -23,8 +23,8 @@ class HomeScreen extends StatelessWidget {
       unawaited(Navigator.pushNamed(context, Routes.scenarioChoice.path));
     }
 
-    Future<void> goToTips() async {
-      await Navigator.of(context).pushNamed(Routes.tipChoice.path);
+    void goToTips() {
+      unawaited(Navigator.pushNamed(context, Routes.tipChoice.path));
     }
 
     return Scaffold(

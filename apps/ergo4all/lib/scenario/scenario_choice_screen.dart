@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
@@ -28,10 +30,12 @@ class ScenarioChoiceScreen extends StatelessWidget {
     };
 
     // Added scenario passing
-    Future<void> goToDetailScreen(Scenario scenario) async {
-      await Navigator.of(context).pushNamed(
-        Routes.scenarioDetail.path,
-        arguments: scenario,
+    void goToDetailScreen(Scenario scenario) {
+      unawaited(
+        Navigator.of(context).pushNamed(
+          Routes.scenarioDetail.path,
+          arguments: scenario,
+        ),
       );
     }
 
