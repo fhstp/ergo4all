@@ -96,12 +96,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
   }
 
-  void _analyzePose(int timestamp, Pose pose) {
-    final rulaSheet = pose.toRulaSheet();
-    final scores = scoresOf(rulaSheet);
-    timeline.add(TimelineEntry(timestamp: timestamp, scores: scores));
-  }
-
   void onFrame(_Frame frame) {
     if (analysisMode == _AnalysisMode.none || !mounted) return;
 
@@ -125,7 +119,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     if (poses.length < 5) return;
 
     final averagePose = averagePoses(poses);
-    _analyzePose(frame.timestamp, averagePose);
+
+    final rulaSheet = averagePose.toRulaSheet();
+    final scores = scoresOf(rulaSheet);
+    timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
   void onPoseInput(PoseDetectInput input) {
