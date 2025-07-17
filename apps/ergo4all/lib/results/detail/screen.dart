@@ -19,7 +19,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 /// Screen for displaying detailed information about a [RulaTimeline].
-class ResultsDetailScreen extends StatefulWidget {
+class ResultsDetailScreen extends StatelessWidget {
   ///
   const ResultsDetailScreen({required this.analysisResult, super.key});
 
@@ -27,31 +27,26 @@ class ResultsDetailScreen extends StatefulWidget {
   final AnalysisResult analysisResult;
 
   @override
-  State<ResultsDetailScreen> createState() => _ResultsDetailScreenState();
-}
-
-class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
-  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final tips = localizations.scenarioTip(widget.analysisResult.scenario);
+    final tips = localizations.scenarioTip(analysisResult.scenario);
     final improvements =
-        localizations.scenarioImprovement(widget.analysisResult.scenario);
+        localizations.scenarioImprovement(analysisResult.scenario);
 
-    if (widget.analysisResult.timeline.isEmpty) {
+    if (analysisResult.timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }
 
     final recordingDuration = Duration(
-      milliseconds: widget.analysisResult.timeline.last.timestamp -
-          widget.analysisResult.timeline.first.timestamp,
+      milliseconds: analysisResult.timeline.last.timestamp -
+          analysisResult.timeline.first.timestamp,
     );
 
     final normalizedScoresByGroup = IMap.fromKeys(
       keys: BodyPartGroup.values,
-      valueMapper: (bodyPartGroup) => widget.analysisResult.timeline
+      valueMapper: (bodyPartGroup) => analysisResult.timeline
           .map((entry) {
             final splitScores =
                 bodyPartGroupScoreOf(entry.scores, bodyPartGroup);
@@ -158,7 +153,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                 ),
                 Center(
                   child: ScenarioGoodBadGraphic(
-                    widget.analysisResult.scenario,
+                    analysisResult.scenario,
                     height: 330,
                   ),
                 ),
