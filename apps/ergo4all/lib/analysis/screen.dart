@@ -11,6 +11,7 @@ import 'package:ergo4all/analysis/camera_utils.dart';
 import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
+import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -21,11 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
-import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_transforming/denoise.dart';
-import 'package:pose_transforming/normalization.dart';
-import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
 import 'package:rula/rula.dart';
@@ -99,14 +97,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   }
 
   void _analyzePose(int timestamp, Pose pose) {
-    final normalized = normalizePose(pose);
-    final sagittal = make2dSagittalPose(normalized);
-    final coronal = make2dCoronalPose(normalized);
-    final transverse = make2dTransversePose(normalized);
-    final angles = calculateAngles(pose, coronal, sagittal, transverse);
-
-    final sheet = rulaSheetFromAngles(angles);
-    timeline.add(TimelineEntry(timestamp: timestamp, scores: scoresOf(sheet)));
+    final rulaSheet = pose.toRulaSheet();
+    final scores = scoresOf(rulaSheet);
+    timeline.add(TimelineEntry(timestamp: timestamp, scores: scores));
   }
 
   void onFrame(_Frame frame) {
