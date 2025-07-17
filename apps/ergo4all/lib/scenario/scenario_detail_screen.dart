@@ -8,9 +8,9 @@ import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
+import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 /// Screen for viewing a detailed description of a [Scenario].
 class ScenarioDetailScreen extends StatelessWidget {
@@ -23,19 +23,6 @@ class ScenarioDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    final graphicFileName = switch (scenario) {
-      Scenario.liftAndCarry || Scenario.lift25 => 'lifting',
-      Scenario.pull => 'pushing',
-      Scenario.seated => 'sitting',
-      Scenario.packaging ||
-      Scenario.standingCNC ||
-      Scenario.standingAssembly ||
-      Scenario.conveyorBelt =>
-        'standing',
-      Scenario.ceiling => 'overhead_work',
-    };
-    final graphicKey = 'assets/images/puppet_scenario/$graphicFileName.svg';
 
     // Pass scenario context
     void goToRecordScreen() {
@@ -95,7 +82,7 @@ class ScenarioDetailScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: mediumSpace),
-                    SvgPicture.asset(graphicKey, height: 330),
+                    ScenarioGraphic(scenario, height: 330),
                     const SizedBox(height: mediumSpace),
                     ElevatedButton(
                       key: const Key('start'),
