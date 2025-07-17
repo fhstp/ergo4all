@@ -1,3 +1,12 @@
+# [1.90.0](https://github.com/fhstp/ergo4all/compare/v1.89.0...v1.90.0) (2025-07-17)
+
+
+### Features
+
+* display both sides in body part graph ([d0147a1](https://github.com/fhstp/ergo4all/commit/d0147a10793c7148afdcce1d05937b6ead93f730)), closes [#98](https://github.com/fhstp/ergo4all/issues/98)
+* highlight line in body part graph ([9b4630d](https://github.com/fhstp/ergo4all/commit/9b4630deb34f6e4f39398f51868f8ac454d32fd0)), closes [#98](https://github.com/fhstp/ergo4all/issues/98)
+* toggle highlighted score line ([3d5bd01](https://github.com/fhstp/ergo4all/commit/3d5bd016165b255d3f185156c7422bb4f10dd390)), closes [#98](https://github.com/fhstp/ergo4all/issues/98)
+
 # [1.89.0](https://github.com/fhstp/ergo4all/compare/v1.88.0...v1.89.0) (2025-07-16)
 
 
