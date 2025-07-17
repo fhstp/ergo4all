@@ -1,5 +1,4 @@
 import 'package:common/pair_utils.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:rula/rula.dart';
@@ -41,20 +40,6 @@ int maxScoreOf(BodyPartGroup group) => switch (group) {
       BodyPartGroup.neck => 6,
       BodyPartGroup.legs => 3
     };
-
-/// Get the localized label for the given [group].
-String bodyPartGroupLabelFor(
-  AppLocalizations localizations,
-  BodyPartGroup group,
-) {
-  return switch (group) {
-    BodyPartGroup.shoulder => localizations.results_body_shoulder,
-    BodyPartGroup.arm => localizations.results_body_arm,
-    BodyPartGroup.trunk => localizations.results_body_trunk,
-    BodyPartGroup.neck => localizations.results_body_neck,
-    BodyPartGroup.legs => localizations.results_body_legs,
-  };
-}
 
 /// Gets the [BodyPartGroup] for a [BodyPart].
 BodyPartGroup groupOf(BodyPart part) => switch (part) {

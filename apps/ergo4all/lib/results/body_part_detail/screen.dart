@@ -10,6 +10,7 @@ import 'package:ergo4all/results/body_part_detail/static_load_chart.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/rating.dart';
+import 'package:ergo4all/results/variable_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -87,7 +88,7 @@ class BodyPartResultsScreen extends StatelessWidget {
         ? calculateRunningMedian(timelines.reduce2d(max), 20)
         : const IList<double>.empty();
 
-    final bodyPartLabel = bodyPartGroupLabelFor(localizations, bodyPartGroup);
+    final bodyPartLabel = localizations.bodyPartGroupLabel(bodyPartGroup);
 
     // Here we walk the two timelines for left/right body parts and
     // pick the worst score for each timestamp. Is this right?
