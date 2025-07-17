@@ -116,7 +116,7 @@ class BodyPartResultsScreen extends StatelessWidget {
             SizedBox(
               height: 132,
               child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
+                padding: const EdgeInsets.symmetric(horizontal: smallSpace),
                 child: BodyPartLineChart(timelines: averagedTimelines),
               ),
             ),
@@ -130,7 +130,7 @@ class BodyPartResultsScreen extends StatelessWidget {
               SizedBox(
                 height: 132,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: smallSpace),
                   child: LineChart(
                     LineChartData(
                       gridData: FlGridData(
