@@ -8,6 +8,7 @@ import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
+import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -22,44 +23,6 @@ class ScenarioDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    final summary = switch (scenario) {
-      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_summary,
-      Scenario.pull => localizations.scenario_pull_summary,
-      Scenario.seated => localizations.scenario_seated_summary,
-      Scenario.packaging => localizations.scenario_packaging_summary,
-      Scenario.standingCNC => localizations.scenario_CNC_summary,
-      Scenario.standingAssembly => localizations.scenario_assembly_summary,
-      Scenario.ceiling => localizations.scenario_ceiling_summary,
-      Scenario.lift25 => localizations.scenario_lift_and_carry_summary,
-      Scenario.conveyorBelt => localizations.scenario_conveyor_summary,
-    };
-
-    final description = switch (scenario) {
-      Scenario.liftAndCarry =>
-        localizations.scenario_lift_and_carry_description,
-      Scenario.pull => localizations.scenario_pull_description,
-      Scenario.seated => localizations.scenario_seated_description,
-      Scenario.packaging => localizations.scenario_packaging_description,
-      Scenario.standingCNC => localizations.scenario_CNC_description,
-      Scenario.standingAssembly => localizations.scenario_assembly_description,
-      Scenario.ceiling => localizations.scenario_ceiling_description,
-      Scenario.lift25 => localizations.scenario_lift_description,
-      Scenario.conveyorBelt => localizations.scenario_conveyor_description,
-    };
-
-    final expectation = switch (scenario) {
-      Scenario.liftAndCarry =>
-        localizations.scenario_lift_and_carry_expectation,
-      Scenario.pull => localizations.scenario_pull_expectation,
-      Scenario.seated => localizations.scenario_seated_expectation,
-      Scenario.packaging => localizations.scenario_packaging_expectation,
-      Scenario.standingCNC => localizations.scenario_CNC_expectation,
-      Scenario.standingAssembly => localizations.scenario_assembly_expectation,
-      Scenario.ceiling => localizations.scenario_ceiling_expectation,
-      Scenario.lift25 => localizations.scenario_lift_expectation,
-      Scenario.conveyorBelt => localizations.scenario_conveyor_expectation,
-    };
 
     final graphicFileName = switch (scenario) {
       Scenario.liftAndCarry || Scenario.lift25 => 'lifting',
@@ -104,7 +67,7 @@ class ScenarioDetailScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: mediumSpace),
                     Text(
-                      summary,
+                      localizations.scenarioSummary(scenario),
                       style: h4Style.copyWith(color: cardinal),
                       textAlign: TextAlign.center,
                     ),
@@ -117,7 +80,7 @@ class ScenarioDetailScreen extends StatelessWidget {
                           style: paragraphHeaderStyle,
                         ),
                         Text(
-                          description,
+                          localizations.scenarioDescription(scenario),
                           style: dynamicBodyStyle,
                         ),
                         const SizedBox(height: mediumSpace),
@@ -126,7 +89,7 @@ class ScenarioDetailScreen extends StatelessWidget {
                           style: paragraphHeaderStyle,
                         ),
                         Text(
-                          expectation,
+                          localizations.scenarioExpectation(scenario),
                           style: dynamicBodyStyle,
                         ),
                       ],

@@ -6,6 +6,7 @@ import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
+import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Screen where users can choose which [Scenario] they want to record.
@@ -16,18 +17,6 @@ class ScenarioChoiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    String titleFor(Scenario scenario) => switch (scenario) {
-      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
-      Scenario.pull => localizations.scenario_pull_label,
-      Scenario.seated => localizations.scenario_seated_label,
-      Scenario.packaging => localizations.scenario_packaging_label,
-      Scenario.standingCNC => localizations.scenario_CNC_label,
-      Scenario.standingAssembly => localizations.scenario_assembly_label,
-      Scenario.ceiling => localizations.scenario_ceiling_label,
-      Scenario.lift25 => localizations.scenario_lift_label,
-      Scenario.conveyorBelt => localizations.scenario_conveyor_label,
-    };
 
     // Added scenario passing
     void goToDetailScreen(Scenario scenario) {
@@ -63,7 +52,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
                           goToDetailScreen(scenario);
                         },
                         child: Text(
-                          titleFor(scenario),
+                          localizations.scenarioLabel(scenario),
                           textAlign: TextAlign.center,
                         ),
                       );
