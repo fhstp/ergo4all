@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/rula_colors.dart';
@@ -5,6 +6,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart' hide State;
+import 'package:toggle_switch/toggle_switch.dart';
 
 final _lineGray = Colors.grey.withValues(alpha: 0.2);
 
@@ -43,14 +45,16 @@ class BodyPartLineChart extends StatefulWidget {
 }
 
 class _BodyPartLineChartState extends State<BodyPartLineChart> {
+  int highlightedTimelineIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
     final valueCount = widget.timelines[0].length;
-    final highlightedTimelineIndex = 0;
+    final hasMultipleTimelines = widget.timelines.length == 2;
 
-    var graphLines = widget.timelines
+    final graphLines = widget.timelines
         .mapWithIndex((IList<double> timeline, int timelineIndex) {
       final isSelectedTimeline = timelineIndex == highlightedTimelineIndex;
 
@@ -74,45 +78,65 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
       );
     }).toList();
 
-    // This is the easy way to make the selected line appear on top.
-    // This solution would break if we had more than 2 lines, but this
-    // seems unlikely. (3 arms? lmao)
-    if (highlightedTimelineIndex == 0) graphLines = graphLines.reversedView;
-
-    return LineChart(
-      LineChartData(
-        gridData: FlGridData(
-          drawVerticalLine: false,
-          horizontalInterval: 0.5,
-          getDrawingHorizontalLine: (value) => _hLine,
-        ),
-        titlesData: FlTitlesData(
-          rightTitles: _noTitles,
-          topTitles: _noTitles,
-          bottomTitles: _noTitles,
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              interval: 0.5,
-              reservedSize: 80,
-              getTitlesWidget: (value, meta) => Text(
-                switch (value) {
-                  0.0 => localizations.results_score_low_short,
-                  1.0 => localizations.results_score_high_short,
-                  _ => ''
-                },
-                style: infoText,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: LineChart(
+            LineChartData(
+              gridData: FlGridData(
+                drawVerticalLine: false,
+                horizontalInterval: 0.5,
+                getDrawingHorizontalLine: (value) => _hLine,
               ),
+              titlesData: FlTitlesData(
+                rightTitles: _noTitles,
+                topTitles: _noTitles,
+                bottomTitles: _noTitles,
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    interval: 0.5,
+                    reservedSize: 80,
+                    getTitlesWidget: (value, meta) => Text(
+                      switch (value) {
+                        0.0 => localizations.results_score_low_short,
+                        1.0 => localizations.results_score_high_short,
+                        _ => ''
+                      },
+                      style: infoText,
+                    ),
+                  ),
+                ),
+              ),
+              borderData: FlBorderData(show: false),
+              minX: 0,
+              maxX: valueCount - 1,
+              minY: 0,
+              maxY: 1,
+              lineBarsData: graphLines,
             ),
           ),
         ),
-        borderData: FlBorderData(show: false),
-        minX: 0,
-        maxX: valueCount - 1,
-        minY: 0,
-        maxY: 1,
-        lineBarsData: graphLines,
-      ),
+        if (hasMultipleTimelines) ...[
+          const SizedBox(height: smallSpace),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ToggleSwitch(
+                initialLabelIndex: highlightedTimelineIndex,
+                totalSwitches: 2,
+                labels: [localizations.common_left, localizations.common_right],
+                onToggle: (index) {
+                  setState(() {
+                    highlightedTimelineIndex = index!;
+                  });
+                },
+              ),
+            ],
+          ),
+        ],
+      ],
     );
   }
 }

@@ -1,6 +1,14 @@
 {
   "@@locale": "en",
   "choice_title": "CHOOSE",
+  "common_left": "Left",
+  "@common_left": {
+    "description": "The name of the left direction, for use in any situation."
+  },
+  "common_right": "Right",
+  "@common_right": {
+    "description": "The name of the right direction, for use in any situation."
+  },
   "common_next": "Next",
   "common_description": "Description",
   "@common_description": {

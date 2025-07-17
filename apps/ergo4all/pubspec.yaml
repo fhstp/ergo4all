@@ -47,6 +47,7 @@ dependencies:
   provider: ^6.1.5
   objectbox: ^4.2.0
   objectbox_sync_flutter_libs: ^4.2.0
+  toggle_switch: ^2.3.0
 
 dev_dependencies:
   flutter_test:

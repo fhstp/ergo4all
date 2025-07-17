@@ -3,6 +3,8 @@
   "choice_title": "WÄHLE",
   "common_description": "Beschreibung",
   "common_expectation": "Erwartung",
+  "common_left": "Links",
+  "common_right": "Rechts",
   "common_next": "Weiter",
   "home_title": "Hauptmenü",
   "home_tips_label": "Allgemeine Tipps",
