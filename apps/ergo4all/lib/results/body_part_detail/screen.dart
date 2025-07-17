@@ -112,7 +112,7 @@ class BodyPartResultsScreen extends StatelessWidget {
               localizations.body_part_score_plot_title,
               style: paragraphHeaderStyle,
             ),
-            const SizedBox(height: largeSpace),
+            const SizedBox(height: mediumSpace),
             SizedBox(
               height: 132,
               child: Padding(
@@ -125,7 +125,7 @@ class BodyPartResultsScreen extends StatelessWidget {
               localizations.body_part_static_plot_title,
               style: paragraphHeaderStyle,
             ),
-            const SizedBox(height: mediumSpace),
+            const SizedBox(height: smallSpace),
             if (showStaticLoad)
               SizedBox(
                 height: 132,
@@ -196,7 +196,7 @@ class BodyPartResultsScreen extends StatelessWidget {
                 localizations.body_part_static_plot_condition,
                 style: dynamicBodyStyle,
               ),
-            const SizedBox(height: mediumSpace),
+            const SizedBox(height: largeSpace),
             Text(
               localizations.analysis,
               style: paragraphHeaderStyle,
