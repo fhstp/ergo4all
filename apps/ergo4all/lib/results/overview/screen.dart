@@ -38,9 +38,10 @@ class ResultsOverviewScreen extends StatelessWidget {
       return Container();
     }
 
-    final normalizedScoresByGroup = groupTimelineScores(analysisResult.timeline)
-        .mapValues((group, splitScores) {
-      final maxScore = maxScoreOf(group);
+    final normalizedScoresByGroup =
+        BodyPartGroup.groupScoresFrom(analysisResult.timeline)
+            .mapValues((group, splitScores) {
+      final maxScore = BodyPartGroup.maxScoreOf(group);
       return splitScores
           .map(
             (timeline) => timeline
@@ -102,7 +103,7 @@ class ResultsOverviewScreen extends StatelessWidget {
           BodyScoreDisplay(
             aggregate,
             onBodyPartTapped: (part) {
-              goToBodyPartPage(groupOf(part));
+              goToBodyPartPage(BodyPartGroup.forPart(part));
             },
           ),
           Text(

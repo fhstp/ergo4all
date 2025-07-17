@@ -44,9 +44,10 @@ class ResultsDetailScreen extends StatelessWidget {
           analysisResult.timeline.first.timestamp,
     );
 
-    final normalizedScoresByGroup = groupTimelineScores(analysisResult.timeline)
-        .mapValues((group, splitScores) {
-      final maxScore = maxScoreOf(group);
+    final normalizedScoresByGroup =
+        BodyPartGroup.groupScoresFrom(analysisResult.timeline)
+            .mapValues((group, splitScores) {
+      final maxScore = BodyPartGroup.maxScoreOf(group);
       return splitScores
           .map(
             (timeline) => timeline
