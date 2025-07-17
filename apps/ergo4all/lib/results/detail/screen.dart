@@ -10,10 +10,10 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/detail/rula_color_legend.dart';
 import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
-import 'package:ergo4all/results/rula_colors.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -127,39 +127,7 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
               child: SizedBox(
                 height: 50,
                 width: heatmapWidth,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 20,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        gradient: const LinearGradient(
-                          colors: [
-                            RulaColors.low,
-                            RulaColors.lowMid,
-                            RulaColors.mid,
-                            RulaColors.midHigh,
-                            RulaColors.high,
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          localizations.results_score_low,
-                          style: infoText,
-                        ),
-                        Text(
-                          localizations.results_score_high,
-                          style: infoText,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                child: const RulaColorLegend(),
               ),
             ),
 
