@@ -1,4 +1,4 @@
-import 'package:ergo4all/results/rula_colors.dart';
+import 'package:ergo4all/common/rula_color.dart';
 import 'package:flutter/material.dart';
 
 /// A graphic displaying a full ergo-puppet inside a circle with a drop-shadow.
@@ -27,7 +27,7 @@ class PuppetGraphic extends StatelessWidget {
           padding: const EdgeInsets.all(30),
           child: Image.asset(
             'assets/images/puppet/full_body.png',
-            color: RulaColors.low,
+            color: RulaColor.forScore(0),
             fit: BoxFit.contain,
             colorBlendMode: BlendMode.modulate,
           ),

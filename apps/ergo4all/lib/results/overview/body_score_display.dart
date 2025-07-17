@@ -1,7 +1,7 @@
+import 'package:ergo4all/common/rula_color.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/overview/transparent_image_stack.dart';
-import 'package:ergo4all/results/rula_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
@@ -73,7 +73,7 @@ class BodyScoreDisplay extends StatelessWidget {
 
     final colors = _bodyPartsInDisplayOrder.map((part) {
       final score = getNormalizedScoreForPart(part);
-      return rulaColorFor(score);
+      return RulaColor.forScore(score);
     }).toList();
 
     return TransparentImageStack(

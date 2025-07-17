@@ -1,6 +1,6 @@
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/common/rula_color.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/rula_colors.dart';
 import 'package:flutter/material.dart';
 
 /// Displays a horizontal legend of the Rula colors so users can learn
@@ -19,14 +19,8 @@ class RulaColorLegend extends StatelessWidget {
           height: 20,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            gradient: const LinearGradient(
-              colors: [
-                RulaColors.low,
-                RulaColors.lowMid,
-                RulaColors.mid,
-                RulaColors.midHigh,
-                RulaColors.high,
-              ],
+            gradient: LinearGradient(
+              colors: RulaColor.all.toList(),
             ),
           ),
         ),

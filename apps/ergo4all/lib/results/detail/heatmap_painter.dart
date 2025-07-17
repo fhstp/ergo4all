@@ -1,4 +1,4 @@
-import 'package:ergo4all/results/rula_colors.dart';
+import 'package:ergo4all/common/rula_color.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class HeatmapPainter extends CustomPainter {
 
     for (var i = 0; i < normalizedScores.length; i++) {
       final value = normalizedScores[i];
-      paint.color = rulaColorFor(value);
+      paint.color = RulaColor.forScore(value);
 
       canvas.drawRect(
         Rect.fromLTWH(i * cellWidth, 0, cellWidth, size.height),

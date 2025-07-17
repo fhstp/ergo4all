@@ -1,7 +1,7 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/common/rula_color.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/rula_colors.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,7 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
       final isSelectedTimeline = timelineIndex == highlightedTimelineIndex;
 
       final rulaColors =
-          timeline.map((score) => rulaColorFor(score, dark: true));
+          timeline.map((score) => RulaColor.forScore(score, dark: true));
 
       final colors = isSelectedTimeline
           ? rulaColors.toList()
