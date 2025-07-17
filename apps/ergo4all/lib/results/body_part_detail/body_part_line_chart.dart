@@ -52,10 +52,12 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
 
     var graphLines = widget.timelines
         .mapWithIndex((IList<double> timeline, int timelineIndex) {
+      final isSelectedTimeline = timelineIndex == highlightedTimelineIndex;
+
       final rulaColors =
           timeline.map((score) => rulaColorFor(score, dark: true));
 
-      final colors = timelineIndex == highlightedTimelineIndex
+      final colors = isSelectedTimeline
           ? rulaColors.toList()
           : rulaColors.map(_grayscale).toList();
 
