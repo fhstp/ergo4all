@@ -10,11 +10,14 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 /// Sessions screen that displays a list of all the user stored sessions
 class SessionChoiceScreen extends StatefulWidget {
-  const SessionChoiceScreen({super.key});
+  ///
+  const SessionChoiceScreen({required this.sessionRepository, super.key});
+
+  /// Store from which to load sessions.
+  final RulaSessionRepository sessionRepository;
 
   @override
   State<SessionChoiceScreen> createState() => _SessionChoiceScreenState();
@@ -22,16 +25,13 @@ class SessionChoiceScreen extends StatefulWidget {
 
 class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     with SingleTickerProviderStateMixin {
-  late RulaSessionRepository dataStorage;
-
   List<RulaSession> sessions = List.empty();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    dataStorage = Provider.of<RulaSessionRepository>(context);
-    dataStorage.getAll().then((it) {
+    widget.sessionRepository.getAll().then((it) {
       setState(() {
         sessions = it;
       });
@@ -96,7 +96,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
                   return Dismissible(
                     key: Key(sessions[index].timestamp.toString()),
                     onDismissed: (direction) async {
-                      await dataStorage
+                      await widget.sessionRepository
                           .deleteByTimestamp(sessions[index].timestamp);
                       if (!context.mounted) return;
 

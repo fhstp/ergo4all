@@ -25,7 +25,6 @@ import 'package:pose/pose.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_transforming/denoise.dart';
 import 'package:pose_vis/pose_vis.dart';
-import 'package:provider/provider.dart';
 import 'package:rula/rula.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
@@ -34,11 +33,15 @@ class LiveAnalysisScreen extends StatefulWidget {
   const LiveAnalysisScreen({
     required this.scenario,
     required this.videoStore,
+    required this.sessionRepository,
     super.key,
   });
 
   /// Video store into which to put recorded videos.
   final VideoStore videoStore;
+
+  /// Session store into which to store the session
+  final RulaSessionRepository sessionRepository;
 
   /// The scenario for which to make an analysis.
   final Scenario scenario;
@@ -72,12 +75,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     vsync: this,
   );
 
-  late RulaSessionRepository dataStorage;
-
   void goToResults() {
     if (!context.mounted) return;
 
-    dataStorage.put(
+    widget.sessionRepository.put(
       RulaSession(
         timestamp: DateTime.now().millisecondsSinceEpoch,
         scenario: widget.scenario,
@@ -162,12 +163,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Camera controller must be initialized.',
     );
 
-    // Comment out
     final outputFile = await cameraController.stopVideoRecording();
     await widget.videoStore.putFromFile(outputFile);
-
-    // Comment in
-    // await cameraController.stopImageStream();
 
     await cameraController.dispose();
     await stopPoseDetection();
@@ -285,7 +282,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       ),
     );
 
-    dataStorage = Provider.of<RulaSessionRepository>(context);
     final isRecording = analysisMode == _AnalysisMode.full;
 
     return Scaffold(
