@@ -27,6 +27,10 @@ class HomeScreen extends StatelessWidget {
       unawaited(Navigator.pushNamed(context, Routes.tipChoice.path));
     }
 
+    void goToAllSessions() {
+      unawaited(Navigator.of(context).pushNamed(Routes.sessions.path));
+    }
+
     return Scaffold(
       appBar: RedCircleAppBar(
         titleText: localizations.home_title,
@@ -66,6 +70,12 @@ class HomeScreen extends StatelessWidget {
                 style: secondaryTextButtonStyle,
                 onPressed: goToTips,
                 child: Text(localizations.home_tips_label),
+              ),
+              const SizedBox(height: mediumSpace),
+              ElevatedButton(
+                style: secondaryTextButtonStyle,
+                onPressed: goToAllSessions,
+                child: Text(localizations.sessions_header),
               ),
               const Spacer(),
             ],
