@@ -22,6 +22,8 @@ class _SessionMeta {
   final int scenarioIndex;
 }
 
+typedef _ScoreRow = (int, RulaScores);
+
 IMap<String, String> _parseKV(List<String> lines) => IMap.fromEntries(
       lines.map((part) {
         final [key, value] = part.split('=');
@@ -53,39 +55,40 @@ Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
   await file.writeAsString(text);
 }
 
-List<int> _timelineEntryToRow(TimelineEntry entry) {
+List<int> _csvRowOf(_ScoreRow row) {
+  final (timestamp, scores) = row;
   return [
-    entry.timestamp,
-    entry.scores.fullScore,
-    Pair.left(entry.scores.legScores),
-    Pair.right(entry.scores.legScores),
-    Pair.left(entry.scores.lowerArmPositionScores),
-    Pair.right(entry.scores.lowerArmPositionScores),
-    Pair.left(entry.scores.lowerArmScores),
-    Pair.right(entry.scores.lowerArmScores),
-    entry.scores.neckPositionScore,
-    entry.scores.neckScore,
-    entry.scores.neckSideBendAdjustment,
-    entry.scores.neckTwistAdjustment,
-    entry.scores.trunkPositionScore,
-    entry.scores.trunkScore,
-    entry.scores.trunkSideBendAdjustment,
-    entry.scores.trunkTwistAdjustment,
-    Pair.left(entry.scores.upperArmAbductedAdjustments),
-    Pair.right(entry.scores.upperArmAbductedAdjustments),
-    Pair.left(entry.scores.upperArmPositionScores),
-    Pair.right(entry.scores.upperArmPositionScores),
-    Pair.left(entry.scores.upperArmScores),
-    Pair.right(entry.scores.upperArmScores),
-    Pair.left(entry.scores.wristScores),
-    Pair.right(entry.scores.wristScores),
+    timestamp,
+    scores.fullScore,
+    Pair.left(scores.legScores),
+    Pair.right(scores.legScores),
+    Pair.left(scores.lowerArmPositionScores),
+    Pair.right(scores.lowerArmPositionScores),
+    Pair.left(scores.lowerArmScores),
+    Pair.right(scores.lowerArmScores),
+    scores.neckPositionScore,
+    scores.neckScore,
+    scores.neckSideBendAdjustment,
+    scores.neckTwistAdjustment,
+    scores.trunkPositionScore,
+    scores.trunkScore,
+    scores.trunkSideBendAdjustment,
+    scores.trunkTwistAdjustment,
+    Pair.left(scores.upperArmAbductedAdjustments),
+    Pair.right(scores.upperArmAbductedAdjustments),
+    Pair.left(scores.upperArmPositionScores),
+    Pair.right(scores.upperArmPositionScores),
+    Pair.left(scores.upperArmScores),
+    Pair.right(scores.upperArmScores),
+    Pair.left(scores.wristScores),
+    Pair.right(scores.wristScores),
   ];
 }
 
-TimelineEntry _timelineEntryFromRow(List<dynamic> row) {
-  return TimelineEntry(
-    timestamp: row[0] as int,
-    scores: RulaScores(
+_ScoreRow _scoreRowOf(List<dynamic> row) {
+  return (
+    row[0] as int,
+    RulaScores(
       fullScore: row[1] as int,
       legScores: (row[2], row[3]),
       lowerArmPositionScores: (row[4], row[5]),
@@ -106,15 +109,14 @@ TimelineEntry _timelineEntryFromRow(List<dynamic> row) {
   );
 }
 
-Future<RulaTimeline> _loadTimelineFrom(File file) async {
+Future<Iterable<_ScoreRow>> _loadScoresFrom(File file) async {
   final text = await file.readAsString();
   final rows = const CsvToListConverter().convert(text);
-  final entries = rows.map(_timelineEntryFromRow);
-  return entries.toIList();
+  return rows.map(_scoreRowOf);
 }
 
-Future<void> _writeTimelineTo(RulaTimeline timeline, File file) async {
-  final rows = timeline.map(_timelineEntryToRow).toList();
+Future<void> _writeSoresTo(Iterable<_ScoreRow> scoreRows, File file) async {
+  final rows = scoreRows.map(_csvRowOf).toList();
   final text = const ListToCsvConverter().convert(rows);
   await file.writeAsString(text);
 }
@@ -123,8 +125,11 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   final meta = await _loadMetaFrom(metaFile);
 
-  final timelineFile = File(path.join(dir.path, 'timeline.csv'));
-  final timeline = await _loadTimelineFrom(timelineFile);
+  final timelineFile = File(path.join(dir.path, 'scores.csv'));
+  final scores = await _loadScoresFrom(timelineFile);
+  final timeline = scores
+      .map((row) => TimelineEntry(timestamp: row.$1, scores: row.$2))
+      .toIList();
 
   return RulaSession(
     timestamp: meta.timestamp,
@@ -139,9 +144,11 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final meta = _SessionMeta(session.timestamp, session.scenario.index);
   await _writeMetaTo(meta, metaFile);
 
-  final timelineFile = File(path.join(dir.path, 'timeline.csv'));
+  final timelineFile = File(path.join(dir.path, 'scores.csv'));
   await timelineFile.create();
-  await _writeTimelineTo(session.timeline, timelineFile);
+  final scores =
+      session.timeline.map((entry) => (entry.timestamp, entry.scores));
+  await _writeSoresTo(scores, timelineFile);
 }
 
 /// Implementation of [RulaSessionRepository] which stores session as plain
