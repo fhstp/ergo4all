@@ -3,6 +3,7 @@ import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/imprint_screen.dart';

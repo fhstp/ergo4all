@@ -6,6 +6,7 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
@@ -14,7 +15,6 @@ import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
-import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
