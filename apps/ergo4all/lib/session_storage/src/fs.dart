@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:common/func_ext.dart';
+import 'package:common/nullable_utils.dart';
 import 'package:common/pair_utils.dart';
 import 'package:csv/csv.dart';
 import 'package:ergo4all/common/rula_session.dart';
@@ -10,6 +11,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:rula/rula.dart';
@@ -121,15 +123,48 @@ Future<void> _writeSoresTo(Iterable<_ScoreRow> scoreRows, File file) async {
   await file.writeAsString(text);
 }
 
+Iterable<(int, img.Image)> _sessionImagesOf(RulaSession session) sync* {
+  for (final entry in session.timeline) {
+    if (entry.image != null) yield (entry.timestamp, entry.image!);
+  }
+}
+
+Future<IMap<int, img.Image>> _loadImages(Directory dir) async {
+  final imageFiles = dir
+      .list()
+      .where((entry) => entry is File && entry.path.endsWith('.jpg'))
+      .map((file) => file as File);
+
+  final entries = await imageFiles.asyncMap((file) async {
+    final fileName = path.basenameWithoutExtension(file.path);
+    final timestamp =
+        fileName.toIntOption.expect('Should parse timestamp from file name');
+    final image =
+        (await img.decodeJpgFile(file.path)).expect('Should decode image.');
+    return MapEntry(timestamp, image);
+  }).toList();
+
+  return IMap.fromEntries(entries);
+}
+
+Future<void> _storeImage(Directory dir, int timestamp, img.Image image) async {
+  final filePath = path.join(dir.path, timestamp.toString(), '.jpg');
+  await img.encodeJpgFile(filePath, image);
+}
+
 Future<RulaSession> _loadSessionFrom(Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   final meta = await _loadMetaFrom(metaFile);
 
+  final imagesByTimestamp = await _loadImages(dir);
+
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   final scores = await _loadScoresFrom(timelineFile);
-  final timeline = scores
-      .map((row) => TimelineEntry(timestamp: row.$1, scores: row.$2))
-      .toIList();
+  final timeline = scores.map((row) {
+    final timestamp = row.$1;
+    final image = imagesByTimestamp.get(timestamp);
+    return TimelineEntry(timestamp: timestamp, scores: row.$2, image: image);
+  }).toIList();
 
   return RulaSession(
     timestamp: meta.timestamp,
@@ -149,6 +184,9 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final scores =
       session.timeline.map((entry) => (entry.timestamp, entry.scores));
   await _writeSoresTo(scores, timelineFile);
+
+  final images = _sessionImagesOf(session);
+  await Future.forEach(images, (row) => _storeImage(dir, row.$1, row.$2));
 }
 
 /// Implementation of [RulaSessionRepository] which stores session as plain
