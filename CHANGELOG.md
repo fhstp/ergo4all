@@ -1,3 +1,11 @@
+# [1.92.0](https://github.com/fhstp/ergo4all/compare/v1.91.0...v1.92.0) (2025-07-23)
+
+
+### Features
+
+* change sessions navigation ([701ef3f](https://github.com/fhstp/ergo4all/commit/701ef3f4c516d82382d41310990ee24119178582)), closes [#108](https://github.com/fhstp/ergo4all/issues/108)
+* improve body part line chart ([ab385aa](https://github.com/fhstp/ergo4all/commit/ab385aafea3439409aeeacdcb9c801027afc8b5a)), closes [#109](https://github.com/fhstp/ergo4all/issues/109)
+
 # [1.91.0](https://github.com/fhstp/ergo4all/compare/v1.90.0...v1.91.0) (2025-07-17)
 
 
