@@ -114,8 +114,14 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
               maxX: valueCount - 1,
               minY: 0,
               maxY: 1,
-              lineBarsData: graphLines,
+              // Reverse list depending on which line we want to render
+              // on top
+              lineBarsData: highlightedTimelineIndex == 1
+                  ? graphLines
+                  : graphLines.reversedView,
             ),
+            // Disable animations
+            duration: Duration.zero,
           ),
         ),
         if (hasMultipleTimelines) ...[
