@@ -4,48 +4,46 @@ import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
-import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
-import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/rula_color_legend.dart';
 import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
+import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-/// Screen for displaying detailed information about a [RulaTimeline].
+/// Screen for displaying detailed information about a [RulaSession].
 class ResultsDetailScreen extends StatelessWidget {
   ///
-  const ResultsDetailScreen({required this.analysisResult, super.key});
+  const ResultsDetailScreen({required this.session, super.key});
 
-  /// The result for which to view details.
-  final AnalysisResult analysisResult;
+  /// The session for which to view details.
+  final RulaSession session;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final tips = localizations.scenarioTip(analysisResult.scenario);
-    final improvements =
-        localizations.scenarioImprovement(analysisResult.scenario);
+    final tips = localizations.scenarioTip(session.scenario);
+    final improvements = localizations.scenarioImprovement(session.scenario);
 
-    if (analysisResult.timeline.isEmpty) {
+    if (session.timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }
 
     final recordingDuration = Duration(
-      milliseconds: analysisResult.timeline.last.timestamp -
-          analysisResult.timeline.first.timestamp,
+      milliseconds:
+          session.timeline.last.timestamp - session.timeline.first.timestamp,
     );
 
     final normalizedScoresByGroup =
-        BodyPartGroup.groupScoresFrom(analysisResult.timeline)
+        BodyPartGroup.groupScoresFrom(session.timeline)
             .mapValues((group, splitScores) {
       final maxScore = BodyPartGroup.maxScoreOf(group);
       return splitScores
@@ -149,7 +147,7 @@ class ResultsDetailScreen extends StatelessWidget {
                 ),
                 Center(
                   child: ScenarioGoodBadGraphic(
-                    analysisResult.scenario,
+                    session.scenario,
                     height: 330,
                   ),
                 ),

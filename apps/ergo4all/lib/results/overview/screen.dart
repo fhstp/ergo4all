@@ -5,7 +5,6 @@ import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
-import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -15,31 +14,32 @@ import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
+import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-/// The screen for viewing an overview over the [AnalysisResult].
+/// The screen for viewing an overview over the [RulaSession].
 class ResultsOverviewScreen extends StatelessWidget {
   ///
   const ResultsOverviewScreen({
-    required this.analysisResult,
+    required this.session,
     super.key,
   });
 
-  /// The result to view.
-  final AnalysisResult analysisResult;
+  /// The session to view.
+  final RulaSession session;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    if (analysisResult.timeline.isEmpty) {
+    if (session.timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }
 
     final normalizedScoresByGroup =
-        BodyPartGroup.groupScoresFrom(analysisResult.timeline)
+        BodyPartGroup.groupScoresFrom(session.timeline)
             .mapValues((group, splitScores) {
       final maxScore = BodyPartGroup.maxScoreOf(group);
       return splitScores
@@ -52,14 +52,14 @@ class ResultsOverviewScreen extends StatelessWidget {
     });
 
     final recordingDuration = Duration(
-      milliseconds: analysisResult.timeline.last.timestamp -
-          analysisResult.timeline.first.timestamp,
+      milliseconds:
+          session.timeline.last.timestamp - session.timeline.first.timestamp,
     ).inSeconds;
 
     void goToDetails() {
       Navigator.of(context).pushNamed(
         Routes.resultsDetail.path,
-        arguments: analysisResult,
+        arguments: session,
       );
     }
 
@@ -68,7 +68,7 @@ class ResultsOverviewScreen extends StatelessWidget {
         Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.liveAnalysis.path,
           ModalRoute.withName(Routes.home.path),
-          arguments: analysisResult.scenario,
+          arguments: session.scenario,
         ),
       );
     }
@@ -84,9 +84,9 @@ class ResultsOverviewScreen extends StatelessWidget {
       );
     }
 
-    final aggregate = aggregateTimeline(analysisResult.timeline)!;
+    final aggregate = aggregateTimeline(session.timeline)!;
 
-    final totalRating = analysisResult.timeline
+    final totalRating = session.timeline
         .map((entry) => entry.scores.fullScore)
         .map((score) => normalizeScore(score, 7))
         .toIList()

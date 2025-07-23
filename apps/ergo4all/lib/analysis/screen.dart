@@ -8,7 +8,6 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/camera_utils.dart';
-import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
@@ -78,21 +77,18 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   void goToResults() {
     if (!context.mounted) return;
 
-    widget.sessionRepository.put(
-      RulaSession(
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-        scenario: widget.scenario,
-        timeline: timeline.toIList(),
-      ),
+    final session = RulaSession(
+      timestamp: DateTime.now().millisecondsSinceEpoch,
+      scenario: widget.scenario,
+      timeline: timeline.toIList(),
     );
+
+    widget.sessionRepository.put(session);
 
     unawaited(
       Navigator.of(context).pushReplacementNamed(
         Routes.resultsOverview.path,
-        arguments: AnalysisResult(
-          scenario: widget.scenario,
-          timeline: timeline.toIList(),
-        ),
+        arguments: session,
       ),
     );
   }

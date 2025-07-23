@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
-import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -47,10 +46,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       unawaited(
         Navigator.of(context).pushReplacementNamed(
           Routes.resultsOverview.path,
-          arguments: AnalysisResult(
-            scenario: session.scenario,
-            timeline: session.timeline,
-          ),
+          arguments: session,
         ),
       );
     }

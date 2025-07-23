@@ -1,7 +1,6 @@
 import 'package:common/casting.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
-import 'package:ergo4all/analysis/common.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -87,12 +86,12 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           );
         },
         Routes.resultsOverview.path: (context) {
-          final analysisResult = _getRouteArgs<AnalysisResult>(context);
-          return ResultsOverviewScreen(analysisResult: analysisResult);
+          final session = _getRouteArgs<RulaSession>(context);
+          return ResultsOverviewScreen(session: session);
         },
         Routes.resultsDetail.path: (context) {
-          final analysisResult = _getRouteArgs<AnalysisResult>(context);
-          return ResultsDetailScreen(analysisResult: analysisResult);
+          final session = _getRouteArgs<RulaSession>(context);
+          return ResultsDetailScreen(session: session);
         },
         Routes.language.path: (context) => const PickLanguageScreen(),
         Routes.welcome.path: (context) => const WelcomeScreen(),
