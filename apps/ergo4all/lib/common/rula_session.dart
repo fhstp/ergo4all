@@ -21,7 +21,7 @@ class TimelineEntry {
 /// but this is not enforced.
 typedef RulaTimeline = IList<TimelineEntry>;
 
-/// Represents a stored session.
+/// A completed recording session.
 @immutable
 class RulaSession {
   ///
