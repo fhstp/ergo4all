@@ -13,7 +13,6 @@ import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
-import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/video_storage/video_storage.dart';

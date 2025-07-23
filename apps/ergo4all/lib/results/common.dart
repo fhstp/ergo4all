@@ -1,25 +1,7 @@
 import 'package:common/iterable_ext.dart';
 import 'package:common/pair_utils.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart';
+import 'package:ergo4all/common/rula_session.dart';
 import 'package:rula/rula.dart';
-
-/// An entry in a [RulaTimeline]. Has a [timestamp] and associated [RulaScores].
-@immutable
-class TimelineEntry {
-  ///
-  const TimelineEntry({required this.timestamp, required this.scores});
-
-  /// The timestamp of this entry. This is a global UNIX timestamp.
-  final int timestamp;
-
-  /// The scores for this time-stamp.
-  final RulaScores scores;
-}
-
-/// A timeline of [RulaSheet]s. The list is expected to be sorted by timestamp
-/// but this is not enforced.
-typedef RulaTimeline = IList<TimelineEntry>;
 
 /// Aggregates a [RulaTimeline] into a single [RulaScores] sheet. It does this
 /// by doing a mode over each score. Currently, time, ie. how long the

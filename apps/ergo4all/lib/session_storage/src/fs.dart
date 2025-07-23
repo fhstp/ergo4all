@@ -4,7 +4,6 @@ import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:csv/csv.dart';
 import 'package:ergo4all/common/rula_session.dart';
-import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

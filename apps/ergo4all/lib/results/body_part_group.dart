@@ -1,5 +1,6 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common/pair_utils.dart';
+import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:rula/rula.dart';
