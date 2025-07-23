@@ -1,3 +1,11 @@
+# [1.93.0](https://github.com/fhstp/ergo4all/compare/v1.92.0...v1.93.0) (2025-07-23)
+
+
+### Features
+
+* improve session score storage ([d7af81b](https://github.com/fhstp/ergo4all/commit/d7af81bf8e2121d8c4efcf2e962bdf243dbeeaf9))
+* store images in rula-sessions ([f7209d6](https://github.com/fhstp/ergo4all/commit/f7209d602aad91f2fab146fb37e7cb49e26aecaf))
+
 # [1.92.0](https://github.com/fhstp/ergo4all/compare/v1.91.0...v1.92.0) (2025-07-23)
 
 
