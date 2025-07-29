@@ -39,11 +39,18 @@ Future<void> _saveUserTo(File file, User user) async {
 
 /// [UserStore] which persists users in the file-system. Each user is stored
 /// in its own json file named with the users id.
+/// It also stores a meta file for containing information such as who the
+/// current user is.
 class FileSystemUserStore implements UserStore {
   Future<Directory> _getUsersDir() async {
     final docDir = await getApplicationDocumentsDirectory();
     final sessionsDirPath = path.join(docDir.path, 'users');
     return Directory(sessionsDirPath).create(recursive: true);
+  }
+
+  Future<File> _getMetaFile() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    return File(path.join(docDir.path, 'user.meta.json'));
   }
 
   Future<File> _getUserFile(String id) async {
@@ -67,6 +74,12 @@ class FileSystemUserStore implements UserStore {
   Future<bool> deleteUserById(String id) async {
     final file = await _getUserFile(id);
     if (file.existsSync()) return false;
+
+    // If the deleted user is the current one we deselect them
+    if (await getCurrentUserId() == id) {
+      await setCurrentUserId(null);
+    }
+
     await file.delete();
     return true;
   }
@@ -75,5 +88,32 @@ class FileSystemUserStore implements UserStore {
   Future<User?> tryGetUserById(String id) async {
     final file = await _getUserFile(id);
     return _tryLoadUserFrom(file);
+  }
+
+  @override
+  Future<String?> getCurrentUserId() async {
+    final metaFile = await _getMetaFile();
+    if (!metaFile.existsSync()) return null;
+
+    // Currently he meta file stores only the id of the current user
+    // so we don't need to do any parsing.
+    return metaFile.readAsString();
+  }
+
+  @override
+  Future<void> setCurrentUserId(String? id) async {
+    final metaFile = await _getMetaFile();
+
+    if (id == null) {
+      // If the meta file ever contains other information than the
+      // current user id, then we need some smarter logic here instead of
+      // just deleting the file.
+      await metaFile.delete();
+      return;
+    }
+
+    // Currently the meta file stores only the id of the current user
+    // so we don't need to do any fancy serializing.
+    await metaFile.writeAsString(id);
   }
 }
