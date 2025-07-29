@@ -15,6 +15,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
+import 'package:ergo4all/users/storage/common.dart';
 import 'package:ergo4all/video_storage/video_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -32,12 +33,16 @@ class LiveAnalysisScreen extends StatefulWidget {
   const LiveAnalysisScreen({
     required this.scenario,
     required this.videoStore,
+    required this.userStore,
     required this.sessionRepository,
     super.key,
   });
 
   /// Video store into which to put recorded videos.
   final VideoStore videoStore;
+
+  /// Store for determining who is recording this session.
+  final UserStore userStore;
 
   /// Session store into which to store the session
   final RulaSessionRepository sessionRepository;
@@ -74,17 +79,25 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     vsync: this,
   );
 
-  void goToResults() {
-    if (!context.mounted) return;
+  Future<RulaSession> completeSession() async {
+    final currentUserId = await widget.userStore.getCurrentUserId();
+    if (currentUserId == null) {
+      throw AssertionError('Cannot complete session without a current user');
+    }
 
     final session = RulaSession(
+      createdById: currentUserId,
       timestamp: DateTime.now().millisecondsSinceEpoch,
       scenario: widget.scenario,
       timeline: timeline.toIList(),
     );
 
-    widget.sessionRepository.put(session);
+    await widget.sessionRepository.put(session);
 
+    return session;
+  }
+
+  void goToResults(RulaSession session) {
     unawaited(
       Navigator.of(context).pushReplacementNamed(
         Routes.resultsOverview.path,
@@ -163,13 +176,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     await widget.videoStore.putFromFile(outputFile);
 
     await cameraController.dispose();
-    await stopPoseDetection();
-
-    goToResults();
-
     setState(() {
       this.cameraController = none();
     });
+
+    await stopPoseDetection();
+
+    final session = await completeSession();
+    goToResults(session);
   }
 
   Future<void> tryStartFullAnalysis() async {

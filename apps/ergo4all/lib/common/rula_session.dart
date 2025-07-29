@@ -34,10 +34,14 @@ typedef RulaTimeline = IList<TimelineEntry>;
 class RulaSession {
   ///
   const RulaSession({
+    required this.createdById,
     required this.timestamp,
     required this.scenario,
     required this.timeline,
   });
+
+  /// The id of the user who created this session.
+  final String createdById;
 
   /// Unix timestamp at which the session was completed.
   final int timestamp;

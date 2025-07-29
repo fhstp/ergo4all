@@ -19,6 +19,7 @@ import 'package:ergo4all/session_choice_screen.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
+import 'package:ergo4all/users/storage/fs.dart';
 import 'package:ergo4all/video_storage/src/local.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
   @override
   Widget build(BuildContext context) {
     final sessionRepository = FileBasedRulaSessionRepository();
+    final userStore = FileSystemUserStore();
 
     return MaterialApp(
       routes: {
@@ -84,6 +86,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
             scenario: scenario,
             videoStore: LocalVideoStore(),
             sessionRepository: sessionRepository,
+            userStore: userStore,
           );
         },
         Routes.resultsOverview.path: (context) {
