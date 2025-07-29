@@ -15,7 +15,6 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/video_storage/video_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -31,13 +30,9 @@ class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
   const LiveAnalysisScreen({
     required this.scenario,
-    required this.videoStore,
     required this.sessionRepository,
     super.key,
   });
-
-  /// Video store into which to put recorded videos.
-  final VideoStore videoStore;
 
   /// Session store into which to store the session
   final RulaSessionRepository sessionRepository;
@@ -159,9 +154,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Camera controller must be initialized.',
     );
 
-    final outputFile = await cameraController.stopVideoRecording();
-    await widget.videoStore.putFromFile(outputFile);
-
     await cameraController.dispose();
     await stopPoseDetection();
 
@@ -180,19 +172,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Should only switch to full analysis from pose-only analysis.',
     );
 
-    final cameraController =
-        this.cameraController.expect('Must have a camera controller.');
-
     setState(() {
       analysisMode = _AnalysisMode.full;
     });
-
-    await cameraController.stopImageStream();
-    await cameraController.startVideoRecording(
-      onAvailable: (image) {
-        onCameraImage(cameraController.value, image);
-      },
-    );
 
     unawaited(
       progressAnimationController.reverse().then((_) {
