@@ -58,6 +58,30 @@
     "description": "Label for button to change the app language"
   },
   "menu_privacy_label": "Privacy Manifest",
+  "onboarding_ergonomicsInfo_title": "What is ergonomics?",
+  "onboarding_ergonomicsInfo_description": "",
+  "onboarding_label": "Next",
+  "@onboarding_label": {
+    "description": "Label for button to continue the onboarding process"
+  },
+  "onboarding_privacy_title": "Privacy",
+  "onboarding_privacy_description": "",
+  "onboarding_preIntro_title": "App Overview",
+  "onboarding_preIntro_description": "",
+  "onboarding_skip_label": "Skip",
+  "@onboarding_skip_label": {
+    "description": "Label for button to skip the user creation part of the onboarding process"
+  },
+  "onboarding_termsOfUse_title": "Terms of Use",
+  "onboarding_termsOfUse_description": "",
+  "onboarding_termsOfUse_accept": "I accept",
+  "onboarding_userCreation_title": "Creating User",
+  "onboarding_userCreation_description": "",
+  "onboarding_userCreation_nickname": "Nickname",
+  "onboarding_userCreation_label": "Create Profile",
+  "@onboarding_userCreation_label": {
+    "description": "Label for button to create the user profile"
+  },
   "permission_label_allow": "Allow",
   "permission_label_cancel": "Cancel",
   "permission_label_denied": "Grant permission in settings",
