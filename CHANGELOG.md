@@ -1,3 +1,10 @@
+# [1.94.0](https://github.com/fhstp/ergo4all/compare/v1.93.0...v1.94.0) (2025-08-12)
+
+
+### Features
+
+* drop video recording ([b4dee2e](https://github.com/fhstp/ergo4all/commit/b4dee2eabef763c83d6481d7cd10d15fc238885d)), closes [#94](https://github.com/fhstp/ergo4all/issues/94)
+
 # [1.93.0](https://github.com/fhstp/ergo4all/compare/v1.92.0...v1.93.0) (2025-07-23)
 
 
