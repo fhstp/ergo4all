@@ -163,6 +163,10 @@ class ResultsDetailScreen extends StatelessWidget {
                     height: 330,
                   ),
                 ),
+                /// currently the following is only for testing
+                ...session.keyFrames.map((keyFrame) {
+                  return Image.memory(keyFrame.screenshot);
+                }),
               ],
             ),
           ],

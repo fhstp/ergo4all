@@ -38,6 +38,7 @@ class RulaSession {
     required this.subjectId,
     required this.scenario,
     required this.timeline,
+    required this.keyFrames,
   });
 
   /// Unix timestamp at which the session was completed.
@@ -51,4 +52,21 @@ class RulaSession {
 
   /// The recorded timeline.
   final RulaTimeline timeline;
+
+  /// keyframes screenshot data
+  final List<KeyFrame> keyFrames;
+}
+
+/// KeyFrame data structure so store relevant keyframe information
+@immutable
+class KeyFrame {
+  /// KeyFrame init
+  const KeyFrame(this.score, this.screenshot, this.timestamp);
+
+  /// KeyFrame full score
+  final int score;
+  /// keyFrame screenshot
+  final Uint8List screenshot;
+  /// KeyFrame timestamp (when it was recorded)
+  final int timestamp;
 }
