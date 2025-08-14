@@ -15,6 +15,7 @@ import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
+import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -48,6 +49,9 @@ class LiveAnalysisScreen extends StatefulWidget {
 
   /// The scenario for which to make an analysis.
   final Scenario scenario;
+
+  /// The subject who was recorded.
+  final Subject subject = const Subject(id: 1);
 
   @override
   State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
@@ -86,8 +90,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
-      // TODO: Use real subject id
-      subjectId: 1,
+      subjectId: widget.subject.id,
       scenario: widget.scenario,
       timeline: timeline.toIList(),
     );
