@@ -35,12 +35,16 @@ class RulaSession {
   ///
   const RulaSession({
     required this.timestamp,
+    required this.subjectId,
     required this.scenario,
     required this.timeline,
   });
 
   /// Unix timestamp at which the session was completed.
   final int timestamp;
+
+  /// Id of the user who was recorded in this session.
+  final int subjectId;
 
   /// [Scenario] which was recorded in this session.
   final Scenario scenario;
