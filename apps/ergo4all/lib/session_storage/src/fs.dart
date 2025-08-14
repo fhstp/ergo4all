@@ -18,9 +18,10 @@ import 'package:rula/rula.dart';
 
 @immutable
 class _SessionMeta {
-  const _SessionMeta(this.timestamp, this.scenarioIndex);
+  const _SessionMeta(this.timestamp, this.subjectId, this.scenarioIndex);
 
   final int timestamp;
+  final int subjectId;
   final int scenarioIndex;
 }
 
@@ -42,15 +43,18 @@ Future<_SessionMeta> _loadMetaFrom(File file) async {
 
   final timestamp =
       map['timestamp']!.toIntOption.expect('Should parse timestamp');
+  final subjectId =
+      map['subjectId']!.toIntOption.expect('Should parse subject id');
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
-  return _SessionMeta(timestamp, scenarioIndex);
+  return _SessionMeta(timestamp, subjectId, scenarioIndex);
 }
 
 Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
   final map = IMap.fromEntries([
     MapEntry('timestamp', meta.timestamp.toString()),
+    MapEntry('subjectId', meta.subjectId.toString()),
     MapEntry('scenarioIndex', meta.scenarioIndex.toString()),
   ]);
   final text = _stringifyKV(map);
@@ -168,6 +172,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
 
   return RulaSession(
     timestamp: meta.timestamp,
+    subjectId: meta.subjectId,
     scenario: Scenario.values[meta.scenarioIndex],
     timeline: timeline,
   );
@@ -176,7 +181,11 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
 Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   await metaFile.create();
-  final meta = _SessionMeta(session.timestamp, session.scenario.index);
+  final meta = _SessionMeta(
+    session.timestamp,
+    session.subjectId,
+    session.scenario.index,
+  );
   await _writeMetaTo(meta, metaFile);
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));

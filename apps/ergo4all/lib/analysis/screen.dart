@@ -86,6 +86,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
+      // TODO: Use real subject id
+      subjectId: 1,
       scenario: widget.scenario,
       timeline: timeline.toIList(),
     );
