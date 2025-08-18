@@ -23,6 +23,7 @@ import 'package:pose/pose.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_transforming/denoise.dart';
 import 'package:pose_vis/pose_vis.dart';
+import 'package:provider/provider.dart';
 import 'package:rula/rula.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
@@ -30,12 +31,8 @@ class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
   const LiveAnalysisScreen({
     required this.scenario,
-    required this.sessionRepository,
     super.key,
   });
-
-  /// Session store into which to store the session
-  final RulaSessionRepository sessionRepository;
 
   /// The scenario for which to make an analysis.
   final Scenario scenario;
@@ -69,6 +66,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     vsync: this,
   );
 
+  /// Session store into which to store the session
+  late final RulaSessionRepository sessionRepository;
+
   void goToResults() {
     if (!context.mounted) return;
 
@@ -78,7 +78,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       timeline: timeline.toIList(),
     );
 
-    widget.sessionRepository.put(session);
+    sessionRepository.put(session);
 
     unawaited(
       Navigator.of(context).pushReplacementNamed(
@@ -218,6 +218,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   @override
   void initState() {
     super.initState();
+
+    sessionRepository = Provider.of(context, listen: false);
 
     openPoseDetectionCamera().then((controller) {
       setState(() {

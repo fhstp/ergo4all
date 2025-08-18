@@ -68,10 +68,12 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
 
   @override
   Widget build(BuildContext context) {
-    final sessionRepository = FileBasedRulaSessionRepository();
-
     return MultiProvider(
-      providers: const [],
+      providers: [
+        Provider<RulaSessionRepository>(
+          create: (_) => FileBasedRulaSessionRepository(),
+        ),
+      ],
       child: MaterialApp(
         routes: {
           Routes.home.path: (context) => const HomeScreen(),
@@ -84,7 +86,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
             final scenario = _getRouteArgs<Scenario>(context);
             return LiveAnalysisScreen(
               scenario: scenario,
-              sessionRepository: sessionRepository,
             );
           },
           Routes.resultsOverview.path: (context) {
@@ -101,8 +102,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           Routes.tipDetail.path: (context) => const TipDetailScreen(),
           Routes.imprint.path: (_) => const ImprintScreen(),
           Routes.privacy.path: (_) => const PrivacyScreen(),
-          Routes.sessions.path: (context) =>
-              SessionChoiceScreen(sessionRepository: sessionRepository),
+          Routes.sessions.path: (context) => const SessionChoiceScreen(),
         },
         navigatorObservers: [
           RouteLeaveObserver(
