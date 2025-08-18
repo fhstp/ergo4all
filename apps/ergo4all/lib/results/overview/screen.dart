@@ -6,7 +6,6 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/screen.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -14,6 +13,7 @@ import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
@@ -71,10 +71,7 @@ class ResultsOverviewScreen extends StatelessWidget {
     ).inSeconds;
 
     void goToDetails() {
-      Navigator.of(context).pushNamed(
-        Routes.resultsDetail.path,
-        arguments: session,
-      );
+      Navigator.of(context).push(ResultsDetailScreen.makeRoute(session));
     }
 
     void recordAgain() {
