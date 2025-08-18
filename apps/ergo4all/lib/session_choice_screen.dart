@@ -17,6 +17,17 @@ class SessionChoiceScreen extends StatefulWidget {
   ///
   const SessionChoiceScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'session-choice';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const SessionChoiceScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   State<SessionChoiceScreen> createState() => _SessionChoiceScreenState();
 }

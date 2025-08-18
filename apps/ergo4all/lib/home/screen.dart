@@ -4,11 +4,11 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
 import 'package:ergo4all/home/puppet_graphic.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
+import 'package:ergo4all/session_choice_screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
     }
 
     void goToAllSessions() {
-      unawaited(Navigator.of(context).pushNamed(Routes.sessions.path));
+      unawaited(Navigator.of(context).push(SessionChoiceScreen.makeRoute()));
     }
 
     return Scaffold(
