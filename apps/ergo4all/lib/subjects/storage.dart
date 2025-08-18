@@ -2,6 +2,10 @@ import 'package:ergo4all/subjects/common.dart';
 
 /// A persistent storage for [Subject]s.
 abstract class SubjectRepo {
+  /// The default subject which will always exist and cannot be deleted.
+  /// It has the reserved id **1**.
+  static const Subject defaultSubject = Subject(id: 1);
+
   /// Gets all [Subject]s from this repo.
   Future<List<Subject>> getAll();
 
@@ -13,7 +17,7 @@ abstract class SubjectRepo {
 class FileBasedSubjectRepo implements SubjectRepo {
   @override
   Future<List<Subject>> getAll() async {
-    return [const Subject(id: 1)];
+    return [SubjectRepo.defaultSubject];
   }
 
   @override
@@ -22,6 +26,6 @@ class FileBasedSubjectRepo implements SubjectRepo {
       return null;
     }
 
-    return const Subject(id: 1);
+    return SubjectRepo.defaultSubject;
   }
 }
