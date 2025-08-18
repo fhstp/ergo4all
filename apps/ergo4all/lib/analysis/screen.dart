@@ -11,8 +11,8 @@ import 'package:ergo4all/analysis/camera_utils.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -33,6 +33,18 @@ class LiveAnalysisScreen extends StatefulWidget {
     required this.scenario,
     super.key,
   });
+
+  /// The route name for this screen.
+  static const String routeName = 'live-analysis';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen for analyzing
+  /// the given [scenario].
+  static MaterialPageRoute<void> makeRoute(Scenario scenario) {
+    return MaterialPageRoute(
+      builder: (_) => LiveAnalysisScreen(scenario: scenario),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   /// The scenario for which to make an analysis.
   final Scenario scenario;
@@ -81,10 +93,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     sessionRepository.put(session);
 
     unawaited(
-      Navigator.of(context).pushReplacementNamed(
-        Routes.resultsOverview.path,
-        arguments: session,
-      ),
+      Navigator.of(context)
+          .pushReplacement(ResultsOverviewScreen.makeRoute(session)),
     );
   }
 

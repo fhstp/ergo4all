@@ -3,15 +3,26 @@ import 'dart:async';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:custom_locale/custom_locale.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/home/screen.dart';
 import 'package:flutter/material.dart';
 
 /// Screen for picking a language. Once a user has picked a language,
-/// they will be navigated to [Routes.home].
+/// they will be navigated to the [HomeScreen].
 class PickLanguageScreen extends StatelessWidget {
   /// Creates a [PickLanguageScreen].
   const PickLanguageScreen({super.key});
+
+  /// The route name for this screen.
+  static const String routeName = 'pick-language';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const PickLanguageScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +32,10 @@ class PickLanguageScreen extends StatelessWidget {
       await setCustomLocale(locale);
       if (!context.mounted) return;
       unawaited(
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.pushAndRemoveUntil(
           context,
-          Routes.home.path,
-          ModalRoute.withName(Routes.home.name),
+          HomeScreen.makeRoute(),
+          ModalRoute.withName(HomeScreen.routeName),
         ),
       );
     }

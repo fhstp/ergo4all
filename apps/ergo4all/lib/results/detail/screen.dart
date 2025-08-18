@@ -22,6 +22,18 @@ class ResultsDetailScreen extends StatelessWidget {
   ///
   const ResultsDetailScreen({required this.session, super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'result-detail';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen and view
+  /// the given [session].
+  static MaterialPageRoute<void> makeRoute(RulaSession session) {
+    return MaterialPageRoute(
+      builder: (_) => ResultsDetailScreen(session: session),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   /// The session for which to view details.
   final RulaSession session;
 

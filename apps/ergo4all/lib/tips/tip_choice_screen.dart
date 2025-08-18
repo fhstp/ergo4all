@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/tips/common.dart';
+import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 /// Screen which lists all the tips and allows further navigation to their
@@ -13,6 +13,17 @@ import 'package:flutter/material.dart';
 class TipChoiceScreen extends StatelessWidget {
   /// Creates a [TipChoiceScreen].
   const TipChoiceScreen({super.key});
+
+  /// The route name for this screen.
+  static const String routeName = 'tip-choice';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const TipChoiceScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +40,7 @@ class TipChoiceScreen extends StatelessWidget {
 
     void goToDetailScreen(Tip tip) {
       unawaited(
-        Navigator.of(context).pushNamed(Routes.tipDetail.path, arguments: tip),
+        Navigator.of(context).push(TipDetailScreen.makeRoute(tip)),
       );
     }
 

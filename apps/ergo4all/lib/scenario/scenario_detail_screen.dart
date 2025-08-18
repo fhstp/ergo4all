@@ -5,8 +5,9 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
-import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
@@ -16,6 +17,18 @@ import 'package:flutter/material.dart';
 class ScenarioDetailScreen extends StatelessWidget {
   ///
   const ScenarioDetailScreen({required this.scenario, super.key});
+
+  /// The route name for this screen.
+  static const String routeName = 'scenario-detail';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen in order to
+  /// view the given [scenario].
+  static MaterialPageRoute<void> makeRoute(Scenario scenario) {
+    return MaterialPageRoute(
+      builder: (_) => ScenarioDetailScreen(scenario: scenario),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   /// The scenario for which to view detail.
   final Scenario scenario;
@@ -27,10 +40,9 @@ class ScenarioDetailScreen extends StatelessWidget {
     // Pass scenario context
     void goToRecordScreen() {
       unawaited(
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.liveAnalysis.path,
-          ModalRoute.withName(Routes.home.path),
-          arguments: scenario,
+        Navigator.of(context).pushAndRemoveUntil(
+          LiveAnalysisScreen.makeRoute(scenario),
+          ModalRoute.withName(HomeScreen.routeName),
         ),
       );
     }

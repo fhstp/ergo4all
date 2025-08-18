@@ -4,10 +4,12 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
 import 'package:ergo4all/home/puppet_graphic.dart';
+import 'package:ergo4all/scenario/scenario_choice_screen.dart';
+import 'package:ergo4all/session_choice_screen.dart';
+import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:flutter/material.dart';
 
 /// Top-level widget for home screen.
@@ -15,20 +17,31 @@ class HomeScreen extends StatelessWidget {
   /// Creates a [HomeScreen].
   const HomeScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'home';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const HomeScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
     void startSession() {
-      unawaited(Navigator.pushNamed(context, Routes.scenarioChoice.path));
+      unawaited(Navigator.push(context, ScenarioChoiceScreen.makeRoute()));
     }
 
     void goToTips() {
-      unawaited(Navigator.pushNamed(context, Routes.tipChoice.path));
+      unawaited(Navigator.push(context, TipChoiceScreen.makeRoute()));
     }
 
     void goToAllSessions() {
-      unawaited(Navigator.of(context).pushNamed(Routes.sessions.path));
+      unawaited(Navigator.of(context).push(SessionChoiceScreen.makeRoute()));
     }
 
     return Scaffold(

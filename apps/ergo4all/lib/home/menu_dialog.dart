@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/imprint_screen.dart';
+import 'package:ergo4all/language_screen.dart';
+import 'package:ergo4all/privacy_screen.dart';
 import 'package:flutter/material.dart';
 
 Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
@@ -24,12 +26,12 @@ Future<void> showHomeMenuDialog(BuildContext context) {
   final localizations = AppLocalizations.of(context)!;
 
   void goToLanguage() {
-    Navigator.of(context).pushReplacementNamed(Routes.language.path);
+    Navigator.of(context).pushReplacement(PickLanguageScreen.makeRoute());
   }
 
   void goToPrivacy() {
     final navigator = Navigator.of(context)..pop();
-    unawaited(navigator.pushNamed(Routes.privacy.path));
+    unawaited(navigator.push(PrivacyScreen.makeRoute()));
   }
 
   return showDialog<void>(
@@ -47,7 +49,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         ),
         _makeOptionButton(localizations.imprint, () {
           final navigator = Navigator.of(context)..pop();
-          unawaited(navigator.pushNamed(Routes.imprint.path));
+          unawaited(navigator.push(ImprintScreen.makeRoute()));
         }),
         _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
       ],

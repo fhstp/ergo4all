@@ -4,8 +4,8 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +16,17 @@ import 'package:package_info_plus/package_info_plus.dart';
 class WelcomeScreen extends StatefulWidget {
   ///
   const WelcomeScreen({super.key});
+
+  /// The route name for this screen.
+  static const String routeName = 'welcome';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const WelcomeScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -43,7 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     void navigateToNextScreen() {
       unawaited(
-        Navigator.of(context).pushReplacementNamed(Routes.language.path),
+        Navigator.of(context).pushReplacement(PickLanguageScreen.makeRoute()),
       );
     }
 

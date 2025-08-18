@@ -5,13 +5,15 @@ import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
-import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
@@ -25,6 +27,18 @@ class ResultsOverviewScreen extends StatelessWidget {
     required this.session,
     super.key,
   });
+
+  /// The route name for this screen.
+  static const String routeName = 'results-overview';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen to view
+  /// the given [session].
+  static MaterialPageRoute<void> makeRoute(RulaSession session) {
+    return MaterialPageRoute(
+      builder: (_) => ResultsOverviewScreen(session: session),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
 
   /// The session to view.
   final RulaSession session;
@@ -57,18 +71,14 @@ class ResultsOverviewScreen extends StatelessWidget {
     ).inSeconds;
 
     void goToDetails() {
-      Navigator.of(context).pushNamed(
-        Routes.resultsDetail.path,
-        arguments: session,
-      );
+      Navigator.of(context).push(ResultsDetailScreen.makeRoute(session));
     }
 
     void recordAgain() {
       unawaited(
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.liveAnalysis.path,
-          ModalRoute.withName(Routes.home.path),
-          arguments: session.scenario,
+        Navigator.of(context).pushAndRemoveUntil(
+          LiveAnalysisScreen.makeRoute(session.scenario),
+          ModalRoute.withName(HomeScreen.routeName),
         ),
       );
     }
