@@ -14,6 +14,17 @@ class ScenarioChoiceScreen extends StatelessWidget {
   ///
   const ScenarioChoiceScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'scenario-choice';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const ScenarioChoiceScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;

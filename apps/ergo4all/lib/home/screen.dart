@@ -8,6 +8,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
 import 'package:ergo4all/home/puppet_graphic.dart';
+import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:flutter/material.dart';
 
 /// Top-level widget for home screen.
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     void startSession() {
-      unawaited(Navigator.pushNamed(context, Routes.scenarioChoice.path));
+      unawaited(Navigator.push(context, ScenarioChoiceScreen.makeRoute()));
     }
 
     void goToTips() {
