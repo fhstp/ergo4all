@@ -64,34 +64,35 @@ class ScenarioDetailScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: mediumSpace),
                     Text(
                       localizations.scenarioSummary(scenario),
                       style: h4Style.copyWith(color: cardinal),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: mediumSpace),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          localizations.common_description,
-                          style: paragraphHeaderStyle,
-                        ),
-                        Text(
-                          localizations.scenarioDescription(scenario),
-                          style: dynamicBodyStyle,
-                        ),
-                        const SizedBox(height: mediumSpace),
-                        Text(
-                          localizations.common_expectation,
-                          style: paragraphHeaderStyle,
-                        ),
-                        Text(
-                          localizations.scenarioExpectation(scenario),
-                          style: dynamicBodyStyle,
-                        ),
-                      ],
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        localizations.common_description,
+                        style: paragraphHeaderStyle,
+                      ),
+                    ),
+                    Text(
+                      localizations.scenarioDescription(scenario),
+                      style: dynamicBodyStyle,
+                    ),
+                    const SizedBox(height: mediumSpace),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        textAlign: TextAlign.start,
+                        localizations.common_expectation,
+                        style: paragraphHeaderStyle,
+                      ),
+                    ),
+                    Text(
+                      localizations.scenarioExpectation(scenario),
+                      style: dynamicBodyStyle,
                     ),
                     const SizedBox(height: mediumSpace),
                     ScenarioGraphic(scenario, height: 330),
