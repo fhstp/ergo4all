@@ -17,6 +17,7 @@ import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/overview/ergo_score_badge.dart';
 import 'package:ergo4all/results/rating.dart';
+import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class ResultsOverviewScreen extends StatelessWidget {
   ///
   const ResultsOverviewScreen({
     required this.session,
+    required this.subject,
     super.key,
   });
 
@@ -32,16 +34,25 @@ class ResultsOverviewScreen extends StatelessWidget {
   static const String routeName = 'results-overview';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen to view
-  /// the given [session].
-  static MaterialPageRoute<void> makeRoute(RulaSession session) {
+  /// the [session] for a [subject].
+  static MaterialPageRoute<void> makeRoute(
+    RulaSession session,
+    Subject subject,
+  ) {
     return MaterialPageRoute(
-      builder: (_) => ResultsOverviewScreen(session: session),
+      builder: (_) => ResultsOverviewScreen(
+        session: session,
+        subject: subject,
+      ),
       settings: const RouteSettings(name: routeName),
     );
   }
 
   /// The session to view.
   final RulaSession session;
+
+  /// The subject that was recorded.
+  final Subject subject;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +88,7 @@ class ResultsOverviewScreen extends StatelessWidget {
     void recordAgain() {
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
-          LiveAnalysisScreen.makeRoute(session.scenario),
+          LiveAnalysisScreen.makeRoute(session.scenario, subject),
           ModalRoute.withName(HomeScreen.routeName),
         ),
       );
