@@ -69,10 +69,8 @@ class _SessionEntry extends StatelessWidget {
         onDismissed?.call();
       },
       child: ListTile(
-        title: Text(
-          '$scenarioLabel ($formattedDate)',
-          style: paragraphHeaderStyle,
-        ),
+        title: Text(scenarioLabel, style: paragraphHeaderStyle),
+        subtitle: Text(formattedDate),
         onTap: onTap,
       ),
     );
