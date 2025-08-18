@@ -7,6 +7,7 @@ import 'package:csv/csv.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
+import 'package:ergo4all/subjects/storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,11 @@ Future<_SessionMeta> _loadMetaFrom(File file) async {
   final timestamp =
       map['timestamp']!.toIntOption.expect('Should parse timestamp');
   final subjectId =
-      map['subjectId']!.toIntOption.expect('Should parse subject id');
+      map['subjectId']?.toIntOption.expect('Should parse subject id') ??
+          // If the file did not contain a subject-id, then it was likely
+          // recorded with an old version of the app, without subjects.
+          // In that case we just assign the session to the default subject.
+          SubjectRepo.defaultSubject.id;
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
