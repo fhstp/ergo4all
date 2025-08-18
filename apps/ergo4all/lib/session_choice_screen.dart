@@ -38,6 +38,7 @@ class SessionChoiceScreen extends StatefulWidget {
 class _SessionEntry extends StatelessWidget {
   const _SessionEntry({
     required this.session,
+    required this.subject,
     this.onTap,
     this.onDismissed,
   });
@@ -45,6 +46,7 @@ class _SessionEntry extends StatelessWidget {
   static final dateFormat = DateFormat('dd MMM yyyy, HH:mm');
 
   final RulaSession session;
+  final Subject subject;
   final void Function()? onTap;
   final void Function()? onDismissed;
 
@@ -72,8 +74,9 @@ class _SessionEntry extends StatelessWidget {
         onDismissed?.call();
       },
       child: ListTile(
-        title: Text(scenarioLabel, style: paragraphHeaderStyle),
-        subtitle: Text(formattedDate),
+        title: Text(formattedDate),
+        subtitle: Text('${subject.nickname} - $scenarioLabel'),
+        titleTextStyle: paragraphHeaderStyle,
         onTap: onTap,
       ),
     );
@@ -166,6 +169,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
                   final session = sessions[index];
                   return _SessionEntry(
                     session: session,
+                    subject: subjectsById[session.subjectId]!,
                     onDismissed: () {
                       deleteSessionWith(index);
                     },
