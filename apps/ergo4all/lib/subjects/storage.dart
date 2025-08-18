@@ -4,7 +4,7 @@ import 'package:ergo4all/subjects/common.dart';
 abstract class SubjectRepo {
   /// The default subject which will always exist and cannot be deleted.
   /// It has the reserved id **1**.
-  static const Subject defaultSubject = Subject(id: 1);
+  static const Subject defaultSubject = Subject(id: 1, nickname: 'Ergo-fan');
 
   /// Gets all [Subject]s from this repo.
   Future<List<Subject>> getAll();

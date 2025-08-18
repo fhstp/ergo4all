@@ -4,8 +4,11 @@ import 'package:flutter/foundation.dart';
 @immutable
 class Subject {
   ///
-  const Subject({required this.id});
+  const Subject({required this.id, required this.nickname});
 
   /// Numeric id which uniquely identifies this subject.
   final int id;
+
+  /// A display name for this subject.
+  final String nickname;
 }
