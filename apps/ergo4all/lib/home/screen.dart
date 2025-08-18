@@ -15,6 +15,17 @@ class HomeScreen extends StatelessWidget {
   /// Creates a [HomeScreen].
   const HomeScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'home';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const HomeScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;

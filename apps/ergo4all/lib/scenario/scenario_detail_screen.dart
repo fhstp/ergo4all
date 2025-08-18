@@ -7,6 +7,7 @@ import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
@@ -29,7 +30,7 @@ class ScenarioDetailScreen extends StatelessWidget {
       unawaited(
         Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.liveAnalysis.path,
-          ModalRoute.withName(Routes.home.path),
+          ModalRoute.withName(HomeScreen.routeName),
           arguments: scenario,
         ),
       );

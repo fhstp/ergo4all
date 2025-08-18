@@ -5,7 +5,6 @@ import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/privacy_screen.dart';
@@ -76,7 +75,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       ],
       child: MaterialApp(
         routes: {
-          Routes.home.path: (context) => const HomeScreen(),
           Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
           Routes.scenarioDetail.path: (context) {
             final scenario = _getRouteArgs<Scenario>(context);

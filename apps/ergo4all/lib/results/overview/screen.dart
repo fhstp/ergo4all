@@ -9,6 +9,7 @@ import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
@@ -67,7 +68,7 @@ class ResultsOverviewScreen extends StatelessWidget {
       unawaited(
         Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.liveAnalysis.path,
-          ModalRoute.withName(Routes.home.path),
+          ModalRoute.withName(HomeScreen.routeName),
           arguments: session.scenario,
         ),
       );
