@@ -22,6 +22,7 @@ import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 /// Utility function for getting the current route args casted as a specific
 /// type [T].
@@ -67,52 +68,55 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
 
   @override
   Widget build(BuildContext context) {
-    final sessionRepository = FileBasedRulaSessionRepository();
-
-    return MaterialApp(
-      routes: {
-        Routes.home.path: (context) => const HomeScreen(),
-        Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
-        Routes.scenarioDetail.path: (context) {
-          final scenario = _getRouteArgs<Scenario>(context);
-          return ScenarioDetailScreen(scenario: scenario);
-        },
-        Routes.liveAnalysis.path: (context) {
-          final scenario = _getRouteArgs<Scenario>(context);
-          return LiveAnalysisScreen(
-            scenario: scenario,
-            sessionRepository: sessionRepository,
-          );
-        },
-        Routes.resultsOverview.path: (context) {
-          final session = _getRouteArgs<RulaSession>(context);
-          return ResultsOverviewScreen(session: session);
-        },
-        Routes.resultsDetail.path: (context) {
-          final session = _getRouteArgs<RulaSession>(context);
-          return ResultsDetailScreen(session: session);
-        },
-        Routes.language.path: (context) => const PickLanguageScreen(),
-        Routes.welcome.path: (context) => const WelcomeScreen(),
-        Routes.tipChoice.path: (context) => const TipChoiceScreen(),
-        Routes.tipDetail.path: (context) => const TipDetailScreen(),
-        Routes.imprint.path: (_) => const ImprintScreen(),
-        Routes.privacy.path: (_) => const PrivacyScreen(),
-        Routes.sessions.path: (context) =>
-            SessionChoiceScreen(sessionRepository: sessionRepository),
-      },
-      navigatorObservers: [
-        RouteLeaveObserver(
-          routeName: Routes.language.path,
-          onLeft: _reloadCustomLocale,
+    return MultiProvider(
+      providers: [
+        Provider<RulaSessionRepository>(
+          create: (_) => FileBasedRulaSessionRepository(),
         ),
       ],
-      locale: _customLocale,
-      title: 'Ergo4All',
-      theme: ergo4allTheme,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: Routes.welcome.path,
+      child: MaterialApp(
+        routes: {
+          Routes.home.path: (context) => const HomeScreen(),
+          Routes.scenarioChoice.path: (context) => const ScenarioChoiceScreen(),
+          Routes.scenarioDetail.path: (context) {
+            final scenario = _getRouteArgs<Scenario>(context);
+            return ScenarioDetailScreen(scenario: scenario);
+          },
+          Routes.liveAnalysis.path: (context) {
+            final scenario = _getRouteArgs<Scenario>(context);
+            return LiveAnalysisScreen(
+              scenario: scenario,
+            );
+          },
+          Routes.resultsOverview.path: (context) {
+            final session = _getRouteArgs<RulaSession>(context);
+            return ResultsOverviewScreen(session: session);
+          },
+          Routes.resultsDetail.path: (context) {
+            final session = _getRouteArgs<RulaSession>(context);
+            return ResultsDetailScreen(session: session);
+          },
+          Routes.language.path: (context) => const PickLanguageScreen(),
+          Routes.welcome.path: (context) => const WelcomeScreen(),
+          Routes.tipChoice.path: (context) => const TipChoiceScreen(),
+          Routes.tipDetail.path: (context) => const TipDetailScreen(),
+          Routes.imprint.path: (_) => const ImprintScreen(),
+          Routes.privacy.path: (_) => const PrivacyScreen(),
+          Routes.sessions.path: (context) => const SessionChoiceScreen(),
+        },
+        navigatorObservers: [
+          RouteLeaveObserver(
+            routeName: Routes.language.path,
+            onLeft: _reloadCustomLocale,
+          ),
+        ],
+        locale: _customLocale,
+        title: 'Ergo4All',
+        theme: ergo4allTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        initialRoute: Routes.welcome.path,
+      ),
     );
   }
 }
