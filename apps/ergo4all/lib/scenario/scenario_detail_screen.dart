@@ -145,8 +145,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                           .map(
                             (subject) => DropdownMenuEntry(
                               value: subject,
-                              // TODO: Use nickname
-                              label: 'Subject ${subject.id}',
+                              label: subject.nickname,
                             ),
                           )
                           .toList(),
