@@ -138,8 +138,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                       // where the dropdown would not resize after the subjects
                       // were loaded and be too small.
                       key: UniqueKey(),
-                      // TODO: Localize
-                      label: const Text('Subject'),
+                      label: Text(localizations.subject_selection_label),
                       initialSelection: subjects.firstOrNull,
                       dropdownMenuEntries: subjects
                           .map(
