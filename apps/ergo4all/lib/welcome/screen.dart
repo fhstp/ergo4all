@@ -17,6 +17,17 @@ class WelcomeScreen extends StatefulWidget {
   ///
   const WelcomeScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'welcome';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const WelcomeScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }

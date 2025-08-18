@@ -1,6 +1,4 @@
 enum Routes {
-  welcome('/welcome'),
-
   /// Screen for viewing imprint information.
   imprint('/imprint'),
 

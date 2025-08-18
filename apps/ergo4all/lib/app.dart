@@ -55,7 +55,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       ],
       child: MaterialApp(
         routes: {
-          Routes.welcome.path: (context) => const WelcomeScreen(),
           Routes.imprint.path: (_) => const ImprintScreen(),
           Routes.privacy.path: (_) => const PrivacyScreen(),
           Routes.sessions.path: (context) => const SessionChoiceScreen(),
@@ -71,7 +70,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         theme: ergo4allTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        initialRoute: Routes.welcome.path,
+        home: const WelcomeScreen(),
       ),
     );
   }
