@@ -161,6 +161,10 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_seated_summary": "Working in a seated position",
+  "subject_selection_label": "Filmed person",
+  "@subject_selection_label": {
+    "description": "The label for a dropdown where a subject to be filmed can be selected"
+  },
   "tip_body_posture_label": "General body posture",
   "@tip_body_posture_label": {
     "description": "Short label text for buttons referencing this tip"
