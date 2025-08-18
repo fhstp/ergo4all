@@ -8,7 +8,9 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
+import 'package:ergo4all/subjects/common.dart';
 import 'package:ergo4all/subjects/storage.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -84,6 +86,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
   late final SubjectRepo subjectRepo;
 
   List<RulaSession> sessions = List.empty();
+  IMap<int, Subject> subjectsById = const IMap.empty();
 
   @override
   void initState() {
@@ -102,14 +105,20 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
         sessions = it;
       });
     });
+
+    subjectRepo.getAllAsMap().then((subjects) {
+      setState(() {
+        subjectsById = subjects;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    Future<void> goToResultsFor(RulaSession session) async {
-      final subject = await subjectRepo.getById(session.subjectId);
+    void goToResultsFor(RulaSession session) {
+      final subject = subjectsById[session.subjectId];
       assert(subject != null, 'Subject for session must exist');
 
       if (!context.mounted) return;
