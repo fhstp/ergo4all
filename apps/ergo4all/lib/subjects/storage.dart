@@ -1,4 +1,5 @@
 import 'package:ergo4all/subjects/common.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 /// A persistent storage for [Subject]s.
 abstract class SubjectRepo {
@@ -11,6 +12,19 @@ abstract class SubjectRepo {
 
   /// Get a specific [Subject] by their id.
   Future<Subject?> getById(int id);
+}
+
+/// Utility extensions for [SubjectRepo].
+extension Utils on SubjectRepo {
+  /// Gets all subjects from this store and organizes them in a map, keyed
+  /// by their id.
+  Future<IMap<int, Subject>> getAllAsMap() async {
+    final subjects = await getAll();
+    return IMap.fromValues(
+      values: subjects,
+      keyMapper: (subject) => subject.id,
+    );
+  }
 }
 
 /// Implementation of [SubjectRepo] which stores its data in the file-system.
