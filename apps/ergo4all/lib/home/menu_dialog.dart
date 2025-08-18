@@ -4,6 +4,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         ),
         _makeOptionButton(localizations.imprint, () {
           final navigator = Navigator.of(context)..pop();
-          unawaited(navigator.pushNamed(Routes.imprint.path));
+          unawaited(navigator.push(ImprintScreen.makeRoute()));
         }),
         _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
       ],

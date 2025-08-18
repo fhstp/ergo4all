@@ -1,7 +1,4 @@
 enum Routes {
-  /// Screen for viewing imprint information.
-  imprint('/imprint'),
-
   /// Screen for viewing privacy information.
   privacy('/privacy'),
 
