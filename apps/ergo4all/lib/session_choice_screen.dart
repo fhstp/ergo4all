@@ -8,7 +8,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/subjects/common.dart';
+import 'package:ergo4all/subjects/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -81,6 +81,8 @@ class _SessionEntry extends StatelessWidget {
 class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     with SingleTickerProviderStateMixin {
   late final RulaSessionRepository sessionRepository;
+  late final SubjectRepo subjectRepo;
+
   List<RulaSession> sessions = List.empty();
 
   @override
@@ -88,6 +90,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     super.initState();
 
     sessionRepository = Provider.of(context, listen: false);
+    subjectRepo = Provider.of(context, listen: false);
   }
 
   @override
@@ -105,15 +108,14 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void goToResultsFor(RulaSession session) {
+    Future<void> goToResultsFor(RulaSession session) async {
+      final subject = await subjectRepo.getById(session.subjectId);
+      assert(subject != null, 'Subject for session must exist');
+
       if (!context.mounted) return;
       unawaited(
         Navigator.of(context).pushReplacement(
-          ResultsOverviewScreen.makeRoute(
-            session,
-            // TODO: Load whole subject from storage
-            Subject(id: session.subjectId),
-          ),
+          ResultsOverviewScreen.makeRoute(session, subject!),
         ),
       );
     }
