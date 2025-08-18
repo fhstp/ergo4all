@@ -1,4 +1,3 @@
-import 'package:common/casting.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/common/routes.dart';
@@ -13,16 +12,6 @@ import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-/// Utility function for getting the current route args casted as a specific
-/// type [T].
-T _getRouteArgs<T extends Object>(BuildContext context) {
-  final args = ModalRoute.of(context)?.settings.arguments?.tryAs<T>();
-
-  assert(args != null, 'Incorrect route args');
-
-  return args!;
-}
 
 class Ergo4AllApp extends StatefulWidget {
   const Ergo4AllApp({super.key});
