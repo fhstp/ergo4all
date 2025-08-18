@@ -4,6 +4,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/language_screen.dart';
 import 'package:flutter/material.dart';
 
 Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
@@ -24,7 +25,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
   final localizations = AppLocalizations.of(context)!;
 
   void goToLanguage() {
-    Navigator.of(context).pushReplacementNamed(Routes.language.path);
+    Navigator.of(context).pushReplacement(PickLanguageScreen.makeRoute());
   }
 
   void goToPrivacy() {

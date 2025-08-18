@@ -1,5 +1,4 @@
 enum Routes {
-  language('/language'),
   welcome('/welcome'),
 
   /// Screen for viewing imprint information.

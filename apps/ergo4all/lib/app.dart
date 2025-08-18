@@ -55,7 +55,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       ],
       child: MaterialApp(
         routes: {
-          Routes.language.path: (context) => const PickLanguageScreen(),
           Routes.welcome.path: (context) => const WelcomeScreen(),
           Routes.imprint.path: (_) => const ImprintScreen(),
           Routes.privacy.path: (_) => const PrivacyScreen(),
@@ -63,7 +62,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         },
         navigatorObservers: [
           RouteLeaveObserver(
-            routeName: Routes.language.path,
+            routeName: PickLanguageScreen.routeName,
             onLeft: _reloadCustomLocale,
           ),
         ],

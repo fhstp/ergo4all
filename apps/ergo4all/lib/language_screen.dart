@@ -13,6 +13,17 @@ class PickLanguageScreen extends StatelessWidget {
   /// Creates a [PickLanguageScreen].
   const PickLanguageScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'pick-language';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const PickLanguageScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
