@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/custom_images.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/privacy_screen.dart';
 import 'package:flutter/material.dart';
 
 class _ContactBlock extends StatelessWidget {
@@ -62,7 +62,7 @@ class ImprintScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     void goToPrivacy() {
-      unawaited(Navigator.of(context).pushNamed(Routes.privacy.path));
+      unawaited(Navigator.of(context).push(PrivacyScreen.makeRoute()));
     }
 
     return Scaffold(

@@ -3,7 +3,6 @@ import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/language_screen.dart';
-import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/session_choice_screen.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
@@ -54,7 +53,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       ],
       child: MaterialApp(
         routes: {
-          Routes.privacy.path: (_) => const PrivacyScreen(),
           Routes.sessions.path: (context) => const SessionChoiceScreen(),
         },
         navigatorObservers: [

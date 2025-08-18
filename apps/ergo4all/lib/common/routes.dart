@@ -1,7 +1,4 @@
 enum Routes {
-  /// Screen for viewing privacy information.
-  privacy('/privacy'),
-
   /// Screen for viewing all the stored record sessions
   sessions('/sessions');
 

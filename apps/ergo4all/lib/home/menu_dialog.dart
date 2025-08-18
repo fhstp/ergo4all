@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language_screen.dart';
+import 'package:ergo4all/privacy_screen.dart';
 import 'package:flutter/material.dart';
 
 Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
@@ -31,7 +31,7 @@ Future<void> showHomeMenuDialog(BuildContext context) {
 
   void goToPrivacy() {
     final navigator = Navigator.of(context)..pop();
-    unawaited(navigator.pushNamed(Routes.privacy.path));
+    unawaited(navigator.push(PrivacyScreen.makeRoute()));
   }
 
   return showDialog<void>(
