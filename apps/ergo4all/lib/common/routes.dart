@@ -1,5 +1,4 @@
 enum Routes {
-  tipChoice('/tip/choice'),
   tipDetail('/tip/detail'),
 
   /// The results overview screen.

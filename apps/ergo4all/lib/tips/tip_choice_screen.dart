@@ -14,6 +14,17 @@ class TipChoiceScreen extends StatelessWidget {
   /// Creates a [TipChoiceScreen].
   const TipChoiceScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'tip-choice';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen.
+  static MaterialPageRoute<void> makeRoute() {
+    return MaterialPageRoute(
+      builder: (_) => const TipChoiceScreen(),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
