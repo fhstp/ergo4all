@@ -32,6 +32,53 @@ class SessionChoiceScreen extends StatefulWidget {
   State<SessionChoiceScreen> createState() => _SessionChoiceScreenState();
 }
 
+class _SessionEntry extends StatelessWidget {
+  const _SessionEntry({
+    required this.session,
+    this.onTap,
+    this.onDismissed,
+  });
+
+  static final dateFormat = DateFormat('dd MMM yyyy, HH:mm');
+
+  final RulaSession session;
+  final void Function()? onTap;
+  final void Function()? onDismissed;
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(session.timestamp);
+    final scenarioLabel = switch (session.scenario) {
+      Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
+      Scenario.pull => localizations.scenario_pull_label,
+      Scenario.seated => localizations.scenario_seated_label,
+      Scenario.packaging => localizations.scenario_packaging_label,
+      Scenario.standingCNC => localizations.scenario_CNC_label,
+      Scenario.standingAssembly => localizations.scenario_assembly_label,
+      Scenario.ceiling => localizations.scenario_ceiling_label,
+      Scenario.lift25 => localizations.scenario_lift_label,
+      Scenario.conveyorBelt => localizations.scenario_conveyor_label,
+    };
+    final formattedDate = dateFormat.format(dateTime);
+
+    return Dismissible(
+      key: Key(session.timestamp.toString()),
+      onDismissed: (direction) {
+        onDismissed?.call();
+      },
+      child: ListTile(
+        title: Text(
+          '$scenarioLabel ($formattedDate)',
+          style: paragraphHeaderStyle,
+        ),
+        onTap: onTap,
+      ),
+    );
+  }
+}
+
 class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     with SingleTickerProviderStateMixin {
   late final RulaSessionRepository sessionRepository;
@@ -59,7 +106,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void goToResults(RulaSession session) {
+    void goToResultsFor(RulaSession session) {
       if (!context.mounted) return;
       unawaited(
         Navigator.of(context)
@@ -67,17 +114,20 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       );
     }
 
-    String titleFor(Scenario scenario) => switch (scenario) {
-          Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
-          Scenario.pull => localizations.scenario_pull_label,
-          Scenario.seated => localizations.scenario_seated_label,
-          Scenario.packaging => localizations.scenario_packaging_label,
-          Scenario.standingCNC => localizations.scenario_CNC_label,
-          Scenario.standingAssembly => localizations.scenario_assembly_label,
-          Scenario.ceiling => localizations.scenario_ceiling_label,
-          Scenario.lift25 => localizations.scenario_lift_label,
-          Scenario.conveyorBelt => localizations.scenario_conveyor_label,
-        };
+    Future<void> deleteSessionWith(int index) async {
+      await sessionRepository.deleteByTimestamp(sessions[index].timestamp);
+      if (!context.mounted) return;
+
+      setState(() {
+        sessions.removeAt(index);
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(localizations.delete_session_message),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -98,41 +148,15 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
             : ListView.builder(
                 itemCount: sessions.length,
                 itemBuilder: (context, index) {
-                  final dateTime = DateTime.fromMillisecondsSinceEpoch(
-                    sessions[index].timestamp,
-                  );
-                  final scenario = sessions[index].scenario;
-                  final scenarioLabel = titleFor(scenario);
-                  final formattedDate =
-                      DateFormat('dd MMM yyyy, HH:mm').format(dateTime);
-                  return Dismissible(
-                    key: Key(sessions[index].timestamp.toString()),
-                    onDismissed: (direction) async {
-                      await sessionRepository
-                          .deleteByTimestamp(sessions[index].timestamp);
-                      if (!context.mounted) return;
-
-                      setState(() {
-                        sessions.removeAt(index);
-                      });
-
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(
-                        SnackBar(
-                          content: Text(localizations.delete_session_message),
-                        ),
-                      );
+                  final session = sessions[index];
+                  return _SessionEntry(
+                    session: session,
+                    onDismissed: () {
+                      deleteSessionWith(index);
                     },
-                    child: ListTile(
-                      title: Text(
-                        '$scenarioLabel ($formattedDate)',
-                        style: paragraphHeaderStyle,
-                      ),
-                      onTap: () {
-                        goToResults(sessions[index]);
-                      },
-                    ),
+                    onTap: () {
+                      goToResultsFor(session);
+                    },
                   );
                 },
               ),
