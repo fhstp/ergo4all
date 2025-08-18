@@ -5,7 +5,7 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
-import 'package:ergo4all/common/routes.dart';
+import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -40,10 +40,9 @@ class ScenarioDetailScreen extends StatelessWidget {
     // Pass scenario context
     void goToRecordScreen() {
       unawaited(
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.liveAnalysis.path,
+        Navigator.of(context).pushAndRemoveUntil(
+          LiveAnalysisScreen.makeRoute(scenario),
           ModalRoute.withName(HomeScreen.routeName),
-          arguments: scenario,
         ),
       );
     }

@@ -5,6 +5,7 @@ import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
+import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
@@ -66,10 +67,9 @@ class ResultsOverviewScreen extends StatelessWidget {
 
     void recordAgain() {
       unawaited(
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.liveAnalysis.path,
+        Navigator.of(context).pushAndRemoveUntil(
+          LiveAnalysisScreen.makeRoute(session.scenario),
           ModalRoute.withName(HomeScreen.routeName),
-          arguments: session.scenario,
         ),
       );
     }

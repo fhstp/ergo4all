@@ -34,6 +34,18 @@ class LiveAnalysisScreen extends StatefulWidget {
     super.key,
   });
 
+  /// The route name for this screen.
+  static const String routeName = 'live-analysis';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen for analyzing
+  /// the given [scenario].
+  static MaterialPageRoute<void> makeRoute(Scenario scenario) {
+    return MaterialPageRoute(
+      builder: (_) => LiveAnalysisScreen(scenario: scenario),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   /// The scenario for which to make an analysis.
   final Scenario scenario;
 

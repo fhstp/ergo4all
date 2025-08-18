@@ -1,5 +1,4 @@
 enum Routes {
-  liveAnalysis('/analysis/live'),
   tipChoice('/tip/choice'),
   tipDetail('/tip/detail'),
 
