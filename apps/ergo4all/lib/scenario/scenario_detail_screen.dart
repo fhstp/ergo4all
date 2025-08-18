@@ -44,6 +44,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
   late final SubjectRepo subjectRepo;
 
   List<Subject> subjects = [];
+  Subject? selectedSubject;
 
   @override
   void initState() {
@@ -57,7 +58,12 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
     super.didChangeDependencies();
 
     subjectRepo.getAll().then((subjects) {
-      this.subjects = subjects;
+      setState(() {
+        assert(subjects.isNotEmpty, 'There must be at least 1 subject');
+
+        this.subjects = subjects;
+        selectedSubject = subjects.first;
+      });
     });
   }
 
@@ -66,10 +72,11 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
     final localizations = AppLocalizations.of(context)!;
     // Pass scenario context
     void goToRecordScreen() {
+      assert(selectedSubject != null, 'Must have selected a subject');
+
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
-          // TODO: Select subject from UI
-          LiveAnalysisScreen.makeRoute(widget.scenario, subjects[0]),
+          LiveAnalysisScreen.makeRoute(widget.scenario, selectedSubject!),
           ModalRoute.withName(HomeScreen.routeName),
         ),
       );
@@ -125,10 +132,36 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                     const SizedBox(height: mediumSpace),
                     ScenarioGraphic(widget.scenario, height: 330),
                     const SizedBox(height: mediumSpace),
+                    DropdownMenu(
+                      // Having this unique key here fixes
+                      // https://github.com/flutter/flutter/issues/120567
+                      // where the dropdown would not resize after the subjects
+                      // were loaded and be too small.
+                      key: UniqueKey(),
+                      // TODO: Localize
+                      label: const Text('Subject'),
+                      initialSelection: subjects.firstOrNull,
+                      dropdownMenuEntries: subjects
+                          .map(
+                            (subject) => DropdownMenuEntry(
+                              value: subject,
+                              // TODO: Use nickname
+                              label: 'Subject ${subject.id}',
+                            ),
+                          )
+                          .toList(),
+                      onSelected: (subject) {
+                        setState(() {
+                          selectedSubject = subject;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: mediumSpace),
                     ElevatedButton(
                       key: const Key('start'),
                       style: primaryTextButtonStyle,
-                      onPressed: goToRecordScreen,
+                      onPressed:
+                          selectedSubject != null ? goToRecordScreen : null,
                       child: Text(localizations.record_label),
                     ),
                   ],
