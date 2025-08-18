@@ -11,6 +11,18 @@ import 'package:flutter_svg/svg.dart';
 class TipDetailScreen extends StatelessWidget {
   const TipDetailScreen({super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'tip-detail';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen to view
+  /// the given [tip].
+  static MaterialPageRoute<void> makeRoute(Tip tip) {
+    return MaterialPageRoute(
+      builder: (_) => const TipDetailScreen(),
+      settings: RouteSettings(name: routeName, arguments: tip),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;

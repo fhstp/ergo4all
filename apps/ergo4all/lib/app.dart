@@ -12,7 +12,6 @@ import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/session_choice_screen.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,7 +79,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           },
           Routes.language.path: (context) => const PickLanguageScreen(),
           Routes.welcome.path: (context) => const WelcomeScreen(),
-          Routes.tipDetail.path: (context) => const TipDetailScreen(),
           Routes.imprint.path: (_) => const ImprintScreen(),
           Routes.privacy.path: (_) => const PrivacyScreen(),
           Routes.sessions.path: (context) => const SessionChoiceScreen(),

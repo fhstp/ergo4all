@@ -1,6 +1,4 @@
 enum Routes {
-  tipDetail('/tip/detail'),
-
   /// The results overview screen.
   resultsOverview('/analysis/results'),
 
