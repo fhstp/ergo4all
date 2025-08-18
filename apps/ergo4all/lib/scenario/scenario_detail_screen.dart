@@ -12,10 +12,12 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:ergo4all/subjects/common.dart';
+import 'package:ergo4all/subjects/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// Screen for viewing a detailed description of a [Scenario].
-class ScenarioDetailScreen extends StatelessWidget {
+class ScenarioDetailScreen extends StatefulWidget {
   ///
   const ScenarioDetailScreen({required this.scenario, super.key});
 
@@ -35,15 +37,39 @@ class ScenarioDetailScreen extends StatelessWidget {
   final Scenario scenario;
 
   @override
+  State<ScenarioDetailScreen> createState() => _ScenarioDetailScreenState();
+}
+
+class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
+  late final SubjectRepo subjectRepo;
+
+  List<Subject> subjects = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    subjectRepo = Provider.of(context, listen: false);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    subjectRepo.getAll().then((subjects) {
+      this.subjects = subjects;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
     // Pass scenario context
     void goToRecordScreen() {
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
           // TODO: Select subject from UI
-          LiveAnalysisScreen.makeRoute(scenario, const Subject(id: 1)),
+          LiveAnalysisScreen.makeRoute(widget.scenario, subjects[0]),
           ModalRoute.withName(HomeScreen.routeName),
         ),
       );
@@ -67,7 +93,7 @@ class ScenarioDetailScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      localizations.scenarioSummary(scenario),
+                      localizations.scenarioSummary(widget.scenario),
                       style: h4Style.copyWith(color: cardinal),
                       textAlign: TextAlign.center,
                     ),
@@ -80,7 +106,7 @@ class ScenarioDetailScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      localizations.scenarioDescription(scenario),
+                      localizations.scenarioDescription(widget.scenario),
                       style: dynamicBodyStyle,
                     ),
                     const SizedBox(height: mediumSpace),
@@ -93,11 +119,11 @@ class ScenarioDetailScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      localizations.scenarioExpectation(scenario),
+                      localizations.scenarioExpectation(widget.scenario),
                       style: dynamicBodyStyle,
                     ),
                     const SizedBox(height: mediumSpace),
-                    ScenarioGraphic(scenario, height: 330),
+                    ScenarioGraphic(widget.scenario, height: 330),
                     const SizedBox(height: mediumSpace),
                     ElevatedButton(
                       key: const Key('start'),
