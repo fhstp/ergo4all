@@ -28,6 +28,18 @@ class ResultsOverviewScreen extends StatelessWidget {
     super.key,
   });
 
+  /// The route name for this screen.
+  static const String routeName = 'results-overview';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen to view
+  /// the given [session].
+  static MaterialPageRoute<void> makeRoute(RulaSession session) {
+    return MaterialPageRoute(
+      builder: (_) => ResultsOverviewScreen(session: session),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   /// The session to view.
   final RulaSession session;
 

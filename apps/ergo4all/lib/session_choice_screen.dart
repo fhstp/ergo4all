@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
-import 'package:ergo4all/common/routes.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +51,8 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     void goToResults(RulaSession session) {
       if (!context.mounted) return;
       unawaited(
-        Navigator.of(context).pushReplacementNamed(
-          Routes.resultsOverview.path,
-          arguments: session,
-        ),
+        Navigator.of(context)
+            .pushReplacement(ResultsOverviewScreen.makeRoute(session)),
       );
     }
 

@@ -1,7 +1,4 @@
 enum Routes {
-  /// The results overview screen.
-  resultsOverview('/analysis/results'),
-
   /// The results detail screen.
   resultsDetail('/analysis/results/detail'),
   language('/language'),
