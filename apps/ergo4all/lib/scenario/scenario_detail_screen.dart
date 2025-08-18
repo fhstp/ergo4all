@@ -11,6 +11,7 @@ import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
+import 'package:ergo4all/subjects/common.dart';
 import 'package:flutter/material.dart';
 
 /// Screen for viewing a detailed description of a [Scenario].
@@ -41,7 +42,8 @@ class ScenarioDetailScreen extends StatelessWidget {
     void goToRecordScreen() {
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
-          LiveAnalysisScreen.makeRoute(scenario),
+          // TODO: Select subject from UI
+          LiveAnalysisScreen.makeRoute(scenario, const Subject(id: 1)),
           ModalRoute.withName(HomeScreen.routeName),
         ),
       );

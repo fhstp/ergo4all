@@ -32,6 +32,7 @@ class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
   const LiveAnalysisScreen({
     required this.scenario,
+    required this.subject,
     super.key,
   });
 
@@ -39,10 +40,10 @@ class LiveAnalysisScreen extends StatefulWidget {
   static const String routeName = 'live-analysis';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen for analyzing
-  /// the given [scenario].
-  static MaterialPageRoute<void> makeRoute(Scenario scenario) {
+  /// a [subject] in a [scenario].
+  static MaterialPageRoute<void> makeRoute(Scenario scenario, Subject subject) {
     return MaterialPageRoute(
-      builder: (_) => LiveAnalysisScreen(scenario: scenario),
+      builder: (_) => LiveAnalysisScreen(scenario: scenario, subject: subject),
       settings: const RouteSettings(name: routeName),
     );
   }
@@ -51,7 +52,7 @@ class LiveAnalysisScreen extends StatefulWidget {
   final Scenario scenario;
 
   /// The subject who was recorded.
-  final Subject subject = const Subject(id: 1);
+  final Subject subject;
 
   @override
   State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
@@ -98,8 +99,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     sessionRepository.put(session);
 
     unawaited(
-      Navigator.of(context)
-          .pushReplacement(ResultsOverviewScreen.makeRoute(session)),
+      Navigator.of(context).pushReplacement(
+        ResultsOverviewScreen.makeRoute(
+          session,
+          widget.subject,
+        ),
+      ),
     );
   }
 
