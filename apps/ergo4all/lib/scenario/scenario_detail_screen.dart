@@ -18,6 +18,18 @@ class ScenarioDetailScreen extends StatelessWidget {
   ///
   const ScenarioDetailScreen({required this.scenario, super.key});
 
+  /// The route name for this screen.
+  static const String routeName = 'scenario-detail';
+
+  /// Creates a [MaterialPageRoute] to navigate to this screen in order to
+  /// view the given [scenario].
+  static MaterialPageRoute<void> makeRoute(Scenario scenario) {
+    return MaterialPageRoute(
+      builder: (_) => ScenarioDetailScreen(scenario: scenario),
+      settings: const RouteSettings(name: routeName),
+    );
+  }
+
   /// The scenario for which to view detail.
   final Scenario scenario;
 

@@ -12,7 +12,6 @@ import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/results/overview/screen.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/scenario/common.dart';
-import 'package:ergo4all/scenario/scenario_detail_screen.dart';
 import 'package:ergo4all/session_choice_screen.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
@@ -74,10 +73,6 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
       ],
       child: MaterialApp(
         routes: {
-          Routes.scenarioDetail.path: (context) {
-            final scenario = _getRouteArgs<Scenario>(context);
-            return ScenarioDetailScreen(scenario: scenario);
-          },
           Routes.liveAnalysis.path: (context) {
             final scenario = _getRouteArgs<Scenario>(context);
             return LiveAnalysisScreen(
