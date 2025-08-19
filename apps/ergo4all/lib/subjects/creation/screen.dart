@@ -1,7 +1,7 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/subjects/creation/form.dart';
-import 'package:ergo4all/subjects/storage.dart';
+import 'package:ergo4all/subjects/storage/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

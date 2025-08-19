@@ -12,7 +12,7 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:ergo4all/subjects/common.dart';
-import 'package:ergo4all/subjects/storage.dart';
+import 'package:ergo4all/subjects/storage/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
