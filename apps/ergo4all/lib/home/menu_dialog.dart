@@ -25,19 +25,18 @@ Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
 /// the home screen.
 Future<void> showHomeMenuDialog(BuildContext context) {
   final localizations = AppLocalizations.of(context)!;
+  final navigator = Navigator.of(context);
 
   void goToLanguage() {
-    Navigator.of(context).pushReplacement(PickLanguageScreen.makeRoute());
+    unawaited(navigator.pushReplacement(PickLanguageScreen.makeRoute()));
   }
 
   void goToPrivacy() {
-    final navigator = Navigator.of(context)..pop();
-    unawaited(navigator.push(PrivacyScreen.makeRoute()));
+    unawaited(navigator.pushReplacement(PrivacyScreen.makeRoute()));
   }
 
   void goToSubjectManagement() {
-    final navigator = Navigator.of(context)..pop();
-    unawaited(navigator.push(SubjectManagementScreen.makeRoute()));
+    unawaited(navigator.pushReplacement(SubjectManagementScreen.makeRoute()));
   }
 
   return showDialog<void>(
