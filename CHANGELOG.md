@@ -1,3 +1,19 @@
+# [1.95.0](https://github.com/fhstp/ergo4all/compare/v1.94.0...v1.95.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* loading pre-subject sessions ([468fcb4](https://github.com/fhstp/ergo4all/commit/468fcb46857aa98266ccc4fba070d884d995a965))
+
+
+### Features
+
+* analysis subject selection ([2ab795b](https://github.com/fhstp/ergo4all/commit/2ab795b1a1f0c5b8a4e6666d9bc6c77835535ddc))
+* display subject on session-choice screen ([2fb8fb1](https://github.com/fhstp/ergo4all/commit/2fb8fb12a99d2e194d739312b615aca7d604f3cd))
+* improve session choice screen ([69a591c](https://github.com/fhstp/ergo4all/commit/69a591c2bd1e75d62ab31ebbcf76fc603f6e84f6))
+* localize subject selection label ([2bcc30b](https://github.com/fhstp/ergo4all/commit/2bcc30b99558de2ab550e559e94d49e0a09a6567))
+* use subject nickname in selection ([66d9e85](https://github.com/fhstp/ergo4all/commit/66d9e85d904933d358f6bcdfc4ae94663ef35e76))
+
 # [1.94.0](https://github.com/fhstp/ergo4all/compare/v1.93.0...v1.94.0) (2025-08-12)
 
 
