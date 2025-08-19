@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/subjects/creation/form.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,10 @@ class SubjectCreationScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Align(
-          child: NewSubjectForm(),
+          child: Padding(
+            padding: EdgeInsets.all(largeSpace),
+            child: NewSubjectForm(),
+          ),
         ),
       ),
     );
