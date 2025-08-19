@@ -1,10 +1,12 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/subjects/creation/form.dart';
+import 'package:ergo4all/subjects/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// Screen where users can add new subjects.
-class SubjectCreationScreen extends StatelessWidget {
+class SubjectCreationScreen extends StatefulWidget {
   ///
   const SubjectCreationScreen({super.key});
 
@@ -20,9 +22,29 @@ class SubjectCreationScreen extends StatelessWidget {
   }
 
   @override
+  State<SubjectCreationScreen> createState() => _SubjectCreationScreenState();
+}
+
+class _SubjectCreationScreenState extends State<SubjectCreationScreen> {
+  late final SubjectRepo subjectRepo;
+
+  @override
+  void initState() {
+    super.initState();
+
+    subjectRepo = Provider.of(context, listen: false);
+  }
+
+  Future<void> submitSubject(NewSubject subject) async {
+    await subjectRepo.createNew(subject.nickName);
+    if (!mounted) return;
+    Navigator.of(context).pop();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: RedCircleAppBar(
+    return Scaffold(
+      appBar: const RedCircleAppBar(
         // TODO: Localize
         titleText: 'New subject',
         withBackButton: true,
@@ -30,8 +52,10 @@ class SubjectCreationScreen extends StatelessWidget {
       body: SafeArea(
         child: Align(
           child: Padding(
-            padding: EdgeInsets.all(largeSpace),
-            child: NewSubjectForm(),
+            padding: const EdgeInsets.all(largeSpace),
+            child: NewSubjectForm(
+              onSubmit: submitSubject,
+            ),
           ),
         ),
       ),
