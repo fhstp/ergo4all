@@ -3,7 +3,7 @@ import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/results/detail/screen.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
-import 'package:ergo4all/scenario/scenario_detail_screen.dart';
+import 'package:ergo4all/scenario/detail/screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

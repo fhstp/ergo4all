@@ -5,7 +5,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
-import 'package:ergo4all/scenario/scenario_detail_screen.dart';
+import 'package:ergo4all/scenario/detail/screen.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:flutter/material.dart';
 

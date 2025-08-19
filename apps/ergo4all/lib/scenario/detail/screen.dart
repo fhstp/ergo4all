@@ -9,6 +9,7 @@ import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
+import 'package:ergo4all/scenario/detail/subject_selector.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
 import 'package:ergo4all/subjects/common.dart';
@@ -132,23 +133,10 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                     const SizedBox(height: mediumSpace),
                     ScenarioGraphic(widget.scenario, height: 330),
                     const SizedBox(height: mediumSpace),
-                    DropdownMenu(
-                      // Having this unique key here fixes
-                      // https://github.com/flutter/flutter/issues/120567
-                      // where the dropdown would not resize after the subjects
-                      // were loaded and be too small.
-                      key: UniqueKey(),
-                      label: Text(localizations.subject_selection_label),
-                      initialSelection: selectedSubject,
-                      dropdownMenuEntries: subjects
-                          .map(
-                            (subject) => DropdownMenuEntry(
-                              value: subject,
-                              label: subject.nickname,
-                            ),
-                          )
-                          .toList(),
-                      onSelected: (subject) {
+                    SubjectSelector(
+                      subjects: subjects,
+                      selectedSubject: selectedSubject,
+                      onSubjectSelected: (subject) {
                         setState(() {
                           selectedSubject = subject;
                         });
