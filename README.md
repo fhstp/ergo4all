@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD033-->
 # ergo4all
 
 <table style="border-collapse: collapse; border: none">
