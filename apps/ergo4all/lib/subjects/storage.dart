@@ -12,6 +12,9 @@ abstract class SubjectRepo {
 
   /// Get a specific [Subject] by their id.
   Future<Subject?> getById(int id);
+
+  /// Creates a new subject with the given data.
+  Future<void> createNew(String nickname);
 }
 
 /// Utility extensions for [SubjectRepo].
@@ -42,4 +45,7 @@ class FileBasedSubjectRepo implements SubjectRepo {
 
     return SubjectRepo.defaultSubject;
   }
+
+  @override
+  Future<void> createNew(String nickname) async {}
 }
