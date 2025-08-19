@@ -44,6 +44,18 @@ class _SubjectEntry extends StatelessWidget {
       onDismissed: (_) {
         onDismissed?.call();
       },
+      confirmDismiss: (_) async {
+        final isDefaultUser = subject.id == SubjectRepo.defaultSubject.id;
+
+        // TODO: Localize
+        if (isDefaultUser) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Can't delete default subject")),
+          );
+        }
+
+        return !isDefaultUser;
+      },
       background: Container(color: cardinal),
       child: ListTile(
         title: Text(subject.nickname),
