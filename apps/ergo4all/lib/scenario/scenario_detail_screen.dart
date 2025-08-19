@@ -139,7 +139,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                       // were loaded and be too small.
                       key: UniqueKey(),
                       label: Text(localizations.subject_selection_label),
-                      initialSelection: subjects.firstOrNull,
+                      initialSelection: selectedSubject,
                       dropdownMenuEntries: subjects
                           .map(
                             (subject) => DropdownMenuEntry(
