@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
-import 'package:ergo4all/subjects/subject_creation_screen.dart';
+import 'package:ergo4all/subjects/creation/screen.dart';
 import 'package:flutter/material.dart';
 
 /// Screen where users can manage the subjects filmed by the app.
