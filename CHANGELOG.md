@@ -1,3 +1,13 @@
+# [1.97.0](https://github.com/fhstp/ergo4all/compare/v1.96.0...v1.97.0) (2025-08-19)
+
+
+### Features
+
+* delete subjects ([a374c78](https://github.com/fhstp/ergo4all/commit/a374c78aa1e65a7867a51247de7ed52ec8572f92))
+* make subjects in list dimissable ([43a235d](https://github.com/fhstp/ergo4all/commit/43a235db7ddffb0f6dcb35c7e2e7f00e4af94a9f))
+* prevent deleting default subject ([e072842](https://github.com/fhstp/ergo4all/commit/e0728423af286be508c468ea7102aca882deebe1))
+* refresh subject list after creation ([9c2e268](https://github.com/fhstp/ergo4all/commit/9c2e2680cd80e81c0f341964016d03c33e52eb0e))
+
 # [1.96.0](https://github.com/fhstp/ergo4all/compare/v1.95.0...v1.96.0) (2025-08-19)
 
 
