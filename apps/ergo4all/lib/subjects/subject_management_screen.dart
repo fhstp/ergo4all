@@ -69,10 +69,7 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
 
   late final SubjectRepo subjectRepo;
 
-  @override
-  void initState() {
-    super.initState();
-    subjectRepo = Provider.of<SubjectRepo>(context, listen: false);
+  void refreshSubjects() {
     subjectRepo.getAll().then((subjects) {
       setState(() {
         this.subjects = subjects;
@@ -81,11 +78,19 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    subjectRepo = Provider.of<SubjectRepo>(context, listen: false);
+    refreshSubjects();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
 
-    void goToSubjectCreator() {
-      unawaited(navigator.push(SubjectCreationScreen.makeRoute()));
+    Future<void> goToSubjectCreator() async {
+      await navigator.push(SubjectCreationScreen.makeRoute());
+      refreshSubjects();
     }
 
     Future<void> deleteSubject(Subject subject) async {
