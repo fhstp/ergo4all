@@ -1,3 +1,17 @@
+# [1.96.0](https://github.com/fhstp/ergo4all/compare/v1.95.0...v1.96.0) (2025-08-19)
+
+
+### Features
+
+* add empty subject creation form ([b49f411](https://github.com/fhstp/ergo4all/commit/b49f411d3efd9b5b9cf22ff12a8ed235be55844c))
+* add empty subject creation screen ([4b7ef6e](https://github.com/fhstp/ergo4all/commit/4b7ef6e2977904e2042d8256f722ca55b0db6dd1))
+* add empty subject-management screen ([4740159](https://github.com/fhstp/ergo4all/commit/474015999e02303320ec4a8343a16077910d165b))
+* add nickname input ([51a89ae](https://github.com/fhstp/ergo4all/commit/51a89aed19a82fa8c9be2970b85c453b6c9f6f22))
+* add subject creation ui logic ([fee5a78](https://github.com/fhstp/ergo4all/commit/fee5a7816930963d7dfa2cd836563baddb714e8c))
+* basic nickname validation ([3ed3ba4](https://github.com/fhstp/ergo4all/commit/3ed3ba4547554b66347078921133b19cc767e3b4))
+* display subjects on subject-management screen ([1e59dde](https://github.com/fhstp/ergo4all/commit/1e59dde70a407747c2322f66fe76af30eb22d839))
+* subject persistence ([dce1a27](https://github.com/fhstp/ergo4all/commit/dce1a27214fa2459b787aafd8e2a5288484dcf45))
+
 # [1.95.0](https://github.com/fhstp/ergo4all/compare/v1.94.0...v1.95.0) (2025-08-19)
 
 
