@@ -4,48 +4,55 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/onboarding/ergonomics_info/screen.dart';
+import 'package:ergo4all/onboarding/user_creation/screen.dart';
+import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 const double _appBarHeight = 200;
 
-/// Screen for displaying the terms of use.
-class TermsOfUseScreen extends StatefulWidget {
+/// Screen for displaying the privacy policy.
+class ErgonomicsInfoScreen extends StatelessWidget {
   ///
-  const TermsOfUseScreen({super.key});
-
-  @override
-  State<TermsOfUseScreen> createState() => _TermsOfUseScreenState();
+  const ErgonomicsInfoScreen({super.key});
 
   /// The route name for this screen.
-  static const String routeName = 'termsOfUseOnboarding';
+  static const String routeName = 'ergonomicsInfoOnboarding';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute() {
     return MaterialPageRoute(
-      builder: (_) => const TermsOfUseScreen(),
+      builder: (_) => const ErgonomicsInfoScreen(),
       settings: const RouteSettings(name: routeName),
-    );
-  }
-}
-
-class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
-  bool checkBoxValue = false;
-
-  void goToErgonomicsInfo() {
-    unawaited(
-      Navigator.pushAndRemoveUntil(
-        context,
-        ErgonomicsInfoScreen.makeRoute(),
-        ModalRoute.withName(ErgonomicsInfoScreen.routeName),
-      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+
+    void goToUserCreation() {
+      unawaited(
+        Navigator.pushAndRemoveUntil(
+          context,
+          UserCreationScreen.makeRoute(),
+          ModalRoute.withName(UserCreationScreen.routeName),
+        ),
+      );
+    }
+
+    void goToTippsScreen(){
+      unawaited(
+        Navigator.pushAndRemoveUntil(
+          context,
+          TipChoiceScreen.makeRoute(),
+          ModalRoute.withName(UserCreationScreen.routeName),
+        ),
+      );
+    }
+
+    const graphicKey = 'assets/images/puppets_good_bad/good_bad_lifting.svg';
 
     return Scaffold(
       body: SafeArea(
@@ -60,7 +67,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                   Positioned(
                     top: 100,
                     child: Text(
-                      localizations.onboarding_termsOfUse_title,
+                      localizations.onboarding_ergonomicsInfo_title,
                       style: h1Style.copyWith(color: cardinal),
                     ),
                   ),
@@ -70,49 +77,42 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const SizedBox(height: largeSpace),
+                    Text(
+                      localizations.onboarding_ergonomicsInfo_subtitle,
+                      style: h3Style,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: largeSpace),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         style: dynamicBodyStyle.copyWith(color: Colors.black),
                         children: [
                           TextSpan(
-                              text: '${localizations
-                                      .onboarding_termsOfUse_description}\n',),
+                            text: '${localizations.onboarding_ergonomicsInfo_description}\n',),
                           TextSpan(
-                            text: localizations.onboarding_termsOfUse_link,
+                            text: localizations.onboarding_ergonomicsInfo_description_link,
                             style: dynamicBodyStyle.copyWith(
                               color: Colors.blue,
                               decoration: TextDecoration.underline,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = () {},
+                            recognizer: TapGestureRecognizer()..onTap = goToTippsScreen,
                           ),
+                          const TextSpan(
+                            text: '.',),
                         ],
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: SvgPicture.asset(graphicKey, height: 300),
                     ),
                   ],
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Text(
-                    localizations.onboarding_termsOfUse_accept,
-                    style: dynamicBodyStyle,
-                  ),
-                ),
-                Checkbox(
-                  value: checkBoxValue,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      checkBoxValue = newValue ?? false;
-                    });
-                  },
-                ),
-              ],
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: largeSpace),
@@ -120,7 +120,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                 child: ElevatedButton(
                   key: const Key('next'),
                   style: primaryTextButtonStyle,
-                  onPressed: checkBoxValue ? goToErgonomicsInfo : null,
+                  onPressed: goToUserCreation,
                   child: Text(localizations.onboarding_label),
                 ),
               ),
