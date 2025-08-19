@@ -1,10 +1,17 @@
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/subjects/common.dart';
 import 'package:flutter/material.dart';
 
 /// Contains data that was entered in a [NewSubjectForm] and can be used
 /// to create a new [Subject].
 @immutable
-class NewSubject {}
+class NewSubject {
+  ///
+  const NewSubject({required this.nickName});
+
+  /// The nickname for the new subject.
+  final String nickName;
+}
 
 /// A form for entering the information needed for new subjects.
 class NewSubjectForm extends StatefulWidget {
@@ -20,11 +27,18 @@ class NewSubjectForm extends StatefulWidget {
 
 class _NewSubjectFormState extends State<NewSubjectForm> {
   final formKey = GlobalKey<FormState>();
+  final nickName = TextEditingController();
 
   FormState get formState => formKey.currentState!;
 
   void submit() {
-    widget.onSubmit?.call(NewSubject());
+    widget.onSubmit?.call(NewSubject(nickName: nickName.text));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nickName.dispose();
   }
 
   @override
@@ -33,10 +47,19 @@ class _NewSubjectFormState extends State<NewSubjectForm> {
       key: formKey,
       child: Column(
         children: [
+          TextFormField(
+            controller: nickName,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              // TODO: Localize
+              hintText: 'Subject nickname',
+            ),
+          ),
           const Spacer(),
           ElevatedButton(
             onPressed: submit,
             style: primaryTextButtonStyle,
+            // TODO: Localize
             child: const Text('Submit'),
           ),
         ],
