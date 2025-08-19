@@ -9,6 +9,7 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
+import 'package:ergo4all/results/detail/image_carousel.dart';
 import 'package:ergo4all/results/detail/rula_color_legend.dart';
 import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
@@ -18,9 +19,9 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 /// Screen for displaying detailed information about a [RulaSession].
-class ResultsDetailScreen extends StatelessWidget {
-  ///
-  const ResultsDetailScreen({required this.session, super.key});
+class ResultsDetailScreen extends StatefulWidget {
+
+  ResultsDetailScreen({required this.session, super.key});
 
   /// The route name for this screen.
   static const String routeName = 'result-detail';
@@ -38,24 +39,38 @@ class ResultsDetailScreen extends StatelessWidget {
   final RulaSession session;
 
   @override
+  State<ResultsDetailScreen> createState() => _ResultsDetailScreenState();
+}
+
+class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
+
+  late KeyFrame currentKeyFrame;
+
+  @override
+  void initState() {
+    super.initState();
+    currentKeyFrame = widget.session.keyFrames.first;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final tips = localizations.scenarioTip(session.scenario);
-    final improvements = localizations.scenarioImprovement(session.scenario);
+    final tips = localizations.scenarioTip(widget.session.scenario);
+    final improvements = localizations.scenarioImprovement(widget.session.scenario);
 
-    if (session.timeline.isEmpty) {
+    if (widget.session.timeline.isEmpty) {
       Navigator.of(context).pop();
       return Container();
     }
 
     final recordingDuration = Duration(
       milliseconds:
-          session.timeline.last.timestamp - session.timeline.first.timestamp,
+          widget.session.timeline.last.timestamp - widget.session.timeline.first.timestamp,
     );
 
     final normalizedScoresByGroup =
-        BodyPartGroup.groupScoresFrom(session.timeline)
+        BodyPartGroup.groupScoresFrom(widget.session.timeline)
             .mapValues((group, splitScores) {
       final maxScore = BodyPartGroup.maxScoreOf(group);
       return splitScores
@@ -99,10 +114,13 @@ class ResultsDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              // 'Normalized RULA Score Analysis',
-              localizations.results_plot_title,
-              style: paragraphHeaderStyle,
+            ImageCarousel(
+              images: widget.session.keyFrames.map((keyFrame)=>keyFrame.screenshot).toList(),
+              onPageChanged: (index) {
+                setState(() {
+                  currentKeyFrame = widget.session.keyFrames[index];
+                });
+              },
             ),
 
             const SizedBox(height: largeSpace),
@@ -117,6 +135,11 @@ class ResultsDetailScreen extends StatelessWidget {
                   timelinesByGroup: worstAveragesByGroup,
                   recordingDuration: recordingDuration,
                   onGroupTapped: navigateToBodyPartPage,
+                  highlightTime:
+                    Duration(
+                      milliseconds:
+                      currentKeyFrame.timestamp - widget.session.timeline.first.timestamp,
+                    ),
                 ),
               ),
             ),
@@ -159,14 +182,10 @@ class ResultsDetailScreen extends StatelessWidget {
                 ),
                 Center(
                   child: ScenarioGoodBadGraphic(
-                    session.scenario,
+                    widget.session.scenario,
                     height: 330,
                   ),
                 ),
-                /// currently the following is only for testing
-                ...session.keyFrames.map((keyFrame) {
-                  return Image.memory(keyFrame.screenshot);
-                }),
               ],
             ),
           ],
