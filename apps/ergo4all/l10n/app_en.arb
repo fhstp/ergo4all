@@ -58,7 +58,7 @@
     "description": "Label for button to change the app language"
   },
   "menu_privacy_label": "Privacy Manifest",
-  "onboarding_ergonomicsInfo_title": "WHAT IS ERGONOMICS?",
+  "onboarding_ergonomicsInfo_title": "WHAT IS\nERGONOMICS?",
   "onboarding_ergonomicsInfo_subtitle": "Before you start, here's what you need to know:",
   "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It’s not just about whether something feels uncomfortable right now.\n\n Sometimes the risk score might be low, even if you felt that body part working a lot. That’s because feeling a muscle work isn’t the same as it being at risk – risk depends on posture, performed activities, load, and how often you repeat the movement.\n\n This app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n\n For tips on better posture and movement, check the",
   "onboarding_ergonomicsInfo_description_link": "Tipps Screen",
@@ -77,13 +77,13 @@
     "description": "Label for button to skip the user creation part of the onboarding process"
   },
   "onboarding_termsOfUse_title": "TERMS OF USE",
-  "onboarding_termsOfUse_description": "This app uses AI to make ergonomics reports for information only. Like any AI, the results might be incorrect – don’t treat them as expert advice. Don’t use it on others without permission, misuse the service, or share harmful content. Using this app is your choice and responsibility.\n\nRead more about our ",
-  "onboarding_termsOfUse_link": "terms of use*",
+  "onboarding_termsOfUse_description": "This app uses AI to make ergonomics reports for information only. Like any AI, the results might be incorrect – don’t treat them as expert advice. Don’t use it on others without permission, misuse the service, or share harmful content. Using this app is your choice and responsibility.",
+  "onboarding_termsOfUse_link": "Read more about our terms of use*",
   "onboarding_termsOfUse_accept": "I accept",
   "onboarding_userCreation_title": "YOUR NICKNAME",
   "onboarding_userCreation_subtitle": "Create a nickname so we can address you directly.",
   "onboarding_userCreation_description": "You can switch between different nicknames and save results for each user — great if you want to use the app with others like colleagues or friends. This makes it easy to find your results and track everyone’s progress.\n\n We don’t personalise or track you. This feature is optional. If you save someone else’s nickname, please make sure you have their permission.",
-  "onboarding_userCreation_input_text": "Nickname",
+  "onboarding_userCreation_input_text": "Nickname...",
   "onboarding_userCreation_label": "Create Profile",
   "@onboarding_userCreation_label": {
     "description": "Label for button to create the user profile"
