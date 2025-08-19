@@ -32,6 +32,7 @@ class _NewSubjectFormState extends State<NewSubjectForm> {
   FormState get formState => formKey.currentState!;
 
   void submit() {
+    if (!formState.validate()) return;
     widget.onSubmit?.call(NewSubject(nickName: nickName.text));
   }
 
@@ -49,6 +50,15 @@ class _NewSubjectFormState extends State<NewSubjectForm> {
         children: [
           TextFormField(
             controller: nickName,
+            validator: (value) {
+              if (value == null) return 'Nickname is required';
+
+              if (value.length < 3) {
+                return 'Nickname must be at least 3 characters';
+              }
+
+              return null;
+            },
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               // TODO: Localize
