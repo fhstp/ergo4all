@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
+import 'package:ergo4all/subjects/common.dart';
 import 'package:ergo4all/subjects/creation/screen.dart';
+import 'package:ergo4all/subjects/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// Screen where users can manage the subjects filmed by the app.
-class SubjectManagementScreen extends StatelessWidget {
+class SubjectManagementScreen extends StatefulWidget {
   ///
   const SubjectManagementScreen({super.key});
 
@@ -19,6 +22,38 @@ class SubjectManagementScreen extends StatelessWidget {
       builder: (_) => const SubjectManagementScreen(),
       settings: const RouteSettings(name: routeName),
     );
+  }
+
+  @override
+  State<SubjectManagementScreen> createState() =>
+      _SubjectManagementScreenState();
+}
+
+class _SubjectEntry extends StatelessWidget {
+  const _SubjectEntry(this.subject);
+
+  final Subject subject;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(subject.nickname),
+    );
+  }
+}
+
+class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
+  List<Subject> subjects = List.empty();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<SubjectRepo>(context, listen: false).getAll().then((subjects) {
+      setState(() {
+        this.subjects = subjects;
+      });
+    });
   }
 
   @override
@@ -39,7 +74,12 @@ class SubjectManagementScreen extends StatelessWidget {
         child: Align(
           child: Column(
             children: [
-              const Spacer(),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, i) => _SubjectEntry(subjects[i]),
+                  itemCount: subjects.length,
+                ),
+              ),
               ElevatedButton(
                 onPressed: goToSubjectCreator,
                 style: primaryTextButtonStyle,
