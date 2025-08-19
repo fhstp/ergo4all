@@ -216,8 +216,7 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
     final sessionsDir = await _getSessionsDir();
     return sessionsDir
         .list()
-        .where((it) => it is Directory)
-        .map((it) => it as Directory)
+        .cast<Directory>()
         .where((it) => path.basename(it.path).toIntOption.isSome());
   }
 
