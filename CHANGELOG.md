@@ -1,3 +1,15 @@
+# [1.98.0](https://github.com/fhstp/ergo4all/compare/v1.97.0...v1.98.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* broken subject selection ([c5a4fd7](https://github.com/fhstp/ergo4all/commit/c5a4fd7ba15078ba147661128337c5552f7c2b71))
+
+
+### Features
+
+* delete subject sessions along with session ([38e794c](https://github.com/fhstp/ergo4all/commit/38e794c13b57ec554ac88ba2c8b59986d4d71475))
+
 # [1.97.0](https://github.com/fhstp/ergo4all/compare/v1.96.0...v1.97.0) (2025-08-19)
 
 
