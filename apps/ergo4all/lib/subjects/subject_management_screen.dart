@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/subjects/common.dart';
@@ -30,14 +32,22 @@ class SubjectManagementScreen extends StatefulWidget {
 }
 
 class _SubjectEntry extends StatelessWidget {
-  const _SubjectEntry(this.subject);
+  const _SubjectEntry(this.subject, {this.onDismissed});
 
   final Subject subject;
+  final void Function()? onDismissed;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(subject.nickname),
+    return Dismissible(
+      key: Key(subject.id.toString()),
+      onDismissed: (_) {
+        onDismissed?.call();
+      },
+      background: Container(color: cardinal),
+      child: ListTile(
+        title: Text(subject.nickname),
+      ),
     );
   }
 }
@@ -45,11 +55,13 @@ class _SubjectEntry extends StatelessWidget {
 class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
   List<Subject> subjects = List.empty();
 
+  late final SubjectRepo subjectRepo;
+
   @override
   void initState() {
     super.initState();
-
-    Provider.of<SubjectRepo>(context, listen: false).getAll().then((subjects) {
+    subjectRepo = Provider.of<SubjectRepo>(context, listen: false);
+    subjectRepo.getAll().then((subjects) {
       setState(() {
         this.subjects = subjects;
       });
@@ -64,6 +76,10 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
       unawaited(navigator.push(SubjectCreationScreen.makeRoute()));
     }
 
+    void deleteSubject(int id) {
+      // TODO: Delete subject
+    }
+
     return Scaffold(
       appBar: const RedCircleAppBar(
         // TODO: Localize
@@ -75,8 +91,15 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, i) => _SubjectEntry(subjects[i]),
+                child: ListView.separated(
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: smallSpace),
+                  itemBuilder: (context, i) => _SubjectEntry(
+                    subjects[i],
+                    onDismissed: () {
+                      deleteSubject(subjects[i].id);
+                    },
+                  ),
                   itemCount: subjects.length,
                 ),
               ),
