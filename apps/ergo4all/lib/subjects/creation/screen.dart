@@ -1,4 +1,5 @@
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
+import 'package:ergo4all/subjects/creation/form.dart';
 import 'package:flutter/material.dart';
 
 /// Screen where users can add new subjects.
@@ -27,7 +28,7 @@ class SubjectCreationScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Align(
-          child: Column(),
+          child: NewSubjectForm(),
         ),
       ),
     );
