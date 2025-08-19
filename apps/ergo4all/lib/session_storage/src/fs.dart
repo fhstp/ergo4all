@@ -251,4 +251,15 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
     await sessionDir.create();
     await _writeSessionTo(session, sessionDir);
   }
+
+  @override
+  Future<void> deleteAllBy(int subjectId) async {
+    final allSessions = await getAll();
+    final sessionsBySubject =
+        allSessions.filter((session) => session.subjectId == subjectId);
+
+    for (final session in sessionsBySubject) {
+      await deleteByTimestamp(session.timestamp);
+    }
+  }
 }

@@ -13,4 +13,7 @@ abstract class RulaSessionRepository {
 
   /// Clears this store.
   Future<void> clear();
+
+  /// Deletes all sessions which are owned by the given subject.
+  Future<void> deleteAllBy(int subjectId);
 }

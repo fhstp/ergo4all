@@ -4,6 +4,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
+import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/subjects/common.dart';
 import 'package:ergo4all/subjects/creation/screen.dart';
 import 'package:ergo4all/subjects/storage/common.dart';
@@ -68,6 +69,7 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
   List<Subject> subjects = List.empty();
 
   late final SubjectRepo subjectRepo;
+  late final RulaSessionRepository sessionRepo;
 
   void refreshSubjects() {
     subjectRepo.getAll().then((subjects) {
@@ -80,7 +82,10 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
   @override
   void initState() {
     super.initState();
-    subjectRepo = Provider.of<SubjectRepo>(context, listen: false);
+
+    subjectRepo = Provider.of(context, listen: false);
+    sessionRepo = Provider.of(context, listen: false);
+
     refreshSubjects();
   }
 
@@ -95,6 +100,7 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
 
     Future<void> deleteSubject(Subject subject) async {
       await subjectRepo.deleteById(subject.id);
+      await sessionRepo.deleteAllBy(subject.id);
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
