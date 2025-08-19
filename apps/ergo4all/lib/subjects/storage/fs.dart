@@ -95,4 +95,14 @@ class FileBasedSubjectRepo implements SubjectRepo {
 
     await _writeSubjectTo(file, subject);
   }
+
+  @override
+  Future<void> deleteById(int id) async {
+    // There is no actual entry for the default subject.
+    if (id == SubjectRepo.defaultSubject.id) return;
+
+    final subjectsDir = await _getSubjectsDir();
+    final file = _fileForSubjectIn(subjectsDir, id);
+    await file.delete();
+  }
 }

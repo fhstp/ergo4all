@@ -15,6 +15,9 @@ abstract class SubjectRepo {
 
   /// Creates a new subject with the given data.
   Future<void> createNew(String nickname);
+
+  /// Deletes the subject with the given [id]
+  Future<void> deleteById(int id);
 }
 
 /// Utility extensions for [SubjectRepo].

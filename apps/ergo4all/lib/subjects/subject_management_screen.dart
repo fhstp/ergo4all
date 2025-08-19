@@ -76,8 +76,13 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
       unawaited(navigator.push(SubjectCreationScreen.makeRoute()));
     }
 
-    void deleteSubject(int id) {
-      // TODO: Delete subject
+    Future<void> deleteSubject(Subject subject) async {
+      await subjectRepo.deleteById(subject.id);
+
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Deleted ${subject.nickname}')),
+      );
     }
 
     return Scaffold(
@@ -97,7 +102,7 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
                   itemBuilder: (context, i) => _SubjectEntry(
                     subjects[i],
                     onDismissed: () {
-                      deleteSubject(subjects[i].id);
+                      deleteSubject(subjects[i]);
                     },
                   ),
                   itemCount: subjects.length,
