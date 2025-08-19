@@ -6,6 +6,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/privacy_screen.dart';
+import 'package:ergo4all/subjects/subject_management_screen.dart';
 import 'package:flutter/material.dart';
 
 Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
@@ -34,6 +35,11 @@ Future<void> showHomeMenuDialog(BuildContext context) {
     unawaited(navigator.push(PrivacyScreen.makeRoute()));
   }
 
+  void goToSubjectManagement() {
+    final navigator = Navigator.of(context)..pop();
+    unawaited(navigator.push(SubjectManagementScreen.makeRoute()));
+  }
+
   return showDialog<void>(
     context: context,
     builder: (context) => SimpleDialog(
@@ -52,6 +58,8 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           unawaited(navigator.push(ImprintScreen.makeRoute()));
         }),
         _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
+        // TODO: Localize
+        _makeOptionButton('Manage subjects', goToSubjectManagement),
       ],
     ),
   );
