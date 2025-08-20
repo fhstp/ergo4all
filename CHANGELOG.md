@@ -1,3 +1,10 @@
+## [1.100.2](https://github.com/fhstp/ergo4all/compare/v1.100.1...v1.100.2) (2025-08-20)
+
+
+### Bug Fixes
+
+* layout problems on analysis screen ([#112](https://github.com/fhstp/ergo4all/issues/112)) ([e193cfb](https://github.com/fhstp/ergo4all/commit/e193cfbfb7cb1f906e39db2aedf6910b76adb06c)), closes [#111](https://github.com/fhstp/ergo4all/issues/111)
+
 ## [1.100.1](https://github.com/fhstp/ergo4all/compare/v1.100.0...v1.100.1) (2025-08-20)
 
 
