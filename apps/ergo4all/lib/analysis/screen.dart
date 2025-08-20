@@ -289,21 +289,23 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(child: Container()),
-            Stack(
-              children: [
-                cameraPreview,
-                Positioned(
-                  bottom: largeSpace,
-                  left: largeSpace,
-                  right: largeSpace,
-                  child: RecordingProgressIndicator(
-                    remainingTime: progressAnimationController.value,
-                    criticalTime: 5,
-                    initialTime: 30,
+            Expanded(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  cameraPreview,
+                  Positioned(
+                    left: largeSpace,
+                    right: largeSpace,
+                    bottom: largeSpace,
+                    child: RecordingProgressIndicator(
+                      remainingTime: progressAnimationController.value,
+                      criticalTime: 5,
+                      initialTime: 30,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: smallSpace),
             Center(
@@ -319,7 +321,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                 child: Text(isRecording ? 'Stop' : 'Start'),
               ),
             ),
-            const SizedBox(height: mediumSpace),
           ],
         ),
       ),
