@@ -54,7 +54,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     void navigateToNextScreen() {
       unawaited(
-        Navigator.of(context).pushReplacement(PickLanguageScreen.makeRoute()),
+        Navigator.of(context).pushReplacement(
+          PickLanguageScreen.makeRoute(
+            // TODO: Go home if user has already done onboarding
+            PostLanguagePickAction.startOnboarding,
+          ),
+        ),
       );
     }
 

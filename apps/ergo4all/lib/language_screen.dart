@@ -5,21 +5,38 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/onboarding/pre_intro/screen.dart';
 import 'package:flutter/material.dart';
+
+/// What to do after a user has picked a language.
+enum PostLanguagePickAction {
+  /// Go to the [HomeScreen].
+  goHome,
+
+  /// Start the onboarding process by navigating to the [PreIntroScreen]
+  startOnboarding
+}
 
 /// Screen for picking a language. Once a user has picked a language,
 /// they will be navigated to the [HomeScreen].
 class PickLanguageScreen extends StatelessWidget {
   /// Creates a [PickLanguageScreen].
-  const PickLanguageScreen({super.key});
+  const PickLanguageScreen({required this.postLanguagePickAction, super.key});
+
+  /// What to do after a user has picked a language.
+  final PostLanguagePickAction postLanguagePickAction;
 
   /// The route name for this screen.
   static const String routeName = 'pick-language';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
-  static MaterialPageRoute<void> makeRoute() {
+  static MaterialPageRoute<void> makeRoute(
+    PostLanguagePickAction postLanguagePickAction,
+  ) {
     return MaterialPageRoute(
-      builder: (_) => const PickLanguageScreen(),
+      builder: (_) => PickLanguageScreen(
+        postLanguagePickAction: postLanguagePickAction,
+      ),
       settings: const RouteSettings(name: routeName),
     );
   }
@@ -31,13 +48,24 @@ class PickLanguageScreen extends StatelessWidget {
     Future<void> selectLocale(Locale locale) async {
       await setCustomLocale(locale);
       if (!context.mounted) return;
-      unawaited(
-        Navigator.pushAndRemoveUntil(
-          context,
-          HomeScreen.makeRoute(),
-          ModalRoute.withName(HomeScreen.routeName),
-        ),
-      );
+
+      final navigator = Navigator.of(context);
+      if (postLanguagePickAction == PostLanguagePickAction.goHome) {
+        // TODO: Check whether we are already 'on top' of home, and if so, simply pop
+        unawaited(
+          navigator.pushAndRemoveUntil(
+            HomeScreen.makeRoute(),
+            ModalRoute.withName(HomeScreen.routeName),
+          ),
+        );
+      } else {
+        unawaited(
+          Navigator.push(
+            context,
+            PreIntroScreen.makeRoute(),
+          ),
+        );
+      }
     }
 
     Widget languageButtonFor(String language, Locale locale) {

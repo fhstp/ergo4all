@@ -28,7 +28,11 @@ Future<void> showHomeMenuDialog(BuildContext context) {
   final navigator = Navigator.of(context);
 
   void goToLanguage() {
-    unawaited(navigator.pushReplacement(PickLanguageScreen.makeRoute()));
+    unawaited(
+      navigator.pushReplacement(
+        PickLanguageScreen.makeRoute(PostLanguagePickAction.goHome),
+      ),
+    );
   }
 
   void goToPrivacy() {
