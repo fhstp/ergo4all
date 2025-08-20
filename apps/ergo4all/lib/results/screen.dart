@@ -21,17 +21,17 @@ import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-/// The screen for viewing an overview over the [RulaSession].
-class ResultsOverviewScreen extends StatelessWidget {
+/// The screen for viewing a [RulaSession].
+class ResultsScreen extends StatelessWidget {
   ///
-  const ResultsOverviewScreen({
+  const ResultsScreen({
     required this.session,
     required this.subject,
     super.key,
   });
 
   /// The route name for this screen.
-  static const String routeName = 'results-overview';
+  static const String routeName = 'results';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen to view
   /// the [session] for a [subject].
@@ -40,7 +40,7 @@ class ResultsOverviewScreen extends StatelessWidget {
     Subject subject,
   ) {
     return MaterialPageRoute(
-      builder: (_) => ResultsOverviewScreen(
+      builder: (_) => ResultsScreen(
         session: session,
         subject: subject,
       ),
