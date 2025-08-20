@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
-import 'package:common_ui/theme/spacing.dart';
-import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/rula_session.dart';
@@ -14,8 +12,7 @@ import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/screen.dart';
-import 'package:ergo4all/results/overview/body_score_display.dart';
-import 'package:ergo4all/results/overview/ergo_score_badge.dart';
+import 'package:ergo4all/results/overview/page.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -118,34 +115,12 @@ class ResultsScreen extends StatelessWidget {
         leading: const IconBackButton(),
         title: Text(localizations.results_ergo_score_header),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 80, child: ErgoScoreBadge(rating: totalRating)),
-          BodyScoreDisplay(
-            aggregate,
-            onBodyPartTapped: (part) {
-              goToBodyPartPage(BodyPartGroup.forPart(part));
-            },
-          ),
-          Text(
-            localizations.results_press_body_part,
-            style: staticBodyStyle,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: mediumSpace),
-          ElevatedButton(
-            onPressed: goToDetails,
-            style: primaryTextButtonStyle,
-            child: const Text('Details'),
-          ),
-          const SizedBox(height: smallSpace),
-          ElevatedButton(
-            onPressed: recordAgain,
-            style: secondaryTextButtonStyle,
-            child:
-                Text(localizations.record_again, textAlign: TextAlign.center),
-          ),
-        ],
+      body: OverviewPage(
+        rating: totalRating,
+        scores: aggregate,
+        onBodyPartGroupTapped: goToBodyPartPage,
+        onDetailsTapped: goToDetails,
+        onRecordAgainTapped: recordAgain,
       ),
     );
   }
