@@ -110,25 +110,29 @@ class ResultsScreen extends StatelessWidget {
         .toIList()
         .pipe(Rating.calculate);
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: const IconBackButton(),
-        title: Text(localizations.results_ergo_score_header),
-      ),
-      body: SafeArea(
-        child: DefaultTabController(
-          length: 1,
-          child: TabBarView(
-            children: [
-              OverviewPage(
-                rating: totalRating,
-                scores: aggregate,
-                onBodyPartGroupTapped: goToBodyPartPage,
-                onDetailsTapped: goToDetails,
-                onRecordAgainTapped: recordAgain,
-              ),
+    return DefaultTabController(
+      length: 1,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const IconBackButton(),
+          title: Text(localizations.results_ergo_score_header),
+          bottom: const TabBar(
+            tabs: [
+              // TODO: Localize
+              Tab(text: 'Overview'),
             ],
           ),
+        ),
+        body: TabBarView(
+          children: [
+            OverviewPage(
+              rating: totalRating,
+              scores: aggregate,
+              onBodyPartGroupTapped: goToBodyPartPage,
+              onDetailsTapped: goToDetails,
+              onRecordAgainTapped: recordAgain,
+            ),
+          ],
         ),
       ),
     );
