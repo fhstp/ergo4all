@@ -1,3 +1,11 @@
+# [1.100.0](https://github.com/fhstp/ergo4all/compare/v1.99.0...v1.100.0) (2025-08-20)
+
+
+### Features
+
+* enable onboarding ([dd2a676](https://github.com/fhstp/ergo4all/commit/dd2a6763e1bea5a07344a177617a802930b94ebc))
+* persist onboarding state ([75fa40f](https://github.com/fhstp/ergo4all/commit/75fa40f59161aa1ca3c76d06bff468b78f23e8f5))
+
 # [1.99.0](https://github.com/fhstp/ergo4all/compare/v1.98.0...v1.99.0) (2025-08-20)
 
 
