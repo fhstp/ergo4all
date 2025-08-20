@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 /// Access class for getting and setting whether onboarding was completed.
 abstract class OnboardingState {
   /// Checks whether onboarding was completed.
@@ -8,20 +10,23 @@ abstract class OnboardingState {
   Future<void> setCompleted();
 }
 
-/// Implementation of [OnboardingState] which has a constant value for
-/// [isCompleted]. Useful for testing.
-class ConstantOnboardingState implements OnboardingState {
+/// Implementation of [OnboardingState] which stores the completion state
+/// in user preferences.
+class PrefsOnboardingState implements OnboardingState {
   ///
-  const ConstantOnboardingState({required this.value});
+  PrefsOnboardingState();
 
-  /// The constant value for this state.
-  final bool value;
+  static const _key = 'onboarding-completed';
+
+  final _prefs = SharedPreferencesAsync();
 
   @override
-  Future<bool> isCompleted() async {
-    return value;
+  Future<bool> isCompleted() {
+    return _prefs.getBool(_key).then((it) => it ?? false);
   }
 
   @override
-  Future<void> setCompleted() async {}
+  Future<void> setCompleted() async {
+    await _prefs.setBool(_key, true);
+  }
 }

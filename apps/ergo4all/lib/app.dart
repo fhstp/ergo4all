@@ -52,10 +52,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           create: (_) => FileBasedRulaSessionRepository(),
         ),
         Provider<SubjectRepo>(create: (_) => FileBasedSubjectRepo()),
-        Provider<OnboardingState>(
-          // TODO: Use a persistant state
-          create: (_) => const ConstantOnboardingState(value: false),
-        ),
+        Provider<OnboardingState>(create: (_) => PrefsOnboardingState()),
       ],
       child: MaterialApp(
         navigatorObservers: [
