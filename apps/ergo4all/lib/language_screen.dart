@@ -51,7 +51,6 @@ class PickLanguageScreen extends StatelessWidget {
 
       final navigator = Navigator.of(context);
       if (postLanguagePickAction == PostLanguagePickAction.goHome) {
-        // TODO: Check whether we are already 'on top' of home, and if so, simply pop
         unawaited(
           navigator.pushAndRemoveUntil(
             HomeScreen.makeRoute(),
