@@ -1,4 +1,3 @@
-import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_group.dart';
@@ -16,7 +15,6 @@ class OverviewPage extends StatelessWidget {
     required this.rating,
     required this.scores,
     this.onBodyPartGroupTapped,
-    this.onRecordAgainTapped,
     super.key,
   });
 
@@ -28,9 +26,6 @@ class OverviewPage extends StatelessWidget {
 
   /// Callback for when a [BodyPartGroup] was tapped on the puppet.
   final void Function(BodyPartGroup group)? onBodyPartGroupTapped;
-
-  /// Callback for when the record-again button was tapped.
-  final void Function()? onRecordAgainTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +44,6 @@ class OverviewPage extends StatelessWidget {
           localizations.results_press_body_part,
           style: staticBodyStyle,
           textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: mediumSpace),
-        ElevatedButton(
-          onPressed: onRecordAgainTapped,
-          style: secondaryTextButtonStyle,
-          child: Text(localizations.record_again, textAlign: TextAlign.center),
         ),
       ],
     );
