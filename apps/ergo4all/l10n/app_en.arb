@@ -227,7 +227,10 @@
   "tip_workingOverhead_summary": "Do not hold your arms above shoulder height for too long, use telescopic tools, relax your neck regularly.  Change positions, use weight shifting, do not remain in one position for too long.",
   "welcome_header": "Welcome!",
   "welcome_start": "Start",
-  "results_title": "Charts Overview",
+  "results_title": "Results",
+  "@results_title": {
+    "description": "Title for the results screen"
+  },
   "results_score_low": "Neutral",
   "results_score_low_short": "Neutral",
   "results_score_high": "Awkward",
@@ -257,8 +260,6 @@
   "body_part_score_plot_title": "Ergonomics Score",
   "body_part_static_plot_title": "Muscle Load Score",
   "body_part_static_plot_condition": "The recording is too short to display the muscle load score. Please record at least 15 seconds to visualize the muscle load diagram.",
-  "results_ergo_score_header": "Your Ergo Score",
-  "@results_ergo_score_header": {},
   "results_press_body_part": "Press on a body part to get more information.",
   "@results_press_body_part": {
     "description": "Text that informs users that they can press a body part on the puppet."

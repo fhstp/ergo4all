@@ -113,7 +113,7 @@ class ResultsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: const IconBackButton(),
-          title: Text(localizations.results_ergo_score_header),
+          title: Text(localizations.results_title),
           bottom: const TabBar(
             tabs: [
               // TODO: Localize
