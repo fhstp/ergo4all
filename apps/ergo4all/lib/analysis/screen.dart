@@ -28,6 +28,7 @@ import 'package:pose_transforming/denoise.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
 import 'package:rula/rula.dart';
+import 'package:image/image.dart' as img;
 
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
@@ -166,7 +167,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
       extractedFrames.add(KeyFrame(score, pngBytes!, timestamp));
     } catch (e) {
-      print("Screenshot error: $e");
+      print("Screenshot error: $e, skip screenshoot");
       return null;
     }
   }

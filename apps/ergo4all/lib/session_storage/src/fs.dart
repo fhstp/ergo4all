@@ -12,7 +12,6 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:rula/rula.dart';
@@ -132,13 +131,7 @@ Future<void> _writeSoresTo(Iterable<_ScoreRow> scoreRows, File file) async {
   await file.writeAsString(text);
 }
 
-Iterable<(int, img.Image)> _sessionImagesOf(RulaSession session) sync* {
-  for (final entry in session.timeline) {
-    if (entry.image != null) yield (entry.timestamp, entry.image!);
-  }
-}
-
-Future<IMap<int, img.Image>> _loadImages(Directory dir) async {
+Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
   final imageFiles = dir
       .list()
       .where((entry) => entry is File && entry.path.endsWith('.jpg'))
@@ -146,33 +139,41 @@ Future<IMap<int, img.Image>> _loadImages(Directory dir) async {
 
   final entries = await imageFiles.asyncMap((file) async {
     final fileName = path.basenameWithoutExtension(file.path);
-    final timestamp =
-        fileName.toIntOption.expect('Should parse timestamp from file name');
-    final image =
-        (await img.decodeJpgFile(file.path)).expect('Should decode image.');
-    return MapEntry(timestamp, image);
+
+    final parts = fileName.split('-');
+
+    final score = parts[0].toIntOption.expect('Should parse score from file name');
+    final timestamp = parts[1].toIntOption.expect('Should parse timestamp from file name');
+
+    final image = await file.readAsBytes();
+
+    return KeyFrame(score, image, timestamp);
   }).toList();
 
-  return IMap.fromEntries(entries);
+  entries.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+
+  return entries;
 }
 
-Future<void> _storeImage(Directory dir, int timestamp, img.Image image) async {
-  final filePath = path.join(dir.path, timestamp.toString(), '.jpg');
-  await img.encodeJpgFile(filePath, image);
+Future<void> _storeImage(Directory dir, int score, int timestamp, Uint8List image) async {
+  final fileName = '${score}-${timestamp}.jpg';
+  final filePath = path.join(dir.path, fileName);
+
+  final file = File(filePath);
+  await file.writeAsBytes(image, flush: true);
 }
 
 Future<RulaSession> _loadSessionFrom(Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   final meta = await _loadMetaFrom(metaFile);
 
-  final imagesByTimestamp = await _loadImages(dir);
+  final keyFrames = await _loadKeyFrames(dir);
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   final scores = await _loadScoresFrom(timelineFile);
   final timeline = scores.map((row) {
     final timestamp = row.$1;
-    final image = imagesByTimestamp.get(timestamp);
-    return TimelineEntry(timestamp: timestamp, scores: row.$2, image: image);
+    return TimelineEntry(timestamp: timestamp, scores: row.$2);
   }).toIList();
 
   return RulaSession(
@@ -180,7 +181,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
     subjectId: meta.subjectId,
     scenario: Scenario.values[meta.scenarioIndex],
     timeline: timeline,
-    keyFrames: List.empty(), // TODO: Load data from stored screenshoots
+    keyFrames: keyFrames,
   );
 }
 
@@ -200,8 +201,7 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
       session.timeline.map((entry) => (entry.timestamp, entry.scores));
   await _writeSoresTo(scores, timelineFile);
 
-  final images = _sessionImagesOf(session);
-  await Future.forEach(images, (row) => _storeImage(dir, row.$1, row.$2));
+  await Future.forEach(session.keyFrames, (row) => _storeImage(dir, row.score, row.timestamp, row.screenshot));
 }
 
 /// Implementation of [RulaSessionRepository] which stores session as plain

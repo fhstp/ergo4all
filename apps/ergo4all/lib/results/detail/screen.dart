@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
@@ -17,6 +18,7 @@ import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
 
 /// Screen for displaying detailed information about a [RulaSession].
 class ResultsDetailScreen extends StatefulWidget {
