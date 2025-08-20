@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
@@ -112,7 +113,7 @@ class ResultsScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          leading: const IconBackButton(),
+          leading: const IconBackButton(color: cardinal),
           title: Text(localizations.results_title),
           bottom: const TabBar(
             tabs: [
