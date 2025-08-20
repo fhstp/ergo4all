@@ -5,7 +5,9 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/onboarding/state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 const double _appBarHeight = 200;
 
@@ -30,20 +32,33 @@ class UserCreationScreen extends StatefulWidget {
 }
 
 class _UserCreationScreenState extends State<UserCreationScreen> {
+  late final OnboardingState onboardingState;
+
   final TextEditingController _nicknameController = TextEditingController();
 
-  void goToHome() {
+  @override
+  void initState() {
+    super.initState();
+
+    onboardingState = Provider.of(context, listen: false);
+  }
+
+  Future<void> completeOnboarding() async {
+    await onboardingState.setCompleted();
+    if (!mounted) return;
+
     unawaited(
       Navigator.pushAndRemoveUntil(
         context,
         HomeScreen.makeRoute(),
-        ModalRoute.withName(HomeScreen.routeName),
+        // Remove all routes, ie. place the home-screen at the root
+        (_) => false,
       ),
     );
   }
 
   void skip() {
-    goToHome();
+    completeOnboarding();
   }
 
   @override
@@ -123,7 +138,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
             ElevatedButton(
               key: const Key('next'),
               style: primaryTextButtonStyle,
-              onPressed: goToHome,
+              onPressed: completeOnboarding,
               child: Text(localizations.onboarding_label),
             ),
             const SizedBox(height: largeSpace),
