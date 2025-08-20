@@ -5,7 +5,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
-import 'package:ergo4all/onboarding/pre_intro/screen.dart';
+import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:flutter/material.dart';
 
 /// What to do after a user has picked a language.

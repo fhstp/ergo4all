@@ -4,23 +4,23 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/onboarding/pre_intro/screen.dart';
+import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:flutter/material.dart';
 
 const double _appBarHeight = 200;
 
-/// Screen for displaying the privacy policy.
-class PrivacyScreen extends StatelessWidget {
+/// Screen for displaying the pre-introductory content before the main onboarding flow.
+class PreIntroScreen extends StatelessWidget {
   ///
-  const PrivacyScreen({super.key});
+  const PreIntroScreen({super.key});
 
   /// The route name for this screen.
-  static const String routeName = 'privacyOnboarding';
+  static const String routeName = 'preIntroOnboarding';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute() {
     return MaterialPageRoute(
-      builder: (_) => const PrivacyScreen(),
+      builder: (_) => const PreIntroScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
@@ -29,12 +29,12 @@ class PrivacyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void goToPreIntro() {
+    void goToTermsOfUse() {
       unawaited(
         Navigator.pushAndRemoveUntil(
           context,
-          PreIntroScreen.makeRoute(),
-          ModalRoute.withName(PreIntroScreen.routeName),
+          TermsOfUseScreen.makeRoute(),
+          ModalRoute.withName(TermsOfUseScreen.routeName),
         ),
       );
     }
@@ -52,7 +52,7 @@ class PrivacyScreen extends StatelessWidget {
                   Positioned(
                     top: 100,
                     child: Text(
-                      localizations.onboarding_privacy_title,
+                      localizations.onboarding_preIntro_title,
                       style: h1Style.copyWith(color: cardinal),
                     ),
                   ),
@@ -66,13 +66,13 @@ class PrivacyScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: largeSpace),
                     Text(
-                      localizations.onboarding_privacy_subtitle,
+                      localizations.onboarding_preIntro_subtitle,
                       style: h3Style,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
                     Text(
-                      localizations.onboarding_privacy_description,
+                      localizations.onboarding_preIntro_description,
                       style: dynamicBodyStyle,
                       textAlign: TextAlign.center,
                     ),
@@ -87,7 +87,7 @@ class PrivacyScreen extends StatelessWidget {
                 child: ElevatedButton(
                   key: const Key('next'),
                   style: primaryTextButtonStyle,
-                  onPressed: goToPreIntro,
+                  onPressed: goToTermsOfUse,
                   child: Text(localizations.onboarding_label),
                 ),
               ),
