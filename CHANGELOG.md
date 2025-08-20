@@ -1,3 +1,12 @@
+# [1.99.0](https://github.com/fhstp/ergo4all/compare/v1.98.0...v1.99.0) (2025-08-20)
+
+
+### Features
+
+* **app:** implement full onboarding screen flow ([a357303](https://github.com/fhstp/ergo4all/commit/a357303ed9d252c2f466a35f8ae0dc2ff7105b65))
+* **app:** initial onboarding screens creation ([eed7941](https://github.com/fhstp/ergo4all/commit/eed794102ec1b7f2f512b6b4e07c537075443039))
+* **app:** Localization variables for the onboarding ([65ba7c8](https://github.com/fhstp/ergo4all/commit/65ba7c80d7931829a45492b7a7fd49d463166fd1))
+
 # [1.98.0](https://github.com/fhstp/ergo4all/compare/v1.97.0...v1.98.0) (2025-08-19)
 
 
