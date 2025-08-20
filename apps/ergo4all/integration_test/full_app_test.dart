@@ -1,7 +1,7 @@
 import 'package:ergo4all/app.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/language_screen.dart';
-import 'package:ergo4all/results/detail/screen.dart';
+import 'package:ergo4all/results/detail/page.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/scenario/detail/screen.dart';
 import 'package:ergo4all/welcome/screen.dart';
@@ -83,7 +83,7 @@ void main() {
     await tester.tap(find.byKey(const Key('record')));
 
     // We are now on the result screen where the user looks around a bit
-    expectScreen(ResultsDetailScreen);
+    expectScreen(DetailPage);
     await tester.pump(const Duration(seconds: 1));
 
     // They want to know more about a body part so they navigate to the
@@ -95,7 +95,7 @@ void main() {
 
     // We should now be back at the overview. The user is done here, so they
     // go back once more
-    expectScreen(ResultsDetailScreen);
+    expectScreen(DetailPage);
     await tester.native.pressBack();
     await tester.pumpAndSettle();
 

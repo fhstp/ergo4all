@@ -16,7 +16,6 @@ class OverviewPage extends StatelessWidget {
     required this.rating,
     required this.scores,
     this.onBodyPartGroupTapped,
-    this.onDetailsTapped,
     this.onRecordAgainTapped,
     super.key,
   });
@@ -29,9 +28,6 @@ class OverviewPage extends StatelessWidget {
 
   /// Callback for when a [BodyPartGroup] was tapped on the puppet.
   final void Function(BodyPartGroup group)? onBodyPartGroupTapped;
-
-  /// Callback for when the details button was tapped.
-  final void Function()? onDetailsTapped;
 
   /// Callback for when the record-again button was tapped.
   final void Function()? onRecordAgainTapped;
@@ -55,13 +51,6 @@ class OverviewPage extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: mediumSpace),
-        ElevatedButton(
-          onPressed: onDetailsTapped,
-          style: primaryTextButtonStyle,
-          // TODO: Localize
-          child: const Text('Details'),
-        ),
-        const SizedBox(height: smallSpace),
         ElevatedButton(
           onPressed: onRecordAgainTapped,
           style: secondaryTextButtonStyle,
