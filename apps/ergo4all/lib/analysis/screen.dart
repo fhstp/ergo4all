@@ -286,7 +286,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     return Scaffold(
       backgroundColor: woodSmoke,
-      body: SizedBox.expand(
+      body: SafeArea(
         child: Column(
           children: [
             Expanded(child: Container()),
