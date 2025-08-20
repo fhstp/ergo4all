@@ -5,7 +5,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/results/overview/screen.dart';
+import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/subjects/common.dart';
@@ -127,7 +127,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       if (!context.mounted) return;
       unawaited(
         Navigator.of(context).pushReplacement(
-          ResultsOverviewScreen.makeRoute(session, subject!),
+          ResultsScreen.makeRoute(session, subject!),
         ),
       );
     }
