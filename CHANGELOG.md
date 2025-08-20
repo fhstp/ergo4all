@@ -1,3 +1,10 @@
+## [1.100.1](https://github.com/fhstp/ergo4all/compare/v1.100.0...v1.100.1) (2025-08-20)
+
+
+### Bug Fixes
+
+* off-screen buttons on analysis screen ([a1f1b53](https://github.com/fhstp/ergo4all/commit/a1f1b5351822d55625fd7f4b886bc03cb8acdbd7))
+
 # [1.100.0](https://github.com/fhstp/ergo4all/compare/v1.99.0...v1.100.0) (2025-08-20)
 
 
