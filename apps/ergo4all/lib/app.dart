@@ -2,6 +2,7 @@ import 'package:common_ui/theme/theme.dart';
 import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/language_screen.dart';
+import 'package:ergo4all/onboarding/state.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/subjects/storage/common.dart';
@@ -51,6 +52,10 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
           create: (_) => FileBasedRulaSessionRepository(),
         ),
         Provider<SubjectRepo>(create: (_) => FileBasedSubjectRepo()),
+        Provider<OnboardingState>(
+          // TODO: Use a persistant state
+          create: (_) => const ConstantOnboardingState(value: false),
+        ),
       ],
       child: MaterialApp(
         navigatorObservers: [

@@ -6,11 +6,13 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/custom_images.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/language_screen.dart';
+import 'package:ergo4all/onboarding/state.dart';
 import 'package:ergo4all/welcome/version_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 
 /// Top-level widget for the welcome screen.
 class WelcomeScreen extends StatefulWidget {
@@ -33,6 +35,8 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  late final OnboardingState onboardingState;
+
   Option<String> projectVersion = none();
 
   Future<void> loadProjectVersion() async {
@@ -45,6 +49,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    onboardingState = Provider.of(context, listen: false);
+
     unawaited(loadProjectVersion());
   }
 
@@ -52,13 +59,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void navigateToNextScreen() {
+    Future<void> navigateToNextScreen() async {
+      final hasCompletedOnboarding = await onboardingState.isCompleted();
+      final afterLanguage = hasCompletedOnboarding
+          ? PostLanguagePickAction.goHome
+          : PostLanguagePickAction.startOnboarding;
+
+      if (!context.mounted) return;
+
       unawaited(
         Navigator.of(context).pushReplacement(
-          PickLanguageScreen.makeRoute(
-            // TODO: Go home if user has already done onboarding
-            PostLanguagePickAction.startOnboarding,
-          ),
+          PickLanguageScreen.makeRoute(afterLanguage),
         ),
       );
     }
