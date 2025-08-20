@@ -115,12 +115,21 @@ class ResultsScreen extends StatelessWidget {
         leading: const IconBackButton(),
         title: Text(localizations.results_ergo_score_header),
       ),
-      body: OverviewPage(
-        rating: totalRating,
-        scores: aggregate,
-        onBodyPartGroupTapped: goToBodyPartPage,
-        onDetailsTapped: goToDetails,
-        onRecordAgainTapped: recordAgain,
+      body: SafeArea(
+        child: DefaultTabController(
+          length: 1,
+          child: TabBarView(
+            children: [
+              OverviewPage(
+                rating: totalRating,
+                scores: aggregate,
+                onBodyPartGroupTapped: goToBodyPartPage,
+                onDetailsTapped: goToDetails,
+                onRecordAgainTapped: recordAgain,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
