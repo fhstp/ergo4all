@@ -9,7 +9,7 @@ import 'package:rula/rula.dart';
 
 /// Page on for viewing an overview of results. Displays the colored puppet
 /// and overall rating.
-class OverviewPage extends StatelessWidget {
+class OverviewPage extends StatefulWidget {
   ///
   const OverviewPage({
     required this.rating,
@@ -28,16 +28,27 @@ class OverviewPage extends StatelessWidget {
   final void Function(BodyPartGroup group)? onBodyPartGroupTapped;
 
   @override
+  State<OverviewPage> createState() => _OverviewPageState();
+}
+
+class _OverviewPageState extends State<OverviewPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final localizations = AppLocalizations.of(context)!;
 
     return Column(
       children: [
-        SizedBox(height: 80, child: ErgoScoreBadge(rating: rating)),
+        SizedBox(height: 80, child: ErgoScoreBadge(rating: widget.rating)),
         BodyScoreDisplay(
-          scores,
+          widget.scores,
           onBodyPartTapped: (part) {
-            onBodyPartGroupTapped?.call(BodyPartGroup.forPart(part));
+            widget.onBodyPartGroupTapped?.call(BodyPartGroup.forPart(part));
           },
         ),
         Text(
