@@ -32,8 +32,12 @@ class DetailPage extends StatefulWidget {
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPageState extends State<DetailPage>
+    with AutomaticKeepAliveClientMixin {
   late KeyFrame currentKeyFrame;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -43,6 +47,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final localizations = AppLocalizations.of(context)!;
 
     final tips = localizations.scenarioTip(widget.session.scenario);
