@@ -11,7 +11,7 @@ import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
-import 'package:ergo4all/results/detail/screen.dart';
+import 'package:ergo4all/results/detail/page.dart';
 import 'package:ergo4all/results/overview/page.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:ergo4all/subjects/common.dart';
@@ -78,10 +78,6 @@ class ResultsScreen extends StatelessWidget {
           session.timeline.last.timestamp - session.timeline.first.timestamp,
     ).inSeconds;
 
-    void goToDetails() {
-      Navigator.of(context).push(ResultsDetailScreen.makeRoute(session));
-    }
-
     void recordAgain() {
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
@@ -111,7 +107,7 @@ class ResultsScreen extends StatelessWidget {
         .pipe(Rating.calculate);
 
     return DefaultTabController(
-      length: 1,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           leading: const IconBackButton(),
@@ -120,6 +116,7 @@ class ResultsScreen extends StatelessWidget {
             tabs: [
               // TODO: Localize
               Tab(text: 'Overview'),
+              Tab(text: 'Details'),
             ],
           ),
         ),
@@ -129,9 +126,9 @@ class ResultsScreen extends StatelessWidget {
               rating: totalRating,
               scores: aggregate,
               onBodyPartGroupTapped: goToBodyPartPage,
-              onDetailsTapped: goToDetails,
               onRecordAgainTapped: recordAgain,
             ),
+            DetailPage(session: session),
           ],
         ),
       ),
