@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
+import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/rula_session.dart';
@@ -120,16 +122,32 @@ class ResultsScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            OverviewPage(
-              rating: totalRating,
-              scores: aggregate,
-              onBodyPartGroupTapped: goToBodyPartPage,
-              onRecordAgainTapped: recordAgain,
-            ),
-            DetailPage(session: session),
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    OverviewPage(
+                      rating: totalRating,
+                      scores: aggregate,
+                      onBodyPartGroupTapped: goToBodyPartPage,
+                    ),
+                    DetailPage(session: session),
+                  ],
+                ),
+              ),
+              const SizedBox(height: largeSpace),
+              ElevatedButton(
+                onPressed: recordAgain,
+                style: secondaryTextButtonStyle,
+                child: Text(
+                  localizations.record_again,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
