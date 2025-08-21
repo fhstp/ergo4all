@@ -16,6 +16,7 @@ class ScoreHeatmapGraph extends StatelessWidget {
   const ScoreHeatmapGraph({
     required this.timelinesByGroup,
     required this.recordingDuration,
+    required this.highlightTime,
     this.onGroupTapped,
     super.key,
   });
@@ -28,6 +29,9 @@ class ScoreHeatmapGraph extends StatelessWidget {
   /// The duration of the recording.
   final Duration recordingDuration;
 
+  /// The time to highlight with a vertical line.
+  final Duration highlightTime;
+
   /// Callback for when the graph of a [BodyPartGroup] is tapped.
   final void Function(BodyPartGroup)? onGroupTapped;
 
@@ -37,61 +41,99 @@ class ScoreHeatmapGraph extends StatelessWidget {
 
     final labelStyle = infoText.copyWith(fontSize: 13);
 
-    return Column(
-      spacing: 10,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ...BodyPartGroup.values.map(
-          (part) => Expanded(
-            child: GestureDetector(
-              onTap: () {
-                onGroupTapped?.call(part);
-              },
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    width: _labelWidth,
-                    child: Text(
-                      localizations.bodyPartGroupLabel(part),
-                      style: labelStyle,
-                    ),
-                  ),
-                  Expanded(
-                    child: CustomPaint(
-                      painter: HeatmapPainter(
-                        normalizedScores: timelinesByGroup[part]!,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+
+        final graphWidth = constraints.maxWidth - _labelWidth;
+        // Compute X position for highlight
+        final highlightX = (highlightTime.inMilliseconds / recordingDuration.inMilliseconds) * graphWidth;
+
+        return CustomPaint(
+          foregroundPainter: VerticalLinePainter(
+            x: highlightX,
+            offsetLeft: _labelWidth, // account for labels
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: _labelWidth),
           child: Column(
+            spacing: 10,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                height: 2,
-                color: woodSmoke.withValues(alpha: 0.5),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('0s', style: labelStyle),
-                  Text(
-                    '${recordingDuration.inSeconds}s',
-                    style: labelStyle,
+              ...BodyPartGroup.values.map(
+                (part) => Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      onGroupTapped?.call(part);
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(
+                          width: _labelWidth,
+                          child: Text(
+                            localizations.bodyPartGroupLabel(part),
+                            style: labelStyle,
+                          ),
+                        ),
+                        Expanded(
+                          child: CustomPaint(
+                            painter: HeatmapPainter(
+                              normalizedScores: timelinesByGroup[part]!,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: _labelWidth),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 2,
+                      color: woodSmoke.withValues(alpha: 0.5),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('0s', style: labelStyle),
+                        Text(
+                          '${recordingDuration.inSeconds}s',
+                          style: labelStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ),
-      ],
+        );
+      },
     );
+  }
+}
+
+class VerticalLinePainter extends CustomPainter {
+  final double x;
+  final double offsetLeft;
+  final double lineWidth;
+
+  VerticalLinePainter({required this.x, this.offsetLeft = 0, this.lineWidth = 2});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.red
+      ..strokeWidth = lineWidth;
+
+    final dx = offsetLeft + x; // shift to account for label column
+    canvas.drawLine(Offset(dx, 0), Offset(dx, size.height), paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant VerticalLinePainter oldDelegate) {
+    return oldDelegate.x != x || oldDelegate.offsetLeft != offsetLeft;
   }
 }
