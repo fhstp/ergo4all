@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
@@ -18,6 +19,7 @@ import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
@@ -75,6 +77,15 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   Queue<_Frame> frameQueue = Queue();
   _AnalysisMode analysisMode = _AnalysisMode.none;
   List<TimelineEntry> timeline = List.empty(growable: true);
+
+  List<KeyFrame> maxKeyFrames = List.empty(growable: true);
+
+  List<KeyFrame> extractedFrames = List.empty(growable: true);
+
+  final GlobalKey _previewContainerKey = GlobalKey();
+
+  int _lastProcessTime = 0;
+
   late final AnimationController progressAnimationController =
       AnimationController(
     value: 30,
@@ -94,6 +105,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       subjectId: widget.subject.id,
       scenario: widget.scenario,
       timeline: timeline.toIList(),
+      keyFrames: maxKeyFrames,
     );
 
     sessionRepository.put(session);
@@ -134,7 +146,39 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final rulaSheet = averagePose.toRulaSheet();
     final scores = scoresOf(rulaSheet);
+
+    // take a screenshot every 250 ms
+    if (frame.timestamp-_lastProcessTime >= 250) {
+      _lastProcessTime = frame.timestamp;
+      captureWidgetScreenshot(scores.fullScore, frame.timestamp);
+    }
+
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
+  }
+
+  /// take screenshot of current image stream with pose overlay, do noting if fails.
+  Future<void> captureWidgetScreenshot(int score, int timestamp) async {
+    try {
+      final boundary = _previewContainerKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final image = await boundary?.toImage();
+      final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
+      final pngBytes = byteData?.buffer.asUint8List();
+
+      extractedFrames.add(KeyFrame(score, pngBytes!, timestamp));
+    } catch (e) {
+      print("Screenshot error: $e, skip screenshoot");
+      return null;
+    }
+  }
+
+  /// selects the peak keyframes
+  void _selectMaxKeyframes() {
+    List<int> topPeaks = findTop3Peaks(extractedFrames);
+    topPeaks.sort();
+
+    List<KeyFrame> topKeyFrames =
+    topPeaks.map((index) => extractedFrames[index]).toList();
+    maxKeyFrames = topKeyFrames;
   }
 
   void onPoseInput(PoseDetectInput input) {
@@ -174,6 +218,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Camera controller must be initialized.',
     );
 
+    // select keyframes
+    _selectMaxKeyframes();
+
+    await cameraController.stopImageStream();
     await cameraController.dispose();
     await stopPoseDetection();
 
@@ -256,6 +304,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   @override
   void dispose() {
     progressAnimationController.dispose();
+    cameraController.expect('camera should exist').dispose();
     super.dispose();
   }
 
@@ -293,7 +342,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  cameraPreview,
+                  RepaintBoundary(
+                    key: _previewContainerKey,
+                    child: cameraPreview,
+                  ),
                   Positioned(
                     left: largeSpace,
                     right: largeSpace,

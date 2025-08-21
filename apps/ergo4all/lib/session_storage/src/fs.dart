@@ -180,6 +180,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
     subjectId: meta.subjectId,
     scenario: Scenario.values[meta.scenarioIndex],
     timeline: timeline,
+    keyFrames: List.empty(),
   );
 }
 
