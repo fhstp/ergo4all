@@ -12,7 +12,6 @@ class TimelineEntry {
   const TimelineEntry({
     required this.timestamp,
     required this.scores,
-    this.image,
   });
 
   /// The timestamp of this entry. This is a global UNIX timestamp.
@@ -20,9 +19,6 @@ class TimelineEntry {
 
   /// The scores for this entry.
   final RulaScores scores;
-
-  /// Image/screen-shot associated with this entry.
-  final img.Image? image;
 }
 
 /// A timeline of [RulaSheet]s. The list is expected to be sorted by timestamp
