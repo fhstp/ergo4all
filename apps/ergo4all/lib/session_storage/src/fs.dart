@@ -139,8 +139,10 @@ Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
     final fileName = path.basenameWithoutExtension(file.path);
     final parts = fileName.split('-');
 
-    final score = parts[0].toIntOption.expect('Should parse score from file name');
-    final timestamp = parts[1].toIntOption.expect('Should parse timestamp from file name');
+    final score =
+        parts[0].toIntOption.expect('Should parse score from file name');
+    final timestamp =
+        parts[1].toIntOption.expect('Should parse timestamp from file name');
 
     final image = await file.readAsBytes();
 
@@ -152,8 +154,13 @@ Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
   return entries;
 }
 
-Future<void> _storeImage(Directory dir, int score, int timestamp, Uint8List image) async {
-  final fileName = '${score}-${timestamp}.jpg';
+Future<void> _storeImage(
+  Directory dir,
+  int score,
+  int timestamp,
+  Uint8List image,
+) async {
+  final fileName = '$score-$timestamp.jpg';
   final filePath = path.join(dir.path, fileName);
 
   final file = File(filePath);
@@ -198,7 +205,10 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
       session.timeline.map((entry) => (entry.timestamp, entry.scores));
   await _writeSoresTo(scores, timelineFile);
 
-  await Future.forEach(session.keyFrames, (row) => _storeImage(dir, row.score, row.timestamp, row.screenshot));
+  await Future.forEach(
+    session.keyFrames,
+    (row) => _storeImage(dir, row.score, row.timestamp, row.screenshot),
+  );
 }
 
 /// Implementation of [RulaSessionRepository] which stores session as plain

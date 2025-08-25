@@ -43,7 +43,6 @@ class ResultsDetailScreen extends StatefulWidget {
 }
 
 class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
-
   late KeyFrame currentKeyFrame;
 
   @override
@@ -57,7 +56,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     final localizations = AppLocalizations.of(context)!;
 
     final tips = localizations.scenarioTip(widget.session.scenario);
-    final improvements = localizations.scenarioImprovement(widget.session.scenario);
+    final improvements =
+        localizations.scenarioImprovement(widget.session.scenario);
 
     if (widget.session.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -65,8 +65,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
     }
 
     final recordingDuration = Duration(
-      milliseconds:
-          widget.session.timeline.last.timestamp - widget.session.timeline.first.timestamp,
+      milliseconds: widget.session.timeline.last.timestamp -
+          widget.session.timeline.first.timestamp,
     );
 
     final normalizedScoresByGroup =
@@ -115,7 +115,9 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageCarousel(
-              images: widget.session.keyFrames.map((keyFrame)=>keyFrame.screenshot).toList(),
+              images: widget.session.keyFrames
+                  .map((keyFrame) => keyFrame.screenshot)
+                  .toList(),
               onPageChanged: (index) {
                 setState(() {
                   currentKeyFrame = widget.session.keyFrames[index];
@@ -136,8 +138,8 @@ class _ResultsDetailScreenState extends State<ResultsDetailScreen> {
                   recordingDuration: recordingDuration,
                   onGroupTapped: navigateToBodyPartPage,
                   highlightTime: Duration(
-                    milliseconds:
-                    currentKeyFrame.timestamp - widget.session.timeline.first.timestamp,
+                    milliseconds: currentKeyFrame.timestamp -
+                        widget.session.timeline.first.timestamp,
                   ),
                 ),
               ),

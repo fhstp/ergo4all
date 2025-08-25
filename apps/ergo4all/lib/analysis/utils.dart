@@ -25,23 +25,23 @@ List<int> findTop3Peaks(List<KeyFrame> frames) {
   if (frames.isEmpty) return [];
 
   // Step 1: Smooth the signal
-  List<double> smoothed = [];
-  for (int i = 0; i < frames.length; i++) {
-    int start = (i - 2).clamp(0, frames.length - 1);
-    int end = (i + 2).clamp(0, frames.length - 1);
+  final smoothed = <double>[];
+  for (var i = 0; i < frames.length; i++) {
+    final start = (i - 2).clamp(0, frames.length - 1);
+    final end = (i + 2).clamp(0, frames.length - 1);
 
-    var window = frames.sublist(start, end + 1).map((e) => e.score);
+    final window = frames.sublist(start, end + 1).map((e) => e.score);
     smoothed.add(window.reduce((a, b) => a + b) / window.length);
   }
 
   // Step 2: Peak finding
-  List<int> peakIndices = [];
+  final peakIndices = <int>[];
   int? peakIndex;
   double? peakValue;
-  double baseline = smoothed.reduce((a, b) => a + b) / smoothed.length;
+  final baseline = smoothed.reduce((a, b) => a + b) / smoothed.length;
 
-  for (int i = 0; i < smoothed.length; i++) {
-    double value = smoothed[i];
+  for (var i = 0; i < smoothed.length; i++) {
+    final value = smoothed[i];
 
     if (value > baseline) {
       if (peakValue == null || value > peakValue) {
@@ -61,10 +61,10 @@ List<int> findTop3Peaks(List<KeyFrame> frames) {
 
   // Ensure at least one peak (max absolute score) if list is empty
   if (peakIndices.isEmpty) {
-    int maxIndex = 0;
-    int maxAbsScore = frames[0].score.abs();
-    for (int i = 1; i < frames.length; i++) {
-      int absScore = frames[i].score.abs();
+    var maxIndex = 0;
+    var maxAbsScore = frames[0].score.abs();
+    for (var i = 1; i < frames.length; i++) {
+      final absScore = frames[i].score.abs();
       if (absScore > maxAbsScore) {
         maxAbsScore = absScore;
         maxIndex = i;
@@ -74,8 +74,8 @@ List<int> findTop3Peaks(List<KeyFrame> frames) {
   }
 
   // Step 3: Sort by score (absolute) and pick top 3
-  peakIndices.sort((a, b) =>
-      frames[b].score.abs().compareTo(frames[a].score.abs()),
+  peakIndices.sort(
+    (a, b) => frames[b].score.abs().compareTo(frames[a].score.abs()),
   );
 
   return peakIndices.take(3).toList();

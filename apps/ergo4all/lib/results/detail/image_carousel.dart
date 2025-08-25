@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 
 /// Image carousel to display key frames
 class ImageCarousel extends StatelessWidget {
-
   const ImageCarousel({
-    Key? key,
     required this.images,
+    super.key,
     this.borderRadius = 8,
     this.onPageChanged,
-  }) : super(key: key);
+  });
 
   final List<Uint8List> images;
   final double borderRadius;

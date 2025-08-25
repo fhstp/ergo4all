@@ -43,10 +43,11 @@ class ScoreHeatmapGraph extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-
         final graphWidth = constraints.maxWidth - _labelWidth;
         // Compute X position for highlight
-        final highlightX = (highlightTime.inMilliseconds / recordingDuration.inMilliseconds) * graphWidth;
+        final highlightX =
+            (highlightTime.inMilliseconds / recordingDuration.inMilliseconds) *
+                graphWidth;
 
         return CustomPaint(
           foregroundPainter: VerticalLinePainter(
@@ -120,7 +121,8 @@ class VerticalLinePainter extends CustomPainter {
   final double offsetLeft;
   final double lineWidth;
 
-  VerticalLinePainter({required this.x, this.offsetLeft = 0, this.lineWidth = 2});
+  VerticalLinePainter(
+      {required this.x, this.offsetLeft = 0, this.lineWidth = 2});
 
   @override
   void paint(Canvas canvas, Size size) {
