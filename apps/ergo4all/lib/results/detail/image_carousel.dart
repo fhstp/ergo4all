@@ -9,15 +9,13 @@ class ImageCarousel extends StatelessWidget {
   const ImageCarousel({
     required this.images,
     super.key,
-    this.borderRadius = 8,
     this.onPageChanged,
   });
 
+  static const double _borderRadius = 8;
+
   /// The images to display in the carousel
   final List<Uint8List> images;
-
-  /// Border-radius for the clip-rect around the images.
-  final double borderRadius;
 
   /// Callback for when the carousel was swiped/turned.
   final ValueChanged<int>? onPageChanged;
@@ -33,7 +31,7 @@ class ImageCarousel extends StatelessWidget {
             onTap: () => Navigator.of(context).pop(),
             child: InteractiveViewer(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(borderRadius),
+                borderRadius: BorderRadius.circular(_borderRadius),
                 child: Image.memory(
                   image,
                   fit: BoxFit.fill,
@@ -61,7 +59,7 @@ class ImageCarousel extends StatelessWidget {
             showImageDisplayDialogFor(image);
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(_borderRadius),
             child: Image.memory(
               image,
               fit: BoxFit.fill,
