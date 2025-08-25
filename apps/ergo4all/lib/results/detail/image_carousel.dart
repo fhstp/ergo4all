@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 /// Image carousel to display key frames
 class ImageCarousel extends StatelessWidget {
+  ///
   const ImageCarousel({
     required this.images,
     super.key,
@@ -12,8 +13,13 @@ class ImageCarousel extends StatelessWidget {
     this.onPageChanged,
   });
 
+  /// The images to display in the carousel
   final List<Uint8List> images;
+
+  /// Border-radius for the clip-rect around the images.
   final double borderRadius;
+
+  /// Callback for when the carousel was swiped/turned.
   final ValueChanged<int>? onPageChanged;
 
   @override
