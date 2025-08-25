@@ -1,3 +1,15 @@
+# [1.101.0](https://github.com/fhstp/ergo4all/compare/v1.100.2...v1.101.0) (2025-08-25)
+
+
+### Features
+
+* add tab-bar to result screen ([75e959f](https://github.com/fhstp/ergo4all/commit/75e959f4629cab9810df98e06131b3b8e37c6bbb))
+* change result screen title ([201ed1a](https://github.com/fhstp/ergo4all/commit/201ed1a731d19bfe9f3cde9d548b8a1204106965))
+* convert result detail screen to page ([4b44e66](https://github.com/fhstp/ergo4all/commit/4b44e6695b3e068e8db7902ade5119d52594acfd))
+* fix incorrect icon color on result-screen ([f0cda43](https://github.com/fhstp/ergo4all/commit/f0cda432f19dd9e63d1c3824c7f884e01ac63be4))
+* move record-again button on result screen ([df45b3c](https://github.com/fhstp/ergo4all/commit/df45b3ca43f6a4fd8de3cf7e800129effdc6662f))
+* no reload on tab-switch on result screen ([17cc61f](https://github.com/fhstp/ergo4all/commit/17cc61f9bc80fd9fab6a71caa82c9c52c2833afe))
+
 ## [1.100.2](https://github.com/fhstp/ergo4all/compare/v1.100.1...v1.100.2) (2025-08-20)
 
 
