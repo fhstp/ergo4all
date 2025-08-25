@@ -8,16 +8,16 @@
     </tr>
     <tr>
         <th style="border: none">
-            <img src="apps/ergo4all/assets/images/logos/ak.jpg" height="150px" />
+            <img src="apps/ergo4all/assets/images/logos/ak.jpg" alt="The logo of the AK Lower Austria" height="150px" />
         </th>
         <th style="border: none">
-            <img src="apps/ergo4all//assets/images/logos/tuwien.jpg" height="150px" />
-            <img src="apps/ergo4all//assets/images/logos/fhstp.png" height="150px" />
+            <img src="apps/ergo4all//assets/images/logos/tuwien.jpg" alt="The logo of the TU Vienna" height="150px" />
+            <img src="apps/ergo4all//assets/images/logos/fhstp.png" alt="The logo of the FH St. Pölten" height="150px" />
         </th>
     </tr>
 </table>
 
-The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle) 
+The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle)
 project.
 
 Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
