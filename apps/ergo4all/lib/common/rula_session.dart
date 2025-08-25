@@ -1,8 +1,6 @@
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:image/image.dart' as img;
 import 'package:rula/rula.dart';
 
 /// An entry/frame in a [RulaTimeline].
@@ -61,8 +59,10 @@ class KeyFrame {
 
   /// KeyFrame full score
   final int score;
+
   /// keyFrame screenshot
   final Uint8List screenshot;
+
   /// KeyFrame timestamp (when it was recorded)
   final int timestamp;
 }
