@@ -120,18 +120,16 @@ class _VerticalLinePainter extends CustomPainter {
   _VerticalLinePainter({
     required this.x,
     this.offsetLeft = 0,
-    this.lineWidth = 2,
   });
 
   final double x;
   final double offsetLeft;
-  final double lineWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Colors.red
-      ..strokeWidth = lineWidth;
+      ..strokeWidth = 2;
 
     final dx = offsetLeft + x; // shift to account for label column
     canvas.drawLine(Offset(dx, 0), Offset(dx, size.height), paint);
