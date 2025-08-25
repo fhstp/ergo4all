@@ -24,6 +24,27 @@ class ImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showImageDisplayDialogFor(Uint8List image) {
+      showDialog<void>(
+        context: context,
+        builder: (_) => Dialog(
+          backgroundColor: Colors.transparent,
+          child: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: InteractiveViewer(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius),
+                child: Image.memory(
+                  image,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return CarouselSlider(
       options: CarouselOptions(
         height: 250,
@@ -37,24 +58,7 @@ class ImageCarousel extends StatelessWidget {
       items: images.map((Uint8List image) {
         return GestureDetector(
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (_) => Dialog(
-                backgroundColor: Colors.transparent,
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: InteractiveViewer(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                      child: Image.memory(
-                        image,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
+            showImageDisplayDialogFor(image);
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(borderRadius),
