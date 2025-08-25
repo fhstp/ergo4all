@@ -50,7 +50,7 @@ class ScoreHeatmapGraph extends StatelessWidget {
                 graphWidth;
 
         return CustomPaint(
-          foregroundPainter: VerticalLinePainter(
+          foregroundPainter: _VerticalLinePainter(
             x: highlightX,
             offsetLeft: _labelWidth, // account for labels
           ),
@@ -116,13 +116,16 @@ class ScoreHeatmapGraph extends StatelessWidget {
   }
 }
 
-class VerticalLinePainter extends CustomPainter {
+class _VerticalLinePainter extends CustomPainter {
+  _VerticalLinePainter({
+    required this.x,
+    this.offsetLeft = 0,
+    this.lineWidth = 2,
+  });
+
   final double x;
   final double offsetLeft;
   final double lineWidth;
-
-  VerticalLinePainter(
-      {required this.x, this.offsetLeft = 0, this.lineWidth = 2});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -135,7 +138,7 @@ class VerticalLinePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant VerticalLinePainter oldDelegate) {
+  bool shouldRepaint(covariant _VerticalLinePainter oldDelegate) {
     return oldDelegate.x != x || oldDelegate.offsetLeft != offsetLeft;
   }
 }
