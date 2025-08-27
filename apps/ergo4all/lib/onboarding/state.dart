@@ -5,9 +5,11 @@ abstract class OnboardingState {
   /// Checks whether onboarding was completed.
   Future<bool> isCompleted();
 
-  /// Sets the onboarding to be completed. There is currently no API
-  /// for 'un-completing' the onboarding.
+  /// Sets the onboarding to be completed.
   Future<void> setCompleted();
+
+  /// Reset the onboarding state to un-completed.
+  Future<void> reset();
 }
 
 /// Implementation of [OnboardingState] which stores the completion state
@@ -28,5 +30,10 @@ class PrefsOnboardingState implements OnboardingState {
   @override
   Future<void> setCompleted() async {
     await _prefs.setBool(_key, true);
+  }
+
+  @override
+  Future<void> reset() async {
+    await _prefs.clear(allowList: {_key});
   }
 }
