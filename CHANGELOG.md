@@ -1,3 +1,10 @@
+# [1.102.0](https://github.com/fhstp/ergo4all/compare/v1.101.0...v1.102.0) (2025-08-27)
+
+
+### Features
+
+* allow resetting onboarding state ([cf91389](https://github.com/fhstp/ergo4all/commit/cf91389faef92710ad47262f586031178bd4d898))
+
 # [1.101.0](https://github.com/fhstp/ergo4all/compare/v1.100.2...v1.101.0) (2025-08-25)
 
 
