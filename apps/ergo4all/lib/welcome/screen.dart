@@ -38,6 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   late final OnboardingState onboardingState;
 
   Option<String> projectVersion = none();
+  int tapCount = 0;
 
   Future<void> loadProjectVersion() async {
     final info = await PackageInfo.fromPlatform();
@@ -53,6 +54,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     onboardingState = Provider.of(context, listen: false);
 
     unawaited(loadProjectVersion());
+  }
+
+  Future<void> resetOnboarding() async {
+    await onboardingState.reset();
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      // TODO: Localize
+      const SnackBar(content: Text('Onboarding state reset')),
+    );
+  }
+
+  void incrementTapCount() {
+    if (tapCount < 5) {
+      tapCount++;
+
+      if (tapCount == 5) {
+        unawaited(resetOnboarding());
+      }
+    }
   }
 
   @override
@@ -140,7 +162,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
-            VersionDisplay(version: projectVersion),
+            VersionDisplay(version: projectVersion, onTap: incrementTapCount),
           ],
         ),
       ),
