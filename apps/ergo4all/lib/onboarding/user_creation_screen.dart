@@ -66,6 +66,8 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
@@ -106,6 +108,8 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                       decoration: InputDecoration(
                         hintText:
                             localizations.onboarding_userCreation_input_text,
+                        hintStyle: theme.textTheme.bodyLarge
+                            ?.copyWith(color: Colors.grey),
                         filled: true,
                         fillColor: Colors.blueGrey.shade50,
                         border: OutlineInputBorder(
