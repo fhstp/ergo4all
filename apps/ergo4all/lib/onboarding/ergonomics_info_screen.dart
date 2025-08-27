@@ -4,6 +4,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/onboarding/user_creation_screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:flutter/gestures.dart';
@@ -82,7 +83,7 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                     const SizedBox(height: largeSpace),
                     Text(
                       localizations.onboarding_ergonomicsInfo_subtitle,
-                      style: h3Style,
+                      style: onboardingHeaderStyle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
