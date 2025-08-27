@@ -4,6 +4,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,7 @@ class PreIntroScreen extends StatelessWidget {
                     const SizedBox(height: largeSpace),
                     Text(
                       localizations.onboarding_preIntro_subtitle,
-                      style: h3Style,
+                      style: onboardingHeaderStyle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),

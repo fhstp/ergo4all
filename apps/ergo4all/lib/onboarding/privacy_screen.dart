@@ -5,6 +5,7 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/onboarding/pre_intro_screen.dart';
+import 'package:ergo4all/onboarding/style.dart';
 import 'package:flutter/material.dart';
 
 const double _appBarHeight = 200;
@@ -67,7 +68,7 @@ class PrivacyScreen extends StatelessWidget {
                     const SizedBox(height: largeSpace),
                     Text(
                       localizations.onboarding_privacy_subtitle,
-                      style: h3Style,
+                      style: onboardingHeaderStyle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),

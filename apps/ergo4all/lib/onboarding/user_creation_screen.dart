@@ -6,6 +6,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/onboarding/state.dart';
+import 'package:ergo4all/onboarding/style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -90,7 +91,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                   children: [
                     Text(
                       localizations.onboarding_userCreation_subtitle,
-                      style: h3Style,
+                      style: onboardingHeaderStyle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: mediumSpace),
