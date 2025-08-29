@@ -1,3 +1,10 @@
+# [1.103.0](https://github.com/fhstp/ergo4all/compare/v1.102.0...v1.103.0) (2025-08-29)
+
+
+### Features
+
+* change hint color on for subject-creation ([f36263e](https://github.com/fhstp/ergo4all/commit/f36263ef8d6f63e2329b12dc42261801d4367515))
+
 # [1.102.0](https://github.com/fhstp/ergo4all/compare/v1.101.0...v1.102.0) (2025-08-27)
 
 
