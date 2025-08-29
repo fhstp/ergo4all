@@ -4,54 +4,54 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
+import 'package:ergo4all/profile/common.dart';
+import 'package:ergo4all/profile/creation/screen.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/subjects/common.dart';
-import 'package:ergo4all/subjects/creation/screen.dart';
-import 'package:ergo4all/subjects/storage/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/// Screen where users can manage the subjects filmed by the app.
-class SubjectManagementScreen extends StatefulWidget {
+/// Screen where users can manage the [Profile]s filmed by the app.
+class ProfileManagementScreen extends StatefulWidget {
   ///
-  const SubjectManagementScreen({super.key});
+  const ProfileManagementScreen({super.key});
 
   /// The route name for this screen.
-  static const String routeName = 'subject-management';
+  static const String routeName = 'profile-management';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute() {
     return MaterialPageRoute(
-      builder: (_) => const SubjectManagementScreen(),
+      builder: (_) => const ProfileManagementScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
 
   @override
-  State<SubjectManagementScreen> createState() =>
-      _SubjectManagementScreenState();
+  State<ProfileManagementScreen> createState() =>
+      _ProfileManagementScreenState();
 }
 
-class _SubjectEntry extends StatelessWidget {
-  const _SubjectEntry(this.subject, {this.onDismissed});
+class _ProfileEntry extends StatelessWidget {
+  const _ProfileEntry(this.profile, {this.onDismissed});
 
-  final Subject subject;
+  final Profile profile;
   final void Function()? onDismissed;
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(subject.id.toString()),
+      key: Key(profile.id.toString()),
       onDismissed: (_) {
         onDismissed?.call();
       },
       confirmDismiss: (_) async {
-        final isDefaultUser = subject.id == SubjectRepo.defaultSubject.id;
+        final isDefaultUser = profile.id == ProfileRepo.defaultProfile.id;
 
         // TODO: Localize
         if (isDefaultUser) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Can't delete default subject")),
+            const SnackBar(content: Text("Can't delete default default")),
           );
         }
 
@@ -59,22 +59,22 @@ class _SubjectEntry extends StatelessWidget {
       },
       background: Container(color: cardinal),
       child: ListTile(
-        title: Text(subject.nickname),
+        title: Text(profile.nickname),
       ),
     );
   }
 }
 
-class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
-  List<Subject> subjects = List.empty();
+class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
+  List<Profile> profiles = List.empty();
 
-  late final SubjectRepo subjectRepo;
+  late final ProfileRepo profileRepo;
   late final RulaSessionRepository sessionRepo;
 
-  void refreshSubjects() {
-    subjectRepo.getAll().then((subjects) {
+  void refreshProfiles() {
+    profileRepo.getAll().then((it) {
       setState(() {
-        this.subjects = subjects;
+        profiles = it;
       });
     });
   }
@@ -83,35 +83,35 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
   void initState() {
     super.initState();
 
-    subjectRepo = Provider.of(context, listen: false);
+    profileRepo = Provider.of(context, listen: false);
     sessionRepo = Provider.of(context, listen: false);
 
-    refreshSubjects();
+    refreshProfiles();
   }
 
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
 
-    Future<void> goToSubjectCreator() async {
-      await navigator.push(SubjectCreationScreen.makeRoute());
-      refreshSubjects();
+    Future<void> goToProfileCreator() async {
+      await navigator.push(ProfileCreationScreen.makeRoute());
+      refreshProfiles();
     }
 
-    Future<void> deleteSubject(Subject subject) async {
-      await subjectRepo.deleteById(subject.id);
-      await sessionRepo.deleteAllBy(subject.id);
+    Future<void> deleteProfile(Profile profile) async {
+      await profileRepo.deleteById(profile.id);
+      await sessionRepo.deleteAllBy(profile.id);
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Deleted ${subject.nickname}')),
+        SnackBar(content: Text('Deleted ${profile.nickname}')),
       );
     }
 
     return Scaffold(
       appBar: const RedCircleAppBar(
         // TODO: Localize
-        titleText: 'Subjects',
+        titleText: 'Profiles',
         withBackButton: true,
       ),
       body: SafeArea(
@@ -122,20 +122,20 @@ class _SubjectManagementScreenState extends State<SubjectManagementScreen> {
                 child: ListView.separated(
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: smallSpace),
-                  itemBuilder: (context, i) => _SubjectEntry(
-                    subjects[i],
+                  itemBuilder: (context, i) => _ProfileEntry(
+                    profiles[i],
                     onDismissed: () {
-                      deleteSubject(subjects[i]);
+                      deleteProfile(profiles[i]);
                     },
                   ),
-                  itemCount: subjects.length,
+                  itemCount: profiles.length,
                 ),
               ),
               ElevatedButton(
-                onPressed: goToSubjectCreator,
+                onPressed: goToProfileCreator,
                 style: primaryTextButtonStyle,
                 // TODO: Localize
-                child: const Text('New Subject'),
+                child: const Text('New Profile'),
               ),
             ],
           ),

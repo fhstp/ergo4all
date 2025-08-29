@@ -3,10 +3,10 @@ import 'package:custom_locale/custom_locale.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/onboarding/state.dart';
+import 'package:ergo4all/profile/storage/common.dart';
+import 'package:ergo4all/profile/storage/fs.dart';
 import 'package:ergo4all/route_leave_observer.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/subjects/storage/common.dart';
-import 'package:ergo4all/subjects/storage/fs.dart';
 import 'package:ergo4all/welcome/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +51,7 @@ class _Ergo4AllAppState extends State<Ergo4AllApp> {
         Provider<RulaSessionRepository>(
           create: (_) => FileBasedRulaSessionRepository(),
         ),
-        Provider<SubjectRepo>(create: (_) => FileBasedSubjectRepo()),
+        Provider<ProfileRepo>(create: (_) => FileBasedProfileRepo()),
         Provider<OnboardingState>(create: (_) => PrefsOnboardingState()),
       ],
       child: MaterialApp(

@@ -13,10 +13,10 @@ import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -34,7 +34,7 @@ class LiveAnalysisScreen extends StatefulWidget {
   /// Creates an instance of the screen.
   const LiveAnalysisScreen({
     required this.scenario,
-    required this.subject,
+    required this.profile,
     super.key,
   });
 
@@ -42,10 +42,10 @@ class LiveAnalysisScreen extends StatefulWidget {
   static const String routeName = 'live-analysis';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen for analyzing
-  /// a [subject] in a [scenario].
-  static MaterialPageRoute<void> makeRoute(Scenario scenario, Subject subject) {
+  /// a [profile] in a [scenario].
+  static MaterialPageRoute<void> makeRoute(Scenario scenario, Profile profile) {
     return MaterialPageRoute(
-      builder: (_) => LiveAnalysisScreen(scenario: scenario, subject: subject),
+      builder: (_) => LiveAnalysisScreen(scenario: scenario, profile: profile),
       settings: const RouteSettings(name: routeName),
     );
   }
@@ -53,8 +53,8 @@ class LiveAnalysisScreen extends StatefulWidget {
   /// The scenario for which to make an analysis.
   final Scenario scenario;
 
-  /// The subject who was recorded.
-  final Subject subject;
+  /// The profile which was used in the recording.
+  final Profile profile;
 
   @override
   State<LiveAnalysisScreen> createState() => _LiveAnalysisScreenState();
@@ -102,7 +102,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
-      subjectId: widget.subject.id,
+      profileId: widget.profile.id,
       scenario: widget.scenario,
       timeline: timeline.toIList(),
       keyFrames: maxKeyFrames,
@@ -114,7 +114,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       Navigator.of(context).pushReplacement(
         ResultsScreen.makeRoute(
           session,
-          widget.subject,
+          widget.profile,
         ),
       ),
     );
@@ -148,7 +148,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final scores = scoresOf(rulaSheet);
 
     // take a screenshot every 250 ms
-    if (frame.timestamp-_lastProcessTime >= 250) {
+    if (frame.timestamp - _lastProcessTime >= 250) {
       _lastProcessTime = frame.timestamp;
       captureWidgetScreenshot(scores.fullScore, frame.timestamp);
     }
@@ -159,7 +159,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   /// take screenshot of current image stream with pose overlay, do noting if fails.
   Future<void> captureWidgetScreenshot(int score, int timestamp) async {
     try {
-      final boundary = _previewContainerKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final boundary = _previewContainerKey.currentContext?.findRenderObject()
+          as RenderRepaintBoundary?;
       final image = await boundary?.toImage();
       final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData?.buffer.asUint8List();
@@ -177,7 +178,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     topPeaks.sort();
 
     List<KeyFrame> topKeyFrames =
-    topPeaks.map((index) => extractedFrames[index]).toList();
+        topPeaks.map((index) => extractedFrames[index]).toList();
     maxKeyFrames = topKeyFrames;
   }
 

@@ -4,9 +4,9 @@ import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:csv/csv.dart';
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/subjects/storage/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
@@ -16,10 +16,10 @@ import 'package:rula/rula.dart';
 
 @immutable
 class _SessionMeta {
-  const _SessionMeta(this.timestamp, this.subjectId, this.scenarioIndex);
+  const _SessionMeta(this.timestamp, this.profileId, this.scenarioIndex);
 
   final int timestamp;
-  final int subjectId;
+  final int profileId;
   final int scenarioIndex;
 }
 
@@ -41,22 +41,22 @@ Future<_SessionMeta> _loadMetaFrom(File file) async {
 
   final timestamp =
       map['timestamp']!.toIntOption.expect('Should parse timestamp');
-  final subjectId =
-      map['subjectId']?.toIntOption.expect('Should parse subject id') ??
-          // If the file did not contain a subject-id, then it was likely
-          // recorded with an old version of the app, without subjects.
-          // In that case we just assign the session to the default subject.
-          SubjectRepo.defaultSubject.id;
+  final profileId =
+      map['profileId']?.toIntOption.expect('Should parse profile id') ??
+          // If the file did not contain a profile-id, then it was likely
+          // recorded with an old version of the app, without profiles.
+          // In that case we just assign the session to the default profile.
+          ProfileRepo.defaultProfile.id;
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
-  return _SessionMeta(timestamp, subjectId, scenarioIndex);
+  return _SessionMeta(timestamp, profileId, scenarioIndex);
 }
 
 Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
   final map = IMap.fromEntries([
     MapEntry('timestamp', meta.timestamp.toString()),
-    MapEntry('subjectId', meta.subjectId.toString()),
+    MapEntry('profileId', meta.profileId.toString()),
     MapEntry('scenarioIndex', meta.scenarioIndex.toString()),
   ]);
   final text = _stringifyKV(map);
@@ -182,7 +182,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
 
   return RulaSession(
     timestamp: meta.timestamp,
-    subjectId: meta.subjectId,
+    profileId: meta.profileId,
     scenario: Scenario.values[meta.scenarioIndex],
     timeline: timeline,
     keyFrames: keyFrames,
@@ -194,7 +194,7 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   await metaFile.create();
   final meta = _SessionMeta(
     session.timestamp,
-    session.subjectId,
+    session.profileId,
     session.scenario.index,
   );
   await _writeMetaTo(meta, metaFile);
@@ -261,12 +261,12 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
   }
 
   @override
-  Future<void> deleteAllBy(int subjectId) async {
+  Future<void> deleteAllBy(int profileId) async {
     final allSessions = await getAll();
-    final sessionsBySubject =
-        allSessions.filter((session) => session.subjectId == subjectId);
+    final sessionsWithProfile =
+        allSessions.filter((session) => session.profileId == profileId);
 
-    for (final session in sessionsBySubject) {
+    for (final session in sessionsWithProfile) {
       await deleteByTimestamp(session.timestamp);
     }
   }

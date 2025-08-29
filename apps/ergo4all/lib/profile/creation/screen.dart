@@ -1,42 +1,43 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
-import 'package:ergo4all/subjects/creation/form.dart';
-import 'package:ergo4all/subjects/storage/common.dart';
+import 'package:ergo4all/profile/common.dart';
+import 'package:ergo4all/profile/creation/form.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/// Screen where users can add new subjects.
-class SubjectCreationScreen extends StatefulWidget {
+/// Screen where users can add new [Profile]s.
+class ProfileCreationScreen extends StatefulWidget {
   ///
-  const SubjectCreationScreen({super.key});
+  const ProfileCreationScreen({super.key});
 
   /// The route name for this screen.
-  static const String routeName = 'subject-creation';
+  static const String routeName = 'profile-creation';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute() {
     return MaterialPageRoute(
-      builder: (_) => const SubjectCreationScreen(),
+      builder: (_) => const ProfileCreationScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
 
   @override
-  State<SubjectCreationScreen> createState() => _SubjectCreationScreenState();
+  State<ProfileCreationScreen> createState() => _ProfileCreationScreenState();
 }
 
-class _SubjectCreationScreenState extends State<SubjectCreationScreen> {
-  late final SubjectRepo subjectRepo;
+class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
+  late final ProfileRepo profileRepo;
 
   @override
   void initState() {
     super.initState();
 
-    subjectRepo = Provider.of(context, listen: false);
+    profileRepo = Provider.of(context, listen: false);
   }
 
-  Future<void> submitSubject(NewSubject subject) async {
-    await subjectRepo.createNew(subject.nickName);
+  Future<void> submitProfile(NewProfile profile) async {
+    await profileRepo.createNew(profile.nickName);
     if (!mounted) return;
     Navigator.of(context).pop();
   }
@@ -46,15 +47,15 @@ class _SubjectCreationScreenState extends State<SubjectCreationScreen> {
     return Scaffold(
       appBar: const RedCircleAppBar(
         // TODO: Localize
-        titleText: 'New subject',
+        titleText: 'New Profile',
         withBackButton: true,
       ),
       body: SafeArea(
         child: Align(
           child: Padding(
             padding: const EdgeInsets.all(largeSpace),
-            child: NewSubjectForm(
-              onSubmit: submitSubject,
+            child: NewProfileForm(
+              onSubmit: submitProfile,
             ),
           ),
         ),
