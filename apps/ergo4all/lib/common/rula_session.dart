@@ -29,7 +29,7 @@ class RulaSession {
   ///
   const RulaSession({
     required this.timestamp,
-    required this.subjectId,
+    required this.profileId,
     required this.scenario,
     required this.timeline,
     required this.keyFrames,
@@ -39,7 +39,7 @@ class RulaSession {
   final int timestamp;
 
   /// Id of the user who was recorded in this session.
-  final int subjectId;
+  final int profileId;
 
   /// [Scenario] which was recorded in this session.
   final Scenario scenario;

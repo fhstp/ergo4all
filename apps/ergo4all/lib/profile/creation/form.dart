@@ -1,31 +1,31 @@
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/subjects/common.dart';
+import 'package:ergo4all/profile/common.dart';
 import 'package:flutter/material.dart';
 
-/// Contains data that was entered in a [NewSubjectForm] and can be used
-/// to create a new [Subject].
+/// Contains data that was entered in a [NewProfileForm] and can be used
+/// to create a new [Profile].
 @immutable
-class NewSubject {
+class NewProfile {
   ///
-  const NewSubject({required this.nickName});
+  const NewProfile({required this.nickName});
 
-  /// The nickname for the new subject.
+  /// The nickname for the new profile.
   final String nickName;
 }
 
-/// A form for entering the information needed for new subjects.
-class NewSubjectForm extends StatefulWidget {
+/// A form for entering the information needed for new [Profile]s.
+class NewProfileForm extends StatefulWidget {
   ///
-  const NewSubjectForm({super.key, this.onSubmit});
+  const NewProfileForm({super.key, this.onSubmit});
 
-  /// Callback for when a [NewSubject] is submitted from this form.
-  final void Function(NewSubject)? onSubmit;
+  /// Callback for when a [NewProfile] is submitted from this form.
+  final void Function(NewProfile)? onSubmit;
 
   @override
-  State<NewSubjectForm> createState() => _NewSubjectFormState();
+  State<NewProfileForm> createState() => _NewProfileFormState();
 }
 
-class _NewSubjectFormState extends State<NewSubjectForm> {
+class _NewProfileFormState extends State<NewProfileForm> {
   final formKey = GlobalKey<FormState>();
   final nickName = TextEditingController();
 
@@ -33,7 +33,7 @@ class _NewSubjectFormState extends State<NewSubjectForm> {
 
   void submit() {
     if (!formState.validate()) return;
-    widget.onSubmit?.call(NewSubject(nickName: nickName.text));
+    widget.onSubmit?.call(NewProfile(nickName: nickName.text));
   }
 
   @override
@@ -62,7 +62,7 @@ class _NewSubjectFormState extends State<NewSubjectForm> {
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               // TODO: Localize
-              hintText: 'Subject nickname',
+              hintText: 'Profile nickname',
             ),
           ),
           const Spacer(),

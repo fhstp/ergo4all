@@ -8,12 +8,12 @@ import 'package:common_ui/widgets/red_circle_bottom_bar.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/profile/common.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/scenario/common.dart';
-import 'package:ergo4all/scenario/detail/subject_selector.dart';
+import 'package:ergo4all/scenario/detail/profile_selector.dart';
 import 'package:ergo4all/scenario/scenario_graphic.dart';
 import 'package:ergo4all/scenario/variable_localizations.dart';
-import 'package:ergo4all/subjects/common.dart';
-import 'package:ergo4all/subjects/storage/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,28 +42,28 @@ class ScenarioDetailScreen extends StatefulWidget {
 }
 
 class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
-  late final SubjectRepo subjectRepo;
+  late final ProfileRepo profileRepo;
 
-  List<Subject> subjects = [];
-  Subject? selectedSubject;
+  List<Profile> profiles = [];
+  Profile? selectedProfile;
 
   @override
   void initState() {
     super.initState();
 
-    subjectRepo = Provider.of(context, listen: false);
+    profileRepo = Provider.of(context, listen: false);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    subjectRepo.getAll().then((subjects) {
+    profileRepo.getAll().then((it) {
       setState(() {
-        assert(subjects.isNotEmpty, 'There must be at least 1 subject');
+        assert(it.isNotEmpty, 'There must be at least 1 profile');
 
-        this.subjects = subjects;
-        selectedSubject = subjects.first;
+        profiles = it;
+        selectedProfile = profiles.first;
       });
     });
   }
@@ -73,11 +73,11 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
     final localizations = AppLocalizations.of(context)!;
     // Pass scenario context
     void goToRecordScreen() {
-      assert(selectedSubject != null, 'Must have selected a subject');
+      assert(selectedProfile != null, 'Must have selected a profile');
 
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
-          LiveAnalysisScreen.makeRoute(widget.scenario, selectedSubject!),
+          LiveAnalysisScreen.makeRoute(widget.scenario, selectedProfile!),
           ModalRoute.withName(HomeScreen.routeName),
         ),
       );
@@ -133,12 +133,12 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                     const SizedBox(height: mediumSpace),
                     ScenarioGraphic(widget.scenario, height: 330),
                     const SizedBox(height: mediumSpace),
-                    SubjectSelector(
-                      subjects: subjects,
-                      selectedSubject: selectedSubject,
-                      onSubjectSelected: (subject) {
+                    ProfileSelector(
+                      profiles: profiles,
+                      selected: selectedProfile,
+                      onSelected: (it) {
                         setState(() {
-                          selectedSubject = subject;
+                          selectedProfile = it;
                         });
                       },
                     ),
@@ -147,7 +147,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                       key: const Key('start'),
                       style: primaryTextButtonStyle,
                       onPressed:
-                          selectedSubject != null ? goToRecordScreen : null,
+                          selectedProfile != null ? goToRecordScreen : null,
                       child: Text(localizations.record_label),
                     ),
                   ],

@@ -8,8 +8,8 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/subjects/common.dart';
-import 'package:ergo4all/subjects/storage/common.dart';
+import 'package:ergo4all/profile/common.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +38,7 @@ class SessionChoiceScreen extends StatefulWidget {
 class _SessionEntry extends StatelessWidget {
   const _SessionEntry({
     required this.session,
-    required this.subject,
+    required this.profile,
     this.onTap,
     this.onDismissed,
   });
@@ -46,7 +46,7 @@ class _SessionEntry extends StatelessWidget {
   static final dateFormat = DateFormat('dd MMM yyyy, HH:mm');
 
   final RulaSession session;
-  final Subject subject;
+  final Profile profile;
   final void Function()? onTap;
   final void Function()? onDismissed;
 
@@ -75,7 +75,7 @@ class _SessionEntry extends StatelessWidget {
       },
       child: ListTile(
         title: Text(formattedDate),
-        subtitle: Text('${subject.nickname} - $scenarioLabel'),
+        subtitle: Text('${profile.nickname} - $scenarioLabel'),
         titleTextStyle: paragraphHeaderStyle,
         onTap: onTap,
       ),
@@ -86,17 +86,17 @@ class _SessionEntry extends StatelessWidget {
 class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     with SingleTickerProviderStateMixin {
   late final RulaSessionRepository sessionRepository;
-  late final SubjectRepo subjectRepo;
+  late final ProfileRepo profileRepo;
 
   List<RulaSession> sessions = List.empty();
-  IMap<int, Subject> subjectsById = const IMap.empty();
+  IMap<int, Profile> profilesById = const IMap.empty();
 
   @override
   void initState() {
     super.initState();
 
     sessionRepository = Provider.of(context, listen: false);
-    subjectRepo = Provider.of(context, listen: false);
+    profileRepo = Provider.of(context, listen: false);
   }
 
   @override
@@ -109,9 +109,9 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       });
     });
 
-    subjectRepo.getAllAsMap().then((subjects) {
+    profileRepo.getAllAsMap().then((it) {
       setState(() {
-        subjectsById = subjects;
+        profilesById = it;
       });
     });
   }
@@ -121,13 +121,13 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     final localizations = AppLocalizations.of(context)!;
 
     void goToResultsFor(RulaSession session) {
-      final subject = subjectsById[session.subjectId];
-      assert(subject != null, 'Subject for session must exist');
+      final profile = profilesById[session.profileId];
+      assert(profile != null, 'Profile for session must exist');
 
       if (!context.mounted) return;
       unawaited(
         Navigator.of(context).pushReplacement(
-          ResultsScreen.makeRoute(session, subject!),
+          ResultsScreen.makeRoute(session, profile!),
         ),
       );
     }
@@ -169,7 +169,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
                   final session = sessions[index];
                   return _SessionEntry(
                     session: session,
-                    subject: subjectsById[session.subjectId]!,
+                    profile: profilesById[session.profileId]!,
                     onDismissed: () {
                       deleteSessionWith(index);
                     },

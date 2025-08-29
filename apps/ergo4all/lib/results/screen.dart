@@ -11,13 +11,13 @@ import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
+import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/page.dart';
 import 'package:ergo4all/results/overview/page.dart';
 import 'package:ergo4all/results/rating.dart';
-import 'package:ergo4all/subjects/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class ResultsScreen extends StatelessWidget {
   ///
   const ResultsScreen({
     required this.session,
-    required this.subject,
+    required this.profile,
     super.key,
   });
 
@@ -34,15 +34,15 @@ class ResultsScreen extends StatelessWidget {
   static const String routeName = 'results';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen to view
-  /// the [session] for a [subject].
+  /// the [session] for a [profile].
   static MaterialPageRoute<void> makeRoute(
     RulaSession session,
-    Subject subject,
+    Profile profile,
   ) {
     return MaterialPageRoute(
       builder: (_) => ResultsScreen(
         session: session,
-        subject: subject,
+        profile: profile,
       ),
       settings: const RouteSettings(name: routeName),
     );
@@ -51,8 +51,8 @@ class ResultsScreen extends StatelessWidget {
   /// The session to view.
   final RulaSession session;
 
-  /// The subject that was recorded.
-  final Subject subject;
+  /// The profile that was used.
+  final Profile profile;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class ResultsScreen extends StatelessWidget {
     void recordAgain() {
       unawaited(
         Navigator.of(context).pushAndRemoveUntil(
-          LiveAnalysisScreen.makeRoute(session.scenario, subject),
+          LiveAnalysisScreen.makeRoute(session.scenario, profile),
           ModalRoute.withName(HomeScreen.routeName),
         ),
       );
