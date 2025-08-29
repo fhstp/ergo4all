@@ -1,3 +1,10 @@
+# [1.104.0](https://github.com/fhstp/ergo4all/compare/v1.103.0...v1.104.0) (2025-08-29)
+
+
+### Features
+
+* rename subjects to profiles ([33e0718](https://github.com/fhstp/ergo4all/commit/33e0718f311c2900a1c3abf140d116df882aee4d))
+
 # [1.103.0](https://github.com/fhstp/ergo4all/compare/v1.102.0...v1.103.0) (2025-08-29)
 
 
