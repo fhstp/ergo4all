@@ -5,7 +5,7 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/profile/common.dart';
-import 'package:ergo4all/profile/creation/screen.dart';
+import 'package:ergo4all/profile/creation/dialog.dart';
 import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:flutter/material.dart';
@@ -91,10 +91,11 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final navigator = Navigator.of(context);
-
-    Future<void> goToProfileCreator() async {
-      await navigator.push(ProfileCreationScreen.makeRoute());
+    Future<void> openProfileCreator() async {
+      await showDialog<void>(
+        context: context,
+        builder: (_) => const ProfileCreationDialog(),
+      );
       refreshProfiles();
     }
 
@@ -132,7 +133,7 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: goToProfileCreator,
+                onPressed: openProfileCreator,
                 style: primaryTextButtonStyle,
                 // TODO: Localize
                 child: const Text('New Profile'),

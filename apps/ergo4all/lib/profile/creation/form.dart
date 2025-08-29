@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class _NewProfileFormState extends State<NewProfileForm> {
               hintText: 'Profile nickname',
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: largeSpace),
           ElevatedButton(
             onPressed: submit,
             style: primaryTextButtonStyle,
