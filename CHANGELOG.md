@@ -1,3 +1,10 @@
+# [1.105.0](https://github.com/fhstp/ergo4all/compare/v1.104.0...v1.105.0) (2025-09-08)
+
+
+### Features
+
+* add scroll to main screen ([0b043c4](https://github.com/fhstp/ergo4all/commit/0b043c444870092d0c95d1f942ed24f78d5331ea))
+
 # [1.104.0](https://github.com/fhstp/ergo4all/compare/v1.103.0...v1.104.0) (2025-08-29)
 
 
