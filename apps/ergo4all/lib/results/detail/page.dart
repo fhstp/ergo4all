@@ -34,7 +34,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
-  late KeyFrame currentKeyFrame;
+  late KeyFrame? currentKeyFrame;
 
   @override
   bool get wantKeepAlive => true;
@@ -42,7 +42,11 @@ class _DetailPageState extends State<DetailPage>
   @override
   void initState() {
     super.initState();
-    currentKeyFrame = widget.session.keyFrames.first;
+    if (widget.session.keyFrames.isNotEmpty) {
+      currentKeyFrame = widget.session.keyFrames.first;
+    } else {
+      currentKeyFrame = null; // no keyframe available
+    }
   }
 
   @override
@@ -105,16 +109,18 @@ class _DetailPageState extends State<DetailPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ImageCarousel(
-            images: widget.session.keyFrames
-                .map((keyFrame) => keyFrame.screenshot)
-                .toList(),
-            onPageChanged: (index) {
-              setState(() {
-                currentKeyFrame = widget.session.keyFrames[index];
-              });
-            },
-          ),
+          if (currentKeyFrame != null)
+            ImageCarousel(
+              images: widget.session.keyFrames
+                  .map((keyFrame) => keyFrame.screenshot)
+                  .toList(),
+              onPageChanged: (index) {
+                setState(() {
+                  currentKeyFrame = widget.session.keyFrames[index];
+                });
+              },
+            ),
+
           const SizedBox(height: largeSpace),
 
           // Heatmap vis of the body parts
@@ -128,8 +134,8 @@ class _DetailPageState extends State<DetailPage>
                 recordingDuration: recordingDuration,
                 onGroupTapped: navigateToBodyPartPage,
                 highlightTime: Duration(
-                  milliseconds: currentKeyFrame.timestamp -
-                      widget.session.timeline.first.timestamp,
+                  milliseconds: currentKeyFrame != null ? currentKeyFrame!.timestamp -
+                      widget.session.timeline.first.timestamp : widget.session.timeline.first.timestamp,
                 ),
               ),
             ),

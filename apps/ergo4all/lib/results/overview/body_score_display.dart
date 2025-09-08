@@ -26,7 +26,7 @@ String _getAssetPathForPart(BodyPart bodyPart) {
   return 'assets/images/puppet/$fileName.png';
 }
 
-const _bodyPartsInDisplayOrder = [
+const bodyPartsInDisplayOrder = [
   BodyPart.head,
   BodyPart.leftLeg,
   BodyPart.leftUpperArm,
@@ -38,6 +38,25 @@ const _bodyPartsInDisplayOrder = [
   BodyPart.rightLowerArm,
   BodyPart.rightHand,
 ];
+
+double getNormalizedScoreForPart(BodyPart part, RulaScores scores) {
+  return switch (part) {
+    BodyPart.head => normalizeScore(scores.neckScore, 6),
+    BodyPart.leftHand ||
+    BodyPart.leftLowerArm =>
+        normalizeScore(Pair.left(scores.lowerArmScores), 3),
+    BodyPart.rightHand ||
+    BodyPart.rightLowerArm =>
+        normalizeScore(Pair.right(scores.lowerArmScores), 3),
+    BodyPart.leftLeg => normalizeScore(Pair.left(scores.legScores), 2),
+    BodyPart.rightLeg => normalizeScore(Pair.right(scores.legScores), 2),
+    BodyPart.leftUpperArm =>
+        normalizeScore(Pair.left(scores.upperArmScores), 6),
+    BodyPart.rightUpperArm =>
+        normalizeScore(Pair.right(scores.upperArmScores), 6),
+    BodyPart.upperBody => normalizeScore(scores.trunkScore, 6),
+  };
+}
 
 /// Displays the aggregate score of a user using a puppet.
 class BodyScoreDisplay extends StatelessWidget {
@@ -52,37 +71,19 @@ class BodyScoreDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double getNormalizedScoreForPart(BodyPart part) {
-      return switch (part) {
-        BodyPart.head => normalizeScore(scores.neckScore, 6),
-        BodyPart.leftHand ||
-        BodyPart.leftLowerArm =>
-          normalizeScore(Pair.left(scores.lowerArmScores), 3),
-        BodyPart.rightHand ||
-        BodyPart.rightLowerArm =>
-          normalizeScore(Pair.right(scores.lowerArmScores), 3),
-        BodyPart.leftLeg => normalizeScore(Pair.left(scores.legScores), 2),
-        BodyPart.rightLeg => normalizeScore(Pair.right(scores.legScores), 2),
-        BodyPart.leftUpperArm =>
-          normalizeScore(Pair.left(scores.upperArmScores), 6),
-        BodyPart.rightUpperArm =>
-          normalizeScore(Pair.right(scores.upperArmScores), 6),
-        BodyPart.upperBody => normalizeScore(scores.trunkScore, 6),
-      };
-    }
 
     final bodyPartsImagePaths =
-        _bodyPartsInDisplayOrder.map(_getAssetPathForPart).toList();
+        bodyPartsInDisplayOrder.map(_getAssetPathForPart).toList();
 
-    final colors = _bodyPartsInDisplayOrder.map((part) {
-      final score = getNormalizedScoreForPart(part);
+    final colors = bodyPartsInDisplayOrder.map((part) {
+      final score = getNormalizedScoreForPart(part, scores);
       return RulaColor.forScore(score);
     }).toList();
 
     return TransparentImageStack(
       imagePaths: bodyPartsImagePaths,
       colors: colors,
-      onTap: (i) => onBodyPartTapped?.call(_bodyPartsInDisplayOrder[i]),
+      onTap: (i) => onBodyPartTapped?.call(bodyPartsInDisplayOrder[i]),
     );
   }
 }

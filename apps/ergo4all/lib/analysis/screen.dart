@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:ui' as ui;
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
@@ -13,7 +14,9 @@ import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/profile/common.dart';
+import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
@@ -150,14 +153,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     // take a screenshot every 250 ms
     if (frame.timestamp - _lastProcessTime >= 250) {
       _lastProcessTime = frame.timestamp;
-      captureWidgetScreenshot(scores.fullScore, frame.timestamp);
+      captureWidgetScreenshot(scores, frame.timestamp);
     }
 
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
   /// take screenshot of current image stream with pose overlay, do noting if fails.
-  Future<void> captureWidgetScreenshot(int score, int timestamp) async {
+  Future<void> captureWidgetScreenshot(RulaScores scores, int timestamp) async {
     try {
       final boundary = _previewContainerKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
@@ -165,7 +168,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData?.buffer.asUint8List();
 
-      extractedFrames.add(KeyFrame(score, pngBytes!, timestamp));
+      final scoreList = bodyPartsInDisplayOrder.map((part) {
+        return getNormalizedScoreForPart(part, scores);
+      }).toList();
+
+      final fullScoreNormalize = normalizeScore(scores.fullScore, 7);
+      final finalScore = fullScoreNormalize * 0.7 + scoreList.reduce(max) * 0.3;
+
+      extractedFrames.add(KeyFrame(finalScore, pngBytes!, timestamp));
     } catch (e) {
       print("Screenshot error: $e, skip screenshoot");
       return null;
@@ -174,7 +184,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   /// selects the peak keyframes
   void _selectMaxKeyframes() {
-    List<int> topPeaks = findTop3Peaks(extractedFrames);
+    List<int> topPeaks = findTop5Peaks(extractedFrames);
     topPeaks.sort();
 
     List<KeyFrame> topKeyFrames =

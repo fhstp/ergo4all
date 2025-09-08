@@ -20,9 +20,16 @@ extension ToSheetExt on Pose {
   }
 }
 
-/// process the extractedFrames signal to select the 3 most relevant peaks.
-List<int> findTop3Peaks(List<KeyFrame> frames) {
+/// process the extractedFrames signal to select the 5 most relevant peaks.
+List<int> findTop5Peaks(List<KeyFrame> frames) {
   if (frames.isEmpty) return [];
+
+  // remove first second keyframes as model can be unstable during this first second
+  final firstKeyFrame = frames.first;
+  final lastKeyFrame = frames.last;
+  if (lastKeyFrame.timestamp - firstKeyFrame.timestamp > 1000) {
+    frames.removeWhere((keyFrame) => keyFrame.timestamp <= firstKeyFrame.timestamp + 1000);
+  }
 
   // Step 1: Smooth the signal
   final smoothed = <double>[];
@@ -73,10 +80,10 @@ List<int> findTop3Peaks(List<KeyFrame> frames) {
     peakIndices.add(maxIndex);
   }
 
-  // Step 3: Sort by score (absolute) and pick top 3
+  // Step 3: Sort by score (absolute) and pick top 5
   peakIndices.sort(
     (a, b) => frames[b].score.abs().compareTo(frames[a].score.abs()),
   );
 
-  return peakIndices.take(3).toList();
+  return peakIndices.take(5).toList();
 }
