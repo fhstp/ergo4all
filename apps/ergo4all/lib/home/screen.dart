@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Align(
           alignment: Alignment.topCenter,
-          child: Column(
+          child: ListView(
             children: [
               const SizedBox(height: largeSpace),
               const PuppetGraphic(),
@@ -71,26 +71,32 @@ class HomeScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
-              ElevatedButton(
-                key: const Key('start'),
-                style: primaryTextButtonStyle,
-                onPressed: startSession,
-                child: Text(localizations.home_start_label),
+              Center(
+                child: ElevatedButton(
+                  key: const Key('start'),
+                  style: primaryTextButtonStyle,
+                  onPressed: startSession,
+                  child: Text(localizations.home_start_label),
+                ),
               ),
               const SizedBox(height: mediumSpace),
-              ElevatedButton(
-                key: const Key('tips'),
-                style: secondaryTextButtonStyle,
-                onPressed: goToTips,
-                child: Text(localizations.home_tips_label),
+              Center(
+                child: ElevatedButton(
+                  key: const Key('tips'),
+                  style: secondaryTextButtonStyle,
+                  onPressed: goToTips,
+                  child: Text(localizations.home_tips_label),
+                ),
               ),
               const SizedBox(height: mediumSpace),
-              ElevatedButton(
-                style: secondaryTextButtonStyle,
-                onPressed: goToAllSessions,
-                child: Text(localizations.sessions_header),
+              Center(
+                child: ElevatedButton(
+                  style: secondaryTextButtonStyle,
+                  onPressed: goToAllSessions,
+                  child: Text(localizations.sessions_header),
+                ),
               ),
-              const Spacer(),
+              const SizedBox(height: largeSpace),
             ],
           ),
         ),
