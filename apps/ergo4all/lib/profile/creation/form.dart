@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/profile/common.dart';
@@ -60,10 +61,18 @@ class _NewProfileFormState extends State<NewProfileForm> {
 
               return null;
             },
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              // TODO: Localize
-              hintText: 'Profile nickname',
+            decoration: InputDecoration(
+              hintText: 'Nickname...',
+              filled: true,
+              fillColor: spindle,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(largeSpace),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: smallSpace,
+                horizontal: mediumSpace,
+              ),
             ),
           ),
           const SizedBox(height: largeSpace),
@@ -71,7 +80,7 @@ class _NewProfileFormState extends State<NewProfileForm> {
             onPressed: submit,
             style: primaryTextButtonStyle,
             // TODO: Localize
-            child: const Text('Submit'),
+            child: const Text('Create'),
           ),
         ],
       ),

@@ -1,4 +1,6 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
+import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/profile/creation/form.dart';
 import 'package:ergo4all/profile/storage/common.dart';
@@ -23,9 +25,18 @@ class ProfileCreationDialog extends StatelessWidget {
 
     return SimpleDialog(
       // TODO: Localize
-      title: const Text('New profile'),
+      title: const Text('New Profile', textAlign: TextAlign.center),
+      titleTextStyle: h3Style.copyWith(color: white),
+      backgroundColor: tarawera,
       contentPadding: const EdgeInsets.all(largeSpace),
       children: [
+        // TODO: Localize
+        Text(
+          'Give the profile a name.',
+          style: staticBodyStyle.copyWith(color: white),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: mediumSpace),
         NewProfileForm(onSubmit: submitProfile),
       ],
     );
