@@ -195,6 +195,30 @@
   "@profile_selection_label": {
     "description": "The label for a dropdown where a profile can be selected"
   },
+  "profile_creation_title": "New Profile",
+  "@profile_creation_title": {
+    "description": "Header in the profile creation dialog"
+  },
+  "profile_creation_nickname_label": "Give the profile a name.",
+  "@profile_creation_nickname_label": {
+    "description": "Label/sub-header for the nickname field in the profile creation dialog"
+  },
+  "profile_creation_nickname_hint": "Nickname...",
+  "@profile_creation_nickname_hint": {
+    "description": "Hint-text for the nickname input in profile creation"
+  },
+  "profile_creation_submit_label": "Create",
+  "@profile_creation_submit_label": {
+    "description": "Label for the submit button in the profile creation dialog"
+  },
+  "profile_creation_error_nickname_required": "Nickname is required",
+  "@profile_creation_error_nickname_required": {
+    "description": "Error message for when a user did not enter a nickname during profile creation"
+  },
+  "profile_creation_error_nickname_length": "Nickname be at least 3 characters long",
+  "@profile_creation_error_nickname_length": {
+    "description": "Error message for when a user entered a too short nickname during profile creation"
+  },
   "tip_body_posture_label": "General body posture",
   "@tip_body_posture_label": {
     "description": "Short label text for buttons referencing this tip"
