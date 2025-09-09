@@ -53,6 +53,12 @@ class _NewProfileFormState extends State<NewProfileForm> {
       key: formKey,
       child: Column(
         children: [
+          Text(
+            localizations.profile_creation_nickname_label,
+            style: staticBodyStyle.copyWith(color: white),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: mediumSpace),
           TextFormField(
             controller: nickName,
             validator: (value) {

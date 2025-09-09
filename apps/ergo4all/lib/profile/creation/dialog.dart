@@ -35,12 +35,6 @@ class ProfileCreationDialog extends StatelessWidget {
       backgroundColor: tarawera,
       contentPadding: const EdgeInsets.all(largeSpace),
       children: [
-        Text(
-          localizations.profile_creation_nickname_label,
-          style: staticBodyStyle.copyWith(color: white),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: mediumSpace),
         NewProfileForm(onSubmit: submitProfile),
       ],
     );
