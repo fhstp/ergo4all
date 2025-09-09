@@ -1,6 +1,7 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:flutter/material.dart';
 
@@ -46,6 +47,8 @@ class _NewProfileFormState extends State<NewProfileForm> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Form(
       key: formKey,
       child: Column(
@@ -53,18 +56,21 @@ class _NewProfileFormState extends State<NewProfileForm> {
           TextFormField(
             controller: nickName,
             validator: (value) {
-              if (value == null) return 'Nickname is required';
+              if (value == null) {
+                return localizations.profile_creation_error_nickname_required;
+              }
 
               if (value.length < 3) {
-                return 'Nickname must be at least 3 characters';
+                return localizations.profile_creation_error_nickname_length;
               }
 
               return null;
             },
             decoration: InputDecoration(
-              hintText: 'Nickname...',
+              hintText: localizations.profile_creation_nickname_hint,
               filled: true,
               fillColor: spindle,
+              errorMaxLines: 2,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(largeSpace),
                 borderSide: BorderSide.none,
@@ -79,8 +85,7 @@ class _NewProfileFormState extends State<NewProfileForm> {
           ElevatedButton(
             onPressed: submit,
             style: primaryTextButtonStyle,
-            // TODO: Localize
-            child: const Text('Create'),
+            child: Text(localizations.profile_creation_submit_label),
           ),
         ],
       ),
