@@ -13,6 +13,7 @@ const _colorScheme = ColorScheme(
   onError: white,
   surface: white,
   onSurface: woodSmoke,
+  onSurfaceVariant: doveGray,
 );
 
 final _appBarTheme = AppBarTheme(

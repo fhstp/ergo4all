@@ -37,3 +37,6 @@ const heather = Color(0xFFC4D0DA);
 
 /// #1D1B20
 const balticSea = Color(0xFF1D1B20);
+
+/// #656565
+const doveGray = Color(0xFF656565);
