@@ -1,3 +1,12 @@
+# [1.106.0](https://github.com/fhstp/ergo4all/compare/v1.105.0...v1.106.0) (2025-09-10)
+
+
+### Features
+
+* convert profile creation screen to dialog ([7d99360](https://github.com/fhstp/ergo4all/commit/7d993608e0e81c5320c69bd59e991ec57f23b971))
+* localize profile creation ([e09c820](https://github.com/fhstp/ergo4all/commit/e09c8200c4f2c55dbb32aac143188b8cd830c2d2))
+* style profile creation dialog ([6ead32f](https://github.com/fhstp/ergo4all/commit/6ead32f1db6a44d244b61d22d4a256c482540282))
+
 # [1.105.0](https://github.com/fhstp/ergo4all/compare/v1.104.0...v1.105.0) (2025-09-08)
 
 
