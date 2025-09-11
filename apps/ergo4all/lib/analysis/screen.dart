@@ -80,7 +80,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   List<KeyFrame> maxKeyFrames = List.empty(growable: true);
 
-  List<KeyFrame> extractedFrames = List.empty(growable: true);
+  OnlinePeakDetector peakDetector = OnlinePeakDetector();
 
   final GlobalKey _previewContainerKey = GlobalKey();
 
@@ -150,14 +150,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     // take a screenshot every 250 ms
     if (frame.timestamp - _lastProcessTime >= 250) {
       _lastProcessTime = frame.timestamp;
-      captureWidgetScreenshot(scores.fullScore, frame.timestamp);
+      captureWidgetScreenshot(scores);
     }
 
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
   /// take screenshot of current image stream with pose overlay, do noting if fails.
-  Future<void> captureWidgetScreenshot(int score, int timestamp) async {
+  Future<void> captureWidgetScreenshot(RulaScores scores) async {
     try {
       final boundary = _previewContainerKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
@@ -165,21 +165,11 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData?.buffer.asUint8List();
 
-      extractedFrames.add(KeyFrame(score, pngBytes!, timestamp));
+      peakDetector.addFrame(scores, pngBytes!, DateTime.now().millisecondsSinceEpoch);
     } catch (e) {
       print("Screenshot error: $e, skip screenshoot");
       return null;
     }
-  }
-
-  /// selects the peak keyframes
-  void _selectMaxKeyframes() {
-    List<int> topPeaks = findTop3Peaks(extractedFrames);
-    topPeaks.sort();
-
-    List<KeyFrame> topKeyFrames =
-        topPeaks.map((index) => extractedFrames[index]).toList();
-    maxKeyFrames = topKeyFrames;
   }
 
   void onPoseInput(PoseDetectInput input) {
@@ -220,7 +210,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
 
     // select keyframes
-    _selectMaxKeyframes();
+    maxKeyFrames = peakDetector.topPeaks;
 
     await cameraController.stopImageStream();
     await cameraController.dispose();
@@ -305,7 +295,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   @override
   void dispose() {
     progressAnimationController.dispose();
-    cameraController.expect('camera should exist').dispose();
+    cameraController.map((c) => c.dispose());
     super.dispose();
   }
 

@@ -58,7 +58,7 @@ class KeyFrame {
   const KeyFrame(this.score, this.screenshot, this.timestamp);
 
   /// KeyFrame full score
-  final int score;
+  final double score;
 
   /// keyFrame screenshot
   final Uint8List screenshot;

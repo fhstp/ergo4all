@@ -34,7 +34,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
-  late KeyFrame currentKeyFrame;
+  late int currentKeyFrameIndex;
 
   @override
   bool get wantKeepAlive => true;
@@ -42,7 +42,23 @@ class _DetailPageState extends State<DetailPage>
   @override
   void initState() {
     super.initState();
-    currentKeyFrame = widget.session.keyFrames.first;
+    currentKeyFrameIndex = findClosestIndex(widget.session.timeline, widget.session.keyFrames.first.timestamp);
+  }
+
+  int findClosestIndex(RulaTimeline list, int targetTimestamp) {
+    if (list.isEmpty) return -1;
+
+    int closestIndex = 0;
+    int smallestDiff = (list[0].timestamp - targetTimestamp).abs();
+
+    for (int i = 1; i < list.length; i++) {
+      final diff = (list[i].timestamp - targetTimestamp).abs();
+      if (diff < smallestDiff) {
+        smallestDiff = diff;
+        closestIndex = i;
+      }
+    }
+    return closestIndex;
   }
 
   @override
@@ -111,7 +127,7 @@ class _DetailPageState extends State<DetailPage>
                 .toList(),
             onPageChanged: (index) {
               setState(() {
-                currentKeyFrame = widget.session.keyFrames[index];
+                currentKeyFrameIndex = findClosestIndex(widget.session.timeline, widget.session.keyFrames[index].timestamp);
               });
             },
           ),
@@ -127,10 +143,7 @@ class _DetailPageState extends State<DetailPage>
                 timelinesByGroup: worstAveragesByGroup,
                 recordingDuration: recordingDuration,
                 onGroupTapped: navigateToBodyPartPage,
-                highlightTime: Duration(
-                  milliseconds: currentKeyFrame.timestamp -
-                      widget.session.timeline.first.timestamp,
-                ),
+                 keyframeIndex: currentKeyFrameIndex,
               ),
             ),
           ),
