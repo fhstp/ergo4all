@@ -21,6 +21,7 @@ class BodyPartResultsScreen extends StatelessWidget {
     required this.timelines,
     required this.bodyPartGroup,
     required this.recordingDuration,
+    required this.activities,
     super.key,
   });
 
@@ -37,17 +38,23 @@ class BodyPartResultsScreen extends StatelessWidget {
   /// The duration of the recording in seconds.
   final int recordingDuration;
 
+  /// The activities corresponding to each value in the timelines.
+  /// There is only one activity independently from the number of timelines.
+  final IList<String> activities;
+
   /// Makes a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute({
     required BodyPartGroup bodyPartGroup,
     required IList<IList<double>> timelines,
     required int recordingDuration,
+    required IList<String> activities,
   }) {
     return MaterialPageRoute<void>(
       builder: (context) => BodyPartResultsScreen(
         bodyPartGroup: bodyPartGroup,
         timelines: timelines,
         recordingDuration: recordingDuration,
+        activities: activities,
       ),
     );
   }
@@ -93,7 +100,7 @@ class BodyPartResultsScreen extends StatelessWidget {
               height: 200,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: smallSpace),
-                child: BodyPartLineChart(timelines: averagedTimelines),
+                child: BodyPartLineChart(timelines: averagedTimelines, activities: activities),
               ),
             ),
             const SizedBox(height: largeSpace),
@@ -101,13 +108,13 @@ class BodyPartResultsScreen extends StatelessWidget {
               localizations.body_part_static_plot_title,
               style: paragraphHeaderStyle,
             ),
-            const SizedBox(height: smallSpace),
+            const SizedBox(height: mediumSpace),
             if (showStaticLoad)
               SizedBox(
                 height: 132,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: smallSpace),
-                  child: StaticLoadChart(staticLoadScores: staticLoadScores),
+                  child: StaticLoadChart(staticLoadScores: staticLoadScores, activities: activities,),
                 ),
               )
             else

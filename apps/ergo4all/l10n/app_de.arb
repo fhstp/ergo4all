@@ -161,5 +161,17 @@
   "no_sessions_placeholder": "Keine Sitzungen verfügbar",
   "sessions_header": "Sitzungen",
   "delete_session_message": "Sitzung erfolgreich gelöscht",
-  "record_again": "Nochmal versuchen"
+  "record_again": "Nochmal versuchen",
+  "har_activity": "Aktivität",
+  "har_class_background": "Hintergrund",
+  "har_class_carrying": "Heben",
+  "har_class_kneeling": "Knieend",
+  "har_class_lifting": "Heben",
+  "har_class_overhead": "Überkopf",
+  "har_class_sitting": "Sitzen",
+  "har_class_standing": "Stehen",
+  "har_class_walking": "Gehen",
+  "har_class_no_selection": "Keine Auswahl", 
+  "har_activity_selection": "Aktivität auswählen",
+  "chart_tooltip_score": "Bewertung"
 }

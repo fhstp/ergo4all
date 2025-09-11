@@ -1,4 +1,6 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +8,42 @@ import 'package:flutter/material.dart';
 /// Chart that displays static load over time as a line.
 class StaticLoadChart extends StatelessWidget {
   ///
-  const StaticLoadChart({required this.staticLoadScores, super.key});
+  const StaticLoadChart({
+    required this.staticLoadScores,
+    required this.activities, 
+    super.key
+  });
 
   /// The scores to display.
   final IList<double> staticLoadScores;
 
+  /// The activities corresponding to each value in the timelines.
+  /// There is only one activity independently from the number of timelines.
+  final IList<String> activities;
+
+  /// Generates tooltip items for the static load chart touch interactions.
+  List<LineTooltipItem> _getTooltipItems(
+    List<LineBarSpot> touchedSpots,
+    BuildContext context,
+  ) {
+    final localizations = AppLocalizations.of(context)!;
+    
+    return touchedSpots.map((spot) {
+      final activity = activities[spot.x.toInt()];
+      final score = spot.y.toStringAsFixed(2);
+      final touchLabel = '$activity\n${localizations.chart_tooltip_score}: $score';
+      
+      return LineTooltipItem(
+        touchLabel,
+        const TextStyle(color: white),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    
     return LineChart(
       LineChartData(
         gridData: FlGridData(
@@ -33,19 +64,15 @@ class StaticLoadChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               interval: 0.5,
-              reservedSize: 60,
-              getTitlesWidget: (value, meta) {
-                var text = '';
-                if (value == 0.0) {
-                  text = 'Low';
-                } else if (value == 1.0) {
-                  text = 'High';
-                }
-                return Text(
-                  text,
-                  style: infoText,
-                );
-              },
+              reservedSize: 80,
+              getTitlesWidget: (value, meta) => Text(
+                      switch (value) {
+                        0.0 => localizations.results_score_low_short,
+                        1.0 => localizations.results_score_high_short,
+                        _ => ''
+                      },
+                      style: infoText,
+              ),
             ),
           ),
         ),
@@ -69,6 +96,11 @@ class StaticLoadChart extends StatelessWidget {
             dotData: const FlDotData(show: false),
           ),
         ],
+        lineTouchData: LineTouchData(
+          touchTooltipData: LineTouchTooltipData(
+            getTooltipItems: (touchedSpots) => _getTooltipItems(touchedSpots, context),
+          ),
+        ),
       ),
     );
   }

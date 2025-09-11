@@ -140,7 +140,7 @@ Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
     final parts = fileName.split('-');
 
     final score =
-        parts[0].toIntOption.expect('Should parse score from file name');
+        parts[0].toDoubleOption.expect('Should parse score from file name');
     final timestamp =
         parts[1].toIntOption.expect('Should parse timestamp from file name');
 
@@ -156,7 +156,7 @@ Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
 
 Future<void> _storeImage(
   Directory dir,
-  int score,
+  double score,
   int timestamp,
   Uint8List image,
 ) async {
@@ -165,6 +165,20 @@ Future<void> _storeImage(
 
   final file = File(filePath);
   await file.writeAsBytes(image, flush: true);
+}
+
+Future<List<String>> _loadActivities(File file) async {
+  if (!await file.exists()) {
+    return [];
+  }
+  
+  final lines = await file.readAsLines();
+  return lines;
+}
+
+Future<void> _writeActivities(List<String> activities, File file) async {
+  final content = activities.join('\n');
+  await file.writeAsString(content);
 }
 
 Future<RulaSession> _loadSessionFrom(Directory dir) async {
@@ -180,12 +194,16 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
     return TimelineEntry(timestamp: timestamp, scores: row.$2);
   }).toIList();
 
+  final activitiesFile = File(path.join(dir.path, 'activities.txt'));
+  final activities = await _loadActivities(activitiesFile);
+
   return RulaSession(
     timestamp: meta.timestamp,
     profileId: meta.profileId,
     scenario: Scenario.values[meta.scenarioIndex],
     timeline: timeline,
     keyFrames: keyFrames,
+    activities: activities,
   );
 }
 
@@ -204,6 +222,10 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final scores =
       session.timeline.map((entry) => (entry.timestamp, entry.scores));
   await _writeSoresTo(scores, timelineFile);
+
+  final activitiesFile = File(path.join(dir.path, 'activities.txt'));
+  await activitiesFile.create();
+  await _writeActivities(session.activities, activitiesFile);
 
   await Future.forEach(
     session.keyFrames,

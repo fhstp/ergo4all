@@ -97,6 +97,7 @@ class ResultsScreen extends StatelessWidget {
           bodyPartGroup: bodyPart,
           timelines: normalizedScoresByGroup[bodyPart]!,
           recordingDuration: recordingDuration,
+          activities: session.activities.lock,
         ),
       );
     }

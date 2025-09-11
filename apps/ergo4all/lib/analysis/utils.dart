@@ -1,4 +1,9 @@
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/common/utils.dart';
+import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_transforming/normalization.dart';
@@ -20,63 +25,91 @@ extension ToSheetExt on Pose {
   }
 }
 
-/// process the extractedFrames signal to select the 3 most relevant peaks.
-List<int> findTop3Peaks(List<KeyFrame> frames) {
-  if (frames.isEmpty) return [];
+/// Helper class that has the logic to detect the peak keyframes online
+class OnlinePeakDetector {
+  final int windowSize;
+  final int topK;
+  final double thresholdFactor; // e.g. 1.2 means 20% above baseline
 
-  // Step 1: Smooth the signal
-  final smoothed = <double>[];
-  for (var i = 0; i < frames.length; i++) {
-    final start = (i - 2).clamp(0, frames.length - 1);
-    final end = (i + 2).clamp(0, frames.length - 1);
+  final List<KeyFrame> _recentFrames = [];
+  final List<KeyFrame> _topPeaks = [];
 
-    final window = frames.sublist(start, end + 1).map((e) => e.score);
-    smoothed.add(window.reduce((a, b) => a + b) / window.length);
+  OnlinePeakDetector({
+    this.windowSize = 11,
+    this.topK = 5,
+    this.thresholdFactor = 1.05,
+  });
+
+  void addFrame(RulaScores scores, Uint8List screenshot, int timestamp) {
+
+    final scoreList = bodyPartsInDisplayOrder.map((part) {
+      return getNormalizedScoreForPart(part, scores);
+    }).toList();
+
+    final fullScoreNormalize = normalizeScore(scores.fullScore, 7);
+    final finalScore = fullScoreNormalize * 0.7 + scoreList.reduce(max) * 0.3;
+
+    final frame = KeyFrame(finalScore, screenshot, timestamp);
+
+    _recentFrames.add(frame);
+    if (_recentFrames.length > windowSize) {
+      _recentFrames.removeAt(0);
+    }
+
+    if (_recentFrames.length == windowSize) {
+      final midIndex = windowSize ~/ 2;
+      final midFrame = _recentFrames[midIndex];
+      final midScore = midFrame.score;
+
+      final windowScores = _recentFrames.map((f) => f.score).toList();
+      final windowMax = windowScores.reduce((a, b) => a > b ? a : b);
+      final baseline = windowScores.reduce((a, b) => a + b) / windowScores.length;
+
+      if (midScore == windowMax && midScore > baseline * thresholdFactor) {
+        _maybeStore(midFrame);
+      }
+    }
   }
 
-  // Step 2: Peak finding
-  final peakIndices = <int>[];
-  int? peakIndex;
-  double? peakValue;
-  final baseline = smoothed.reduce((a, b) => a + b) / smoothed.length;
+  void _maybeStore(KeyFrame peak) {
+    // Check if there’s a peak within 2.5 seconds (2500 ms)
+    final nearby = _topPeaks.where(
+          (p) => (peak.timestamp - p.timestamp).abs() < 2500,
+    );
 
-  for (var i = 0; i < smoothed.length; i++) {
-    final value = smoothed[i];
+    if (nearby.isNotEmpty) {
+      // Compare with the strongest nearby peak
+      final strongestNearby = nearby.reduce(
+            (a, b) => a.score.abs() >= b.score.abs() ? a : b,
+      );
 
-    if (value > baseline) {
-      if (peakValue == null || value > peakValue) {
-        peakIndex = i;
-        peakValue = value;
+      if (peak.score.abs() > strongestNearby.score.abs()) {
+        // Replace the weaker nearby peak with this stronger one
+        _topPeaks.remove(strongestNearby);
+        _topPeaks.add(peak);
       }
-    } else if (value < baseline && peakIndex != null) {
-      peakIndices.add(peakIndex);
-      peakIndex = null;
-      peakValue = null;
+    } else {
+      // No nearby peak, just add it
+      _topPeaks.add(peak);
+    }
+
+    // Always keep only topK globally
+    _topPeaks.sort((a, b) => b.score.abs().compareTo(a.score.abs()));
+    if (_topPeaks.length > topK) {
+      _topPeaks.removeLast();
     }
   }
 
-  if (peakIndex != null) {
-    peakIndices.add(peakIndex);
-  }
-
-  // Ensure at least one peak (max absolute score) if list is empty
-  if (peakIndices.isEmpty) {
-    var maxIndex = 0;
-    var maxAbsScore = frames[0].score.abs();
-    for (var i = 1; i < frames.length; i++) {
-      final absScore = frames[i].score.abs();
-      if (absScore > maxAbsScore) {
-        maxAbsScore = absScore;
-        maxIndex = i;
-      }
+  List<KeyFrame> get topPeaks {
+    if (_topPeaks.isEmpty && _recentFrames.isNotEmpty) {
+      // fallback: return the max score frame from recent window
+      final fallback = _recentFrames.reduce(
+            (a, b) => a.score.abs() >= b.score.abs() ? a : b,
+      );
+      return [fallback];
     }
-    peakIndices.add(maxIndex);
+    _topPeaks.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    return List.unmodifiable(_topPeaks);
   }
-
-  // Step 3: Sort by score (absolute) and pick top 3
-  peakIndices.sort(
-    (a, b) => frames[b].score.abs().compareTo(frames[a].score.abs()),
-  );
-
-  return peakIndices.take(3).toList();
 }
+

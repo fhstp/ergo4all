@@ -9,10 +9,14 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/camera_utils.dart';
+import 'package:ergo4all/analysis/har/activity_overlay.dart';
+import 'package:ergo4all/analysis/har/activity_recognition.dart';
+import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -25,6 +29,7 @@ import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_transforming/denoise.dart';
+import 'package:pose_transforming/normalization.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
 import 'package:rula/rula.dart';
@@ -76,11 +81,13 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   Option<CameraController> cameraController = none();
   Queue<_Frame> frameQueue = Queue();
   _AnalysisMode analysisMode = _AnalysisMode.none;
+  ActivityRecognitionManager activityRecognitionManager =
+    ActivityRecognitionManager();
   List<TimelineEntry> timeline = List.empty(growable: true);
 
   List<KeyFrame> maxKeyFrames = List.empty(growable: true);
 
-  List<KeyFrame> extractedFrames = List.empty(growable: true);
+  OnlinePeakDetector peakDetector = OnlinePeakDetector();
 
   final GlobalKey _previewContainerKey = GlobalKey();
 
@@ -96,9 +103,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   /// Session store into which to store the session
   late final RulaSessionRepository sessionRepository;
+  // Current recognized activity
+  Activity? currentActivity;
+  // Human activity recognition subscription
+  StreamSubscription<Activity>? activitySubscription;
 
   void goToResults() {
     if (!context.mounted) return;
+
+    final localizations = AppLocalizations.of(context)!;
+    final weightedActivities = activityRecognitionManager.computeWeightedActivities();
+    final activities = timeline.map((e) => 
+      localizations.activityDisplayName(
+        weightedActivities[e.timestamp] ?? Activity.background,
+      ),).toList();
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
@@ -106,6 +124,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       scenario: widget.scenario,
       timeline: timeline.toIList(),
       keyFrames: maxKeyFrames,
+      activities: activities,
     );
 
     sessionRepository.put(session);
@@ -144,20 +163,37 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final averagePose = averagePoses(poses);
 
+    // add pose for activity recognition
+    setState(() {
+      frame.pose.match(
+        () {},
+        (pose)
+        {
+          activityRecognitionManager.addPose(
+            normalizePose(averagePose), frame.timestamp,
+          );
+        },
+      );
+    });
+
+    activityRecognitionManager.processFrame();
+
+    // compute RULA score
+
     final rulaSheet = averagePose.toRulaSheet();
     final scores = scoresOf(rulaSheet);
 
     // take a screenshot every 250 ms
     if (frame.timestamp - _lastProcessTime >= 250) {
       _lastProcessTime = frame.timestamp;
-      captureWidgetScreenshot(scores.fullScore, frame.timestamp);
+      captureWidgetScreenshot(scores);
     }
 
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
   /// take screenshot of current image stream with pose overlay, do noting if fails.
-  Future<void> captureWidgetScreenshot(int score, int timestamp) async {
+  Future<void> captureWidgetScreenshot(RulaScores scores) async {
     try {
       final boundary = _previewContainerKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
@@ -165,21 +201,11 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData?.buffer.asUint8List();
 
-      extractedFrames.add(KeyFrame(score, pngBytes!, timestamp));
+      peakDetector.addFrame(scores, pngBytes!, DateTime.now().millisecondsSinceEpoch);
     } catch (e) {
       print("Screenshot error: $e, skip screenshoot");
       return null;
     }
-  }
-
-  /// selects the peak keyframes
-  void _selectMaxKeyframes() {
-    List<int> topPeaks = findTop3Peaks(extractedFrames);
-    topPeaks.sort();
-
-    List<KeyFrame> topKeyFrames =
-        topPeaks.map((index) => extractedFrames[index]).toList();
-    maxKeyFrames = topKeyFrames;
   }
 
   void onPoseInput(PoseDetectInput input) {
@@ -212,6 +238,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Should only complete analysis from full analysis.',
     );
 
+    // activate human activity recognition
+    activityRecognitionManager.activate();
+
     final cameraController =
         this.cameraController.expect('Must have a camera controller.');
     assert(
@@ -220,7 +249,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
 
     // select keyframes
-    _selectMaxKeyframes();
+    maxKeyFrames = peakDetector.topPeaks;
 
     await cameraController.stopImageStream();
     await cameraController.dispose();
@@ -240,6 +269,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       analysisMode == _AnalysisMode.poseOnly,
       'Should only switch to full analysis from pose-only analysis.',
     );
+
+    activityRecognitionManager.activate();
 
     setState(() {
       analysisMode = _AnalysisMode.full;
@@ -288,6 +319,15 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   void initState() {
     super.initState();
 
+    activitySubscription = activityRecognitionManager
+        .onlineInferenceOutputController.stream.listen((activity) {
+      if (mounted) {
+        setState(() {
+          currentActivity = activity;
+        });
+      }
+    });
+
     sessionRepository = Provider.of(context, listen: false);
 
     openPoseDetectionCamera().then((controller) {
@@ -304,8 +344,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   @override
   void dispose() {
+    activitySubscription?.cancel();
     progressAnimationController.dispose();
-    cameraController.expect('camera should exist').dispose();
+    cameraController.map((c) => c.dispose());
     super.dispose();
   }
 
@@ -315,20 +356,27 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       Container.new,
       (cameraController) => CameraPreview(
         cameraController,
-        child: frameQueue.lastOption
-            .flatMap(
-              (frame) => frame.pose.map(
-                (pose) => CustomPaint(
-                  willChange: true,
-                  painter: Pose3dPainter(
-                    pose: pose,
-                    imageSize: frame.imageSize,
-                    color: hippieBlue,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            frameQueue.lastOption
+              .flatMap(
+                (frame) => frame.pose.map(
+                  (pose) => CustomPaint(
+                    willChange: true,
+                    painter: Pose3dPainter(
+                      pose: pose,
+                      imageSize: frame.imageSize,
+                      color: hippieBlue,
+                    ),
                   ),
                 ),
-              ),
-            )
-            .toNullable(),
+              )
+              .toNullable() ?? const SizedBox.shrink(),
+                
+            ActivityOverlay(activity: currentActivity),
+          ],
+        ),
       ),
     );
 

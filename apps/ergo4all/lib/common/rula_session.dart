@@ -33,6 +33,7 @@ class RulaSession {
     required this.scenario,
     required this.timeline,
     required this.keyFrames,
+    required this.activities,
   });
 
   /// Unix timestamp at which the session was completed.
@@ -49,6 +50,9 @@ class RulaSession {
 
   /// keyframes screenshot data
   final List<KeyFrame> keyFrames;
+
+  /// The activities corresponding to each value in the timeline.
+  final List<String> activities;
 }
 
 /// KeyFrame data structure so store relevant keyframe information
@@ -58,7 +62,7 @@ class KeyFrame {
   const KeyFrame(this.score, this.screenshot, this.timestamp);
 
   /// KeyFrame full score
-  final int score;
+  final double score;
 
   /// keyFrame screenshot
   final Uint8List screenshot;

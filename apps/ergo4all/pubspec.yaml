@@ -48,6 +48,7 @@ dependencies:
   provider: ^6.1.5
   shared_preferences: ^2.5.3
   carousel_slider: ^5.1.1
+  tflite_flutter: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +88,7 @@ flutter:
     - assets/images/puppets_good_bad/
     - assets/images/logos/
     - assets/images/ergo_score_badge/
+    - assets/har/
 
 flutter_icons:
   android: true

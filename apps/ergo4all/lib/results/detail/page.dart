@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/analysis/har/activity_recognition.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -34,7 +36,9 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
-  late KeyFrame currentKeyFrame;
+  late int currentKeyFrameIndex;
+
+  String? selectedActivity; // TODO: replace with localization
 
   @override
   bool get wantKeepAlive => true;
@@ -42,7 +46,23 @@ class _DetailPageState extends State<DetailPage>
   @override
   void initState() {
     super.initState();
-    currentKeyFrame = widget.session.keyFrames.first;
+    currentKeyFrameIndex = findClosestIndex(widget.session.timeline, widget.session.keyFrames.first.timestamp);
+  }
+
+  int findClosestIndex(RulaTimeline list, int targetTimestamp) {
+    if (list.isEmpty) return -1;
+
+    int closestIndex = 0;
+    int smallestDiff = (list[0].timestamp - targetTimestamp).abs();
+
+    for (int i = 1; i < list.length; i++) {
+      final diff = (list[i].timestamp - targetTimestamp).abs();
+      if (diff < smallestDiff) {
+        smallestDiff = diff;
+        closestIndex = i;
+      }
+    }
+    return closestIndex;
   }
 
   @override
@@ -86,6 +106,30 @@ class _DetailPageState extends State<DetailPage>
         )
         .mapValues((_, splitScores) => splitScores.reduce2d(max));
 
+    IList<bool>? activityFilter;
+    if (selectedActivity != null && selectedActivity != localizations.har_class_no_selection) {
+      activityFilter = widget.session.activities
+          .map((activity) => activity == selectedActivity)
+          .toIList();
+    }
+
+    List<String> getUniqueActivities(List<String> activities) {
+      final activityCounts = <String, int>{};
+
+      // Count occurrences of each activity
+      for (var activity in activities) {
+        activityCounts[activity] = (activityCounts[activity] ?? 0) + 1;
+      }
+      
+      final sortedActivities = activityCounts.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+
+      final uniqueActivities = sortedActivities.map((entry) => entry.key).toList();
+      return [localizations.har_class_no_selection, ...uniqueActivities];
+    }
+
+    final uniqueActivities = getUniqueActivities(widget.session.activities);
+
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       Navigator.push(
         context,
@@ -93,6 +137,7 @@ class _DetailPageState extends State<DetailPage>
           bodyPartGroup: bodyPart,
           timelines: normalizedScoresByGroup[bodyPart]!,
           recordingDuration: recordingDuration.inSeconds,
+          activities: widget.session.activities.lock,
         ),
       );
     }
@@ -111,7 +156,7 @@ class _DetailPageState extends State<DetailPage>
                 .toList(),
             onPageChanged: (index) {
               setState(() {
-                currentKeyFrame = widget.session.keyFrames[index];
+                currentKeyFrameIndex = findClosestIndex(widget.session.timeline, widget.session.keyFrames[index].timestamp);
               });
             },
           ),
@@ -126,11 +171,9 @@ class _DetailPageState extends State<DetailPage>
               child: ScoreHeatmapGraph(
                 timelinesByGroup: worstAveragesByGroup,
                 recordingDuration: recordingDuration,
+                keyframeIndex: currentKeyFrameIndex,
+                activityFilter: activityFilter,
                 onGroupTapped: navigateToBodyPartPage,
-                highlightTime: Duration(
-                  milliseconds: currentKeyFrame.timestamp -
-                      widget.session.timeline.first.timestamp,
-                ),
               ),
             ),
           ),
@@ -145,6 +188,45 @@ class _DetailPageState extends State<DetailPage>
               child: const RulaColorLegend(),
             ),
           ),
+
+          // Human action recognition activity selector
+          const SizedBox(height: 16),
+
+          Center(
+            child: DropdownMenu<String>(
+              width: heatmapWidth,
+              key: UniqueKey(),
+              label: Text(localizations.har_activity_selection, style: dynamicBodyStyle),
+              initialSelection: selectedActivity,
+              dropdownMenuEntries: uniqueActivities.map((entry) =>
+                DropdownMenuEntry(
+                  value: entry,
+                  label: entry,
+                  style: ButtonStyle(
+                    textStyle: WidgetStateProperty.all(dynamicBodyStyle),
+                  ),
+                ),
+              ).toList(),
+              onSelected: (newActivity) {
+                setState(() {
+                    selectedActivity = newActivity;
+                  });
+              },
+              inputDecorationTheme: InputDecorationTheme(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 8,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: woodSmoke, width: 4),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                labelStyle: dynamicBodyStyle,
+                hintStyle: dynamicBodyStyle,
+              ),
+              textStyle: dynamicBodyStyle
+            ),
+          ),
+
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
