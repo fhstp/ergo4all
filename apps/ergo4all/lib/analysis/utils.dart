@@ -108,6 +108,7 @@ class OnlinePeakDetector {
       );
       return [fallback];
     }
+    _topPeaks.sort((a, b) => a.timestamp.compareTo(b.timestamp));
     return List.unmodifiable(_topPeaks);
   }
 }
