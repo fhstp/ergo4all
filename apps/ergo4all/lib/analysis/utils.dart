@@ -35,7 +35,7 @@ class OnlinePeakDetector {
   final List<KeyFrame> _topPeaks = [];
 
   OnlinePeakDetector({
-    this.windowSize = 21,
+    this.windowSize = 11,
     this.topK = 5,
     this.thresholdFactor = 1.05,
   });
@@ -72,9 +72,9 @@ class OnlinePeakDetector {
   }
 
   void _maybeStore(KeyFrame peak) {
-    // Check if there’s a peak within 3 seconds (3000 ms)
+    // Check if there’s a peak within 2.5 seconds (2500 ms)
     final nearby = _topPeaks.where(
-          (p) => (peak.timestamp - p.timestamp).abs() < 3000,
+          (p) => (peak.timestamp - p.timestamp).abs() < 2500,
     );
 
     if (nearby.isNotEmpty) {
