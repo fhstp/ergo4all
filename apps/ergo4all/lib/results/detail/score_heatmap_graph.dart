@@ -16,7 +16,7 @@ class ScoreHeatmapGraph extends StatelessWidget {
   const ScoreHeatmapGraph({
     required this.timelinesByGroup,
     required this.recordingDuration,
-    required this.highlightTime,
+    required this.keyframeIndex,
     this.onGroupTapped,
     super.key,
   });
@@ -29,8 +29,8 @@ class ScoreHeatmapGraph extends StatelessWidget {
   /// The duration of the recording.
   final Duration recordingDuration;
 
-  /// The time to highlight with a vertical line.
-  final Duration highlightTime;
+  /// Index of the keyframe line on the heatmap.
+  final int keyframeIndex;
 
   /// Callback for when the graph of a [BodyPartGroup] is tapped.
   final void Function(BodyPartGroup)? onGroupTapped;
@@ -44,10 +44,8 @@ class ScoreHeatmapGraph extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final graphWidth = constraints.maxWidth - _labelWidth;
-        // Compute X position for highlight
-        final highlightX =
-            (highlightTime.inMilliseconds / recordingDuration.inMilliseconds) *
-                graphWidth;
+        // Compute X position for highlight using cell width to match HeatmapPainter logic
+        final highlightX = (graphWidth / timelinesByGroup.entries.first.value.length) * keyframeIndex;
 
         return CustomPaint(
           foregroundPainter: _VerticalLinePainter(

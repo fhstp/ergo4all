@@ -140,7 +140,7 @@ Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
     final parts = fileName.split('-');
 
     final score =
-        parts[0].toIntOption.expect('Should parse score from file name');
+        parts[0].toDoubleOption.expect('Should parse score from file name');
     final timestamp =
         parts[1].toIntOption.expect('Should parse timestamp from file name');
 
@@ -156,7 +156,7 @@ Future<List<KeyFrame>> _loadKeyFrames(Directory dir) async {
 
 Future<void> _storeImage(
   Directory dir,
-  int score,
+  double score,
   int timestamp,
   Uint8List image,
 ) async {
