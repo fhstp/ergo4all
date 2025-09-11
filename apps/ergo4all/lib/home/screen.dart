@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                 style: h3Style,
                 textAlign: TextAlign.center,
               ),
-              const Spacer(),
+              const SizedBox(height: mediumSpace),
               Center(
                 child: ElevatedButton(
                   key: const Key('start'),
