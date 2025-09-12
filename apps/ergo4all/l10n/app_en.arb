@@ -66,13 +66,9 @@
   "@onboarding_ergonomicsInfo_subtitle": {
     "description": "Sub-title for the ergonomics-info screen in onboarding"
   },
-  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\nSometimes the risk score might be low, even if you felt that body part working a lot. That's because feeling a muscle work isn't the same as it being at risk - risk depends on posture, performed activities, load, and how often you repeat the movement.\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.",
+  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\nSometimes the risk score might be low, even if you felt that body part working a lot. That's because feeling a muscle work isn't the same as it being at risk - risk depends on posture, performed activities, load, and how often you repeat the movement.\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n👉 For tips on better posture and movement, check the \"Tipps screen\".",
   "@onboarding_ergonomicsInfo_description": {
     "description": "Body-text for the ergonomics-info screen in onboarding"
-  },
-  "onboarding_ergonomicsInfo_description_link": "👉 For tips on better posture and movement, check the \"Tipps screen\".",
-  "@onboarding_ergonomicsInfo_description_link": {
-    "description": "Link-text for navigating to the tips screen from onboarding"
   },
   "onboarding_label": "Next",
   "@onboarding_label": {
