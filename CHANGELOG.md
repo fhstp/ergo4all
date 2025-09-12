@@ -1,3 +1,10 @@
+# [1.107.0](https://github.com/fhstp/ergo4all/compare/v1.106.0...v1.107.0) (2025-09-12)
+
+
+### Features
+
+* human activity recognition  ([#153](https://github.com/fhstp/ergo4all/issues/153)) ([407ebed](https://github.com/fhstp/ergo4all/commit/407ebedb3dd12397a93390e9d2a0fd25cbcd497e))
+
 # [1.106.0](https://github.com/fhstp/ergo4all/compare/v1.105.0...v1.106.0) (2025-09-10)
 
 
