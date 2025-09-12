@@ -6,6 +6,8 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/onboarding/user_creation_screen.dart';
+import 'package:ergo4all/tips/tip_choice_screen.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -36,6 +38,16 @@ class ErgonomicsInfoScreen extends StatelessWidget {
         Navigator.pushAndRemoveUntil(
           context,
           UserCreationScreen.makeRoute(),
+          ModalRoute.withName(UserCreationScreen.routeName),
+        ),
+      );
+    }
+
+    void goToTippsScreen() {
+      unawaited(
+        Navigator.pushAndRemoveUntil(
+          context,
+          TipChoiceScreen.makeRoute(),
           ModalRoute.withName(UserCreationScreen.routeName),
         ),
       );
@@ -75,28 +87,45 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
-                    Text(
-                      localizations.onboarding_ergonomicsInfo_description,
+                    RichText(
                       textAlign: TextAlign.center,
-                      style: dynamicBodyStyle,
+                      text: TextSpan(
+                        style: dynamicBodyStyle.copyWith(color: Colors.black),
+                        children: [
+                          TextSpan(
+                            text:
+                                '${localizations.onboarding_ergonomicsInfo_description}\n',
+                          ),
+                          TextSpan(
+                            text: localizations
+                                .onboarding_ergonomicsInfo_description_link,
+                            style: dynamicBodyStyle.copyWith(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = goToTippsScreen,
+                          ),
+                          const TextSpan(
+                            text: '.',
+                          ),
+                        ],
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(30),
                       child: SvgPicture.asset(graphicKey, height: 300),
                     ),
+                    ElevatedButton(
+                      key: const Key('next'),
+                      style: primaryTextButtonStyle,
+                      onPressed: goToUserCreation,
+                      child: Text(localizations.onboarding_label),
+                    ),
                   ],
                 ),
               ),
             ),
-            Center(
-              child: ElevatedButton(
-                key: const Key('next'),
-                style: primaryTextButtonStyle,
-                onPressed: goToUserCreation,
-                child: Text(localizations.onboarding_label),
-              ),
-            ),
-            const SizedBox(height: largeSpace),
           ],
         ),
       ),

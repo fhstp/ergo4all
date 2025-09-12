@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 
 const double _appBarHeight = 200;
 
-/// Screen for displaying the pre-introductory content before the main
-/// onboarding flow.
+/// Screen for displaying the pre-introductory content before the main onboarding flow.
 class PreIntroScreen extends StatelessWidget {
   ///
   const PreIntroScreen({super.key});
@@ -79,19 +78,16 @@ class PreIntroScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
+                    ElevatedButton(
+                      key: const Key('next'),
+                      style: primaryTextButtonStyle,
+                      onPressed: goToTermsOfUse,
+                      child: Text(localizations.onboarding_label),
+                    ),
                   ],
                 ),
               ),
             ),
-            Center(
-              child: ElevatedButton(
-                key: const Key('next'),
-                style: primaryTextButtonStyle,
-                onPressed: goToTermsOfUse,
-                child: Text(localizations.onboarding_label),
-              ),
-            ),
-            const SizedBox(height: largeSpace),
           ],
         ),
       ),
