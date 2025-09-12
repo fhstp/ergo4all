@@ -5,6 +5,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/tips/common.dart';
+import 'package:ergo4all/tips/general_info_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,12 @@ class TipChoiceScreen extends StatelessWidget {
           Tip.handAndArm => localizations.tip_handAndArm_label,
         };
 
+    void goToGeneralTipsScreen() {
+      unawaited(
+        Navigator.of(context).push(GeneralInfoScreen.makeRoute()),
+      );
+    }
+
     void goToDetailScreen(Tip tip) {
       unawaited(
         Navigator.of(context).push(TipDetailScreen.makeRoute(tip)),
@@ -58,6 +65,14 @@ class TipChoiceScreen extends StatelessWidget {
       );
     }
 
+    final generalTipButton = ElevatedButton(
+      key: const Key('tip_button_general'),
+      style: paleTextButtonStyle,
+      onPressed: goToGeneralTipsScreen,
+      // TODO: Localize
+      child: const Text('General', textAlign: TextAlign.center),
+    );
+
     return Scaffold(
       appBar: RedCircleAppBar(
         titleText: localizations.choice_title,
@@ -72,9 +87,12 @@ class TipChoiceScreen extends StatelessWidget {
                 child: SizedBox(
                   width: 275,
                   child: ListView.separated(
-                    itemCount: Tip.values.length,
+                    // +1 for the general tips button at the start
+                    itemCount: Tip.values.length + 1,
                     itemBuilder: (ctx, i) {
-                      final tip = Tip.values[i];
+                      if (i == 0) return generalTipButton;
+
+                      final tip = Tip.values[i - 1];
                       return tipButtonFor(tip);
                     },
                     separatorBuilder: (ctx, i) =>
