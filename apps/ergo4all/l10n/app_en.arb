@@ -296,10 +296,6 @@
   "@tutorial_dialog_page_2": {
     "description": "The text which is displayed on the second page of the video recording tutorial."
   },
-  "tutorial_dialog_page_3": "To start the recording press the red button below.",
-  "@tutorial_dialog_page_3": {
-    "description": "The text which is displayed on the third page of the video recording tutorial."
-  },
   "ergonomics_tipps": "General ergonomics tips",
   "scenario_lift_and_carry_tips": "When lifting, keep your back straight, lift from your legs, hold the load close to your body. Strengthening exercises for back and legs.",
   "scenario_pull_tips": "Pushing is preferred. Choose an ergonomic grip height, keep your arms close to your body, push with your legs instead of your arms. Loosening exercises for shoulders and wrists.",
