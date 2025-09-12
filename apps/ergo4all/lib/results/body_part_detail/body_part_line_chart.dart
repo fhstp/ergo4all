@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/rula_color.dart';
@@ -28,6 +29,7 @@ class BodyPartLineChart extends StatefulWidget {
   ///
   const BodyPartLineChart({
     required this.timelines,
+    required this.activities,
     super.key,
   }) : assert(
           timelines.length == 1 || timelines.length == 2,
@@ -40,12 +42,86 @@ class BodyPartLineChart extends StatefulWidget {
   /// The values in each timeline are expected to be [0; 1].
   final IList<IList<double>> timelines;
 
+  /// The activities corresponding to each value in the timelines.
+  /// There is only one activity independently from the number of timelines.
+  final IList<String> activities;
+
+
   @override
   State<BodyPartLineChart> createState() => _BodyPartLineChartState();
 }
 
 class _BodyPartLineChartState extends State<BodyPartLineChart> {
   int highlightedTimelineIndex = 0;
+
+  /// Generates tooltip items for the line chart touch interactions.
+  List<LineTooltipItem> _getTooltipItems(List<LineBarSpot> touchedSpots) {
+    final localizations = AppLocalizations.of(context)!;
+    
+    if (widget.timelines.length == 1) {
+      return _getSingleTimelineTooltips(touchedSpots, localizations);
+    }
+    
+    return _getMultipleTimelineTooltips(touchedSpots, localizations);
+  }
+
+  /// Creates tooltips for single timeline charts.
+  List<LineTooltipItem> _getSingleTimelineTooltips(
+    List<LineBarSpot> touchedSpots,
+    AppLocalizations localizations,
+  ) {
+    return touchedSpots.map((spot) {
+      final activity = widget.activities[spot.x.toInt()];
+      final score = spot.y.toStringAsFixed(2);
+      final touchLabel = '$activity\n${localizations.chart_tooltip_score}: $score';
+      
+      return LineTooltipItem(
+        touchLabel,
+        const TextStyle(color: white),
+      );
+    }).toList();
+  }
+
+  /// Creates tooltips for multiple timeline charts (left/right).
+  List<LineTooltipItem> _getMultipleTimelineTooltips(
+    List<LineBarSpot> touchedSpots,
+    AppLocalizations localizations,
+  ) {
+    final activityBarIndices = _getHighestSpotPerX(touchedSpots);
+    
+    return touchedSpots.map((spot) {
+      final shouldShowActivity = activityBarIndices[spot.x] == spot;
+      final activity = shouldShowActivity 
+          ? '${widget.activities[spot.x.toInt()]}\n' 
+          : '';
+      
+      final sideLabel = spot.barIndex == 0 
+          ? localizations.common_left
+          : localizations.common_right;
+      
+      final score = spot.y.toStringAsFixed(2);
+      final touchLabel = '$activity${localizations.chart_tooltip_score} ($sideLabel): $score';
+      
+      return LineTooltipItem(
+        touchLabel,
+        const TextStyle(color: white),
+      );
+    }).toList();
+  }
+
+  /// Gets the highest spot for each x-coordinate to avoid duplicate activity labels.
+  Map<double, LineBarSpot> _getHighestSpotPerX(List<LineBarSpot> touchedSpots) {
+    final activityBarIndices = <double, LineBarSpot>{};
+    
+    for (final spot in touchedSpots) {
+      final existingSpot = activityBarIndices[spot.x];
+      if (existingSpot == null || spot.y > existingSpot.y) {
+        activityBarIndices[spot.x] = spot;
+      }
+    }
+    
+    return activityBarIndices;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +195,11 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
               lineBarsData: highlightedTimelineIndex == 1
                   ? graphLines
                   : graphLines.reversedView,
+              lineTouchData: LineTouchData(
+                touchTooltipData: LineTouchTooltipData(
+                  getTooltipItems: _getTooltipItems,
+                ),
+              ),
             ),
             // Disable animations
             duration: Duration.zero,
