@@ -69,8 +69,7 @@ class TipChoiceScreen extends StatelessWidget {
       key: const Key('tip_button_general'),
       style: paleTextButtonStyle,
       onPressed: goToGeneralTipsScreen,
-      // TODO: Localize
-      child: const Text('General', textAlign: TextAlign.center),
+      child: Text(localizations.tips_general_nav, textAlign: TextAlign.center),
     );
 
     return Scaffold(

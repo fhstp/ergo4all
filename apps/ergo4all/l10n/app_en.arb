@@ -439,6 +439,10 @@
   "@profile_choice_new": {
     "description": "Button label for creating a new profile"
   },
+  "tips_general_nav": "General",
+  "@tips_general_nav": {
+    "description": "Label for a button which brings the user to the general ergonomics info screen"
+  },
   "tips_general_title": "What is ergonomics",
   "@tips_general_title": {
     "description": "Title for the general ergonomics info screen"
