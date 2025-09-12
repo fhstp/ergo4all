@@ -77,26 +77,22 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                     const SizedBox(height: largeSpace),
                     Text(
                       localizations.onboarding_ergonomicsInfo_description,
-                      textAlign: TextAlign.center,
                       style: dynamicBodyStyle,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(30),
                       child: SvgPicture.asset(graphicKey, height: 300),
                     ),
+                    ElevatedButton(
+                      key: const Key('next'),
+                      style: primaryTextButtonStyle,
+                      onPressed: goToUserCreation,
+                      child: Text(localizations.onboarding_label),
+                    ),
                   ],
                 ),
               ),
             ),
-            Center(
-              child: ElevatedButton(
-                key: const Key('next'),
-                style: primaryTextButtonStyle,
-                onPressed: goToUserCreation,
-                child: Text(localizations.onboarding_label),
-              ),
-            ),
-            const SizedBox(height: largeSpace),
           ],
         ),
       ),
