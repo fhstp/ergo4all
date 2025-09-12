@@ -7,11 +7,16 @@ class HeatmapPainter extends CustomPainter {
   /// Creates a heatmap painter
   HeatmapPainter({
     required this.normalizedScores,
+    this.activityFilter,
   });
 
   /// Normalized scores to be displayed. These are expected to be in the range
   /// [0; 1].
   final IList<double> normalizedScores;
+
+  /// Optional activity filter mask. If provided, scores at indices where
+  /// the filter is false will be rendered with reduced opacity.
+  final IList<bool>? activityFilter;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -21,8 +26,17 @@ class HeatmapPainter extends CustomPainter {
 
     for (var i = 0; i < normalizedScores.length; i++) {
       final value = normalizedScores[i];
-      paint.color = RulaColor.forScore(value);
-
+      final baseColor = RulaColor.forScore(value);
+      
+      // Apply opacity based on activity filter
+      final shouldMute = activityFilter != null && 
+                        i < activityFilter!.length && 
+                        !activityFilter![i];
+      
+      paint.color = shouldMute 
+          ? baseColor.withValues(alpha: 0.15) 
+          : baseColor; 
+          
       canvas.drawRect(
         Rect.fromLTWH(i * cellWidth, 0, cellWidth, size.height),
         paint,

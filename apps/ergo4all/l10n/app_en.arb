@@ -342,5 +342,17 @@
   "record_again": "Try again",
   "@record_again": {
     "description": "Text for button which allows the user to record another session for the same scenario."
-  }
+  },
+  "har_activity": "Activity",
+  "har_class_background": "Background",
+  "har_class_carrying": "Carrying",
+  "har_class_kneeling": "Kneeling",
+  "har_class_lifting": "Lifting",
+  "har_class_overhead": "Overhead",
+  "har_class_sitting": "Sitting",
+  "har_class_standing": "Standing",
+  "har_class_walking": "Walking",
+  "har_class_no_selection": "No Selection",
+  "har_activity_selection": "Select Activity",
+  "chart_tooltip_score": "Score"
 }

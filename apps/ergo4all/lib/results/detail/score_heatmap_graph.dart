@@ -17,6 +17,7 @@ class ScoreHeatmapGraph extends StatelessWidget {
     required this.timelinesByGroup,
     required this.recordingDuration,
     required this.keyframeIndex,
+    required this.activityFilter,
     this.onGroupTapped,
     super.key,
   });
@@ -34,6 +35,10 @@ class ScoreHeatmapGraph extends StatelessWidget {
 
   /// Callback for when the graph of a [BodyPartGroup] is tapped.
   final void Function(BodyPartGroup)? onGroupTapped;
+
+  /// Optional activity filter mask. If provided, scores at indices where
+  /// the filter is false will be rendered with reduced opacity.
+  final IList<bool>? activityFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +81,7 @@ class ScoreHeatmapGraph extends StatelessWidget {
                           child: CustomPaint(
                             painter: HeatmapPainter(
                               normalizedScores: timelinesByGroup[part]!,
+                              activityFilter: activityFilter,
                             ),
                           ),
                         ),
