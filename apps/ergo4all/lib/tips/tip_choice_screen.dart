@@ -44,6 +44,20 @@ class TipChoiceScreen extends StatelessWidget {
       );
     }
 
+    Widget tipButtonFor(Tip tip) {
+      return ElevatedButton(
+        key: Key('tip_button_${tip.name}'),
+        style: paleTextButtonStyle,
+        onPressed: () {
+          goToDetailScreen(tip);
+        },
+        child: Text(
+          titleFor(tip),
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: RedCircleAppBar(
         titleText: localizations.choice_title,
@@ -61,17 +75,7 @@ class TipChoiceScreen extends StatelessWidget {
                     itemCount: Tip.values.length,
                     itemBuilder: (ctx, i) {
                       final tip = Tip.values[i];
-                      return ElevatedButton(
-                        key: Key('tip_button_${tip.name}'),
-                        style: paleTextButtonStyle,
-                        onPressed: () {
-                          goToDetailScreen(tip);
-                        },
-                        child: Text(
-                          titleFor(tip),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
+                      return tipButtonFor(tip);
                     },
                     separatorBuilder: (ctx, i) =>
                         const SizedBox(height: largeSpace),
