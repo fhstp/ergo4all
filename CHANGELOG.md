@@ -1,3 +1,10 @@
+# [1.108.0](https://github.com/fhstp/ergo4all/compare/v1.107.0...v1.108.0) (2025-09-13)
+
+
+### Features
+
+* improve keyframes peak extraction by looking for the max in the keyframes window ([5a51baf](https://github.com/fhstp/ergo4all/commit/5a51baf21552cf182b9b3a10ae24d3c644385579))
+
 # [1.107.0](https://github.com/fhstp/ergo4all/compare/v1.106.0...v1.107.0) (2025-09-12)
 
 
