@@ -57,16 +57,14 @@ class OnlinePeakDetector {
     }
 
     if (_recentFrames.length == windowSize) {
-      final midIndex = windowSize ~/ 2;
-      final midFrame = _recentFrames[midIndex];
-      final midScore = midFrame.score;
-
       final windowScores = _recentFrames.map((f) => f.score).toList();
       final windowMax = windowScores.reduce((a, b) => a > b ? a : b);
       final baseline = windowScores.reduce((a, b) => a + b) / windowScores.length;
 
-      if (midScore == windowMax && midScore > baseline * thresholdFactor) {
-        _maybeStore(midFrame);
+      if (windowMax > baseline * thresholdFactor) {
+        // Get the frame corresponding to the max score
+        final peakFrame = _recentFrames.firstWhere((f) => f.score == windowMax);
+        _maybeStore(peakFrame);
       }
     }
   }
