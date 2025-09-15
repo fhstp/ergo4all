@@ -6,6 +6,8 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
@@ -76,6 +78,12 @@ class ResultsScreen extends StatelessWidget {
           .toIList();
     });
 
+    final activities = session.timeline
+        .map((e) => e.activity != null
+            ? localizations.activityDisplayName(e.activity!)
+            : localizations.activityDisplayName(Activity.background))
+        .toList().lock;
+
     final recordingDuration = Duration(
       milliseconds:
           session.timeline.last.timestamp - session.timeline.first.timestamp,
@@ -97,7 +105,7 @@ class ResultsScreen extends StatelessWidget {
           bodyPartGroup: bodyPart,
           timelines: normalizedScoresByGroup[bodyPart]!,
           recordingDuration: recordingDuration,
-          activities: session.activities.lock,
+          activities: activities,
         ),
       );
     }

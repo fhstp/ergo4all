@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:csv/csv.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -23,7 +24,7 @@ class _SessionMeta {
   final int scenarioIndex;
 }
 
-typedef _ScoreRow = (int, RulaScores);
+typedef _ScoreRow = (int, RulaScores, Activity?);
 
 IMap<String, String> _parseKV(List<String> lines) => IMap.fromEntries(
       lines.map((part) {
@@ -63,8 +64,8 @@ Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
   await file.writeAsString(text);
 }
 
-List<int> _csvRowOf(_ScoreRow row) {
-  final (timestamp, scores) = row;
+List<dynamic> _csvRowOf(_ScoreRow row) {
+  final (timestamp, scores, activity) = row;
   return [
     timestamp,
     scores.fullScore,
@@ -90,10 +91,14 @@ List<int> _csvRowOf(_ScoreRow row) {
     Pair.right(scores.upperArmScores),
     Pair.left(scores.wristScores),
     Pair.right(scores.wristScores),
+    activity?.value ?? -1, // Store activity value or -1 for null
   ];
 }
 
 _ScoreRow _scoreRowOf(List<dynamic> row) {
+  final activityValue = row.length > 24 ? row[24] as int : -1; // Handle backward compatibility
+  final activity = activityValue == -1 ? null : Activity.fromValue(activityValue);
+  
   return (
     row[0] as int,
     RulaScores(
@@ -114,6 +119,7 @@ _ScoreRow _scoreRowOf(List<dynamic> row) {
       upperArmScores: (row[20], row[21]),
       wristScores: (row[22], row[23]),
     ),
+    activity,
   );
 }
 
@@ -167,20 +173,6 @@ Future<void> _storeImage(
   await file.writeAsBytes(image, flush: true);
 }
 
-Future<List<String>> _loadActivities(File file) async {
-  if (!await file.exists()) {
-    return [];
-  }
-  
-  final lines = await file.readAsLines();
-  return lines;
-}
-
-Future<void> _writeActivities(List<String> activities, File file) async {
-  final content = activities.join('\n');
-  await file.writeAsString(content);
-}
-
 Future<RulaSession> _loadSessionFrom(Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   final meta = await _loadMetaFrom(metaFile);
@@ -190,12 +182,13 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   final scores = await _loadScoresFrom(timelineFile);
   final timeline = scores.map((row) {
-    final timestamp = row.$1;
-    return TimelineEntry(timestamp: timestamp, scores: row.$2);
+    final (timestamp, rulaScores, activity) = row;
+    return TimelineEntry(
+      timestamp: timestamp, 
+      scores: rulaScores,
+      activity: activity,
+    );
   }).toIList();
-
-  final activitiesFile = File(path.join(dir.path, 'activities.txt'));
-  final activities = await _loadActivities(activitiesFile);
 
   return RulaSession(
     timestamp: meta.timestamp,
@@ -203,7 +196,6 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
     scenario: Scenario.values[meta.scenarioIndex],
     timeline: timeline,
     keyFrames: keyFrames,
-    activities: activities,
   );
 }
 
@@ -219,13 +211,12 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   await timelineFile.create();
-  final scores =
-      session.timeline.map((entry) => (entry.timestamp, entry.scores));
+  final scores = session.timeline.map((entry) => (
+    entry.timestamp, 
+    entry.scores, 
+    entry.activity,
+  ));
   await _writeSoresTo(scores, timelineFile);
-
-  final activitiesFile = File(path.join(dir.path, 'activities.txt'));
-  await activitiesFile.create();
-  await _writeActivities(session.activities, activitiesFile);
 
   await Future.forEach(
     session.keyFrames,

@@ -9,14 +9,13 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/camera_utils.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/analysis/har/activity_overlay.dart';
 import 'package:ergo4all/analysis/har/activity_recognition.dart';
-import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/rula_session.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -95,9 +94,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   late final AnimationController progressAnimationController =
       AnimationController(
-    value: 30,
-    duration: const Duration(seconds: 30),
-    upperBound: 30,
+    value: isFreestyleMode ? 120 : 30,
+    duration: Duration(seconds: isFreestyleMode ? 120 : 30),
+    upperBound: isFreestyleMode ? 120 : 30,
     vsync: this,
   );
 
@@ -108,15 +107,19 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   // Human activity recognition subscription
   StreamSubscription<Activity>? activitySubscription;
 
+  /// Returns true if the current scenario is freestyle mode
+  bool get isFreestyleMode => widget.scenario == Scenario.freestyle;
+
   void goToResults() {
     if (!context.mounted) return;
 
-    final localizations = AppLocalizations.of(context)!;
+
     final weightedActivities = activityRecognitionManager.computeWeightedActivities();
-    final activities = timeline.map((e) => 
-      localizations.activityDisplayName(
-        weightedActivities[e.timestamp] ?? Activity.background,
-      ),).toList();
+    timeline = timeline.map((e) => TimelineEntry(
+      timestamp: e.timestamp, 
+      scores: e.scores, 
+      activity: weightedActivities[e.timestamp] ?? Activity.background))
+    .toList();
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
@@ -124,7 +127,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       scenario: widget.scenario,
       timeline: timeline.toIList(),
       keyFrames: maxKeyFrames,
-      activities: activities,
     );
 
     sessionRepository.put(session);
@@ -276,6 +278,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       analysisMode = _AnalysisMode.full;
     });
 
+    // Start the timer for both freestyle and regular modes
     unawaited(
       progressAnimationController.reverse().then((_) {
         tryCompleteAnalysis();
@@ -395,16 +398,28 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                     key: _previewContainerKey,
                     child: cameraPreview,
                   ),
-                  Positioned(
-                    left: largeSpace,
-                    right: largeSpace,
-                    bottom: largeSpace,
-                    child: RecordingProgressIndicator(
-                      remainingTime: progressAnimationController.value,
-                      criticalTime: 5,
-                      initialTime: 30,
+                  if (!isFreestyleMode)
+                    Positioned(
+                      left: largeSpace,
+                      right: largeSpace,
+                      bottom: largeSpace,
+                      child: RecordingProgressIndicator(
+                        remainingTime: progressAnimationController.value,
+                        criticalTime: 5,
+                        initialTime: 30,
+                      ),
                     ),
-                  ),
+                  if (isFreestyleMode)
+                    Positioned(
+                      left: largeSpace,
+                      right: largeSpace,
+                      bottom: largeSpace,
+                      child: RecordingProgressIndicator(
+                        remainingTime: progressAnimationController.value,
+                        criticalTime: 10,
+                        initialTime: 120,
+                      ),
+                    ),
                 ],
               ),
             ),

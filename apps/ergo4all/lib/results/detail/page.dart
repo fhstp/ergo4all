@@ -4,7 +4,8 @@ import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/analysis/har/activity_recognition.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -16,6 +17,7 @@ import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
+import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -71,9 +73,47 @@ class _DetailPageState extends State<DetailPage>
 
     final localizations = AppLocalizations.of(context)!;
 
-    final tips = localizations.scenarioTip(widget.session.scenario);
+    List<String> getUniqueActivities(List<String> activities) {
+      final activityCounts = <String, int>{};
+
+      // Count occurrences of each activity
+      for (var activity in activities) {
+        activityCounts[activity] = (activityCounts[activity] ?? 0) + 1;
+      }
+      
+      final sortedActivities = activityCounts.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+
+      var uniqueActivities = sortedActivities
+        .map((entry) => entry.key).toList();
+
+      // limit to top 3 most frequent activities
+      if (uniqueActivities.length > 3) {
+        uniqueActivities = uniqueActivities.sublist(0, 3);
+      }
+      
+      return [localizations.har_class_no_selection, ...uniqueActivities]
+        ..remove(localizations.har_class_background)
+        ..remove(localizations.har_class_walking);
+    }
+
+    final activities = widget.session.timeline
+        .map((e) => e.activity != null
+            ? localizations.activityDisplayName(e.activity!)
+            : localizations.activityDisplayName(Activity.background))
+        .toList();
+    final uniqueActivities = getUniqueActivities(activities);
+    final mostPopularActivity = uniqueActivities.length > 1 ? uniqueActivities[1] : localizations.har_class_no_selection;
+
+    // In freestyle mode, determine tips and improvements based on selected activity
+    final currentActivity = selectedActivity ?? mostPopularActivity;
+    final textScenario = widget.session.scenario == Scenario.freestyle
+        ? (Activity.getScenario(localizations.activityFromName(currentActivity)) ?? Scenario.freestyle)
+        : widget.session.scenario;
+    
+    final tips = localizations.scenarioTip(textScenario);
     final improvements =
-        localizations.scenarioImprovement(widget.session.scenario);
+        localizations.scenarioImprovement(textScenario);
 
     if (widget.session.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -108,27 +148,10 @@ class _DetailPageState extends State<DetailPage>
 
     IList<bool>? activityFilter;
     if (selectedActivity != null && selectedActivity != localizations.har_class_no_selection) {
-      activityFilter = widget.session.activities
+      activityFilter = activities
           .map((activity) => activity == selectedActivity)
           .toIList();
     }
-
-    List<String> getUniqueActivities(List<String> activities) {
-      final activityCounts = <String, int>{};
-
-      // Count occurrences of each activity
-      for (var activity in activities) {
-        activityCounts[activity] = (activityCounts[activity] ?? 0) + 1;
-      }
-      
-      final sortedActivities = activityCounts.entries.toList()
-        ..sort((a, b) => b.value.compareTo(a.value));
-
-      final uniqueActivities = sortedActivities.map((entry) => entry.key).toList();
-      return [localizations.har_class_no_selection, ...uniqueActivities];
-    }
-
-    final uniqueActivities = getUniqueActivities(widget.session.activities);
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
       Navigator.push(
@@ -137,7 +160,7 @@ class _DetailPageState extends State<DetailPage>
           bodyPartGroup: bodyPart,
           timelines: normalizedScoresByGroup[bodyPart]!,
           recordingDuration: recordingDuration.inSeconds,
-          activities: widget.session.activities.lock,
+          activities: activities.lock,
         ),
       );
     }
@@ -173,7 +196,7 @@ class _DetailPageState extends State<DetailPage>
                 recordingDuration: recordingDuration,
                 keyframeIndex: currentKeyFrameIndex,
                 activityFilter: activityFilter,
-                onGroupTapped: navigateToBodyPartPage
+                onGroupTapped: navigateToBodyPartPage,
               ),
             ),
           ),

@@ -65,6 +65,7 @@ class _SessionEntry extends StatelessWidget {
       Scenario.ceiling => localizations.scenario_ceiling_label,
       Scenario.lift25 => localizations.scenario_lift_label,
       Scenario.conveyorBelt => localizations.scenario_conveyor_label,
+      Scenario.freestyle => localizations.scenario_freestyle_label,
     };
     final formattedDate = dateFormat.format(dateTime);
 

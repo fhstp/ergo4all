@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:pose/pose.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
@@ -11,27 +12,6 @@ class HarConfig {
   static const onlineInputShape = [1, 40, 17, 4];
   static const onlineModelPath = 'assets/har/har_tcn_online_inference_temporal_displacement.tflite';
   static const weightingFactors = [0.2, 0.5, 0.3];
-}
-
-enum Activity {
-  background(0),
-  carrying(1),
-  kneeling(2),
-  lifting(3),
-  overhead(4),
-  sitting(5),
-  standing(6),
-  walking(7),
-  noSelection(-1);
-
-  const Activity(this.value);
-  final int value;
-
-  static final Map<int, Activity> _valueToActivity = {
-    for (Activity activity in Activity.values) activity.value: activity,
-  };
-
-  static Activity? fromValue(int value) => _valueToActivity[value];
 }
 
 /// Input data structure for Human Activity Recognition
@@ -54,6 +34,27 @@ class ActivityRecognitionManager {
   final Map<int, List<List<double>>> timestampProbabilities = {};
   final List<Pose> _poses = [];
   final List<int> _poseTimestamps = [];
+
+  /// A list of key-points which are relevant for human activity recognition (HAR).
+  List<KeyPoints> harKeypoints = [
+    KeyPoints.nose,
+    KeyPoints.leftEar,
+    KeyPoints.rightEar,
+    KeyPoints.leftShoulder,
+    KeyPoints.rightShoulder,
+    KeyPoints.leftElbow,
+    KeyPoints.rightElbow,
+    KeyPoints.leftWrist,
+    KeyPoints.rightWrist,
+    KeyPoints.leftHip,
+    KeyPoints.rightHip,
+    KeyPoints.leftKnee,
+    KeyPoints.rightKnee,
+    KeyPoints.leftAnkle,
+    KeyPoints.rightAnkle,
+    KeyPoints.leftPalm,
+    KeyPoints.rightPalm,
+  ];
 
   bool active = false;
 

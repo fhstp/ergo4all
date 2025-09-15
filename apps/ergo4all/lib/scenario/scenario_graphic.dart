@@ -30,6 +30,7 @@ class ScenarioGraphic extends StatelessWidget {
       Scenario.conveyorBelt =>
         'standing',
       Scenario.ceiling => 'overhead_work',
+      Scenario.freestyle => null,
     };
 
     final graphicKey = 'assets/images/puppet_scenario/$graphicFileName.svg';

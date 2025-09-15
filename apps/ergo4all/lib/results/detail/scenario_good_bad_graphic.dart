@@ -30,6 +30,7 @@ class ScenarioGoodBadGraphic extends StatelessWidget {
       Scenario.conveyorBelt =>
         'standing',
       Scenario.ceiling => 'overhead_work',
+      Scenario.freestyle => null,
     };
 
     final graphicKey =

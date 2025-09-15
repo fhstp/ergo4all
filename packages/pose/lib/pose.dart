@@ -84,24 +84,3 @@ Pose mapPosePositions(Pose pose, Vector3 Function(Vector3) map) {
     (_, landmark) => (map(posOf(landmark)), visibilityOf(landmark)),
   );
 }
-
-/// A list of key-points which are relevant for human activity recognition (HAR).
-List<KeyPoints> harKeypoints = [
-  KeyPoints.nose,
-  KeyPoints.leftEar,
-  KeyPoints.rightEar,
-  KeyPoints.leftShoulder,
-  KeyPoints.rightShoulder,
-  KeyPoints.leftElbow,
-  KeyPoints.rightElbow,
-  KeyPoints.leftWrist,
-  KeyPoints.rightWrist,
-  KeyPoints.leftHip,
-  KeyPoints.rightHip,
-  KeyPoints.leftKnee,
-  KeyPoints.rightKnee,
-  KeyPoints.leftAnkle,
-  KeyPoints.rightAnkle,
-  KeyPoints.leftPalm,
-  KeyPoints.rightPalm,
-];

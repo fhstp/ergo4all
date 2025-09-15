@@ -1,3 +1,4 @@
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ class TimelineEntry {
   const TimelineEntry({
     required this.timestamp,
     required this.scores,
+    this.activity,
   });
 
   /// The timestamp of this entry. This is a global UNIX timestamp.
@@ -17,6 +19,9 @@ class TimelineEntry {
 
   /// The scores for this entry.
   final RulaScores scores;
+
+  /// The activity recognized at this timestamp.
+  final Activity? activity;
 }
 
 /// A timeline of [RulaSheet]s. The list is expected to be sorted by timestamp
@@ -33,7 +38,6 @@ class RulaSession {
     required this.scenario,
     required this.timeline,
     required this.keyFrames,
-    required this.activities,
   });
 
   /// Unix timestamp at which the session was completed.
@@ -50,9 +54,6 @@ class RulaSession {
 
   /// keyframes screenshot data
   final List<KeyFrame> keyFrames;
-
-  /// The activities corresponding to each value in the timeline.
-  final List<String> activities;
 }
 
 /// KeyFrame data structure so store relevant keyframe information

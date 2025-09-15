@@ -136,6 +136,17 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_conveyor_summary": "Working on a conveyor belt for long periods",
+  "scenario_freestyle_expectation": "This mode allows free ergonomic analysis without time constraints, suitable for custom evaluations.",
+  "@scenario_freestyle_expectation": {},
+  "scenario_freestyle_description": "A flexible mode that allows users to perform any activity they want to analyze ergonomically. There is no time limit, giving users full control over when to start and stop recording.",
+  "@scenario_freestyle_description": {
+    "description": "Long description text for freestyle scenario"
+  },
+  "scenario_freestyle_label": "Freestyle Mode",
+  "@scenario_freestyle_label": {
+    "description": "Short label text for buttons referencing freestyle scenario"
+  },
+  "scenario_freestyle_summary": "Freestyle mode with no time limit",
   "scenario_lift_and_carry_expectation": "Poor ergonomic posture can lead to high strain on the lower back, increasing the risk of fatigue or injury.",
   "@scenario_lift_and_carry_expectation": {},
   "scenario_lift_and_carry_description": "A worker regularly lifts heavy metal plates from the floor onto a workbench, often with his back bent.",
