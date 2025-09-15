@@ -1,3 +1,10 @@
+# [1.109.0](https://github.com/fhstp/ergo4all/compare/v1.108.0...v1.109.0) (2025-09-15)
+
+
+### Features
+
+* freestyle mode ([f25a13f](https://github.com/fhstp/ergo4all/commit/f25a13fbd443439cd70edab0e141ad0384f63393))
+
 # [1.108.0](https://github.com/fhstp/ergo4all/compare/v1.107.0...v1.108.0) (2025-09-13)
 
 
