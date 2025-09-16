@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
@@ -21,6 +20,7 @@ import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -88,8 +88,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   OnlinePeakDetector peakDetector = OnlinePeakDetector();
 
-  final GlobalKey _previewContainerKey = GlobalKey();
-
   int _lastProcessTime = 0;
 
   late final AnimationController progressAnimationController =
@@ -141,7 +139,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
   }
 
-  void onFrame(_Frame frame) {
+  void onFrame(_Frame frame, RawFrame imageRaw) {
     if (analysisMode == _AnalysisMode.none || !mounted) return;
 
     final targetQueueCount = analysisMode == _AnalysisMode.full ? 5 : 1;
@@ -186,31 +184,15 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final scores = scoresOf(rulaSheet);
 
     // take a screenshot every 250 ms
-    if (frame.timestamp - _lastProcessTime >= 250) {
+    if (frame.timestamp - _lastProcessTime >= 250 && timeline.isNotEmpty && frame.timestamp - timeline.first.timestamp >= 2000) {
       _lastProcessTime = frame.timestamp;
-      captureWidgetScreenshot(scores);
+      peakDetector.addFrame(scores, imageRaw, frame.timestamp, frame.pose);
     }
 
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
-  /// take screenshot of current image stream with pose overlay, do noting if fails.
-  Future<void> captureWidgetScreenshot(RulaScores scores) async {
-    try {
-      final boundary = _previewContainerKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
-      final image = await boundary?.toImage();
-      final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
-      final pngBytes = byteData?.buffer.asUint8List();
-
-      peakDetector.addFrame(scores, pngBytes!, DateTime.now().millisecondsSinceEpoch);
-    } catch (e) {
-      print("Screenshot error: $e, skip screenshoot");
-      return null;
-    }
-  }
-
-  void onPoseInput(PoseDetectInput input) {
+  void onPoseInput(PoseDetectInput input, RawFrame imageRaw) {
     if (analysisMode == _AnalysisMode.none) return;
 
     // For some reason, the width and height in the image are flipped in
@@ -225,13 +207,28 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     detectPose(input).then((pose) {
       final frame = _Frame(timestamp, Option.fromNullable(pose), imageSize);
-      onFrame(frame);
+      onFrame(frame, imageRaw);
     });
   }
 
   void onCameraImage(CameraValue camera, CameraImage image) {
     final input = poseDetectInputFromCamera(camera, image);
-    onPoseInput(input);
+
+    final WriteBuffer allBytes = WriteBuffer();
+    for (final Plane plane in image.planes) {
+      allBytes.putUint8List(plane.bytes);
+    }
+
+    final rawFrame = RawFrame(
+      bytes: allBytes.done().buffer.asUint8List(),
+      width: image.width,
+      height: image.height,
+      format: image.format.group,
+      bytesPerRow: image.planes.map((p) => p.bytesPerRow).toList(),
+      bytesPerPixel: image.planes.map((p) => p.bytesPerPixel).toList(),
+    );
+
+    onPoseInput(input, rawFrame);
   }
 
   Future<void> tryCompleteAnalysis() async {
@@ -394,10 +391,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  RepaintBoundary(
-                    key: _previewContainerKey,
-                    child: cameraPreview,
-                  ),
+                  cameraPreview,
                   if (!isFreestyleMode)
                     Positioned(
                       left: largeSpace,

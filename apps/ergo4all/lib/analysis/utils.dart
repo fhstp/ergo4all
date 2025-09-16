@@ -1,14 +1,17 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:camera/camera.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:rula/rula.dart';
+import 'package:image/image.dart' as img;
 
 /// Extensions for calculating rula sheet from pose.
 extension ToSheetExt on Pose {
@@ -31,8 +34,8 @@ class OnlinePeakDetector {
   final int topK;
   final double thresholdFactor; // e.g. 1.2 means 20% above baseline
 
-  final List<KeyFrame> _recentFrames = [];
-  final List<KeyFrame> _topPeaks = [];
+  final List<KeyFrameTemp> _recentFrames = [];
+  final List<KeyFrameTemp> _topPeaks = [];
 
   OnlinePeakDetector({
     this.windowSize = 11,
@@ -40,8 +43,8 @@ class OnlinePeakDetector {
     this.thresholdFactor = 1.05,
   });
 
-  void addFrame(RulaScores scores, Uint8List screenshot, int timestamp) {
-
+  void addFrame(RulaScores scores, RawFrame screenshot, int timestamp,
+      Option<Pose> pose) {
     final scoreList = bodyPartsInDisplayOrder.map((part) {
       return getNormalizedScoreForPart(part, scores);
     }).toList();
@@ -49,7 +52,7 @@ class OnlinePeakDetector {
     final fullScoreNormalize = normalizeScore(scores.fullScore, 7);
     final finalScore = fullScoreNormalize * 0.7 + scoreList.reduce(max) * 0.3;
 
-    final frame = KeyFrame(finalScore, screenshot, timestamp);
+    final frame = KeyFrameTemp(finalScore, screenshot, timestamp, pose);
 
     _recentFrames.add(frame);
     if (_recentFrames.length > windowSize) {
@@ -59,7 +62,8 @@ class OnlinePeakDetector {
     if (_recentFrames.length == windowSize) {
       final windowScores = _recentFrames.map((f) => f.score).toList();
       final windowMax = windowScores.reduce((a, b) => a > b ? a : b);
-      final baseline = windowScores.reduce((a, b) => a + b) / windowScores.length;
+      final baseline =
+          windowScores.reduce((a, b) => a + b) / windowScores.length;
 
       if (windowMax > baseline * thresholdFactor) {
         // Get the frame corresponding to the max score
@@ -69,16 +73,16 @@ class OnlinePeakDetector {
     }
   }
 
-  void _maybeStore(KeyFrame peak) {
+  void _maybeStore(KeyFrameTemp peak) {
     // Check if there’s a peak within 2.5 seconds (2500 ms)
     final nearby = _topPeaks.where(
-          (p) => (peak.timestamp - p.timestamp).abs() < 2500,
+      (p) => (peak.timestamp - p.timestamp).abs() < 2500,
     );
 
     if (nearby.isNotEmpty) {
       // Compare with the strongest nearby peak
       final strongestNearby = nearby.reduce(
-            (a, b) => a.score.abs() >= b.score.abs() ? a : b,
+        (a, b) => a.score.abs() >= b.score.abs() ? a : b,
       );
 
       if (peak.score.abs() > strongestNearby.score.abs()) {
@@ -102,12 +106,243 @@ class OnlinePeakDetector {
     if (_topPeaks.isEmpty && _recentFrames.isNotEmpty) {
       // fallback: return the max score frame from recent window
       final fallback = _recentFrames.reduce(
-            (a, b) => a.score.abs() >= b.score.abs() ? a : b,
+        (a, b) => a.score.abs() >= b.score.abs() ? a : b,
       );
-      return [fallback];
+      final image = convertFrame(fallback.frame, fallback.pose);
+      return [KeyFrame(fallback.score, image, fallback.timestamp)];
     }
     _topPeaks.sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    return List.unmodifiable(_topPeaks);
+    final finalTopPeaks = _topPeaks.map((peak) => KeyFrame(
+        peak.score, convertFrame(peak.frame, peak.pose), peak.timestamp));
+    return List.unmodifiable(finalTopPeaks);
+  }
+
+  Uint8List convertFrame(RawFrame frame, Option<Pose> pose) {
+    Uint8List result = Uint8List(0);
+
+    switch (frame.format) {
+      case ImageFormatGroup.jpeg:
+        result = frame.bytes;
+        break;
+      case ImageFormatGroup.yuv420:
+        result = _yuv420ToJpeg(frame, pose, rotate90: true);
+        break;
+      case ImageFormatGroup.bgra8888:
+        result = _bgra8888ToJpeg(frame, pose, rotate90: false);
+        break;
+      case ImageFormatGroup.nv21:
+        result = _nv21ToJpeg(frame, pose, rotate90: true);
+        break;
+      default:
+        throw UnsupportedError("Unsupported format: ${frame.format}");
+    }
+    return result;
+  }
+
+  Uint8List _yuv420ToJpeg(RawFrame frame, Option<Pose> pose,
+      {bool rotate90 = false}) {
+    final int width = frame.width;
+    final int height = frame.height;
+
+    final img.Image imgBuffer = img.Image(
+        width: rotate90 ? height : width, height: rotate90 ? width : height);
+
+    final bytes = frame.bytes;
+    final rowStride = frame.bytesPerRow;
+    final pixelStride = frame.bytesPerPixel;
+
+    // Split planes back from concatenated buffer
+    int offset = 0;
+    final yPlane = bytes.sublist(offset, offset += rowStride[0] * height);
+    final uPlane =
+        bytes.sublist(offset, offset += rowStride[1] * (height ~/ 2));
+    final vPlane =
+        bytes.sublist(offset, offset += rowStride[2] * (height ~/ 2));
+
+    final int uvRowStride = rowStride[1];
+    final int uvPixelStride = pixelStride[1]!;
+
+    for (int y = 0; y < height; y++) {
+      final int uvRow = uvRowStride * (y >> 1);
+      for (int x = 0; x < width; x++) {
+        final int uvIndex = uvRow + (x >> 1) * uvPixelStride;
+
+        final int yp = yPlane[y * rowStride[0] + x];
+        final int up = uPlane[uvIndex];
+        final int vp = vPlane[uvIndex];
+
+        int r = (yp + (1.370705 * (vp - 128))).round();
+        int g =
+            (yp - (0.337633 * (up - 128)) - (0.698001 * (vp - 128))).round();
+        int b = (yp + (1.732446 * (up - 128))).round();
+
+        // Flip rotation direction
+        int px = rotate90 ? (height - y - 1) : x;
+        int py = rotate90 ? x : y;
+
+        imgBuffer.setPixelRgba(
+          px,
+          py,
+          r.clamp(0, 255),
+          g.clamp(0, 255),
+          b.clamp(0, 255),
+          255,
+        );
+      }
+    }
+
+    paintSkeleton(imgBuffer, pose, width, height);
+
+    return Uint8List.fromList(img.encodeJpg(imgBuffer));
+  }
+
+  Uint8List _bgra8888ToJpeg(RawFrame frame, Option<Pose> pose,
+      {bool rotate90 = false}) {
+    final int width = frame.width;
+    final int height = frame.height;
+
+    final img.Image src = img.Image.fromBytes(
+      width: width,
+      height: height,
+      bytes: frame.bytes.buffer,
+      order: img.ChannelOrder.bgra,
+    );
+
+    final img.Image rotated = rotate90 ? img.copyRotate(src, angle: -90) : src;
+
+    // Step 3: Draw a skeleton
+    paintSkeleton(rotated, pose, width, height);
+
+    return Uint8List.fromList(img.encodeJpg(rotated));
+  }
+
+  Uint8List _nv21ToJpeg(RawFrame frame, Option<Pose> pose,
+      {bool rotate90 = false}) {
+    final int width = frame.width;
+    final int height = frame.height;
+
+    final img.Image imgBuffer = img.Image(
+        width: rotate90 ? height : width, height: rotate90 ? width : height);
+
+    final Uint8List yuv = frame.bytes;
+    final int frameSize = width * height;
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        final int yp = yuv[y * width + x] & 0xFF;
+        final int uvIndex = frameSize + (y >> 1) * width + (x & ~1);
+        final int v = yuv[uvIndex] & 0xFF;
+        final int u = yuv[uvIndex + 1] & 0xFF;
+
+        int r = (yp + 1.370705 * (v - 128)).round();
+        int g = (yp - 0.337633 * (u - 128) - 0.698001 * (v - 128)).round();
+        int b = (yp + 1.732446 * (u - 128)).round();
+
+        // Flip rotation direction
+        int px = rotate90 ? (height - y - 1) : x;
+        int py = rotate90 ? x : y;
+
+        imgBuffer.setPixelRgba(
+          px,
+          py,
+          r.clamp(0, 255),
+          g.clamp(0, 255),
+          b.clamp(0, 255),
+          255,
+        );
+      }
+    }
+
+    paintSkeleton(imgBuffer, pose, width, height);
+
+    return Uint8List.fromList(img.encodeJpg(imgBuffer));
+  }
+
+  void paintSkeleton(
+      img.Image imgBuffer, Option<Pose> pose, int width, int height) {
+    pose.match(
+      () {},
+      (pose) {
+        (int, int) tryGetPosOf(KeyPoints keyPoint) {
+          final landmark = pose[keyPoint]!;
+          final position = posOf(landmark).xy;
+          return (
+            (width * (position.x / width)).round(),
+            (height * (position.y / height)).round(),
+          );
+        }
+
+        void drawBone((KeyPoints, KeyPoints) bone) {
+          final (from, to) = bone;
+          final fromPos = tryGetPosOf(from);
+          final toPos = tryGetPosOf(to);
+
+          final color = img.ColorRgb8(103,146,182);
+          img.drawLine(imgBuffer,
+              x1: fromPos.$1,
+              y1: fromPos.$2,
+              x2: toPos.$1,
+              y2: toPos.$2,
+              color: color,
+              thickness: 5);
+        }
+
+        [
+          (KeyPoints.rightWrist, KeyPoints.rightElbow),
+          (KeyPoints.leftWrist, KeyPoints.leftElbow),
+          (KeyPoints.rightElbow, KeyPoints.rightShoulder),
+          (KeyPoints.rightWrist, KeyPoints.rightPalm),
+          (KeyPoints.leftElbow, KeyPoints.leftShoulder),
+          (KeyPoints.leftWrist, KeyPoints.leftPalm),
+          (KeyPoints.rightShoulder, KeyPoints.leftShoulder),
+          (KeyPoints.rightShoulder, KeyPoints.rightHip),
+          (KeyPoints.leftShoulder, KeyPoints.leftHip),
+          (KeyPoints.rightHip, KeyPoints.leftHip),
+          (KeyPoints.rightHip, KeyPoints.rightKnee),
+          (KeyPoints.leftHip, KeyPoints.leftKnee),
+          (KeyPoints.rightKnee, KeyPoints.rightAnkle),
+          (KeyPoints.leftKnee, KeyPoints.leftAnkle),
+          (KeyPoints.midNeck, KeyPoints.midPelvis),
+          (KeyPoints.midNeck, KeyPoints.midHead),
+          (KeyPoints.midHead, KeyPoints.nose),
+          (KeyPoints.midHead, KeyPoints.leftEar),
+          (KeyPoints.midHead, KeyPoints.rightEar),
+        ].forEach(drawBone);
+      },
+    );
   }
 }
 
+class KeyFrameTemp {
+  /// KeyFrame init
+  const KeyFrameTemp(this.score, this.frame, this.timestamp, this.pose);
+
+  /// KeyFrame full score
+  final double score;
+
+  /// keyFrame screenshot
+  final RawFrame frame;
+
+  /// KeyFrame timestamp (when it was recorded)
+  final int timestamp;
+
+  final Option<Pose> pose;
+}
+
+class RawFrame {
+  final Uint8List bytes;
+  final int width;
+  final int height;
+  final ImageFormatGroup format;
+  final List<int> bytesPerRow;
+  final List<int?> bytesPerPixel;
+
+  RawFrame({
+    required this.bytes,
+    required this.width,
+    required this.height,
+    required this.format,
+    required this.bytesPerRow,
+    required this.bytesPerPixel,
+  });
+}

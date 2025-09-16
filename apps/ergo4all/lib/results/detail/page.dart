@@ -38,7 +38,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
-  late int currentKeyFrameIndex;
+  late KeyFrame currentKeyFrame;
 
   String? selectedActivity;
 
@@ -48,7 +48,7 @@ class _DetailPageState extends State<DetailPage>
   @override
   void initState() {
     super.initState();
-    currentKeyFrameIndex = findClosestIndex(widget.session.timeline, widget.session.keyFrames.first.timestamp);
+    currentKeyFrame = widget.session.keyFrames.first;
   }
 
   int findClosestIndex(RulaTimeline list, int targetTimestamp) {
@@ -179,7 +179,7 @@ class _DetailPageState extends State<DetailPage>
                 .toList(),
             onPageChanged: (index) {
               setState(() {
-                currentKeyFrameIndex = findClosestIndex(widget.session.timeline, widget.session.keyFrames[index].timestamp);
+                currentKeyFrame = widget.session.keyFrames[index];
               });
             },
           ),
@@ -194,7 +194,10 @@ class _DetailPageState extends State<DetailPage>
               child: ScoreHeatmapGraph(
                 timelinesByGroup: worstAveragesByGroup,
                 recordingDuration: recordingDuration,
-                keyframeIndex: currentKeyFrameIndex,
+                highlightTime: Duration(
+                  milliseconds: currentKeyFrame.timestamp -
+                      widget.session.timeline.first.timestamp,
+                ),
                 activityFilter: activityFilter,
                 onGroupTapped: navigateToBodyPartPage,
               ),
