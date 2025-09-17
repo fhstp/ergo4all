@@ -1,3 +1,11 @@
+# [1.111.0](https://github.com/fhstp/ergo4all/compare/v1.110.0...v1.111.0) (2025-09-17)
+
+
+### Features
+
+* Improve keyframe extraction by switching from screen capture to storing raw image data and processing keyframe images at the end, ensuring real-time images without delays. ([7f9c5b9](https://github.com/fhstp/ergo4all/commit/7f9c5b97940be8c8a0559c6878b7976675bdf972))
+* move keyframes extration after stopping of pose detection and camera, to ensure a more natural workflow ([53fa9b8](https://github.com/fhstp/ergo4all/commit/53fa9b83f10200c78d80999d57c56d1ef3ea0865))
+
 # [1.110.0](https://github.com/fhstp/ergo4all/compare/v1.109.0...v1.110.0) (2025-09-17)
 
 
