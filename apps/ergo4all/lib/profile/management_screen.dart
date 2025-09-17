@@ -59,17 +59,20 @@ class _ProfileEntry extends StatelessWidget {
         return !isDefaultUser;
       },
       background: Container(color: cardinal),
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Text(
-                profile.nickname,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ],
+      child: ColoredBox(
+        color: spindle,
+        child: Row(
+          children: [
+            Column(
+              children: [
+                Text(
+                  profile.nickname,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
