@@ -1,3 +1,10 @@
+# [1.110.0](https://github.com/fhstp/ergo4all/compare/v1.109.0...v1.110.0) (2025-09-17)
+
+
+### Features
+
+* center button text ([97ecf3a](https://github.com/fhstp/ergo4all/commit/97ecf3af61531c1206ae48b39f1dcdc36b12b382)), closes [#154](https://github.com/fhstp/ergo4all/issues/154)
+
 # [1.109.0](https://github.com/fhstp/ergo4all/compare/v1.108.0...v1.109.0) (2025-09-15)
 
 
