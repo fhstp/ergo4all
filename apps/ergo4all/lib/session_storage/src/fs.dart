@@ -15,12 +15,22 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:rula/rula.dart';
 
+/// Contains meta information about a [RulaSession]. It is more efficient
+/// to load only this meta information instead of the whole session if you
+/// don't need the score data immediately.
 @immutable
-class _SessionMeta {
-  const _SessionMeta(this.timestamp, this.profileId, this.scenario);
+class RulaSessionMeta {
+  ///
+  const RulaSessionMeta(this.timestamp, this.profileId, this.scenario);
 
+  /// Mirror of [RulaSession.timestamp]. Use this timestamp like an id
+  /// to get the load the full session later.
   final int timestamp;
+
+  /// Mirror of [RulaSession.profileId].
   final int profileId;
+
+  /// Mirror of [RulaSession.scenario].
   final Scenario scenario;
 }
 
@@ -36,7 +46,7 @@ IMap<String, String> _parseKV(List<String> lines) => IMap.fromEntries(
 String _stringifyKV(IMap<String, String> kv) =>
     kv.toEntryList().map((entry) => '${entry.key}=${entry.value}').join('\n');
 
-Future<_SessionMeta> _loadMetaFrom(File file) async {
+Future<RulaSessionMeta> _loadMetaFrom(File file) async {
   final lines = await file.readAsLines();
   final map = _parseKV(lines);
 
@@ -51,10 +61,10 @@ Future<_SessionMeta> _loadMetaFrom(File file) async {
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
-  return _SessionMeta(timestamp, profileId, Scenario.values[scenarioIndex]);
+  return RulaSessionMeta(timestamp, profileId, Scenario.values[scenarioIndex]);
 }
 
-Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
+Future<void> _writeMetaTo(RulaSessionMeta meta, File file) async {
   final map = IMap.fromEntries([
     MapEntry('timestamp', meta.timestamp.toString()),
     MapEntry('profileId', meta.profileId.toString()),
@@ -204,7 +214,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
 Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   await metaFile.create();
-  final meta = _SessionMeta(
+  final meta = RulaSessionMeta(
     session.timestamp,
     session.profileId,
     session.scenario,
