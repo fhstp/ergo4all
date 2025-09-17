@@ -247,12 +247,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Camera controller must be initialized.',
     );
 
-    // select keyframes
-    maxKeyFrames = peakDetector.topPeaks;
-
     await cameraController.stopImageStream();
     await cameraController.dispose();
     await stopPoseDetection();
+
+    // select keyframes
+    maxKeyFrames = peakDetector.topPeaks;
 
     goToResults();
 
