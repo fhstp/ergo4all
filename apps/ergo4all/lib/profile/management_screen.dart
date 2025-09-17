@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
@@ -61,16 +62,21 @@ class _ProfileEntry extends StatelessWidget {
       background: Container(color: cardinal),
       child: ColoredBox(
         color: spindle,
-        child: Row(
+        child: Column(
           children: [
-            Column(
+            Row(
               children: [
-                Text(
-                  profile.nickname,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Column(
+                  children: [
+                    Text(
+                      profile.nickname,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ],
             ),
+            const Divider(color: blueChill),
           ],
         ),
       ),
