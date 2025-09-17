@@ -1,3 +1,10 @@
+# [1.113.0](https://github.com/fhstp/ergo4all/compare/v1.112.0...v1.113.0) (2025-09-17)
+
+
+### Features
+
+* modify iOS project to be able to compile in iOS devices, fix orientation of skeleton overlay in iOS ([49089b8](https://github.com/fhstp/ergo4all/commit/49089b8847c79a25fee5cf2d41a838981d6b3795))
+
 # [1.112.0](https://github.com/fhstp/ergo4all/compare/v1.111.0...v1.112.0) (2025-09-17)
 
 
