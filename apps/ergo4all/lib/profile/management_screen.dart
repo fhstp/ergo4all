@@ -153,7 +153,8 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
         child: Align(
           child: Column(
             children: [
-              Expanded(
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: ListView.builder(
                   itemBuilder: (context, i) => _ProfileEntry(
                     profiles[i],
@@ -162,8 +163,11 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
                     },
                   ),
                   itemCount: profiles.length,
+                  itemExtent: 76,
+                  shrinkWrap: true,
                 ),
               ),
+              const Spacer(),
               ElevatedButton(
                 onPressed: openProfileCreator,
                 style: primaryTextButtonStyle,
