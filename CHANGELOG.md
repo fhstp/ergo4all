@@ -1,3 +1,10 @@
+# [1.112.0](https://github.com/fhstp/ergo4all/compare/v1.111.0...v1.112.0) (2025-09-17)
+
+
+### Features
+
+* optimize session choice screen ([489ef64](https://github.com/fhstp/ergo4all/commit/489ef64f9abd81fa269d864587a1931f247029ac))
+
 # [1.111.0](https://github.com/fhstp/ergo4all/compare/v1.110.0...v1.111.0) (2025-09-17)
 
 
