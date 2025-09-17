@@ -4,6 +4,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
+import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/profile/creation/dialog.dart';
 import 'package:ergo4all/profile/storage/common.dart';
@@ -51,6 +52,8 @@ class _ProfileEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Dismissible(
       key: Key(data.profile.id.toString()),
       direction: DismissDirection.startToEnd,
@@ -60,10 +63,11 @@ class _ProfileEntry extends StatelessWidget {
       confirmDismiss: (_) async {
         final isDefaultUser = data.profile.id == ProfileRepo.defaultProfile.id;
 
-        // TODO: Localize
         if (isDefaultUser) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Can't delete default default")),
+            SnackBar(
+              content: Text(localizations.profile_choice_cannot_delete_default),
+            ),
           );
         }
 
@@ -89,8 +93,7 @@ class _ProfileEntry extends StatelessWidget {
                         Text(
                           data.lastRecordedDate != null
                               ? _dateFormat.format(data.lastRecordedDate!)
-                              // TODO: Localize
-                              : 'Noch keine Aufnahme',
+                              : localizations.profile_no_sessions_yet,
                         ),
                       ],
                     ),
@@ -144,6 +147,8 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     Future<void> openProfileCreator() async {
       await showDialog<void>(
         context: context,
@@ -159,14 +164,15 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Deleted ${profile.nickname}')),
+        SnackBar(
+          content: Text(localizations.profile_deleted(profile.nickname)),
+        ),
       );
     }
 
     return Scaffold(
-      appBar: const RedCircleAppBar(
-        // TODO: Localize
-        titleText: 'Profiles',
+      appBar: RedCircleAppBar(
+        titleText: localizations.profile_choice_title,
         withBackButton: true,
       ),
       body: SafeArea(
@@ -200,8 +206,7 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
             ElevatedButton(
               onPressed: openProfileCreator,
               style: primaryTextButtonStyle,
-              // TODO: Localize
-              child: const Text('New Profile'),
+              child: Text(localizations.profile_choice_new),
             ),
           ],
         ),
