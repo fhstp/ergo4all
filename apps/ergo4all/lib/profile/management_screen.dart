@@ -151,32 +151,34 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
           mediumSpace,
           mediumSpace,
         ),
-        child: Align(
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: ListView.builder(
-                  itemBuilder: (context, i) => _ProfileEntry(
-                    profiles[i],
-                    onDismissed: () {
-                      deleteProfile(profiles[i]);
-                    },
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: profiles
+                        .map(
+                          (profile) => _ProfileEntry(
+                            profile,
+                            onDismissed: () => deleteProfile(profile),
+                          ),
+                        )
+                        .toList(),
                   ),
-                  itemCount: profiles.length,
-                  itemExtent: 76,
-                  shrinkWrap: true,
                 ),
               ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: openProfileCreator,
-                style: primaryTextButtonStyle,
-                // TODO: Localize
-                child: const Text('New Profile'),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: mediumSpace),
+            ElevatedButton(
+              onPressed: openProfileCreator,
+              style: primaryTextButtonStyle,
+              // TODO: Localize
+              child: const Text('New Profile'),
+            ),
+          ],
         ),
       ),
     );
