@@ -17,11 +17,11 @@ import 'package:rula/rula.dart';
 
 @immutable
 class _SessionMeta {
-  const _SessionMeta(this.timestamp, this.profileId, this.scenarioIndex);
+  const _SessionMeta(this.timestamp, this.profileId, this.scenario);
 
   final int timestamp;
   final int profileId;
-  final int scenarioIndex;
+  final Scenario scenario;
 }
 
 typedef _ScoreRow = (int, RulaScores, Activity?);
@@ -51,14 +51,14 @@ Future<_SessionMeta> _loadMetaFrom(File file) async {
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
-  return _SessionMeta(timestamp, profileId, scenarioIndex);
+  return _SessionMeta(timestamp, profileId, Scenario.values[scenarioIndex]);
 }
 
 Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
   final map = IMap.fromEntries([
     MapEntry('timestamp', meta.timestamp.toString()),
     MapEntry('profileId', meta.profileId.toString()),
-    MapEntry('scenarioIndex', meta.scenarioIndex.toString()),
+    MapEntry('scenarioIndex', meta.scenario.index.toString()),
   ]);
   final text = _stringifyKV(map);
   await file.writeAsString(text);
@@ -96,9 +96,11 @@ List<dynamic> _csvRowOf(_ScoreRow row) {
 }
 
 _ScoreRow _scoreRowOf(List<dynamic> row) {
-  final activityValue = row.length > 24 ? row[24] as int : -1; // Handle backward compatibility
-  final activity = activityValue == -1 ? null : Activity.fromValue(activityValue);
-  
+  final activityValue =
+      row.length > 24 ? row[24] as int : -1; // Handle backward compatibility
+  final activity =
+      activityValue == -1 ? null : Activity.fromValue(activityValue);
+
   return (
     row[0] as int,
     RulaScores(
@@ -184,7 +186,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
   final timeline = scores.map((row) {
     final (timestamp, rulaScores, activity) = row;
     return TimelineEntry(
-      timestamp: timestamp, 
+      timestamp: timestamp,
       scores: rulaScores,
       activity: activity,
     );
@@ -193,7 +195,7 @@ Future<RulaSession> _loadSessionFrom(Directory dir) async {
   return RulaSession(
     timestamp: meta.timestamp,
     profileId: meta.profileId,
-    scenario: Scenario.values[meta.scenarioIndex],
+    scenario: meta.scenario,
     timeline: timeline,
     keyFrames: keyFrames,
   );
@@ -205,17 +207,17 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final meta = _SessionMeta(
     session.timestamp,
     session.profileId,
-    session.scenario.index,
+    session.scenario,
   );
   await _writeMetaTo(meta, metaFile);
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   await timelineFile.create();
   final scores = session.timeline.map((entry) => (
-    entry.timestamp, 
-    entry.scores, 
-    entry.activity,
-  ));
+        entry.timestamp,
+        entry.scores,
+        entry.activity,
+      ));
   await _writeSoresTo(scores, timelineFile);
 
   await Future.forEach(
