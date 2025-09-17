@@ -85,7 +85,10 @@ class HomeScreen extends StatelessWidget {
                   key: const Key('tips'),
                   style: secondaryTextButtonStyle,
                   onPressed: goToTips,
-                  child: Text(localizations.home_tips_label),
+                  child: Text(
+                    localizations.home_tips_label,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
               const SizedBox(height: mediumSpace),
