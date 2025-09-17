@@ -63,19 +63,24 @@ class _ProfileEntry extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        profile.nickname,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const Text('[Datum]'),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          profile.nickname,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Text('[Datum]'),
+                      ],
+                    ),
                   ),
+                  const Icon(Icons.delete_outline, color: blueChill),
+                  const SizedBox(width: 20),
+                  const Icon(Icons.chevron_right, color: blueChill),
                 ],
               ),
             ),
