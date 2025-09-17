@@ -42,6 +42,7 @@ class _ProfileEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(profile.id.toString()),
+      direction: DismissDirection.startToEnd,
       onDismissed: (_) {
         onDismissed?.call();
       },
