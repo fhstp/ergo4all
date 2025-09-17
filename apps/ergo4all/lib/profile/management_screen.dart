@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:common_ui/theme/colors.dart';
-import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/profile/common.dart';
@@ -139,9 +137,7 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
           child: Column(
             children: [
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: smallSpace),
+                child: ListView.builder(
                   itemBuilder: (context, i) => _ProfileEntry(
                     profiles[i],
                     onDismissed: () {
