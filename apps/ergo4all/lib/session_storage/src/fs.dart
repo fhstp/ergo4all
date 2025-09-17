@@ -185,9 +185,13 @@ Future<void> _storeImage(
   await file.writeAsBytes(image, flush: true);
 }
 
-Future<RulaSession> _loadSessionFrom(Directory dir) async {
+Future<RulaSessionMeta> _loadMetaIn(Directory dir) {
   final metaFile = File(path.join(dir.path, 'meta'));
-  final meta = await _loadMetaFrom(metaFile);
+  return _loadMetaFrom(metaFile);
+}
+
+Future<RulaSession> _loadSessionFrom(Directory dir) async {
+  final meta = await _loadMetaIn(dir);
 
   final keyFrames = await _loadKeyFrames(dir);
 
@@ -270,9 +274,19 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
   }
 
   @override
-  Future<List<RulaSession>> getAll() async {
+  Future<RulaSession?> getByTimestamp(int timestamp) async {
+    final sessionsDir = await _getSessionsDir();
+    final sessionDir =
+        Directory(path.join(sessionsDir.path, timestamp.toString()));
+
+    if (!sessionDir.existsSync()) return null;
+    return _loadSessionFrom(sessionDir);
+  }
+
+  @override
+  Future<List<RulaSessionMeta>> getAll() async {
     final sessionDirs = await _getSessionDirs();
-    return sessionDirs.asyncMap(_loadSessionFrom).toList();
+    return sessionDirs.asyncMap(_loadMetaIn).toList();
   }
 
   @override
