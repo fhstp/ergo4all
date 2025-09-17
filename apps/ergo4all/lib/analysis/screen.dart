@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
@@ -196,12 +197,15 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     if (analysisMode == _AnalysisMode.none) return;
 
     // For some reason, the width and height in the image are flipped in
-    // portrait mode.
+    // portrait mode only for Android.
     // So in order for the math in following code to be correct, we need
     // to flip it back.
     // This might be an issue if we ever allow landscape mode. Then we
     // would need to use some dynamic logic to determine the image orientation.
-    final imageSize = input.metadata!.size.flipped;
+    var imageSize = input.metadata!.size;
+    if (Platform.isAndroid) {
+      imageSize = imageSize.flipped;
+    }
 
     final timestamp = DateTime.now().millisecondsSinceEpoch;
 
