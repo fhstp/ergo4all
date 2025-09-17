@@ -130,6 +130,7 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
     Future<void> deleteProfile(Profile profile) async {
       await profileRepo.deleteById(profile.id);
       await sessionRepo.deleteAllBy(profile.id);
+      refreshProfiles();
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
