@@ -59,8 +59,17 @@ class _ProfileEntry extends StatelessWidget {
         return !isDefaultUser;
       },
       background: Container(color: cardinal),
-      child: ListTile(
-        title: Text(profile.nickname),
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Text(
+                profile.nickname,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
