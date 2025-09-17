@@ -9,6 +9,7 @@ import 'package:ergo4all/profile/creation/dialog.dart';
 import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 /// Screen where users can manage the [Profile]s filmed by the app.
@@ -32,22 +33,32 @@ class ProfileManagementScreen extends StatefulWidget {
       _ProfileManagementScreenState();
 }
 
-class _ProfileEntry extends StatelessWidget {
-  const _ProfileEntry(this.profile, {this.onDismissed});
+final _dateFormat = DateFormat.yMd();
+
+@immutable
+class _EntryData {
+  const _EntryData({required this.profile, required this.lastRecordedDate});
 
   final Profile profile;
+  final DateTime? lastRecordedDate;
+}
+
+class _ProfileEntry extends StatelessWidget {
+  const _ProfileEntry(this.data, {this.onDismissed});
+
+  final _EntryData data;
   final void Function()? onDismissed;
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(profile.id.toString()),
+      key: Key(data.profile.id.toString()),
       direction: DismissDirection.startToEnd,
       onDismissed: (_) {
         onDismissed?.call();
       },
       confirmDismiss: (_) async {
-        final isDefaultUser = profile.id == ProfileRepo.defaultProfile.id;
+        final isDefaultUser = data.profile.id == ProfileRepo.defaultProfile.id;
 
         // TODO: Localize
         if (isDefaultUser) {
@@ -72,10 +83,15 @@ class _ProfileEntry extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          profile.nickname,
+                          data.profile.nickname,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        const Text('[Datum]'),
+                        Text(
+                          data.lastRecordedDate != null
+                              ? _dateFormat.format(data.lastRecordedDate!)
+                              // TODO: Localize
+                              : 'Noch keine Aufnahme',
+                        ),
                       ],
                     ),
                   ),
@@ -94,16 +110,25 @@ class _ProfileEntry extends StatelessWidget {
 }
 
 class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
-  List<Profile> profiles = List.empty();
+  List<_EntryData> entries = List.empty();
 
   late final ProfileRepo profileRepo;
   late final RulaSessionRepository sessionRepo;
 
-  void refreshProfiles() {
-    profileRepo.getAll().then((it) {
-      setState(() {
-        profiles = it;
-      });
+  Future<void> refreshProfiles() async {
+    final profiles = await profileRepo.getAll();
+    final entries = await Future.wait(
+      profiles.map((profile) async {
+        final lastMeta = await sessionRepo.getLatestMetaFor(profile.id);
+        final lastTimestamp = lastMeta?.timestamp;
+        final lastDate = lastTimestamp != null
+            ? DateTime.fromMillisecondsSinceEpoch(lastTimestamp)
+            : null;
+        return _EntryData(profile: profile, lastRecordedDate: lastDate);
+      }),
+    );
+    setState(() {
+      this.entries = entries;
     });
   }
 
@@ -124,13 +149,13 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
         context: context,
         builder: (_) => const ProfileCreationDialog(),
       );
-      refreshProfiles();
+      unawaited(refreshProfiles());
     }
 
     Future<void> deleteProfile(Profile profile) async {
       await profileRepo.deleteById(profile.id);
       await sessionRepo.deleteAllBy(profile.id);
-      refreshProfiles();
+      unawaited(refreshProfiles());
 
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -159,11 +184,11 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: profiles
+                    children: entries
                         .map(
-                          (profile) => _ProfileEntry(
-                            profile,
-                            onDismissed: () => deleteProfile(profile),
+                          (entry) => _ProfileEntry(
+                            entry,
+                            onDismissed: () => deleteProfile(entry.profile),
                           ),
                         )
                         .toList(),
