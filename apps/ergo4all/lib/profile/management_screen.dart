@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/profile/common.dart';
@@ -143,6 +144,12 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
         withBackButton: true,
       ),
       body: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(
+          mediumSpace,
+          largeSpace,
+          mediumSpace,
+          mediumSpace,
+        ),
         child: Align(
           child: Column(
             children: [
