@@ -1,3 +1,12 @@
+# [1.119.0](https://github.com/fhstp/ergo4all/compare/v1.118.0...v1.119.0) (2025-09-18)
+
+
+### Features
+
+* add line margin ([75fa8bf](https://github.com/fhstp/ergo4all/commit/75fa8bfb5bb0d89b0fc6da77fa7bbd2b06ebdd95))
+* add profile delete background gradient ([b477616](https://github.com/fhstp/ergo4all/commit/b47761663fb164af7ca061b74cab3e9db48978b8))
+* remove bottom margin ([0998653](https://github.com/fhstp/ergo4all/commit/09986531f174e4b7a37e66c797654c9f97337e88))
+
 # [1.118.0](https://github.com/fhstp/ergo4all/compare/v1.117.0...v1.118.0) (2025-09-18)
 
 
