@@ -9,8 +9,6 @@ import 'package:ergo4all/onboarding/user_creation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-const double _appBarHeight = 200;
-
 /// Screen for displaying the privacy policy.
 class ErgonomicsInfoScreen extends StatelessWidget {
   ///
@@ -48,19 +46,13 @@ class ErgonomicsInfoScreen extends StatelessWidget {
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
         child: Column(
           children: [
-            SizedBox(
-              height: _appBarHeight,
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Positioned(
-                    top: 100,
-                    child: Text(
-                      localizations.onboarding_ergonomicsInfo_title,
-                      style: h1Style.copyWith(color: cardinal),
-                    ),
-                  ),
-                ],
+            const SizedBox(height: largeSpace),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                localizations.onboarding_ergonomicsInfo_title,
+                textAlign: TextAlign.center,
+                style: h1Style.copyWith(color: cardinal),
               ),
             ),
             Expanded(

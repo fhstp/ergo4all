@@ -78,14 +78,18 @@ class PickLanguageScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Align(
+        minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                localizations.language_header,
-                style: h3Style,
-                textAlign: TextAlign.center,
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  localizations.language_header,
+                  style: h3Style,
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(height: largeSpace),
               languageButtonFor('Deutsch', const Locale('de')),

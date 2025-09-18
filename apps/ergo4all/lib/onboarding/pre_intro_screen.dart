@@ -8,8 +8,6 @@ import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:flutter/material.dart';
 
-const double _appBarHeight = 200;
-
 /// Screen for displaying the pre-introductory content before the main onboarding flow.
 class PreIntroScreen extends StatelessWidget {
   ///
@@ -45,19 +43,12 @@ class PreIntroScreen extends StatelessWidget {
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
         child: Column(
           children: [
-            SizedBox(
-              height: _appBarHeight,
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Positioned(
-                    top: 100,
-                    child: Text(
-                      localizations.onboarding_preIntro_title,
-                      style: h1Style.copyWith(color: cardinal),
-                    ),
-                  ),
-                ],
+            const SizedBox(height: largeSpace),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                localizations.onboarding_preIntro_title,
+                style: h1Style.copyWith(color: cardinal),
               ),
             ),
             Expanded(
