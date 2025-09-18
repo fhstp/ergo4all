@@ -1,3 +1,10 @@
+# [1.115.0](https://github.com/fhstp/ergo4all/compare/v1.114.0...v1.115.0) (2025-09-18)
+
+
+### Features
+
+* remove tips link from onboarding ([e125818](https://github.com/fhstp/ergo4all/commit/e12581825edf179e5ff9caebfa1cd15672e02c89)), closes [#125](https://github.com/fhstp/ergo4all/issues/125)
+
 # [1.114.0](https://github.com/fhstp/ergo4all/compare/v1.113.0...v1.114.0) (2025-09-18)
 
 
