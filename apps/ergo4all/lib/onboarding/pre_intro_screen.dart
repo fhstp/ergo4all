@@ -82,17 +82,15 @@ class PreIntroScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: largeSpace),
-              child: Center(
-                child: ElevatedButton(
-                  key: const Key('next'),
-                  style: primaryTextButtonStyle,
-                  onPressed: goToTermsOfUse,
-                  child: Text(localizations.onboarding_label),
-                ),
+            Center(
+              child: ElevatedButton(
+                key: const Key('next'),
+                style: primaryTextButtonStyle,
+                onPressed: goToTermsOfUse,
+                child: Text(localizations.onboarding_label),
               ),
             ),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

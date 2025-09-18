@@ -115,17 +115,15 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: largeSpace),
-              child: Center(
-                child: ElevatedButton(
-                  key: const Key('next'),
-                  style: primaryTextButtonStyle,
-                  onPressed: checkBoxValue ? goToErgonomicsInfo : null,
-                  child: Text(localizations.onboarding_label),
-                ),
+            Center(
+              child: ElevatedButton(
+                key: const Key('next'),
+                style: primaryTextButtonStyle,
+                onPressed: checkBoxValue ? goToErgonomicsInfo : null,
+                child: Text(localizations.onboarding_label),
               ),
             ),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

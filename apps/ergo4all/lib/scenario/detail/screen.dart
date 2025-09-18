@@ -153,6 +153,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                           selectedProfile != null ? goToRecordScreen : null,
                       child: Text(localizations.record_label),
                     ),
+                    const SizedBox(height: largeSpace),
                   ],
                 ),
               ),

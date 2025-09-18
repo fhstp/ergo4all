@@ -208,6 +208,7 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
               style: primaryTextButtonStyle,
               child: Text(localizations.profile_choice_new),
             ),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

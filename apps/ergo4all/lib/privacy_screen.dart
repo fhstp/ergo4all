@@ -47,6 +47,7 @@ class PrivacyScreen extends StatelessWidget {
               style: staticBodyStyle,
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

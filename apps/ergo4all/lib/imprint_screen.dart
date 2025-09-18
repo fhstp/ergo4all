@@ -70,45 +70,46 @@ class ImprintScreen extends StatelessWidget {
         titleText: localizations.imprint,
         withBackButton: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: mediumSpace,
-          vertical: largeSpace,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _ContactBlock(
-              logo: CustomImages.logoAk,
-              companyName: 'AK Niederösterreich',
-              companyAddress: '[Address]',
-              contactPersonName: '[Contact Name]',
-              contactEmail: '[Contact Email]',
-              contactTelephone: '[Contact Telephone]',
-            ),
-            const SizedBox(height: largeSpace),
-            const _ContactBlock(
-              logo: CustomImages.logoFhStp,
-              companyName: 'FH St. Pölten',
-              companyAddress: 'Campus-Platz 1, A-3100 St. Pölten',
-              contactPersonName: 'Christian Jandl',
-              contactEmail: 'christian.jandl@fhstp.ac.at',
-              contactTelephone: '+43676847228618',
-            ),
-            const SizedBox(height: largeSpace),
-            const _ContactBlock(
-              logo: CustomImages.logoTUWien,
-              companyName: 'TU Wien',
-              companyAddress: 'Theresianumgasse 27, 1040 Wien',
-              contactPersonName: 'David Kostolani',
-              contactEmail: 'david.kostolani@tuwien.ac.at',
-              contactTelephone: '',
-            ),
-            TextButton(
-              onPressed: goToPrivacy,
-              child: Text(localizations.menu_privacy_label),
-            ),
-          ],
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: mediumSpace),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: largeSpace),
+              const _ContactBlock(
+                logo: CustomImages.logoAk,
+                companyName: 'AK Niederösterreich',
+                companyAddress: '[Address]',
+                contactPersonName: '[Contact Name]',
+                contactEmail: '[Contact Email]',
+                contactTelephone: '[Contact Telephone]',
+              ),
+              const SizedBox(height: largeSpace),
+              const _ContactBlock(
+                logo: CustomImages.logoFhStp,
+                companyName: 'FH St. Pölten',
+                companyAddress: 'Campus-Platz 1, A-3100 St. Pölten',
+                contactPersonName: 'Christian Jandl',
+                contactEmail: 'christian.jandl@fhstp.ac.at',
+                contactTelephone: '+43676847228618',
+              ),
+              const SizedBox(height: largeSpace),
+              const _ContactBlock(
+                logo: CustomImages.logoTUWien,
+                companyName: 'TU Wien',
+                companyAddress: 'Theresianumgasse 27, 1040 Wien',
+                contactPersonName: 'David Kostolani',
+                contactEmail: 'david.kostolani@tuwien.ac.at',
+                contactTelephone: '',
+              ),
+              TextButton(
+                onPressed: goToPrivacy,
+                child: Text(localizations.menu_privacy_label),
+              ),
+              const SizedBox(height: largeSpace),
+            ],
+          ),
         ),
       ),
     );

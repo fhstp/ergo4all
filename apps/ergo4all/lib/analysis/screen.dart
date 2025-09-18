@@ -435,6 +435,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                 child: Text(isRecording ? 'Stop' : 'Start'),
               ),
             ),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),
