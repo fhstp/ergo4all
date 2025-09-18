@@ -8,8 +8,6 @@ import 'package:ergo4all/onboarding/ergonomics_info_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-const double _appBarHeight = 200;
-
 /// Screen for displaying the terms of use.
 class TermsOfUseScreen extends StatefulWidget {
   ///
@@ -52,21 +50,16 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
         child: Column(
           children: [
-            SizedBox(
-              height: _appBarHeight,
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Positioned(
-                    top: 100,
-                    child: Text(
-                      localizations.onboarding_termsOfUse_title,
-                      style: h1Style.copyWith(color: cardinal),
-                    ),
-                  ),
-                ],
+            const SizedBox(height: largeSpace),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                localizations.onboarding_termsOfUse_title,
+                textAlign: TextAlign.center,
+                style: h1Style.copyWith(color: cardinal),
               ),
             ),
+            const SizedBox(height: largeSpace),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
