@@ -72,7 +72,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                         children: [
                           TextSpan(
                             text:
-                                '${localizations.onboarding_termsOfUse_description}\n',
+                                localizations.onboarding_termsOfUse_description,
                           ),
                           TextSpan(
                             text: localizations.onboarding_termsOfUse_link,

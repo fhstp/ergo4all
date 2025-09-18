@@ -1,3 +1,26 @@
+# [1.116.0](https://github.com/fhstp/ergo4all/compare/v1.115.0...v1.116.0) (2025-09-18)
+
+
+### Features
+
+* add general info content ([24a4aaa](https://github.com/fhstp/ergo4all/commit/24a4aaaaab5bd3e3e955ecd6aef3a001c7e8062d))
+* add placeholder general info screen ([b540906](https://github.com/fhstp/ergo4all/commit/b54090613a526bf8313c9b8668d9cbb9939ab425))
+* localize nav button label ([91366ff](https://github.com/fhstp/ergo4all/commit/91366ffe59c3d5adbd96ec55c340d975080a615c))
+
+# [1.115.0](https://github.com/fhstp/ergo4all/compare/v1.114.0...v1.115.0) (2025-09-18)
+
+
+### Features
+
+* remove tips link from onboarding ([e125818](https://github.com/fhstp/ergo4all/commit/e12581825edf179e5ff9caebfa1cd15672e02c89)), closes [#125](https://github.com/fhstp/ergo4all/issues/125)
+
+# [1.114.0](https://github.com/fhstp/ergo4all/compare/v1.113.0...v1.114.0) (2025-09-18)
+
+
+### Features
+
+* uniform screen bottom margings ([03f7dab](https://github.com/fhstp/ergo4all/commit/03f7daba1f67d29ef1ae0cb9f1ba54d159413028)), closes [#154](https://github.com/fhstp/ergo4all/issues/154)
+
 # [1.113.0](https://github.com/fhstp/ergo4all/compare/v1.112.0...v1.113.0) (2025-09-17)
 
 

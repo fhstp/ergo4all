@@ -20,8 +20,7 @@
   "menu_privacy_label": "Datenschutz",
   "onboarding_ergonomicsInfo_title": "Was ist Ergonomie?",
   "onboarding_ergonomicsInfo_subtitle": "Wichtig, bevor es losgeht:",
-  "onboarding_ergonomicsInfo_description": "Ergonomie bedeutet, den Körper in natürlichen, gesunden Positionen zu halten, damit er langfristig stark und schmerzfrei bleibt. Es bedeutet nicht unbedingt, dass sich die Körperhaltung gerade etwas unbequem oder anstrengend anfühlt.\nManchmal zeigt die App ein niedriges Risiko, auch wenn du das Gefühl hast, dass ein bestimmter Muskel stark arbeitet. Muskelarbeit allein bedeutet nicht automatisch Gefahr – entscheidend sind Körperhaltung, ausgeführte Arbeitstätigkeiten, Belastung und Häufigkeit.\nDiese App hilft dir, Bewegungsmuster zu erkennen, die bei zu häufiger Wiederholung Probleme verursachen könnten, damit du sie rechtzeitig korrigieren kannst.",
-  "onboarding_ergonomicsInfo_description_link": "👉 Tipps für eine bessere Körperhaltung und Bewegung finden Sie auf dem Bildschirm \"Tipps\".",
+  "onboarding_ergonomicsInfo_description": "Ergonomie bedeutet, den Körper in natürlichen, gesunden Positionen zu halten, damit er langfristig stark und schmerzfrei bleibt. Es bedeutet nicht unbedingt, dass sich die Körperhaltung gerade etwas unbequem oder anstrengend anfühlt.\nManchmal zeigt die App ein niedriges Risiko, auch wenn du das Gefühl hast, dass ein bestimmter Muskel stark arbeitet. Muskelarbeit allein bedeutet nicht automatisch Gefahr – entscheidend sind Körperhaltung, ausgeführte Arbeitstätigkeiten, Belastung und Häufigkeit.\nDiese App hilft dir, Bewegungsmuster zu erkennen, die bei zu häufiger Wiederholung Probleme verursachen könnten, damit du sie rechtzeitig korrigieren kannst.\n👉 Tipps für eine bessere Körperhaltung und Bewegung finden Sie auf dem Bildschirm \"Tipps\".",
   "onboarding_label": "Weiter",
   "onboarding_privacy_title": "PRIVATSPHÄRE",
   "onboarding_privacy_subtitle": "Keine Cloud. Kein Tracking.",
@@ -137,7 +136,6 @@
   "results_press_body_part": "Tippe einen Körperteil um mehr Informationen zu bekommen.",
   "tutorial_dialog_page_1": "Das Ergebnis wird genauer berechnet, wenn der Körper aus einer 45° Seitensicht gefilmt wird.",
   "tutorial_dialog_page_2": "Nehmen Sie das Szenario für bis zu 30 Sekunden auf und stellen Sie sicher, dass ihr ganzer Körper sichtbar ist.",
-  "tutorial_dialog_page_3": "Tippen Sie die rote Taste unten um die Aufnahme zu beginnen.",
   "ergonomics_tipps": "Allgemeine Ergonomie Tipps",
   "scenario_lift_and_carry_tips": "Rücken gerade halten, aus den Beinen heben, Last nah am Körper halten. Kräftigungs-übungen für Rücken und Beine.",
   "scenario_pull_tips": "Schieben bevorzugt. Ergonomische Griffhöhe wählen, Arme nah am Körper halten, mit den Beinen schieben statt mit den Armen. Lockerungsübungen für Schultern und Handgelenke.",
@@ -182,5 +180,12 @@
   "profile_no_sessions_yet": "Noch keine Sitzungen aufgenommen",
   "profile_deleted": "Profile \"{profile}\" gelöscht.",
   "profile_choice_title": "Profile",
-  "profile_choice_new": "Neues Profil"
+  "profile_choice_new": "Neues Profil",
+  "tips_general_nav": "Allgemein",
+  "tips_general_title": "Was ist Ergonomie",
+  "tips_general_ergonomics_explanation": "Ergonomie ist die Wissenschaft davon, Ihren Körper während der Arbeit oder Bewegung in einer gesunden, natürlichen Haltung zu halten, um Belastungen und Verletzungen zu vermeiden.\nEine natürliche Haltung ist eine Körperhaltung, in der Ihre Muskeln, Gelenke und Knochen reibungslos und bequem zusammenarbeiten.",
+  "tips_general_factors": "Welche Faktoren bestimmen also das Verletzungsrisiko? Was wirklich zählt, ist die Position, die Sie einnehmen, die Bewegung, die Sie ausführen, und wie oft Sie diese Bewegung wiederholen. Diese Faktoren können jedoch schwer zu erkennen sein, insbesondere wenn Sie noch keine Erfahrung damit haben.",
+  "tips_general_example": "Wenn Sie beispielsweise etwas Schweres heben, werden durch das Beugen der Knie Ihre Beinmuskeln stärker aktiviert, was Ihren Rücken schont.",
+  "tips_general_legs": "Obwohl Sie Ihre Beinmuskeln stärker beanspruchen, führt dies zu einer natürlicheren Körperhaltung und einem geringeren Verletzungsrisiko. Andererseits kann es vorkommen, dass Sie eine Muskelgruppe aktiv arbeiten spüren, die ergonomische Belastung jedoch gering ist - manchmal ist Muskelaktivität gut und notwendig, solange Ihre Körperhaltung natürlich ist.\nDie Wissenschaft der Bewegung kann komplex sein, aber eines sollten Sie unbedingt beachten: Ihre Körperteile arbeiten nicht isoliert, sondern sind alle miteinander verbunden.",
+  "tips_general_teach": "Unsere App versucht Ihnen beizubringen, falsche Muster zu erkennen und die guten anzunehmen."
 }

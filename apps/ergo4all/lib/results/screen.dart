@@ -79,10 +79,13 @@ class ResultsScreen extends StatelessWidget {
     });
 
     final activities = session.timeline
-        .map((e) => e.activity != null
-            ? localizations.activityDisplayName(e.activity!)
-            : localizations.activityDisplayName(Activity.background))
-        .toList().lock;
+        .map(
+          (e) => e.activity != null
+              ? localizations.activityDisplayName(e.activity!)
+              : localizations.activityDisplayName(Activity.background),
+        )
+        .toList()
+        .lock;
 
     final recordingDuration = Duration(
       milliseconds:

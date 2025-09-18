@@ -23,7 +23,6 @@ import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
@@ -82,7 +81,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   Queue<_Frame> frameQueue = Queue();
   _AnalysisMode analysisMode = _AnalysisMode.none;
   ActivityRecognitionManager activityRecognitionManager =
-    ActivityRecognitionManager();
+      ActivityRecognitionManager();
   List<TimelineEntry> timeline = List.empty(growable: true);
 
   List<KeyFrame> maxKeyFrames = List.empty(growable: true);
@@ -112,13 +111,17 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   void goToResults() {
     if (!context.mounted) return;
 
-
-    final weightedActivities = activityRecognitionManager.computeWeightedActivities();
-    timeline = timeline.map((e) => TimelineEntry(
-      timestamp: e.timestamp, 
-      scores: e.scores, 
-      activity: weightedActivities[e.timestamp] ?? Activity.background))
-    .toList();
+    final weightedActivities =
+        activityRecognitionManager.computeWeightedActivities();
+    timeline = timeline
+        .map(
+          (e) => TimelineEntry(
+            timestamp: e.timestamp,
+            scores: e.scores,
+            activity: weightedActivities[e.timestamp] ?? Activity.background,
+          ),
+        )
+        .toList();
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
@@ -168,10 +171,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     setState(() {
       frame.pose.match(
         () {},
-        (pose)
-        {
+        (pose) {
           activityRecognitionManager.addPose(
-            normalizePose(averagePose), frame.timestamp,
+            normalizePose(averagePose),
+            frame.timestamp,
           );
         },
       );
@@ -185,7 +188,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final scores = scoresOf(rulaSheet);
 
     // take a screenshot every 250 ms
-    if (frame.timestamp - _lastProcessTime >= 250 && timeline.isNotEmpty && frame.timestamp - timeline.first.timestamp >= 2000) {
+    if (frame.timestamp - _lastProcessTime >= 250 &&
+        timeline.isNotEmpty &&
+        frame.timestamp - timeline.first.timestamp >= 2000) {
       _lastProcessTime = frame.timestamp;
       peakDetector.addFrame(scores, imageRaw, frame.timestamp, frame.pose);
     }
@@ -218,8 +223,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   void onCameraImage(CameraValue camera, CameraImage image) {
     final input = poseDetectInputFromCamera(camera, image);
 
-    final WriteBuffer allBytes = WriteBuffer();
-    for (final Plane plane in image.planes) {
+    final allBytes = WriteBuffer();
+    for (final plane in image.planes) {
       allBytes.putUint8List(plane.bytes);
     }
 
@@ -324,7 +329,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     super.initState();
 
     activitySubscription = activityRecognitionManager
-        .onlineInferenceOutputController.stream.listen((activity) {
+        .onlineInferenceOutputController.stream
+        .listen((activity) {
       if (mounted) {
         setState(() {
           currentActivity = activity;
@@ -364,20 +370,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
           fit: StackFit.expand,
           children: [
             frameQueue.lastOption
-              .flatMap(
-                (frame) => frame.pose.map(
-                  (pose) => CustomPaint(
-                    willChange: true,
-                    painter: Pose3dPainter(
-                      pose: pose,
-                      imageSize: frame.imageSize,
-                      color: hippieBlue,
-                    ),
-                  ),
-                ),
-              )
-              .toNullable() ?? const SizedBox.shrink(),
-                
+                    .flatMap(
+                      (frame) => frame.pose.map(
+                        (pose) => CustomPaint(
+                          willChange: true,
+                          painter: Pose3dPainter(
+                            pose: pose,
+                            imageSize: frame.imageSize,
+                            color: hippieBlue,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toNullable() ??
+                const SizedBox.shrink(),
             ActivityOverlay(activity: currentActivity),
           ],
         ),

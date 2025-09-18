@@ -66,13 +66,9 @@
   "@onboarding_ergonomicsInfo_subtitle": {
     "description": "Sub-title for the ergonomics-info screen in onboarding"
   },
-  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\nSometimes the risk score might be low, even if you felt that body part working a lot. That's because feeling a muscle work isn't the same as it being at risk - risk depends on posture, performed activities, load, and how often you repeat the movement.\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.",
+  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\nSometimes the risk score might be low, even if you felt that body part working a lot. That's because feeling a muscle work isn't the same as it being at risk - risk depends on posture, performed activities, load, and how often you repeat the movement.\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n👉 For tips on better posture and movement, check the \"Tipps screen\".",
   "@onboarding_ergonomicsInfo_description": {
     "description": "Body-text for the ergonomics-info screen in onboarding"
-  },
-  "onboarding_ergonomicsInfo_description_link": "👉 For tips on better posture and movement, check the \"Tipps screen\".",
-  "@onboarding_ergonomicsInfo_description_link": {
-    "description": "Link-text for navigating to the tips screen from onboarding"
   },
   "onboarding_label": "Next",
   "@onboarding_label": {
@@ -358,10 +354,6 @@
   "@tutorial_dialog_page_2": {
     "description": "The text which is displayed on the second page of the video recording tutorial."
   },
-  "tutorial_dialog_page_3": "To start the recording press the red button below.",
-  "@tutorial_dialog_page_3": {
-    "description": "The text which is displayed on the third page of the video recording tutorial."
-  },
   "ergonomics_tipps": "General ergonomics tips",
   "scenario_lift_and_carry_tips": "When lifting, keep your back straight, lift from your legs, hold the load close to your body. Strengthening exercises for back and legs.",
   "scenario_pull_tips": "Pushing is preferred. Choose an ergonomic grip height, keep your arms close to your body, push with your legs instead of your arms. Loosening exercises for shoulders and wrists.",
@@ -442,5 +434,33 @@
   "profile_choice_new": "New profile",
   "@profile_choice_new": {
     "description": "Button label for creating a new profile"
+  },
+  "tips_general_nav": "General",
+  "@tips_general_nav": {
+    "description": "Label for a button which brings the user to the general ergonomics info screen"
+  },
+  "tips_general_title": "What is ergonomics",
+  "@tips_general_title": {
+    "description": "Title for the general ergonomics info screen"
+  },
+  "tips_general_ergonomics_explanation": "Ergonomics is the science of keeping your body in healthy, natural positions while you work or move, so you avoid strain and injury over time.\nA natural position means the posture where your muscles, joints, and bones work together smoothly and comfortably.",
+  "@tips_general_ergonomics_explanation": {
+    "description": "The first paragraph on the general ergonomics info screen"
+  },
+  "tips_general_factors": "So what factors determine the risk of injury? What really matters is the position you hold, the action you are performing, and how often you repeat that movement. But these factors can be hard to recognize, especially if you're new to this.",
+  "@tips_general_factors": {
+    "description": "The second paragraph on the general ergonomics info screen"
+  },
+  "tips_general_example": "For example, when you lift something heavy, bending your knees activates your leg muscles, more, which helps protect your back.",
+  "@tips_general_example": {
+    "description": "The third paragraph on the general ergonomics info screen"
+  },
+  "tips_general_legs": "Although you are using your leg muscles more, this results in a more natural posture, and a lower risk of injury. On the other hand, sometimes you might feel a muscle group working actively, but the resulting ergonomic stain is low - sometimes muscle activity is good and necessary, as long as your posture is natural.\nThe science of movement can be complex, but one important thing to remember is that your body parts don't work alone - they are all connected.",
+  "@tips_general_legs": {
+    "description": "The fourth paragraph on the general ergonomics info screen"
+  },
+  "tips_general_teach": "Our app tries to teach you to recognize wrong patterns and embrace the good ones.",
+  "@tips_general_teach": {
+    "description": "The fifth paragraph on the general ergonomics info screen"
   }
 }

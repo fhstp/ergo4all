@@ -6,12 +6,12 @@ import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:image/image.dart' as img;
 import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:rula/rula.dart';
-import 'package:image/image.dart' as img;
 
 /// Extensions for calculating rula sheet from pose.
 extension ToSheetExt on Pose {
@@ -30,6 +30,12 @@ extension ToSheetExt on Pose {
 
 /// Helper class that has the logic to detect the peak keyframes online
 class OnlinePeakDetector {
+  OnlinePeakDetector({
+    this.windowSize = 11,
+    this.topK = 5,
+    this.thresholdFactor = 1.05,
+  });
+
   final int windowSize;
   final int topK;
   final double thresholdFactor; // e.g. 1.2 means 20% above baseline
@@ -37,14 +43,12 @@ class OnlinePeakDetector {
   final List<KeyFrameTemp> _recentFrames = [];
   final List<KeyFrameTemp> _topPeaks = [];
 
-  OnlinePeakDetector({
-    this.windowSize = 11,
-    this.topK = 5,
-    this.thresholdFactor = 1.05,
-  });
-
-  void addFrame(RulaScores scores, RawFrame screenshot, int timestamp,
-      Option<Pose> pose) {
+  void addFrame(
+    RulaScores scores,
+    RawFrame screenshot,
+    int timestamp,
+    Option<Pose> pose,
+  ) {
     final scoreList = bodyPartsInDisplayOrder.map((part) {
       return getNormalizedScoreForPart(part, scores);
     }).toList();
@@ -87,8 +91,9 @@ class OnlinePeakDetector {
 
       if (peak.score.abs() > strongestNearby.score.abs()) {
         // Replace the weaker nearby peak with this stronger one
-        _topPeaks.remove(strongestNearby);
-        _topPeaks.add(peak);
+        _topPeaks
+          ..remove(strongestNearby)
+          ..add(peak);
       }
     } else {
       // No nearby peak, just add it
@@ -112,73 +117,71 @@ class OnlinePeakDetector {
       return [KeyFrame(fallback.score, image, fallback.timestamp)];
     }
     _topPeaks.sort((a, b) => a.timestamp.compareTo(b.timestamp));
-    final finalTopPeaks = _topPeaks.map((peak) => KeyFrame(
-        peak.score, convertFrame(peak.frame, peak.pose), peak.timestamp));
+    final finalTopPeaks = _topPeaks.map(
+      (peak) => KeyFrame(
+        peak.score,
+        convertFrame(peak.frame, peak.pose),
+        peak.timestamp,
+      ),
+    );
     return List.unmodifiable(finalTopPeaks);
   }
 
   Uint8List convertFrame(RawFrame frame, Option<Pose> pose) {
-    Uint8List result = Uint8List(0);
-
-    switch (frame.format) {
-      case ImageFormatGroup.jpeg:
-        result = frame.bytes;
-        break;
-      case ImageFormatGroup.yuv420:
-        result = _yuv420ToJpeg(frame, pose, rotate90: true);
-        break;
-      case ImageFormatGroup.bgra8888:
-        result = _bgra8888ToJpeg(frame, pose, rotate90: false);
-        break;
-      case ImageFormatGroup.nv21:
-        result = _nv21ToJpeg(frame, pose, rotate90: true);
-        break;
-      default:
-        throw UnsupportedError("Unsupported format: ${frame.format}");
-    }
-    return result;
+    return switch (frame.format) {
+      ImageFormatGroup.jpeg => frame.bytes,
+      ImageFormatGroup.yuv420 => _yuv420ToJpeg(frame, pose, rotate90: true),
+      ImageFormatGroup.bgra8888 => _bgra8888ToJpeg(frame, pose),
+      ImageFormatGroup.nv21 => _nv21ToJpeg(frame, pose, rotate90: true),
+      _ => throw UnsupportedError('Unsupported format: ${frame.format}')
+    };
   }
 
-  Uint8List _yuv420ToJpeg(RawFrame frame, Option<Pose> pose,
-      {bool rotate90 = false}) {
-    final int width = frame.width;
-    final int height = frame.height;
+  Uint8List _yuv420ToJpeg(
+    RawFrame frame,
+    Option<Pose> pose, {
+    bool rotate90 = false,
+  }) {
+    final width = frame.width;
+    final height = frame.height;
 
-    final img.Image imgBuffer = img.Image(
-        width: rotate90 ? height : width, height: rotate90 ? width : height);
+    final imgBuffer = img.Image(
+      width: rotate90 ? height : width,
+      height: rotate90 ? width : height,
+    );
 
     final bytes = frame.bytes;
     final rowStride = frame.bytesPerRow;
     final pixelStride = frame.bytesPerPixel;
 
     // Split planes back from concatenated buffer
-    int offset = 0;
+    var offset = 0;
     final yPlane = bytes.sublist(offset, offset += rowStride[0] * height);
     final uPlane =
         bytes.sublist(offset, offset += rowStride[1] * (height ~/ 2));
     final vPlane =
         bytes.sublist(offset, offset += rowStride[2] * (height ~/ 2));
 
-    final int uvRowStride = rowStride[1];
-    final int uvPixelStride = pixelStride[1]!;
+    final uvRowStride = rowStride[1];
+    final uvPixelStride = pixelStride[1]!;
 
-    for (int y = 0; y < height; y++) {
-      final int uvRow = uvRowStride * (y >> 1);
-      for (int x = 0; x < width; x++) {
-        final int uvIndex = uvRow + (x >> 1) * uvPixelStride;
+    for (var y = 0; y < height; y++) {
+      final uvRow = uvRowStride * (y >> 1);
+      for (var x = 0; x < width; x++) {
+        final uvIndex = uvRow + (x >> 1) * uvPixelStride;
 
-        final int yp = yPlane[y * rowStride[0] + x];
-        final int up = uPlane[uvIndex];
-        final int vp = vPlane[uvIndex];
+        final yp = yPlane[y * rowStride[0] + x];
+        final up = uPlane[uvIndex];
+        final vp = vPlane[uvIndex];
 
-        int r = (yp + (1.370705 * (vp - 128))).round();
-        int g =
+        final r = (yp + (1.370705 * (vp - 128))).round();
+        final g =
             (yp - (0.337633 * (up - 128)) - (0.698001 * (vp - 128))).round();
-        int b = (yp + (1.732446 * (up - 128))).round();
+        final b = (yp + (1.732446 * (up - 128))).round();
 
         // Flip rotation direction
-        int px = rotate90 ? (height - y - 1) : x;
-        int py = rotate90 ? x : y;
+        final px = rotate90 ? (height - y - 1) : x;
+        final py = rotate90 ? x : y;
 
         imgBuffer.setPixelRgba(
           px,
@@ -196,19 +199,22 @@ class OnlinePeakDetector {
     return Uint8List.fromList(img.encodeJpg(imgBuffer));
   }
 
-  Uint8List _bgra8888ToJpeg(RawFrame frame, Option<Pose> pose,
-      {bool rotate90 = false}) {
-    final int width = frame.width;
-    final int height = frame.height;
+  Uint8List _bgra8888ToJpeg(
+    RawFrame frame,
+    Option<Pose> pose, {
+    bool rotate90 = false,
+  }) {
+    final width = frame.width;
+    final height = frame.height;
 
-    final img.Image src = img.Image.fromBytes(
+    final src = img.Image.fromBytes(
       width: width,
       height: height,
       bytes: frame.bytes.buffer,
       order: img.ChannelOrder.bgra,
     );
 
-    final img.Image rotated = rotate90 ? img.copyRotate(src, angle: -90) : src;
+    final rotated = rotate90 ? img.copyRotate(src, angle: -90) : src;
 
     // Step 3: Draw a skeleton
     paintSkeleton(rotated, pose, width, height);
@@ -216,31 +222,36 @@ class OnlinePeakDetector {
     return Uint8List.fromList(img.encodeJpg(rotated));
   }
 
-  Uint8List _nv21ToJpeg(RawFrame frame, Option<Pose> pose,
-      {bool rotate90 = false}) {
-    final int width = frame.width;
-    final int height = frame.height;
+  Uint8List _nv21ToJpeg(
+    RawFrame frame,
+    Option<Pose> pose, {
+    bool rotate90 = false,
+  }) {
+    final width = frame.width;
+    final height = frame.height;
 
-    final img.Image imgBuffer = img.Image(
-        width: rotate90 ? height : width, height: rotate90 ? width : height);
+    final imgBuffer = img.Image(
+      width: rotate90 ? height : width,
+      height: rotate90 ? width : height,
+    );
 
-    final Uint8List yuv = frame.bytes;
-    final int frameSize = width * height;
+    final yuv = frame.bytes;
+    final frameSize = width * height;
 
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        final int yp = yuv[y * width + x] & 0xFF;
-        final int uvIndex = frameSize + (y >> 1) * width + (x & ~1);
-        final int v = yuv[uvIndex] & 0xFF;
-        final int u = yuv[uvIndex + 1] & 0xFF;
+    for (var y = 0; y < height; y++) {
+      for (var x = 0; x < width; x++) {
+        final yp = yuv[y * width + x] & 0xFF;
+        final uvIndex = frameSize + (y >> 1) * width + (x & ~1);
+        final v = yuv[uvIndex] & 0xFF;
+        final u = yuv[uvIndex + 1] & 0xFF;
 
-        int r = (yp + 1.370705 * (v - 128)).round();
-        int g = (yp - 0.337633 * (u - 128) - 0.698001 * (v - 128)).round();
-        int b = (yp + 1.732446 * (u - 128)).round();
+        final r = (yp + 1.370705 * (v - 128)).round();
+        final g = (yp - 0.337633 * (u - 128) - 0.698001 * (v - 128)).round();
+        final b = (yp + 1.732446 * (u - 128)).round();
 
         // Flip rotation direction
-        int px = rotate90 ? (height - y - 1) : x;
-        int py = rotate90 ? x : y;
+        final px = rotate90 ? (height - y - 1) : x;
+        final py = rotate90 ? x : y;
 
         imgBuffer.setPixelRgba(
           px,
@@ -259,7 +270,11 @@ class OnlinePeakDetector {
   }
 
   void paintSkeleton(
-      img.Image imgBuffer, Option<Pose> pose, int width, int height) {
+    img.Image imgBuffer,
+    Option<Pose> pose,
+    int width,
+    int height,
+  ) {
     pose.match(
       () {},
       (pose) {
@@ -277,14 +292,16 @@ class OnlinePeakDetector {
           final fromPos = tryGetPosOf(from);
           final toPos = tryGetPosOf(to);
 
-          final color = img.ColorRgb8(103,146,182);
-          img.drawLine(imgBuffer,
-              x1: fromPos.$1,
-              y1: fromPos.$2,
-              x2: toPos.$1,
-              y2: toPos.$2,
-              color: color,
-              thickness: 5);
+          final color = img.ColorRgb8(103, 146, 182);
+          img.drawLine(
+            imgBuffer,
+            x1: fromPos.$1,
+            y1: fromPos.$2,
+            x2: toPos.$1,
+            y2: toPos.$2,
+            color: color,
+            thickness: 5,
+          );
         }
 
         [
@@ -330,13 +347,6 @@ class KeyFrameTemp {
 }
 
 class RawFrame {
-  final Uint8List bytes;
-  final int width;
-  final int height;
-  final ImageFormatGroup format;
-  final List<int> bytesPerRow;
-  final List<int?> bytesPerPixel;
-
   RawFrame({
     required this.bytes,
     required this.width,
@@ -345,4 +355,11 @@ class RawFrame {
     required this.bytesPerRow,
     required this.bytesPerPixel,
   });
+
+  final Uint8List bytes;
+  final int width;
+  final int height;
+  final ImageFormatGroup format;
+  final List<int> bytesPerRow;
+  final List<int?> bytesPerPixel;
 }

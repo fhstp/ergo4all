@@ -227,11 +227,13 @@ Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   await timelineFile.create();
-  final scores = session.timeline.map((entry) => (
-        entry.timestamp,
-        entry.scores,
-        entry.activity,
-      ));
+  final scores = session.timeline.map(
+    (entry) => (
+      entry.timestamp,
+      entry.scores,
+      entry.activity,
+    ),
+  );
   await _writeSoresTo(scores, timelineFile);
 
   await Future.forEach(

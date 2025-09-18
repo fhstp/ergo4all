@@ -5,6 +5,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/tips/common.dart';
+import 'package:ergo4all/tips/general_info_screen.dart';
 import 'package:ergo4all/tips/tip_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -38,11 +39,38 @@ class TipChoiceScreen extends StatelessWidget {
           Tip.handAndArm => localizations.tip_handAndArm_label,
         };
 
+    void goToGeneralTipsScreen() {
+      unawaited(
+        Navigator.of(context).push(GeneralInfoScreen.makeRoute()),
+      );
+    }
+
     void goToDetailScreen(Tip tip) {
       unawaited(
         Navigator.of(context).push(TipDetailScreen.makeRoute(tip)),
       );
     }
+
+    Widget tipButtonFor(Tip tip) {
+      return ElevatedButton(
+        key: Key('tip_button_${tip.name}'),
+        style: paleTextButtonStyle,
+        onPressed: () {
+          goToDetailScreen(tip);
+        },
+        child: Text(
+          titleFor(tip),
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+    final generalTipButton = ElevatedButton(
+      key: const Key('tip_button_general'),
+      style: paleTextButtonStyle,
+      onPressed: goToGeneralTipsScreen,
+      child: Text(localizations.tips_general_nav, textAlign: TextAlign.center),
+    );
 
     return Scaffold(
       appBar: RedCircleAppBar(
@@ -58,20 +86,13 @@ class TipChoiceScreen extends StatelessWidget {
                 child: SizedBox(
                   width: 275,
                   child: ListView.separated(
-                    itemCount: Tip.values.length,
+                    // +1 for the general tips button at the start
+                    itemCount: Tip.values.length + 1,
                     itemBuilder: (ctx, i) {
-                      final tip = Tip.values[i];
-                      return ElevatedButton(
-                        key: Key('tip_button_${tip.name}'),
-                        style: paleTextButtonStyle,
-                        onPressed: () {
-                          goToDetailScreen(tip);
-                        },
-                        child: Text(
-                          titleFor(tip),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
+                      if (i == 0) return generalTipButton;
+
+                      final tip = Tip.values[i - 1];
+                      return tipButtonFor(tip);
                     },
                     separatorBuilder: (ctx, i) =>
                         const SizedBox(height: largeSpace),
