@@ -104,7 +104,10 @@ class _ProfileEntry extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(color: blueChill),
+            const Padding(
+              padding: EdgeInsets.only(left: mediumSpace),
+              child: Divider(color: blueChill),
+            ),
           ],
         ),
       ),
