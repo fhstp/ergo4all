@@ -1,3 +1,12 @@
+# [1.117.0](https://github.com/fhstp/ergo4all/compare/v1.116.0...v1.117.0) (2025-09-18)
+
+
+### Features
+
+* adjust next-button placement in onboarding ([f76d52a](https://github.com/fhstp/ergo4all/commit/f76d52af49c8ac6e2cd0f304e5ab8ad665a856e1)), closes [#140](https://github.com/fhstp/ergo4all/issues/140)
+* dynamic title scale ([9ce30cd](https://github.com/fhstp/ergo4all/commit/9ce30cd9692e43478e240253b40e0a063e70e944))
+* remove record button tutorial ([aa9cff8](https://github.com/fhstp/ergo4all/commit/aa9cff84379b592a7006a2a8e00254803ec138e2))
+
 # [1.116.0](https://github.com/fhstp/ergo4all/compare/v1.115.0...v1.116.0) (2025-09-18)
 
 
