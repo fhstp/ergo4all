@@ -4,17 +4,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "switch fvm",
-            "type": "shell",
-            "command": "fvm use",
-            "runOptions": {
-                "runOn": "folderOpen",
-            },
-            "presentation": {
-                "close": true
-            }
-        },
-        {
             "label": "gen locales",
             "type": "shell",
             "command": "cd apps/ergo4all && fvm flutter gen-l10n",
