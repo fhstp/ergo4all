@@ -74,7 +74,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                localizations.onboarding_userCreation_title,
+                localizations.onboarding_userCreation_title.toUpperCase(),
                 style: h1Style,
                 textAlign: TextAlign.center,
               ),

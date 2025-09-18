@@ -53,7 +53,7 @@ class PrivacyScreen extends StatelessWidget {
                   Positioned(
                     top: 100,
                     child: Text(
-                      localizations.onboarding_privacy_title,
+                      localizations.onboarding_privacy_title.toUpperCase(),
                       style: h1Style.copyWith(color: cardinal),
                     ),
                   ),

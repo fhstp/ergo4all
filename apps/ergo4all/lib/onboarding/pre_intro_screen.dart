@@ -47,7 +47,7 @@ class PreIntroScreen extends StatelessWidget {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                localizations.onboarding_preIntro_title,
+                localizations.onboarding_preIntro_title.toUpperCase(),
                 style: h1Style.copyWith(color: cardinal),
               ),
             ),

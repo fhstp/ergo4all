@@ -50,7 +50,7 @@ class ErgonomicsInfoScreen extends StatelessWidget {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                localizations.onboarding_ergonomicsInfo_title,
+                localizations.onboarding_ergonomicsInfo_title.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: h1Style.copyWith(color: cardinal),
               ),

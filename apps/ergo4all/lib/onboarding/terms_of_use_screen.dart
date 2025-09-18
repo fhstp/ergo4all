@@ -54,7 +54,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                localizations.onboarding_termsOfUse_title,
+                localizations.onboarding_termsOfUse_title.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: h1Style.copyWith(color: cardinal),
               ),
