@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -9,8 +8,6 @@ import 'package:ergo4all/onboarding/state.dart';
 import 'package:ergo4all/onboarding/style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-const double _appBarHeight = 200;
 
 /// Screen for define the nickname.
 class UserCreationScreen extends StatefulWidget {
@@ -73,19 +70,16 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
         child: Column(
           children: [
-            SizedBox(
-              height: _appBarHeight,
-              child: Center(
-                child: Text(
-                  localizations.onboarding_userCreation_title,
-                  style: h1Style.copyWith(
-                    color: cardinal,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+            const SizedBox(height: largeSpace),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                localizations.onboarding_userCreation_title,
+                style: h1Style,
+                textAlign: TextAlign.center,
               ),
             ),
+            const SizedBox(height: largeSpace),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
