@@ -1,3 +1,10 @@
+# [1.114.0](https://github.com/fhstp/ergo4all/compare/v1.113.0...v1.114.0) (2025-09-18)
+
+
+### Features
+
+* uniform screen bottom margings ([03f7dab](https://github.com/fhstp/ergo4all/commit/03f7daba1f67d29ef1ae0cb9f1ba54d159413028)), closes [#154](https://github.com/fhstp/ergo4all/issues/154)
+
 # [1.113.0](https://github.com/fhstp/ergo4all/compare/v1.112.0...v1.113.0) (2025-09-17)
 
 
