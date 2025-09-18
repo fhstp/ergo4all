@@ -177,7 +177,7 @@
   "har_activity_selection": "Aktivität auswählen",
   "chart_tooltip_score": "Bewertung",
   "profile_choice_cannot_delete_default": "Das Standardprofil kann nicht gelöscht werden.",
-  "profile_no_sessions_yet": "Noch keine Sitzungen aufgenommen",
+  "profile_no_sessions_yet": "Keine Daten",
   "profile_deleted": "Profile \"{profile}\" gelöscht.",
   "profile_choice_title": "Profile",
   "profile_choice_new": "Neues Profil",

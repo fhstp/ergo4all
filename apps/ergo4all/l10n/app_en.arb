@@ -413,7 +413,7 @@
   "@profile_choice_cannot_delete_default": {
     "description": "Message to inform users that they cannot delete the default profile."
   },
-  "profile_no_sessions_yet": "No session recorded",
+  "profile_no_sessions_yet": "No data",
   "@profile_no_sessions_yet": {
     "description": "Text informing user that a profile has not yet recorded any sessions."
   },
