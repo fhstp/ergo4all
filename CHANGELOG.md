@@ -1,3 +1,12 @@
+# [1.116.0](https://github.com/fhstp/ergo4all/compare/v1.115.0...v1.116.0) (2025-09-18)
+
+
+### Features
+
+* add general info content ([24a4aaa](https://github.com/fhstp/ergo4all/commit/24a4aaaaab5bd3e3e955ecd6aef3a001c7e8062d))
+* add placeholder general info screen ([b540906](https://github.com/fhstp/ergo4all/commit/b54090613a526bf8313c9b8668d9cbb9939ab425))
+* localize nav button label ([91366ff](https://github.com/fhstp/ergo4all/commit/91366ffe59c3d5adbd96ec55c340d975080a615c))
+
 # [1.115.0](https://github.com/fhstp/ergo4all/compare/v1.114.0...v1.115.0) (2025-09-18)
 
 
