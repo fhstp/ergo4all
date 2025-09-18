@@ -1,3 +1,10 @@
+# [1.120.0](https://github.com/fhstp/ergo4all/compare/v1.119.0...v1.120.0) (2025-09-18)
+
+
+### Features
+
+* change text ([6430b73](https://github.com/fhstp/ergo4all/commit/6430b737f3478441877bad6c3a81c085bc589d78))
+
 # [1.119.0](https://github.com/fhstp/ergo4all/compare/v1.118.0...v1.119.0) (2025-09-18)
 
 
