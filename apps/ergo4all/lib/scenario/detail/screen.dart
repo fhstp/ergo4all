@@ -97,6 +97,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
           SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
             child: Align(
+              alignment: Alignment.topCenter,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -131,8 +132,10 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                       style: dynamicBodyStyle,
                     ),
                     const SizedBox(height: mediumSpace),
-                    ScenarioGraphic(widget.scenario, height: 330),
-                    const SizedBox(height: mediumSpace),
+                    if (widget.scenario != Scenario.freestyle) ...[
+                      ScenarioGraphic(widget.scenario, height: 330),
+                      const SizedBox(height: mediumSpace),
+                    ],
                     ProfileSelector(
                       profiles: profiles,
                       selected: selectedProfile,
@@ -150,6 +153,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                           selectedProfile != null ? goToRecordScreen : null,
                       child: Text(localizations.record_label),
                     ),
+                    const SizedBox(height: largeSpace),
                   ],
                 ),
               ),

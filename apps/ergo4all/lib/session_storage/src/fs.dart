@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:common/func_ext.dart';
 import 'package:common/pair_utils.dart';
 import 'package:csv/csv.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -14,16 +15,26 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:rula/rula.dart';
 
+/// Contains meta information about a [RulaSession]. It is more efficient
+/// to load only this meta information instead of the whole session if you
+/// don't need the score data immediately.
 @immutable
-class _SessionMeta {
-  const _SessionMeta(this.timestamp, this.profileId, this.scenarioIndex);
+class RulaSessionMeta {
+  ///
+  const RulaSessionMeta(this.timestamp, this.profileId, this.scenario);
 
+  /// Mirror of [RulaSession.timestamp]. Use this timestamp like an id
+  /// to get the load the full session later.
   final int timestamp;
+
+  /// Mirror of [RulaSession.profileId].
   final int profileId;
-  final int scenarioIndex;
+
+  /// Mirror of [RulaSession.scenario].
+  final Scenario scenario;
 }
 
-typedef _ScoreRow = (int, RulaScores);
+typedef _ScoreRow = (int, RulaScores, Activity?);
 
 IMap<String, String> _parseKV(List<String> lines) => IMap.fromEntries(
       lines.map((part) {
@@ -35,7 +46,7 @@ IMap<String, String> _parseKV(List<String> lines) => IMap.fromEntries(
 String _stringifyKV(IMap<String, String> kv) =>
     kv.toEntryList().map((entry) => '${entry.key}=${entry.value}').join('\n');
 
-Future<_SessionMeta> _loadMetaFrom(File file) async {
+Future<RulaSessionMeta> _loadMetaFrom(File file) async {
   final lines = await file.readAsLines();
   final map = _parseKV(lines);
 
@@ -50,21 +61,21 @@ Future<_SessionMeta> _loadMetaFrom(File file) async {
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
-  return _SessionMeta(timestamp, profileId, scenarioIndex);
+  return RulaSessionMeta(timestamp, profileId, Scenario.values[scenarioIndex]);
 }
 
-Future<void> _writeMetaTo(_SessionMeta meta, File file) async {
+Future<void> _writeMetaTo(RulaSessionMeta meta, File file) async {
   final map = IMap.fromEntries([
     MapEntry('timestamp', meta.timestamp.toString()),
     MapEntry('profileId', meta.profileId.toString()),
-    MapEntry('scenarioIndex', meta.scenarioIndex.toString()),
+    MapEntry('scenarioIndex', meta.scenario.index.toString()),
   ]);
   final text = _stringifyKV(map);
   await file.writeAsString(text);
 }
 
-List<int> _csvRowOf(_ScoreRow row) {
-  final (timestamp, scores) = row;
+List<dynamic> _csvRowOf(_ScoreRow row) {
+  final (timestamp, scores, activity) = row;
   return [
     timestamp,
     scores.fullScore,
@@ -90,10 +101,16 @@ List<int> _csvRowOf(_ScoreRow row) {
     Pair.right(scores.upperArmScores),
     Pair.left(scores.wristScores),
     Pair.right(scores.wristScores),
+    activity?.value ?? -1, // Store activity value or -1 for null
   ];
 }
 
 _ScoreRow _scoreRowOf(List<dynamic> row) {
+  final activityValue =
+      row.length > 24 ? row[24] as int : -1; // Handle backward compatibility
+  final activity =
+      activityValue == -1 ? null : Activity.fromValue(activityValue);
+
   return (
     row[0] as int,
     RulaScores(
@@ -114,6 +131,7 @@ _ScoreRow _scoreRowOf(List<dynamic> row) {
       upperArmScores: (row[20], row[21]),
       wristScores: (row[22], row[23]),
     ),
+    activity,
   );
 }
 
@@ -167,65 +185,56 @@ Future<void> _storeImage(
   await file.writeAsBytes(image, flush: true);
 }
 
-Future<List<String>> _loadActivities(File file) async {
-  if (!await file.exists()) {
-    return [];
-  }
-  
-  final lines = await file.readAsLines();
-  return lines;
-}
-
-Future<void> _writeActivities(List<String> activities, File file) async {
-  final content = activities.join('\n');
-  await file.writeAsString(content);
+Future<RulaSessionMeta> _loadMetaIn(Directory dir) {
+  final metaFile = File(path.join(dir.path, 'meta'));
+  return _loadMetaFrom(metaFile);
 }
 
 Future<RulaSession> _loadSessionFrom(Directory dir) async {
-  final metaFile = File(path.join(dir.path, 'meta'));
-  final meta = await _loadMetaFrom(metaFile);
+  final meta = await _loadMetaIn(dir);
 
   final keyFrames = await _loadKeyFrames(dir);
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   final scores = await _loadScoresFrom(timelineFile);
   final timeline = scores.map((row) {
-    final timestamp = row.$1;
-    return TimelineEntry(timestamp: timestamp, scores: row.$2);
+    final (timestamp, rulaScores, activity) = row;
+    return TimelineEntry(
+      timestamp: timestamp,
+      scores: rulaScores,
+      activity: activity,
+    );
   }).toIList();
-
-  final activitiesFile = File(path.join(dir.path, 'activities.txt'));
-  final activities = await _loadActivities(activitiesFile);
 
   return RulaSession(
     timestamp: meta.timestamp,
     profileId: meta.profileId,
-    scenario: Scenario.values[meta.scenarioIndex],
+    scenario: meta.scenario,
     timeline: timeline,
     keyFrames: keyFrames,
-    activities: activities,
   );
 }
 
 Future<void> _writeSessionTo(RulaSession session, Directory dir) async {
   final metaFile = File(path.join(dir.path, 'meta'));
   await metaFile.create();
-  final meta = _SessionMeta(
+  final meta = RulaSessionMeta(
     session.timestamp,
     session.profileId,
-    session.scenario.index,
+    session.scenario,
   );
   await _writeMetaTo(meta, metaFile);
 
   final timelineFile = File(path.join(dir.path, 'scores.csv'));
   await timelineFile.create();
-  final scores =
-      session.timeline.map((entry) => (entry.timestamp, entry.scores));
+  final scores = session.timeline.map(
+    (entry) => (
+      entry.timestamp,
+      entry.scores,
+      entry.activity,
+    ),
+  );
   await _writeSoresTo(scores, timelineFile);
-
-  final activitiesFile = File(path.join(dir.path, 'activities.txt'));
-  await activitiesFile.create();
-  await _writeActivities(session.activities, activitiesFile);
 
   await Future.forEach(
     session.keyFrames,
@@ -267,9 +276,19 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
   }
 
   @override
-  Future<List<RulaSession>> getAll() async {
+  Future<RulaSession?> getByTimestamp(int timestamp) async {
+    final sessionsDir = await _getSessionsDir();
+    final sessionDir =
+        Directory(path.join(sessionsDir.path, timestamp.toString()));
+
+    if (!sessionDir.existsSync()) return null;
+    return _loadSessionFrom(sessionDir);
+  }
+
+  @override
+  Future<List<RulaSessionMeta>> getAll() async {
     final sessionDirs = await _getSessionDirs();
-    return sessionDirs.asyncMap(_loadSessionFrom).toList();
+    return sessionDirs.asyncMap(_loadMetaIn).toList();
   }
 
   @override
@@ -291,5 +310,19 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
     for (final session in sessionsWithProfile) {
       await deleteByTimestamp(session.timestamp);
     }
+  }
+
+  @override
+  Future<RulaSessionMeta?> getLatestMetaFor(int profileId) async {
+    final metas = await getAll();
+
+    RulaSessionMeta? latest;
+
+    for (final meta in metas) {
+      if (meta.profileId != profileId) continue;
+      if (latest == null || meta.timestamp > latest.timestamp) latest = meta;
+    }
+
+    return latest;
   }
 }

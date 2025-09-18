@@ -116,18 +116,13 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(30),
                       child: SvgPicture.asset(graphicKey, height: 300),
                     ),
+                    ElevatedButton(
+                      key: const Key('next'),
+                      style: primaryTextButtonStyle,
+                      onPressed: goToUserCreation,
+                      child: Text(localizations.onboarding_label),
+                    ),
                   ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: largeSpace),
-              child: Center(
-                child: ElevatedButton(
-                  key: const Key('next'),
-                  style: primaryTextButtonStyle,
-                  onPressed: goToUserCreation,
-                  child: Text(localizations.onboarding_label),
                 ),
               ),
             ),

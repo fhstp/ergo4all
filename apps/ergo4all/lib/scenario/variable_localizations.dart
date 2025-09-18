@@ -14,6 +14,7 @@ extension VariableLocalizations on AppLocalizations {
         Scenario.ceiling => scenario_ceiling_label,
         Scenario.lift25 => scenario_lift_label,
         Scenario.conveyorBelt => scenario_conveyor_label,
+        Scenario.freestyle => scenario_freestyle_label,
       };
 
   /// Gets the localized summary of a [Scenario].
@@ -27,6 +28,7 @@ extension VariableLocalizations on AppLocalizations {
         Scenario.ceiling => scenario_ceiling_summary,
         Scenario.lift25 => scenario_lift_and_carry_summary,
         Scenario.conveyorBelt => scenario_conveyor_summary,
+        Scenario.freestyle => scenario_freestyle_summary,
       };
 
   /// Gets the localized description of a [Scenario].
@@ -40,6 +42,7 @@ extension VariableLocalizations on AppLocalizations {
         Scenario.ceiling => scenario_ceiling_description,
         Scenario.lift25 => scenario_lift_description,
         Scenario.conveyorBelt => scenario_conveyor_description,
+        Scenario.freestyle => scenario_freestyle_description,
       };
 
   /// Gets the localized expectation text for a [Scenario].
@@ -53,5 +56,6 @@ extension VariableLocalizations on AppLocalizations {
         Scenario.ceiling => scenario_ceiling_expectation,
         Scenario.lift25 => scenario_lift_expectation,
         Scenario.conveyorBelt => scenario_conveyor_expectation,
+        Scenario.freestyle => scenario_freestyle_expectation,
       };
 }

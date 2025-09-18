@@ -47,6 +47,7 @@ extension VariableLocalizations on AppLocalizations {
         Scenario.ceiling => scenario_ceiling_tips,
         Scenario.lift25 => scenario_lift_tips,
         Scenario.conveyorBelt => scenario_conveyor_tips,
+        Scenario.freestyle => '',
       };
 
   /// Gets a localized improvement suggestion for the given [scenario].
@@ -60,5 +61,6 @@ extension VariableLocalizations on AppLocalizations {
         Scenario.ceiling => scenario_ceiling_tools,
         Scenario.lift25 => scenario_lift_tools,
         Scenario.conveyorBelt => scenario_conveyor_tools,
+        Scenario.freestyle => '',
       };
 }

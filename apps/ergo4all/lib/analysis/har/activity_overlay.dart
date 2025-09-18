@@ -1,6 +1,6 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/analysis/har/activity_recognition.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,9 @@ class ActivityOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     if (activity == null) return const SizedBox.shrink();
-    
+
+    final activityName = localizations.activityDisplayName(activity!);
+    final message = '${localizations.har_activity}: $activityName';
     return Positioned(
       top: 24,
       left: 0,
@@ -30,7 +32,7 @@ class ActivityOverlay extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Text(
-            '${localizations.har_activity}: ${localizations.activityDisplayName(activity!)}',
+            message,
             style: infoText.copyWith(color: white),
           ),
         ),

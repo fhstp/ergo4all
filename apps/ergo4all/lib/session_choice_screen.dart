@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
-import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
+import 'package:ergo4all/profile/common.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
-import 'package:ergo4all/profile/common.dart';
-import 'package:ergo4all/profile/storage/common.dart';
+import 'package:ergo4all/session_storage/src/fs.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -45,7 +46,7 @@ class _SessionEntry extends StatelessWidget {
 
   static final dateFormat = DateFormat('dd MMM yyyy, HH:mm');
 
-  final RulaSession session;
+  final RulaSessionMeta session;
   final Profile profile;
   final void Function()? onTap;
   final void Function()? onDismissed;
@@ -65,6 +66,7 @@ class _SessionEntry extends StatelessWidget {
       Scenario.ceiling => localizations.scenario_ceiling_label,
       Scenario.lift25 => localizations.scenario_lift_label,
       Scenario.conveyorBelt => localizations.scenario_conveyor_label,
+      Scenario.freestyle => localizations.scenario_freestyle_label,
     };
     final formattedDate = dateFormat.format(dateTime);
 
@@ -88,7 +90,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
   late final RulaSessionRepository sessionRepository;
   late final ProfileRepo profileRepo;
 
-  List<RulaSession> sessions = List.empty();
+  List<RulaSessionMeta> sessions = List.empty();
   IMap<int, Profile> profilesById = const IMap.empty();
 
   @override
@@ -120,14 +122,21 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void goToResultsFor(RulaSession session) {
-      final profile = profilesById[session.profileId];
+    Future<void> goToResultsFor(RulaSessionMeta sessionMeta) async {
+      final profile = profilesById[sessionMeta.profileId];
       assert(profile != null, 'Profile for session must exist');
+
+      final session =
+          await sessionRepository.getByTimestamp(sessionMeta.timestamp);
+      assert(
+        session != null,
+        'Session should exist since we just got it from storage',
+      );
 
       if (!context.mounted) return;
       unawaited(
         Navigator.of(context).pushReplacement(
-          ResultsScreen.makeRoute(session, profile!),
+          ResultsScreen.makeRoute(session!, profile!),
         ),
       );
     }
@@ -163,21 +172,28 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
                   style: paragraphHeaderStyle,
                 ),
               )
-            : ListView.builder(
-                itemCount: sessions.length,
-                itemBuilder: (context, index) {
-                  final session = sessions[index];
-                  return _SessionEntry(
-                    session: session,
-                    profile: profilesById[session.profileId]!,
-                    onDismissed: () {
-                      deleteSessionWith(index);
-                    },
-                    onTap: () {
-                      goToResultsFor(session);
-                    },
-                  );
-                },
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: sessions.length,
+                      itemBuilder: (context, index) {
+                        final session = sessions[index];
+                        return _SessionEntry(
+                          session: session,
+                          profile: profilesById[session.profileId]!,
+                          onDismissed: () {
+                            deleteSessionWith(index);
+                          },
+                          onTap: () {
+                            goToResultsFor(session);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: largeSpace),
+                ],
               ),
       ),
     );

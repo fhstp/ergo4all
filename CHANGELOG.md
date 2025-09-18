@@ -1,3 +1,69 @@
+# [1.116.0](https://github.com/fhstp/ergo4all/compare/v1.115.0...v1.116.0) (2025-09-18)
+
+
+### Features
+
+* add general info content ([24a4aaa](https://github.com/fhstp/ergo4all/commit/24a4aaaaab5bd3e3e955ecd6aef3a001c7e8062d))
+* add placeholder general info screen ([b540906](https://github.com/fhstp/ergo4all/commit/b54090613a526bf8313c9b8668d9cbb9939ab425))
+* localize nav button label ([91366ff](https://github.com/fhstp/ergo4all/commit/91366ffe59c3d5adbd96ec55c340d975080a615c))
+
+# [1.115.0](https://github.com/fhstp/ergo4all/compare/v1.114.0...v1.115.0) (2025-09-18)
+
+
+### Features
+
+* remove tips link from onboarding ([e125818](https://github.com/fhstp/ergo4all/commit/e12581825edf179e5ff9caebfa1cd15672e02c89)), closes [#125](https://github.com/fhstp/ergo4all/issues/125)
+
+# [1.114.0](https://github.com/fhstp/ergo4all/compare/v1.113.0...v1.114.0) (2025-09-18)
+
+
+### Features
+
+* uniform screen bottom margings ([03f7dab](https://github.com/fhstp/ergo4all/commit/03f7daba1f67d29ef1ae0cb9f1ba54d159413028)), closes [#154](https://github.com/fhstp/ergo4all/issues/154)
+
+# [1.113.0](https://github.com/fhstp/ergo4all/compare/v1.112.0...v1.113.0) (2025-09-17)
+
+
+### Features
+
+* modify iOS project to be able to compile in iOS devices, fix orientation of skeleton overlay in iOS ([49089b8](https://github.com/fhstp/ergo4all/commit/49089b8847c79a25fee5cf2d41a838981d6b3795))
+
+# [1.112.0](https://github.com/fhstp/ergo4all/compare/v1.111.0...v1.112.0) (2025-09-17)
+
+
+### Features
+
+* optimize session choice screen ([489ef64](https://github.com/fhstp/ergo4all/commit/489ef64f9abd81fa269d864587a1931f247029ac))
+
+# [1.111.0](https://github.com/fhstp/ergo4all/compare/v1.110.0...v1.111.0) (2025-09-17)
+
+
+### Features
+
+* Improve keyframe extraction by switching from screen capture to storing raw image data and processing keyframe images at the end, ensuring real-time images without delays. ([7f9c5b9](https://github.com/fhstp/ergo4all/commit/7f9c5b97940be8c8a0559c6878b7976675bdf972))
+* move keyframes extration after stopping of pose detection and camera, to ensure a more natural workflow ([53fa9b8](https://github.com/fhstp/ergo4all/commit/53fa9b83f10200c78d80999d57c56d1ef3ea0865))
+
+# [1.110.0](https://github.com/fhstp/ergo4all/compare/v1.109.0...v1.110.0) (2025-09-17)
+
+
+### Features
+
+* center button text ([97ecf3a](https://github.com/fhstp/ergo4all/commit/97ecf3af61531c1206ae48b39f1dcdc36b12b382)), closes [#154](https://github.com/fhstp/ergo4all/issues/154)
+
+# [1.109.0](https://github.com/fhstp/ergo4all/compare/v1.108.0...v1.109.0) (2025-09-15)
+
+
+### Features
+
+* freestyle mode ([f25a13f](https://github.com/fhstp/ergo4all/commit/f25a13fbd443439cd70edab0e141ad0384f63393))
+
+# [1.108.0](https://github.com/fhstp/ergo4all/compare/v1.107.0...v1.108.0) (2025-09-13)
+
+
+### Features
+
+* improve keyframes peak extraction by looking for the max in the keyframes window ([5a51baf](https://github.com/fhstp/ergo4all/commit/5a51baf21552cf182b9b3a10ae24d3c644385579))
+
 # [1.107.0](https://github.com/fhstp/ergo4all/compare/v1.106.0...v1.107.0) (2025-09-12)
 
 

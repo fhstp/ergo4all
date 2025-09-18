@@ -70,6 +70,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: largeSpace),
             ],
           ),
         ),

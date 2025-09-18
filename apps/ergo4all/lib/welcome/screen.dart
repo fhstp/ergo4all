@@ -163,6 +163,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             VersionDisplay(version: projectVersion, onTap: incrementTapCount),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

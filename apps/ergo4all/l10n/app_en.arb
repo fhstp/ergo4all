@@ -58,31 +58,78 @@
     "description": "Label for button to change the app language"
   },
   "menu_privacy_label": "Privacy Manifest",
-  "onboarding_ergonomicsInfo_title": "WHAT IS\nERGONOMICS?",
+  "onboarding_ergonomicsInfo_title": "What is ergonomics",
+  "@onboarding_ergonomicsInfo_title": {
+    "description": "Title for the ergonomics-info screen in onboarding"
+  },
   "onboarding_ergonomicsInfo_subtitle": "Before you start, here's what you need to know:",
-  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It’s not just about whether something feels uncomfortable right now.\n\n Sometimes the risk score might be low, even if you felt that body part working a lot. That’s because feeling a muscle work isn’t the same as it being at risk – risk depends on posture, performed activities, load, and how often you repeat the movement.\n\n This app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n\n For tips on better posture and movement, check the",
-  "onboarding_ergonomicsInfo_description_link": "Tipps Screen",
+  "@onboarding_ergonomicsInfo_subtitle": {
+    "description": "Sub-title for the ergonomics-info screen in onboarding"
+  },
+  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\nSometimes the risk score might be low, even if you felt that body part working a lot. That's because feeling a muscle work isn't the same as it being at risk - risk depends on posture, performed activities, load, and how often you repeat the movement.\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n👉 For tips on better posture and movement, check the \"Tipps screen\".",
+  "@onboarding_ergonomicsInfo_description": {
+    "description": "Body-text for the ergonomics-info screen in onboarding"
+  },
   "onboarding_label": "Next",
   "@onboarding_label": {
     "description": "Label for button to continue the onboarding process"
   },
   "onboarding_privacy_title": "PRIVACY",
+  "@onboarding_privacy_title": {
+    "description": "Title for the privacy screen in onboarding"
+  },
   "onboarding_privacy_subtitle": "No cloud. No tracking.",
-  "onboarding_privacy_description": "Ergo4A works completely offline. Everything is processed locally on your device. You can delete all data anytime – by uninstalling the app or through the menu.\n\nYou stay in control - just your device, your storage, and your trust - protected.",
-  "onboarding_preIntro_title": "APP OVERVIEW",
+  "@onboarding_privacy_subtitle": {
+    "description": "Sub-title for the privacy screen in onboarding"
+  },
+  "onboarding_privacy_description": "Ergo4A works completely offline. Everything is processed locally on your device. You can delete all data anytime - by uninstalling the app or through the menu.\nYou stay in control - just your device, your storage, and your trust - protected.",
+  "@onboarding_privacy_description": {
+    "description": "Body-text for the privacy screen in onboarding"
+  },
+  "onboarding_preIntro_title": "App overview",
+  "@onboarding_preIntro_title": {
+    "description": "Title for the app-overview screen in onboarding"
+  },
   "onboarding_preIntro_subtitle": "Learn about ergonomics with an interactive AI",
-  "onboarding_preIntro_description": "Ever had sharp pain when lifting? Or that stubborn neck pain that won’t go away? These can be signs of poor posture at work.\n\n This app uses AI to analyse your work posture from video and give practical tips to improve it. It’s a research prototype, developed to help prevent long-term postural problems. It’s designed for you – as a learning tool, not as medical advice.",
+  "@onboarding_preIntro_subtitle": {
+    "description": "Sub-title for the app-overview screen in onboarding"
+  },
+  "onboarding_preIntro_description": "Ever had sharp pain when lifting? Or that stubborn neck pain that won't go away? These can be signs of poor posture at work.\nThis app uses AI to analyze your work posture from video and give practical tips to improve it. It's a research prototype, developed to help prevent long-term postural problems. It's designed for you - as a learning tool, not as medical advice.",
+  "@onboarding_preIntro_description": {
+    "description": "Body-text for the app-overview screen in onboarding"
+  },
   "onboarding_skip_label": "Skip",
   "@onboarding_skip_label": {
     "description": "Label for button to skip the user creation part of the onboarding process"
   },
-  "onboarding_termsOfUse_title": "TERMS OF USE",
-  "onboarding_termsOfUse_description": "This app uses AI to make ergonomics reports for information only. Like any AI, the results might be incorrect – don’t treat them as expert advice. Don’t use it on others without permission, misuse the service, or share harmful content. Using this app is your choice and responsibility.",
+  "onboarding_termsOfUse_title": "Terms of use",
+  "@onboarding_termsOfUse_title": {
+    "description": "Title for the terms-of-use screen in onboarding"
+  },
+  "onboarding_termsOfUse_description": "This app uses AI to make ergonomics reports for information only. Like any AI, the results might be incorrect - don't treat them as expert advice. Don't use it on others without permission, misuse the service, or share harmful content. Using this app is your choice and responsibility.",
+  "@onboarding_termsOfUse_description": {
+    "description": "Body-text for the terms-of-use screen in onboarding"
+  },
   "onboarding_termsOfUse_link": "Read more about our terms of use*",
+  "@onboarding_termsOfUse_link": {
+    "description": "Link-text for the link to navigate to extended terms of use from onboarding."
+  },
   "onboarding_termsOfUse_accept": "I accept",
-  "onboarding_userCreation_title": "YOUR NICKNAME",
+  "@onboarding_termsOfUse_accept": {
+    "description": "Label for button to accept terms-of-use"
+  },
+  "onboarding_userCreation_title": "Your nickname",
+  "@onboarding_userCreation_title": {
+    "description": "Title for the profile-creation screen in onboarding"
+  },
   "onboarding_userCreation_subtitle": "Create a nickname so we can address you directly.",
-  "onboarding_userCreation_description": "You can switch between different nicknames and save results for each user — great if you want to use the app with others like colleagues or friends. This makes it easy to find your results and track everyone’s progress.\n\n We don’t personalise or track you. This feature is optional. If you save someone else’s nickname, please make sure you have their permission.",
+  "@onboarding_userCreation_subtitle": {
+    "description": "Sub-title for the profile-creation screen in onboarding"
+  },
+  "onboarding_userCreation_description": "You can switch between different nicknames and save results for each user — great if you want to use the app with others like colleagues or friends. This makes it easy to find your results and track everyone's progress.\nWe don't personalize or track you. This feature is optional. If you save someone else’s nickname, please make sure you have their permission.",
+  "@onboarding_userCreation_description": {
+    "description": "Body-text for the profile-creation screen in onboarding"
+  },
   "onboarding_userCreation_input_text": "Nickname...",
   "onboarding_userCreation_label": "Create Profile",
   "@onboarding_userCreation_label": {
@@ -136,6 +183,17 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_conveyor_summary": "Working on a conveyor belt for long periods",
+  "scenario_freestyle_expectation": "This mode allows free ergonomic analysis without time constraints, suitable for custom evaluations.",
+  "@scenario_freestyle_expectation": {},
+  "scenario_freestyle_description": "A flexible mode that allows users to perform any activity they want to analyze ergonomically. There is no time limit, giving users full control over when to start and stop recording.",
+  "@scenario_freestyle_description": {
+    "description": "Long description text for freestyle scenario"
+  },
+  "scenario_freestyle_label": "Freestyle Mode",
+  "@scenario_freestyle_label": {
+    "description": "Short label text for buttons referencing freestyle scenario"
+  },
+  "scenario_freestyle_summary": "Freestyle mode with no time limit",
   "scenario_lift_and_carry_expectation": "Poor ergonomic posture can lead to high strain on the lower back, increasing the risk of fatigue or injury.",
   "@scenario_lift_and_carry_expectation": {},
   "scenario_lift_and_carry_description": "A worker regularly lifts heavy metal plates from the floor onto a workbench, often with his back bent.",
@@ -350,5 +408,59 @@
   "har_class_walking": "Walking",
   "har_class_no_selection": "No Selection",
   "har_activity_selection": "Select Activity",
-  "chart_tooltip_score": "Score"
+  "chart_tooltip_score": "Score",
+  "profile_choice_cannot_delete_default": "Can't delete default profile",
+  "@profile_choice_cannot_delete_default": {
+    "description": "Message to inform users that they cannot delete the default profile."
+  },
+  "profile_no_sessions_yet": "No session recorded",
+  "@profile_no_sessions_yet": {
+    "description": "Text informing user that a profile has not yet recorded any sessions."
+  },
+  "profile_deleted": "Profile \"{profile}\" deleted",
+  "@profile_deleted": {
+    "description": "Message for when a profile was deleted",
+    "placeholders": {
+      "profile": {
+        "type": "String",
+        "description": "The name of the deleted profile"
+      }
+    }
+  },
+  "profile_choice_title": "Profiles",
+  "@profile_choice_title": {
+    "description": "Title for the profile choice screen"
+  },
+  "profile_choice_new": "New profile",
+  "@profile_choice_new": {
+    "description": "Button label for creating a new profile"
+  },
+  "tips_general_nav": "General",
+  "@tips_general_nav": {
+    "description": "Label for a button which brings the user to the general ergonomics info screen"
+  },
+  "tips_general_title": "What is ergonomics",
+  "@tips_general_title": {
+    "description": "Title for the general ergonomics info screen"
+  },
+  "tips_general_ergonomics_explanation": "Ergonomics is the science of keeping your body in healthy, natural positions while you work or move, so you avoid strain and injury over time.\nA natural position means the posture where your muscles, joints, and bones work together smoothly and comfortably.",
+  "@tips_general_ergonomics_explanation": {
+    "description": "The first paragraph on the general ergonomics info screen"
+  },
+  "tips_general_factors": "So what factors determine the risk of injury? What really matters is the position you hold, the action you are performing, and how often you repeat that movement. But these factors can be hard to recognize, especially if you're new to this.",
+  "@tips_general_factors": {
+    "description": "The second paragraph on the general ergonomics info screen"
+  },
+  "tips_general_example": "For example, when you lift something heavy, bending your knees activates your leg muscles, more, which helps protect your back.",
+  "@tips_general_example": {
+    "description": "The third paragraph on the general ergonomics info screen"
+  },
+  "tips_general_legs": "Although you are using your leg muscles more, this results in a more natural posture, and a lower risk of injury. On the other hand, sometimes you might feel a muscle group working actively, but the resulting ergonomic stain is low - sometimes muscle activity is good and necessary, as long as your posture is natural.\nThe science of movement can be complex, but one important thing to remember is that your body parts don't work alone - they are all connected.",
+  "@tips_general_legs": {
+    "description": "The fourth paragraph on the general ergonomics info screen"
+  },
+  "tips_general_teach": "Our app tries to teach you to recognize wrong patterns and embrace the good ones.",
+  "@tips_general_teach": {
+    "description": "The fifth paragraph on the general ergonomics info screen"
+  }
 }

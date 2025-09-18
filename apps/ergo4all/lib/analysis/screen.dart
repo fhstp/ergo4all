@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:ui' as ui;
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
@@ -9,21 +9,20 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/camera_utils.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/analysis/har/activity_overlay.dart';
 import 'package:ergo4all/analysis/har/activity_recognition.dart';
-import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
 import 'package:ergo4all/common/rula_session.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose/pose.dart';
@@ -82,22 +81,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   Queue<_Frame> frameQueue = Queue();
   _AnalysisMode analysisMode = _AnalysisMode.none;
   ActivityRecognitionManager activityRecognitionManager =
-    ActivityRecognitionManager();
+      ActivityRecognitionManager();
   List<TimelineEntry> timeline = List.empty(growable: true);
 
   List<KeyFrame> maxKeyFrames = List.empty(growable: true);
 
   OnlinePeakDetector peakDetector = OnlinePeakDetector();
 
-  final GlobalKey _previewContainerKey = GlobalKey();
-
   int _lastProcessTime = 0;
 
   late final AnimationController progressAnimationController =
       AnimationController(
-    value: 30,
-    duration: const Duration(seconds: 30),
-    upperBound: 30,
+    value: isFreestyleMode ? 120 : 30,
+    duration: Duration(seconds: isFreestyleMode ? 120 : 30),
+    upperBound: isFreestyleMode ? 120 : 30,
     vsync: this,
   );
 
@@ -108,15 +105,23 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   // Human activity recognition subscription
   StreamSubscription<Activity>? activitySubscription;
 
+  /// Returns true if the current scenario is freestyle mode
+  bool get isFreestyleMode => widget.scenario == Scenario.freestyle;
+
   void goToResults() {
     if (!context.mounted) return;
 
-    final localizations = AppLocalizations.of(context)!;
-    final weightedActivities = activityRecognitionManager.computeWeightedActivities();
-    final activities = timeline.map((e) => 
-      localizations.activityDisplayName(
-        weightedActivities[e.timestamp] ?? Activity.background,
-      ),).toList();
+    final weightedActivities =
+        activityRecognitionManager.computeWeightedActivities();
+    timeline = timeline
+        .map(
+          (e) => TimelineEntry(
+            timestamp: e.timestamp,
+            scores: e.scores,
+            activity: weightedActivities[e.timestamp] ?? Activity.background,
+          ),
+        )
+        .toList();
 
     final session = RulaSession(
       timestamp: DateTime.now().millisecondsSinceEpoch,
@@ -124,7 +129,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       scenario: widget.scenario,
       timeline: timeline.toIList(),
       keyFrames: maxKeyFrames,
-      activities: activities,
     );
 
     sessionRepository.put(session);
@@ -139,7 +143,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
   }
 
-  void onFrame(_Frame frame) {
+  void onFrame(_Frame frame, RawFrame imageRaw) {
     if (analysisMode == _AnalysisMode.none || !mounted) return;
 
     final targetQueueCount = analysisMode == _AnalysisMode.full ? 5 : 1;
@@ -167,10 +171,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     setState(() {
       frame.pose.match(
         () {},
-        (pose)
-        {
+        (pose) {
           activityRecognitionManager.addPose(
-            normalizePose(averagePose), frame.timestamp,
+            normalizePose(averagePose),
+            frame.timestamp,
           );
         },
       );
@@ -184,52 +188,56 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final scores = scoresOf(rulaSheet);
 
     // take a screenshot every 250 ms
-    if (frame.timestamp - _lastProcessTime >= 250) {
+    if (frame.timestamp - _lastProcessTime >= 250 &&
+        timeline.isNotEmpty &&
+        frame.timestamp - timeline.first.timestamp >= 2000) {
       _lastProcessTime = frame.timestamp;
-      captureWidgetScreenshot(scores);
+      peakDetector.addFrame(scores, imageRaw, frame.timestamp, frame.pose);
     }
 
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
-  /// take screenshot of current image stream with pose overlay, do noting if fails.
-  Future<void> captureWidgetScreenshot(RulaScores scores) async {
-    try {
-      final boundary = _previewContainerKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
-      final image = await boundary?.toImage();
-      final byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
-      final pngBytes = byteData?.buffer.asUint8List();
-
-      peakDetector.addFrame(scores, pngBytes!, DateTime.now().millisecondsSinceEpoch);
-    } catch (e) {
-      print("Screenshot error: $e, skip screenshoot");
-      return null;
-    }
-  }
-
-  void onPoseInput(PoseDetectInput input) {
+  void onPoseInput(PoseDetectInput input, RawFrame imageRaw) {
     if (analysisMode == _AnalysisMode.none) return;
 
     // For some reason, the width and height in the image are flipped in
-    // portrait mode.
+    // portrait mode only for Android.
     // So in order for the math in following code to be correct, we need
     // to flip it back.
     // This might be an issue if we ever allow landscape mode. Then we
     // would need to use some dynamic logic to determine the image orientation.
-    final imageSize = input.metadata!.size.flipped;
+    var imageSize = input.metadata!.size;
+    if (Platform.isAndroid) {
+      imageSize = imageSize.flipped;
+    }
 
     final timestamp = DateTime.now().millisecondsSinceEpoch;
 
     detectPose(input).then((pose) {
       final frame = _Frame(timestamp, Option.fromNullable(pose), imageSize);
-      onFrame(frame);
+      onFrame(frame, imageRaw);
     });
   }
 
   void onCameraImage(CameraValue camera, CameraImage image) {
     final input = poseDetectInputFromCamera(camera, image);
-    onPoseInput(input);
+
+    final allBytes = WriteBuffer();
+    for (final plane in image.planes) {
+      allBytes.putUint8List(plane.bytes);
+    }
+
+    final rawFrame = RawFrame(
+      bytes: allBytes.done().buffer.asUint8List(),
+      width: image.width,
+      height: image.height,
+      format: image.format.group,
+      bytesPerRow: image.planes.map((p) => p.bytesPerRow).toList(),
+      bytesPerPixel: image.planes.map((p) => p.bytesPerPixel).toList(),
+    );
+
+    onPoseInput(input, rawFrame);
   }
 
   Future<void> tryCompleteAnalysis() async {
@@ -248,12 +256,12 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       'Camera controller must be initialized.',
     );
 
-    // select keyframes
-    maxKeyFrames = peakDetector.topPeaks;
-
     await cameraController.stopImageStream();
     await cameraController.dispose();
     await stopPoseDetection();
+
+    // select keyframes
+    maxKeyFrames = peakDetector.topPeaks;
 
     goToResults();
 
@@ -276,6 +284,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       analysisMode = _AnalysisMode.full;
     });
 
+    // Start the timer for both freestyle and regular modes
     unawaited(
       progressAnimationController.reverse().then((_) {
         tryCompleteAnalysis();
@@ -320,7 +329,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     super.initState();
 
     activitySubscription = activityRecognitionManager
-        .onlineInferenceOutputController.stream.listen((activity) {
+        .onlineInferenceOutputController.stream
+        .listen((activity) {
       if (mounted) {
         setState(() {
           currentActivity = activity;
@@ -360,20 +370,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
           fit: StackFit.expand,
           children: [
             frameQueue.lastOption
-              .flatMap(
-                (frame) => frame.pose.map(
-                  (pose) => CustomPaint(
-                    willChange: true,
-                    painter: Pose3dPainter(
-                      pose: pose,
-                      imageSize: frame.imageSize,
-                      color: hippieBlue,
-                    ),
-                  ),
-                ),
-              )
-              .toNullable() ?? const SizedBox.shrink(),
-                
+                    .flatMap(
+                      (frame) => frame.pose.map(
+                        (pose) => CustomPaint(
+                          willChange: true,
+                          painter: Pose3dPainter(
+                            pose: pose,
+                            imageSize: frame.imageSize,
+                            color: hippieBlue,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toNullable() ??
+                const SizedBox.shrink(),
             ActivityOverlay(activity: currentActivity),
           ],
         ),
@@ -391,20 +401,29 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  RepaintBoundary(
-                    key: _previewContainerKey,
-                    child: cameraPreview,
-                  ),
-                  Positioned(
-                    left: largeSpace,
-                    right: largeSpace,
-                    bottom: largeSpace,
-                    child: RecordingProgressIndicator(
-                      remainingTime: progressAnimationController.value,
-                      criticalTime: 5,
-                      initialTime: 30,
+                  cameraPreview,
+                  if (!isFreestyleMode)
+                    Positioned(
+                      left: largeSpace,
+                      right: largeSpace,
+                      bottom: largeSpace,
+                      child: RecordingProgressIndicator(
+                        remainingTime: progressAnimationController.value,
+                        criticalTime: 5,
+                        initialTime: 30,
+                      ),
                     ),
-                  ),
+                  if (isFreestyleMode)
+                    Positioned(
+                      left: largeSpace,
+                      right: largeSpace,
+                      bottom: largeSpace,
+                      child: RecordingProgressIndicator(
+                        remainingTime: progressAnimationController.value,
+                        criticalTime: 10,
+                        initialTime: 120,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -422,6 +441,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                 child: Text(isRecording ? 'Stop' : 'Start'),
               ),
             ),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

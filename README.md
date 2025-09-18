@@ -8,16 +8,16 @@
     </tr>
     <tr>
         <th style="border: none">
-            <img src="apps/ergo4all/assets/images/logos/ak.jpg" height="150px" />
+            <img src="apps/ergo4all/assets/images/logos/ak.jpg" alt="The logo of the AK Lower Austria" height="150px" />
         </th>
         <th style="border: none">
-            <img src="apps/ergo4all//assets/images/logos/tuwien.jpg" height="150px" />
-            <img src="apps/ergo4all//assets/images/logos/fhstp.png" height="150px" />
+            <img src="apps/ergo4all//assets/images/logos/tuwien.jpg" alt="The logo of the TU Vienna" height="150px" />
+            <img src="apps/ergo4all//assets/images/logos/fhstp.png" alt="The logo of the FH St. Pölten" height="150px" />
         </th>
     </tr>
 </table>
 
-The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle) 
+The main repository for the [Ergo4All](https://research.fhstp.ac.at/projekte/ergo4all-ergonomie-fuer-alle)
 project.
 
 Checkout the projects [Changelog](./CHANGELOG.md) to see what's new.
@@ -75,3 +75,16 @@ We use the following commit types:
 
 We also use scopes matching the name of the affected app or package. If a
 change affects multiple scopes, then omit it.
+
+## Contributors
+
+|                                                                                                                                                                                 |                                                                                          |                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| <a href="https://github.com/AlinaGodun"><img height="50" src="https://github.com/AlinaGodun.png?size=50" alt="AlinaGodun"></a>                                                  | [Alina Godun](https://www.tuwien.at/mwbw/im/ie/mmi/team)                                 | ML and Visualization Development                          |
+| <a href="https://github.com/anasoftwareanddataengineer/"><img height="50" src="https://github.com/anasoftwareanddataengineer.png?size=50" alt="anasoftwareanddataengineer"></a> | [Ana Vesic](https://www.tuwien.at/mwbw/im/ie/mmi/team)                                   | UX conceptualisation, initial data visualisation concepts |
+| <a href="https://github.com/kaiseran99"><img height="50" src="https://github.com/kaiseran99.png?size=50" alt="kaiseran99"></a>                                                  | Andreas Kaiser                                                                           | App development                                           |
+| <a href="https://github.com/RiinaXoXo"><img height="50" src="https://github.com/RiinaXoXo.png?size=50" alt="RiinaXoXo"></a>                                                     | [Carina Stoiber](https://www.linkedin.com/in/carina-stoiber)                             | UI/UX                                                     |
+| <a href="https://github.com/ukarfs"><img height="50" src="https://github.com/ukarfs.png?size=50" alt="ukarfs"></a>                                                              | [David Kostolani](https://www.tuwien.at/mwbw/im/ie/mmi/team)                             | AI model architecture and development roadmap             |
+| <a href="https://github.com/comradevanti"><img height="50" src="https://github.com/comradevanti.png?size=50" alt="comradevanti"></a>                                            | [Ramon Brullo](https://www.fhstp.ac.at/de/uber-uns/mitarbeiter-innen-a-z/brullo-ramon-1) | App development                                           |
+| <a href="https://github.com/SantiagoCalvo"><img height="50" src="https://github.com/SantiagoCalvo.png?size=50" alt="SantiagoCalvo"></a>                                         | [Santiago Calvo](https://www.tuwien.at/mwbw/im/ie/mmi/team)                              | App development                                           |
+| <a href="https://github.com/ThiccWitch"><img height="50" src="https://github.com/ThiccWitch.png?size=50" alt="ThiccWitch"></a>                                                  | [Vivian Seidl](https://www.fhstp.ac.at/en/about-us/staff-a-z/seidl-vivian)               | UI/UX and Visualizations                                  |

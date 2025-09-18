@@ -1,12 +1,23 @@
 import 'package:ergo4all/common/rula_session.dart';
+import 'package:ergo4all/session_storage/src/fs.dart';
 
 /// Store for [RulaSession] objects.
 abstract class RulaSessionRepository {
   /// Stores a [RulaSession] object.
   Future<void> put(RulaSession session);
 
-  /// Retrieves all stored [RulaSession]s
-  Future<List<RulaSession>> getAll();
+  /// Attempts to load the [RulaSession] associated with the given
+  /// timestamp. If no such session is found `null` is returned.
+  Future<RulaSession?> getByTimestamp(int timestamp);
+
+  /// Retrieves meta data for all stored [RulaSession]s. If you want to
+  /// actually load the full session data use [getByTimestamp] with
+  /// [RulaSessionMeta.timestamp].
+  Future<List<RulaSessionMeta>> getAll();
+
+  /// Gets meta data for the latest recorded session with the given [profileId].
+  /// Returns `null` if no session was yet recorded with that profile.
+  Future<RulaSessionMeta?> getLatestMetaFor(int profileId);
 
   /// Deletes a [RulaSession] based on it's [timestamp].
   Future<void> deleteByTimestamp(int timestamp);
