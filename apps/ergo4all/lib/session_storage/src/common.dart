@@ -15,6 +15,10 @@ abstract class RulaSessionRepository {
   /// [RulaSessionMeta.timestamp].
   Future<List<RulaSessionMeta>> getAll();
 
+  /// Gets meta data for the latest recorded session with the given [profileId].
+  /// Returns `null` if no session was yet recorded with that profile.
+  Future<RulaSessionMeta?> getLatestMetaFor(int profileId);
+
   /// Deletes a [RulaSession] based on it's [timestamp].
   Future<void> deleteByTimestamp(int timestamp);
 

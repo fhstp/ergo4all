@@ -416,5 +416,31 @@
   "har_class_walking": "Walking",
   "har_class_no_selection": "No Selection",
   "har_activity_selection": "Select Activity",
-  "chart_tooltip_score": "Score"
+  "chart_tooltip_score": "Score",
+  "profile_choice_cannot_delete_default": "Can't delete default profile",
+  "@profile_choice_cannot_delete_default": {
+    "description": "Message to inform users that they cannot delete the default profile."
+  },
+  "profile_no_sessions_yet": "No session recorded",
+  "@profile_no_sessions_yet": {
+    "description": "Text informing user that a profile has not yet recorded any sessions."
+  },
+  "profile_deleted": "Profile \"{profile}\" deleted",
+  "@profile_deleted": {
+    "description": "Message for when a profile was deleted",
+    "placeholders": {
+      "profile": {
+        "type": "String",
+        "description": "The name of the deleted profile"
+      }
+    }
+  },
+  "profile_choice_title": "Profiles",
+  "@profile_choice_title": {
+    "description": "Title for the profile choice screen"
+  },
+  "profile_choice_new": "New profile",
+  "@profile_choice_new": {
+    "description": "Button label for creating a new profile"
+  }
 }

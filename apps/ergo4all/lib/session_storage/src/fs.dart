@@ -309,4 +309,18 @@ class FileBasedRulaSessionRepository implements RulaSessionRepository {
       await deleteByTimestamp(session.timestamp);
     }
   }
+
+  @override
+  Future<RulaSessionMeta?> getLatestMetaFor(int profileId) async {
+    final metas = await getAll();
+
+    RulaSessionMeta? latest;
+
+    for (final meta in metas) {
+      if (meta.profileId != profileId) continue;
+      if (latest == null || meta.timestamp > latest.timestamp) latest = meta;
+    }
+
+    return latest;
+  }
 }
