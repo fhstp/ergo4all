@@ -1,3 +1,10 @@
+# [1.118.0](https://github.com/fhstp/ergo4all/compare/v1.117.0...v1.118.0) (2025-09-18)
+
+
+### Features
+
+* capitalize onboarding titles ([9e44a4d](https://github.com/fhstp/ergo4all/commit/9e44a4d5a0a5ba745be2378317f534cd542c5d3c))
+
 # [1.117.0](https://github.com/fhstp/ergo4all/compare/v1.116.0...v1.117.0) (2025-09-18)
 
 
