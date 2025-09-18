@@ -21,9 +21,11 @@ RulaScores? aggregateTimeline(RulaTimeline timeline) {
     ),
     upperArmAbductedAdjustments: (
       aggregateScoreOf(
-          (scores) => Pair.left(scores.upperArmAbductedAdjustments)),
+        (scores) => Pair.left(scores.upperArmAbductedAdjustments),
+      ),
       aggregateScoreOf(
-          (scores) => Pair.right(scores.upperArmAbductedAdjustments)),
+        (scores) => Pair.right(scores.upperArmAbductedAdjustments),
+      ),
     ),
     upperArmScores: (
       aggregateScoreOf((scores) => Pair.left(scores.upperArmScores)),

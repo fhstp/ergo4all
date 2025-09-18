@@ -10,8 +10,8 @@ class StaticLoadChart extends StatelessWidget {
   ///
   const StaticLoadChart({
     required this.staticLoadScores,
-    required this.activities, 
-    super.key
+    required this.activities,
+    super.key,
   });
 
   /// The scores to display.
@@ -27,12 +27,13 @@ class StaticLoadChart extends StatelessWidget {
     BuildContext context,
   ) {
     final localizations = AppLocalizations.of(context)!;
-    
+
     return touchedSpots.map((spot) {
       final activity = activities[spot.x.toInt()];
       final score = spot.y.toStringAsFixed(2);
-      final touchLabel = '$activity\n${localizations.chart_tooltip_score}: $score';
-      
+      final touchLabel =
+          '$activity\n${localizations.chart_tooltip_score}: $score';
+
       return LineTooltipItem(
         touchLabel,
         const TextStyle(color: white),
@@ -43,7 +44,7 @@ class StaticLoadChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    
+
     return LineChart(
       LineChartData(
         gridData: FlGridData(
@@ -66,12 +67,12 @@ class StaticLoadChart extends StatelessWidget {
               interval: 0.5,
               reservedSize: 80,
               getTitlesWidget: (value, meta) => Text(
-                      switch (value) {
-                        0.0 => localizations.results_score_low_short,
-                        1.0 => localizations.results_score_high_short,
-                        _ => ''
-                      },
-                      style: infoText,
+                switch (value) {
+                  0.0 => localizations.results_score_low_short,
+                  1.0 => localizations.results_score_high_short,
+                  _ => ''
+                },
+                style: infoText,
               ),
             ),
           ),
@@ -98,7 +99,8 @@ class StaticLoadChart extends StatelessWidget {
         ],
         lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
-            getTooltipItems: (touchedSpots) => _getTooltipItems(touchedSpots, context),
+            getTooltipItems: (touchedSpots) =>
+                _getTooltipItems(touchedSpots, context),
           ),
         ),
       ),

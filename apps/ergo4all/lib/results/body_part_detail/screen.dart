@@ -100,7 +100,10 @@ class BodyPartResultsScreen extends StatelessWidget {
               height: 200,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: smallSpace),
-                child: BodyPartLineChart(timelines: averagedTimelines, activities: activities),
+                child: BodyPartLineChart(
+                  timelines: averagedTimelines,
+                  activities: activities,
+                ),
               ),
             ),
             const SizedBox(height: largeSpace),
@@ -114,7 +117,10 @@ class BodyPartResultsScreen extends StatelessWidget {
                 height: 132,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: smallSpace),
-                  child: StaticLoadChart(staticLoadScores: staticLoadScores, activities: activities,),
+                  child: StaticLoadChart(
+                    staticLoadScores: staticLoadScores,
+                    activities: activities,
+                  ),
                 ),
               )
             else

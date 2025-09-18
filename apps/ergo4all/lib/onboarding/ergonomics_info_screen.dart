@@ -93,8 +93,8 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                         style: dynamicBodyStyle.copyWith(color: Colors.black),
                         children: [
                           TextSpan(
-                            text:
-                                '${localizations.onboarding_ergonomicsInfo_description}\n',
+                            text: localizations
+                                .onboarding_ergonomicsInfo_description,
                           ),
                           TextSpan(
                             text: localizations

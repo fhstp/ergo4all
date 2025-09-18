@@ -54,10 +54,10 @@ class _DetailPageState extends State<DetailPage>
   int findClosestIndex(RulaTimeline list, int targetTimestamp) {
     if (list.isEmpty) return -1;
 
-    int closestIndex = 0;
-    int smallestDiff = (list[0].timestamp - targetTimestamp).abs();
+    var closestIndex = 0;
+    var smallestDiff = (list[0].timestamp - targetTimestamp).abs();
 
-    for (int i = 1; i < list.length; i++) {
+    for (var i = 1; i < list.length; i++) {
       final diff = (list[i].timestamp - targetTimestamp).abs();
       if (diff < smallestDiff) {
         smallestDiff = diff;
@@ -77,43 +77,50 @@ class _DetailPageState extends State<DetailPage>
       final activityCounts = <String, int>{};
 
       // Count occurrences of each activity
-      for (var activity in activities) {
+      for (final activity in activities) {
         activityCounts[activity] = (activityCounts[activity] ?? 0) + 1;
       }
-      
+
       final sortedActivities = activityCounts.entries.toList()
         ..sort((a, b) => b.value.compareTo(a.value));
 
-      var uniqueActivities = sortedActivities
-        .map((entry) => entry.key).toList();
+      var uniqueActivities =
+          sortedActivities.map((entry) => entry.key).toList();
 
       // limit to top 3 most frequent activities
       if (uniqueActivities.length > 3) {
         uniqueActivities = uniqueActivities.sublist(0, 3);
       }
-      
+
       return [localizations.har_class_no_selection, ...uniqueActivities]
         ..remove(localizations.har_class_background)
         ..remove(localizations.har_class_walking);
     }
 
     final activities = widget.session.timeline
-        .map((e) => e.activity != null
-            ? localizations.activityDisplayName(e.activity!)
-            : localizations.activityDisplayName(Activity.background))
+        .map(
+          (e) => e.activity != null
+              ? localizations.activityDisplayName(e.activity!)
+              : localizations.activityDisplayName(Activity.background),
+        )
         .toList();
     final uniqueActivities = getUniqueActivities(activities);
-    final mostPopularActivity = uniqueActivities.length > 1 ? uniqueActivities[1] : localizations.har_class_no_selection;
+    final mostPopularActivity = uniqueActivities.length > 1
+        ? uniqueActivities[1]
+        : localizations.har_class_no_selection;
 
-    // In freestyle mode, determine tips and improvements based on selected activity
+    // In freestyle mode, determine tips and improvements based on selected
+    // activity
     final currentActivity = selectedActivity ?? mostPopularActivity;
     final textScenario = widget.session.scenario == Scenario.freestyle
-        ? (Activity.getScenario(localizations.activityFromName(currentActivity)) ?? Scenario.freestyle)
+        ? (Activity.getScenario(
+              localizations.activityFromName(currentActivity),
+            ) ??
+            Scenario.freestyle)
         : widget.session.scenario;
-    
+
     final tips = localizations.scenarioTip(textScenario);
-    final improvements =
-        localizations.scenarioImprovement(textScenario);
+    final improvements = localizations.scenarioImprovement(textScenario);
 
     if (widget.session.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -147,10 +154,10 @@ class _DetailPageState extends State<DetailPage>
         .mapValues((_, splitScores) => splitScores.reduce2d(max));
 
     IList<bool>? activityFilter;
-    if (selectedActivity != null && selectedActivity != localizations.har_class_no_selection) {
-      activityFilter = activities
-          .map((activity) => activity == selectedActivity)
-          .toIList();
+    if (selectedActivity != null &&
+        selectedActivity != localizations.har_class_no_selection) {
+      activityFilter =
+          activities.map((activity) => activity == selectedActivity).toIList();
     }
 
     void navigateToBodyPartPage(BodyPartGroup bodyPart) {
@@ -222,25 +229,31 @@ class _DetailPageState extends State<DetailPage>
             child: DropdownMenu<String>(
               width: heatmapWidth,
               key: UniqueKey(),
-              label: Text(localizations.har_activity_selection, style: dynamicBodyStyle),
+              label: Text(
+                localizations.har_activity_selection,
+                style: dynamicBodyStyle,
+              ),
               initialSelection: selectedActivity,
-              dropdownMenuEntries: uniqueActivities.map((entry) =>
-                DropdownMenuEntry(
-                  value: entry,
-                  label: entry,
-                  style: ButtonStyle(
-                    textStyle: WidgetStateProperty.all(dynamicBodyStyle),
-                  ),
-                ),
-              ).toList(),
+              dropdownMenuEntries: uniqueActivities
+                  .map(
+                    (entry) => DropdownMenuEntry(
+                      value: entry,
+                      label: entry,
+                      style: ButtonStyle(
+                        textStyle: WidgetStateProperty.all(dynamicBodyStyle),
+                      ),
+                    ),
+                  )
+                  .toList(),
               onSelected: (newActivity) {
                 setState(() {
-                    selectedActivity = newActivity;
-                  });
+                  selectedActivity = newActivity;
+                });
               },
               inputDecorationTheme: InputDecorationTheme(
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 8,
+                  horizontal: 16,
+                  vertical: 8,
                 ),
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(color: woodSmoke, width: 4),
@@ -249,10 +262,9 @@ class _DetailPageState extends State<DetailPage>
                 labelStyle: dynamicBodyStyle,
                 hintStyle: dynamicBodyStyle,
               ),
-              textStyle: dynamicBodyStyle
+              textStyle: dynamicBodyStyle,
             ),
           ),
-
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
