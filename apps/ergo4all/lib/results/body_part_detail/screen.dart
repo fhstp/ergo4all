@@ -129,6 +129,7 @@ class BodyPartResultsScreen extends StatelessWidget {
             ),
             const SizedBox(height: smallSpace),
             Text(message, style: dynamicBodyStyle),
+            const SizedBox(height: largeSpace),
           ],
         ),
       ),

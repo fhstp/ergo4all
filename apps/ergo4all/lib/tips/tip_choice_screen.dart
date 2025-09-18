@@ -78,6 +78,7 @@ class TipChoiceScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: largeSpace),
             ],
           ),
         ),

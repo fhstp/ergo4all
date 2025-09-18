@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:common_ui/theme/colors.dart';
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
@@ -171,21 +172,28 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
                   style: paragraphHeaderStyle,
                 ),
               )
-            : ListView.builder(
-                itemCount: sessions.length,
-                itemBuilder: (context, index) {
-                  final session = sessions[index];
-                  return _SessionEntry(
-                    session: session,
-                    profile: profilesById[session.profileId]!,
-                    onDismissed: () {
-                      deleteSessionWith(index);
-                    },
-                    onTap: () {
-                      goToResultsFor(session);
-                    },
-                  );
-                },
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: sessions.length,
+                      itemBuilder: (context, index) {
+                        final session = sessions[index];
+                        return _SessionEntry(
+                          session: session,
+                          profile: profilesById[session.profileId]!,
+                          onDismissed: () {
+                            deleteSessionWith(index);
+                          },
+                          onTap: () {
+                            goToResultsFor(session);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: largeSpace),
+                ],
               ),
       ),
     );
