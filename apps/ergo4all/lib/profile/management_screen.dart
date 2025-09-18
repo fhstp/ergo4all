@@ -9,6 +9,7 @@ import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/profile/creation/dialog.dart';
 import 'package:ergo4all/profile/storage/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +74,11 @@ class _ProfileEntry extends StatelessWidget {
 
         return !isDefaultUser;
       },
-      background: Container(color: cardinal),
+      background: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [persimmon, spindle]),
+        ),
+      ),
       child: ColoredBox(
         color: spindle,
         child: Column(
