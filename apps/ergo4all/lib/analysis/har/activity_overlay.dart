@@ -5,21 +5,24 @@ import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+/// Displays information about an [Activity] in the top-left of it's parent.
 class ActivityOverlay extends StatelessWidget {
-  const ActivityOverlay({
-    required this.activity,
+  ///
+  const ActivityOverlay(
+    this.activity, {
     super.key,
   });
 
-  final Activity? activity;
+  /// The activity to display.
+  final Activity activity;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    if (activity == null) return const SizedBox.shrink();
 
-    final activityName = localizations.activityDisplayName(activity!);
+    final activityName = localizations.activityDisplayName(activity);
     final message = '${localizations.har_activity}: $activityName';
+
     return Positioned(
       top: 24,
       left: 0,

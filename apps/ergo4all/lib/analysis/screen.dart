@@ -384,7 +384,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                     )
                     .toNullable() ??
                 const SizedBox.shrink(),
-            ActivityOverlay(activity: currentActivity),
+            if (currentActivity != null) ActivityOverlay(currentActivity!),
           ],
         ),
       ),
