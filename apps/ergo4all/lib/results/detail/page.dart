@@ -14,7 +14,6 @@ import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/detail/image_carousel.dart';
 import 'package:ergo4all/results/detail/rula_color_legend.dart';
-import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:ergo4all/results/variable_localizations.dart';
@@ -271,12 +270,6 @@ class _DetailPageState extends State<DetailPage>
                 improvements,
                 style: dynamicBodyStyle,
                 textAlign: TextAlign.left,
-              ),
-              Center(
-                child: ScenarioGoodBadGraphic(
-                  widget.session.scenario,
-                  height: 330,
-                ),
               ),
             ],
           ),

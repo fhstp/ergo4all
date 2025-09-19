@@ -140,7 +140,9 @@ class ResultsScreen extends StatelessWidget {
                       onBodyPartGroupTapped: goToBodyPartPage,
                     ),
                     DetailPage(session: session),
-                    const ImprovementsPage()
+                    ImprovementsPage(
+                      scenario: session.scenario,
+                    ),
                   ],
                 ),
               ),
