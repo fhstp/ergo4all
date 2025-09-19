@@ -52,22 +52,6 @@ class _DetailPageState extends State<DetailPage>
     currentKeyFrame = widget.session.keyFrames.first;
   }
 
-  int findClosestIndex(RulaTimeline list, int targetTimestamp) {
-    if (list.isEmpty) return -1;
-
-    var closestIndex = 0;
-    var smallestDiff = (list[0].timestamp - targetTimestamp).abs();
-
-    for (var i = 1; i < list.length; i++) {
-      final diff = (list[i].timestamp - targetTimestamp).abs();
-      if (diff < smallestDiff) {
-        smallestDiff = diff;
-        closestIndex = i;
-      }
-    }
-    return closestIndex;
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
