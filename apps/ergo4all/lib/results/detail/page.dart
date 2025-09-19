@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
+import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
@@ -21,6 +22,25 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart' hide State;
+
+List<Activity> _popularActivitiesFor(List<Activity> activities) {
+  final counts = activities.countOccurrences();
+
+  // These are the unique activities in the timeline sorted by how often
+  // they appear.
+  final sortedByPopularity = counts.entries
+      .sortBy(Order.by((entry) => entry.value, Order.orderInt))
+      .map((entry) => entry.key);
+
+  // We pick the top 3 most frequent activities
+  final top3 = sortedByPopularity.take(3);
+
+  // There are also some activities which we don't care about
+  final relevant = top3.delete(Activity.background).delete(Activity.walking);
+
+  // So finally we have 0 - 3 popular activities
+  return relevant.toList();
+}
 
 /// Page for displaying detailed information about a [RulaSession].
 class DetailPage extends StatefulWidget {
@@ -58,35 +78,10 @@ class _DetailPageState extends State<DetailPage>
 
     final localizations = AppLocalizations.of(context)!;
 
-    List<Activity> getUniqueActivities(List<Activity> activities) {
-      final activityCounts = <Activity, int>{};
-
-      // Count occurrences of each activity
-      for (final activity in activities) {
-        activityCounts[activity] = (activityCounts[activity] ?? 0) + 1;
-      }
-
-      final sortedActivities = activityCounts.entries.toList()
-        ..sort((a, b) => b.value.compareTo(a.value));
-
-      var uniqueActivities =
-          sortedActivities.map((entry) => entry.key).toList();
-
-      // limit to top 3 most frequent activities
-      if (uniqueActivities.length > 3) {
-        uniqueActivities = uniqueActivities.sublist(0, 3);
-      }
-
-      return uniqueActivities
-        ..remove(Activity.background)
-        ..remove(Activity.walking);
-    }
-
-    final activities = widget.session.timeline
-        .map((e) => e.activity ?? Activity.background)
-        .toList();
-    final uniqueActivities = getUniqueActivities(activities);
-    final mostPopularActivity = uniqueActivities.firstOrNull;
+    final activities =
+        widget.session.timeline.map((it) => it.activity).nonNulls.toList();
+    final popularActivities = _popularActivitiesFor(activities);
+    final mostPopularActivity = popularActivities.firstOrNull;
 
     // In freestyle mode, determine tips and improvements based on selected
     // activity
@@ -211,7 +206,7 @@ class _DetailPageState extends State<DetailPage>
                 style: dynamicBodyStyle,
               ),
               initialSelection: selectedActivity,
-              dropdownMenuEntries: uniqueActivities
+              dropdownMenuEntries: popularActivities
                   .map(
                     (activity) => DropdownMenuEntry<Activity?>(
                       value: activity,

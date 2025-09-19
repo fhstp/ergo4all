@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// Useful extensions for iterables.
@@ -33,5 +34,18 @@ extension UtilExt<T> on Iterable<T> {
         .sortWith((e) => e.value, Order.orderInt.reverse)
         .firstOrNull
         ?.key;
+  }
+
+  /// Counts how often each item occurs in the collection. Returns a map
+  /// where the keys are the unique items and the values how often they
+  /// occur.
+  IMap<T, int> countOccurrences() {
+    final occurrences = <T, int>{};
+
+    for (final item in this) {
+      occurrences.update(item, (count) => count + 1, ifAbsent: () => 1);
+    }
+
+    return occurrences.toIMap();
   }
 }
