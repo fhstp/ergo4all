@@ -1,5 +1,6 @@
 import 'package:ergo4all/scenario/common.dart';
 
+/// An generic movement activity.
 enum Activity {
   background(0),
   carrying(1),
