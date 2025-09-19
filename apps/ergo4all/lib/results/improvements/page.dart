@@ -8,6 +8,22 @@ import 'package:ergo4all/results/variable_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:flutter/material.dart';
 
+/// Gets the [Scenario] which includes most of the given [Activity] or
+/// `null` if there is no clean match.
+Scenario? _scenarioFor(Activity activity) {
+  return switch (activity) {
+    Activity.lifting ||
+    Activity.carrying ||
+    Activity.kneeling =>
+      Scenario.liftAndCarry,
+    Activity.overhead => Scenario.ceiling,
+    Activity.sitting => Scenario.seated,
+    Activity.standing =>
+      Scenario.standingCNC, // or standingAssembly or packaging
+    Activity.walking || Activity.background => null
+  };
+}
+
 /// Page on the [ResultsScreen] for displaying feedback and improvements.
 class ImprovementsPage extends StatelessWidget {
   ///
@@ -32,7 +48,7 @@ class ImprovementsPage extends StatelessWidget {
     // activity
     final textScenario = scenario == Scenario.freestyle
         ? (mostPopularActivity != null
-            ? Activity.getScenario(mostPopularActivity!) ?? Scenario.freestyle
+            ? _scenarioFor(mostPopularActivity!) ?? Scenario.freestyle
             : Scenario.freestyle)
         : scenario;
 

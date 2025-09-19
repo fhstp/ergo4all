@@ -1,5 +1,4 @@
 import 'package:common/iterable_ext.dart';
-import 'package:ergo4all/scenario/common.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// An generic movement activity.
@@ -12,24 +11,6 @@ enum Activity {
   sitting,
   standing,
   walking;
-
-  static Scenario? getScenario(Activity activity) {
-    switch (activity) {
-      case Activity.lifting:
-      case Activity.carrying:
-      case Activity.kneeling:
-        return Scenario.liftAndCarry;
-      case Activity.overhead:
-        return Scenario.ceiling;
-      case Activity.sitting:
-        return Scenario.seated;
-      case Activity.standing:
-        return Scenario.standingCNC; // or standingAssembly or packaging
-      case Activity.walking:
-      case Activity.background:
-        return null;
-    }
-  }
 }
 
 /// Determines the top 3 most popular activities in the given collection.
