@@ -30,20 +30,21 @@ class StaticLoadChart extends StatelessWidget {
   ) {
     final localizations = AppLocalizations.of(context)!;
 
-    return touchedSpots.map((spot) {
-      final activity = activities[spot.x.toInt()];
-      final activityName = activity != null
-          ? localizations.activityDisplayName(activity)
-          : localizations.har_class_no_selection;
-      final score = spot.y.toStringAsFixed(2);
-      final touchLabel =
-          '$activityName\n${localizations.chart_tooltip_score}: $score';
+    final spot = touchedSpots.single;
 
-      return LineTooltipItem(
-        touchLabel,
-        const TextStyle(color: white),
-      );
-    }).toList();
+    final activity = activities[spot.x.toInt()];
+    final activityName = activity != null
+        ? localizations.activityDisplayName(activity)
+        : localizations.har_class_no_selection;
+    final score = spot.y.toStringAsFixed(2);
+    final touchLabel =
+        '$activityName\n${localizations.chart_tooltip_score}: $score';
+
+    final tooltip = LineTooltipItem(
+      touchLabel,
+      const TextStyle(color: white),
+    );
+    return [tooltip];
   }
 
   @override
