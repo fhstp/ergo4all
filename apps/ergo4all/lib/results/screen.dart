@@ -6,6 +6,7 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/analysis/screen.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
@@ -16,6 +17,7 @@ import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/page.dart';
+import 'package:ergo4all/results/improvements/page.dart';
 import 'package:ergo4all/results/overview/page.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -112,8 +114,11 @@ class ResultsScreen extends StatelessWidget {
         .toIList()
         .pipe(Rating.calculate);
 
+    final popularActivities = mostPopularActivitiesOf(activities.nonNulls);
+    final mostPopularActivity = popularActivities.firstOrNull;
+
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: const IconBackButton(color: cardinal),
@@ -123,6 +128,7 @@ class ResultsScreen extends StatelessWidget {
               // TODO: Localize
               Tab(text: 'Overview'),
               Tab(text: 'Details'),
+              Tab(text: 'Improvements'),
             ],
           ),
         ),
@@ -138,6 +144,10 @@ class ResultsScreen extends StatelessWidget {
                       onBodyPartGroupTapped: goToBodyPartPage,
                     ),
                     DetailPage(session: session),
+                    ImprovementsPage(
+                      scenario: session.scenario,
+                      mostPopularActivity: mostPopularActivity,
+                    ),
                   ],
                 ),
               ),

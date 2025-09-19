@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
-import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
@@ -14,33 +13,11 @@ import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/detail/image_carousel.dart';
 import 'package:ergo4all/results/detail/rula_color_legend.dart';
-import 'package:ergo4all/results/detail/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
-import 'package:ergo4all/results/variable_localizations.dart';
-import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart' hide State;
-
-List<Activity> _popularActivitiesFor(List<Activity> activities) {
-  final counts = activities.countOccurrences();
-
-  // These are the unique activities in the timeline sorted by how often
-  // they appear.
-  final sortedByPopularity = counts.entries
-      .sortBy(Order.by((entry) => entry.value, Order.orderInt))
-      .map((entry) => entry.key);
-
-  // We pick the top 3 most frequent activities
-  final top3 = sortedByPopularity.take(3);
-
-  // There are also some activities which we don't care about
-  final relevant = top3.delete(Activity.background).delete(Activity.walking);
-
-  // So finally we have 0 - 3 popular activities
-  return relevant.toList();
-}
 
 /// Page for displaying detailed information about a [RulaSession].
 class DetailPage extends StatefulWidget {
@@ -80,20 +57,7 @@ class _DetailPageState extends State<DetailPage>
 
     final activities =
         widget.session.timeline.map((it) => it.activity).nonNulls.toList();
-    final popularActivities = _popularActivitiesFor(activities);
-    final mostPopularActivity = popularActivities.firstOrNull;
-
-    // In freestyle mode, determine tips and improvements based on selected
-    // activity
-    final currentActivity = selectedActivity ?? mostPopularActivity;
-    final textScenario = widget.session.scenario == Scenario.freestyle
-        ? (currentActivity != null
-            ? Activity.getScenario(currentActivity) ?? Scenario.freestyle
-            : Scenario.freestyle)
-        : widget.session.scenario;
-
-    final tips = localizations.scenarioTip(textScenario);
-    final improvements = localizations.scenarioImprovement(textScenario);
+    final popularActivities = mostPopularActivitiesOf(activities).toList();
 
     if (widget.session.timeline.isEmpty) {
       Navigator.of(context).pop();
@@ -245,40 +209,6 @@ class _DetailPageState extends State<DetailPage>
               ),
               textStyle: dynamicBodyStyle,
             ),
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: largeSpace),
-              Text(
-                localizations.ergonomics_tipps,
-                style: paragraphHeaderStyle,
-                textAlign: TextAlign.left,
-              ),
-              Text(
-                tips,
-                style: dynamicBodyStyle,
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(height: mediumSpace),
-              Text(
-                localizations.improvements,
-                style: paragraphHeaderStyle,
-                textAlign: TextAlign.left,
-              ),
-              Text(
-                improvements,
-                style: dynamicBodyStyle,
-                textAlign: TextAlign.left,
-              ),
-              Center(
-                child: ScenarioGoodBadGraphic(
-                  widget.session.scenario,
-                  height: 330,
-                ),
-              ),
-            ],
           ),
         ],
       ),
