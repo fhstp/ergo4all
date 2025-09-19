@@ -4,23 +4,14 @@ import 'package:fpdart/fpdart.dart';
 
 /// An generic movement activity.
 enum Activity {
-  background(0),
-  carrying(1),
-  kneeling(2),
-  lifting(3),
-  overhead(4),
-  sitting(5),
-  standing(6),
-  walking(7);
-
-  const Activity(this.value);
-  final int value;
-
-  static final Map<int, Activity> _valueToActivity = {
-    for (Activity activity in Activity.values) activity.value: activity,
-  };
-
-  static Activity? fromValue(int value) => _valueToActivity[value];
+  background,
+  carrying,
+  kneeling,
+  lifting,
+  overhead,
+  sitting,
+  standing,
+  walking;
 
   static Scenario? getScenario(Activity activity) {
     switch (activity) {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pose/pose.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
@@ -113,7 +114,7 @@ class ActivityRecognitionManager {
 
       final probabilityTensors = output[0] as List<double>;
       final currentActivity =
-          Activity.fromValue(_findMaxIndex(probabilityTensors));
+          Activity.values.getOrNull(_findMaxIndex(probabilityTensors));
       onlineInferenceOutputController
           .add(currentActivity ?? Activity.background);
 
@@ -225,7 +226,7 @@ class ActivityRecognitionManager {
       }
 
       final maxIndex = _findMaxIndex(weightedProbabilities);
-      final activity = Activity.fromValue(maxIndex);
+      final activity = Activity.values.getOrNull(maxIndex);
       if (activity != null) {
         weightedActivities[timestamp] = activity;
       }

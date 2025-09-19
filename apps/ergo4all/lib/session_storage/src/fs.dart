@@ -101,7 +101,7 @@ List<dynamic> _csvRowOf(_ScoreRow row) {
     Pair.right(scores.upperArmScores),
     Pair.left(scores.wristScores),
     Pair.right(scores.wristScores),
-    activity?.value ?? -1, // Store activity value or -1 for null
+    activity?.index ?? -1, // Store activity value or -1 for null
   ];
 }
 
@@ -109,7 +109,7 @@ _ScoreRow _scoreRowOf(List<dynamic> row) {
   final activityValue =
       row.length > 24 ? row[24] as int : -1; // Handle backward compatibility
   final activity =
-      activityValue == -1 ? null : Activity.fromValue(activityValue);
+      activityValue == -1 ? null : Activity.values.getOrNull(activityValue);
 
   return (
     row[0] as int,
