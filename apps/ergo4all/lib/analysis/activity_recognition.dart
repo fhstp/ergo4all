@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/common/activity.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pose/pose.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';

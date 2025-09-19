@@ -1,4 +1,4 @@
-import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 
 /// Extensions for getting variable localized texts for Activity.

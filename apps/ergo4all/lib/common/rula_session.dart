@@ -1,4 +1,4 @@
-import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';

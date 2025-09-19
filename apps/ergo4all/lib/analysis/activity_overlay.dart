@@ -1,7 +1,7 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/analysis/har/activity.dart';
-import 'package:ergo4all/analysis/har/variable_localizations.dart';
+import 'package:ergo4all/common/activity.dart';
+import 'package:ergo4all/common/variable_localizations.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 

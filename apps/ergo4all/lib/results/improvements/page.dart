@@ -1,6 +1,6 @@
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/improvements/scenario_good_bad_graphic.dart';
 import 'package:ergo4all/results/screen.dart';
