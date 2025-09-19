@@ -10,7 +10,7 @@ import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/camera_utils.dart';
 import 'package:ergo4all/analysis/har/activity.dart';
-import 'package:ergo4all/analysis/har/activity_overlay.dart';
+import 'package:ergo4all/analysis/activity_overlay.dart';
 import 'package:ergo4all/analysis/har/activity_recognition.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
