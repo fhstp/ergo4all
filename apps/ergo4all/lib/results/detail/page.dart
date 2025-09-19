@@ -24,9 +24,6 @@ class DetailPage extends StatefulWidget {
   ///
   const DetailPage({required this.session, super.key});
 
-  /// The route name for this screen.
-  static const String routeName = 'result-detail';
-
   /// The session for which to view details.
   final RulaSession session;
 
