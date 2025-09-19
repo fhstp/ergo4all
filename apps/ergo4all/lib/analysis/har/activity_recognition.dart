@@ -8,7 +8,6 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 class _HarConfig {
   static const stride = 15;
   static const minNumPoses = 45;
-  static const batchSize = 25;
   static const temporalDisplacementStride = 5;
   static const onlineInputShape = [1, 40, 17, 4];
   static const onlineModelPath =
