@@ -20,6 +20,7 @@ import 'package:ergo4all/results/variable_localizations.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart' hide State;
 
 /// Page for displaying detailed information about a [RulaSession].
 class DetailPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
   late KeyFrame currentKeyFrame;
 
-  String? selectedActivity;
+  Activity? selectedActivity;
 
   @override
   bool get wantKeepAlive => true;
@@ -73,8 +74,8 @@ class _DetailPageState extends State<DetailPage>
 
     final localizations = AppLocalizations.of(context)!;
 
-    List<String> getUniqueActivities(List<String> activities) {
-      final activityCounts = <String, int>{};
+    List<Activity> getUniqueActivities(List<Activity> activities) {
+      final activityCounts = <Activity, int>{};
 
       // Count occurrences of each activity
       for (final activity in activities) {
@@ -92,31 +93,24 @@ class _DetailPageState extends State<DetailPage>
         uniqueActivities = uniqueActivities.sublist(0, 3);
       }
 
-      return [localizations.har_class_no_selection, ...uniqueActivities]
-        ..remove(localizations.har_class_background)
-        ..remove(localizations.har_class_walking);
+      return uniqueActivities
+        ..remove(Activity.background)
+        ..remove(Activity.walking);
     }
 
     final activities = widget.session.timeline
-        .map(
-          (e) => e.activity != null
-              ? localizations.activityDisplayName(e.activity!)
-              : localizations.activityDisplayName(Activity.background),
-        )
+        .map((e) => e.activity ?? Activity.background)
         .toList();
     final uniqueActivities = getUniqueActivities(activities);
-    final mostPopularActivity = uniqueActivities.length > 1
-        ? uniqueActivities[1]
-        : localizations.har_class_no_selection;
+    final mostPopularActivity = uniqueActivities.firstOrNull;
 
     // In freestyle mode, determine tips and improvements based on selected
     // activity
     final currentActivity = selectedActivity ?? mostPopularActivity;
     final textScenario = widget.session.scenario == Scenario.freestyle
-        ? (Activity.getScenario(
-              localizations.activityFromName(currentActivity),
-            ) ??
-            Scenario.freestyle)
+        ? (currentActivity != null
+            ? Activity.getScenario(currentActivity) ?? Scenario.freestyle
+            : Scenario.freestyle)
         : widget.session.scenario;
 
     final tips = localizations.scenarioTip(textScenario);
@@ -154,8 +148,7 @@ class _DetailPageState extends State<DetailPage>
         .mapValues((_, splitScores) => splitScores.reduce2d(max));
 
     IList<bool>? activityFilter;
-    if (selectedActivity != null &&
-        selectedActivity != localizations.har_class_no_selection) {
+    if (selectedActivity != null) {
       activityFilter =
           activities.map((activity) => activity == selectedActivity).toIList();
     }
@@ -226,7 +219,7 @@ class _DetailPageState extends State<DetailPage>
           const SizedBox(height: 16),
 
           Center(
-            child: DropdownMenu<String>(
+            child: DropdownMenu<Activity?>(
               width: heatmapWidth,
               key: UniqueKey(),
               label: Text(
@@ -236,9 +229,18 @@ class _DetailPageState extends State<DetailPage>
               initialSelection: selectedActivity,
               dropdownMenuEntries: uniqueActivities
                   .map(
-                    (entry) => DropdownMenuEntry(
-                      value: entry,
-                      label: entry,
+                    (activity) => DropdownMenuEntry<Activity?>(
+                      value: activity,
+                      label: localizations.activityDisplayName(activity),
+                      style: ButtonStyle(
+                        textStyle: WidgetStateProperty.all(dynamicBodyStyle),
+                      ),
+                    ),
+                  )
+                  .prepend(
+                    DropdownMenuEntry(
+                      value: null,
+                      label: localizations.har_class_no_selection,
                       style: ButtonStyle(
                         textStyle: WidgetStateProperty.all(dynamicBodyStyle),
                       ),

@@ -14,16 +14,4 @@ extension ActivityLocalizations on AppLocalizations {
         Activity.standing => har_class_standing,
         Activity.walking => har_class_walking,
       };
-
-  Activity activityFromName(String name) {
-    if (name == har_class_background) return Activity.background;
-    if (name == har_class_carrying) return Activity.carrying;
-    if (name == har_class_kneeling) return Activity.kneeling;
-    if (name == har_class_lifting) return Activity.lifting;
-    if (name == har_class_overhead) return Activity.overhead;
-    if (name == har_class_sitting) return Activity.sitting;
-    if (name == har_class_standing) return Activity.standing;
-    if (name == har_class_walking) return Activity.walking;
-    throw ArgumentError('Unknown activity name: $name');
-  }
 }

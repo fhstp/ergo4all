@@ -1,5 +1,7 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -19,7 +21,7 @@ class StaticLoadChart extends StatelessWidget {
 
   /// The activities corresponding to each value in the timelines.
   /// There is only one activity independently from the number of timelines.
-  final IList<String> activities;
+  final IList<Activity?> activities;
 
   /// Generates tooltip items for the static load chart touch interactions.
   List<LineTooltipItem> _getTooltipItems(
@@ -30,9 +32,12 @@ class StaticLoadChart extends StatelessWidget {
 
     return touchedSpots.map((spot) {
       final activity = activities[spot.x.toInt()];
+      final activityName = activity != null
+          ? localizations.activityDisplayName(activity)
+          : localizations.har_class_no_selection;
       final score = spot.y.toStringAsFixed(2);
       final touchLabel =
-          '$activity\n${localizations.chart_tooltip_score}: $score';
+          '$activityName\n${localizations.chart_tooltip_score}: $score';
 
       return LineTooltipItem(
         touchLabel,

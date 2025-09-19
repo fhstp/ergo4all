@@ -4,6 +4,7 @@ import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/icon_back_button.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/body_part_line_chart.dart';
 import 'package:ergo4all/results/body_part_detail/static_load_chart.dart';
@@ -40,14 +41,14 @@ class BodyPartResultsScreen extends StatelessWidget {
 
   /// The activities corresponding to each value in the timelines.
   /// There is only one activity independently from the number of timelines.
-  final IList<String> activities;
+  final IList<Activity?> activities;
 
   /// Makes a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute({
     required BodyPartGroup bodyPartGroup,
     required IList<IList<double>> timelines,
     required int recordingDuration,
-    required IList<String> activities,
+    required IList<Activity?> activities,
   }) {
     return MaterialPageRoute<void>(
       builder: (context) => BodyPartResultsScreen(

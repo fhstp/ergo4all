@@ -1,6 +1,8 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:ergo4all/analysis/har/activity.dart';
+import 'package:ergo4all/analysis/har/variable_localizations.dart';
 import 'package:ergo4all/common/rula_color.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -44,7 +46,7 @@ class BodyPartLineChart extends StatefulWidget {
 
   /// The activities corresponding to each value in the timelines.
   /// There is only one activity independently from the number of timelines.
-  final IList<String> activities;
+  final IList<Activity?> activities;
 
   @override
   State<BodyPartLineChart> createState() => _BodyPartLineChartState();
@@ -71,9 +73,13 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
   ) {
     return touchedSpots.map((spot) {
       final activity = widget.activities[spot.x.toInt()];
+      final activityName = activity != null
+          ? localizations.activityDisplayName(activity)
+          : localizations.har_class_no_selection;
+
       final score = spot.y.toStringAsFixed(2);
       final touchLabel =
-          '$activity\n${localizations.chart_tooltip_score}: $score';
+          '$activityName\n${localizations.chart_tooltip_score}: $score';
 
       return LineTooltipItem(
         touchLabel,
@@ -91,16 +97,20 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
 
     return touchedSpots.map((spot) {
       final shouldShowActivity = activityBarIndices[spot.x] == spot;
-      final activity =
-          shouldShowActivity ? '${widget.activities[spot.x.toInt()]}\n' : '';
+      final activity = shouldShowActivity
+          ? (widget.activities[spot.x.toInt()] ?? Activity.background)
+          : null;
+      final activityName = activity != null
+          ? '${localizations.activityDisplayName(activity)}\n'
+          : '';
 
       final sideLabel = spot.barIndex == 0
           ? localizations.common_left
           : localizations.common_right;
 
       final score = spot.y.toStringAsFixed(2);
-      final touchLabel =
-          '$activity${localizations.chart_tooltip_score} ($sideLabel): $score';
+      final touchLabel = '$activityName${localizations.chart_tooltip_score}'
+          '($sideLabel): $score';
 
       return LineTooltipItem(
         touchLabel,
@@ -131,8 +141,7 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
     final valueCount = widget.timelines[0].length;
     final hasMultipleTimelines = widget.timelines.length == 2;
 
-    final graphLines = widget.timelines
-        .mapWithIndex((IList<double> timeline, int timelineIndex) {
+    final graphLines = widget.timelines.mapWithIndex((timeline, timelineIndex) {
       final isSelectedTimeline = timelineIndex == highlightedTimelineIndex;
 
       final rulaColors =
