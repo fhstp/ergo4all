@@ -9,8 +9,7 @@ enum Activity {
   overhead(4),
   sitting(5),
   standing(6),
-  walking(7),
-  noSelection(-1);
+  walking(7);
 
   const Activity(this.value);
   final int value;
@@ -35,7 +34,6 @@ enum Activity {
         return Scenario.standingCNC; // or standingAssembly or packaging
       case Activity.walking:
       case Activity.background:
-      case Activity.noSelection:
         return null;
     }
   }

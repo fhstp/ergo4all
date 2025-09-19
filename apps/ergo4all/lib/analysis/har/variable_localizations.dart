@@ -13,7 +13,6 @@ extension ActivityLocalizations on AppLocalizations {
         Activity.sitting => har_class_sitting,
         Activity.standing => har_class_standing,
         Activity.walking => har_class_walking,
-        Activity.noSelection => har_class_no_selection,
       };
 
   Activity activityFromName(String name) {
@@ -25,7 +24,6 @@ extension ActivityLocalizations on AppLocalizations {
     if (name == har_class_sitting) return Activity.sitting;
     if (name == har_class_standing) return Activity.standing;
     if (name == har_class_walking) return Activity.walking;
-    if (name == har_class_no_selection) return Activity.noSelection;
     throw ArgumentError('Unknown activity name: $name');
   }
 }
