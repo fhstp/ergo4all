@@ -36,7 +36,7 @@ class ActivityRecognitionManager {
   final onlineInferenceOutputController = StreamController<Activity>();
 
   // Data storage
-  final Map<int, List<List<double>>> timestampProbabilities = {};
+  final Map<int, List<List<double>>> _timestampProbabilities = {};
   final List<Pose> _poses = [];
   final List<int> _poseTimestamps = [];
 
@@ -62,22 +62,22 @@ class ActivityRecognitionManager {
     KeyPoints.rightPalm,
   ];
 
-  bool active = false;
+  bool _active = false;
 
   /// Public API methods
-  void activate() => active = true;
+  void activate() => _active = true;
 
   void addPose(Pose pose, int timestamp) {
-    if (active) {
+    if (_active) {
       _poses.add(pose);
       _poseTimestamps.add(timestamp);
     }
   }
 
-  void clearStoredProbabilities() => timestampProbabilities.clear();
+  void _clearStoredProbabilities() => _timestampProbabilities.clear();
 
-  int getProbabilityCount(int timestamp) =>
-      timestampProbabilities[timestamp]?.length ?? 0;
+  int _getProbabilityCount(int timestamp) =>
+      _timestampProbabilities[timestamp]?.length ?? 0;
 
   /// Finds the index of the maximum value in a list
   int _findMaxIndex(List<double> list) {
@@ -119,7 +119,7 @@ class ActivityRecognitionManager {
 
       // Store probabilities for each timestamp
       for (final timestamp in harPoseEntries.poseTimestamps) {
-        timestampProbabilities
+        _timestampProbabilities
             .putIfAbsent(timestamp, () => [])
             .add(probabilityTensors);
       }
@@ -199,7 +199,7 @@ class ActivityRecognitionManager {
   Map<int, Activity> computeWeightedActivities() {
     final weightedActivities = <int, Activity>{};
 
-    for (final entry in timestampProbabilities.entries) {
+    for (final entry in _timestampProbabilities.entries) {
       final timestamp = entry.key;
       final probabilityTensors = entry.value;
 
