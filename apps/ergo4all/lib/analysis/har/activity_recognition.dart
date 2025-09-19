@@ -5,7 +5,7 @@ import 'package:pose/pose.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// Configuration constants for Human Activity Recognition
-class HarConfig {
+class _HarConfig {
   static const stride = 15;
   static const minNumPoses = 45;
   static const batchSize = 25;
@@ -17,8 +17,8 @@ class HarConfig {
 }
 
 /// Input data structure for Human Activity Recognition
-class HarPoseEntries {
-  const HarPoseEntries({
+class _HarPoseEntries {
+  const _HarPoseEntries({
     required this.poses,
     required this.poseTimestamps,
   });
@@ -33,7 +33,7 @@ class ActivityRecognitionManager {
         .listen(_runOnlineActivityRecognitionModel);
   }
   // Stream controllers
-  final _onlineInferenceInputController = StreamController<HarPoseEntries>();
+  final _onlineInferenceInputController = StreamController<_HarPoseEntries>();
   final onlineInferenceOutputController = StreamController<Activity>();
 
   // Data storage
@@ -99,9 +99,9 @@ class ActivityRecognitionManager {
 
   /// Runs online activity recognition model
   Future<void> _runOnlineActivityRecognitionModel(
-    HarPoseEntries harPoseEntries,
+    _HarPoseEntries harPoseEntries,
   ) async {
-    final interpreter = await Interpreter.fromAsset(HarConfig.onlineModelPath);
+    final interpreter = await Interpreter.fromAsset(_HarConfig.onlineModelPath);
 
     try {
       final outputShape = interpreter.getOutputTensors()[0].shape;
@@ -109,7 +109,7 @@ class ActivityRecognitionManager {
           .reshape<double>(outputShape);
 
       final inputReshaped =
-          harPoseEntries.poses.reshape<double>(HarConfig.onlineInputShape);
+          harPoseEntries.poses.reshape<double>(_HarConfig.onlineInputShape);
       interpreter.run(inputReshaped, output);
 
       final probabilityTensors = output[0] as List<double>;
@@ -148,9 +148,9 @@ class ActivityRecognitionManager {
     if (maxAbsValue == 0.0) maxAbsValue = 1.0; // Avoid division by zero
 
     // Process poses with temporal displacement
-    for (var i = HarConfig.temporalDisplacementStride; i < poses.length; i++) {
+    for (var i = _HarConfig.temporalDisplacementStride; i < poses.length; i++) {
       final currentPose = poses[i];
-      final prevPose = poses[i - HarConfig.temporalDisplacementStride];
+      final prevPose = poses[i - _HarConfig.temporalDisplacementStride];
 
       for (final keypoint in harKeypoints) {
         if (currentPose.containsKey(keypoint) &&
@@ -180,20 +180,20 @@ class ActivityRecognitionManager {
 
   /// Processes current frame of poses
   void processFrame() {
-    if (_poses.length != HarConfig.minNumPoses) return;
+    if (_poses.length != _HarConfig.minNumPoses) return;
 
     final poseModelInput = _transformPoses(_poses);
 
     _onlineInferenceInputController.add(
-      HarPoseEntries(
+      _HarPoseEntries(
         poses: poseModelInput,
         poseTimestamps: List.from(_poseTimestamps),
       ),
     );
 
     // Remove processed poses using stride
-    _poses.removeRange(0, HarConfig.stride);
-    _poseTimestamps.removeRange(0, HarConfig.stride);
+    _poses.removeRange(0, _HarConfig.stride);
+    _poseTimestamps.removeRange(0, _HarConfig.stride);
   }
 
   /// Computes weighted activities from stored probabilities
@@ -205,7 +205,7 @@ class ActivityRecognitionManager {
       final probabilityTensors = entry.value;
 
       final weightingFactors = probabilityTensors.length >= 3
-          ? HarConfig.weightingFactors
+          ? _HarConfig.weightingFactors
           : List.filled(
               probabilityTensors.length,
               1.0 / probabilityTensors.length,
