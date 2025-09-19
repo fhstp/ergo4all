@@ -26,6 +26,28 @@ class _HarPoseEntries {
   final List<int> poseTimestamps;
 }
 
+/// A list of key-points which are relevant for human activity recognition
+/// (HAR).
+const IList<KeyPoints> _harKeyPoints = IListConst([
+  KeyPoints.nose,
+  KeyPoints.leftEar,
+  KeyPoints.rightEar,
+  KeyPoints.leftShoulder,
+  KeyPoints.rightShoulder,
+  KeyPoints.leftElbow,
+  KeyPoints.rightElbow,
+  KeyPoints.leftWrist,
+  KeyPoints.rightWrist,
+  KeyPoints.leftHip,
+  KeyPoints.rightHip,
+  KeyPoints.leftKnee,
+  KeyPoints.rightKnee,
+  KeyPoints.leftAnkle,
+  KeyPoints.rightAnkle,
+  KeyPoints.leftPalm,
+  KeyPoints.rightPalm,
+]);
+
 class ActivityRecognitionManager {
   ActivityRecognitionManager() {
     _onlineInferenceInputController.stream
@@ -39,29 +61,6 @@ class ActivityRecognitionManager {
   final Map<int, List<List<double>>> _timestampProbabilities = {};
   final List<Pose> _poses = [];
   final List<int> _poseTimestamps = [];
-
-  /// A list of key-points which are relevant for human activity recognition
-  /// (HAR).
-  List<KeyPoints> harKeyPoints = [
-    KeyPoints.nose,
-    KeyPoints.leftEar,
-    KeyPoints.rightEar,
-    KeyPoints.leftShoulder,
-    KeyPoints.rightShoulder,
-    KeyPoints.leftElbow,
-    KeyPoints.rightElbow,
-    KeyPoints.leftWrist,
-    KeyPoints.rightWrist,
-    KeyPoints.leftHip,
-    KeyPoints.rightHip,
-    KeyPoints.leftKnee,
-    KeyPoints.rightKnee,
-    KeyPoints.leftAnkle,
-    KeyPoints.rightAnkle,
-    KeyPoints.leftPalm,
-    KeyPoints.rightPalm,
-  ];
-
   bool _active = false;
 
   /// Public API methods
@@ -135,7 +134,7 @@ class ActivityRecognitionManager {
 
     // Find maximum absolute value for normalization
     for (final pose in poses) {
-      for (final keyPoint in harKeyPoints) {
+      for (final keyPoint in _harKeyPoints) {
         if (pose.containsKey(keyPoint)) {
           final landmark = pose[keyPoint]!.$1;
           maxAbsValue = [maxAbsValue, landmark.y.abs(), landmark.z.abs()]
@@ -151,7 +150,7 @@ class ActivityRecognitionManager {
       final currentPose = poses[i];
       final prevPose = poses[i - _HarConfig.temporalDisplacementStride];
 
-      for (final keyPoint in harKeyPoints) {
+      for (final keyPoint in _harKeyPoints) {
         if (currentPose.containsKey(keyPoint) &&
             prevPose.containsKey(keyPoint)) {
           final current = currentPose[keyPoint]!.$1;
