@@ -55,83 +55,63 @@ class BodyPartLineChart extends StatefulWidget {
 class _BodyPartLineChartState extends State<BodyPartLineChart> {
   int highlightedTimelineIndex = 0;
 
-  /// Generates tooltip items for the line chart touch interactions.
-  List<LineTooltipItem> _getTooltipItems(List<LineBarSpot> touchedSpots) {
+  /// Creates tooltips for single timeline charts.
+  LineTooltipItem _getSingleTimelineTooltip(LineBarSpot spot) {
     final localizations = AppLocalizations.of(context)!;
 
-    if (widget.timelines.length == 1) {
-      return _getSingleTimelineTooltips(touchedSpots, localizations);
-    }
+    final activity = widget.activities[spot.x.toInt()];
+    final activityName = activity != null
+        ? localizations.activityDisplayName(activity)
+        : localizations.har_class_no_selection;
 
-    return _getMultipleTimelineTooltips(touchedSpots, localizations);
-  }
+    final score = spot.y.toStringAsFixed(2);
+    final touchLabel =
+        '$activityName\n${localizations.chart_tooltip_score}: $score';
 
-  /// Creates tooltips for single timeline charts.
-  List<LineTooltipItem> _getSingleTimelineTooltips(
-    List<LineBarSpot> touchedSpots,
-    AppLocalizations localizations,
-  ) {
-    return touchedSpots.map((spot) {
-      final activity = widget.activities[spot.x.toInt()];
-      final activityName = activity != null
-          ? localizations.activityDisplayName(activity)
-          : localizations.har_class_no_selection;
-
-      final score = spot.y.toStringAsFixed(2);
-      final touchLabel =
-          '$activityName\n${localizations.chart_tooltip_score}: $score';
-
-      return LineTooltipItem(
-        touchLabel,
-        const TextStyle(color: white),
-      );
-    }).toList();
+    return LineTooltipItem(
+      touchLabel,
+      const TextStyle(color: white),
+    );
   }
 
   /// Creates tooltips for multiple timeline charts (left/right).
-  List<LineTooltipItem> _getMultipleTimelineTooltips(
-    List<LineBarSpot> touchedSpots,
-    AppLocalizations localizations,
+  List<LineTooltipItem> _getSymmetricTimelineTooltips(
+    LineBarSpot left,
+    LineBarSpot right,
   ) {
-    final activityBarIndices = _getHighestSpotPerX(touchedSpots);
+    final localizations = AppLocalizations.of(context)!;
 
-    return touchedSpots.map((spot) {
-      final shouldShowActivity = activityBarIndices[spot.x] == spot;
-      final activity = shouldShowActivity
-          ? (widget.activities[spot.x.toInt()] ?? Activity.background)
-          : null;
-      final activityName = activity != null
-          ? '${localizations.activityDisplayName(activity)}\n'
-          : '';
+    final activity = widget.activities[left.x.toInt()];
+    final activityText = activity != null
+        ? '${localizations.activityDisplayName(activity)}\n'
+        : '';
 
-      final sideLabel = spot.barIndex == 0
-          ? localizations.common_left
-          : localizations.common_right;
+    final leftScore = left.y.toStringAsFixed(2);
+    final leftText = '$activityText${localizations.chart_tooltip_score}'
+        '(${localizations.common_left}): $leftScore';
+    final leftTooltip =
+        LineTooltipItem(leftText, const TextStyle(color: white));
 
-      final score = spot.y.toStringAsFixed(2);
-      final touchLabel = '$activityName${localizations.chart_tooltip_score}'
-          '($sideLabel): $score';
+    final rightScore = right.y.toStringAsFixed(2);
+    final rightText = '${localizations.chart_tooltip_score}'
+        '(${localizations.common_right}): $rightScore';
+    final rightTooltip =
+        LineTooltipItem(rightText, const TextStyle(color: white));
 
-      return LineTooltipItem(
-        touchLabel,
-        const TextStyle(color: white),
-      );
-    }).toList();
+    return [leftTooltip, rightTooltip];
   }
 
-  /// Gets the highest spot for each x-coordinate to avoid duplicate activity
-  /// labels.
-  Map<double, LineBarSpot> _getHighestSpotPerX(List<LineBarSpot> touchedSpots) {
-    final activityBarIndices = <double, LineBarSpot>{};
-
-    for (final spot in touchedSpots) {
-      final existingSpot = activityBarIndices[spot.x];
-      if (existingSpot == null || spot.y > existingSpot.y) {
-        activityBarIndices[spot.x] = spot;
-      }
-    }
-
-    return activityBarIndices;
+  /// Generates tooltip items for the line chart touch interactions.
+  List<LineTooltipItem> _getTooltipItems(List<LineBarSpot> touchedSpots) {
+    return switch (touchedSpots) {
+      [final single] => [_getSingleTimelineTooltip(single)],
+      [final left, final right] => _getSymmetricTimelineTooltips(left, right),
+      _ => throw ArgumentError.value(
+          touchedSpots,
+          'touchedSpots.length',
+          'There should only ever be 1 or 2 touched spots',
+        )
+    };
   }
 
   @override
