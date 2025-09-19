@@ -42,7 +42,7 @@ class ActivityRecognitionManager {
 
   /// A list of key-points which are relevant for human activity recognition
   /// (HAR).
-  List<KeyPoints> harKeypoints = [
+  List<KeyPoints> harKeyPoints = [
     KeyPoints.nose,
     KeyPoints.leftEar,
     KeyPoints.rightEar,
@@ -135,9 +135,9 @@ class ActivityRecognitionManager {
 
     // Find maximum absolute value for normalization
     for (final pose in poses) {
-      for (final keypoint in harKeypoints) {
-        if (pose.containsKey(keypoint)) {
-          final landmark = pose[keypoint]!.$1;
+      for (final keyPoint in harKeyPoints) {
+        if (pose.containsKey(keyPoint)) {
+          final landmark = pose[keyPoint]!.$1;
           maxAbsValue = [maxAbsValue, landmark.y.abs(), landmark.z.abs()]
               .reduce((a, b) => a > b ? a : b);
         }
@@ -151,11 +151,11 @@ class ActivityRecognitionManager {
       final currentPose = poses[i];
       final prevPose = poses[i - _HarConfig.temporalDisplacementStride];
 
-      for (final keypoint in harKeypoints) {
-        if (currentPose.containsKey(keypoint) &&
-            prevPose.containsKey(keypoint)) {
-          final current = currentPose[keypoint]!.$1;
-          final prev = prevPose[keypoint]!.$1;
+      for (final keyPoint in harKeyPoints) {
+        if (currentPose.containsKey(keyPoint) &&
+            prevPose.containsKey(keyPoint)) {
+          final current = currentPose[keyPoint]!.$1;
+          final prev = prevPose[keyPoint]!.$1;
 
           final normY = current.y / maxAbsValue;
           final normZ = current.z / maxAbsValue;
