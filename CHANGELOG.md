@@ -1,3 +1,10 @@
+# [1.121.0](https://github.com/fhstp/ergo4all/compare/v1.120.0...v1.121.0) (2025-09-19)
+
+
+### Features
+
+* create improvements  page ([baecacc](https://github.com/fhstp/ergo4all/commit/baecacc264f46d13a1aa5af1fe9b3751b31079ce))
+
 # [1.120.0](https://github.com/fhstp/ergo4all/compare/v1.119.0...v1.120.0) (2025-09-18)
 
 
