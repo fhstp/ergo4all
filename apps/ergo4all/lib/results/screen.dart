@@ -16,6 +16,7 @@ import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/page.dart';
+import 'package:ergo4all/results/improvements/page.dart';
 import 'package:ergo4all/results/overview/page.dart';
 import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -113,7 +114,7 @@ class ResultsScreen extends StatelessWidget {
         .pipe(Rating.calculate);
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: const IconBackButton(color: cardinal),
@@ -123,6 +124,7 @@ class ResultsScreen extends StatelessWidget {
               // TODO: Localize
               Tab(text: 'Overview'),
               Tab(text: 'Details'),
+              Tab(text: 'Improvements'),
             ],
           ),
         ),
@@ -138,6 +140,7 @@ class ResultsScreen extends StatelessWidget {
                       onBodyPartGroupTapped: goToBodyPartPage,
                     ),
                     DetailPage(session: session),
+                    const ImprovementsPage()
                   ],
                 ),
               ),
