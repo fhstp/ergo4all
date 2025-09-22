@@ -1,3 +1,10 @@
+# [1.124.0](https://github.com/fhstp/ergo4all/compare/v1.123.0...v1.124.0) (2025-09-22)
+
+
+### Features
+
+* adjust general tips header style ([b4a484a](https://github.com/fhstp/ergo4all/commit/b4a484a121b7573c1570933b70b0ba9101233316)), closes [#163](https://github.com/fhstp/ergo4all/issues/163)
+
 # [1.123.0](https://github.com/fhstp/ergo4all/compare/v1.122.0...v1.123.0) (2025-09-22)
 
 
