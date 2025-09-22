@@ -1,3 +1,15 @@
+# [1.125.0](https://github.com/fhstp/ergo4all/compare/v1.124.0...v1.125.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* cut off drop shadow ([e497279](https://github.com/fhstp/ergo4all/commit/e4972796b19fad42f286e2f1fd9185496c46c9e7))
+
+
+### Features
+
+* localize profile nav button ([08f7902](https://github.com/fhstp/ergo4all/commit/08f7902f0591fa0764f1552441502474f10f412e))
+
 # [1.124.0](https://github.com/fhstp/ergo4all/compare/v1.123.0...v1.124.0) (2025-09-22)
 
 
