@@ -5,9 +5,9 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/activity.dart';
-import 'package:ergo4all/common/variable_localizations.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
+import 'package:ergo4all/common/variable_localizations.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
@@ -56,11 +56,6 @@ class _DetailPageState extends State<DetailPage>
     final activities =
         widget.session.timeline.map((it) => it.activity).nonNulls.toList();
     final popularActivities = mostPopularActivitiesOf(activities).toList();
-
-    if (widget.session.timeline.isEmpty) {
-      Navigator.of(context).pop();
-      return Container();
-    }
 
     final recordingDuration = Duration(
       milliseconds: widget.session.timeline.last.timestamp -
