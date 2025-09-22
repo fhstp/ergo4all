@@ -402,28 +402,16 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
                 alignment: Alignment.center,
                 children: [
                   cameraPreview,
-                  if (!isFreestyleMode)
-                    Positioned(
-                      left: largeSpace,
-                      right: largeSpace,
-                      bottom: largeSpace,
-                      child: RecordingProgressIndicator(
-                        remainingTime: progressAnimationController.value,
-                        criticalTime: 5,
-                        initialTime: 30,
-                      ),
+                  Positioned(
+                    left: largeSpace,
+                    right: largeSpace,
+                    bottom: largeSpace,
+                    child: RecordingProgressIndicator(
+                      remainingTime: progressAnimationController.value,
+                      criticalTime: isFreestyleMode ? 10 : 5,
+                      initialTime: progressAnimationController.upperBound,
                     ),
-                  if (isFreestyleMode)
-                    Positioned(
-                      left: largeSpace,
-                      right: largeSpace,
-                      bottom: largeSpace,
-                      child: RecordingProgressIndicator(
-                        remainingTime: progressAnimationController.value,
-                        criticalTime: 10,
-                        initialTime: 120,
-                      ),
-                    ),
+                  ),
                 ],
               ),
             ),
