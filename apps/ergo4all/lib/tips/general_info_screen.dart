@@ -1,5 +1,7 @@
+import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
+import 'package:common_ui/widgets/icon_back_button.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,18 +27,19 @@ class GeneralInfoScreen extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: const IconBackButton(color: cardinal),
+        title: Text(
+          localizations.tips_general_title.toUpperCase(),
+          textAlign: TextAlign.center,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: largeSpace),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                localizations.tips_general_title.toUpperCase(),
-                style: h1Style,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: largeSpace),
               Text(
                 localizations.tips_general_ergonomics_explanation,
                 style: staticBodyStyle,
