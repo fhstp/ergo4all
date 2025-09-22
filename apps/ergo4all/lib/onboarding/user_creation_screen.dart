@@ -6,6 +6,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/onboarding/state.dart';
 import 'package:ergo4all/onboarding/style.dart';
+import 'package:ergo4all/profile/creation/form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +33,6 @@ class UserCreationScreen extends StatefulWidget {
 class _UserCreationScreenState extends State<UserCreationScreen> {
   late final OnboardingState onboardingState;
 
-  final TextEditingController _nicknameController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -55,15 +54,13 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
     );
   }
 
-  void skip() {
-    completeOnboarding();
+  Future<void> completeOnboardingWith(NewProfile profile) async {
+    await completeOnboarding();
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
-    final theme = Theme.of(context);
 
     return Scaffold(
       body: SafeArea(
@@ -83,7 +80,6 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       localizations.onboarding_userCreation_subtitle,
@@ -97,45 +93,17 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
-                    TextField(
-                      controller: _nicknameController,
-                      decoration: InputDecoration(
-                        hintText:
-                            localizations.onboarding_userCreation_input_text,
-                        hintStyle: theme.textTheme.bodyLarge
-                            ?.copyWith(color: Colors.grey),
-                        filled: true,
-                        fillColor: Colors.blueGrey.shade50,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(mediumSpace),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: mediumSpace,
-                          horizontal: largeSpace,
-                        ),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: mediumSpace),
-                    TextButton(
-                      onPressed: skip,
-                      key: const Key('skip'),
-                      child: Text(
-                        localizations.onboarding_skip_label,
-                        style: dynamicBodyStyle.copyWith(
-                          color: Colors.black,
-                          decoration: TextDecoration.none,
-                        ),
+                    NewProfileForm(onSubmit: completeOnboardingWith),
+                    const SizedBox(height: largeSpace),
+                    SizedBox(
+                      width: 275,
+                      child: ElevatedButton(
+                        onPressed: completeOnboarding,
+                        style: primaryTextButtonStyle,
+                        child: Text(localizations.onboarding_skip_label),
                       ),
                     ),
-                    const SizedBox(height: mediumSpace),
-                    ElevatedButton(
-                      key: const Key('next'),
-                      style: primaryTextButtonStyle,
-                      onPressed: completeOnboarding,
-                      child: Text(localizations.onboarding_label),
-                    ),
+                    const SizedBox(height: largeSpace),
                   ],
                 ),
               ),
