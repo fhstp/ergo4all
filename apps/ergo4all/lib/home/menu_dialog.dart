@@ -61,8 +61,10 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           unawaited(navigator.push(ImprintScreen.makeRoute()));
         }),
         _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
-        // TODO: Localize
-        _makeOptionButton('Manage profiles', goToProfileManagement),
+        _makeOptionButton(
+          localizations.menu_profiles_label,
+          goToProfileManagement,
+        ),
       ],
     ),
   );

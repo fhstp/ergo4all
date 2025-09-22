@@ -58,6 +58,10 @@
     "description": "Label for button to change the app language"
   },
   "menu_privacy_label": "Privacy Manifest",
+  "menu_profiles_label": "Manage profiles",
+  "@menu_profiles_label": {
+    "description": "Label for navigation to the profile management screen"
+  },
   "onboarding_ergonomicsInfo_title": "What is ergonomics",
   "@onboarding_ergonomicsInfo_title": {
     "description": "Title for the ergonomics-info screen in onboarding"
