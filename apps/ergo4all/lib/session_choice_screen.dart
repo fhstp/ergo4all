@@ -36,6 +36,8 @@ class SessionChoiceScreen extends StatefulWidget {
   State<SessionChoiceScreen> createState() => _SessionChoiceScreenState();
 }
 
+final _dateFormat = DateFormat('dd MMM yyyy, HH:mm');
+
 class _SessionEntry extends StatelessWidget {
   const _SessionEntry({
     required this.session,
@@ -43,8 +45,6 @@ class _SessionEntry extends StatelessWidget {
     this.onTap,
     this.onDismissed,
   });
-
-  static final dateFormat = DateFormat('dd MMM yyyy, HH:mm');
 
   final RulaSessionMeta session;
   final Profile profile;
@@ -55,7 +55,8 @@ class _SessionEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final dateTime = DateTime.fromMillisecondsSinceEpoch(session.timestamp);
+    final sessionTimestamp =
+        DateTime.fromMillisecondsSinceEpoch(session.timestamp);
     final scenarioLabel = switch (session.scenario) {
       Scenario.liftAndCarry => localizations.scenario_lift_and_carry_label,
       Scenario.pull => localizations.scenario_pull_label,
@@ -68,18 +69,51 @@ class _SessionEntry extends StatelessWidget {
       Scenario.conveyorBelt => localizations.scenario_conveyor_label,
       Scenario.freestyle => localizations.scenario_freestyle_label,
     };
-    final formattedDate = dateFormat.format(dateTime);
+    final subTitle = '${profile.nickname} - $scenarioLabel';
 
     return Dismissible(
       key: Key(session.timestamp.toString()),
-      onDismissed: (direction) {
+      direction: DismissDirection.startToEnd,
+      onDismissed: (_) {
         onDismissed?.call();
       },
-      child: ListTile(
-        title: Text(formattedDate),
-        subtitle: Text('${profile.nickname} - $scenarioLabel'),
-        titleTextStyle: paragraphHeaderStyle,
-        onTap: onTap,
+      background: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [persimmon, spindle]),
+        ),
+      ),
+      child: ColoredBox(
+        color: spindle,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _dateFormat.format(sessionTimestamp),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(subTitle),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.delete_outline, color: blueChill),
+                  const SizedBox(width: 20),
+                  const Icon(Icons.chevron_right, color: blueChill),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: mediumSpace),
+              child: Divider(color: blueChill),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -156,6 +190,40 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       );
     }
 
+    final content = sessions.isEmpty
+        ? Center(
+            child: Text(
+              localizations.no_sessions_placeholder,
+              style: paragraphHeaderStyle,
+            ),
+          )
+        : Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: largeSpace),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: ListView.builder(
+                  itemCount: sessions.length,
+                  shrinkWrap: true,
+                  itemExtent: 76,
+                  itemBuilder: (context, index) {
+                    final session = sessions[index];
+                    return _SessionEntry(
+                      session: session,
+                      profile: profilesById[session.profileId]!,
+                      onDismissed: () {
+                        deleteSessionWith(index);
+                      },
+                      onTap: () {
+                        goToResultsFor(session);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
+
     return Scaffold(
       appBar: AppBar(
         leading: const IconBackButton(color: cardinal),
@@ -165,36 +233,8 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
         ),
       ),
       body: SafeArea(
-        child: sessions.isEmpty
-            ? Center(
-                child: Text(
-                  localizations.no_sessions_placeholder,
-                  style: paragraphHeaderStyle,
-                ),
-              )
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: sessions.length,
-                      itemBuilder: (context, index) {
-                        final session = sessions[index];
-                        return _SessionEntry(
-                          session: session,
-                          profile: profilesById[session.profileId]!,
-                          onDismissed: () {
-                            deleteSessionWith(index);
-                          },
-                          onTap: () {
-                            goToResultsFor(session);
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: largeSpace),
-                ],
-              ),
+        minimum: const EdgeInsets.symmetric(horizontal: mediumSpace),
+        child: content,
       ),
     );
   }
