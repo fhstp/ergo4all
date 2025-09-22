@@ -79,6 +79,11 @@ const _freestyleMaxRecordTime = Duration(seconds: 120);
 
 const _scenarioMaxRecordTime = Duration(seconds: 30);
 
+/// Gets the current timestamp. This is an impure operation, hence the use of
+/// [Future].
+Future<int> getCurrentTimestamp() async =>
+    DateTime.now().millisecondsSinceEpoch;
+
 class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     with SingleTickerProviderStateMixin {
   Option<CameraController> cameraController = none();
@@ -106,7 +111,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   /// Returns true if the current scenario is freestyle mode
   bool get isFreestyleMode => widget.scenario == Scenario.freestyle;
 
-  void goToResults() {
+  Future<void> goToResults() async {
     if (!context.mounted) return;
 
     final weightedActivities =
@@ -121,15 +126,17 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
         )
         .toList();
 
+    final timestamp = await getCurrentTimestamp();
     final session = RulaSession(
-      timestamp: DateTime.now().millisecondsSinceEpoch,
+      timestamp: timestamp,
       profileId: widget.profile.id,
       scenario: widget.scenario,
       timeline: timeline.toIList(),
       keyFrames: maxKeyFrames,
     );
+    await sessionRepository.put(session);
 
-    sessionRepository.put(session);
+    if (!mounted) return;
 
     unawaited(
       Navigator.of(context).pushReplacement(
@@ -196,7 +203,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     timeline.add(TimelineEntry(timestamp: frame.timestamp, scores: scores));
   }
 
-  void onPoseInput(PoseDetectInput input, RawFrame imageRaw) {
+  Future<void> onPoseInput(PoseDetectInput input, RawFrame imageRaw) async {
     if (analysisMode == _AnalysisMode.none) return;
 
     // For some reason, the width and height in the image are flipped in
@@ -210,9 +217,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       imageSize = imageSize.flipped;
     }
 
-    final timestamp = DateTime.now().millisecondsSinceEpoch;
-
-    detectPose(input).then((pose) {
+    final timestamp = await getCurrentTimestamp();
+    await detectPose(input).then((pose) {
       final frame = _Frame(timestamp, Option.fromNullable(pose), imageSize);
       onFrame(frame, imageRaw);
     });
@@ -235,7 +241,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       bytesPerPixel: image.planes.map((p) => p.bytesPerPixel).toList(),
     );
 
-    onPoseInput(input, rawFrame);
+    unawaited(onPoseInput(input, rawFrame));
   }
 
   Future<void> tryCompleteAnalysis() async {
@@ -261,7 +267,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     // select keyframes
     maxKeyFrames = peakDetector.topPeaks;
 
-    goToResults();
+    unawaited(goToResults());
 
     setState(() {
       this.cameraController = none();
