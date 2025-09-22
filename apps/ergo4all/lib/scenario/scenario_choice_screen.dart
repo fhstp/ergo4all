@@ -42,36 +42,28 @@ class ScenarioChoiceScreen extends StatelessWidget {
         withBackButton: true,
       ),
       body: SafeArea(
-        child: Align(
-          child: Column(
-            children: [
-              const SizedBox(height: largeSpace),
-              Expanded(
-                child: SizedBox(
-                  width: 275,
-                  child: ListView.separated(
-                    itemCount: Scenario.values.length,
-                    itemBuilder: (ctx, i) {
-                      final scenario = Scenario.values[i];
-                      return ElevatedButton(
-                        key: Key('scenario_button_${scenario.name}'),
-                        style: paleTextButtonStyle,
-                        onPressed: () {
-                          goToDetailScreen(scenario);
-                        },
-                        child: Text(
-                          localizations.scenarioLabel(scenario),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (ctx, i) =>
-                        const SizedBox(height: largeSpace),
+        child: Center(
+          child: SizedBox(
+            width: 275,
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(vertical: largeSpace),
+              itemCount: Scenario.values.length,
+              itemBuilder: (ctx, i) {
+                final scenario = Scenario.values[i];
+                return ElevatedButton(
+                  key: Key('scenario_button_${scenario.name}'),
+                  style: paleTextButtonStyle,
+                  onPressed: () {
+                    goToDetailScreen(scenario);
+                  },
+                  child: Text(
+                    localizations.scenarioLabel(scenario),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ),
-              const SizedBox(height: largeSpace),
-            ],
+                );
+              },
+              separatorBuilder: (ctx, i) => const SizedBox(height: largeSpace),
+            ),
           ),
         ),
       ),
