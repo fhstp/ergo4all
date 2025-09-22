@@ -1,3 +1,10 @@
+# [1.123.0](https://github.com/fhstp/ergo4all/compare/v1.122.0...v1.123.0) (2025-09-22)
+
+
+### Features
+
+* add bottom padding to onboarding ([33aa715](https://github.com/fhstp/ergo4all/commit/33aa7150de8cfe255844aa6003c2715e4f3cc890)), closes [#154](https://github.com/fhstp/ergo4all/issues/154)
+
 # [1.122.0](https://github.com/fhstp/ergo4all/compare/v1.121.0...v1.122.0) (2025-09-22)
 
 
