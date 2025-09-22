@@ -75,6 +75,10 @@ class _Frame {
 
 enum _AnalysisMode { none, poseOnly, full }
 
+const _freestyleMaxRecordTime = Duration(seconds: 120);
+
+const _scenarioMaxRecordTime = Duration(seconds: 30);
+
 class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     with SingleTickerProviderStateMixin {
   Option<CameraController> cameraController = none();
@@ -90,13 +94,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
   int _lastProcessTime = 0;
 
-  late final AnimationController progressAnimationController =
-      AnimationController(
-    value: isFreestyleMode ? 120 : 30,
-    duration: Duration(seconds: isFreestyleMode ? 120 : 30),
-    upperBound: isFreestyleMode ? 120 : 30,
-    vsync: this,
-  );
+  late final AnimationController progressAnimationController;
 
   /// Session store into which to store the session
   late final RulaSessionRepository sessionRepository;
@@ -350,6 +348,15 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     SchedulerBinding.instance
         .addPostFrameCallback((_) => unawaited(showTutorialDialog(context)));
+
+    final maxRecordDuration =
+        isFreestyleMode ? _freestyleMaxRecordTime : _scenarioMaxRecordTime;
+    progressAnimationController = AnimationController(
+      value: maxRecordDuration.inSeconds.toDouble(),
+      duration: maxRecordDuration,
+      upperBound: maxRecordDuration.inSeconds.toDouble(),
+      vsync: this,
+    );
   }
 
   @override
