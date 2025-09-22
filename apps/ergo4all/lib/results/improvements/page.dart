@@ -33,11 +33,11 @@ class ImprovementsPage extends StatelessWidget {
     this.mostPopularActivity,
   });
 
-  /// The recorded scenario.
-  final Scenario scenario;
+  /// The recorded scenario or `null` if it was freestyle mode.
+  final Scenario? scenario;
 
   /// Activity for which to display improvements in case the
-  /// [ImprovementsPage.scenario] is [Scenario.freestyle].
+  /// [ImprovementsPage.scenario] is `null`.
   final Activity? mostPopularActivity;
 
   @override
@@ -46,14 +46,16 @@ class ImprovementsPage extends StatelessWidget {
 
     // In freestyle mode, determine tips and improvements based on selected
     // activity
-    final textScenario = scenario == Scenario.freestyle
-        ? (mostPopularActivity != null
-            ? _scenarioFor(mostPopularActivity!) ?? Scenario.freestyle
-            : Scenario.freestyle)
-        : scenario;
+    final textScenario = scenario ??
+        (mostPopularActivity != null
+            ? _scenarioFor(mostPopularActivity!)
+            : null);
 
-    final tips = localizations.scenarioTip(textScenario);
-    final improvements = localizations.scenarioImprovement(textScenario);
+    final tips =
+        textScenario != null ? localizations.scenarioTip(textScenario) : '';
+    final improvements = textScenario != null
+        ? localizations.scenarioImprovement(textScenario)
+        : '';
 
     return SingleChildScrollView(
       child: Column(
@@ -79,9 +81,10 @@ class ImprovementsPage extends StatelessWidget {
             style: dynamicBodyStyle,
             textAlign: TextAlign.left,
           ),
-          Center(
-            child: ScenarioGoodBadGraphic(textScenario, height: 330),
-          ),
+          if (textScenario != null)
+            Center(
+              child: ScenarioGoodBadGraphic(textScenario, height: 330),
+            ),
         ],
       ),
     );

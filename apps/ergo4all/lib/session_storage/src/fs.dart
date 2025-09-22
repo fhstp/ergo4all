@@ -31,7 +31,7 @@ class RulaSessionMeta {
   final int profileId;
 
   /// Mirror of [RulaSession.scenario].
-  final Scenario scenario;
+  final Scenario? scenario;
 }
 
 typedef _ScoreRow = (int, RulaScores, Activity?);
@@ -61,14 +61,15 @@ Future<RulaSessionMeta> _loadMetaFrom(File file) async {
   final scenarioIndex =
       map['scenarioIndex']!.toIntOption.expect('Should parse scenario-index');
 
-  return RulaSessionMeta(timestamp, profileId, Scenario.values[scenarioIndex]);
+  final scenario = scenarioIndex == -1 ? null : Scenario.values[scenarioIndex];
+  return RulaSessionMeta(timestamp, profileId, scenario);
 }
 
 Future<void> _writeMetaTo(RulaSessionMeta meta, File file) async {
   final map = IMap.fromEntries([
     MapEntry('timestamp', meta.timestamp.toString()),
     MapEntry('profileId', meta.profileId.toString()),
-    MapEntry('scenarioIndex', meta.scenario.index.toString()),
+    MapEntry('scenarioIndex', (meta.scenario?.index ?? -1).toString()),
   ]);
   final text = _stringifyKV(map);
   await file.writeAsString(text);

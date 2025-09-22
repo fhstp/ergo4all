@@ -26,16 +26,17 @@ class ScenarioDetailScreen extends StatefulWidget {
   static const String routeName = 'scenario-detail';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen in order to
-  /// view the given [scenario].
-  static MaterialPageRoute<void> makeRoute(Scenario scenario) {
+  /// view the given [scenario]. [scenario] can also be `null` for freestyle
+  /// mode.
+  static MaterialPageRoute<void> makeRoute(Scenario? scenario) {
     return MaterialPageRoute(
       builder: (_) => ScenarioDetailScreen(scenario: scenario),
       settings: const RouteSettings(name: routeName),
     );
   }
 
-  /// The scenario for which to view detail.
-  final Scenario scenario;
+  /// The scenario for which to view detail or `null` for freestyle mode.
+  final Scenario? scenario;
 
   @override
   State<ScenarioDetailScreen> createState() => _ScenarioDetailScreenState();
@@ -132,8 +133,8 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                       style: dynamicBodyStyle,
                     ),
                     const SizedBox(height: mediumSpace),
-                    if (widget.scenario != Scenario.freestyle) ...[
-                      ScenarioGraphic(widget.scenario, height: 330),
+                    if (widget.scenario != null) ...[
+                      ScenarioGraphic(widget.scenario!, height: 330),
                       const SizedBox(height: mediumSpace),
                     ],
                     ProfileSelector(
