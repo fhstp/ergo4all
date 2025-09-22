@@ -1,3 +1,11 @@
+# [1.122.0](https://github.com/fhstp/ergo4all/compare/v1.121.0...v1.122.0) (2025-09-22)
+
+
+### Features
+
+* profile creation in onboarding ([3107d12](https://github.com/fhstp/ergo4all/commit/3107d12c0e4ac4906205349b0959efff4c695a26))
+* update onboarding profile creation page ([c3e5085](https://github.com/fhstp/ergo4all/commit/c3e5085cbb9aa8ec8d6eec0c50dca1d1f23edc81)), closes [#145](https://github.com/fhstp/ergo4all/issues/145)
+
 # [1.121.0](https://github.com/fhstp/ergo4all/compare/v1.120.0...v1.121.0) (2025-09-19)
 
 
