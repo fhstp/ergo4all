@@ -7,6 +7,7 @@ import 'package:ergo4all/home/screen.dart';
 import 'package:ergo4all/onboarding/state.dart';
 import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/profile/creation/form.dart';
+import 'package:ergo4all/profile/storage/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,12 +33,14 @@ class UserCreationScreen extends StatefulWidget {
 
 class _UserCreationScreenState extends State<UserCreationScreen> {
   late final OnboardingState onboardingState;
+  late final ProfileRepo profileRepo;
 
   @override
   void initState() {
     super.initState();
 
     onboardingState = Provider.of(context, listen: false);
+    profileRepo = Provider.of(context, listen: false);
   }
 
   Future<void> completeOnboarding() async {
@@ -55,6 +58,7 @@ class _UserCreationScreenState extends State<UserCreationScreen> {
   }
 
   Future<void> completeOnboardingWith(NewProfile profile) async {
+    await profileRepo.createNew(profile.nickName);
     await completeOnboarding();
   }
 
