@@ -1,8 +1,5 @@
 /// The different work scenarios we can evaluate
 enum Scenario {
-    /// Freestyle mode with no time limit
-  freestyle,
-
   /// Lifting and carrying heavy loads up to 25 kg
   liftAndCarry,
 
@@ -29,5 +26,4 @@ enum Scenario {
 
   /// Working on a conveyor belt for long periods
   conveyorBelt,
-
 }

@@ -46,16 +46,20 @@ class LiveAnalysisScreen extends StatefulWidget {
   static const String routeName = 'live-analysis';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen for analyzing
-  /// a [profile] in a [scenario].
-  static MaterialPageRoute<void> makeRoute(Scenario scenario, Profile profile) {
+  /// a [profile] in a [scenario]. A `null` [Scenario] indicates freestyle mode.
+  static MaterialPageRoute<void> makeRoute(
+    Scenario? scenario,
+    Profile profile,
+  ) {
     return MaterialPageRoute(
       builder: (_) => LiveAnalysisScreen(scenario: scenario, profile: profile),
       settings: const RouteSettings(name: routeName),
     );
   }
 
-  /// The scenario for which to make an analysis.
-  final Scenario scenario;
+  /// The scenario for which to make an analysis. `null` indicates freestyle
+  /// mode.
+  final Scenario? scenario;
 
   /// The profile which was used in the recording.
   final Profile profile;
@@ -109,7 +113,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
   StreamSubscription<Activity>? activitySubscription;
 
   /// Returns true if the current scenario is freestyle mode
-  bool get isFreestyleMode => widget.scenario == Scenario.freestyle;
+  bool get isFreestyleMode => widget.scenario == null;
 
   Future<void> goToResults() async {
     if (!context.mounted) return;

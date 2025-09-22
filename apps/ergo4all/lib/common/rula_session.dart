@@ -46,8 +46,9 @@ class RulaSession {
   /// Id of the user who was recorded in this session.
   final int profileId;
 
-  /// [Scenario] which was recorded in this session.
-  final Scenario scenario;
+  /// [Scenario] which was recorded in this session, or `null` if it
+  /// was freestyle mode.
+  final Scenario? scenario;
 
   /// The recorded timeline.
   final RulaTimeline timeline;

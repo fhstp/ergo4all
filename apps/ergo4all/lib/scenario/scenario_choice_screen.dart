@@ -29,8 +29,7 @@ class ScenarioChoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    // Added scenario passing
-    void goToDetailScreen(Scenario scenario) {
+    void goToDetailScreen(Scenario? scenario) {
       unawaited(
         Navigator.of(context).push(ScenarioDetailScreen.makeRoute(scenario)),
       );
@@ -47,11 +46,12 @@ class ScenarioChoiceScreen extends StatelessWidget {
             width: 275,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(vertical: largeSpace),
-              itemCount: Scenario.values.length,
+              // +1 for the freestyle button
+              itemCount: Scenario.values.length + 1,
               itemBuilder: (ctx, i) {
-                final scenario = Scenario.values[i];
+                final scenario = i == 0 ? null : Scenario.values[i - 1];
                 return ElevatedButton(
-                  key: Key('scenario_button_${scenario.name}'),
+                  key: Key('scenario_button_${scenario?.name ?? 'freestyle'}'),
                   style: paleTextButtonStyle,
                   onPressed: () {
                     goToDetailScreen(scenario);
