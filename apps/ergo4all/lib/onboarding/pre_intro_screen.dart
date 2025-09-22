@@ -75,6 +75,7 @@ class PreIntroScreen extends StatelessWidget {
                       onPressed: goToTermsOfUse,
                       child: Text(localizations.onboarding_label),
                     ),
+                    const SizedBox(height: largeSpace),
                   ],
                 ),
               ),

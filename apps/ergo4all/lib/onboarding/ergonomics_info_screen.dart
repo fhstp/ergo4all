@@ -81,6 +81,7 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                       onPressed: goToUserCreation,
                       child: Text(localizations.onboarding_label),
                     ),
+                    const SizedBox(height: largeSpace),
                   ],
                 ),
               ),
