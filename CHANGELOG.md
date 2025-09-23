@@ -1,3 +1,10 @@
+# [1.126.0](https://github.com/fhstp/ergo4all/compare/v1.125.0...v1.126.0) (2025-09-23)
+
+
+### Features
+
+* adjust session choice screen style ([8cbb506](https://github.com/fhstp/ergo4all/commit/8cbb506eaf0c5773288c2544765aca7664fffc09)), closes [#169](https://github.com/fhstp/ergo4all/issues/169)
+
 # [1.125.0](https://github.com/fhstp/ergo4all/compare/v1.124.0...v1.125.0) (2025-09-22)
 
 
