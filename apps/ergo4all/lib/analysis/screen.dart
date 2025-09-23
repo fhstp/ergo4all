@@ -356,8 +356,14 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       tryStartPoseOnlyAnalysis();
     });
 
-    SchedulerBinding.instance
-        .addPostFrameCallback((_) => unawaited(showTutorialDialog(context)));
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) => unawaited(
+        showDialog(
+          context: context,
+          builder: (context) => const TutorialDialog(),
+        ),
+      ),
+    );
 
     final maxRecordDuration =
         isFreestyleMode ? _freestyleMaxRecordTime : _scenarioMaxRecordTime;
