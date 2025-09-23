@@ -33,6 +33,21 @@ class TutorialDialog extends StatelessWidget {
                 style: staticBodyStyle.copyWith(color: white),
               ),
               const SizedBox(height: largeSpace),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: largeSpace,
+                  vertical: smallSpace,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: white, width: 3),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.asset(
+                  height: 150,
+                  'assets/images/record_tutorial.png',
+                ),
+              ),
+              const SizedBox(height: largeSpace),
               ElevatedButton(
                 onPressed: close,
                 style: primaryTextButtonStyle,
