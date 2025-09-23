@@ -8,13 +8,13 @@ import 'package:common/iterable_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
-import 'package:ergo4all/analysis/camera_utils.dart';
-import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/analysis/activity_overlay.dart';
 import 'package:ergo4all/analysis/activity_recognition.dart';
+import 'package:ergo4all/analysis/camera_utils.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
+import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/screen.dart';
@@ -348,6 +348,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     sessionRepository = Provider.of(context, listen: false);
 
+    final maxRecordDuration =
+        isFreestyleMode ? _freestyleMaxRecordTime : _scenarioMaxRecordTime;
+
     openPoseDetectionCamera().then((controller) {
       setState(() {
         cameraController = Some(controller);
@@ -360,13 +363,13 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       (_) => unawaited(
         showDialog(
           context: context,
-          builder: (context) => const TutorialDialog(),
+          builder: (context) => TutorialDialog(
+            maxRecordDuration: maxRecordDuration,
+          ),
         ),
       ),
     );
 
-    final maxRecordDuration =
-        isFreestyleMode ? _freestyleMaxRecordTime : _scenarioMaxRecordTime;
     progressAnimationController = AnimationController(
       value: maxRecordDuration.inSeconds.toDouble(),
       duration: maxRecordDuration,
