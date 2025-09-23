@@ -4,14 +4,16 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class _TutorialDialog extends StatefulWidget {
-  const _TutorialDialog();
+/// Dialog which explains how to record sessions to users.
+class TutorialDialog extends StatefulWidget {
+  ///
+  const TutorialDialog({super.key});
 
   @override
-  State<_TutorialDialog> createState() => _TutorialDialogState();
+  State<TutorialDialog> createState() => _TutorialDialogState();
 }
 
-class _TutorialDialogState extends State<_TutorialDialog> {
+class _TutorialDialogState extends State<TutorialDialog> {
   int pageIndex = 0;
 
   @override
@@ -57,13 +59,4 @@ class _TutorialDialogState extends State<_TutorialDialog> {
       ),
     );
   }
-}
-
-/// Shows a tutorial in a [Dialog] which explains to the user how to
-/// record videos. The returned [Future] completes when the dialog is closed.
-Future<void> showTutorialDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (context) => const _TutorialDialog(),
-  );
 }
