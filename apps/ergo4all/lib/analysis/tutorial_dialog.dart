@@ -24,7 +24,7 @@ class TutorialDialog extends StatelessWidget {
       backgroundColor: tarawera.withAlpha(230),
       child: IntrinsicHeight(
         child: Padding(
-          padding: const EdgeInsets.all(mediumSpace),
+          padding: const EdgeInsets.all(largeSpace),
           child: Column(
             children: [
               Text(
