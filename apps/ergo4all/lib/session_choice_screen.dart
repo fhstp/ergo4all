@@ -82,37 +82,40 @@ class _SessionEntry extends StatelessWidget {
           gradient: LinearGradient(colors: [persimmon, spindle]),
         ),
       ),
-      child: ColoredBox(
-        color: spindle,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _dateFormat.format(sessionTimestamp),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(subTitle),
-                      ],
+      child: GestureDetector(
+        onTap: onTap,
+        child: ColoredBox(
+          color: spindle,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _dateFormat.format(sessionTimestamp),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(subTitle),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Icon(Icons.delete_outline, color: blueChill),
-                  const SizedBox(width: 20),
-                  const Icon(Icons.chevron_right, color: blueChill),
-                ],
+                    const Icon(Icons.delete_outline, color: blueChill),
+                    const SizedBox(width: 20),
+                    const Icon(Icons.chevron_right, color: blueChill),
+                  ],
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: mediumSpace),
-              child: Divider(color: blueChill),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.only(left: mediumSpace),
+                child: Divider(color: blueChill),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -197,32 +200,30 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
               style: paragraphHeaderStyle,
             ),
           )
-        : Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: largeSpace),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: ListView.builder(
-                  itemCount: sessions.length,
-                  shrinkWrap: true,
-                  itemExtent: 76,
-                  itemBuilder: (context, index) {
-                    final session = sessions[index];
-                    return _SessionEntry(
-                      session: session,
-                      profile: profilesById[session.profileId]!,
-                      onDismissed: () {
-                        deleteSessionWith(index);
-                      },
-                      onTap: () {
-                        goToResultsFor(session);
-                      },
-                    );
+        : Padding(
+          padding: const EdgeInsets.symmetric(vertical: largeSpace),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            child: ListView.builder(
+              itemCount: sessions.length,
+              shrinkWrap: true,
+              itemExtent: 76,
+              itemBuilder: (context, index) {
+                final session = sessions[index];
+                return _SessionEntry(
+                  session: session,
+                  profile: profilesById[session.profileId]!,
+                  onDismissed: () {
+                    deleteSessionWith(index);
                   },
-                ),
-              ),
+                  onTap: () {
+                    goToResultsFor(session);
+                  },
+                );
+              },
             ),
-          );
+          ),
+        );
 
     return Scaffold(
       appBar: AppBar(
@@ -234,7 +235,7 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: mediumSpace),
-        child: content,
+        child: Column(children: [Expanded(child: content)]),
       ),
     );
   }
