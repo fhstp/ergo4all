@@ -5,35 +5,20 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Dialog which explains how to record sessions to users.
-class TutorialDialog extends StatefulWidget {
+class TutorialDialog extends StatelessWidget {
   ///
-  const TutorialDialog({super.key});
+  const TutorialDialog({required this.maxRecordDuration, super.key});
 
-  @override
-  State<TutorialDialog> createState() => _TutorialDialogState();
-}
-
-class _TutorialDialogState extends State<TutorialDialog> {
-  int pageIndex = 0;
+  /// How long the user can record for.
+  final Duration maxRecordDuration;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    void onNextPressed() {
-      if (pageIndex < 1) {
-        setState(() {
-          pageIndex++;
-        });
-      } else {
-        Navigator.of(context).pop();
-      }
+    void close() {
+      Navigator.of(context).pop();
     }
-
-    final text = switch (pageIndex) {
-      0 => localizations.tutorial_dialog_page_1,
-      _ => localizations.tutorial_dialog_page_2,
-    };
 
     return Dialog(
       backgroundColor: tarawera.withAlpha(230),
@@ -43,13 +28,13 @@ class _TutorialDialogState extends State<TutorialDialog> {
           child: Column(
             children: [
               Text(
-                text,
+                localizations.record_tutorial(maxRecordDuration.inSeconds),
                 textAlign: TextAlign.center,
                 style: staticBodyStyle.copyWith(color: white),
               ),
               const SizedBox(height: largeSpace),
               ElevatedButton(
-                onPressed: onNextPressed,
+                onPressed: close,
                 style: primaryTextButtonStyle,
                 child: Text(localizations.common_next),
               ),

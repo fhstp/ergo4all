@@ -350,13 +350,16 @@
   "@results_press_body_part": {
     "description": "Text that informs users that they can press a body part on the puppet."
   },
-  "tutorial_dialog_page_1": "The results will be more accurate if you record the person from a 45° angle",
-  "@tutorial_dialog_page_1": {
-    "description": "The text which is displayed on the first page of the video recording tutorial."
-  },
-  "tutorial_dialog_page_2": "Record the scenario for up to 30 seconds and make sure the whole body is visible.",
-  "@tutorial_dialog_page_2": {
-    "description": "The text which is displayed on the second page of the video recording tutorial."
+  "record_tutorial": "Record the scenario for up to {max} seconds from a 45° side angle. Make sure the whole body is within the frame.",
+  "@record_tutorial": {
+    "placeholders": {
+      "max": {
+        "type": "int",
+        "example": "10",
+        "description": "The maximum recording duration."
+      }
+    },
+    "description": "Text explaining some things to keep in mind when recording a session."
   },
   "ergonomics_tipps": "General ergonomics tips",
   "scenario_lift_and_carry_tips": "When lifting, keep your back straight, lift from your legs, hold the load close to your body. Strengthening exercises for back and legs.",
