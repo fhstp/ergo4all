@@ -1,3 +1,10 @@
+## [1.126.1](https://github.com/fhstp/ergo4all/compare/v1.126.0...v1.126.1) (2025-09-24)
+
+
+### Bug Fixes
+
+* while using physical devices the sessions screen was blank, also each session was not clickable ([168f7f4](https://github.com/fhstp/ergo4all/commit/168f7f4ebc2a0c505a7a1b34747fa8a1523150e5))
+
 # [1.126.0](https://github.com/fhstp/ergo4all/compare/v1.125.0...v1.126.0) (2025-09-23)
 
 
