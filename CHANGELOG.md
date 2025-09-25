@@ -1,3 +1,12 @@
+## [1.126.2](https://github.com/fhstp/ergo4all/compare/v1.126.1...v1.126.2) (2025-09-25)
+
+
+### Bug Fixes
+
+* resolve activity recognition not working ([4b8f5e9](https://github.com/fhstp/ergo4all/commit/4b8f5e9abf1376ce624d37ff0f9be1a92ac7bd72))
+* resolve activity recognition not working ([0081b88](https://github.com/fhstp/ergo4all/commit/0081b888f81b1b5eb2fc8318ffcf67e5fc832b51))
+* resolve har issue (typing the function makes tflite reshape call fail) ([6237945](https://github.com/fhstp/ergo4all/commit/6237945729557342c17749c77111cbcc86379f08))
+
 ## [1.126.1](https://github.com/fhstp/ergo4all/compare/v1.126.0...v1.126.1) (2025-09-24)
 
 
