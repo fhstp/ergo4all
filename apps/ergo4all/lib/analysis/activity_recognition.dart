@@ -103,11 +103,15 @@ class ActivityRecognitionManager {
 
     try {
       final outputShape = interpreter.getOutputTensors()[0].shape;
+      // ignore lint type warning, since specifying the type makes call fail
+      // ignore: inference_failure_on_function_invocation
       final output = List.filled(outputShape.reduce((a, b) => a * b), 0)
-          .reshape<double>(outputShape);
+          .reshape(outputShape);
 
+      // ignore lint type warning, since specifying the type makes call fail
+      // ignore: inference_failure_on_function_invocation
       final inputReshaped =
-          harPoseEntries.poses.reshape<double>(_HarConfig.onlineInputShape);
+          harPoseEntries.poses.reshape(_HarConfig.onlineInputShape);
       interpreter.run(inputReshaped, output);
 
       final probabilityTensors = output[0] as List<double>;
