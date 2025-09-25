@@ -104,7 +104,7 @@ class ActivityRecognitionManager {
     try {
       final outputShape = interpreter.getOutputTensors()[0].shape;
       // ignore lint type warning, since specifying the type makes call fail
-      // ignore: inference_failure_on_function_invocation
+      // ignore: dart(inference_failure_on_function_invocation)
       final output = List.filled(outputShape.reduce((a, b) => a * b), 0)
           .reshape(outputShape);
 
