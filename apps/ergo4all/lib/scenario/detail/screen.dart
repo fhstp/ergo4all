@@ -145,6 +145,7 @@ class _ScenarioDetailScreenState extends State<ScenarioDetailScreen> {
                           selectedProfile = it;
                         });
                       },
+                      width: buttonWidth,
                     ),
                     const SizedBox(height: mediumSpace),
                     ElevatedButton(
