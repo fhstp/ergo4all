@@ -1,3 +1,11 @@
+# [1.128.0](https://github.com/fhstp/ergo4all/compare/v1.127.0...v1.128.0) (2025-09-26)
+
+
+### Features
+
+* adjust profile selector style ([bd2a4db](https://github.com/fhstp/ergo4all/commit/bd2a4dbba5d098f8165a51212833fc67c8f82974)), closes [#180](https://github.com/fhstp/ergo4all/issues/180) [#180](https://github.com/fhstp/ergo4all/issues/180)
+* reword tutorial message ([302d1d1](https://github.com/fhstp/ergo4all/commit/302d1d17900060cfba035e381899bd0e38d9318a)), closes [#181](https://github.com/fhstp/ergo4all/issues/181)
+
 # [1.127.0](https://github.com/fhstp/ergo4all/compare/v1.126.2...v1.127.0) (2025-09-26)
 
 
