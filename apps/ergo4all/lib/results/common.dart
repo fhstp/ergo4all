@@ -98,28 +98,42 @@ enum BodyPart {
   upperBody
 }
 
-/// Determines the top 3 most popular activities in the given collection.
-/// "Popular" here means the activities which occur most often.
+
+/// Determines the top 3 activities with highest average scores from the timeline.
+/// Uses both activities and scores from timeline entries to compute average score
+/// for each activity, then picks activities with the highest average scores.
 ///
 /// There may be less than 3 elements in the output for two reasons:
 ///
-///  - There were less than 3 unique activities in the input
+///  - There were less than 3 unique activities in the timeline
 ///  - We filter out "boring" activities such as [Activity.background]
-Iterable<Activity> mostPopularActivitiesOf(Iterable<Activity> activities) {
-  final counts = activities.countOccurrences();
-
-  // These are the unique activities in the timeline sorted by how often
-  // they appear.
-  final sortedByPopularity = counts.entries
-      .sortBy(Order.by((entry) => entry.value, Order.orderInt))
+Iterable<Activity> highestRulaActivitiesOf(RulaTimeline timeline) {
+  // Group timeline entries by activity, filtering out null activities
+  final activitiesWithScores = <Activity, List<int>>{};
+  
+  for (final entry in timeline) {
+    if (entry.activity != null) {
+      activitiesWithScores
+          .putIfAbsent(entry.activity!, () => [])
+          .add(entry.scores.fullScore);
+    }
+  }
+ 
+  // Background and walking are not interesting for the user
+  activitiesWithScores..remove(Activity.background)
+  ..remove(Activity.walking);
+ 
+  // Calculate average scores for each activity
+  final activityAverages = activitiesWithScores.map((activity, scores) {
+    final average = scores.reduce((a, b) => a + b) / scores.length;
+    return MapEntry(activity, average);
+  });
+ 
+  // Sort activities by average score (highest first)
+  final sortedByAverage = activityAverages.entries
+      .sortBy(Order.by((entry) => entry.value, Order.orderDouble.reverse))
       .map((entry) => entry.key);
-
-  // We pick the top 3 most frequent activities
-  final top3 = sortedByPopularity.take(3);
-
-  // There are also some activities which we don't care about
-  final relevant = top3.delete(Activity.background).delete(Activity.walking);
-
-  // So finally we have 0 - 3 popular activities
-  return relevant;
+ 
+  // Return top 3 activities with highest average scores
+  return sortedByAverage.take(3);
 }

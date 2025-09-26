@@ -55,7 +55,7 @@ class _DetailPageState extends State<DetailPage>
 
     final activities =
         widget.session.timeline.map((it) => it.activity).nonNulls.toList();
-    final popularActivities = mostPopularActivitiesOf(activities).toList();
+    final highestRulaActivities = highestRulaActivitiesOf(widget.session.timeline).toList();
 
     final recordingDuration = Duration(
       milliseconds: widget.session.timeline.last.timestamp -
@@ -163,7 +163,7 @@ class _DetailPageState extends State<DetailPage>
                 style: dynamicBodyStyle,
               ),
               initialSelection: selectedActivity,
-              dropdownMenuEntries: popularActivities
+              dropdownMenuEntries: highestRulaActivities
                   .map(
                     (activity) => DropdownMenuEntry<Activity?>(
                       value: activity,

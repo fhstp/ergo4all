@@ -113,8 +113,8 @@ class ResultsScreen extends StatelessWidget {
         .toIList()
         .pipe(Rating.calculate);
 
-    final popularActivities = mostPopularActivitiesOf(activities.nonNulls);
-    final mostPopularActivity = popularActivities.firstOrNull;
+    final highestRulaActivities = highestRulaActivitiesOf(session.timeline);
+    final highestRulaActivity = highestRulaActivities.firstOrNull;
 
     return DefaultTabController(
       length: 3,
@@ -145,7 +145,7 @@ class ResultsScreen extends StatelessWidget {
                     DetailPage(session: session),
                     ImprovementsPage(
                       scenario: session.scenario,
-                      mostPopularActivity: mostPopularActivity,
+                      highestRulaActivity: highestRulaActivity,
                     ),
                   ],
                 ),

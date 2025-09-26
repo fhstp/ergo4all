@@ -30,7 +30,7 @@ class ImprovementsPage extends StatelessWidget {
   const ImprovementsPage({
     required this.scenario,
     super.key,
-    this.mostPopularActivity,
+    this.highestRulaActivity,
   });
 
   /// The recorded scenario or `null` if it was freestyle mode.
@@ -38,7 +38,7 @@ class ImprovementsPage extends StatelessWidget {
 
   /// Activity for which to display improvements in case the
   /// [ImprovementsPage.scenario] is `null`.
-  final Activity? mostPopularActivity;
+  final Activity? highestRulaActivity;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,8 @@ class ImprovementsPage extends StatelessWidget {
     // In freestyle mode, determine tips and improvements based on selected
     // activity
     final textScenario = scenario ??
-        (mostPopularActivity != null
-            ? _scenarioFor(mostPopularActivity!)
+        (highestRulaActivity != null
+            ? _scenarioFor(highestRulaActivity!)
             : null);
 
     final tips =
