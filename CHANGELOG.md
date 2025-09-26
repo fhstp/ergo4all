@@ -1,3 +1,15 @@
+# [1.129.0](https://github.com/fhstp/ergo4all/compare/v1.128.0...v1.129.0) (2025-09-26)
+
+
+### Bug Fixes
+
+* prevent tooltip linechart data from getting obscured when score is high in body detail page ([82163b7](https://github.com/fhstp/ergo4all/commit/82163b7b0e7dcce350ad95fc3784a8aa3b8d947c))
+
+
+### Features
+
+* use top 3 activities with highest rula instead of 3 most popular activities for selection ([5f69ed6](https://github.com/fhstp/ergo4all/commit/5f69ed63a2961edc02cb66a1cec6664287c4b463))
+
 # [1.128.0](https://github.com/fhstp/ergo4all/compare/v1.127.0...v1.128.0) (2025-09-26)
 
 
