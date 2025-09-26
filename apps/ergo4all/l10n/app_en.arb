@@ -350,7 +350,7 @@
   "@results_press_body_part": {
     "description": "Text that informs users that they can press a body part on the puppet."
   },
-  "record_tutorial": "Record the scenario for up to {max} seconds from a 45° side angle. Make sure the whole body is within the frame.",
+  "record_tutorial": "Record the scenario for up to {max} seconds and make sure all body parts are clearly visible.",
   "@record_tutorial": {
     "placeholders": {
       "max": {
