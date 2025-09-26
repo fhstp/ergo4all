@@ -1,3 +1,12 @@
+# [1.127.0](https://github.com/fhstp/ergo4all/compare/v1.126.2...v1.127.0) (2025-09-26)
+
+
+### Features
+
+* add image to tutorial dialog ([4bf2200](https://github.com/fhstp/ergo4all/commit/4bf22009c41e87b74ceae6ebe8b21d3857274a8c)), closes [#142](https://github.com/fhstp/ergo4all/issues/142)
+* increase tutorial dialog padding ([984e21e](https://github.com/fhstp/ergo4all/commit/984e21ea180f1a261e5011979b24fd4312e242a1)), closes [#142](https://github.com/fhstp/ergo4all/issues/142)
+* merge record tutorial texts ([8ea55fb](https://github.com/fhstp/ergo4all/commit/8ea55fb3d3b7cc7032129f2fbacf588ac68132f8)), closes [#142](https://github.com/fhstp/ergo4all/issues/142)
+
 ## [1.126.2](https://github.com/fhstp/ergo4all/compare/v1.126.1...v1.126.2) (2025-09-25)
 
 
