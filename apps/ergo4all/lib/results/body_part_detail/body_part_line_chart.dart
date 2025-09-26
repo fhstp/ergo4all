@@ -188,6 +188,8 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
               lineTouchData: LineTouchData(
                 touchTooltipData: LineTouchTooltipData(
                   getTooltipItems: _getTooltipItems,
+                  fitInsideHorizontally: true,
+                  fitInsideVertically: true,
                 ),
               ),
             ),

@@ -107,6 +107,8 @@ class StaticLoadChart extends StatelessWidget {
           touchTooltipData: LineTouchTooltipData(
             getTooltipItems: (touchedSpots) =>
                 _getTooltipItems(touchedSpots, context),
+            fitInsideHorizontally: true,
+            fitInsideVertically: true,
           ),
         ),
       ),
