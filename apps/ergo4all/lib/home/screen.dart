@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               const PuppetGraphic(),
               const SizedBox(height: mediumSpace),
               Text(
-                localizations.home_welcome_break('Ergo-fan'),
+                localizations.home_welcome,
                 style: h3Style,
                 textAlign: TextAlign.center,
               ),

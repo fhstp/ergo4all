@@ -31,21 +31,9 @@
   "@home_start_label": {
     "description": "Button label for navigation to scenario screen"
   },
-  "home_welcome": "Welcome {firstName}",
+  "home_welcome": "Welcome!",
   "@home_welcome": {
-    "placeholders": {
-      "firstName": {
-        "type": "String"
-      }
-    }
-  },
-  "home_welcome_break": "Welcome \n {firstName}",
-  "@home_welcome_break": {
-    "placeholders": {
-      "firstName": {
-        "type": "String"
-      }
-    }
+    "description": "Message welcoming the user"
   },
   "language_header": "Choose language",
   "language_title": "Languages",
