@@ -1,3 +1,12 @@
+# [1.130.0](https://github.com/fhstp/ergo4all/compare/v1.129.0...v1.130.0) (2025-09-29)
+
+
+### Features
+
+* minimum record time ([39d65c9](https://github.com/fhstp/ergo4all/commit/39d65c9b0d9bf2552518bbf12a52f3768b267da3)), closes [#184](https://github.com/fhstp/ergo4all/issues/184)
+* reword session screen header ([0db002c](https://github.com/fhstp/ergo4all/commit/0db002c894930f6cd27c6400dab7a8928a97c289)), closes [#182](https://github.com/fhstp/ergo4all/issues/182)
+* simplify welcome message ([185cdaa](https://github.com/fhstp/ergo4all/commit/185cdaa888f3e079c831e8f9a7ad31009b89f622)), closes [#183](https://github.com/fhstp/ergo4all/issues/183)
+
 # [1.129.0](https://github.com/fhstp/ergo4all/compare/v1.128.0...v1.129.0) (2025-09-26)
 
 
