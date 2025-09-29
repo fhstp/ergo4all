@@ -83,6 +83,8 @@ const _freestyleMaxRecordTime = Duration(seconds: 120);
 
 const _scenarioMaxRecordTime = Duration(seconds: 30);
 
+const _minRecordTime = Duration(seconds: 1);
+
 /// Gets the current timestamp. This is an impure operation, hence the use of
 /// [Future].
 Future<int> getCurrentTimestamp() async =>
@@ -418,6 +420,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final isRecording = analysisMode == _AnalysisMode.full;
 
+    /// How long we have been recording for. Will be 0s when the recording
+    /// was not started yet.
+    final recordTime = Duration(
+      seconds: (progressAnimationController.upperBound -
+              progressAnimationController.value)
+          .toInt(),
+    );
+
+    /// Whether we can press the record button (whether it is enabled).
+    /// It should be pressable either when we have not yet started recording,
+    /// in order to start it, or to stop the recording once we have recorded
+    /// for the minium amount of time.
+    final canPressRecordButton = !isRecording || recordTime > _minRecordTime;
+
     return Scaffold(
       backgroundColor: woodSmoke,
       body: SafeArea(
@@ -445,13 +461,9 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
             Center(
               child: ElevatedButton(
                 key: const Key('record'),
-                onPressed: onRecordButtonPressed,
-                style: elevatedButtonStyle.copyWith(
-                  backgroundColor: WidgetStatePropertyAll(
-                    isRecording ? cardinal : blueChill,
-                  ),
-                  foregroundColor: const WidgetStatePropertyAll(white),
-                ),
+                onPressed: canPressRecordButton ? onRecordButtonPressed : null,
+                style:
+                    isRecording ? redTextButtonStyle : primaryTextButtonStyle,
                 child: Text(isRecording ? 'Stop' : 'Start'),
               ),
             ),

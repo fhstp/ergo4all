@@ -64,6 +64,16 @@ final paleTextButtonStyle = elevatedButtonStyle.copyWith(
   }),
 );
 
+/// The button style for red buttons, such as error buttons.
+final redTextButtonStyle = elevatedButtonStyle.copyWith(
+  foregroundColor: const WidgetStatePropertyAll(white),
+  backgroundColor: const WidgetStateColor.fromMap({
+    WidgetState.pressed: persimmon,
+    WidgetState.disabled: persimmon,
+    WidgetState.any: cardinal,
+  }),
+);
+
 /// Text style for H1 headers.
 final h1Style = GoogleFonts.montserrat(
   fontWeight: FontWeight.w700,
