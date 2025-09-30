@@ -1,3 +1,13 @@
+# [1.131.0](https://github.com/fhstp/ergo4all/compare/v1.130.0...v1.131.0) (2025-09-30)
+
+
+### Features
+
+* add delete confirmation dialog ([111f7db](https://github.com/fhstp/ergo4all/commit/111f7dbb4eb24fffd2f7fd2effa39cc321e49909)), closes [#191](https://github.com/fhstp/ergo4all/issues/191)
+* add delete explanation texts ([56a6e24](https://github.com/fhstp/ergo4all/commit/56a6e24bb6da8b414ba374b1ed9ae6a8c95726cc)), closes [#190](https://github.com/fhstp/ergo4all/issues/190)
+* add padding to result screen pages ([fab4d05](https://github.com/fhstp/ergo4all/commit/fab4d0508b113abf8a6ff49b7a590ef015b5b08a)), closes [#186](https://github.com/fhstp/ergo4all/issues/186)
+* overhaul puppet scaling on overview page ([c4bae3f](https://github.com/fhstp/ergo4all/commit/c4bae3fdebd81e972d67c531827afe41a79add79)), closes [#189](https://github.com/fhstp/ergo4all/issues/189)
+
 # [1.130.0](https://github.com/fhstp/ergo4all/compare/v1.129.0...v1.130.0) (2025-09-29)
 
 
