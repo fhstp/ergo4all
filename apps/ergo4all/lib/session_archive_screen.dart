@@ -17,23 +17,23 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 /// Sessions screen that displays a list of all the user stored sessions
-class SessionChoiceScreen extends StatefulWidget {
+class SessionArchiveScreen extends StatefulWidget {
   ///
-  const SessionChoiceScreen({super.key});
+  const SessionArchiveScreen({super.key});
 
   /// The route name for this screen.
-  static const String routeName = 'session-choice';
+  static const String routeName = 'session-archive';
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
   static MaterialPageRoute<void> makeRoute() {
     return MaterialPageRoute(
-      builder: (_) => const SessionChoiceScreen(),
+      builder: (_) => const SessionArchiveScreen(),
       settings: const RouteSettings(name: routeName),
     );
   }
 
   @override
-  State<SessionChoiceScreen> createState() => _SessionChoiceScreenState();
+  State<SessionArchiveScreen> createState() => _SessionArchiveScreenState();
 }
 
 final _dateFormat = DateFormat('dd MMM yyyy, HH:mm');
@@ -164,7 +164,7 @@ class _SessionList extends StatelessWidget {
   }
 }
 
-class _SessionChoiceScreenState extends State<SessionChoiceScreen>
+class _SessionArchiveScreenState extends State<SessionArchiveScreen>
     with SingleTickerProviderStateMixin {
   late final RulaSessionRepository sessionRepository;
   late final ProfileRepo profileRepo;
