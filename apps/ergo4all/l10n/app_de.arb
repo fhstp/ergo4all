@@ -187,5 +187,8 @@
   "tips_general_example": "Wenn Sie beispielsweise etwas Schweres heben, werden durch das Beugen der Knie Ihre Beinmuskeln stärker aktiviert, was Ihren Rücken schont.",
   "tips_general_legs": "Obwohl Sie Ihre Beinmuskeln stärker beanspruchen, führt dies zu einer natürlicheren Körperhaltung und einem geringeren Verletzungsrisiko. Andererseits kann es vorkommen, dass Sie eine Muskelgruppe aktiv arbeiten spüren, die ergonomische Belastung jedoch gering ist - manchmal ist Muskelaktivität gut und notwendig, solange Ihre Körperhaltung natürlich ist.\nDie Wissenschaft der Bewegung kann komplex sein, aber eines sollten Sie unbedingt beachten: Ihre Körperteile arbeiten nicht isoliert, sondern sind alle miteinander verbunden.",
   "tips_general_teach": "Unsere App versucht Ihnen beizubringen, falsche Muster zu erkennen und die guten anzunehmen.",
-  "delete_action_explanation": "Nach rechts wischen um zu löschen"
+  "delete_action_explanation": "Nach rechts wischen um zu löschen",
+  "ask_delete": "Bist du dir sicher, dass du löschen möchtest?",
+  "yes": "Ja",
+  "no": "Nein"
 }

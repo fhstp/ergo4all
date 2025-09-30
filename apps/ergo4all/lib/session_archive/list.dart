@@ -1,5 +1,6 @@
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
+import 'package:ergo4all/common/confirm_delete_dialog.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/scenario/common.dart';
@@ -46,6 +47,13 @@ class _Entry extends StatelessWidget {
     return Dismissible(
       key: Key(session.timestamp.toString()),
       direction: DismissDirection.startToEnd,
+      confirmDismiss: (_) async {
+        final result = await showDialog<bool>(
+          context: context,
+          builder: (context) => const ConfirmDeleteDialog(),
+        );
+        return result ?? false;
+      },
       onDismissed: (_) {
         onDismissed?.call();
       },

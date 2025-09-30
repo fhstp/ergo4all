@@ -464,5 +464,17 @@
   "delete_action_explanation": "Swipe right to delete",
   "@delete_action_explanation": {
     "description": "Explanation of what input action must be made to delete an item from a list"
+  },
+  "ask_delete": "Are you sure you want to delete?",
+  "@ask_delete": {
+    "description": "Text asking the user whether they are sure they want to delete some item"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Generic 'yes' text"
+  },
+  "no": "No",
+  "@no": {
+    "description": "Generic 'no' text"
   }
 }
