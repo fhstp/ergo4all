@@ -122,6 +122,48 @@ class _SessionEntry extends StatelessWidget {
   }
 }
 
+class _SessionList extends StatelessWidget {
+  const _SessionList({
+    required this.sessions,
+    required this.profilesById,
+    this.onSessionDismissed,
+    this.onSessionTapped,
+  });
+
+  final List<RulaSessionMeta> sessions;
+
+  final IMap<int, Profile> profilesById;
+
+  final void Function(RulaSessionMeta session)? onSessionDismissed;
+
+  final void Function(RulaSessionMeta session)? onSessionTapped;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+      child: ListView.builder(
+        itemCount: sessions.length,
+        shrinkWrap: true,
+        itemExtent: 76,
+        itemBuilder: (context, index) {
+          final session = sessions[index];
+          return _SessionEntry(
+            session: session,
+            profile: profilesById[session.profileId]!,
+            onDismissed: () {
+              onSessionDismissed?.call(session);
+            },
+            onTap: () {
+              onSessionTapped?.call(session);
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
 class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     with SingleTickerProviderStateMixin {
   late final RulaSessionRepository sessionRepository;
@@ -138,15 +180,19 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
     profileRepo = Provider.of(context, listen: false);
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
+  void reloadSessions() {
     sessionRepository.getAll().then((it) {
       setState(() {
         sessions = it;
       });
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    reloadSessions();
 
     profileRepo.getAllAsMap().then((it) {
       setState(() {
@@ -178,52 +224,18 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
       );
     }
 
-    Future<void> deleteSessionWith(int index) async {
-      await sessionRepository.deleteByTimestamp(sessions[index].timestamp);
+    Future<void> deleteSession(RulaSessionMeta session) async {
+      await sessionRepository.deleteByTimestamp(session.timestamp);
       if (!context.mounted) return;
-
-      setState(() {
-        sessions.removeAt(index);
-      });
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(localizations.delete_session_message),
         ),
       );
-    }
 
-    final content = sessions.isEmpty
-        ? Center(
-            child: Text(
-              localizations.no_sessions_placeholder,
-              style: paragraphHeaderStyle,
-            ),
-          )
-        : Padding(
-          padding: const EdgeInsets.symmetric(vertical: largeSpace),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            child: ListView.builder(
-              itemCount: sessions.length,
-              shrinkWrap: true,
-              itemExtent: 76,
-              itemBuilder: (context, index) {
-                final session = sessions[index];
-                return _SessionEntry(
-                  session: session,
-                  profile: profilesById[session.profileId]!,
-                  onDismissed: () {
-                    deleteSessionWith(index);
-                  },
-                  onTap: () {
-                    goToResultsFor(session);
-                  },
-                );
-              },
-            ),
-          ),
-        );
+      reloadSessions();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -234,8 +246,25 @@ class _SessionChoiceScreenState extends State<SessionChoiceScreen>
         ),
       ),
       body: SafeArea(
-        minimum: const EdgeInsets.symmetric(horizontal: mediumSpace),
-        child: Column(children: [Expanded(child: content)]),
+        minimum: const EdgeInsets.symmetric(
+          horizontal: mediumSpace,
+          vertical: largeSpace,
+        ),
+        child: Expanded(
+          child: sessions.isEmpty
+              ? Center(
+                  child: Text(
+                    localizations.no_sessions_placeholder,
+                    style: paragraphHeaderStyle,
+                  ),
+                )
+              : _SessionList(
+                  sessions: sessions,
+                  profilesById: profilesById,
+                  onSessionDismissed: deleteSession,
+                  onSessionTapped: goToResultsFor,
+                ),
+        ),
       ),
     );
   }
