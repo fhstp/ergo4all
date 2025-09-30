@@ -98,28 +98,28 @@ class _ProfileManagementScreenState extends State<ProfileManagementScreen> {
         withBackButton: true,
       ),
       body: SafeArea(
-        minimum: const EdgeInsets.fromLTRB(
-          mediumSpace,
-          largeSpace,
-          mediumSpace,
-          mediumSpace,
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: ProfileList(
-                entries: entries,
-                onProfileDismissed: deleteProfile,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: mediumSpace,
+            vertical: largeSpace,
+          ),
+          child: Column(
+            spacing: mediumSpace,
+            children: [
+              Text(localizations.delete_action_explanation),
+              Expanded(
+                child: ProfileList(
+                  entries: entries,
+                  onProfileDismissed: deleteProfile,
+                ),
               ),
-            ),
-            const SizedBox(height: mediumSpace),
-            ElevatedButton(
-              onPressed: openProfileCreator,
-              style: primaryTextButtonStyle,
-              child: Text(localizations.profile_choice_new),
-            ),
-            const SizedBox(height: largeSpace),
-          ],
+              ElevatedButton(
+                onPressed: openProfileCreator,
+                style: primaryTextButtonStyle,
+                child: Text(localizations.profile_choice_new),
+              ),
+            ],
+          ),
         ),
       ),
     );

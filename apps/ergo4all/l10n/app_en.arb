@@ -460,5 +460,9 @@
   "tips_general_teach": "Our app tries to teach you to recognize wrong patterns and embrace the good ones.",
   "@tips_general_teach": {
     "description": "The fifth paragraph on the general ergonomics info screen"
+  },
+  "delete_action_explanation": "Swipe right to delete",
+  "@delete_action_explanation": {
+    "description": "Explanation of what input action must be made to delete an item from a list"
   }
 }

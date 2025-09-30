@@ -117,24 +117,36 @@ class _SessionArchiveScreenState extends State<SessionArchiveScreen>
         ),
       ),
       body: SafeArea(
-        minimum: const EdgeInsets.symmetric(
-          horizontal: mediumSpace,
-          vertical: largeSpace,
-        ),
-        child: Expanded(
-          child: sessions.isEmpty
-              ? Center(
-                  child: Text(
-                    localizations.no_sessions_placeholder,
-                    style: paragraphHeaderStyle,
-                  ),
-                )
-              : SessionList(
-                  sessions: sessions,
-                  profilesById: profilesById,
-                  onSessionDismissed: deleteSession,
-                  onSessionTapped: goToResultsFor,
+        child: Builder(
+          builder: (context) {
+            if (sessions.isEmpty) {
+              return Center(
+                child: Text(
+                  localizations.no_sessions_placeholder,
+                  style: paragraphHeaderStyle,
                 ),
+              );
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: mediumSpace,
+                vertical: largeSpace,
+              ),
+              child: Column(
+                spacing: mediumSpace,
+                children: [
+                  Text(localizations.delete_action_explanation),
+                  SessionList(
+                    sessions: sessions,
+                    profilesById: profilesById,
+                    onSessionDismissed: deleteSession,
+                    onSessionTapped: goToResultsFor,
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
