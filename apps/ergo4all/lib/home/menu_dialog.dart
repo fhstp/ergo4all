@@ -6,7 +6,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/privacy_screen.dart';
-import 'package:ergo4all/profile/management_screen.dart';
+import 'package:ergo4all/profile/management/screen.dart';
 import 'package:flutter/material.dart';
 
 Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
