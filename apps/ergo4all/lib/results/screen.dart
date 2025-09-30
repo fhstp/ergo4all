@@ -135,22 +135,27 @@ class ResultsScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: TabBarView(
-                  children: [
-                    OverviewPage(
-                      rating: totalRating,
-                      scores: aggregate,
-                      onBodyPartGroupTapped: goToBodyPartPage,
-                    ),
-                    DetailPage(session: session),
-                    ImprovementsPage(
-                      scenario: session.scenario,
-                      highestRulaActivity: highestRulaActivity,
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: mediumSpace,
+                    horizontal: largeSpace,
+                  ),
+                  child: TabBarView(
+                    children: [
+                      OverviewPage(
+                        rating: totalRating,
+                        scores: aggregate,
+                        onBodyPartGroupTapped: goToBodyPartPage,
+                      ),
+                      DetailPage(session: session),
+                      ImprovementsPage(
+                        scenario: session.scenario,
+                        highestRulaActivity: highestRulaActivity,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: largeSpace),
               ElevatedButton(
                 onPressed: recordAgain,
                 style: secondaryTextButtonStyle,

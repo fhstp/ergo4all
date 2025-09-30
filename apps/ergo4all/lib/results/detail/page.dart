@@ -55,7 +55,8 @@ class _DetailPageState extends State<DetailPage>
 
     final activities =
         widget.session.timeline.map((it) => it.activity).nonNulls.toList();
-    final highestRulaActivities = highestRulaActivitiesOf(widget.session.timeline).toList();
+    final highestRulaActivities =
+        highestRulaActivitiesOf(widget.session.timeline).toList();
 
     final recordingDuration = Duration(
       milliseconds: widget.session.timeline.last.timestamp -
@@ -105,7 +106,6 @@ class _DetailPageState extends State<DetailPage>
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
