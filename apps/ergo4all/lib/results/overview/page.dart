@@ -1,3 +1,4 @@
+import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_group.dart';
@@ -43,13 +44,16 @@ class _OverviewPageState extends State<OverviewPage>
     final localizations = AppLocalizations.of(context)!;
 
     return Column(
+      spacing: mediumSpace,
       children: [
         SizedBox(height: 80, child: ErgoScoreBadge(rating: widget.rating)),
-        BodyScoreDisplay(
-          widget.scores,
-          onBodyPartTapped: (part) {
-            widget.onBodyPartGroupTapped?.call(BodyPartGroup.forPart(part));
-          },
+        Expanded(
+          child: BodyScoreDisplay(
+            widget.scores,
+            onBodyPartTapped: (part) {
+              widget.onBodyPartGroupTapped?.call(BodyPartGroup.forPart(part));
+            },
+          ),
         ),
         Text(
           localizations.results_press_body_part,

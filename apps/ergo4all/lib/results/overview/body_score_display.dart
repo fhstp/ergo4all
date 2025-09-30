@@ -44,16 +44,16 @@ double getNormalizedScoreForPart(BodyPart part, RulaScores scores) {
     BodyPart.head => normalizeScore(scores.neckScore, 6),
     BodyPart.leftHand ||
     BodyPart.leftLowerArm =>
-        normalizeScore(Pair.left(scores.lowerArmScores), 3),
+      normalizeScore(Pair.left(scores.lowerArmScores), 3),
     BodyPart.rightHand ||
     BodyPart.rightLowerArm =>
-        normalizeScore(Pair.right(scores.lowerArmScores), 3),
+      normalizeScore(Pair.right(scores.lowerArmScores), 3),
     BodyPart.leftLeg => normalizeScore(Pair.left(scores.legScores), 2),
     BodyPart.rightLeg => normalizeScore(Pair.right(scores.legScores), 2),
     BodyPart.leftUpperArm =>
-        normalizeScore(Pair.left(scores.upperArmScores), 6),
+      normalizeScore(Pair.left(scores.upperArmScores), 6),
     BodyPart.rightUpperArm =>
-        normalizeScore(Pair.right(scores.upperArmScores), 6),
+      normalizeScore(Pair.right(scores.upperArmScores), 6),
     BodyPart.upperBody => normalizeScore(scores.trunkScore, 6),
   };
 }
@@ -71,7 +71,6 @@ class BodyScoreDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final bodyPartsImagePaths =
         bodyPartsInDisplayOrder.map(_getAssetPathForPart).toList();
 
@@ -80,10 +79,12 @@ class BodyScoreDisplay extends StatelessWidget {
       return RulaColor.forScore(score);
     }).toList();
 
-    return TransparentImageStack(
-      imagePaths: bodyPartsImagePaths,
-      colors: colors,
-      onTap: (i) => onBodyPartTapped?.call(bodyPartsInDisplayOrder[i]),
+    return Center(
+      child: TransparentImageStack(
+        imagePaths: bodyPartsImagePaths,
+        colors: colors,
+        onTap: (i) => onBodyPartTapped?.call(bodyPartsInDisplayOrder[i]),
+      ),
     );
   }
 }
