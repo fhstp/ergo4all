@@ -8,7 +8,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
 import 'package:ergo4all/home/puppet_graphic.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
-import 'package:ergo4all/session_archive_screen.dart';
+import 'package:ergo4all/session_archive/screen.dart';
 import 'package:ergo4all/tips/tip_choice_screen.dart';
 import 'package:flutter/material.dart';
 
