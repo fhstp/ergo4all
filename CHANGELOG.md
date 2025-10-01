@@ -1,3 +1,10 @@
+# [1.132.0](https://github.com/fhstp/ergo4all/compare/v1.131.0...v1.132.0) (2025-10-01)
+
+
+### Features
+
+* warning & return to start screen when no poses were detected (e.g., recording too short) ([ebe61f4](https://github.com/fhstp/ergo4all/commit/ebe61f4983e152bc6fc5774155e0d3765e1cef4a))
+
 # [1.131.0](https://github.com/fhstp/ergo4all/compare/v1.130.0...v1.131.0) (2025-09-30)
 
 
