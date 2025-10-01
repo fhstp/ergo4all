@@ -476,5 +476,9 @@
   "no": "No",
   "@no": {
     "description": "Generic 'no' text"
+  },
+  "not_enough_data": "Not enough poses were detected, probably because recording was too short. Please try again.",
+  "@not_enough_data": {
+    "description": "Error message shown when there is not enough data to recognize an activity and analyze the ergonomics."
   }
 }

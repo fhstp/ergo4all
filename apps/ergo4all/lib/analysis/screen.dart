@@ -11,6 +11,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/analysis/activity_overlay.dart';
 import 'package:ergo4all/analysis/activity_recognition.dart';
 import 'package:ergo4all/analysis/camera_utils.dart';
+import 'package:ergo4all/analysis/not_enough_data_dialogue.dart';
 import 'package:ergo4all/analysis/recording_progress_indicator.dart';
 import 'package:ergo4all/analysis/tutorial_dialog.dart';
 import 'package:ergo4all/analysis/utils.dart';
@@ -20,6 +21,7 @@ import 'package:ergo4all/profile/common.dart';
 import 'package:ergo4all/results/screen.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:ergo4all/session_storage/session_storage.dart';
+import 'package:ergo4all/welcome/screen.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +124,20 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final weightedActivities =
         activityRecognitionManager.computeWeightedActivities();
+
+     
+    if (weightedActivities.isEmpty) {
+      await showDialog<void>(
+        context: context,
+        builder: (context) => const NotEnoughDataDialog(),
+      );
+      if (!mounted) return;
+      await Navigator.of(context).pushAndRemoveUntil(
+        WelcomeScreen.makeRoute(),
+        (route) => false,
+      );
+      return;
+    }
     timeline = timeline
         .map(
           (e) => TimelineEntry(
@@ -420,20 +436,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
 
     final isRecording = analysisMode == _AnalysisMode.full;
 
-    /// How long we have been recording for. Will be 0s when the recording
-    /// was not started yet.
-    final recordTime = Duration(
-      seconds: (progressAnimationController.upperBound -
-              progressAnimationController.value)
-          .toInt(),
-    );
-
-    /// Whether we can press the record button (whether it is enabled).
-    /// It should be pressable either when we have not yet started recording,
-    /// in order to start it, or to stop the recording once we have recorded
-    /// for the minium amount of time.
-    final canPressRecordButton = !isRecording || recordTime > _minRecordTime;
-
     return Scaffold(
       backgroundColor: woodSmoke,
       body: SafeArea(
@@ -461,7 +463,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
             Center(
               child: ElevatedButton(
                 key: const Key('record'),
-                onPressed: canPressRecordButton ? onRecordButtonPressed : null,
+                onPressed: onRecordButtonPressed,
                 style:
                     isRecording ? redTextButtonStyle : primaryTextButtonStyle,
                 child: Text(isRecording ? 'Stop' : 'Start'),

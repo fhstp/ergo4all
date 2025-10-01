@@ -190,5 +190,6 @@
   "delete_action_explanation": "Nach rechts wischen um zu löschen",
   "ask_delete": "Bist du dir sicher, dass du löschen möchtest?",
   "yes": "Ja",
-  "no": "Nein"
+  "no": "Nein",
+  "not_enough_data": "Nicht genügend Daten wurden erkannt, wahrscheinlich weil die Aufnahme zu kurz war. Bitte versuche es erneut."
 }
