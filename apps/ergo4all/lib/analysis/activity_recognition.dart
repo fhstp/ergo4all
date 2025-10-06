@@ -11,7 +11,7 @@ class _HarConfig {
   static const temporalDisplacementStride = 5;
   static const onlineInputShape = [1, 40, 17, 4];
   static const onlineModelPath =
-      'assets/har/har_tcn_online_inference_temporal_displacement.tflite';
+      'assets/har/har_tcn_online_inference_label_smoothing.tflite';
   static const weightingFactors = [0.2, 0.5, 0.3];
 }
 
