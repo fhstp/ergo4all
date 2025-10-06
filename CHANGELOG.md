@@ -1,3 +1,10 @@
+# [1.133.0](https://github.com/fhstp/ergo4all/compare/v1.132.0...v1.133.0) (2025-10-06)
+
+
+### Features
+
+* update har model (add label smoothing + new data) ([45647db](https://github.com/fhstp/ergo4all/commit/45647db9c1e5b38a4c6ff6cb86c5b702e21919f6))
+
 # [1.132.0](https://github.com/fhstp/ergo4all/compare/v1.131.0...v1.132.0) (2025-10-01)
 
 
