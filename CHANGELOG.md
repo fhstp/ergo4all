@@ -1,3 +1,10 @@
+## [1.133.1](https://github.com/fhstp/ergo4all/compare/v1.133.0...v1.133.1) (2025-10-12)
+
+
+### Bug Fixes
+
+* fix incorrect localization for carrying work, update name of har classes ([1e698f3](https://github.com/fhstp/ergo4all/commit/1e698f3c83d351eb46cf12ed3c3eab96af6eeda1))
+
 # [1.133.0](https://github.com/fhstp/ergo4all/compare/v1.132.0...v1.133.0) (2025-10-06)
 
 
