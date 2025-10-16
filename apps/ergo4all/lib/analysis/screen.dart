@@ -85,8 +85,6 @@ const _freestyleMaxRecordTime = Duration(seconds: 120);
 
 const _scenarioMaxRecordTime = Duration(seconds: 30);
 
-const _minRecordTime = Duration(seconds: 1);
-
 /// Gets the current timestamp. This is an impure operation, hence the use of
 /// [Future].
 Future<int> getCurrentTimestamp() async =>
@@ -125,7 +123,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     final weightedActivities =
         activityRecognitionManager.computeWeightedActivities();
 
-     
     if (weightedActivities.isEmpty) {
       await showDialog<void>(
         context: context,
