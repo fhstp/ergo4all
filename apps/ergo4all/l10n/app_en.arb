@@ -480,5 +480,11 @@
   "not_enough_data": "Not enough poses were detected, probably because recording was too short. Please try again.",
   "@not_enough_data": {
     "description": "Error message shown when there is not enough data to recognize an activity and analyze the ergonomics."
+  },
+  "activity_filter": "Activity filter",
+  "@activity_filter": {},
+  "activity_filter_explanation": "Ergo4All detects what activities were performed during the session. Using the activity-selection dropdown you can filter for these activities to get more specific information.",
+  "@activity_filter_explanation": {
+    "description": "Explanation text for what the activity filter does"
   }
 }

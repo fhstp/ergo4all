@@ -191,5 +191,7 @@
   "ask_delete": "Bist du dir sicher, dass du löschen möchtest?",
   "yes": "Ja",
   "no": "Nein",
-  "not_enough_data": "Nicht genügend Daten wurden erkannt, wahrscheinlich weil die Aufnahme zu kurz war. Bitte versuche es erneut."
+  "not_enough_data": "Nicht genügend Daten wurden erkannt, wahrscheinlich weil die Aufnahme zu kurz war. Bitte versuche es erneut.",
+  "activity_filter": "Aktivität-filter",
+  "activity_filter_explanation": "Ergo4All erkennt welche Aktivitäten in der Aufnahme durchgeführt wurden. Indem du eine von ihnen auswählst kannst du detaillierte Informationen über sie bekommen."
 }
