@@ -8,11 +8,12 @@
             "type": "shell",
             "command": "cd apps/ergo4all && fvm flutter gen-l10n",
             "runOptions": {
-                "runOn": "folderOpen",
+                "runOn": "folderOpen"
             },
             "presentation": {
                 "close": true
-            }
+            },
+            "problemMatcher": []
         }
     ]
 }
