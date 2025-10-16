@@ -172,7 +172,7 @@
   "har_class_sitting": "Sitzen",
   "har_class_standing": "Gehen/Stehen",
   "har_class_walking": "Gehen/Stehen",
-  "har_class_no_selection": "Keine Auswahl",
+  "all_activities": "Alle Aktivitäten",
   "har_activity_selection": "Aktivität auswählen",
   "chart_tooltip_score": "Bewertung",
   "profile_choice_cannot_delete_default": "Das Standardprofil kann nicht gelöscht werden.",

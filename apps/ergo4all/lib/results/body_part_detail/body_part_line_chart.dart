@@ -62,7 +62,7 @@ class _BodyPartLineChartState extends State<BodyPartLineChart> {
     final activity = widget.activities[spot.x.toInt()];
     final activityName = activity != null
         ? localizations.activityDisplayName(activity)
-        : localizations.har_class_no_selection;
+        : localizations.all_activities;
 
     final score = spot.y.toStringAsFixed(2);
     final touchLabel =

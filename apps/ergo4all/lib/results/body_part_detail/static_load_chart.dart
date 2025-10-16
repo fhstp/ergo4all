@@ -35,7 +35,7 @@ class StaticLoadChart extends StatelessWidget {
     final activity = activities[spot.x.toInt()];
     final activityName = activity != null
         ? localizations.activityDisplayName(activity)
-        : localizations.har_class_no_selection;
+        : localizations.all_activities;
     final score = spot.y.toStringAsFixed(2);
     final touchLabel =
         '$activityName\n${localizations.chart_tooltip_score}: $score';
