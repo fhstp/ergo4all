@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
@@ -8,6 +9,7 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/detail/activity_explanation_popup.dart';
 import 'package:ergo4all/results/detail/activity_selection_dropdown.dart';
 import 'package:ergo4all/results/detail/image_carousel.dart';
 import 'package:ergo4all/results/detail/rula_color_legend.dart';
@@ -96,6 +98,15 @@ class _DetailPageState extends State<DetailPage>
       );
     }
 
+    void showActivityExplanationPopup() {
+      unawaited(
+        showDialog(
+          context: context,
+          builder: (_) => const ActivityExplanationPopup(),
+        ),
+      );
+    }
+
     final heatmapHeight = MediaQuery.of(context).size.width * 0.65;
     final heatmapWidth = MediaQuery.of(context).size.width * 0.85;
 
@@ -146,14 +157,25 @@ class _DetailPageState extends State<DetailPage>
           ),
 
           const SizedBox(height: 16),
-          ActivitySelectionDropdown(
-            selected: selectedActivity,
-            options: highestRulaActivities,
-            onSelected: (activity) {
-              setState(() {
-                selectedActivity = activity;
-              });
-            },
+          Row(
+            spacing: mediumSpace,
+            children: [
+              Expanded(
+                child: ActivitySelectionDropdown(
+                  selected: selectedActivity,
+                  options: highestRulaActivities,
+                  onSelected: (activity) {
+                    setState(() {
+                      selectedActivity = activity;
+                    });
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: showActivityExplanationPopup,
+                icon: const Icon(Icons.info),
+              ),
+            ],
           ),
         ],
       ),
