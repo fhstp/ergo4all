@@ -1,24 +1,20 @@
 import 'dart:math';
 
 import 'package:common/immutable_collection_ext.dart';
-import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
-import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/common/utils.dart';
-import 'package:ergo4all/common/variable_localizations.dart';
-import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_detail/screen.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/common.dart';
+import 'package:ergo4all/results/detail/activity_selection_dropdown.dart';
 import 'package:ergo4all/results/detail/image_carousel.dart';
 import 'package:ergo4all/results/detail/rula_color_legend.dart';
 import 'package:ergo4all/results/detail/score_heatmap_graph.dart';
 import 'package:ergo4all/results/detail/utils.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart' hide State;
 
 /// Page for displaying detailed information about a [RulaSession].
 class DetailPage extends StatefulWidget {
@@ -50,8 +46,6 @@ class _DetailPageState extends State<DetailPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    final localizations = AppLocalizations.of(context)!;
 
     final activities =
         widget.session.timeline.map((it) => it.activity).nonNulls.toList();
@@ -151,57 +145,15 @@ class _DetailPageState extends State<DetailPage>
             ),
           ),
 
-          // Human action recognition activity selector
           const SizedBox(height: 16),
-
-          Center(
-            child: DropdownMenu<Activity?>(
-              width: heatmapWidth,
-              key: UniqueKey(),
-              label: Text(
-                localizations.har_activity_selection,
-                style: dynamicBodyStyle,
-              ),
-              initialSelection: selectedActivity,
-              dropdownMenuEntries: highestRulaActivities
-                  .map(
-                    (activity) => DropdownMenuEntry<Activity?>(
-                      value: activity,
-                      label: localizations.activityDisplayName(activity),
-                      style: ButtonStyle(
-                        textStyle: WidgetStateProperty.all(dynamicBodyStyle),
-                      ),
-                    ),
-                  )
-                  .prepend(
-                    DropdownMenuEntry(
-                      value: null,
-                      label: localizations.all_activities,
-                      style: ButtonStyle(
-                        textStyle: WidgetStateProperty.all(dynamicBodyStyle),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              onSelected: (newActivity) {
-                setState(() {
-                  selectedActivity = newActivity;
-                });
-              },
-              inputDecorationTheme: InputDecorationTheme(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: woodSmoke, width: 4),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                labelStyle: dynamicBodyStyle,
-                hintStyle: dynamicBodyStyle,
-              ),
-              textStyle: dynamicBodyStyle,
-            ),
+          ActivitySelectionDropdown(
+            selected: selectedActivity,
+            options: highestRulaActivities,
+            onSelected: (activity) {
+              setState(() {
+                selectedActivity = activity;
+              });
+            },
           ),
         ],
       ),
