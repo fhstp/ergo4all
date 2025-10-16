@@ -176,7 +176,7 @@ class _DetailPageState extends State<DetailPage>
                   .prepend(
                     DropdownMenuEntry(
                       value: null,
-                      label: localizations.har_class_no_selection,
+                      label: localizations.all_activities,
                       style: ButtonStyle(
                         textStyle: WidgetStateProperty.all(dynamicBodyStyle),
                       ),
