@@ -1,3 +1,10 @@
+# [1.134.0](https://github.com/fhstp/ergo4all/compare/v1.133.1...v1.134.0) (2025-10-20)
+
+
+### Features
+
+* added localisations for screen results ([3b9ea49](https://github.com/fhstp/ergo4all/commit/3b9ea49c828d9fbfb228b7247e2776709efa3ac6))
+
 ## [1.133.1](https://github.com/fhstp/ergo4all/compare/v1.133.0...v1.133.1) (2025-10-12)
 
 
