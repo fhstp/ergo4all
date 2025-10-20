@@ -122,12 +122,11 @@ class ResultsScreen extends StatelessWidget {
         appBar: AppBar(
           leading: const IconBackButton(color: cardinal),
           title: Text(localizations.results_title),
-          bottom: const TabBar(
+          bottom:  TabBar(
             tabs: [
-              // TODO: Localize
-              Tab(text: 'Overview'),
-              Tab(text: 'Details'),
-              Tab(text: 'Improvements'),
+              Tab(text: localizations.results_body),
+              Tab(text: localizations.results_time),
+              Tab(text: localizations.results_tips),
             ],
           ),
         ),

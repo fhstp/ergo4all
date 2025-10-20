@@ -78,6 +78,10 @@
   "@onboarding_privacy_description": {
     "description": "Body-text for the privacy screen in onboarding"
   },
+  "privacy_link": "You can find the full data privacy statement on our website*",
+  "@privacy_link": {
+    "description": "Link to the website for full GDPR information and data processing."
+  },  
   "onboarding_preIntro_title": "App overview",
   "@onboarding_preIntro_title": {
     "description": "Title for the app-overview screen in onboarding"
@@ -337,6 +341,18 @@
   "results_press_body_part": "Press on a body part to get more information.",
   "@results_press_body_part": {
     "description": "Text that informs users that they can press a body part on the puppet."
+  },
+  "results_body": "Body",
+  "@results_body": {
+    "description": "Label for the 'Body' tab on the results screen"
+  },
+  "results_time": "Timeline",
+  "@results_time": {
+    "description": "Label for the 'Time' tab on the results screen"
+  },
+  "results_tips": "Improve",
+  "@results_tips": {
+    "description": "Label for the 'Tips' tab on the results screen"
   },
   "record_tutorial": "Record the scenario for up to {max} seconds and make sure all body parts are clearly visible.",
   "@record_tutorial": {
