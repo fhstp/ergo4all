@@ -1,3 +1,10 @@
+# [1.136.0](https://github.com/fhstp/ergo4all/compare/v1.135.0...v1.136.0) (2025-10-21)
+
+
+### Features
+
+* use new app icons ([572195b](https://github.com/fhstp/ergo4all/commit/572195be54793e7d3caab128ef4e469d08bc5904))
+
 # [1.135.0](https://github.com/fhstp/ergo4all/compare/v1.134.0...v1.135.0) (2025-10-21)
 
 
