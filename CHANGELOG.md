@@ -1,3 +1,11 @@
+# [1.135.0](https://github.com/fhstp/ergo4all/compare/v1.134.0...v1.135.0) (2025-10-21)
+
+
+### Features
+
+* add activity filter explanation popup ([10221f3](https://github.com/fhstp/ergo4all/commit/10221f300c62492d858335b52db11dd0b6f46f73))
+* reword activity selection label ([80f7fdf](https://github.com/fhstp/ergo4all/commit/80f7fdfefbd1b217d9f51c27c68bad083cf97dbc))
+
 # [1.134.0](https://github.com/fhstp/ergo4all/compare/v1.133.1...v1.134.0) (2025-10-20)
 
 
