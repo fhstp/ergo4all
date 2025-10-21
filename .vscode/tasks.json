@@ -14,6 +14,15 @@
                 "close": true
             },
             "problemMatcher": []
+        },
+        {
+            "options": {
+                "cwd": "apps/ergo4all"
+            },
+            "label": "regenerate launcher icons",
+            "type": "shell",
+            "command": "fvm dart run flutter_launcher_icons",
+            "problemMatcher": []
         }
     ]
 }
