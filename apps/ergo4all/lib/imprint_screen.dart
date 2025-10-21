@@ -12,17 +12,17 @@ class _ContactBlock extends StatelessWidget {
     required this.logo,
     required this.companyName,
     required this.companyAddress,
-    required this.contactPersonName,
-    required this.contactEmail,
-    required this.contactTelephone,
+    //required this.contactPersonName,
+    //required this.contactEmail,
+    //required this.contactTelephone,
   });
 
   final AssetImage logo;
   final String companyName;
   final String companyAddress;
-  final String contactPersonName;
-  final String contactEmail;
-  final String contactTelephone;
+  //final String contactPersonName;
+  //final String contactEmail;
+  //final String contactTelephone;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +33,12 @@ class _ContactBlock extends StatelessWidget {
         const SizedBox(height: mediumSpace),
         Text(companyName),
         Text(companyAddress),
-        Text(contactPersonName),
-        Text(contactEmail),
-        Text(contactTelephone),
+
+        // ToDo - clarify if we want emails and contact to display here
+
+        //Text(contactPersonName),
+        //Text(contactEmail),
+        //Text(contactTelephone),
       ],
     );
   }
@@ -77,36 +80,56 @@ class ImprintScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: largeSpace),
-              const _ContactBlock(
-                logo: CustomImages.logoAk,
-                companyName: 'AK Niederösterreich',
-                companyAddress: '[Address]',
-                contactPersonName: '[Contact Name]',
-                contactEmail: '[Contact Email]',
-                contactTelephone: '[Contact Telephone]',
-              ),
+              const Image(image: CustomImages.logoAk, height: 50),
+              Text(localizations.imprint_project_info),
+              //const Text("This project has been supported by the AK Niederösterreich as a part of the Ergo4A Project."), //done
+
               const SizedBox(height: largeSpace),
-              const _ContactBlock(
-                logo: CustomImages.logoFhStp,
-                companyName: 'FH St. Pölten',
-                companyAddress: 'Campus-Platz 1, A-3100 St. Pölten',
-                contactPersonName: 'Christian Jandl',
-                contactEmail: 'christian.jandl@fhstp.ac.at',
-                contactTelephone: '+43676847228618',
-              ),
-              const SizedBox(height: largeSpace),
-              const _ContactBlock(
-                logo: CustomImages.logoTUWien,
-                companyName: 'TU Wien',
-                companyAddress: 'Theresianumgasse 27, 1040 Wien',
-                contactPersonName: 'David Kostolani',
-                contactEmail: 'david.kostolani@tuwien.ac.at',
-                contactTelephone: '',
-              ),
+              Text(localizations.imprint_privacy_text),
+              //const Text("If you have any questions regarding data privacy, please contact the respective project partners below."), //done
+
+              //const SizedBox(height: mediumSpace),
               TextButton(
                 onPressed: goToPrivacy,
-                child: Text(localizations.menu_privacy_label),
+                child: Text(localizations.menu_privacy_label), // done
               ),
+              //const Text("Du kannst dich jederzeit an folgende Ansprechpersonen wenden:"),// done
+              const Text("Christina Thirsfeld"),
+              const Text("datenschutz@tuwien.ac.at"),
+              
+              const SizedBox(height: mediumSpace),
+              Text(localizations.imprint_project_partners),
+              //const Text("Das Projekt wurde in Zusammenarbeit mit folgenden Partnern umgesetzt:"),
+              const SizedBox(height: smallSpace),
+
+              // const _ContactBlock(
+              //   logo: CustomImages.logoAk,
+              //   companyName: 'AK Niederösterreich',
+              //   companyAddress: '[Address]',
+              //   contactPersonName: '[Contact Name]',
+              //   contactEmail: '[Contact Email]',
+              //   contactTelephone: '[Contact Telephone]',
+              // ),
+              // const SizedBox(height: largeSpace),
+
+              const _ContactBlock(
+                logo: CustomImages.logoFhStp,
+                companyName: 'FH St. Pölten, Creative\\Media/Technologies',
+                companyAddress: 'Campus-Platz 1, A-3100 St. Pölten',
+                //contactPersonName: 'Christian Jandl',
+                //contactEmail: "", //'christian.jandl@fhstp.ac.at', // ToDo - clarify email
+                //contactTelephone: '+43676847228618',
+              ),
+
+              const SizedBox(height: smallSpace),
+              const _ContactBlock(
+                logo: CustomImages.logoTUWien,
+                companyName: 'TU Wien, Institute for Management Science, Human-Machine Interaction',
+                companyAddress: 'Theresianumgasse 27, 1040 Wien',
+                //contactPersonName: 'David Kostolani',
+                //contactEmail: 'datenschutz@tuwien.ac.at',
+                //contactTelephone: '',
+              ),              
               const SizedBox(height: largeSpace),
             ],
           ),

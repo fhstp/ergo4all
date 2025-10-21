@@ -4,16 +4,23 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/onboarding/pre_intro_screen.dart';
+//import 'package:ergo4all/onboarding/pre_intro_screen.dart';
 import 'package:ergo4all/onboarding/style.dart';
+import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:flutter/material.dart';
+
+//import 'package:flutter/gestures.dart';
 
 const double _appBarHeight = 200;
 
 /// Screen for displaying the privacy policy.
-class PrivacyScreen extends StatelessWidget {
+class PrivacyScreen extends StatefulWidget {//StatelessWidget {
   ///
   const PrivacyScreen({super.key});
+
+
+  @override
+  State<PrivacyScreen> createState() => _PrivacyScreenState();
 
   /// The route name for this screen.
   static const String routeName = 'privacyOnboarding';
@@ -25,21 +32,39 @@ class PrivacyScreen extends StatelessWidget {
       settings: const RouteSettings(name: routeName),
     );
   }
+}
+
+class _PrivacyScreenState extends State<PrivacyScreen> {
+
+  bool consetCheck = false; 
+
+  void goToPreIntro() {
+    unawaited(
+      Navigator.pushAndRemoveUntil(
+        context,
+        TermsOfUseScreen.makeRoute(),
+        //PreIntroScreen.makeRoute(),
+        ModalRoute.withName(TermsOfUseScreen.routeName), //(PreIntroScreen.routeName),
+      ),
+    );
+  }
+
+
+  // void goToErgonomicsInfo() {
+  //   unawaited(
+  //     Navigator.pushAndRemoveUntil(
+  //       context,
+  //       ErgonomicsInfoScreen.makeRoute(),
+  //       ModalRoute.withName(ErgonomicsInfoScreen.routeName),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
+
     final localizations = AppLocalizations.of(context)!;
-
-    void goToPreIntro() {
-      unawaited(
-        Navigator.pushAndRemoveUntil(
-          context,
-          PreIntroScreen.makeRoute(),
-          ModalRoute.withName(PreIntroScreen.routeName),
-        ),
-      );
-    }
-
+    
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
@@ -77,11 +102,58 @@ class PrivacyScreen extends StatelessWidget {
                       style: dynamicBodyStyle,
                       textAlign: TextAlign.center,
                     ),
+
+                    const SizedBox(height: mediumSpace),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        //style: dynamicBodyStyle.copyWith(color: Colors.black),
+                        children: [
+                          TextSpan(
+                            text: localizations.privacy_link,
+                            style: dynamicBodyStyle.copyWith(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),                        
+                        ],
+                      //const SizedBox(height: mediumSpace),
+                      ),
+                    ),
+                    const SizedBox(height: mediumSpace),
+
+                    Text(
+                      localizations.onboarding_privacy_consent,
+                      style: dynamicBodyStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: largeSpace),
+
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            localizations.onboarding_termsOfUse_accept,
+                            style: dynamicBodyStyle,
+                          ),
+                        ),
+                        Checkbox(
+                          value: consetCheck,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              consetCheck = newValue ?? false;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: largeSpace),
                     ElevatedButton(
                       key: const Key('next'),
                       style: primaryTextButtonStyle,
-                      onPressed: goToPreIntro,
+                      onPressed: consetCheck ? goToPreIntro : null, 
                       child: Text(localizations.onboarding_label),
                     ),
                   ],

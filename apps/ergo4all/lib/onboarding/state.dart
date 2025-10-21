@@ -24,7 +24,7 @@ class PrefsOnboardingState implements OnboardingState {
 
   @override
   Future<bool> isCompleted() {
-    return _prefs.getBool(_key).then((it) => it ?? false);
+    return Future.value(false); //_prefs.getBool(_key).then((it) => it ?? false); //
   }
 
   @override

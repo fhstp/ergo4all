@@ -40,7 +40,19 @@
   "imprint": "Imprint",
   "@imprint": {
     "description": "The word \"imprint\" to be used in a variety of contexts."
+  },  
+  "imprint_project_info": "This research was supported by the Lower Austria Chamber of Labor as a part of the Ergo4A project (Ergonomics for All).",
+  "@imprint_project_info": {
+    "description": "Describes the background on the project funding."
   },
+  "imprint_privacy_text": "If you have any questions regarding data privacy, please refer to our data privacy statement or contact the data protection officer below.",
+  "@imprint_privacy_text": {
+    "description": "Reference to the contact and data privacy link."
+  },
+  "imprint_project_partners": "This research project has been done in collaboration with the following partners:",
+  "@imprint_project_partners": {
+    "description": "Reference to the project partners."
+  },  
   "menu_language_label": "Change Language",
   "@menu_language_label": {
     "description": "Label for button to change the app language"
@@ -81,7 +93,11 @@
   "privacy_link": "You can find the full data privacy statement on our website*",
   "@privacy_link": {
     "description": "Link to the website for full GDPR information and data processing."
-  },  
+  },
+  "onboarding_privacy_consent": "I agree to the processing of personal data (videos, nickname) within the app. There is no transfer of data. I confirm that I have read and acknowledged the privacy manifest and that this consent is given on a voluntary basis.\nThis consent can be revoked at any time by uninstalling the app. This will delete all app-related data.",
+  "@onboarding_privacy_consent": {
+    "description": "Body-text for consent as required by GDPR"
+  },
   "onboarding_preIntro_title": "App overview",
   "@onboarding_preIntro_title": {
     "description": "Title for the app-overview screen in onboarding"
