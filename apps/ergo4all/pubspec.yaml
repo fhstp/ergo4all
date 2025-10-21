@@ -92,7 +92,7 @@ flutter:
     - assets/images/ergo_score_badge/
     - assets/har/
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/logos/IconRed.png"
