@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common/func_ext.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
@@ -18,7 +17,6 @@ import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/detail/page.dart';
 import 'package:ergo4all/results/improvements/page.dart';
 import 'package:ergo4all/results/overview/page.dart';
-import 'package:ergo4all/results/rating.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
@@ -107,12 +105,6 @@ class ResultsScreen extends StatelessWidget {
 
     final aggregate = aggregateTimeline(session.timeline)!;
 
-    final totalRating = session.timeline
-        .map((entry) => entry.scores.fullScore)
-        .map((score) => normalizeScore(score, 7))
-        .toIList()
-        .pipe(Rating.calculate);
-
     final highestRulaActivities = highestRulaActivitiesOf(session.timeline);
     final highestRulaActivity = highestRulaActivities.firstOrNull;
 
@@ -122,7 +114,7 @@ class ResultsScreen extends StatelessWidget {
         appBar: AppBar(
           leading: const IconBackButton(color: cardinal),
           title: Text(localizations.results_title),
-          bottom:  TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(text: localizations.results_body),
               Tab(text: localizations.results_time),
@@ -142,7 +134,6 @@ class ResultsScreen extends StatelessWidget {
                   child: TabBarView(
                     children: [
                       OverviewPage(
-                        rating: totalRating,
                         scores: aggregate,
                         onBodyPartGroupTapped: goToBodyPartPage,
                       ),

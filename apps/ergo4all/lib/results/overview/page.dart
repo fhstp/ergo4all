@@ -3,8 +3,6 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
-import 'package:ergo4all/results/overview/ergo_score_badge.dart';
-import 'package:ergo4all/results/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:rula/rula.dart';
 
@@ -13,14 +11,10 @@ import 'package:rula/rula.dart';
 class OverviewPage extends StatefulWidget {
   ///
   const OverviewPage({
-    required this.rating,
     required this.scores,
     this.onBodyPartGroupTapped,
     super.key,
   });
-
-  /// The overall rating to display.
-  final Rating rating;
 
   /// Rula scores to display using the puppet.
   final RulaScores scores;
@@ -46,7 +40,6 @@ class _OverviewPageState extends State<OverviewPage>
     return Column(
       spacing: mediumSpace,
       children: [
-        SizedBox(height: 80, child: ErgoScoreBadge(rating: widget.rating)),
         Expanded(
           child: BodyScoreDisplay(
             widget.scores,
