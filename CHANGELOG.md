@@ -1,3 +1,10 @@
+# [1.139.0](https://github.com/fhstp/ergo4all/compare/v1.138.0...v1.139.0) (2025-10-28)
+
+
+### Features
+
+* increase puppet graphic size ([7d44ef4](https://github.com/fhstp/ergo4all/commit/7d44ef49de47657eb6e8f6c1f32dc09342db238d))
+
 # [1.138.0](https://github.com/fhstp/ergo4all/compare/v1.137.0...v1.138.0) (2025-10-28)
 
 
