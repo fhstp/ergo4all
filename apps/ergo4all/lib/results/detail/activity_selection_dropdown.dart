@@ -60,16 +60,14 @@ class ActivitySelectionDropdown extends StatelessWidget {
           .toList(),
       onSelected: onSelected,
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 8,
-        ),
         border: OutlineInputBorder(
-          borderSide: const BorderSide(color: woodSmoke, width: 4),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(10),
         ),
-        labelStyle: dynamicBodyStyle,
-        hintStyle: dynamicBodyStyle,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: blueChill, width: 2),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: const TextStyle(color: blackPearl),
       ),
       textStyle: dynamicBodyStyle,
     );
