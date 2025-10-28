@@ -156,7 +156,7 @@ class _DetailPageState extends State<DetailPage>
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: largeSpace),
           Row(
             spacing: mediumSpace,
             children: [
@@ -177,6 +177,7 @@ class _DetailPageState extends State<DetailPage>
               ),
             ],
           ),
+          const SizedBox(height: largeSpace * 2),
         ],
       ),
     );
