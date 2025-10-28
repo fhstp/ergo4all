@@ -1,3 +1,11 @@
+# [1.137.0](https://github.com/fhstp/ergo4all/compare/v1.136.0...v1.137.0) (2025-10-28)
+
+
+### Features
+
+* delete ergo-score badge logic and assets ([c726003](https://github.com/fhstp/ergo4all/commit/c726003ecac083dc8d7cbd521e57fa7b423f8191)), closes [#199](https://github.com/fhstp/ergo4all/issues/199)
+* reword texts ([9d01137](https://github.com/fhstp/ergo4all/commit/9d01137e257bd60f39ba92112c2722a754e727bc)), closes [#201](https://github.com/fhstp/ergo4all/issues/201)
+
 # [1.136.0](https://github.com/fhstp/ergo4all/compare/v1.135.0...v1.136.0) (2025-10-21)
 
 
