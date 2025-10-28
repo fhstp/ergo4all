@@ -1,3 +1,15 @@
+# [1.138.0](https://github.com/fhstp/ergo4all/compare/v1.137.0...v1.138.0) (2025-10-28)
+
+
+### Bug Fixes
+
+* drop-down off screen ([65d6a64](https://github.com/fhstp/ergo4all/commit/65d6a64eb3638c2dd7ecba3fb82a3ffad14fc5e1)), closes [#196](https://github.com/fhstp/ergo4all/issues/196)
+
+
+### Features
+
+* reuse dropdown style ([51d40b8](https://github.com/fhstp/ergo4all/commit/51d40b89a0a0a3c29028fc60c6321727d22b3778))
+
 # [1.137.0](https://github.com/fhstp/ergo4all/compare/v1.136.0...v1.137.0) (2025-10-28)
 
 
