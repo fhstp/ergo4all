@@ -81,7 +81,7 @@
   "privacy_link": "You can find the full data privacy statement on our website*",
   "@privacy_link": {
     "description": "Link to the website for full GDPR information and data processing."
-  },  
+  },
   "onboarding_preIntro_title": "App overview",
   "@onboarding_preIntro_title": {
     "description": "Title for the app-overview screen in onboarding"
@@ -135,19 +135,19 @@
   "permission_label_cancel": "Cancel",
   "permission_label_denied": "Grant permission in settings",
   "permission_camera_text": "Allow Camera permission?",
-  "scenario_assembly_description": "An employee stands at an assembly table, often having to bend forwards.",
+  "scenario_assembly_description": "You stand at an assembly table and often have to lean forward.",
   "@scenario_assembly_description": {
     "description": "Long description text for this scenario"
   },
-  "scenario_assembly_expectation": "Unfavorable posture and bending can cause strain on the back and neck.",
+  "scenario_assembly_expectation": "If you don’t move ergonomically while working and frequently bend, it can put significant strain on your back and neck.",
   "@scenario_assembly_expectation": {},
   "scenario_assembly_label": "Standing assembly",
   "@scenario_assembly_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_assembly_summary": "Assembly standing at a table",
-  "scenario_ceiling_description": "An electrician installs cable trays overhead and holds tools up for long periods of time.",
-  "scenario_ceiling_expectation": "A high amount of static overhead work can strain the shoulder, arm, and neck muscles.",
+  "scenario_ceiling_description": "You install cable trays overhead and hold tools above your head for extended periods.",
+  "scenario_ceiling_expectation": "If you don’t work ergonomically, you put heavy strain on your shoulders, arms, and neck. Your muscles tense up quickly, and your arms fatigue faster.",
   "@scenario_ceiling_expectation": {},
   "@scenario_ceiling_description": {
     "description": "Long description text for this scenario"
@@ -157,9 +157,9 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_ceiling_summary": "Cable installation on the ceiling",
-  "scenario_CNC_expectation": "Poor posture can cause significant neck tension due to static positions and lead to quick arm fatigue.",
+  "scenario_CNC_expectation": "With poor posture, strong neck tension from static positioning and rapid arm fatigue can occur.",
   "@scenario_CNC_expectation": {},
-  "scenario_CNC_description": "A machine operator stands in front of a CNC milling machine all day, taking measurements and checking the process.",
+  "scenario_CNC_description": "You stand in front of a CNC milling machine all day, measuring workpieces and monitoring the process.",
   "@scenario_CNC_description": {
     "description": "Long description text for this scenario"
   },
@@ -168,9 +168,9 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_CNC_summary": "Working in a standing position on a CNC machine",
-  "scenario_conveyor_expectation": "Unfavorable posture can cause severe neck tension due to static holding and rapid arm fatigue.",
+  "scenario_conveyor_expectation": "If you don’t stand ergonomically, it can lead to neck tension. Your arms also tire more quickly because you keep them in a static position for a long time",
   "@scenario_conveyor_expectation": {},
-  "scenario_conveyor_description": "A labourer stands at a conveyor belt for several hours a day and performs repetitive hand movements. He is forced to work in a slightly inclined position.",
+  "scenario_conveyor_description": "You stand at the assembly line for several hours, repeatedly performing the same hand movements while working in a slightly bent posture.",
   "@scenario_conveyor_description": {
     "description": "Long description text for this scenario"
   },
@@ -190,9 +190,9 @@
     "description": "Short label text for buttons referencing freestyle scenario"
   },
   "scenario_freestyle_summary": "Freestyle mode with no time limit",
-  "scenario_lift_and_carry_expectation": "Poor ergonomic posture can lead to high strain on the lower back, increasing the risk of fatigue or injury.",
+  "scenario_lift_and_carry_expectation": "If you don’t move ergonomically while doing so, you put a lot of strain on your lower back. This can quickly lead to fatigue or injury.",
   "@scenario_lift_and_carry_expectation": {},
-  "scenario_lift_and_carry_description": "A worker regularly lifts heavy metal plates from the floor onto a workbench, often with his back bent.",
+  "scenario_lift_and_carry_description": "You regularly lift heavy metal plates from the floor onto a workbench, often bending your back while doing so.",
   "@scenario_lift_and_carry_description": {
     "description": "Long description text for this scenario"
   },
@@ -201,9 +201,9 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_and_carry_summary": "Lifting and carrying heavy loads up to 25 kg",
-  "scenario_lift_expectation": "Poor posture while lifting can result in high stress on the back and legs. Unergonomic posture can also lead to strain on lower arms.",
+  "scenario_lift_expectation": "If you don’t lift ergonomically, you put heavy strain on your back and legs. Your forearms can also be significantly stressed.",
   "@scenario_lift_expectation": {},
-  "scenario_lift_description": "A warehouse worker regularly lifts 25 kg sacks (cement, grain).",
+  "scenario_lift_description": "You regularly lift 25-kilogram bags, for example containing cement or grain.",
   "@scenario_lift_description": {
     "description": "Long description text for this scenario"
   },
@@ -212,9 +212,9 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_lift_summary": "Lifting a bag weighing up to 25 kg",
-  "scenario_packaging_expectation": "Unfavorable positions of the arms and wrists can lead to muscle tension and raise the risk of tendonitis.",
+  "scenario_packaging_expectation": "If you don’t keep your arms and wrists in an ergonomic position, it can lead to muscle tension. The risk of tendonitis also increases.",
   "@scenario_packaging_expectation": {},
-  "scenario_packaging_description": "An employee packs products into boxes and uses an adhesive tape dispenser with repetitive movements.",
+  "scenario_packaging_description": "You pack products into boxes and use a tape dispenser with repetitive movements.",
   "@scenario_packaging_description": {
     "description": "Long description text for this scenario"
   },
@@ -223,9 +223,9 @@
     "description": "Short label text for buttons referencing this scenario"
   },
   "scenario_packaging_summary": "Packaging work with a high repetition rate",
-  "scenario_pull_expectation": "Poor posture can strain the shoulders and wrists when pushing heavy carts. Likewise, it can cause stress on the back.",
+  "scenario_pull_expectation": "If you don’t move ergonomically while pushing, you put significant strain on your shoulders and wrists. Your back can also be heavily stressed.",
   "@scenario_pull_expectation": {},
-  "scenario_pull_description": "A warehouse worker pushes material trolleys with a load of approx. 150 kg over a distance of 50 metres every day.",
+  "scenario_pull_description": "You push material carts weighing around 150 kilograms over a distance of about 50 meters every day.",
   "@scenario_pull_description": {
     "description": "Long description text for this scenario"
   },
@@ -233,10 +233,10 @@
   "@scenario_pull_label": {
     "description": "Short label text for buttons referencing this scenario"
   },
-  "scenario_pull_summary": "Pushing and pulling material trolleys up to 150 kg",
-  "scenario_seated_expectation": "Bending and twisting the upper body can put strain on the lower back muscles. Ergonomically unfavorable positions increase the load on the shoulders and neck.",
+  "scenario_pull_summary": "Pushing and pulling up to 150 kg",
+  "scenario_seated_expectation": "If you bend or twist your upper body frequently, you put a lot of strain on your lower back muscles. If your arm position is not ergonomic, the strain on your shoulders increases.",
   "@scenario_seated_expectation": {},
-  "scenario_seated_description": "An employee assembles small parts on a conveyor line and often has to turn his upper body.",
+  "scenario_seated_description": "You assemble small parts on a conveyor line and frequently twist your upper body.",
   "@scenario_seated_description": {
     "description": "Long description text for this scenario"
   },
@@ -277,32 +277,32 @@
   "@tip_body_posture_label": {
     "description": "Short label text for buttons referencing this tip"
   },
-  "tip_body_posture_summary": "Maintain an upright posture, keep your shoulders relaxed, look straight ahead (maintain the natural S-curve of the spine). Position feet shoulder-width apart, take the weight off one leg occasionally, use padded floor mats. When standing, objects that are used frequently should not be more than 35 cm away for two-handed work and 45 cm away for one-handed work. Take short breaks to stretch or take a few steps.",
+  "tip_body_posture_summary": "Keep your back straight and your shoulders relaxed. Look straight ahead to maintain the natural S-curve of your spine. Stand with your feet shoulder-width apart and shift your weight from one leg to the other. Use cushioned floor mats. Keep frequently used items close — no more than 35 cm for two-handed tasks and 45 cm for one-handed tasks. Take short breaks, stretch, or walk a few steps.",
   "tip_handAndArm_label": "Hand & arm position",
   "@tip_handAndArm_label": {
     "description": "Short label text for buttons referencing this tip"
   },
-  "tip_handAndArm_summary": "Do not overstretch your wrists, make gentle movements, do regular relaxation exercises. Keep wrists in a neutral position, support forearms, vary gripping movements. Keep your hands at elbow height while working.",
+  "tip_handAndArm_summary": "Keep your wrists straight and avoid overextension. Move smoothly and without using excessive force. Support your forearms and keep your hands at elbow height. Change your grip regularly and do relaxation exercises.",
   "tip_lift_and_carry_label": "Lift and carry",
   "@tip_lift_and_carry_label": {
     "description": "Short label text for buttons referencing this tip"
   },
-  "tip_lift_and_carry_summary": "Keep your back straight, lift from your legs, hold the load close to your body, avoid twisting movements. For generally light loads, use different lifting techniques, including the less ergonomically correct techniques, to ensure that the body is relieved. In addition, make sure that you do not remain in a bent-over position for too long.",
+  "tip_lift_and_carry_summary": "Keep your back straight and lift with your legs. Hold the load close to your body and avoid twisting movements. For lighter loads, you can use different lifting techniques, even if they are not perfectly ergonomic – this helps relieve your body. Make sure not to stay bent forward for too long.",
   "tip_pushAndPull_label": "Push & pull",
   "@tip_pushAndPull_label": {
     "description": "Short label text for buttons referencing this tip"
   },
-  "tip_pushAndPull_summary": "Choose an ergonomic handle height, push with your legs and body strength instead of just with your arms.",
+  "tip_pushAndPull_summary": "Choose an ergonomic handle height. Push the cart using your legs and body strength, not just your arms.",
   "tip_sitting_label": "Sitting",
   "@tip_sitting_label": {
     "description": "Short label text for buttons referencing this tip"
   },
-  "tip_sitting_summary": "Use the backrest, knees and hips at a 90° angle, feet flat on the floor. Alternate between sitting and standing, use weight shifting, do not remain in one position for too long. (approx. at intervals of one hour) Objects that are used frequently should not be more than 40 cm away from the worker and 25 cm above the workstation.",
+  "tip_sitting_summary": "Lean against the backrest and keep your knees and hips at a 90° angle. Place your feet flat on the floor. Switch regularly between sitting and standing, about once every hour. Shift your weight and avoid staying in one position for too long. Keep frequently used items within 40 cm of reach and no more than 25 cm above your work surface.",
   "tip_workingOverhead_label": "Working overhead",
   "@tip_workingOverhead_label": {
     "description": "Short label text for buttons referencing this tip"
   },
-  "tip_workingOverhead_summary": "Do not hold your arms above shoulder height for too long, use telescopic tools, relax your neck regularly.  Change positions, use weight shifting, do not remain in one position for too long.",
+  "tip_workingOverhead_summary": "Do not keep your arms above shoulder height for too long. Use telescopic tools to reduce strain. Relax your neck regularly. Change your position, shift your weight, and avoid staying in one posture for too long.",
   "welcome_header": "Welcome!",
   "welcome_start": "Start",
   "results_title": "Results",
@@ -465,11 +465,11 @@
   "@tips_general_factors": {
     "description": "The second paragraph on the general ergonomics info screen"
   },
-  "tips_general_example": "For example, when you lift something heavy, bending your knees activates your leg muscles, more, which helps protect your back.",
+  "tips_general_example": "When lifting something heavy, bend your knees. This way, you use your leg muscles and relieve strain on your back.",
   "@tips_general_example": {
     "description": "The third paragraph on the general ergonomics info screen"
   },
-  "tips_general_legs": "Although you are using your leg muscles more, this results in a more natural posture, and a lower risk of injury. On the other hand, sometimes you might feel a muscle group working actively, but the resulting ergonomic stain is low - sometimes muscle activity is good and necessary, as long as your posture is natural.\nThe science of movement can be complex, but one important thing to remember is that your body parts don't work alone - they are all connected.",
+  "tips_general_legs": "Even though you put more strain on your leg muscles, it promotes a more natural posture and reduces the risk of injury. Sometimes you may feel a muscle group working. That’s fine as long as your posture remains ergonomic. Remember: your body functions as a whole, not as separate parts.",
   "@tips_general_legs": {
     "description": "The fourth paragraph on the general ergonomics info screen"
   },
