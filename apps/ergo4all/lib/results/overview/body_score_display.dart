@@ -79,12 +79,10 @@ class BodyScoreDisplay extends StatelessWidget {
       return RulaColor.forScore(score);
     }).toList();
 
-    return Center(
-      child: TransparentImageStack(
-        imagePaths: bodyPartsImagePaths,
-        colors: colors,
-        onTap: (i) => onBodyPartTapped?.call(bodyPartsInDisplayOrder[i]),
-      ),
+    return TransparentImageStack(
+      imagePaths: bodyPartsImagePaths,
+      colors: colors,
+      onTap: (i) => onBodyPartTapped?.call(bodyPartsInDisplayOrder[i]),
     );
   }
 }

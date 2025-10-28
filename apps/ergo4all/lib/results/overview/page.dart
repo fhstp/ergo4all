@@ -38,14 +38,16 @@ class _OverviewPageState extends State<OverviewPage>
     final localizations = AppLocalizations.of(context)!;
 
     return Column(
-      spacing: mediumSpace,
       children: [
         Expanded(
-          child: BodyScoreDisplay(
-            widget.scores,
-            onBodyPartTapped: (part) {
-              widget.onBodyPartGroupTapped?.call(BodyPartGroup.forPart(part));
-            },
+          child: Padding(
+            padding: const EdgeInsets.all(mediumSpace),
+            child: BodyScoreDisplay(
+              widget.scores,
+              onBodyPartTapped: (part) {
+                widget.onBodyPartGroupTapped?.call(BodyPartGroup.forPart(part));
+              },
+            ),
           ),
         ),
         Text(

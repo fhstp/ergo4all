@@ -103,17 +103,18 @@ class _TransparentImageStackState extends State<TransparentImageStack> {
             behavior: HitTestBehavior.translucent,
             onTapDown: _handleTap,
             child: Stack(
+              fit: StackFit.passthrough,
               children: List.generate(images.length, (index) {
                 return Image.memory(
                   images[index].bytes,
                   key: _imageKeys[index],
-                  fit: BoxFit.contain,
+                  fit: BoxFit.fitHeight,
                   color: widget.colors[index],
                   colorBlendMode: BlendMode.modulate,
                 );
               }),
             ),
           )
-        : const CircularProgressIndicator();
+        : const Center(child: CircularProgressIndicator());
   }
 }
