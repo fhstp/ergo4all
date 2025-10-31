@@ -49,13 +49,13 @@ This repository uses dual licensing.
 
 All source code in this repository is licensed under the **MIT License with Commons Clause**. This means the software is free to use, modify, and distribute for non-commercial purposes. However, you may not sell the software or provide it as part of a commercial service or paid support offering. 
 
-See [LICENSE_SOFTWARE](./LICENSE_SOFTWARE) for details.
+See [LICENSE_SOFTWARE](./LICENSE_SOFTWARE.md) for details.
 
 
 #### Content and Media
 All non-code assets (i.e., texts, images, branding, logos, and other) are licensed under the Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license. You may share these assets with attribution, but you may not modify or use them commercially.
 
-See [LICENSE_SOFTWARE](./LICENSE_CONTENT) for details.
+See [LICENSE_CONTENT](./LICENSE_CONTENT.md) for details.
 
 [![CC BY-ND 4.0][cc-by-nd-image]][cc-by-nd]
 
