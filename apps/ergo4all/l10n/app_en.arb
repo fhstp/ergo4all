@@ -389,6 +389,11 @@
   "@scenario_detail_title": {
     "description": "Title to be used on the scenario-detail screen"
   },
+  "activity_carry_tipps": "Carrying: Hold the load close to your body. Strengthening exercises for back and legs.",
+  "activity_lift_tipps": "Lifting: When lifting, keep your back straight, lift from your legs, hold the load close to your body. Strengthening exercises for back and legs.",
+  "activity_overhead_tipps": "Overhead: Optimize overhead work ergonomically - where possible, perform work at hip height or chest height. Limit the time spent on overhead work and take breaks to relax your shoulders.",
+  "activity_sitting_tipps": "Sitting: Use the backrest, place both feet on the floor, arms at a 90° angle. Stretching exercises for neck and shoulders.",
+  "activity_standing_tipps": "Standing: Set up your standing workstation correctly: adjust the work surface to elbow height, favor slightly inclined surfaces so you don't have to lean forward. Use a footrest when standing for long periods and alternate feet occasionally.",
   "privacy_title": "Privacy",
   "@privacy_title": {
     "description": "Title for the privacy screen"

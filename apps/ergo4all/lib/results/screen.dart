@@ -141,6 +141,7 @@ class ResultsScreen extends StatelessWidget {
                       ImprovementsPage(
                         scenario: session.scenario,
                         highestRulaActivity: highestRulaActivity,
+                        highestRulaActivities: highestRulaActivities.toIList(),
                       ),
                     ],
                   ),
