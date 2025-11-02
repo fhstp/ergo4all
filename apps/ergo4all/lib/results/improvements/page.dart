@@ -9,21 +9,8 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-/// Gets the [Scenario] which includes most of the given [Activity] or
-/// `null` if there is no clean match.
-Scenario? _scenarioFor(Activity activity) {
-  return switch (activity) {
-    Activity.lifting ||
-    Activity.carrying =>
-      Scenario.liftAndCarry,
-    Activity.overhead => Scenario.ceiling,
-    Activity.sitting => Scenario.seated,
-    Activity.standing =>
-      Scenario.standingCNC, // or standingAssembly or packaging
-    Activity.walking || Activity.background || Activity.kneeling => null
-  };
-}
 
+/// Helper to get  text for a recognised activity
 String? _tipForActivity(Activity activity, AppLocalizations localizations) {
   return switch (activity) {
     Activity.lifting => localizations.activity_lift_tipps,
@@ -31,8 +18,24 @@ String? _tipForActivity(Activity activity, AppLocalizations localizations) {
     Activity.overhead => localizations.activity_overhead_tipps,
     Activity.sitting => localizations.activity_sitting_tipps,
     Activity.standing => localizations.activity_standing_tipps,
-    Activity.kneeling || Activity.walking || Activity.background => null,
+    Activity.kneeling => localizations.activity_kneeling_tipps,
+    Activity.walking => localizations.activity_standing_tipps,
+    Activity.background => null
   };
+}
+
+/// Helper to merge ranking text with activity explanations
+String? activityRanking(int index, AppLocalizations localizations) {
+  switch (index) {
+    case 0:
+      return localizations.activity_first;
+    case 1:
+      return localizations.activity_second;
+    case 2:
+      return localizations.activity_third;
+    default:
+      return null;
+  }
 }
 
 /// Page on the [ResultsScreen] for displaying feedback and improvements.
@@ -63,18 +66,26 @@ class ImprovementsPage extends StatelessWidget {
     String? improvements;
     Scenario? textScenario;
 
+    final topThreeActivities = highestRulaActivities!.take(3).toList();
+
     if (scenario == null) {
-      // Freestyle mode - use tips for all highest RULA activities
+      // Freestyle mode - use tips for three activities with highest RULA
       if (highestRulaActivities != null && highestRulaActivities!.isNotEmpty) {
-        final allTips = highestRulaActivities!
-            .map((activity) => _tipForActivity(activity, localizations))
-            .where((tip) => tip != null)
-            .join('\n\n');
-        tips = allTips;
+        final activityTexts = <String>[];
+
+        for (var i = 0; i < topThreeActivities.length; i++) {
+          final activity = topThreeActivities[i];
+
+          // We merge texts together          
+          final tip = _tipForActivity(activity, localizations);
+          final intro = activityRanking(i, localizations);
+          
+          if (intro != null && tip != null) {
+            activityTexts.add('$intro $tip');
+          }
+        }
         
-        // No improvements suggestions for freestyle mode activities
-        textScenario = _scenarioFor(highestRulaActivities!.first);
-        improvements = null;
+        tips = activityTexts.join('\n\n');
       }
     } else {
       // Scenario mode
@@ -83,11 +94,18 @@ class ImprovementsPage extends StatelessWidget {
       improvements = localizations.scenarioImprovement(scenario!);
     }
 
+
+    // Header depends on scenario vs freestyle mode
+    String tipsHeader = scenario == null
+        ? localizations.activity_recognition_header
+        : localizations.ergonomics_tipps;
+        
+
     return SingleChildScrollView(
       child: Column(
         children: [
           Text(
-            localizations.ergonomics_tipps,
+            tipsHeader,
             style: paragraphHeaderStyle,
             textAlign: TextAlign.left,
           ),
