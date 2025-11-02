@@ -388,7 +388,20 @@
   "scenario_detail_title": "Scenario",
   "@scenario_detail_title": {
     "description": "Title to be used on the scenario-detail screen"
-  },
+  },  
+  "activity_recognition_header": "Our AI has identified improvement potential in the following activities:\n",
+  "@activity_recognition_header": {
+    "description": "Header for the improvements result page in case of HAR based recommendations"
+  },  
+  "activity_first": "The most recognised action was", 
+  "activity_second": "You might also want to consider the action", 
+  "activity_third": "Lastly,",   
+  "activity_carry_tipps": "carrying / working standing. Make sure that your elbows and arms are in a neutral position. Pay attention to your lower arms and review the timeline.",
+  "activity_lift_tipps": "lifting. When lifting, keep your back straight, and lift from your legs. Analyse your back position in the timeline, and have a look at the learning scenario for lifting.",
+  "activity_overhead_tipps": "overhead work. In general, limit the time spent on overhead work and take breaks to relax your shoulders. Have a look at the respective learning tutorial.",
+  "activity_sitting_tipps": "sitting. Have a look at the learning scenario for sitting. Make sure to analyse the timeline, with focus on neck, trunk, and lower arms.",
+  "activity_standing_tipps": "walking / standing. Make sure that your upper body posture is correct - have a look at the general tips for standing posture via the start screen.",
+  "activity_kneeling_tipps": "kneeling. Prolonged kneeling can lead to increased pressure on the knees and restricted blood flow to the lower legs. Consider taking breaks during this activity.",
   "privacy_title": "Privacy",
   "@privacy_title": {
     "description": "Title for the privacy screen"
