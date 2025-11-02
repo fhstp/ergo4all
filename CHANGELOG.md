@@ -1,3 +1,11 @@
+# [1.140.0](https://github.com/fhstp/ergo4all/compare/v1.139.0...v1.140.0) (2025-11-02)
+
+
+### Features
+
+* rework tips in freestyle mode; separate freestyle and scenario tips ([89f189d](https://github.com/fhstp/ergo4all/commit/89f189dbbb12a64897937c0aba238fa3ea9c5a61))
+* reworking improvement page for AI based recommendations ([d87a668](https://github.com/fhstp/ergo4all/commit/d87a668d3fba756ab0e4395823856f06e953ddaf))
+
 # [1.139.0](https://github.com/fhstp/ergo4all/compare/v1.138.0...v1.139.0) (2025-10-28)
 
 
