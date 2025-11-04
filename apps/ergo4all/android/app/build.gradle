@@ -40,6 +40,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+
     defaultConfig {
         applicationId = "at.ac.fhstp.ergo4all"
         // You can update the following values to match your application needs.
