@@ -150,18 +150,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: mediumSpace),
               child: SizedBox.fromSize(
-                size: const Size.fromHeight(50),
+                size: const Size.fromHeight(40),
                 child: const Row(
                   children: [
                     Image(image: CustomImages.logoAk),
                     Spacer(),
                     Image(image: CustomImages.logoTUWien),
                     SizedBox(width: mediumSpace),
-                    Image(image: CustomImages.logoFhStp),
+                    Image(image: CustomImages.logoUstp),
                   ],
                 ),
               ),
             ),
+            const SizedBox(height: mediumSpace),
             VersionDisplay(version: projectVersion, onTap: incrementTapCount),
           ],
         ),

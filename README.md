@@ -12,7 +12,7 @@
         </th>
         <th style="border: none">
             <img src="apps/ergo4all//assets/images/logos/tuwien.jpg" alt="The logo of the TU Vienna" height="150px" />
-            <img src="apps/ergo4all//assets/images/logos/fhstp.png" alt="The logo of the FH St. Pölten" height="150px" />
+            <img src="apps/ergo4all//assets/images/logos/ustp.png" alt="The logo of the UAS St. Pölten" height="150px" />
         </th>
     </tr>
 </table>

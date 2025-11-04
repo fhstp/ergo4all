@@ -87,7 +87,7 @@ class ImprintScreen extends StatelessWidget {
               ),
               const SizedBox(height: largeSpace),
               const _ContactBlock(
-                logo: CustomImages.logoFhStp,
+                logo: CustomImages.logoUstp,
                 companyName: 'FH St. Pölten',
                 companyAddress: 'Campus-Platz 1, A-3100 St. Pölten',
                 contactPersonName: 'Christian Jandl',

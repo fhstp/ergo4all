@@ -21,6 +21,6 @@ abstract final class CustomImages {
   /// The logo for TU Wien
   static const logoTUWien = AssetImage('assets/images/logos/tuwien.jpg');
 
-  /// The logo for FH St.Pölten
-  static const logoFhStp = AssetImage('assets/images/logos/fhstp.png');
+  /// The logo for UAS St.Pölten
+  static const logoUstp = AssetImage('assets/images/logos/ustp.png');
 }
