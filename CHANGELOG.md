@@ -1,3 +1,15 @@
+# [1.141.0](https://github.com/fhstp/ergo4all/compare/v1.140.0...v1.141.0) (2025-11-04)
+
+
+### Bug Fixes
+
+* compile error ([8f9758a](https://github.com/fhstp/ergo4all/commit/8f9758ad8784c18e822ba6501127e8d8b4a63c3b))
+
+
+### Features
+
+* replace welcome with funding message ([af79dfe](https://github.com/fhstp/ergo4all/commit/af79dfe50531706d5fdc1990ef6a0e2794cddf97))
+
 # [1.140.0](https://github.com/fhstp/ergo4all/compare/v1.139.0...v1.140.0) (2025-11-02)
 
 
