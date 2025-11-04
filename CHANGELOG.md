@@ -1,3 +1,11 @@
+# [1.142.0](https://github.com/fhstp/ergo4all/compare/v1.141.0...v1.142.0) (2025-11-04)
+
+
+### Features
+
+* use new app logo in app ([9ce54a2](https://github.com/fhstp/ergo4all/commit/9ce54a288541b218ee1bc77531710a67ec1e1f7f))
+* use ustp logo ([7de3ee2](https://github.com/fhstp/ergo4all/commit/7de3ee2c38bff1691f20339de6eef117e13d8b72))
+
 # [1.141.0](https://github.com/fhstp/ergo4all/compare/v1.140.0...v1.141.0) (2025-11-04)
 
 
