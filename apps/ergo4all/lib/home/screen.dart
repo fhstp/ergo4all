@@ -6,6 +6,7 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/home/menu_dialog.dart';
+import 'package:ergo4all/home/powered_by_banner.dart';
 import 'package:ergo4all/home/puppet_graphic.dart';
 import 'package:ergo4all/scenario/scenario_choice_screen.dart';
 import 'package:ergo4all/session_archive/screen.dart';
@@ -64,13 +65,10 @@ class HomeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: largeSpace),
               const PuppetGraphic(),
-              const SizedBox(height: mediumSpace),
-              Text(
-                localizations.home_welcome,
-                style: h3Style,
-                textAlign: TextAlign.center,
+              const Padding(
+                padding: EdgeInsets.all(largeSpace),
+                child: PoweredByBanner(),
               ),
-              const SizedBox(height: mediumSpace),
               Center(
                 child: ElevatedButton(
                   key: const Key('start'),
