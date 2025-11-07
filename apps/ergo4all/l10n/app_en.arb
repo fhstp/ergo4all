@@ -31,9 +31,9 @@
   "@home_start_label": {
     "description": "Button label for navigation to scenario screen"
   },
-  "funded_by": "Funded by",
-  "@funded_by": {
-    "description": "Leading text for UI which describes who fundet the app"
+  "funded_by_ak": "Funded within the Projektfonds Arbeit 4.0 Programme",
+  "@funded_by_ak": {
+    "description": "Text which explains that this project was funded by AK"
   },
   "language_header": "Choose language",
   "language_title": "Languages",

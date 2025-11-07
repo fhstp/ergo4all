@@ -16,7 +16,11 @@ class PoweredByBanner extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: smallSpace,
       children: [
-        Text(localizations.funded_by, style: theme.textTheme.bodyLarge),
+        Text(
+          localizations.funded_by_ak,
+          style: theme.textTheme.bodyLarge,
+          textAlign: TextAlign.center,
+        ),
         Image.asset(height: 48, 'assets/images/logos/ak.jpg'),
       ],
     );
