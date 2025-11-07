@@ -1,3 +1,10 @@
+# [1.143.0](https://github.com/fhstp/ergo4all/compare/v1.142.0...v1.143.0) (2025-11-07)
+
+
+### Features
+
+* add new funding text ([30a4a75](https://github.com/fhstp/ergo4all/commit/30a4a75f199519ccfb85119601a580fb587e9cd9))
+
 # [1.142.0](https://github.com/fhstp/ergo4all/compare/v1.141.0...v1.142.0) (2025-11-04)
 
 
