@@ -59,8 +59,7 @@ jobs:
         with:
           name: android-build
           path: |
-            apps/ergo4all/build/app/outputs/apk/release/app-release.apk
-            apps/ergo4all/build/app/outputs/bundle/release/app-release.aab
+            apps/ergo4all/build/app/outputs/apk/debug/*.apk
           retention-days: 2
 
   github-release:
@@ -78,4 +77,4 @@ jobs:
         with:
           make_latest: "true"
           files: |
-            build/android/**/*-release.*
+            build/android/**/*-debug.*
