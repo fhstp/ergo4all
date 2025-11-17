@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:ergo4all/common/activity.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pose/pose.dart';
@@ -136,8 +137,8 @@ class ActivityRecognitionManager {
     for (final pose in poses) {
       for (final keyPoint in _harKeyPoints) {
         if (pose.containsKey(keyPoint)) {
-          final landmark = pose[keyPoint]!.$1;
-          maxAbsValue = [maxAbsValue, landmark.y.abs(), landmark.z.abs()]
+          final position = pose[keyPoint]!.position;
+          maxAbsValue = [maxAbsValue, position.y.abs(), position.z.abs()]
               .reduce((a, b) => a > b ? a : b);
         }
       }
@@ -153,8 +154,8 @@ class ActivityRecognitionManager {
       for (final keyPoint in _harKeyPoints) {
         if (currentPose.containsKey(keyPoint) &&
             prevPose.containsKey(keyPoint)) {
-          final current = currentPose[keyPoint]!.$1;
-          final prev = prevPose[keyPoint]!.$1;
+          final current = currentPose[keyPoint]!.position;
+          final prev = prevPose[keyPoint]!.position;
 
           final normY = current.y / maxAbsValue;
           final normZ = current.z / maxAbsValue;

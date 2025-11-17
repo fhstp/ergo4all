@@ -10,7 +10,7 @@ extension type NormalizedPose(Pose it) implements Pose {}
 
 /// Gets the offset from the origin to the[pose]s mid-hip point.
 Vector3 _midHipOffset(Pose pose) {
-  return posOf(pose[KeyPoints.midPelvis]!);
+  return pose[KeyPoints.midPelvis]!.position;
 }
 
 /// Translates a [pose] by a given [translation] vector.
@@ -41,8 +41,8 @@ Pose _centerPose(Pose pose) {
 
 /// Rotates the given [pose] such that it's hip line is in the XY plane.
 Pose _alignHipWithXYPlane(Pose pose) {
-  final leftHip = posOf(pose[KeyPoints.leftHip]!);
-  final rightHip = posOf(pose[KeyPoints.rightHip]!);
+  final leftHip = pose[KeyPoints.leftHip]!.position;
+  final rightHip = pose[KeyPoints.rightHip]!.position;
 
   final yRotation = _yRotationMatrixFor(leftHip, rightHip);
 
@@ -51,8 +51,8 @@ Pose _alignHipWithXYPlane(Pose pose) {
 
 /// Rotates the given [pose] such that it's hip line is in the XZ plane.
 Pose _alignHipWithXZPlane(Pose pose) {
-  final leftHip = posOf(pose[KeyPoints.leftHip]!);
-  final rightHip = posOf(pose[KeyPoints.rightHip]!);
+  final leftHip = pose[KeyPoints.leftHip]!.position;
+  final rightHip = pose[KeyPoints.rightHip]!.position;
 
   final zRotation = _zRotationMatrixFor(leftHip, rightHip);
 
@@ -63,7 +63,7 @@ Pose _alignHipWithXZPlane(Pose pose) {
 /// You can also apply additional scaling to the other axes using the [yMult]
 /// and [zMult] parameters.
 Pose _normalizeScale(Pose pose, double yMult, double zMult) {
-  final hipLength = 2 * posOf(pose[KeyPoints.leftHip]!).x.abs();
+  final hipLength = 2 * pose[KeyPoints.leftHip]!.position.x.abs();
   final scalar = 1 / hipLength;
   return mapPosePositions(
     pose,

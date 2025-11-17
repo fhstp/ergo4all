@@ -160,8 +160,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
   Future<void> sharePose(BuildContext context, Pose pose) async {
     final poseText = pose.mapTo((point, landmark) {
-      final pos = posOf(landmark);
-      return '${point.name}: ${pos.x}, ${pos.y}, ${pos.z}';
+      final position = landmark.position;
+      return '${point.name}: ${position.x}, ${position.y}, ${position.z}';
     }).join('\n');
 
     final shareResult = await Share.share(poseText, subject: 'Exported pose');
