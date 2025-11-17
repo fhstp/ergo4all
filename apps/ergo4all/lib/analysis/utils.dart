@@ -280,7 +280,7 @@ class OnlinePeakDetector {
       (pose) {
         (int, int) tryGetPosOf(KeyPoints keyPoint) {
           final landmark = pose[keyPoint]!;
-          final position = posOf(landmark).xy;
+          final position = landmark.position.xy;
           return (
             (width * (position.x / width)).round(),
             (height * (position.y / height)).round(),

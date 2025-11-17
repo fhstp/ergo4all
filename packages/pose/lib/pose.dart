@@ -1,5 +1,6 @@
 import 'package:common/immutable_collection_ext.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// The key-points which are relevant for RULA pose analysis.
@@ -65,14 +66,22 @@ enum KeyPoints {
   nose
 }
 
-/// Tuple containing data for a landmark. First element is the landmarks position in world-space. Second element is the elements visibility/confidence.
-typedef Landmark = (Vector3, double);
+/// A detected feature or point in a pose.
+///
+/// This concept is called 'landmark' here to mirror the
+/// [Google MLKit](https://developers.google.com/ml-kit/vision/pose-detection)
+/// vocabulary.
+@immutable
+class Landmark {
+  /// Creates a landmark.
+  const Landmark(this.position, this.confidence);
 
-/// Extract the world-space position from a [Landmark].
-Vector3 posOf(Landmark landmark) => Vector3.copy(landmark.$1);
+  /// The position of the landmark in world-space.
+  final Vector3 position;
 
-/// Extract the visibility from a [Landmark].
-double visibilityOf(Landmark landmark) => landmark.$2;
+  /// Confidence in the accuracy of this landmark.
+  final double confidence;
+}
 
 /// A pose in 3d world-space. This is a map of [KeyPoints] with their
 /// associated [Landmark]s.
@@ -81,6 +90,6 @@ typedef Pose = IMap<KeyPoints, Landmark>;
 /// Maps the positions in a [Pose] by applying [map] to each.
 Pose mapPosePositions(Pose pose, Vector3 Function(Vector3) map) {
   return pose.mapValues(
-    (_, landmark) => (map(posOf(landmark)), visibilityOf(landmark)),
+    (_, landmark) => Landmark(map(landmark.position), landmark.confidence),
   );
 }

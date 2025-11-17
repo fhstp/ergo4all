@@ -8,18 +8,21 @@ import 'package:vector_math/vector_math.dart';
 Pose convertMlkitPose(mlkit.Pose pose) {
   Landmark single(mlkit.PoseLandmarkType type) {
     final landmark = pose.landmarks[type]!;
-    return (Vector3(landmark.x, landmark.y, landmark.z), landmark.likelihood);
+    return Landmark(
+      Vector3(landmark.x, landmark.y, landmark.z),
+      landmark.likelihood,
+    );
   }
 
   Landmark average(Iterable<mlkit.PoseLandmarkType> types) {
     final landmarks = types.map(single).toISet();
     final sum = landmarks.reduce(
       (acc, it) =>
-          (posOf(acc) + posOf(it), visibilityOf(acc) + visibilityOf(it)),
+          Landmark(acc.position + it.position, acc.confidence + it.confidence),
     );
-    return (
-      posOf(sum) / landmarks.length.toDouble(),
-      visibilityOf(sum) / landmarks.length
+    return Landmark(
+      sum.position / landmarks.length.toDouble(),
+      sum.confidence / landmarks.length,
     );
   }
 

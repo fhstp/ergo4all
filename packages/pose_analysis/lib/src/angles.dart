@@ -87,7 +87,7 @@ Vector2 _line2d(Pose2d pose, KeyPoints a, KeyPoints b) {
 }
 
 Vector3 _line(Pose pose, KeyPoints a, KeyPoints b) {
-  return (posOf(pose[b]!) - posOf(pose[a]!)).normalized();
+  return (pose[b]!.position - pose[a]!.position).normalized();
 }
 
 /// Calculates [PoseAngles] from the given pose data.

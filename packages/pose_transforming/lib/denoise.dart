@@ -3,7 +3,7 @@ import 'package:common/iterable_ext.dart';
 import 'package:pose/pose.dart';
 
 Landmark _addLandmarks(Landmark a, Landmark b) {
-  return (posOf(a) + posOf(b), visibilityOf(a) + visibilityOf(b));
+  return Landmark(a.position + b.position, a.confidence + b.confidence);
 }
 
 Pose _addPoses(Pose a, Pose b) {
@@ -14,9 +14,9 @@ Pose _addPoses(Pose a, Pose b) {
 }
 
 Landmark _divideLandmark(Landmark landmark, int i) {
-  return (
-    posOf(landmark) / i.toDouble(),
-    visibilityOf(landmark) / i.toDouble()
+  return Landmark(
+    landmark.position / i.toDouble(),
+    landmark.confidence / i.toDouble(),
   );
 }
 
