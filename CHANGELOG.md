@@ -1,3 +1,10 @@
+# [1.144.0](https://github.com/fhstp/ergo4all/compare/v1.143.0...v1.144.0) (2025-11-17)
+
+
+### Features
+
+* change ios/runner.xcworkspace config, ensure to use Non-Global Symbols as strip style for the iOS project in order to avoid tflite to be striped in app store versions ([1014ab0](https://github.com/fhstp/ergo4all/commit/1014ab0279fa306de57a9062893b5c5472833324))
+
 # [1.143.0](https://github.com/fhstp/ergo4all/compare/v1.142.0...v1.143.0) (2025-11-07)
 
 
