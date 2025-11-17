@@ -1,10 +1,10 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/pair_utils.dart';
 import 'package:flutter/foundation.dart';
-import 'package:rula/src/degree.dart';
 
-final _clampRightAngle = clampDegree(-90, 90);
+Degree _clampRightAngle(Degree x) => x.clamp(-90, 90);
 
-final _clampStraightLine = clampDegree(0, 179);
+Degree _clampStraightLine(Degree x) => x.clamp(0, 179);
 
 /// A pair of [Degree] used for body parts of which there are two.
 typedef DegreePair = (Degree, Degree);

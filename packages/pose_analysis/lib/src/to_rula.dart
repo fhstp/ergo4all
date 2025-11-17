@@ -1,3 +1,4 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:rula/rula.dart';
 
@@ -5,14 +6,14 @@ import 'package:rula/rula.dart';
 RulaSheet rulaSheetFromAngles(PoseAngles angles) {
   Degree angleOf(KeyAngles key) {
     final angle = angles[key]!;
-    return Degree.makeFrom180(angle);
+    return Degree(angle);
   }
 
   Degree angleDiff(KeyAngles a, KeyAngles b) {
     final angleA = angles[a]!;
     final angleB = angles[b]!;
     final diff = (angleA - angleB).abs();
-    return Degree.makeFrom180(diff);
+    return Degree(diff);
   }
 
   return RulaSheet(
