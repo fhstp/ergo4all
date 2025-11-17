@@ -4,7 +4,6 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:ergo4all/results/overview/transparent_image_stack.dart';
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 
 String _fileNameForPart(BodyPart part) {
   return switch (part) {

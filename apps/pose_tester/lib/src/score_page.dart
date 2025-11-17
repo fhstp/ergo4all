@@ -5,7 +5,6 @@ import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
-import 'package:rula/rula.dart';
 
 /// Page for displaying score.
 class ScorePage extends StatefulWidget {
@@ -31,7 +30,8 @@ class _ScorePageState extends State<ScorePage> {
 
     widget.angles.match(() {}, (angles) {
       setState(() {
-        currentScores = Some(rulaSheetFromAngles(angles)).map(scoresOf);
+        currentScores =
+            Some(rulaSheetFromAngles(angles)).map(RulaScores.calculateFor);
       });
     });
   }

@@ -1,8 +1,8 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
-import 'package:rula/rula.dart';
 
 /// An entry/frame in a [RulaTimeline].
 @immutable

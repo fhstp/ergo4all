@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:auto_rula/auto_rula.dart';
 import 'package:camera/camera.dart';
 import 'package:common/func_ext.dart';
 import 'package:common/iterable_ext.dart';
@@ -33,7 +34,6 @@ import 'package:pose_transforming/denoise.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
-import 'package:rula/rula.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
@@ -210,7 +210,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     // compute RULA score
 
     final rulaSheet = averagePose.toRulaSheet();
-    final scores = scoresOf(rulaSheet);
+    final scores = RulaScores.calculateFor(rulaSheet);
 
     // take a screenshot every 250 ms
     if (frame.timestamp - _lastProcessTime >= 250 &&
