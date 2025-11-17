@@ -1,10 +1,10 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/results/body_part_group.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:flutter/material.dart';
-import 'package:rula/rula.dart';
 
 /// Page on for viewing an overview of results. Displays the colored puppet
 /// and overall rating.
