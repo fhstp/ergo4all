@@ -136,11 +136,9 @@ class ActivityRecognitionManager {
     // Find maximum absolute value for normalization
     for (final pose in poses) {
       for (final keyPoint in _harKeyPoints) {
-        if (pose.containsKey(keyPoint)) {
-          final position = pose[keyPoint]!.position;
-          maxAbsValue = [maxAbsValue, position.y.abs(), position.z.abs()]
-              .reduce((a, b) => a > b ? a : b);
-        }
+        final position = pose[keyPoint].position;
+        maxAbsValue = [maxAbsValue, position.y.abs(), position.z.abs()]
+            .reduce((a, b) => a > b ? a : b);
       }
     }
 
@@ -152,25 +150,20 @@ class ActivityRecognitionManager {
       final prevPose = poses[i - _HarConfig.temporalDisplacementStride];
 
       for (final keyPoint in _harKeyPoints) {
-        if (currentPose.containsKey(keyPoint) &&
-            prevPose.containsKey(keyPoint)) {
-          final current = currentPose[keyPoint]!.position;
-          final prev = prevPose[keyPoint]!.position;
+        final current = currentPose[keyPoint].position;
+        final prev = prevPose[keyPoint].position;
 
-          final normY = current.y / maxAbsValue;
-          final normZ = current.z / maxAbsValue;
-          final prevNormY = prev.y / maxAbsValue;
-          final prevNormZ = prev.z / maxAbsValue;
+        final normY = current.y / maxAbsValue;
+        final normZ = current.z / maxAbsValue;
+        final prevNormY = prev.y / maxAbsValue;
+        final prevNormZ = prev.z / maxAbsValue;
 
-          poseModelInput.addAll([
-            normY,
-            normZ,
-            normY - prevNormY,
-            normZ - prevNormZ,
-          ]);
-        } else {
-          poseModelInput.addAll(List.filled(4, 0));
-        }
+        poseModelInput.addAll([
+          normY,
+          normZ,
+          normY - prevNormY,
+          normZ - prevNormZ,
+        ]);
       }
     }
 

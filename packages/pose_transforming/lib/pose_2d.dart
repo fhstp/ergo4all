@@ -12,7 +12,7 @@ Pose2d _make2dPose(
   Vector2 Function(Vector3 pos3d) makePoint2d, {
   required double minVisibility,
 }) =>
-    pose
+    pose.landmarks
         .where((_, landmark) => landmark.confidence >= minVisibility)
         .mapValues((_, landmark) => landmark.position)
         .mapValues((_, pos) => makePoint2d(pos));

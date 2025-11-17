@@ -1,4 +1,3 @@
-import 'package:common/immutable_collection_ext.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math.dart';
@@ -83,13 +82,26 @@ class Landmark {
   final double confidence;
 }
 
-/// A pose in 3d world-space. This is a map of [KeyPoints] with their
-/// associated [Landmark]s.
-typedef Pose = IMap<KeyPoints, Landmark>;
+/// A pose in 3d world-space which can be evaluated using RULA.
+@immutable
+class Pose {
+  /// Create a pose from the given key points.
+  ///
+  /// The given map must contain an entry for every [KeyPoints]. Throws
+  /// an [AssertionError] if this is not the case.
+  Pose(this.landmarks)
+      : assert(
+          KeyPoints.values.every(landmarks.containsKey),
+          'Pose must contain all key points!',
+        );
 
-/// Maps the positions in a [Pose] by applying [map] to each.
-Pose mapPosePositions(Pose pose, Vector3 Function(Vector3) map) {
-  return pose.mapValues(
-    (_, landmark) => Landmark(map(landmark.position), landmark.confidence),
-  );
+  /// The poses landmarks keyed by their [KeyPoints] identifier.
+  ///
+  /// The map is guaranteed to contain all [KeyPoints.values].
+  /// If you want to access landmarks by key-points, consider using
+  /// the indexer operator on [Pose] itself.
+  final IMap<KeyPoints, Landmark> landmarks;
+
+  /// Get the landmark for a specific [KeyPoints].
+  Landmark operator [](KeyPoints point) => landmarks[point]!;
 }
