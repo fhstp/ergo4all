@@ -3,7 +3,6 @@ import 'package:common/iterable_ext.dart';
 import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:rula/rula.dart';
 
 /// Aggregates a [RulaTimeline] into a single [RulaScores] sheet. It does this
 /// by doing a mode over each score. Currently, time, ie. how long the

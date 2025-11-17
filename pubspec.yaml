@@ -13,7 +13,6 @@ workspace:
   - ./packages/pose_analysis
   - ./packages/pose_transforming
   - ./packages/pose_vis
-  - ./packages/rula
   - ./apps/ergo4all
   - ./apps/pose_tester
 

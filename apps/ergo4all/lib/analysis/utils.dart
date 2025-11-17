@@ -12,7 +12,6 @@ import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
-import 'package:rula/rula.dart';
 
 /// Extensions for calculating rula sheet from pose.
 extension ToSheetExt on Pose {

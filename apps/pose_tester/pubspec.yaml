@@ -27,7 +27,6 @@ dependencies:
   pose_detect: any
   pose_transforming: any
   pose_vis: any
-  rula: any
   share_plus: ^10.1.4
   vector_math: ^2.1.4
 
