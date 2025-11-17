@@ -1,5 +1,5 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/iterable_ext.dart';
-import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:fpdart/fpdart.dart';
@@ -98,9 +98,10 @@ enum BodyPart {
   upperBody
 }
 
-
-/// Determines the top 3 activities with highest average scores from the timeline.
-/// Uses both activities and scores from timeline entries to compute average score
+/// Determines the top 3 activities with highest average scores from the
+/// timeline.
+/// Uses both activities and scores from timeline entries to compute average
+/// score
 /// for each activity, then picks activities with the highest average scores.
 ///
 /// There may be less than 3 elements in the output for two reasons:
@@ -110,7 +111,7 @@ enum BodyPart {
 Iterable<Activity> highestRulaActivitiesOf(RulaTimeline timeline) {
   // Group timeline entries by activity, filtering out null activities
   final activitiesWithScores = <Activity, List<int>>{};
-  
+
   for (final entry in timeline) {
     if (entry.activity != null) {
       activitiesWithScores
@@ -118,22 +119,23 @@ Iterable<Activity> highestRulaActivitiesOf(RulaTimeline timeline) {
           .add(entry.scores.fullScore);
     }
   }
- 
+
   // Background and walking are not interesting for the user
-  activitiesWithScores..remove(Activity.background)
-  ..remove(Activity.walking);
- 
+  activitiesWithScores
+    ..remove(Activity.background)
+    ..remove(Activity.walking);
+
   // Calculate average scores for each activity
   final activityAverages = activitiesWithScores.map((activity, scores) {
     final average = scores.reduce((a, b) => a + b) / scores.length;
     return MapEntry(activity, average);
   });
- 
+
   // Sort activities by average score (highest first)
   final sortedByAverage = activityAverages.entries
       .sortBy(Order.by((entry) => entry.value, Order.orderDouble.reverse))
       .map((entry) => entry.key);
- 
+
   // Return top 3 activities with highest average scores
   return sortedByAverage.take(3);
 }

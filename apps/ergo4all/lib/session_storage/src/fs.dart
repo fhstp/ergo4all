@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/func_ext.dart';
-import 'package:common/pair_utils.dart';
 import 'package:csv/csv.dart';
 import 'package:ergo4all/common/activity.dart';
 import 'package:ergo4all/common/rula_session.dart';

@@ -1,6 +1,7 @@
 name: pose_analysis
 version: 1.145.1
 description: Pose analysis
+publish_to: none
 
 environment:
   sdk: ^3.6.0

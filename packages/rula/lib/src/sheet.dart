@@ -1,5 +1,4 @@
 import 'package:auto_rula/auto_rula.dart';
-import 'package:common/pair_utils.dart';
 import 'package:flutter/foundation.dart';
 
 Degree _clampRightAngle(Degree x) => x.clamp(-90, 90);
