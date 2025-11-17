@@ -8,6 +8,9 @@ environment:
 resolution: workspace
 
 dependencies:
+  auto_rula:
+    git: git@github.com:fhstp/auto_rula.git
+
   common: any
   fast_immutable_collections: ^11.0.0
   pose: any

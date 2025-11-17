@@ -1,6 +1,7 @@
 name: rula
 version: 1.145.1
 description: Calculation logic for rula scoring
+publish_to: none
 
 environment:
   sdk: ^3.6.0
@@ -8,6 +9,8 @@ environment:
 resolution: workspace
 
 dependencies:
+  auto_rula:
+    git: git@github.com:fhstp/auto_rula.git
   common: any
   fast_immutable_collections: ^11.0.0
   flutter:
