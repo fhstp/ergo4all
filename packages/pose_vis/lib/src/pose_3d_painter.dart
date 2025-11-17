@@ -25,7 +25,7 @@ class Pose3dPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Offset tryGetPosOf(KeyPoints keyPoint) {
-      final landmark = pose[keyPoint]!;
+      final landmark = pose[keyPoint];
       final position = landmark.position.xy;
       return Offset(
         size.width * (position.x / imageSize.width),

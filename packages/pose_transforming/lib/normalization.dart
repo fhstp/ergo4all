@@ -1,7 +1,15 @@
 import 'dart:math';
 
+import 'package:common/immutable_collection_ext.dart';
 import 'package:pose/pose.dart';
 import 'package:vector_math/vector_math.dart';
+
+/// Maps the positions in a [Pose] by applying [map] to each.
+Pose _mapPosePositions(Pose pose, Vector3 Function(Vector3) map) => Pose(
+      pose.landmarks.mapValues(
+        (_, landmark) => Landmark(map(landmark.position), landmark.confidence),
+      ),
+    );
 
 /// A [Pose] which was normalized using the [normalizePose] function. It
 /// is has it's mid-hip point at the origin, it's hip line is aligned with the
@@ -10,17 +18,17 @@ extension type NormalizedPose(Pose it) implements Pose {}
 
 /// Gets the offset from the origin to the[pose]s mid-hip point.
 Vector3 _midHipOffset(Pose pose) {
-  return pose[KeyPoints.midPelvis]!.position;
+  return pose[KeyPoints.midPelvis].position;
 }
 
 /// Translates a [pose] by a given [translation] vector.
 Pose _translatePose(Pose pose, Vector3 translation) {
-  return mapPosePositions(pose, (pos) => pos - translation);
+  return _mapPosePositions(pose, (pos) => pos - translation);
 }
 
 /// Rotates the points in a [pose] using the given [rotation] matrix.
 Pose _rotatePose(Pose pose, Matrix3 rotation) {
-  return mapPosePositions(pose, rotation.transform);
+  return _mapPosePositions(pose, rotation.transform);
 }
 
 Matrix3 _yRotationMatrixFor(Vector3 leftHip, Vector3 rightHip) {
@@ -41,8 +49,8 @@ Pose _centerPose(Pose pose) {
 
 /// Rotates the given [pose] such that it's hip line is in the XY plane.
 Pose _alignHipWithXYPlane(Pose pose) {
-  final leftHip = pose[KeyPoints.leftHip]!.position;
-  final rightHip = pose[KeyPoints.rightHip]!.position;
+  final leftHip = pose[KeyPoints.leftHip].position;
+  final rightHip = pose[KeyPoints.rightHip].position;
 
   final yRotation = _yRotationMatrixFor(leftHip, rightHip);
 
@@ -51,8 +59,8 @@ Pose _alignHipWithXYPlane(Pose pose) {
 
 /// Rotates the given [pose] such that it's hip line is in the XZ plane.
 Pose _alignHipWithXZPlane(Pose pose) {
-  final leftHip = pose[KeyPoints.leftHip]!.position;
-  final rightHip = pose[KeyPoints.rightHip]!.position;
+  final leftHip = pose[KeyPoints.leftHip].position;
+  final rightHip = pose[KeyPoints.rightHip].position;
 
   final zRotation = _zRotationMatrixFor(leftHip, rightHip);
 
@@ -63,9 +71,9 @@ Pose _alignHipWithXZPlane(Pose pose) {
 /// You can also apply additional scaling to the other axes using the [yMult]
 /// and [zMult] parameters.
 Pose _normalizeScale(Pose pose, double yMult, double zMult) {
-  final hipLength = 2 * pose[KeyPoints.leftHip]!.position.x.abs();
+  final hipLength = 2 * pose[KeyPoints.leftHip].position.x.abs();
   final scalar = 1 / hipLength;
-  return mapPosePositions(
+  return _mapPosePositions(
     pose,
     (pos) => Vector3(
       pos.x * scalar,
