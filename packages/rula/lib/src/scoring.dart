@@ -4,7 +4,6 @@ import 'package:auto_rula/auto_rula.dart';
 import 'package:common/func_ext.dart';
 import 'package:common/math_utils.dart';
 import 'package:flutter/foundation.dart';
-import 'package:rula/rula.dart';
 
 void Function(int) _assertInRange(int min, int max, [String? message]) {
   return (i) {

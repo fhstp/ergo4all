@@ -59,10 +59,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3e9939216ee37d27f2606b95dcee5c52f2304c07"
+      resolved-ref: "825992bec94c7ad1b7b22426193078c5ba2a8fb3"
       url: "git@github.com:fhstp/auto_rula.git"
     source: git
-    version: "1.0.2"
+    version: "1.0.3"
   boolean_selector:
     dependency: transitive
     description:
