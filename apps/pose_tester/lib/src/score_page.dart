@@ -1,4 +1,4 @@
-import 'package:common/pair_utils.dart';
+import 'package:auto_rula/auto_rula.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_analysis/pose_analysis.dart';

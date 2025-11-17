@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/func_ext.dart';
 import 'package:common/math_utils.dart';
-import 'package:common/pair_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:rula/rula.dart';
 

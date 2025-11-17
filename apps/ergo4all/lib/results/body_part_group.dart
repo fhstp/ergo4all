@@ -1,5 +1,5 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/immutable_collection_ext.dart';
-import 'package:common/pair_utils.dart';
 import 'package:ergo4all/common/rula_session.dart';
 import 'package:ergo4all/results/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -61,7 +61,10 @@ enum BodyPartGroup {
       IMap.fromKeys(
         keys: BodyPartGroup.values,
         valueMapper: (bodyPartGroup) => timeline
-            .map((entry) => entry.scores.bodyPartGroupScoreOf(bodyPartGroup))
+            .map(
+              (entry) =>
+                  entry.scores.bodyPartGroupScoreOf(bodyPartGroup).toIList(),
+            )
             .toIList()
             .columns()
             .toIList(),
@@ -71,12 +74,12 @@ enum BodyPartGroup {
 /// Extension for accessing scores for [BodyPartGroup]s from [RulaScores].
 extension ScoreAccess on RulaScores {
   /// Get scores for a [BodyPartGroup].
-  IList<int> bodyPartGroupScoreOf(BodyPartGroup group) {
+  List<int> bodyPartGroupScoreOf(BodyPartGroup group) {
     return switch (group) {
       BodyPartGroup.shoulder => Pair.toList(upperArmScores),
       BodyPartGroup.arm => Pair.toList(lowerArmScores),
-      BodyPartGroup.trunk => IList([trunkScore]),
-      BodyPartGroup.neck => IList([neckScore]),
+      BodyPartGroup.trunk => [trunkScore],
+      BodyPartGroup.neck => [neckScore],
       BodyPartGroup.legs => Pair.toList(legScores)
     };
   }

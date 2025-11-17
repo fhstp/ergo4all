@@ -1,4 +1,4 @@
-import 'package:common/pair_utils.dart';
+import 'package:auto_rula/auto_rula.dart';
 import 'package:ergo4all/common/rula_color.dart';
 import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/common.dart';
