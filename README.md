@@ -39,7 +39,6 @@ with the following parts.
 | [pose_detect](./packages/pose_detect/README.md)             | Logic to extract poses from images               |
 | [pose_transforming](./packages/pose_transforming/README.md) | Logic for transforming and normalizing pose data |
 | [pose_vis](./packages/pose_vis/README.md)                   | UI logic for visualizing poses                   |
-| [rula](./packages/rula/README.md)                           | Logic modelling the RULA sheet                   |
 
 ## License
 
