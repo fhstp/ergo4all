@@ -1,7 +1,6 @@
 import 'package:auto_rula/auto_rula.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
-import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
 import 'package:pose_tester/src/rula_score_display.dart';
@@ -31,7 +30,7 @@ class _ScorePageState extends State<ScorePage> {
     widget.angles.match(() {}, (angles) {
       setState(() {
         currentScores =
-            Some(rulaSheetFromAngles(angles)).map(RulaScores.calculateFor);
+            Some(RulaSheet.fromAngles(angles)).map(RulaScores.calculateFor);
       });
     });
   }
