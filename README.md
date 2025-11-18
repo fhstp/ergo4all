@@ -34,7 +34,6 @@ with the following parts.
 | [common](./packages/common/README.md)               | Common dart logic                            |
 | [common_ui](./packages/common_ui/README.md)         | Common ui logic                              |
 | [custom_locale](./packages/custom_locale/README.md) | Logic for managing a custom locale setting   |
-| [pose_analysis](./packages/pose_analysis/README.md) | Logic for analyzing and scoring poses        |
 | [pose_detect](./packages/pose_detect/README.md)     | Logic to extract poses from images           |
 | [pose_vis](./packages/pose_vis/README.md)           | UI logic for visualizing poses               |
 

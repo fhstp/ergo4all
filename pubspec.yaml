@@ -9,7 +9,6 @@ workspace:
   - ./packages/common_ui
   - ./packages/custom_locale
   - ./packages/pose_detect
-  - ./packages/pose_analysis
   - ./packages/pose_vis
   - ./apps/ergo4all
   - ./apps/pose_tester
