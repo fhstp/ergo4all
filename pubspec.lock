@@ -59,10 +59,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "48a105a5cd1b8f1d8d9c76c45c1a2f6679061d52"
+      resolved-ref: e8e890b979aa4fe624b9310f68ee07e3fbaa71a3
       url: "git@github.com:fhstp/auto_rula.git"
     source: git
-    version: "1.0.5"
+    version: "1.0.6"
   boolean_selector:
     dependency: transitive
     description:
@@ -347,10 +347,10 @@ packages:
     dependency: transitive
     description:
       name: fast_immutable_collections
-      sha256: "95a69b9380483dff49ae2c12c9eb92e2b4e1aeff481a33c2a20883471771598a"
+      sha256: "19f70498af299cbce5ff919dbbecd5abfd9d0c28139004f68d3810ce23dedfb3"
       url: "https://pub.dev"
     source: hosted
-    version: "11.0.3"
+    version: "11.1.0"
   ffi:
     dependency: transitive
     description:

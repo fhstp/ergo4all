@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:auto_rula/auto_rula.dart';
 import 'package:ergo4all/common/activity.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:pose/pose.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 /// Configuration constants for Human Activity Recognition

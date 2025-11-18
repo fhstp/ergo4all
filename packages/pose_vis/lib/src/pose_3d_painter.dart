@@ -1,5 +1,5 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:flutter/material.dart';
-import 'package:pose/pose.dart';
 import 'package:pose_vis/src/painting.dart';
 
 /// [CustomPainter] for [Pose] objects. Intended to be overlayed over the image

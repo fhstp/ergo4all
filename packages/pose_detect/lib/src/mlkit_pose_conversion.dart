@@ -1,7 +1,7 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
     as mlkit;
-import 'package:pose/pose.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// Converts an [mlkit.Pose] to a domain [Pose].

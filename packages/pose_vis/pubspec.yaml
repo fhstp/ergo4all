@@ -10,6 +10,9 @@ environment:
   flutter: ^3.24.0
 
 dependencies:
+  auto_rula:
+    git: git@github.com:fhstp/auto_rula.git
+
   common: any
 
   flutter:

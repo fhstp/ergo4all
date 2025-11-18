@@ -1,6 +1,7 @@
 name: pose_detect
 version: 1.145.1
 description: Contains logic for detecting poses in images.
+publish_to: none
 
 resolution: workspace
 
@@ -8,6 +9,9 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
+  auto_rula:
+    git: git@github.com:fhstp/auto_rula.git
+
   camera: ^0.10.0
 
   fast_immutable_collections: ^11.0.3

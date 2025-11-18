@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:auto_rula/auto_rula.dart';
 import 'package:flutter/material.dart';
-import 'package:pose/pose.dart';
 
 /// Calculates a [Color] for the given [keyPoint] based on its enum index.
 Color getJointColorFromIndex(KeyPoints keyPoint) {

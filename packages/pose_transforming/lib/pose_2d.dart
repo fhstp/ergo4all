@@ -1,6 +1,6 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:pose/pose.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:vector_math/vector_math.dart';
 

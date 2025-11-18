@@ -8,7 +8,6 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image/image.dart' as img;
-import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
