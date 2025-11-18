@@ -5,7 +5,6 @@ import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:image_picker/image_picker.dart';
-import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_tester/src/angle_page.dart';
 import 'package:pose_tester/src/image_file.dart';
@@ -105,10 +104,12 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     final input = PoseDetectInput.fromFile(imageFile.file);
     final pose = await detectPose(input);
     final normalized = NormalizedPose.normalize(pose!);
-    final coronal = ProjectedPose.coronal(normalized);
-    final sagittal = ProjectedPose.sagittal(normalized);
-    final transverse = ProjectedPose.transverse(normalized);
-    final angles = calculateAngles(normalized, coronal, sagittal, transverse);
+    final angles = PoseAngles.calculate(
+      world: normalized,
+      coronal: ProjectedPose.coronal(normalized),
+      sagittal: ProjectedPose.sagittal(normalized),
+      transverse: ProjectedPose.transverse(normalized),
+    );
 
     setState(() {
       currentPoseData = Some(

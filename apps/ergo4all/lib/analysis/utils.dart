@@ -15,10 +15,12 @@ extension ToSheetExt on Pose {
   /// Calculates the [RulaSheet] from the angles in this [Pose].
   RulaSheet toRulaSheet() {
     final normalized = NormalizedPose.normalize(this);
-    final sagittal = ProjectedPose.sagittal(normalized);
-    final coronal = ProjectedPose.coronal(normalized);
-    final transverse = ProjectedPose.transverse(normalized);
-    final angles = calculateAngles(this, coronal, sagittal, transverse);
+    final angles = PoseAngles.calculate(
+      world: this,
+      coronal: ProjectedPose.coronal(normalized),
+      sagittal: ProjectedPose.sagittal(normalized),
+      transverse: ProjectedPose.transverse(normalized),
+    );
 
     final sheet = rulaSheetFromAngles(angles);
     return sheet;
