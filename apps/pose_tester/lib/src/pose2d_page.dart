@@ -1,8 +1,8 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
-import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 

@@ -30,7 +30,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_transforming/denoise.dart';
-import 'package:pose_transforming/normalization.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -197,7 +196,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
         () {},
         (pose) {
           activityRecognitionManager.addPose(
-            normalizePose(averagePose),
+            NormalizedPose.normalize(averagePose),
             frame.timestamp,
           );
         },
