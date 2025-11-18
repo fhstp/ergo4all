@@ -28,7 +28,6 @@ dependencies:
   common_ui: any
   custom_locale: any
   pose_detect: any
-  pose_transforming: any
   pose_analysis: any
   pose_vis: any
 
