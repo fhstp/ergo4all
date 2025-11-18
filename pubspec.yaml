@@ -8,7 +8,6 @@ workspace:
   - ./packages/common
   - ./packages/common_ui
   - ./packages/custom_locale
-  - ./packages/pose
   - ./packages/pose_detect
   - ./packages/pose_analysis
   - ./packages/pose_transforming

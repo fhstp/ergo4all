@@ -19,8 +19,6 @@ dependencies:
     sdk: flutter
 
   google_mlkit_pose_detection: ^0.13.0
-
-  pose: any
   vector_math: ^2.1.4
 
 dev_dependencies:
