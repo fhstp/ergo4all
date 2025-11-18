@@ -1,6 +1,6 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:common/iterable_ext.dart';
-import 'package:pose/pose.dart';
 
 Landmark _addLandmarks(Landmark a, Landmark b) {
   return Landmark(a.position + b.position, a.confidence + b.confidence);

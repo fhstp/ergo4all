@@ -1,10 +1,10 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:common_ui/theme/theme.dart';
 import 'package:common_ui/widgets/paint_on_image.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:image_picker/image_picker.dart';
-import 'package:pose/pose.dart';
 import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_detect/pose_detect.dart';
 import 'package:pose_tester/src/angle_page.dart';
@@ -105,8 +105,8 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
     });
 
     final input = PoseDetectInput.fromFile(imageFile.file);
-    final pose = (await detectPose(input))!;
-    final normalized = normalizePose(pose);
+    final pose = await detectPose(input);
+    final normalized = normalizePose(pose!);
     final coronal = make2dCoronalPose(normalized);
     final sagittal = make2dSagittalPose(normalized);
     final transverse = make2dTransversePose(normalized);

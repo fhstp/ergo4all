@@ -1,13 +1,17 @@
 name: pose_transforming
 version: 1.145.1
 description: Pose transformation and normalization
+publish_to: none
 
 resolution: workspace
 
 environment:
   sdk: ^3.6.0
 
-dependencies: 
+dependencies:
+  auto_rula:
+    git: git@github.com:fhstp/auto_rula.git
+
   common: any
   fast_immutable_collections: ^11.0.3
   pose: any

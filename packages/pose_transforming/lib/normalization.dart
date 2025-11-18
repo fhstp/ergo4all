@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import 'package:auto_rula/auto_rula.dart';
 import 'package:common/immutable_collection_ext.dart';
-import 'package:pose/pose.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// Maps the positions in a [Pose] by applying [map] to each.
