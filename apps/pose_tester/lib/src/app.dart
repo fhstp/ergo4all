@@ -11,7 +11,6 @@ import 'package:pose_tester/src/angle_page.dart';
 import 'package:pose_tester/src/image_file.dart';
 import 'package:pose_tester/src/pose2d_page.dart';
 import 'package:pose_tester/src/score_page.dart';
-import 'package:pose_transforming/normalization.dart';
 import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:share_plus/share_plus.dart';
@@ -106,10 +105,10 @@ class _PoseTesterAppState extends State<PoseTesterApp> {
 
     final input = PoseDetectInput.fromFile(imageFile.file);
     final pose = await detectPose(input);
-    final normalized = normalizePose(pose!);
     final coronal = make2dCoronalPose(normalized);
     final sagittal = make2dSagittalPose(normalized);
     final transverse = make2dTransversePose(normalized);
+    final normalized = NormalizedPose.normalize(pose!);
     final angles = calculateAngles(normalized, coronal, sagittal, transverse);
 
     setState(() {
