@@ -8,7 +8,6 @@ import 'package:ergo4all/common/utils.dart';
 import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image/image.dart' as img;
-import 'package:pose_analysis/pose_analysis.dart';
 
 /// Extensions for calculating rula sheet from pose.
 extension ToSheetExt on Pose {
@@ -22,8 +21,7 @@ extension ToSheetExt on Pose {
       transverse: ProjectedPose.transverse(normalized),
     );
 
-    final sheet = rulaSheetFromAngles(angles);
-    return sheet;
+    return RulaSheet.fromAngles(angles);
   }
 }
 
