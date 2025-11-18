@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:auto_rula/auto_rula.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:pose_transforming/pose_2d.dart';
 import 'package:vector_math/vector_math.dart';
 
 /// Key angles in a pose.
@@ -82,7 +81,7 @@ double _angle(Vector3 a, Vector3 b) {
 
 Vector2 _up = Vector2(0, -1);
 
-Vector2 _line2d(Pose2d pose, KeyPoints a, KeyPoints b) {
+Vector2 _line2d(ProjectedPose pose, KeyPoints a, KeyPoints b) {
   return (pose[b]! - pose[a]!).normalized();
 }
 
@@ -93,9 +92,9 @@ Vector3 _line(Pose pose, KeyPoints a, KeyPoints b) {
 /// Calculates [PoseAngles] from the given pose data.
 PoseAngles calculateAngles(
   Pose world,
-  Pose2d coronal,
-  Pose2d sagittal,
-  Pose2d transverse,
+  ProjectedPose coronal,
+  ProjectedPose sagittal,
+  ProjectedPose transverse,
 ) {
   double calcKeyAngle(KeyAngles keyAngle) => switch (keyAngle) {
         KeyAngles.shoulderFlexionLeft => -_angle2d(

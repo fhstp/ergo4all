@@ -3,10 +3,9 @@ import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
-import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/pose_vis.dart';
 
-/// Page for displaying a [Pose2d].
+/// Page for displaying a [ProjectedPose].
 class Pose2dPage extends StatefulWidget {
   /// Creates a page.
   const Pose2dPage({
@@ -23,14 +22,14 @@ class Pose2dPage extends StatefulWidget {
   final Option<NormalizedPose> normalizedPose;
 
   /// A function for converting the pose to a 2d pose.
-  final Pose2d Function(NormalizedPose) makePose2d;
+  final ProjectedPose Function(NormalizedPose) makePose2d;
 
   @override
   State<Pose2dPage> createState() => _Pose2dPageState();
 }
 
 class _Pose2dPageState extends State<Pose2dPage> {
-  Option<Pose2d> pose = none();
+  Option<ProjectedPose> pose = none();
 
   void recalculatePose() {
     setState(() {
