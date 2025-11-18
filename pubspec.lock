@@ -58,11 +58,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "647a63735b7a07b2b68db636ab4a79dd8f9df2c8"
+      ref: "v1.1.0"
+      resolved-ref: "23f04b9d8e7cb1eb2a9050ca03e61de71fb3272f"
       url: "git@github.com:fhstp/auto_rula.git"
     source: git
-    version: "1.0.11"
+    version: "1.1.0"
   boolean_selector:
     dependency: transitive
     description:

@@ -10,7 +10,9 @@ environment:
 
 dependencies:
   auto_rula:
-    git: git@github.com:fhstp/auto_rula.git
+    git:
+      url: git@github.com:fhstp/auto_rula.git
+      ref: v1.1.0
 
   camera: ^0.10.0
 
