@@ -1,5 +1,4 @@
 import 'package:auto_rula/auto_rula.dart';
-import 'package:pose_analysis/pose_analysis.dart';
 
 /// Creates a [RulaSheet] from [PoseAngles].
 RulaSheet rulaSheetFromAngles(PoseAngles angles) {

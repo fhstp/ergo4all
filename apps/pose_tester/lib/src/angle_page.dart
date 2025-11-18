@@ -1,6 +1,6 @@
+import 'package:auto_rula/auto_rula.dart';
 import 'package:flutter/material.dart' hide Page, ProgressIndicator;
 import 'package:fpdart/fpdart.dart';
-import 'package:pose_analysis/pose_analysis.dart';
 import 'package:pose_tester/src/map_display.dart';
 import 'package:pose_tester/src/page.dart';
 import 'package:pose_tester/src/progress_indicator.dart';
