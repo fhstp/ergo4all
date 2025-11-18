@@ -41,27 +41,27 @@ with the following parts.
 | [pose_vis](./packages/pose_vis/README.md)                   | UI logic for visualizing poses                   |
 | [rula](./packages/rula/README.md)                           | Logic modelling the RULA sheet                   |
 
-## Licence
+## License
 
 This repository uses dual licensing.
 
-#### Software (code)
+### Software (code)
 
-All source code in this repository is licensed under the **MIT License with Commons Clause**. This means the software is free to use, modify, and distribute for non-commercial purposes. However, you may not sell the software or provide it as part of a commercial service or paid support offering. 
+All source code in this repository is licensed under the **MIT License with Commons Clause**. This means the software is free to use, modify, and distribute for non-commercial purposes. However, you may not sell the software or provide it as part of a commercial service or paid support offering.
 
 See [LICENSE_SOFTWARE](./LICENSE_SOFTWARE.md) for details.
 
+### Content and Media
 
-#### Content and Media
 All non-code assets (i.e., texts, images, branding, logos, and other) are licensed under the Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International (CC BY-NC-ND 4.0) license. You may share these assets with attribution, but you may not modify or use them commercially.
 
 See [LICENSE_CONTENT](./LICENSE_CONTENT.md) for details.
 
 [![CC BY-ND 4.0][cc-by-nd-image]][cc-by-nd]
+![cc-by-nd-shield](https://img.shields.io/badge/License-CC%20BY--ND%204.0-lightgrey.svg)
 
 [cc-by-nd]: https://creativecommons.org/licenses/by-nd/4.0/
 [cc-by-nd-image]: https://licensebuttons.net/l/by-nd/4.0/88x31.png
-[cc-by-nd-shield]: https://img.shields.io/badge/License-CC%20BY--ND%204.0-lightgrey.svg
 
 If you are interested in alternative licenses, please contact the project team.
 
