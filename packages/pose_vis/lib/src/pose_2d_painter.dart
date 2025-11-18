@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:auto_rula/auto_rula.dart';
 import 'package:common/immutable_collection_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:pose_transforming/pose_2d.dart';
 import 'package:pose_vis/src/painting.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 
-extension _ScalingExt on Pose2d {
+extension _ScalingExt on ProjectedPose {
   Rect get boundingBox {
-    final minX = values.map((it) => it.x).reduce(min);
-    final minY = values.map((it) => it.y).reduce(min);
-    final maxX = values.map((it) => it.x).reduce(max);
-    final maxY = values.map((it) => it.y).reduce(max);
+    final minX = positions.map((it) => it.x).reduce(min);
+    final minY = positions.map((it) => it.y).reduce(min);
+    final maxX = positions.map((it) => it.x).reduce(max);
+    final maxY = positions.map((it) => it.y).reduce(max);
 
     final width = maxX - minX;
     final height = maxY - minY;
@@ -20,10 +19,12 @@ extension _ScalingExt on Pose2d {
     return Rect.fromLTWH(minX, minY, width, height);
   }
 
-  Pose2d scaleToFit(Size size) {
+  ProjectedPose scaleToFit(Size size) {
     final bounds = boundingBox;
     final scale = min(size.width / bounds.width, size.height / bounds.height);
-    return mapValues((_, pos) => pos * scale);
+    return ProjectedPose(
+      positionsByKeyPoint.mapValues((_, pos) => pos * scale),
+    );
   }
 
   Vector2 get center {
@@ -31,19 +32,21 @@ extension _ScalingExt on Pose2d {
     return Vector2(centerOffset.dx, centerOffset.dy);
   }
 
-  Pose2d centerAt(Offset newCenter) {
+  ProjectedPose centerAt(Offset newCenter) {
     final translate = Vector2(newCenter.dx, newCenter.dy) - center;
-    return mapValues((_, p) => p + translate);
+    return ProjectedPose(
+      positionsByKeyPoint.mapValues((_, p) => p + translate),
+    );
   }
 }
 
-/// A [CustomPainter] for [Pose2d] objects.
+/// A [CustomPainter] for [ProjectedPose] objects.
 class Pose2dPainter extends CustomPainter {
   /// Creates a painter for the given [pose].
   Pose2dPainter({required this.pose, super.repaint});
 
   /// The pose to paint.
-  final Pose2d pose;
+  final ProjectedPose pose;
 
   @override
   void paint(Canvas canvas, Size size) {

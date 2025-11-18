@@ -9,16 +9,15 @@ import 'package:ergo4all/results/overview/body_score_display.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image/image.dart' as img;
 import 'package:pose_analysis/pose_analysis.dart';
-import 'package:pose_transforming/pose_2d.dart';
 
 /// Extensions for calculating rula sheet from pose.
 extension ToSheetExt on Pose {
   /// Calculates the [RulaSheet] from the angles in this [Pose].
   RulaSheet toRulaSheet() {
-    final sagittal = make2dSagittalPose(normalized);
-    final coronal = make2dCoronalPose(normalized);
-    final transverse = make2dTransversePose(normalized);
     final normalized = NormalizedPose.normalize(this);
+    final sagittal = ProjectedPose.sagittal(normalized);
+    final coronal = ProjectedPose.coronal(normalized);
+    final transverse = ProjectedPose.transverse(normalized);
     final angles = calculateAngles(this, coronal, sagittal, transverse);
 
     final sheet = rulaSheetFromAngles(angles);
