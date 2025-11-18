@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:pose_detect/pose_detect.dart';
-import 'package:pose_transforming/denoise.dart';
+import 'package:ergo4all/analysis/denoise.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
