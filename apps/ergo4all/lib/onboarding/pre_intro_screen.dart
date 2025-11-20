@@ -7,6 +7,7 @@ import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:ergo4all/onboarding/privacy_screen.dart';
 
 /// Screen for displaying the pre-introductory content before the main onboarding flow.
 class PreIntroScreen extends StatelessWidget {
@@ -32,8 +33,8 @@ class PreIntroScreen extends StatelessWidget {
       unawaited(
         Navigator.pushAndRemoveUntil(
           context,
-          TermsOfUseScreen.makeRoute(),
-          ModalRoute.withName(TermsOfUseScreen.routeName),
+          PrivacyScreen.makeRoute(),
+          ModalRoute.withName(PrivacyScreen.routeName),//(TermsOfUseScreen.routeName),
         ),
       );
     }
