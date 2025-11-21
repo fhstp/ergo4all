@@ -70,6 +70,7 @@ class ErgonomicsInfoScreen extends StatelessWidget {
                     Text(
                       localizations.onboarding_ergonomicsInfo_description,
                       style: dynamicBodyStyle,
+                      textAlign: TextAlign.center,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(30),

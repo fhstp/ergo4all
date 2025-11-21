@@ -70,7 +70,7 @@
   "@onboarding_ergonomicsInfo_subtitle": {
     "description": "Sub-title for the ergonomics-info screen in onboarding"
   },
-  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\nSometimes the risk score might be low, even if you felt that body part working a lot. That's because feeling a muscle work isn't the same as it being at risk - risk depends on posture, performed activities, load, and how often you repeat the movement.\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n👉 For tips on better posture and movement, check the \"Tipps screen\".",
+  "onboarding_ergonomicsInfo_description": "Ergonomics is about keeping your body in healthy, natural positions so it stays strong over time. It's not just about whether something feels uncomfortable right now.\n\nSometimes the app may indicate low ergonomic strain, even if you feel a particular muscle is working hard. Muscle activity alone does not automatically mean ergonomic strain - what matters are your posture, the tasks being performed, and how often they are done.\n\nThis app helps you spot patterns that could cause problems if repeated too often, so you can fix them before they do.\n\n👉 For tips on better posture and movement, check the \"Tips\" on the start page.",
   "@onboarding_ergonomicsInfo_description": {
     "description": "Body-text for the ergonomics-info screen in onboarding"
   },
@@ -86,7 +86,7 @@
   "@onboarding_privacy_subtitle": {
     "description": "Sub-title for the privacy screen in onboarding"
   },
-  "onboarding_privacy_description": "Ergo4A works completely offline. Everything is processed locally on your device. You can delete all data anytime - by uninstalling the app or through the menu.\nYou stay in control - just your device, your storage, and your trust - protected.",
+  "onboarding_privacy_description": "Ergo4A works completely offline. Everything is processed locally on your device. You can delete all data anytime - by uninstalling the app or through the menu. You stay in control - just your device, your storage, and your trust - protected.",
   "@onboarding_privacy_description": {
     "description": "Body-text for the privacy screen in onboarding"
   },
@@ -94,9 +94,13 @@
   "@privacy_link": {
     "description": "Link to the website for full GDPR information and data processing."
   },
-  "onboarding_privacy_consent": "I agree to the processing of personal data (videos, nickname) within the app. There is no transfer of data. I confirm that I have read and acknowledged the privacy manifest and that this consent is given on a voluntary basis.\nThis consent can be revoked at any time by uninstalling the app. This will delete all app-related data.",
+  "onboarding_privacy_consent": "When you use the app, personal data (videos, nickname) is processed locally. Your data is never uploaded or shared with anyone.\n\nI confirm that I have read and acknowledged the privacy manifest and that this consent is given on a voluntary basis.\n\nThis consent can be revoked at any time by uninstalling the app. This will delete all app-related data.",
   "@onboarding_privacy_consent": {
     "description": "Body-text for consent as required by GDPR"
+  },
+  "onboarding_consent_accept": "I consent",
+  "@onboarding_consent_accept": {
+    "description": "Label for button for giving consent to data processing"
   },
   "onboarding_preIntro_title": "App overview",
   "@onboarding_preIntro_title": {
@@ -106,7 +110,7 @@
   "@onboarding_preIntro_subtitle": {
     "description": "Sub-title for the app-overview screen in onboarding"
   },
-  "onboarding_preIntro_description": "Ever had sharp pain when lifting? Or that stubborn neck pain that won't go away? These can be signs of poor posture at work.\nThis app uses AI to analyze your work posture from video and give practical tips to improve it. It's a research prototype, developed to help prevent long-term postural problems. It's designed for you - as a learning tool, not as medical advice.",
+  "onboarding_preIntro_description": "Ever had sharp pain when lifting? Or that stubborn neck pain that won't go away? These can be signs of poor posture at work.\n\nThis app uses AI to analyze your work posture from video and give practical tips to improve it. It's a research prototype, developed to help prevent long-term postural problems.\n\nErgo4A is designed for you - as a learning tool, not as medical advice.",
   "@onboarding_preIntro_description": {
     "description": "Body-text for the app-overview screen in onboarding"
   },
@@ -118,13 +122,17 @@
   "@onboarding_termsOfUse_title": {
     "description": "Title for the terms-of-use screen in onboarding"
   },
-  "onboarding_termsOfUse_description": "This app uses AI to make ergonomics reports for information only. Like any AI, the results might be incorrect - don't treat them as expert advice. Don't use it on others without permission, misuse the service, or share harmful content. Using this app is your choice and responsibility.",
+  "onboarding_termsOfUse_description": "This app generates ergonomic analyses using AI - solely for learning and informational purposes.\n\nLike any AI, the results might be incorrect - don't treat them as expert advice. Do not use the app for medical diagnoses, assessing work capability, or making legal decisions.\n\nIf you use the app with other people, you must obtain their explicit consent. You are solely responsible for how you use the app and the conclusions you draw from it. Do not misuse the app and use it responsibly.",
   "@onboarding_termsOfUse_description": {
     "description": "Body-text for the terms-of-use screen in onboarding"
   },
   "onboarding_termsOfUse_link": "Read more about our terms of use*",
   "@onboarding_termsOfUse_link": {
     "description": "Link-text for the link to navigate to extended terms of use from onboarding."
+  },
+  "onboarding_termsOfUse_consent": "Please read our full Terms of Use - by tapping \"Accept\", you agree to them.",
+  "@onboarding_termsOfUse_consent": {
+    "description": "Link-text for consenting to the terms of use."
   },
   "onboarding_termsOfUse_accept": "I accept",
   "@onboarding_termsOfUse_accept": {
@@ -138,7 +146,7 @@
   "@onboarding_userCreation_subtitle": {
     "description": "Sub-title for the profile-creation screen in onboarding"
   },
-  "onboarding_userCreation_description": "You can switch between different nicknames and save results for each user — great if you want to use the app with others like colleagues or friends. This makes it easy to find your results and track everyone's progress.\nWe don't personalize or track you. This feature is optional. If you save someone else’s nickname, please make sure you have their permission.",
+  "onboarding_userCreation_description": "You can switch between different nicknames and save results for each user — great if you want to use the app with others like colleagues or friends. This makes it easy to find your results and track everyone's progress.\n\nWe don't personalize or track you. This feature is optional. If you save someone else’s nickname, please make sure you have their permission.",
   "@onboarding_userCreation_description": {
     "description": "Body-text for the profile-creation screen in onboarding"
   },
@@ -426,7 +434,7 @@
   "@privacy_important": {
     "description": "Text that tells users that privacy is important to us."
   },
-  "privacy_content": "Ergo4A processes all data locally on your device, ensuring no personal information is sent to external servers. We are committed to safeguarding your privacy.",
+  "privacy_content": "Ergo4A processes all data locally on your device, so no personal information is sent to external servers. You can delete all data at any time—through the menu or by uninstalling the app. You remain in control—only your device, your storage, and your trust. We are committed to protecting your privacy.",
   "@privacy_content": {
     "description": "Text that describes the privacy policy of the app to the user."
   },

@@ -50,6 +50,7 @@ dependencies:
   carousel_slider: ^5.1.1
   tflite_flutter: ^0.11.0
   image: ^4.5.4
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
