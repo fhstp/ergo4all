@@ -1,3 +1,15 @@
+# [1.145.0](https://github.com/fhstp/ergo4all/compare/v1.144.0...v1.145.0) (2025-11-21)
+
+
+### Bug Fixes
+
+* reworking the app to be compliant with the requirements from the data protection department ([ad61f74](https://github.com/fhstp/ergo4all/commit/ad61f7444ea29f5db7f892cef847b52322b5b055))
+
+
+### Features
+
+* integrating links for the privacy information and terms of use and rewording to ensure compliance. Minor restyling of the screens ([05fcec1](https://github.com/fhstp/ergo4all/commit/05fcec1189da6ecd026b9da110218350256302bc))
+
 # [1.144.0](https://github.com/fhstp/ergo4all/compare/v1.143.0...v1.144.0) (2025-11-17)
 
 
