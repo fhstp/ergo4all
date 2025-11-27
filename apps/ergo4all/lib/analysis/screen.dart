@@ -404,36 +404,49 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final cameraPreview = cameraController.match(
-      Container.new,
-      (cameraController) => CameraPreview(
-        cameraController,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            frameQueue.lastOption
-                    .flatMap(
-                      (frame) => frame.pose.map(
-                        (pose) => CustomPaint(
-                          willChange: true,
-                          painter: Pose3dPainter(
-                            pose: pose,
-                            imageSize: frame.imageSize,
-                            color: hippieBlue,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toNullable() ??
-                const SizedBox.shrink(),
-            if (currentActivity != null) ActivityOverlay(currentActivity!),
-          ],
+  Option<Widget> tryBuildPoseOverlay() {
+    final lastFrame = frameQueue.lastOption;
+    final painter = lastFrame.flatMap(
+      (frame) => frame.pose.map(
+        (pose) => Pose3dPainter(
+          pose: pose,
+          imageSize: frame.imageSize,
+          color: hippieBlue,
         ),
       ),
     );
+    return painter.map<Widget>(
+      (painter) => CustomPaint(
+        painter: painter,
+        willChange: true,
+      ),
+    );
+  }
 
+  Widget buildCameraPreview() {
+    return cameraController.match(
+      Container.new,
+      (cameraController) => Builder(
+        builder: (context) {
+          if (!cameraController.value.isInitialized) return Container();
+
+          return CameraPreview(
+            cameraController,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                tryBuildPoseOverlay().getOrElse(Container.new),
+                if (currentActivity != null) ActivityOverlay(currentActivity!),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isRecording = analysisMode == _AnalysisMode.full;
 
     return Scaffold(
@@ -445,7 +458,7 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  cameraPreview,
+                  buildCameraPreview(),
                   Positioned(
                     left: largeSpace,
                     right: largeSpace,
