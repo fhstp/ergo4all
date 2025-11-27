@@ -137,11 +137,13 @@ class _SessionArchiveScreenState extends State<SessionArchiveScreen>
                 spacing: mediumSpace,
                 children: [
                   Text(localizations.delete_action_explanation),
-                  SessionList(
-                    sessions: sessions,
-                    profilesById: profilesById,
-                    onSessionDismissed: deleteSession,
-                    onSessionTapped: goToResultsFor,
+                  Expanded(
+                    child: SessionList(
+                      sessions: sessions,
+                      profilesById: profilesById,
+                      onSessionDismissed: deleteSession,
+                      onSessionTapped: goToResultsFor,
+                    ),
                   ),
                 ],
               ),
