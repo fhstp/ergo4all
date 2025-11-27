@@ -279,6 +279,10 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     );
 
     await cameraController.stopImageStream();
+    setState(() {
+      this.cameraController = none();
+    });
+
     await cameraController.dispose();
     await stopPoseDetection();
 
@@ -286,10 +290,6 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     maxKeyFrames = peakDetector.topPeaks;
 
     unawaited(goToResults());
-
-    setState(() {
-      this.cameraController = none();
-    });
   }
 
   Future<void> tryStartFullAnalysis() async {
