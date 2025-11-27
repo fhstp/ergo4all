@@ -74,11 +74,6 @@ class ActivityRecognitionManager {
     }
   }
 
-  void _clearStoredProbabilities() => _timestampProbabilities.clear();
-
-  int _getProbabilityCount(int timestamp) =>
-      _timestampProbabilities[timestamp]?.length ?? 0;
-
   /// Finds the index of the maximum value in a list
   int _findMaxIndex(List<double> list) {
     if (list.isEmpty) return 0;
