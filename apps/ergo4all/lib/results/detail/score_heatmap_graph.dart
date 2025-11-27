@@ -16,8 +16,8 @@ class ScoreHeatmapGraph extends StatelessWidget {
   const ScoreHeatmapGraph({
     required this.timelinesByGroup,
     required this.recordingDuration,
-    required this.highlightTime,
     required this.activityFilter,
+    this.highlightTime,
     this.onGroupTapped,
     super.key,
   });
@@ -31,7 +31,9 @@ class ScoreHeatmapGraph extends StatelessWidget {
   final Duration recordingDuration;
 
   /// The time to highlight with a vertical line.
-  final Duration highlightTime;
+  ///
+  /// May be omitted, in which case no time will be highlighted.
+  final Duration? highlightTime;
 
   /// Callback for when the graph of a [BodyPartGroup] is tapped.
   final void Function(BodyPartGroup)? onGroupTapped;
@@ -40,82 +42,90 @@ class ScoreHeatmapGraph extends StatelessWidget {
   /// the filter is false will be rendered with reduced opacity.
   final IList<bool>? activityFilter;
 
-  @override
-  Widget build(BuildContext context) {
+  Column _buildGraph(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-
     final labelStyle = infoText.copyWith(fontSize: 13);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final graphWidth = constraints.maxWidth - _labelWidth;
-        // Compute X position for highlight
-        final highlightX =
-            (highlightTime.inMilliseconds / recordingDuration.inMilliseconds) *
-                graphWidth;
-
-        return CustomPaint(
-          foregroundPainter: _VerticalLinePainter(
-            x: highlightX,
-            offsetLeft: _labelWidth, // account for labels
-          ),
-          child: Column(
-            spacing: 10,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ...BodyPartGroup.values.map(
-                (part) => Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      onGroupTapped?.call(part);
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                          width: _labelWidth,
-                          child: Text(
-                            localizations.bodyPartGroupLabel(part),
-                            style: labelStyle,
-                          ),
-                        ),
-                        Expanded(
-                          child: CustomPaint(
-                            painter: HeatmapPainter(
-                              normalizedScores: timelinesByGroup[part]!,
-                              activityFilter: activityFilter,
-                            ),
-                          ),
-                        ),
-                      ],
+    return Column(
+      spacing: 10,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ...BodyPartGroup.values.map(
+          (part) => Expanded(
+            child: GestureDetector(
+              onTap: () {
+                onGroupTapped?.call(part);
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    width: _labelWidth,
+                    child: Text(
+                      localizations.bodyPartGroupLabel(part),
+                      style: labelStyle,
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: CustomPaint(
+                      painter: HeatmapPainter(
+                        normalizedScores: timelinesByGroup[part]!,
+                        activityFilter: activityFilter,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: _labelWidth),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 2,
-                      color: woodSmoke.withValues(alpha: 0.5),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('0s', style: labelStyle),
-                        Text(
-                          '${recordingDuration.inSeconds}s',
-                          style: labelStyle,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: _labelWidth),
+          child: Column(
+            children: [
+              Container(
+                height: 2,
+                color: woodSmoke.withValues(alpha: 0.5),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('0s', style: labelStyle),
+                  Text(
+                    '${recordingDuration.inSeconds}s',
+                    style: labelStyle,
+                  ),
+                ],
               ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  CustomPainter? _tryMakeVerticalHighlight(BoxConstraints constraints) {
+    if (highlightTime == null) return null;
+    final graphWidth = constraints.maxWidth - _labelWidth;
+    // Compute X position for highlight
+    final highlightX =
+        (highlightTime!.inMilliseconds / recordingDuration.inMilliseconds) *
+            graphWidth;
+
+    return _VerticalLinePainter(
+      x: highlightX,
+      offsetLeft: _labelWidth, // account for labels
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return CustomPaint(
+          foregroundPainter: _tryMakeVerticalHighlight(constraints),
+          child: _buildGraph(context),
         );
       },
     );

@@ -32,9 +32,16 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
-  late KeyFrame currentKeyFrame;
-
+  KeyFrame? selectedKeyFrame;
   Activity? selectedActivity;
+
+  int get startTimestamp => widget.session.timeline.first.timestamp;
+
+  Duration? get highlightTime {
+    if (selectedKeyFrame == null) return null;
+    final offset = selectedKeyFrame!.timestamp - startTimestamp;
+    return Duration(milliseconds: offset);
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -42,7 +49,7 @@ class _DetailPageState extends State<DetailPage>
   @override
   void initState() {
     super.initState();
-    currentKeyFrame = widget.session.keyFrames.first;
+    selectedKeyFrame = widget.session.keyFrames.firstOrNull;
   }
 
   @override
@@ -114,17 +121,19 @@ class _DetailPageState extends State<DetailPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ImageCarousel(
-            images: widget.session.keyFrames
-                .map((keyFrame) => keyFrame.screenshot)
-                .toList(),
-            onPageChanged: (index) {
-              setState(() {
-                currentKeyFrame = widget.session.keyFrames[index];
-              });
-            },
-          ),
-          const SizedBox(height: largeSpace),
+          if (widget.session.keyFrames.isNotEmpty) ...[
+            ImageCarousel(
+              images: widget.session.keyFrames
+                  .map((keyFrame) => keyFrame.screenshot)
+                  .toList(),
+              onPageChanged: (index) {
+                setState(() {
+                  selectedKeyFrame = widget.session.keyFrames[index];
+                });
+              },
+            ),
+            const SizedBox(height: largeSpace),
+          ],
 
           // Heatmap vis of the body parts
           Center(
@@ -135,10 +144,7 @@ class _DetailPageState extends State<DetailPage>
               child: ScoreHeatmapGraph(
                 timelinesByGroup: worstAveragesByGroup,
                 recordingDuration: recordingDuration,
-                highlightTime: Duration(
-                  milliseconds: currentKeyFrame.timestamp -
-                      widget.session.timeline.first.timestamp,
-                ),
+                highlightTime: highlightTime,
                 activityFilter: activityFilter,
                 onGroupTapped: navigateToBodyPartPage,
               ),
