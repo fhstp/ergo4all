@@ -108,7 +108,7 @@ class _TransparentImageStackState extends State<TransparentImageStack> {
                 return Image.memory(
                   images[index].bytes,
                   key: _imageKeys[index],
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.contain,
                   color: widget.colors[index],
                   colorBlendMode: BlendMode.modulate,
                 );
