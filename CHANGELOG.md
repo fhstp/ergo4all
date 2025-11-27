@@ -1,3 +1,10 @@
+## [1.145.1](https://github.com/fhstp/ergo4all/compare/v1.145.0...v1.145.1) (2025-11-27)
+
+
+### Bug Fixes
+
+* prevent screen lock during recording ([58b1d23](https://github.com/fhstp/ergo4all/commit/58b1d2348bdd15de4ff20c768853f0ac40139105))
+
 # [1.145.0](https://github.com/fhstp/ergo4all/compare/v1.144.0...v1.145.0) (2025-11-21)
 
 
