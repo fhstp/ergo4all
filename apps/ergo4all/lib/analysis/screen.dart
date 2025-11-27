@@ -34,6 +34,7 @@ import 'package:pose_transforming/normalization.dart';
 import 'package:pose_vis/pose_vis.dart';
 import 'package:provider/provider.dart';
 import 'package:rula/rula.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 /// Screen with a camera-view for analyzing live-recorded footage.
 class LiveAnalysisScreen extends StatefulWidget {
@@ -391,6 +392,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
       upperBound: maxRecordDuration.inSeconds.toDouble(),
       vsync: this,
     );
+
+    unawaited(WakelockPlus.enable());
   }
 
   @override
@@ -398,6 +401,8 @@ class _LiveAnalysisScreenState extends State<LiveAnalysisScreen>
     activitySubscription?.cancel();
     progressAnimationController.dispose();
     cameraController.map((c) => c.dispose());
+    unawaited(WakelockPlus.disable());
+
     super.dispose();
   }
 
