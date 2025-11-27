@@ -60,7 +60,7 @@ packages:
       path: "."
       ref: "v1.1.0"
       resolved-ref: "23f04b9d8e7cb1eb2a9050ca03e61de71fb3272f"
-      url: "git@github.com:fhstp/auto_rula.git"
+      url: "https://github.com/fhstp/auto_rula.git"
     source: git
     version: "1.1.0"
   boolean_selector:

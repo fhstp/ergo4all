@@ -11,7 +11,7 @@ resolution: workspace
 dependencies:
   auto_rula:
     git:
-      url: git@github.com:fhstp/auto_rula.git
+      url: https://github.com/fhstp/auto_rula.git
       ref: v1.1.0
 
   common: any
