@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Text style for button labels.
-final buttonLabelStyle =
+final TextStyle buttonLabelStyle =
     GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 20);
 
 /// The intended width for most buttons in the app.
@@ -33,7 +33,7 @@ final elevatedButtonStyle = ButtonStyle(
 
 /// The button style for all primary buttons. It uses a teal color
 /// palette.
-final primaryTextButtonStyle = elevatedButtonStyle.copyWith(
+final ButtonStyle primaryTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(white),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: tealBlue,
@@ -44,7 +44,7 @@ final primaryTextButtonStyle = elevatedButtonStyle.copyWith(
 
 /// The button style for all secondary buttons. It uses a dark blue color
 /// palette.
-final secondaryTextButtonStyle = elevatedButtonStyle.copyWith(
+final ButtonStyle secondaryTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(white),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: blackPearl,
@@ -55,7 +55,7 @@ final secondaryTextButtonStyle = elevatedButtonStyle.copyWith(
 
 /// The button style for all buttons which are surrounded by a lot of white.
 /// It uses the pale blue color palette.
-final paleTextButtonStyle = elevatedButtonStyle.copyWith(
+final ButtonStyle paleTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(woodSmoke),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: hippieBlue,
@@ -65,7 +65,7 @@ final paleTextButtonStyle = elevatedButtonStyle.copyWith(
 );
 
 /// The button style for red buttons, such as error buttons.
-final redTextButtonStyle = elevatedButtonStyle.copyWith(
+final ButtonStyle redTextButtonStyle = elevatedButtonStyle.copyWith(
   foregroundColor: const WidgetStatePropertyAll(white),
   backgroundColor: const WidgetStateColor.fromMap({
     WidgetState.pressed: persimmon,
@@ -75,28 +75,28 @@ final redTextButtonStyle = elevatedButtonStyle.copyWith(
 );
 
 /// Text style for H1 headers.
-final h1Style = GoogleFonts.montserrat(
+final TextStyle h1Style = GoogleFonts.montserrat(
   fontWeight: FontWeight.w700,
   fontSize: 38,
   color: cardinal,
 );
 
 /// Text style for H2 headers.
-final h2Style = GoogleFonts.montserrat(
+final TextStyle h2Style = GoogleFonts.montserrat(
   fontWeight: FontWeight.w700,
   fontSize: 36,
   color: woodSmoke,
 );
 
 /// Text style for H3 headers.
-final h3Style = GoogleFonts.montserrat(
+final TextStyle h3Style = GoogleFonts.montserrat(
   fontWeight: FontWeight.w500,
   fontSize: 36,
   color: woodSmoke,
 );
 
 /// Text style for H4 headers.
-final h4Style = GoogleFonts.nunito(
+final TextStyle h4Style = GoogleFonts.nunito(
   fontWeight: FontWeight.w600,
   fontSize: 24,
   color: woodSmoke,
@@ -104,7 +104,7 @@ final h4Style = GoogleFonts.nunito(
 
 /// Small header for paragraphs
 /// This corresponds to "Überschrift Fließtext" in the Figma.
-final paragraphHeaderStyle = GoogleFonts.nunito(
+final TextStyle paragraphHeaderStyle = GoogleFonts.nunito(
   fontWeight: FontWeight.w700,
   fontSize: 20,
   color: woodSmoke,
@@ -112,7 +112,7 @@ final paragraphHeaderStyle = GoogleFonts.nunito(
 
 /// Body text for static content
 /// This corresponds to "Fließtext statisch" in the Figma.
-final staticBodyStyle = GoogleFonts.nunito(
+final TextStyle staticBodyStyle = GoogleFonts.nunito(
   fontWeight: FontWeight.w400,
   fontSize: 24,
   color: woodSmoke,
@@ -120,7 +120,7 @@ final staticBodyStyle = GoogleFonts.nunito(
 
 /// Body text for dynamic content
 /// This corresponds to "Fließtext dynamisch" in the Figma.
-final dynamicBodyStyle = GoogleFonts.nunito(
+final TextStyle dynamicBodyStyle = GoogleFonts.nunito(
   fontWeight: FontWeight.w400,
   fontSize: 20,
   color: woodSmoke,
@@ -128,7 +128,7 @@ final dynamicBodyStyle = GoogleFonts.nunito(
 
 /// Text style for text input fields.
 /// This corresponds to "Eingabefeld" in the Figma.
-final inputTextStyle = GoogleFonts.nunito(
+final TextStyle inputTextStyle = GoogleFonts.nunito(
   fontWeight: FontWeight.w400,
   fontSize: 20,
   color: woodSmoke,
@@ -136,7 +136,7 @@ final inputTextStyle = GoogleFonts.nunito(
 
 /// Text style for smaller info texts.
 /// This corresponds to "Infotext" in the Figma.
-final infoText = GoogleFonts.nunito(
+final TextStyle infoText = GoogleFonts.nunito(
   fontWeight: FontWeight.w400,
   fontSize: 16,
   color: woodSmoke,

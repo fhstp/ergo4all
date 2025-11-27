@@ -6,11 +6,9 @@ import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:ergo4all/onboarding/style.dart';
 import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-const double _appBarHeight = 200;
 
 /// Screen for displaying the privacy policy.
 class PrivacyScreen extends StatefulWidget {
@@ -32,8 +30,7 @@ class PrivacyScreen extends StatefulWidget {
 }
 
 class _PrivacyScreenState extends State<PrivacyScreen> {
-
-  bool consetCheck = false; 
+  bool consetCheck = false;
 
   void goToToS() {
     unawaited(
@@ -45,20 +42,17 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
     );
   }
 
-  void openPrivacyLink() async {
-    Uri link = Uri.parse('https://www.tuwien.at/mwbw/im/ie/mmi/forschung/ergo4a-ergonomics-for-all/datenschutzinformation-projekt-ergo4a');
-    if (await canLaunchUrl(link)) {
-      await launchUrl(link, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $link';
-    }
+  Future<void> openPrivacyLink() async {
+    final link = Uri.parse(
+      'https://www.tuwien.at/mwbw/im/ie/mmi/forschung/ergo4a-ergonomics-for-all/datenschutzinformation-projekt-ergo4a',
+    );
+    await launchUrl(link, mode: LaunchMode.externalApplication);
   }
 
   @override
   Widget build(BuildContext context) {
-
     final localizations = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: largeSpace),
@@ -73,7 +67,6 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                 style: h1Style.copyWith(color: cardinal),
               ),
             ),
-
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -91,18 +84,18 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                       style: dynamicBodyStyle,
                       textAlign: TextAlign.center,
                     ),
-
                     const SizedBox(height: mediumSpace),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        recognizer: TapGestureRecognizer()..onTap = openPrivacyLink,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = openPrivacyLink,
                         text: localizations.privacy_link,
                         style: dynamicBodyStyle.copyWith(
                           color: Colors.blue,
                           decoration: TextDecoration.underline,
                         ),
-                      ),                      
+                      ),
                     ),
                     const SizedBox(height: mediumSpace),
                     Text(
@@ -111,7 +104,6 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -135,7 +127,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                     ElevatedButton(
                       key: const Key('next'),
                       style: primaryTextButtonStyle,
-                      onPressed: consetCheck ? goToToS : null, 
+                      onPressed: consetCheck ? goToToS : null,
                       child: Text(localizations.onboarding_label),
                     ),
                   ],

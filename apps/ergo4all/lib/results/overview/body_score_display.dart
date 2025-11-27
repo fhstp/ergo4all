@@ -25,7 +25,7 @@ String _getAssetPathForPart(BodyPart bodyPart) {
   return 'assets/images/puppet/$fileName.png';
 }
 
-const bodyPartsInDisplayOrder = [
+const List<BodyPart> bodyPartsInDisplayOrder = [
   BodyPart.head,
   BodyPart.leftLeg,
   BodyPart.leftUpperArm,

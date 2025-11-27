@@ -2,8 +2,8 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/common/activity.dart';
-import 'package:ergo4all/common/variable_localizations.dart';
 import 'package:ergo4all/common/rula_color.dart';
+import 'package:ergo4all/common/variable_localizations.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:toggle_switch/toggle_switch.dart';
 
-final _lineGray = Colors.grey.withValues(alpha: 0.2);
+final Color _lineGray = Colors.grey.withValues(alpha: 0.2);
 
 final _hLine = FlLine(
   color: _lineGray,

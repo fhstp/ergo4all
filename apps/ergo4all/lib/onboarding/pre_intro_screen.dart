@@ -4,12 +4,12 @@ import 'package:common_ui/theme/colors.dart';
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/theme/styles.dart';
 import 'package:ergo4all/gen/i18n/app_localizations.dart';
-import 'package:ergo4all/onboarding/style.dart';
-import 'package:ergo4all/onboarding/terms_of_use_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:ergo4all/onboarding/privacy_screen.dart';
+import 'package:ergo4all/onboarding/style.dart';
+import 'package:flutter/material.dart';
 
-/// Screen for displaying the pre-introductory content before the main onboarding flow.
+/// Screen for displaying the pre-introductory content before the main
+/// onboarding flow.
 class PreIntroScreen extends StatelessWidget {
   ///
   const PreIntroScreen({super.key});
@@ -34,7 +34,9 @@ class PreIntroScreen extends StatelessWidget {
         Navigator.pushAndRemoveUntil(
           context,
           PrivacyScreen.makeRoute(),
-          ModalRoute.withName(PrivacyScreen.routeName),//(TermsOfUseScreen.routeName),
+          ModalRoute.withName(
+            PrivacyScreen.routeName,
+          ), //(TermsOfUseScreen.routeName),
         ),
       );
     }

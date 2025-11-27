@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:common_ui/theme/spacing.dart';
 import 'package:common_ui/widgets/red_circle_app_bar.dart';
 import 'package:ergo4all/common/custom_images.dart';
@@ -10,13 +11,12 @@ class _ContactBlock extends StatelessWidget {
   const _ContactBlock({
     required this.logo,
     required this.companyName,
-    required this.companyAddress
+    required this.companyAddress,
   });
 
   final AssetImage logo;
   final String companyName;
   final String companyAddress;
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,31 +72,28 @@ class ImprintScreen extends StatelessWidget {
               Text(localizations.imprint_project_info),
               const SizedBox(height: largeSpace),
               Text(localizations.imprint_privacy_text),
-
               TextButton(
                 onPressed: goToPrivacy,
                 child: Text(localizations.menu_privacy_label),
               ),
-
-              const Text("Christina Thirsfeld"),
-              const Text("datenschutz@tuwien.ac.at"),
-              
+              const Text('Christina Thirsfeld'),
+              const Text('datenschutz@tuwien.ac.at'),
               const SizedBox(height: largeSpace),
               Text(localizations.imprint_project_partners),
               const SizedBox(height: mediumSpace),
-
               const _ContactBlock(
                 logo: CustomImages.logoUstp,
-                companyName: 'USPT St. Pölten, Institute for Creative\\Media/Technologies, Digital Technologies',
+                companyName:
+                    r'USPT St. Pölten, Institute for Creative\Media/Technologies, Digital Technologies',
                 companyAddress: 'Campus-Platz 1, A-3100 St. Pölten',
               ),
-
               const SizedBox(height: smallSpace),
               const _ContactBlock(
                 logo: CustomImages.logoTUWien,
-                companyName: 'TU Wien, Institute for Management Science, Human-Machine Interaction',
+                companyName:
+                    'TU Wien, Institute for Management Science, Human-Machine Interaction',
                 companyAddress: 'Theresianumgasse 27, 1040 Wien',
-              ),              
+              ),
               const SizedBox(height: largeSpace),
             ],
           ),

@@ -6,7 +6,7 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
     as mlkit;
 import 'package:pose_detect/pose_detect.dart';
 
-final _orientations = {
+final Map<DeviceOrientation, int> _orientations = {
   DeviceOrientation.portraitUp: 0,
   DeviceOrientation.landscapeLeft: 90,
   DeviceOrientation.portraitDown: 180,

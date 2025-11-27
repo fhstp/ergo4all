@@ -9,7 +9,6 @@ import 'package:ergo4all/scenario/common.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
-
 /// Helper to get  text for a recognised activity
 String? _tipForActivity(Activity activity, AppLocalizations localizations) {
   return switch (activity) {
@@ -76,15 +75,15 @@ class ImprovementsPage extends StatelessWidget {
         for (var i = 0; i < topThreeActivities.length; i++) {
           final activity = topThreeActivities[i];
 
-          // We merge texts together          
+          // We merge texts together
           final tip = _tipForActivity(activity, localizations);
           final intro = activityRanking(i, localizations);
-          
+
           if (intro != null && tip != null) {
             activityTexts.add('$intro $tip');
           }
         }
-        
+
         tips = activityTexts.join('\n\n');
       }
     } else {
@@ -94,12 +93,10 @@ class ImprovementsPage extends StatelessWidget {
       improvements = localizations.scenarioImprovement(scenario!);
     }
 
-
     // Header depends on scenario vs freestyle mode
-    String tipsHeader = scenario == null
+    final tipsHeader = scenario == null
         ? localizations.activity_recognition_header
         : localizations.ergonomics_tipps;
-        
 
     return SingleChildScrollView(
       child: Column(

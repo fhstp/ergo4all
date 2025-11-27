@@ -14,14 +14,11 @@ class PrivacyScreen extends StatelessWidget {
   /// The route name for this screen.
   static const String routeName = 'privacy';
 
-
-  void openPrivacyLink() async {
-    Uri link = Uri.parse('https://www.tuwien.at/mwbw/im/ie/mmi/forschung/ergo4a-ergonomics-for-all/datenschutzinformation-projekt-ergo4a');
-    if (await canLaunchUrl(link)) {
-      await launchUrl(link, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $link';
-    }
+  Future<void> _openPrivacyLink() async {
+    final link = Uri.parse(
+      'https://www.tuwien.at/mwbw/im/ie/mmi/forschung/ergo4a-ergonomics-for-all/datenschutzinformation-projekt-ergo4a',
+    );
+    await launchUrl(link, mode: LaunchMode.externalApplication);
   }
 
   /// Creates a [MaterialPageRoute] to navigate to this screen.
@@ -58,7 +55,6 @@ class PrivacyScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: largeSpace),
-
               Text.rich(
                 TextSpan(
                   text: localizations.privacy_link,
@@ -66,7 +62,7 @@ class PrivacyScreen extends StatelessWidget {
                     color: Colors.blue,
                     decoration: TextDecoration.underline,
                   ),
-                  recognizer: TapGestureRecognizer()..onTap = openPrivacyLink,
+                  recognizer: TapGestureRecognizer()..onTap = _openPrivacyLink,
                 ),
                 textAlign: TextAlign.center,
               ),

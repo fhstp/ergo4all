@@ -42,13 +42,11 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
     );
   }
 
-  void openToSLink() async {
-    Uri link = Uri.parse('https://www.tuwien.at/mwbw/im/ie/mmi/forschung/ergo4a-ergonomics-for-all/nutzungsbedingungen-der-app-ergo4a');
-    if (await canLaunchUrl(link)) {
-      await launchUrl(link, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $link';
-    }
+  Future<void> openToSLink() async {
+    final link = Uri.parse(
+      'https://www.tuwien.at/mwbw/im/ie/mmi/forschung/ergo4a-ergonomics-for-all/nutzungsbedingungen-der-app-ergo4a',
+    );
+    await launchUrl(link, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -70,39 +68,35 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
               ),
             ),
             const SizedBox(height: largeSpace),
-
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(                      
+                    Text(
                       localizations.onboarding_termsOfUse_description,
                       style: dynamicBodyStyle,
                       textAlign: TextAlign.center,
                     ),
-
                     const SizedBox(height: mediumSpace),
                     RichText(
                       textAlign: TextAlign.center,
-                      text: TextSpan(                            
+                      text: TextSpan(
                         text: localizations.onboarding_termsOfUse_link,
                         style: dynamicBodyStyle.copyWith(
                           color: Colors.blue,
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()..onTap = openToSLink,
-                      )
+                      ),
                     ),
-
                     const SizedBox(height: mediumSpace),
-                    Text(                      
+                    Text(
                       localizations.onboarding_termsOfUse_consent,
                       style: dynamicBodyStyle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: largeSpace),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
