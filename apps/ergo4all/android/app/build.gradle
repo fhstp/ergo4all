@@ -52,10 +52,6 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
-
-        testInstrumentationRunner "pl.leancode.patrol.PatrolJUnitRunner"
-        testInstrumentationRunnerArguments clearPackageData: "true"
-
     }
 
     signingConfigs {
@@ -82,10 +78,6 @@ android {
             shrinkResources false
         }
     }
-
-    testOptions {
-        execution "ANDROIDX_TEST_ORCHESTRATOR"
-    }
 }
 
 
@@ -101,6 +93,5 @@ flutter {
 }
 
 dependencies {
-  androidTestUtil "androidx.test:orchestrator:1.5.1"
   implementation "org.tensorflow:tensorflow-lite-gpu-api:2.12.0"
 }
