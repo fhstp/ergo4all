@@ -1,3 +1,13 @@
+## [1.145.2](https://github.com/fhstp/ergo4all/compare/v1.145.1...v1.145.2) (2025-11-27)
+
+
+### Bug Fixes
+
+* camera controller disposed error ([e900bb6](https://github.com/fhstp/ergo4all/commit/e900bb602afaedaf9bee16387b35277f44c5d346))
+* cut-off body graphic ([b24b0f7](https://github.com/fhstp/ergo4all/commit/b24b0f737567418e1cb30ba8555b8009fca0d5b7)), closes [#211](https://github.com/fhstp/ergo4all/issues/211)
+* handle no-keyframes on result screen ([b903a12](https://github.com/fhstp/ergo4all/commit/b903a1258bd03b5ab3838b672c489c2952bc5e31))
+* session list overflow error ([1352b9d](https://github.com/fhstp/ergo4all/commit/1352b9d514d110266a20ecabf96603814020d9fd)), closes [#207](https://github.com/fhstp/ergo4all/issues/207)
+
 ## [1.145.1](https://github.com/fhstp/ergo4all/compare/v1.145.0...v1.145.1) (2025-11-27)
 
 
