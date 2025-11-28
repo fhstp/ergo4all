@@ -80,18 +80,6 @@ android {
     }
 }
 
-
-configurations.all {
-    // Exclude LiteRT GPU artifacts, since we want to use the classic
-    // TensorFlow runtime.
-    exclude group: "com.google.ai.edge.litert", module: "litert-gpu-api"
-    exclude group: "com.google.ai.edge.litert", module: "litert-gpu"
-}
-
 flutter {
     source = "../.."
-}
-
-dependencies {
-  implementation "org.tensorflow:tensorflow-lite-gpu-api:2.12.0"
 }
