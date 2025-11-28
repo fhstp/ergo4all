@@ -12,7 +12,7 @@ dependencies:
   auto_rula:
     git:
       url: https://github.com/fhstp/auto_rula.git
-      ref: v1.1.0
+      ref: v1.1.1
 
   common: any
   common_ui: any
