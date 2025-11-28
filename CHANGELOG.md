@@ -1,3 +1,10 @@
+## [1.145.3](https://github.com/fhstp/ergo4all/compare/v1.145.2...v1.145.3) (2025-11-28)
+
+
+### Bug Fixes
+
+* incorrect google font import ([ff5ab9d](https://github.com/fhstp/ergo4all/commit/ff5ab9d594e606c2efbb1389746f3b6b91af7208))
+
 ## [1.145.2](https://github.com/fhstp/ergo4all/compare/v1.145.1...v1.145.2) (2025-11-27)
 
 
