@@ -130,6 +130,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                       onPressed: consetCheck ? goToToS : null,
                       child: Text(localizations.onboarding_label),
                     ),
+                    const SizedBox(height: largeSpace),
                   ],
                 ),
               ),
