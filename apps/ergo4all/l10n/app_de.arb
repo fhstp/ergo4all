@@ -213,5 +213,20 @@
   "no": "Nein",
   "not_enough_data": "Nicht genügend Daten wurden erkannt, wahrscheinlich weil die Aufnahme zu kurz war. Bitte versuche es erneut.",
   "activity_filter": "Aktivität-filter",
-  "activity_filter_explanation": "Ergo4All erkennt welche Aktivitäten in der Aufnahme durchgeführt wurden. Indem du eine von ihnen auswählst kannst du detaillierte Informationen über sie bekommen."
+  "activity_filter_explanation": "Ergo4All erkennt welche Aktivitäten in der Aufnahme durchgeführt wurden. Indem du eine von ihnen auswählst kannst du detaillierte Informationen über sie bekommen.",
+  "sources_nav": "So funktioniert's",
+  "sources_model_nav": "KI-Modell",
+  "sources_model": "Unser Modell basiert auf Posenschätzung. Posenschätzung bezeichnet die Erkennung der Körperhaltung aus Videobildern. Wenn du die Aufnahme startest, schätzt das KI-Modell die Positionen deiner Gelenke in den Bildern und transformiert sie in ein abstraktes 3D-Skelett.\n\nDieses 3D-Skelett ermöglicht es uns, die Körperhaltung detailliert zu analysieren, indem wir die Pose aus verschiedenen Perspektiven betrachten und die Winkel zwischen den einzelnen Körperteilen berechnen. Auf Grundlage dieser Winkel können wir die Ergonomie auf ähnliche Weise analysieren, wie Experten ergonomische Bewertungen am Arbeitsplatz durchführen.",
+  "sources_disclaimer": "Hinweis: Diese App dient ausschließlich Lern- und Informationszwecken. Die App verfolgt keinen medizinischen Zweck und bietet keine medizinische Beratung, Diagnose oder Behandlung. Die Ergebnisse sind automatisierte Schätzungen und sollten nicht als Ersatz für eine professionelle medizinische oder ergonomische Beurteilung herangezogen werden.",
+  "sources_ergonomics_nav": "RULA Bewertung",
+  "sources_ergonomics": "Unser Modell orientiert sich eng an der RULA-Methode. RULA steht für Rapid Upper Limb Assessment und ist eine der am häufigsten verwendeten Methoden sowohl in der Forschung als auch in der Praxis.\n\nDas rechnergestützte Modell funktioniert ähnlich wie die klassische RULA-Bewertung mittels Beobachtungen durch ExpertInnen. Zunächst werden die Körperwinkel geschätzt - in unserer App übernimmt dies das KI-Modell zur Posenschätzung. Im nächsten Schritt wird beurteilt, wie natürlich die Körperhaltung ist. RULA legt für jeden Körperteil Winkelbereiche fest, die Abweichungen von der natürlichen Haltung darstellen. Jeder Körperteil wird einzeln bewertet, und die abschließende Analyse ergibt sich aus der Zusammenführung der relevanten Körperteile.\n\n",
+  "sources_refs_nav": "Quellen & Grundlagen",  
+  "sources_refs": "Ziel dieser App ist es, praktische Vorschläge zur Verbesserung der Ergonomie am Arbeitsplatz zu geben und körperliche Belastungen zu reduzieren. Die Texte und ergonomischen Empfehlungen basieren auf etablierter Forschung sowie auf offiziellen ergonomischen Guidelines. Weitere Informationen zur Funktionsweise der App findest du in den Erklärungen zum Modell und Bewertungsmethode.\n\nObwohl diese Quellen von etablierten Organisationen und aus wissenschaftlichen Veröffentlichungen im Bereich Ergonomie und Arbeitsschutz stammen, ersetzt diese App keine professionelle ergonomische Beurteilung oder arbeitsmedizinische Beratung. Wenn du Schmerzen, Beschwerden oder Sicherheitsprobleme am Arbeitsplatz feststellst, wende dich bitte an qualifizierte Fachpersonen, zum Beispiel an eine Ergonomie-Fachkraft, eine arbeitsmedizinische Fachperson oder eine zuständige Arbeitsschutzvertretung.", 
+  "sources_used": "Verwendete Quellen",
+  "sources_used_text": "Folgenden Publikationen und Guidelines waren die Wissensgrundlage für die ergonomischen Empfehlungen in dieser App.",
+  "sources_research": "Internationale Ergonomie-Forschung",
+  "sources_guidelines": "Ergonomische Guidelines und Fachliteratur",
+  "sources_code_nav": "Quellcode",
+  "sources_code": "Ergo4ll ist ein Open-Source-Forschungsprojekt. Der Quellcode ist öffentlich verfügbar und kann für nicht-kommerzielle Zwecke eingesehen und genutzt werden.\n\nWenn du zur Weiterentwicklung beitragen möchtest, freuen wir uns über deine Unterstützung – zum Beispiel durch Verbesserungsvorschläge, das Melden von Problemen oder das Einreichen eigenen Codes.",
+  "sources_code_link": "GitHub-Repository ansehen"
 }
