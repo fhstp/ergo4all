@@ -61,11 +61,6 @@ Future<void> showHomeMenuDialog(BuildContext context) {
           goToLanguage,
           const Key('button-lang'),
         ),
-        _makeOptionButton(localizations.imprint, () {
-          final navigator = Navigator.of(context)..pop();
-          unawaited(navigator.push(ImprintScreen.makeRoute()));
-        }),
-        _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
         _makeOptionButton(
           localizations.menu_profiles_label,
           goToProfileManagement,
@@ -73,7 +68,12 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         _makeOptionButton(
           localizations.sources_nav,
           goToSources,
-        ),
+        ),        
+        _makeOptionButton(localizations.menu_privacy_label, goToPrivacy),
+        _makeOptionButton(localizations.imprint, () {
+          final navigator = Navigator.of(context)..pop();
+          unawaited(navigator.push(ImprintScreen.makeRoute()));
+        }),        
       ],
     ),
   );
