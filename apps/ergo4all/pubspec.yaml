@@ -79,6 +79,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/puppet/
+    - assets/images/puppet_explanations/
     - assets/images/puppet_scenario/
     - assets/images/puppets_good_bad/
     - assets/images/logos/

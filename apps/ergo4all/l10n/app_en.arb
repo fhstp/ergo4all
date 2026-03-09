@@ -40,7 +40,7 @@
   "imprint": "Imprint",
   "@imprint": {
     "description": "The word \"imprint\" to be used in a variety of contexts."
-  },  
+  },
   "imprint_project_info": "This research was supported by the Lower Austria Chamber of Labor as a part of the Ergo4A project (Ergonomics for All).",
   "@imprint_project_info": {
     "description": "Describes the background on the project funding."
@@ -52,13 +52,13 @@
   "imprint_project_partners": "This research project has been done in collaboration with the following partners:",
   "@imprint_project_partners": {
     "description": "Reference to the project partners."
-  },  
+  },
   "menu_language_label": "Change Language",
   "@menu_language_label": {
     "description": "Label for button to change the app language"
   },
   "menu_privacy_label": "Privacy Manifest",
-  "menu_profiles_label": "Manage profiles",
+  "menu_profiles_label": "Manage Profiles",
   "@menu_profiles_label": {
     "description": "Label for navigation to the profile management screen"
   },
@@ -539,5 +539,68 @@
   "activity_filter_explanation": "Ergo4All detects what activities were performed during the session. Using the activity-selection dropdown you can filter for these activities to get more specific information.",
   "@activity_filter_explanation": {
     "description": "Explanation text for what the activity filter does"
+  },
+  "sources_nav": "How Does it Work?",
+  "@sources_nav": {
+    "description": "Button navigating to explanations"
+  },
+  "@sources_disclaimer": {
+    "description": "Text description about how the app works."
+  },
+  "sources_disclaimer": "Note: This application is designed for informational purposes only. It is not a medical device and does not provide medical advice, diagnosis, or treatment. The results are automated estimates and should not be relied upon as a substitute for professional medical or ergonomic evaluation.",
+  "@sources_disclaimer": {
+    "description": "Disclaimer text about the use of AI"
+  },
+  "sources_model_nav": "Ergonomics Model",
+  "@sources_model_nav": {
+    "description": "Button navigating to model explanation"
+  },
+  "sources_model": "Our model is based on pose estimation. Pose estimation refers to the automated extraction of postural data from video images. When you run the recording, the AI model estimates the locations of your body joints in the images and transforms them into an abstract 3D skeleton.\n\nThis 3D skeleton enables us to analyse posture in more detail. This is done by viewing the pose from different perspectives and calculating the angles between body parts. Based on these angles, we can analyse ergonomics in a similar way to how experts perform ergonomic assessments in the workplace.",
+  "@sources_model": {
+    "description": "Explanation text how the model works"
+  },
+  "sources_ergonomics_nav": "RULA Assessment",
+  "@sources_ergonomics_nav": {
+    "description": "Button navigating to RULA explanation"
+  },
+  "sources_ergonomics": "Our model closely mimics the RULA method. RULA stands for Rapid Upper Limb Assessment and is one of the most commonly used methods in both research and practical settings.\n\nThe computational model works similarly to how ergonomists perform observational assessments. First, body angles are estimated. In our app, this is done using the AI model for pose estimation. In the second step, we assess how natural the posture is. RULA defines angle ranges for deviations from natural postures for each body part. Each body part is evaluated, and the final assessment is computed by combining the relevant body parts.",
+  "@sources_ergonomics": {
+    "description": "Explanation text how RULA scoring works"
+  },
+  "sources_refs_nav": "Sources & Evidence",
+  "@sources_refs_nav": {
+    "description": "Button navigating to AI notification"
+  },
+  "sources_refs": "The goal of this app is to provide practical suggestions to help improve workplace ergonomics and reduce physical strain. The texts and ergonomics recommendations are based on established research and official ergonomics guidelines. You can read more about how the model works in the corresponding sections of the app.\n\nAlthough these sources come from well-established organizations and scientific publications in ergonomics and occupational safety, please note that this app does not replace professional ergonomic assessment or occupational health advice. If you experience pain, discomfort, or workplace safety issues, consult a qualified professional such as an ergonomics specialist, occupational health expert, or workplace safety representative.",
+  "@sources_trust": {
+    "description": "Explanations of what were the sources for app recommendations"
+  },
+  "sources_used": "Sources Used",
+  "@sources_used": {
+    "description": "Header for section on explaining which sources were used"
+  },
+  "sources_used_text": "The following publications and guidelines were used as the knowledge base for the ergonomics recommendations provided in this app.",
+  "@sources_used_text": {
+    "description": "Accompanying text explanation for used sources"
+  },
+  "sources_research": "International Ergonomics Research",
+  "@sources_used": {
+    "description": "Header for research references"
+  },
+  "sources_guidelines": "Ergonomics Guidance and Books",
+  "@sources_used": {
+    "description": "Header for practical references"
+  },
+  "sources_code_nav": "Source Code",
+  "@sources_code_nav": {
+    "description": "Buttton navigating to source code page description"
+  },
+  "sources_code": "Ergo4all is an open-source research project. The source code is publicly available, and you are welcome to explore and use it for non-commercial purposes.\n\nIf you are interested in contributing, we encourage you to join the project by sharing improvements, reporting issues, or submitting your own code.",
+  "@sources_code": {
+    "description": "Text refering to the code being open source"
+  },
+  "sources_code_link": "View the GitHub repository",
+  "@sources_code_link": {
+    "description": "URL link description for the Github repository"
   }
 }

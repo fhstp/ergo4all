@@ -7,6 +7,7 @@ import 'package:ergo4all/imprint_screen.dart';
 import 'package:ergo4all/language_screen.dart';
 import 'package:ergo4all/privacy_screen.dart';
 import 'package:ergo4all/profile/management/screen.dart';
+import 'package:ergo4all/sources/sources_choice_screen.dart';
 import 'package:flutter/material.dart';
 
 Widget _makeOptionButton(String text, void Function() onPressed, [Key? key]) {
@@ -43,6 +44,10 @@ Future<void> showHomeMenuDialog(BuildContext context) {
     unawaited(navigator.pushReplacement(ProfileManagementScreen.makeRoute()));
   }
 
+  void goToSources() {
+    unawaited(Navigator.of(context).push(SourcesScreen.makeRoute()));
+  }
+
   return showDialog<void>(
     context: context,
     builder: (context) => SimpleDialog(
@@ -64,6 +69,10 @@ Future<void> showHomeMenuDialog(BuildContext context) {
         _makeOptionButton(
           localizations.menu_profiles_label,
           goToProfileManagement,
+        ),
+        _makeOptionButton(
+          localizations.sources_nav,
+          goToSources,
         ),
       ],
     ),
