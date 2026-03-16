@@ -1,3 +1,12 @@
+# [1.146.0](https://github.com/fhstp/ergo4all/compare/v1.145.3...v1.146.0) (2026-03-16)
+
+
+### Features
+
+* added an explanations and sources screens ([96f9d9a](https://github.com/fhstp/ergo4all/commit/96f9d9a997fc6d9c7bb905bfc714f81358844287))
+* improve onboarding screen layout ([b27c629](https://github.com/fhstp/ergo4all/commit/b27c629ac085ec8bc79099b89eb5dfc5afc64fba))
+* reorganised menu dialog ([6242a85](https://github.com/fhstp/ergo4all/commit/6242a850bc731eac8bfa2a552b173b186b278139))
+
 ## [1.145.3](https://github.com/fhstp/ergo4all/compare/v1.145.2...v1.145.3) (2025-11-28)
 
 

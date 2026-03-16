@@ -1,5 +1,5 @@
 name: pose_vis
-version: 1.145.3
+version: 1.146.0
 description: Pose visualization logic.
 publish_to: none
 
